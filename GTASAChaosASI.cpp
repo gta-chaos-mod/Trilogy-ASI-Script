@@ -285,7 +285,7 @@ public:
 		char text[1024] = "";
 		DWORD dwRead;
 
-		std::string myProcID = "\\\\.\\pipe\\GTASAPipe";
+		std::string myProcID = "\\\\.\\pipe\\GTASAChaosPipe";
 		std::string To(myProcID.begin(), myProcID.end());
 
 		hPipe = CreateNamedPipe(To.c_str(),
