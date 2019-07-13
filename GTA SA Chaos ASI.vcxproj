@@ -113,6 +113,7 @@
     <ClCompile Include="TimedEffect.cpp" />
     <ClCompile Include="DrawHelper.cpp" />
     <ClCompile Include="GTASAChaosASI.cpp" />
+    <ClCompile Include="EffectPlaceholder.cpp" />
     <ClCompile Include="TimedFunctionCheat.cpp" />
     <ClCompile Include="Timelapse.cpp" />
     <ClCompile Include="ToDriveOrNotToDrive.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="TimedAddressCheat.h" />
     <ClInclude Include="TimedEffect.h" />
     <ClInclude Include="DrawHelper.h" />
+    <ClInclude Include="EffectPlaceholder.h" />
     <ClInclude Include="TimedFunctionCheat.h" />
     <ClInclude Include="Timelapse.h" />
     <ClInclude Include="ToDriveOrNotToDrive.h" />

@@ -56,15 +56,14 @@ void DrawHelper::DrawHelpMessage(std::string _message, int duration) {
 	*/
 }
 
-void DrawHelper::DrawActiveEffects(std::list<TimedEffect*> activeEffects) {
-	float x = SCREEN_COORD_RIGHT(90.0f);
-
+void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 	int i = 1;
 	for (TimedEffect* effect : activeEffects) {
 		if (i > 5) {
 			return;
 		}
 
+		float x = SCREEN_COORD_RIGHT(effect->isPlaceholder ? 25.0f : 90.0f);
 		float y = SCREEN_COORD_BOTTOM(((i + 1) * 70.0f) + 110.0f);
 
 		CFont::SetCentreSize(SCREEN_WIDTH);
@@ -81,22 +80,24 @@ void DrawHelper::DrawActiveEffects(std::list<TimedEffect*> activeEffects) {
 		CFont::SetColor(CRGBA(255, 255, 255, 200));
 		CFont::PrintString(x, y, (char*)effect->GetDescription().c_str());
 
-		CVector2D center = CVector2D(SCREEN_COORD_RIGHT(50.0f), y + SCREEN_COORD(22.0f));
+		if (!effect->isPlaceholder) {
+			CVector2D center = CVector2D(SCREEN_COORD_RIGHT(50.0f), y + SCREEN_COORD(22.0f));
 
-		RwTextureFilterMode filter = rwFILTERLINEAR;
-		int alphaBlending = true;
+			RwTextureFilterMode filter = rwFILTERLINEAR;
+			int alphaBlending = true;
 
-		RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, &alphaBlending);
-		RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)(filter));
-		RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
+			RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, &alphaBlending);
+			RwRenderStateSet(rwRENDERSTATETEXTUREFILTER, (void*)(filter));
+			RwRenderStateSet(rwRENDERSTATETEXTURERASTER, NULL);
 
-		float angle = (float)effect->GetRemaining() / (float)effect->GetDuration() * 360.0f;
+			float angle = (float)effect->GetRemaining() / (float)effect->GetDuration() * 360.0f;
 
-		DrawHelper::DrawCircle(center, 24.0f, 360.0f, CRGBA(255, 255, 255, 200));
+			DrawHelper::DrawCircle(center, 24.0f, 360.0f, CRGBA(255, 255, 255, 200));
 
-		DrawHelper::DrawCircle(center, 20.0f, 360.0f, CRGBA(13, 38, 64, 230));
+			DrawHelper::DrawCircle(center, 20.0f, 360.0f, CRGBA(13, 38, 64, 230));
 
-		DrawHelper::DrawCircle(center, 20.0f, angle, CRGBA(50, 150, 255, 230));
+			DrawHelper::DrawCircle(center, 20.0f, angle, CRGBA(50, 150, 255, 230));
+		}
 
 		i++;
 	}

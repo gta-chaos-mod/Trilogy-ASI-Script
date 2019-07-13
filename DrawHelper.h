@@ -19,7 +19,7 @@ class DrawHelper
 public:
 	static void DrawHelper::DrawRemainingTimeRects(int remaining);
 
-	static void DrawHelper::DrawActiveEffects(std::list<TimedEffect*> activeEffects);
+	static void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects);
 
 	static void DrawHelper::DrawMessages();
 	static void DrawHelper::DrawHelpMessage(std::string message, int duration);

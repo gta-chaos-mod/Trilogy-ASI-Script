@@ -13,6 +13,7 @@ class TimedEffect
 {
 public:
 	bool isInitialized = false;
+	bool isPlaceholder = false;
 	int remaining = 0;
 	int duration = 0;
 	std::string description = "N/A";

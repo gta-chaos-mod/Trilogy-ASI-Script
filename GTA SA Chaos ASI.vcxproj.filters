@@ -80,6 +80,9 @@
     <ClCompile Include="CPedDamageResponseCalculator.cpp">
       <Filter>extra</Filter>
     </ClCompile>
+    <ClCompile Include="EffectPlaceholder.cpp">
+      <Filter>effects\abstract</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -182,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="CPedDamageResponseCalculator.h">
       <Filter>extra</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectPlaceholder.h">
+      <Filter>effects\abstract</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
