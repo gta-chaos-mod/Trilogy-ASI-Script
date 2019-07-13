@@ -29,14 +29,14 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	}
 
 	else if (cheat == "never_wanted") {
-		return new TimedAddressCheat(0x969171, duration, description);
+		return new TimedFunctionCheat(CCheat::NotWantedCheat, 0x969171, duration, description);
 	}
 
 	else if (cheat == "always_midnight") {
-		return new TimedFunctionCheat(CCheat::MidnightCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::MidnightCheat, 0x969167, duration, description);
 	}
 	else if (cheat == "orange_sky") {
-		return new TimedFunctionCheat(CCheat::DuskCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::DuskCheat, 0x969168, duration, description);
 	}
 	else if (cheat == "faster_clock") {
 		return new TimedAddressCheat(0x96913B, duration, description);
@@ -95,16 +95,16 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 		return new TimedAddressCheat(0x96913F, duration, description);
 	}
 	else if (cheat == "elvis_lives") {
-		return new TimedFunctionCheat(CCheat::ElvisLivesCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::ElvisLivesCheat, 0x969157, duration, description);
 	}
 	else if (cheat == "village_people") {
-		return new TimedFunctionCheat(CCheat::VillagePeopleCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::VillagePeopleCheat, 0x969158, duration, description);
 	}
 	else if (cheat == "only_homies") {
-		return new TimedFunctionCheat(CCheat::GangsCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::GangsCheat, 0x96915A, duration, description);
 	}
 	else if (cheat == "stay_indoors") {
-		return new TimedFunctionCheat(CCheat::GangLandCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::GangLandCheat, 0x96915B, duration, description);
 	}
 	else if (cheat == "riot_mode") {
 		return new TimedAddressCheat(0x969175, duration, description);
@@ -128,19 +128,19 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 		return new TimedAddressCheat(0x96918A, duration, description);
 	}
 	else if (cheat == "beach_party") {
-		return new TimedFunctionCheat(CCheat::BeachPartyCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::BeachPartyCheat, 0x969159, duration, description);
 	}
 	else if (cheat == "ninja_theme") {
-		return new TimedFunctionCheat(CCheat::NinjaCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::NinjaCheat, 0x96915C, duration, description);
 	}
 	else if (cheat == "slut_magnet") {
-		return new TimedFunctionCheat(CCheat::LoveConquersAllCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::LoveConquersAllCheat, 0x96915D, duration, description);
 	}
 	else if (cheat == "funhouse_theme") {
-		return new TimedFunctionCheat(CCheat::FunhouseCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::FunhouseCheat, 0x969176, duration, description);
 	}
 	else if (cheat == "country_traffic") {
-		return new TimedFunctionCheat(CCheat::CountrysideInvasionCheat, duration, description);
+		return new TimedFunctionCheat(CCheat::CountrysideInvasionCheat, 0x96917B, duration, description);
 	}
 
 	else if (cheat == "drive_by") {
