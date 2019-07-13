@@ -21,7 +21,7 @@ void DrawHelper::DrawRemainingTimeRects(int remaining) {
 
 void DrawHelper::DrawMessages() {
 	if (message_remainingDuration > 0) {
-		message_remainingDuration -= (int)(CTimer::ms_fTimeStep * 0.02f * 1000.0f);
+		message_remainingDuration -= (int)((CTimer::ms_fTimeStepNonClipped / CTimer::ms_fTimeScale) * 0.02f * 1000.0f);
 
 		float x = SCREEN_COORD_LEFT(5.0f);
 		float y = SCREEN_COORD_TOP(27.0f);

@@ -33,8 +33,8 @@ void TimedEffect::TickDown() {
 		isInitialized = true;
 	}
 
-	if (remaining > 0) {
-		remaining -= (int)(CTimer::ms_fTimeStep * 0.02f * 1000.0f);
+	if (remaining >= 0) {
+		remaining -= (int)((CTimer::ms_fTimeStepNonClipped / CTimer::ms_fTimeScale) * 0.02f * 1000.0f);
 
 		HandleTick();
 
