@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="GTASAChaosASI.cpp" />
+    <ClCompile Include="TimedEffect.cpp">
+      <Filter>effects\abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawHelper.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="DisableHUD.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="DisableRadarBlips.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="Gravity.cpp">
+      <Filter>effects\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Ped.cpp">
+      <Filter>effects\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>effects\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleportation.cpp">
+      <Filter>effects\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Vehicle.cpp">
+      <Filter>effects\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Wanted.cpp">
+      <Filter>effects\other</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapons.cpp">
+      <Filter>effects\other</Filter>
+    </ClCompile>
+    <ClCompile Include="EverybodyBleedNow.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostRider.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="LagEffect.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="OneHitKO.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="Timelapse.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="ToDriveOrNotToDrive.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="ToTheLeftToTheRight.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="TimedAddressCheat.cpp">
+      <Filter>effects\cheats</Filter>
+    </ClCompile>
+    <ClCompile Include="TimedFunctionCheat.cpp">
+      <Filter>effects\cheats</Filter>
+    </ClCompile>
+    <ClCompile Include="InvisibleVehicles.cpp">
+      <Filter>effects\cheats</Filter>
+    </ClCompile>
+    <ClCompile Include="WhereIsEverybody.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="CheatHandler.cpp">
+      <Filter>effects\cheats</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectHandler.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="TruePacifist.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="CPedDamageResponseCalculator.cpp">
+      <Filter>extra</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="effects">
+      <UniqueIdentifier>{e76fb0c3-1556-4807-89fc-624781f606e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{1ab53e1e-6f3c-4411-b2a4-f7a039d72c08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effects\abstract">
+      <UniqueIdentifier>{cf9aeed8-ae23-49ba-822d-d8d1da843b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effects\cheats">
+      <UniqueIdentifier>{1faec4cf-12cf-480e-a43c-f64a2e5a6d99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effects\impl">
+      <UniqueIdentifier>{b5ce0627-5f70-424e-a893-d58c37dfa74b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="effects\other">
+      <UniqueIdentifier>{86ca8722-6d31-4e34-945a-d5bcff44e1f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extra">
+      <UniqueIdentifier>{a5d2965c-5fcf-4a66-8372-2d2c8531ff3c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TimedEffect.h">
+      <Filter>effects\abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawHelper.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="DisableRadarBlips.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="DisableHUD.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Gravity.h">
+      <Filter>effects\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Ped.h">
+      <Filter>effects\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>effects\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleportation.h">
+      <Filter>effects\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Vehicle.h">
+      <Filter>effects\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Wanted.h">
+      <Filter>effects\other</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapons.h">
+      <Filter>effects\other</Filter>
+    </ClInclude>
+    <ClInclude Include="EverybodyBleedNow.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostRider.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ToTheLeftToTheRight.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="LagEffect.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="OneHitKO.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Timelapse.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ToDriveOrNotToDrive.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="TimedAddressCheat.h">
+      <Filter>effects\cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="TimedFunctionCheat.h">
+      <Filter>effects\cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="InvisibleVehicles.h">
+      <Filter>effects\cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="WhereIsEverybody.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="CheatHandler.h">
+      <Filter>effects\cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectHandler.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="TruePacifist.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="CPedDamageResponseCalculator.h">
+      <Filter>extra</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
