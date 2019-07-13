@@ -5,6 +5,7 @@
 
 #include "CPlayerInfo.h"
 #include "CTaskSimpleCarSetPedOut.h"
+#include "CStats.h"
 
 class Player
 {

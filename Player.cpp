@@ -36,27 +36,28 @@ void Player::LockPlayerInsideVehicle() {
 }
 
 void Player::SetMaxStamina() {
-	*(reinterpret_cast<float*>(0xB793D8)) = 1000.0f; // Stamina
+	CStats::SetStatValue(eStats::STAT_STAMINA, 1000.0f); // Stamina
 }
 
 void Player::SetMaxWeaponSkills() {
-	*(reinterpret_cast<float*>(0xB79494)) = 1000.0f; // Pistol
-	*(reinterpret_cast<float*>(0xB79498)) = 1000.0f; // Silenced pistol
-	*(reinterpret_cast<float*>(0xB7949C)) = 1000.0f; // Desert eagle
-	*(reinterpret_cast<float*>(0xB794A0)) = 1000.0f; // Shotgun
-	*(reinterpret_cast<float*>(0xB794A4)) = 1000.0f; // Sawn-off shotgun
-	*(reinterpret_cast<float*>(0xB794A8)) = 1000.0f; // Combat shotgun
-	*(reinterpret_cast<float*>(0xB794AC)) = 1000.0f; // Machine pistol
-	*(reinterpret_cast<float*>(0xB794B0)) = 1000.0f; // SMG
-	*(reinterpret_cast<float*>(0xB794B4)) = 1000.0f; // AK47
-	*(reinterpret_cast<float*>(0xB794B8)) = 1000.0f; // M4
+	CStats::SetStatValue(eStats::STAT_PISTOL_SKILL, 1000.0f); // Pistol
+	CStats::SetStatValue(eStats::STAT_SILENCED_PISTOL_SKILL, 1000.0f); // Silenced pistol
+	CStats::SetStatValue(eStats::STAT_DESERT_EAGLE_SKILL, 1000.0f); // Desert eagle
+	CStats::SetStatValue(eStats::STAT_SHOTGUN_SKILL, 1000.0f); // Shotgun
+	CStats::SetStatValue(eStats::STAT_SAWN_OFF_SHOTGUN_SKILL, 1000.0f); // Sawn-off shotgun
+	CStats::SetStatValue(eStats::STAT_COMBAT_SHOTGUN_SKILL, 1000.0f); // Combat shotgun
+	CStats::SetStatValue(eStats::STAT_MACHINE_PISTOL_SKILL, 1000.0f); // Machine pistol
+	CStats::SetStatValue(eStats::STAT_SMG_SKILL, 1000.0f); // SMG
+	CStats::SetStatValue(eStats::STAT_AK_47_SKILL, 1000.0f); // AK47
+	CStats::SetStatValue(eStats::STAT_M4_SKILL, 1000.0f); // M4
+	CStats::SetStatValue(eStats::STAT_RIFLE_SKILL, 1000.0f); // Rifle
 }
 
 void Player::SetMaxDrivingSkills() {
-	*(reinterpret_cast<float*>(0xB790A0)) = 1000.0f; // Driving
-	*(reinterpret_cast<float*>(0xB7919C)) = 1000.0f; // Flying
-	*(reinterpret_cast<float*>(0xB791B4)) = 1000.0f; // Bike
-	*(reinterpret_cast<float*>(0xB791B8)) = 1000.0f; // Cycling
+	CStats::SetStatValue(eStats::STAT_DRIVING_SKILL, 1000.0f); // Driving
+	CStats::SetStatValue(eStats::STAT_FLYING_SKILL, 1000.0f); // Flying
+	CStats::SetStatValue(eStats::STAT_BIKE_SKILL, 1000.0f); // Bike
+	CStats::SetStatValue(eStats::STAT_CYCLING_SKILL, 1000.0f); // Cycling
 }
 
 void Player::DoBusted() {
