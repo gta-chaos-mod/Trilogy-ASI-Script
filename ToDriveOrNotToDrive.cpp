@@ -20,9 +20,7 @@ void ToDriveOrNotToDrive::HandleTick() {
 		FixTires();
 	}
 
-	std::default_random_engine re;
-	std::uniform_int_distribution unif_i(500, 1000);
-	wait = unif_i(re);
+	wait = Random(500, 1000);
 }
 
 void ToDriveOrNotToDrive::FixTires() {

@@ -11,21 +11,10 @@ void ToTheLeftToTheRight::HandleTick() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
 
-		vehicle->m_vecMoveSpeed.x = RandomEffect();
-		vehicle->m_vecMoveSpeed.y = RandomEffect();
-		vehicle->m_vecMoveSpeed.z = RandomEffect();
+		vehicle->m_vecMoveSpeed.x = Random(-0.25f, 0.25f, 2);
+		vehicle->m_vecMoveSpeed.y = Random(-0.25f, 0.25f, 2);
+		vehicle->m_vecMoveSpeed.z = Random(-0.25f, 0.25f, 2);
 	}
 
-	std::default_random_engine re;
-	std::uniform_int_distribution unif_i(2000, 5000);
-	wait = unif_i(re);
-}
-
-float ToTheLeftToTheRight::RandomEffect() {
-	std::default_random_engine re;
-
-	std::uniform_real_distribution<float> unif(-0.25f, 0.25f);
-	float randomEffect = unif(re) * 2.0f;
-
-	return randomEffect;
+	wait = Random(2000, 5000);
 }

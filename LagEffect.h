@@ -2,8 +2,6 @@
 
 #include "TimedEffect.h"
 
-#include <random>
-
 class LagEffect : public TimedEffect
 {
 private:

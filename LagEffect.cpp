@@ -12,19 +12,15 @@ void LagEffect::HandleTick() {
 		return;
 	}
 
-	std::default_random_engine re;
-
 	slow = !slow;
 	if (slow) {
 		CTimer::ms_fTimeScale = 0.25f;
 
-		std::uniform_int_distribution unif_i(150, 250);
-		wait = unif_i(re);
+		wait = Random(150, 250);
 	}
 	else {
 		CTimer::ms_fTimeScale = 2.0f;
 
-		std::uniform_int_distribution unif_i(350, 450);
-		wait = unif_i(re);
+		wait = Random(350, 450);
 	}
 }
