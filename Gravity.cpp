@@ -6,7 +6,9 @@ Gravity::Gravity(float _gravity, int duration, std::string description) : TimedE
 
 void Gravity::Enable() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
-		CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
+		if (!vehicle->IsDriver(FindPlayerPed())) {
+			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
+		}
 	}
 	GAME_GRAVITY = gravity;
 }
