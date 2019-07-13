@@ -15,7 +15,7 @@ void ToTheLeftToTheRight::HandleTick() {
 
 		vehicle->m_vecMoveSpeed.x = Random(-0.25f, 0.25f, 2);
 		vehicle->m_vecMoveSpeed.y = Random(-0.25f, 0.25f, 2);
-		vehicle->m_vecMoveSpeed.z = Random(-0.25f, 0.25f, 2);
+		vehicle->m_vecMoveSpeed.z = Random(-0.05f, 0.05f, 2);
 	}
 
 	wait = Random(2000, 5000);
