@@ -72,10 +72,6 @@ void Vehicle::SpawnForPlayer(int modelID) {
 }
 
 void Vehicle::BlowUpAllCars() {
-	if (CPools::ms_pVehiclePool->m_nSize == 0) {
-		return;
-	}
-
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		vehicle->BlowUpCar(NULL, false);
 	}
@@ -89,10 +85,6 @@ void Vehicle::SetPlayerVehicleOnFire() {
 }
 
 void Vehicle::PopAllVehicleTires() {
-	if (CPools::ms_pVehiclePool->m_nSize == 0) {
-		return;
-	}
-
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		vehicle->BurstTyre(eWheels::WHEEL_FRONT_LEFT, true);
 		vehicle->BurstTyre(eWheels::WHEEL_FRONT_RIGHT, true);
@@ -109,10 +101,6 @@ void Vehicle::StairwayToHeaven() {
 }
 
 void Vehicle::TurnVehiclesAround() {
-	if (CPools::ms_pVehiclePool->m_nSize == 0) {
-		return;
-	}
-
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		CMatrixLink* matrix = vehicle->GetMatrix();
 		InvertVehicle(matrix);

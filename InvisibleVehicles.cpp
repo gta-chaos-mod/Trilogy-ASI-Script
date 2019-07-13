@@ -1,15 +1,10 @@
 #include "InvisibleVehicles.h"
 
-static bool isHooked = false;
 static bool* isEnabled = reinterpret_cast<bool*>(0x96914B);
 
 InvisibleVehicles::InvisibleVehicles(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
 
 void InvisibleVehicles::InitializeHooks() {
-	if (isHooked) {
-		return;
-	}
-
 	patch::RedirectCall(0x6C4523, HookedRenderHeli); // Heli
 	patch::RedirectCall(0x6BDE5E, HookedRenderBike); // Bike + Bmx
 	patch::RedirectJump(0x6CAB80, HookedRenderPlane); // Plane
@@ -21,8 +16,6 @@ void InvisibleVehicles::InitializeHooks() {
 	patch::RedirectCall(0x6C58A0, HookedRenderShadows); // Heli Shadows
 	patch::RedirectCall(0x6BD667, HookedRenderShadows); // Bike Shadows
 	patch::RedirectCall(0x6CA73A, HookedRenderShadows); // Plane Shadows
-
-	isHooked = true;
 }
 
 void InvisibleVehicles::Enable() {

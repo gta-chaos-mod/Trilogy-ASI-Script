@@ -1,7 +1,5 @@
 #include "Gravity.h"
 
-float gravity;
-
 Gravity::Gravity(float _gravity, int duration, std::string description) : TimedEffect(duration, description) {
 	gravity = _gravity;
 }

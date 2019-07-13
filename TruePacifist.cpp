@@ -1,19 +1,12 @@
 #include "TruePacifist.h"
 
-static bool isHooked = false;
 static bool isEnabled = false;
 
 TruePacifist::TruePacifist(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
 
 void TruePacifist::InitializeHooks() {
-	if (isHooked) {
-		return;
-	}
-
 	patch::RedirectCall(0x4B5B19, HookedAccountForPedArmour);
 	patch::RedirectCall(0x4B5B27, HookedComputeWillKillPed);
-
-	isHooked = true;
 }
 
 void TruePacifist::Enable() {

@@ -1,19 +1,12 @@
 #include "DisableRadarBlips.h"
 
-static bool isHooked = false;
 static bool isEnabled = false;
 
 DisableRadarBlips::DisableRadarBlips(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
 
 void DisableRadarBlips::InitializeHooks() {
-	if (isHooked) {
-		return;
-	}
-
 	patch::RedirectJump(0x58AA2D, HookedBlipsDraw);
 	patch::RedirectCall(0x575B44, HookedBlipsDraw);
-
-	isHooked = true;
 }
 
 void DisableRadarBlips::Enable() {

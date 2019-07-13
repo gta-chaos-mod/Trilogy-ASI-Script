@@ -1,17 +1,9 @@
 #include "WhereIsEverybody.h"
 
-static bool isHooked = false;
-
 WhereIsEverybody::WhereIsEverybody(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
 
 void WhereIsEverybody::InitializeHooks() {
-	if (isHooked) {
-		return;
-	}
-
 	patch::RedirectCall(0x5E6900, HookedRenderPedShadow);
-
-	isHooked = true;
 }
 
 void WhereIsEverybody::Disable() {

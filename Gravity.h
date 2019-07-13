@@ -10,8 +10,11 @@
 
 class Gravity : public TimedEffect
 {
+private:
+	float gravity;
+
 public:
-	Gravity(float gravity, int duration, std::string description);
+	Gravity(float _gravity, int duration, std::string description);
 
 	void Enable();
 	void Disable();
