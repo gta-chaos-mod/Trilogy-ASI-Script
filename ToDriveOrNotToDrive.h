@@ -4,7 +4,6 @@
 
 #include "CBike.h"
 #include "CAutomobile.h"
-#include "CPools.h"
 
 class ToDriveOrNotToDrive : public TimedEffect
 {

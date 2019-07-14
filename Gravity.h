@@ -3,7 +3,6 @@
 #include "common.h"
 #include "plugin.h"
 
-#include "CPools.h"
 #include "CCarCtrl.h"
 
 #include "TimedEffect.h"

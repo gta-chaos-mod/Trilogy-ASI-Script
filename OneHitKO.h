@@ -2,8 +2,6 @@
 
 #include "TimedEffect.h"
 
-#include "CPools.h"
-
 class OneHitKO : public TimedEffect
 {
 public:

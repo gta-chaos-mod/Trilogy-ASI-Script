@@ -2,7 +2,6 @@
 
 #include "TimedEffect.h"
 
-#include "CPools.h"
 #include "CCarCtrl.h"
 
 class ToTheLeftToTheRight : public TimedEffect

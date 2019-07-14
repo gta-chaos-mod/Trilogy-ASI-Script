@@ -2,7 +2,6 @@
 
 #include "TimedEffect.h"
 
-#include "CPools.h"
 #include "CShadows.h"
 
 class WhereIsEverybody : public TimedEffect
