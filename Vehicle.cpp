@@ -87,7 +87,6 @@ void Vehicle::SetPlayerVehicleOnFire() {
 void Vehicle::PopAllVehicleTires() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		vehicle->BurstTyre(eWheels::WHEEL_FRONT_LEFT, true);
-		vehicle->BurstTyre(eWheels::WHEEL_FRONT_RIGHT, true);
 		vehicle->BurstTyre(eWheels::WHEEL_REAR_LEFT, true);
 		vehicle->BurstTyre(eWheels::WHEEL_REAR_RIGHT, true);
 	}

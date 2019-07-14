@@ -33,8 +33,8 @@ void ToDriveOrNotToDrive::FixTires() {
 		else if (vehicle->m_nVehicleClass == VEHICLE_AUTOMOBILE) {
 			CAutomobile* car = reinterpret_cast<CAutomobile*>(vehicle);
 			car->FixTyre(eWheels::WHEEL_FRONT_LEFT);
-			car->FixTyre(eWheels::WHEEL_FRONT_RIGHT);
 			car->FixTyre(eWheels::WHEEL_REAR_LEFT);
+			car->FixTyre(eWheels::WHEEL_FRONT_RIGHT);
 			car->FixTyre(eWheels::WHEEL_REAR_RIGHT);
 		}
 	}
@@ -43,7 +43,6 @@ void ToDriveOrNotToDrive::FixTires() {
 void ToDriveOrNotToDrive::PopTires() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		vehicle->BurstTyre(eWheels::WHEEL_FRONT_LEFT, true);
-		vehicle->BurstTyre(eWheels::WHEEL_FRONT_RIGHT, true);
 		vehicle->BurstTyre(eWheels::WHEEL_REAR_LEFT, true);
 		vehicle->BurstTyre(eWheels::WHEEL_REAR_RIGHT, true);
 	}
