@@ -15,6 +15,8 @@ private:
 public:
 	Gravity(float _gravity, int duration, std::string description);
 
-	void Enable();
-	void Disable();
+	void Enable() override;
+	void Disable() override;
+
+	void HandleTick() override;
 };
