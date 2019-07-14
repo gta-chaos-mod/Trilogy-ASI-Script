@@ -38,7 +38,7 @@ void TimedEffect::TickDown() {
 
 		HandleTick();
 
-		if (remaining < 0) {
+		if (remaining <= 0) {
 			Disable();
 		}
 	}
