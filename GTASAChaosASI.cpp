@@ -30,8 +30,6 @@
 using namespace plugin;
 
 enum EffectState {
-	NOTHING = 0,
-
 	WEAPONS = 1,
 	WANTED = 2,
 	WEATHER = 3,
@@ -53,10 +51,7 @@ static CdeclEvent<AddressList<0x53E83C, H_CALL, 0x53EBA2, H_CALL>, PRIORITY_AFTE
 
 class GTASAChaosMod {
 public:
-	enum EffectState state = EffectState::NOTHING;
 	std::queue<std::function<void()>> queue;
-	int keyPressTime = 0;
-	std::string helpText = "";
 	int remaining;
 
 	std::list<TimedEffect*> activeEffects;
@@ -111,180 +106,174 @@ public:
 		queue.push(std::bind(std::forward<_Callable>(__f), std::forward<_Args>(__args)...));
 	}
 
-	void CallFunction(std::string func) {
-		char cheat[64];
+	void CallFunction(std::string text) {
+		char c_state[32];
+		char c_function[64];
 		int duration;
-		char description[128];
-		if (state != EffectState::NOTHING && state != EffectState::TEXT && state != EffectState::TIME) {
-			sscanf(func.c_str(), "%[^:]:%d:%[^:]", &cheat, &duration, description);
+		char c_description[128];
+		sscanf(text.c_str(), "%[^:]:%[^:]:%d:%[^:]", &c_state, &c_function, &duration, &c_description);
+
+		std::string state(c_state);
+		std::string function(c_function);
+		std::string description(c_description);
+
+		EffectState currentState;
+		if (state == "weapons") {
+			currentState = EffectState::WEAPONS;
+		}
+		else if (state == "wanted") {
+			currentState = EffectState::WANTED;
+		}
+		else if (state == "weather") {
+			currentState = EffectState::WEATHER;
+		}
+		else if (state == "spawn_vehicle") {
+			currentState = EffectState::SPAWN_VEHICLE;
+		}
+		else if (state == "game_speed") {
+			currentState = EffectState::GAME_SPEED;
+		}
+		else if (state == "cheat") {
+			currentState = EffectState::CHEAT;
+		}
+		else if (state == "timed_cheat") {
+			currentState = EffectState::TIMED_CHEAT;
+		}
+		else if (state == "effect") {
+			currentState = EffectState::EFFECT;
+		}
+		else if (state == "timed_effect") {
+			currentState = EffectState::TIMED_EFFECT;
+		}
+		else if (state == "gravity") {
+			currentState = EffectState::GRAVITY;
+		}
+		else if (state == "other") {
+			currentState = EffectState::OTHER;
+		}
+		else if (state == "teleport") {
+			currentState = EffectState::TELEPORT;
+		}
+		else if (state == "text") {
+			currentState = EffectState::TEXT;
+		}
+		else if (state == "time") {
+			currentState = EffectState::TIME;
+		}
+		else {
+			return;
 		}
 
-		switch (state) {
-			case EffectState::NOTHING: {
-				if (func == "weapons") {
-					state = EffectState::WEAPONS;
-				}
-				else if (func == "wanted") {
-					state = EffectState::WANTED;
-				}
-				else if (func == "weather") {
-					state = EffectState::WEATHER;
-				}
-				else if (func == "spawn_vehicle") {
-					state = EffectState::SPAWN_VEHICLE;
-				}
-				else if (func == "game_speed") {
-					state = EffectState::GAME_SPEED;
-				}
-				else if (func == "cheat") {
-					state = EffectState::CHEAT;
-				}
-				else if (func == "timed_cheat") {
-					state = EffectState::TIMED_CHEAT;
-				}
-				else if (func == "effect") {
-					state = EffectState::EFFECT;
-				}
-				else if (func == "timed_effect") {
-					state = EffectState::TIMED_EFFECT;
-				}
-				else if (func == "gravity") {
-					state = EffectState::GRAVITY;
-				}
-				else if (func == "other") {
-					state = EffectState::OTHER;
-				}
-				else if (func == "teleport") {
-					state = EffectState::TELEPORT;
-				}
-				else if (func == "text") {
-					state = EffectState::TEXT;
-				}
-				else if (func == "time") {
-					state = EffectState::TIME;
-				}
-				break;
-			}
+		switch (currentState) {
 			case EffectState::WEAPONS: {
-				int id = std::stoi(cheat);
+				int id = std::stoi(function);
 				QueueFunction(Weapons::GiveByID, id);
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::WANTED: {
-				if (cheat == "plus_two") {
+				if (function == "plus_two") {
 					QueueFunction(Wanted::IncreaseWantedLevel);
 				}
-				else if (cheat == "clear") {
+				else if (function == "clear") {
 					QueueFunction(Wanted::ClearWantedLevel);
 				}
-				else if (cheat == "six_stars") {
+				else if (function == "six_stars") {
 					QueueFunction(Wanted::SixWantedStars);
 				}
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::WEATHER: {
-				QueueFunction(CWeather::ForceWeatherNow, std::stoi(cheat));
+				QueueFunction(CWeather::ForceWeatherNow, std::stoi(function));
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::SPAWN_VEHICLE: {
-				int modelID = std::stoi(cheat);
+				int modelID = std::stoi(function);
 				QueueFunction(Vehicle::SpawnForPlayer, modelID);
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::GAME_SPEED: {
 				float speed;
-				sscanf(cheat, "%f", &speed);
+				sscanf(function.c_str(), "%f", &speed);
 
 				QueueFunction([speed] { CTimer::ms_fTimeScale = speed; });
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::CHEAT: {
-				QueueFunction([cheat] { CheatHandler::HandleCheat(cheat); });
+				QueueFunction([function] { CheatHandler::HandleCheat(function); });
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::TIMED_CHEAT: {
-				QueueEffect(CheatHandler::HandleTimedCheat(std::string(cheat), duration, description));
+				QueueEffect(CheatHandler::HandleTimedCheat(std::string(function), duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::EFFECT: {
-				QueueFunction([cheat] { EffectHandler::HandleEffect(cheat); });
+				QueueFunction([function] { EffectHandler::HandleEffect(function); });
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::TIMED_EFFECT: {
-				QueueEffect(EffectHandler::HandleTimedEffect(std::string(cheat), duration, description));
+				QueueEffect(EffectHandler::HandleTimedEffect(std::string(function), duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::GRAVITY: {
-				float gravity = std::stof(cheat);
+				float gravity = std::stof(function);
 
 				QueueEffect(new Gravity(gravity, duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::TELEPORT: {
 				int x, y, z;
-				sscanf(cheat, "%d,%d,%d", &x, &y, &z);
+				sscanf(function.c_str(), "%d,%d,%d", &x, &y, &z);
 
 				QueueFunction(Teleportation::Teleport, CVector((float) x, (float) y, (float) z));
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::OTHER: {
-				if (cheat == "explode_cars") {
+				if (function == "explode_cars") {
 					QueueFunction(Vehicle::BlowUpAllCars);
 				}
-				else if (cheat == "clear_weapons") {
+				else if (function == "clear_weapons") {
 					QueueFunction(Weapons::Clear);
 				}
 				QueueEffect(new EffectPlaceholder(duration, description));
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::TEXT: {
-				helpText = func.c_str();
-				QueueFunction(DrawHelper::DrawHelpMessage, (char*)helpText.c_str(), 5000);
+				QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			case EffectState::TIME: {
-				remaining = std::stoi(func);
+				remaining = std::stoi(function);
 
-				state = EffectState::NOTHING;
 				break;
 			}
 			default: {
 				break;
 			}
+		}
+
+		if (currentState != EffectState::TEXT && currentState != EffectState::TIME) {
+			QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
 		}
 		return;
 	}
