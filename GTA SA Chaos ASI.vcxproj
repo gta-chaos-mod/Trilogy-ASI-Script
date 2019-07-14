@@ -105,9 +105,11 @@
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="InvisibleVehicles.cpp" />
     <ClCompile Include="LagEffect.cpp" />
+    <ClCompile Include="LetsTakeABreak.cpp" />
     <ClCompile Include="OneHitKO.cpp" />
     <ClCompile Include="Ped.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RainbowCars.cpp" />
     <ClCompile Include="Teleportation.cpp" />
     <ClCompile Include="TimedAddressCheat.cpp" />
     <ClCompile Include="TimedEffect.cpp" />
@@ -135,9 +137,11 @@
     <ClInclude Include="Gravity.h" />
     <ClInclude Include="InvisibleVehicles.h" />
     <ClInclude Include="LagEffect.h" />
+    <ClInclude Include="LetsTakeABreak.h" />
     <ClInclude Include="OneHitKO.h" />
     <ClInclude Include="Ped.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RainbowCars.h" />
     <ClInclude Include="Teleportation.h" />
     <ClInclude Include="TimedAddressCheat.h" />
     <ClInclude Include="TimedEffect.h" />

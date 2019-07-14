@@ -76,6 +76,12 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "true_pacifist") {
 		return new TruePacifist(duration, description);
 	}
+	else if (effect == "lets_take_a_break") {
+		return new LetsTakeABreak(duration, description);
+	}
+	else if (effect == "rainbow_cars") {
+		return new RainbowCars(duration, description);
+	}
 
 	return nullptr;
 }

@@ -20,6 +20,8 @@
 #include "DisableHUD.h"
 #include "DisableRadarBlips.h"
 #include "TruePacifist.h"
+#include "LetsTakeABreak.h"
+#include "RainbowCars.h"
 
 class EffectHandler
 {

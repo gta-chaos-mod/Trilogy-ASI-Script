@@ -83,6 +83,12 @@
     <ClCompile Include="Gravity.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="LetsTakeABreak.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="RainbowCars.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -187,6 +193,12 @@
       <Filter>effects\abstract</Filter>
     </ClInclude>
     <ClInclude Include="Gravity.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="LetsTakeABreak.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="RainbowCars.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
   </ItemGroup>
