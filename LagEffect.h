@@ -5,7 +5,6 @@
 class LagEffect : public TimedEffect
 {
 private:
-	bool slow = false;
 	int wait = 0;
 
 public:
