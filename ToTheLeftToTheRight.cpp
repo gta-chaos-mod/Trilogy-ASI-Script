@@ -9,7 +9,7 @@ void ToTheLeftToTheRight::HandleTick() {
 	}
 
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
-		if (!vehicle->IsDriver(FindPlayerPed())) {
+		if (vehicle->m_pDriver && !vehicle->IsDriver(FindPlayerPed())) {
 			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
 		}
 
