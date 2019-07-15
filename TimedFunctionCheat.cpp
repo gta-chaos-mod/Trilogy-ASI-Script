@@ -5,14 +5,14 @@ TimedFunctionCheat::TimedFunctionCheat(void* _function, int _address, int durati
 	address = reinterpret_cast<bool*>(_address);
 }
 
-void TimedFunctionCheat::Enable() {
-	if (function != nullptr && address != nullptr && !*address) {
+void TimedFunctionCheat::Disable() {
+	if (function != nullptr && address != nullptr && *address) {
 		reinterpret_cast<void(*)()> (function) ();
 	}
 }
 
-void TimedFunctionCheat::Disable() {
-	if (function != nullptr && address != nullptr && *address) {
+void TimedFunctionCheat::HandleTick() {
+	if (function != nullptr && address != nullptr && !*address) {
 		reinterpret_cast<void(*)()> (function) ();
 	}
 }

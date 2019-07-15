@@ -4,14 +4,14 @@ TimedAddressCheat::TimedAddressCheat(int _address, int duration, std::string des
 	address = reinterpret_cast<bool*>(_address);
 }
 
-void TimedAddressCheat::Enable() {
-	if (address != nullptr) {
-		*address = true;
-	}
-}
-
 void TimedAddressCheat::Disable() {
 	if (address != nullptr) {
 		*address = false;
+	}
+}
+
+void TimedAddressCheat::HandleTick() {
+	if (address != nullptr) {
+		*address = true;
 	}
 }
