@@ -8,7 +8,7 @@ void LagEffect::Disable() {
 
 void LagEffect::HandleTick() {
 	if (wait > 0) {
-		wait -= (int)(CTimer::ms_fTimeStep * 0.02f * 1000.0f);
+		wait -= CalculateTick();
 		return;
 	}
 

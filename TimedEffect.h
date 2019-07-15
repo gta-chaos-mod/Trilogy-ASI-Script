@@ -35,6 +35,10 @@ public:
 	void TickDown();
 	virtual void HandleTick() {};
 
+	int CalculateTick() {
+		return (int)((CTimer::ms_fTimeStepNonClipped / CTimer::ms_fTimeScale) * 0.02f * 1000.0f);
+	};
+
 	int Random(int min, int max);
 	int Random(int min, int max, int amplify);
 

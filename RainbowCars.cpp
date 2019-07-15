@@ -4,7 +4,7 @@ RainbowCars::RainbowCars(int _duration, std::string _description) : TimedEffect(
 
 void RainbowCars::HandleTick() {
 	if (wait > 0) {
-		wait -= (int)(CTimer::ms_fTimeStep * 0.02f * 1000.0f);
+		wait -= CalculateTick();
 		return;
 	}
 

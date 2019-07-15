@@ -10,7 +10,7 @@ void GhostRider::Disable() {
 }
 
 void GhostRider::HandleTick() {
-	int step = (int)(CTimer::ms_fTimeStep * 0.02f * 1000.0f);
+	int step = CalculateTick();
 
 	if (vehicleList.size() > 0) {
 		auto it = vehicleList.begin();
