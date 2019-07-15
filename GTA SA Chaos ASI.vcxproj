@@ -110,6 +110,7 @@
     <ClCompile Include="Ped.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RainbowCars.cpp" />
+    <ClCompile Include="Suspension.cpp" />
     <ClCompile Include="Teleportation.cpp" />
     <ClCompile Include="TimedAddressCheat.cpp" />
     <ClCompile Include="TimedEffect.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Ped.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RainbowCars.h" />
+    <ClInclude Include="Suspension.h" />
     <ClInclude Include="Teleportation.h" />
     <ClInclude Include="TimedAddressCheat.h" />
     <ClInclude Include="TimedEffect.h" />

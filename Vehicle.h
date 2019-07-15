@@ -18,6 +18,8 @@
 #include "CWorld.h"
 #include "CTheScripts.h"
 
+#include "cHandlingDataMgr.h"
+
 #define _USE_MATH_DEFINES
 
 #include <math.h>
@@ -33,6 +35,8 @@ public:
 	static void PopAllVehicleTires();
 	static void StairwayToHeaven();
 	static void TurnVehiclesAround();
+	static void SetSuspension(float suspension);
+	static void ResetSuspension();
 
 private:
 	static void InvertVehicle(CMatrix* matrix);

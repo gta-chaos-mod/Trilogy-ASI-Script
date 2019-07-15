@@ -82,6 +82,15 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "rainbow_cars") {
 		return new RainbowCars(duration, description);
 	}
+	else if (effect == "no_bouncy_vehicles") {
+		return new Suspension(10, duration, description);
+	}
+	else if (effect == "bouncy_vehicles") {
+		return new Suspension(0.001f, duration, description);
+	}
+	else if (effect == "very_bouncy_vehicles") {
+		return new Suspension(-1.0f, duration, description);
+	}
 
 	return nullptr;
 }

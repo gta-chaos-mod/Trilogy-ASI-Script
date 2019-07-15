@@ -1,5 +1,8 @@
 #include "Vehicle.h"
 
+static bool didCopyHandling;
+static tHandlingData origVehicleHandling[210];
+
 void Vehicle::SpawnVehicle(int modelID, CVector position, float orientation) {
 	if (modelID == 569) {
 		modelID = 537; // 569 Crashes when being placed as a boat, so replace with 537
@@ -107,6 +110,26 @@ void Vehicle::TurnVehiclesAround() {
 		vehicle->m_vecMoveSpeed.x = -vehicle->m_vecMoveSpeed.x;
 		vehicle->m_vecMoveSpeed.y = -vehicle->m_vecMoveSpeed.y;
 		vehicle->m_vecMoveSpeed.z = -vehicle->m_vecMoveSpeed.z;
+	}
+}
+
+void Vehicle::SetSuspension(float suspension) {
+	if (!didCopyHandling) {
+		for (int i = 0; i < 210; i++) {
+			origVehicleHandling[i] = gHandlingDataMgr.m_aVehicleHandling[i];
+		}
+
+		didCopyHandling = true;
+	}
+
+	for (int i = 0; i < 210; i++) {
+		gHandlingDataMgr.m_aVehicleHandling[i].m_fSuspensionDampingLevel = suspension;
+	}
+}
+
+void Vehicle::ResetSuspension() {
+	for (int i = 0; i < 210; i++) {
+		gHandlingDataMgr.m_aVehicleHandling[i] = origVehicleHandling[i];
 	}
 }
 

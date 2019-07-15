@@ -89,6 +89,9 @@
     <ClCompile Include="RainbowCars.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="Suspension.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -199,6 +202,9 @@
       <Filter>effects\impl</Filter>
     </ClInclude>
     <ClInclude Include="RainbowCars.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Suspension.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
   </ItemGroup>

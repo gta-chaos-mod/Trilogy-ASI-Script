@@ -22,6 +22,7 @@
 #include "TruePacifist.h"
 #include "LetsTakeABreak.h"
 #include "RainbowCars.h"
+#include "Suspension.h"
 
 class EffectHandler
 {
