@@ -49,7 +49,7 @@ void LongLiveTheRich::HandleArmour(CPedDamageResponseCalculator* damageResponseC
 		return;
 	}
 	else if (damageResponseCalc->m_pDamager != player && ped == player) {
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= damageResponseCalc->m_fDamageFactor;
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= (int)damageResponseCalc->m_fDamageFactor;
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = max(0, player->GetPlayerInfoForThisPlayerPed()->m_nMoney);
 
 		if (player->GetPlayerInfoForThisPlayerPed()->m_nMoney == 0) {
@@ -78,7 +78,7 @@ void LongLiveTheRich::HandleHealth(CPedDamageResponseCalculator* damageResponseC
 		return;
 	}
 	else if (damageResponseCalc->m_pDamager != player && ped == player) {
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= damageResponseCalc->m_fDamageFactor;
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= (int)damageResponseCalc->m_fDamageFactor;
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = max(0, player->GetPlayerInfoForThisPlayerPed()->m_nMoney);
 
 		if (player->GetPlayerInfoForThisPlayerPed()->m_nMoney == 0) {
