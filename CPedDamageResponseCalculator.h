@@ -3,12 +3,23 @@
 #include "common.h"
 #include "plugin.h"
 
+// ePedPieceTypes
+/*
+3 - Torso
+4 - Ass?
+5 - Left Arm
+6 - Right Arm
+7 - Left Leg
+8 - Right Leg
+9 - Head
+*/
+
 class CPedDamageResponseCalculator
 {
 public:
-	DWORD m_pDamager;
+	CEntity* m_pDamager;
 	float m_fDamageFactor;
-	unsigned int m_pedPieceType;
+	ePedPieceTypes m_pedPieceType;
 	eWeaponType m_weaponType;
 	byte m_bUnk;
 	char _padding[3];
