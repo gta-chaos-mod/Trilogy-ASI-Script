@@ -1,22 +1,8 @@
 #include "InvisibleVehicles.h"
 
-static bool* isEnabled = reinterpret_cast<bool*>(0x96914B);
+bool* InvisibleVehicles::isEnabled = reinterpret_cast<bool*>(0x96914B);
 
 InvisibleVehicles::InvisibleVehicles(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
-
-void InvisibleVehicles::InitializeHooks() {
-	patch::RedirectCall(0x6C4523, HookedRenderHeli); // Heli
-	patch::RedirectCall(0x6BDE5E, HookedRenderBike); // Bike + Bmx
-	patch::RedirectJump(0x6CAB80, HookedRenderPlane); // Plane
-
-	patch::RedirectCall(0x5343B2, HookedRenderEffects);
-
-	patch::RedirectCall(0x6ABCF5, HookedRenderShadows); // Car Shadows
-	patch::RedirectCall(0x6C0B21, HookedRenderShadows); // BMX Shadows
-	patch::RedirectCall(0x6C58A0, HookedRenderShadows); // Heli Shadows
-	patch::RedirectCall(0x6BD667, HookedRenderShadows); // Bike Shadows
-	patch::RedirectCall(0x6CA73A, HookedRenderShadows); // Plane Shadows
-}
 
 void InvisibleVehicles::Enable() {
 	*isEnabled = true;

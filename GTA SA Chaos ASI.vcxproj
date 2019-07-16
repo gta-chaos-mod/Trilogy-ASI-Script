@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="GTASA Release|Win32">
@@ -103,9 +103,11 @@
     <ClCompile Include="EverybodyBleedNow.cpp" />
     <ClCompile Include="GhostRider.cpp" />
     <ClCompile Include="Gravity.cpp" />
+    <ClCompile Include="HookHandler.cpp" />
     <ClCompile Include="InvisibleVehicles.cpp" />
     <ClCompile Include="LagEffect.cpp" />
     <ClCompile Include="LetsTakeABreak.cpp" />
+    <ClCompile Include="LongLiveTheRich.cpp" />
     <ClCompile Include="OneHitKO.cpp" />
     <ClCompile Include="Ped.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -136,9 +138,11 @@
     <ClInclude Include="EverybodyBleedNow.h" />
     <ClInclude Include="GhostRider.h" />
     <ClInclude Include="Gravity.h" />
+    <ClInclude Include="HookHandler.h" />
     <ClInclude Include="InvisibleVehicles.h" />
     <ClInclude Include="LagEffect.h" />
     <ClInclude Include="LetsTakeABreak.h" />
+    <ClInclude Include="LongLiveTheRich.h" />
     <ClInclude Include="OneHitKO.h" />
     <ClInclude Include="Ped.h" />
     <ClInclude Include="Player.h" />

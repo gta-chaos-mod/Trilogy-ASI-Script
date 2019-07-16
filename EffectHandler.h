@@ -23,6 +23,7 @@
 #include "LetsTakeABreak.h"
 #include "RainbowCars.h"
 #include "Suspension.h"
+#include "LongLiveTheRich.h"
 
 class EffectHandler
 {

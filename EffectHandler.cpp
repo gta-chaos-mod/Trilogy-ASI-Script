@@ -91,6 +91,9 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "very_bouncy_vehicles") {
 		return new Suspension(-1.0f, duration, description);
 	}
+	else if (effect == "long_live_the_rich") {
+		return new LongLiveTheRich(duration, description);
+	}
 
 	return nullptr;
 }

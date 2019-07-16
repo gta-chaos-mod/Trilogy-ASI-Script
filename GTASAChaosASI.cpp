@@ -21,6 +21,7 @@
 #include "DisableRadarBlips.h"
 
 #include "EffectPlaceholder.h"
+#include "HookHandler.h"
 
 #include <queue>
 #include <thread>
@@ -324,6 +325,8 @@ public:
 
 	GTASAChaosMod() {
 		SetupPipe();
+
+		HookHandler::Initialize();
 
 		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });
 

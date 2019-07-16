@@ -12,19 +12,19 @@
 class InvisibleVehicles : public TimedEffect
 {
 public:
-	InvisibleVehicles(int duration, std::string description);
+	static bool* isEnabled;
 
-	void InitializeHooks() override;
+public:
+	InvisibleVehicles(int duration, std::string description);
 
 	void Enable() override;
 	void Disable() override;
 
 	static void TryRenderAtomic(RwFrame* frame);
+
 	static void __fastcall HookedRenderHeli(CHeli* thisHeli, void* edx);
 	static void __fastcall HookedRenderBike(CBike* thisBike, void* edx);
 	static void __fastcall HookedRenderPlane(CPlane* thisPlane, void* edx);
-
 	static void __fastcall HookedRenderEffects(CEntity* thisEntity, void* edx);
-
 	static void HookedRenderShadows(CVehicle* thisVehicle, VEH_SHD_TYPE shadowType);
 };
