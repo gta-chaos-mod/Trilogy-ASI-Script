@@ -17,6 +17,9 @@ void HookHandler::Initialize() {
 	patch::RedirectCall(0x6C58A0, InvisibleVehicles::HookedRenderShadows); // Heli Shadows
 	patch::RedirectCall(0x6BD667, InvisibleVehicles::HookedRenderShadows); // Bike Shadows
 	patch::RedirectCall(0x6CA73A, InvisibleVehicles::HookedRenderShadows); // Plane Shadows
+
+	// Rainbow Cars
+	Events::vehicleRenderEvent += RenderVehicleEvent;
 }
 
 void __fastcall HookHandler::HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, int cDamageResponseInfo) {
@@ -41,6 +44,12 @@ void __fastcall HookHandler::HookedComputeWillKillPed(CPedDamageResponseCalculat
 		LongLiveTheRich::HandleHealth(thisCalc, ped, a3, a4);
 		return;
 	}
-	
+
 	thisCalc->ComputeWillKillPed(ped, a3, a4);
+}
+
+void HookHandler::RenderVehicleEvent(CVehicle* vehicle) {
+	if (RainbowCars::isEnabled) {
+		RainbowCars::ModifyCarPaint(vehicle);
+	}
 }

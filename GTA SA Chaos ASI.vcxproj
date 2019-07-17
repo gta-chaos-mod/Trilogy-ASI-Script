@@ -96,6 +96,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CheatHandler.cpp" />
+    <ClCompile Include="ColorHelper.cpp" />
     <ClCompile Include="CPedDamageResponseCalculator.cpp" />
     <ClCompile Include="DisableHUD.cpp" />
     <ClCompile Include="DisableRadarBlips.cpp" />
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CheatHandler.h" />
+    <ClInclude Include="ColorHelper.h" />
     <ClInclude Include="CPedDamageResponseCalculator.h" />
     <ClInclude Include="DisableHUD.h" />
     <ClInclude Include="DisableRadarBlips.h" />
