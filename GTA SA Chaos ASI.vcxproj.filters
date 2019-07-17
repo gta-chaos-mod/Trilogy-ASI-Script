@@ -98,6 +98,9 @@
     <ClCompile Include="LongLiveTheRich.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="InvertedControls.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
     <ClCompile Include="ColorHelper.cpp">
       <Filter>util</Filter>
     </ClCompile>
@@ -220,6 +223,9 @@
       <Filter>effects\impl</Filter>
     </ClInclude>
     <ClInclude Include="LongLiveTheRich.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="InvertedControls.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
     <ClInclude Include="ColorHelper.h">

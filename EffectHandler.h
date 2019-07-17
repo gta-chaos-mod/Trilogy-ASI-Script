@@ -24,6 +24,7 @@
 #include "RainbowCars.h"
 #include "Suspension.h"
 #include "LongLiveTheRich.h"
+#include "InvertedControls.h"
 
 class EffectHandler
 {
