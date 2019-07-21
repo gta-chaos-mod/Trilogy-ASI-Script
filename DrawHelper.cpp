@@ -64,7 +64,7 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 		}
 
 		float x = SCREEN_COORD_RIGHT(effect->isPlaceholder ? 25.0f : 90.0f);
-		float y = SCREEN_COORD_BOTTOM(((i + 1) * 70.0f) + 110.0f);
+		float y = SCREEN_COORD_BOTTOM(((i + 1) * 70.0f) + 260.0f);
 
 		CFont::SetCentreSize(SCREEN_WIDTH);
 		CFont::SetScaleForCurrentlanguage(SCREEN_MULTIPLIER(1.0f), SCREEN_MULTIPLIER(2.0f));
