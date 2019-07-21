@@ -35,8 +35,8 @@ void GhostRider::HandleTick() {
 	CVehicle* currentVehicle = FindPlayerVehicle(-1, false);
 
 	if (currentVehicle) {
-		if (vehicleList.contains(lastVehicle)) {
-			auto it = vehicleList.find(lastVehicle);
+		if (vehicleList.contains(currentVehicle)) {
+			auto it = vehicleList.find(currentVehicle);
 			if (it != vehicleList.end()) {
 				vehicleList.erase(it);
 			}
