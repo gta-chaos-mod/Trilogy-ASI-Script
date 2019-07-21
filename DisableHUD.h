@@ -8,13 +8,12 @@
 class DisableHUD : public TimedEffect
 {
 public:
-	DisableHUD(int _duration, std::string _description);
+	static bool isEnabled;
 
-	void InitializeHooks() override;
+public:
+	DisableHUD(int _duration, std::string _description);
 
 	void Enable() override;
 	void Disable() override;
-
-	static void HookedHUDDraw();
 };
 

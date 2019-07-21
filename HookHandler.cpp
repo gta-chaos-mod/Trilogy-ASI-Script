@@ -20,6 +20,13 @@ void HookHandler::Initialize() {
 
 	// Rainbow Cars
 	Events::vehicleRenderEvent += RenderVehicleEvent;
+
+	// Disable HUD
+	patch::RedirectCall(0x53E4FF, HookedHUDDraw);
+
+	// Disable Radar Blips
+	patch::RedirectJump(0x58AA2D, HookedBlipsDraw);
+	patch::RedirectCall(0x575B44, HookedBlipsDraw);
 }
 
 void __fastcall HookHandler::HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, int cDamageResponseInfo) {
@@ -51,5 +58,20 @@ void __fastcall HookHandler::HookedComputeWillKillPed(CPedDamageResponseCalculat
 void HookHandler::RenderVehicleEvent(CVehicle* vehicle) {
 	if (RainbowCars::isEnabled) {
 		RainbowCars::ModifyCarPaint(vehicle);
+	}
+}
+
+void HookHandler::HookedHUDDraw() {
+	if (DisableHUD::isEnabled) {
+		CRadar::Draw3dMarkers();
+	}
+	else {
+		CHud::Draw();
+	}
+}
+
+void HookHandler::HookedBlipsDraw() {
+	if (!DisableHUD::isEnabled && !DisableRadarBlips::isEnabled) {
+		CRadar::DrawBlips();
 	}
 }
