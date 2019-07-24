@@ -9,6 +9,6 @@
 class Teleportation
 {
 public:
-	static void Teleportation::Teleport(CVector destination);
+	static void Teleport(CVector destination);
 };
 

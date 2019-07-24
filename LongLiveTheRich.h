@@ -11,7 +11,7 @@ public:
 	static bool isEnabled;
 
 private:
-	int storedMoney;
+	int storedMoney = 0;
 
 public:
 	LongLiveTheRich(int _duration, std::string _description);

@@ -10,7 +10,7 @@
 class Gravity : public TimedEffect
 {
 private:
-	float gravity;
+	float gravity = 0.008f;
 
 public:
 	Gravity(float _gravity, int duration, std::string description);

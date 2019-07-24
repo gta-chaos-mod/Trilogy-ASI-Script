@@ -8,6 +8,6 @@
 class Ped
 {
 public:
-	static void Ped::SetAllOnFire();
+	static void SetAllOnFire();
 };
 

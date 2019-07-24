@@ -1,7 +1,7 @@
 #include "RainbowCars.h"
 
-bool RainbowCars::isEnabled;
-float RainbowCars::hueShift;
+bool RainbowCars::isEnabled = false;
+float RainbowCars::hueShift = 0.0f;
 std::map<RpMaterial*, RwRGBA> RainbowCars::resetMaterials;
 
 RainbowCars::RainbowCars(int _duration, std::string _description) : TimedEffect(_duration, _description) {}

@@ -9,10 +9,10 @@ class InvertedControls : public TimedEffect
 {
 public:
 	static bool isEnabled;
-	static CControllerAction origActions[59];
 
 private:
-	int wait;
+	int wait = 0;
+	CControllerAction origActions[59];
 	CControllerAction invertedActions[59];
 
 public:

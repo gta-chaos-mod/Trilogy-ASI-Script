@@ -7,7 +7,7 @@
 
 class Wanted {
 public:
-	static void Wanted::IncreaseWantedLevel();
-	static void Wanted::ClearWantedLevel();
-	static void Wanted::SixWantedStars();
+	static void IncreaseWantedLevel();
+	static void ClearWantedLevel();
+	static void SixWantedStars();
 };
