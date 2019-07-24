@@ -3,6 +3,9 @@
 static std::string message;
 static int message_remainingDuration;
 
+static std::string bigMessage;
+static int bigMessage_remainingDuration;
+
 void DrawHelper::DrawRemainingTimeRects(int remaining) {
 	float maxWidth = (SCREEN_WIDTH / 1000.0f * remaining) - SCREEN_COORD(4.0f);
 	if (maxWidth < 0.0f) {
@@ -45,9 +48,47 @@ void DrawHelper::DrawMessages() {
 	}
 }
 
+void DrawHelper::DrawBigMessages() {
+	if (bigMessage_remainingDuration > 0) {
+		bigMessage_remainingDuration -= (int)((CTimer::ms_fTimeStepNonClipped / CTimer::ms_fTimeScale) * 0.02f * 1000.0f);
+
+		float x = SCREEN_COORD_CENTER_LEFT(0.0f);
+		float y = SCREEN_COORD_CENTER_UP(150.0f);
+
+		char* helpMessage = (char*)bigMessage.c_str();
+
+		CFont::SetCentreSize(SCREEN_WIDTH);
+		CFont::SetScaleForCurrentlanguage(SCREEN_MULTIPLIER(2.0f), SCREEN_MULTIPLIER(4.0f));
+
+		CFont::SetOrientation(eFontAlignment::ALIGN_CENTER);
+		CFont::SetJustify(false);
+		CFont::SetWrapx(SCREEN_WIDTH);
+		CFont::SetFontStyle(FONT_MENU);
+		CFont::SetDropColor(CRGBA(0, 0, 0, 200));
+		CFont::SetDropShadowPosition(0);
+		CFont::SetEdge(2);
+		CFont::SetBackground(false, false);
+
+		CFont::SetColor(CRGBA(255, 255, 255, 200));
+		CFont::SetWrapx(SCREEN_COORD(420.0f));
+		CFont::PrintString(x, y, helpMessage);
+	}
+}
+
 void DrawHelper::DrawHelpMessage(std::string _message, int duration) {
 	message = _message;
 	message_remainingDuration = duration;
+
+	/*
+	// TODO: Let it play the sound
+	eAudioEvents::AE_FRONTEND_DISPLAY_INFO;
+	CAudioEngine::ReportFrontendAudioEvent(&AudioEngine, 32, 0.0, 1.0);
+	*/
+}
+
+void DrawHelper::DrawBigMessage(std::string _message, int duration) {
+	bigMessage = _message;
+	bigMessage_remainingDuration = duration;
 
 	/*
 	// TODO: Let it play the sound

@@ -22,7 +22,9 @@ public:
 	static void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects);
 
 	static void DrawHelper::DrawMessages();
+	static void DrawHelper::DrawBigMessages();
 	static void DrawHelper::DrawHelpMessage(std::string message, int duration);
+	static void DrawHelper::DrawBigMessage(std::string message, int duration);
 
 	static void DrawHelper::DrawCircle(CVector2D position, float radius, float angle, CRGBA color);
 	static void DrawHelper::AppendPie(RwIm2DVertex* vertices, int numCount, float radius, CVector2D center,

@@ -46,6 +46,7 @@ enum EffectState {
 
 	TEXT = 20,
 	TIME = 21,
+	BIG_TEXT = 22,
 };
 
 static CdeclEvent<AddressList<0x53E83C, H_CALL, 0x53EBA2, H_CALL>, PRIORITY_AFTER, ArgPickNone, void()> onDrawAfterFade;
@@ -100,6 +101,7 @@ public:
 		DrawHelper::DrawRemainingTimeRects(remaining);
 		DrawHelper::DrawRecentEffects(activeEffects);
 		DrawHelper::DrawMessages();
+		DrawHelper::DrawBigMessages();
 	}
 
 	template<typename _Callable, typename... _Args>
@@ -160,6 +162,9 @@ public:
 		}
 		else if (state == "time") {
 			currentState = EffectState::TIME;
+		}
+		else if (state == "big_text") {
+			currentState = EffectState::BIG_TEXT;
 		}
 		else {
 			return;
@@ -268,12 +273,17 @@ public:
 
 				break;
 			}
+			case EffectState::BIG_TEXT: {
+				QueueFunction(DrawHelper::DrawBigMessage, function, 10000);
+
+				break;
+			}
 			default: {
 				break;
 			}
 		}
 
-		if (currentState != EffectState::TEXT && currentState != EffectState::TIME) {
+		if (currentState != EffectState::TEXT && currentState != EffectState::TIME && currentState != EffectState::BIG_TEXT) {
 			QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
 		}
 		return;
