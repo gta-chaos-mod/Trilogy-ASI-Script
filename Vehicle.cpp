@@ -81,9 +81,9 @@ void Vehicle::BlowUpAllCars() {
 }
 
 void Vehicle::SetPlayerVehicleOnFire() {
-	CPlayerPed* player = FindPlayerPed();
-	if (player && player->m_pVehicle) {
-		player->m_pVehicle->m_fHealth = 249.9f;
+	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
+	if (playerVehicle) {
+		playerVehicle->m_fHealth = 249.9f;
 	}
 }
 
@@ -96,9 +96,9 @@ void Vehicle::PopAllVehicleTires() {
 }
 
 void Vehicle::StairwayToHeaven() {
-	CPlayerPed* player = FindPlayerPed();
-	if (player && player->m_pVehicle) {
-		player->m_pVehicle->m_vecMoveSpeed.z = 10.0f;
+	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
+	if (playerVehicle) {
+		playerVehicle->m_vecMoveSpeed.z = 10.0f;
 	}
 }
 

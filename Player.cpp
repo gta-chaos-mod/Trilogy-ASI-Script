@@ -19,19 +19,18 @@ void Player::KillPlayer() {
 void Player::KickOutOfVehicleAndLock() {
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		if (player->m_pVehicle) {
-			player->m_pIntelligence->m_TaskMgr.SetTask(new CTaskSimpleCarSetPedOut(player->m_pVehicle, 0, false), 0, false);
-			player->m_pVehicle->m_nDoorLock = eCarLock::CARLOCK_LOCKED;
+		CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
+		if (playerVehicle) {
+			player->m_pIntelligence->m_TaskMgr.SetTask(new CTaskSimpleCarSetPedOut(playerVehicle, 0, false), 0, false);
+			playerVehicle->m_nDoorLock = eCarLock::CARLOCK_LOCKED;
 		}
 	}
 }
 
 void Player::LockPlayerInsideVehicle() {
-	CPlayerPed* player = FindPlayerPed();
-	if (player) {
-		if (player->m_pVehicle) {
-			player->m_pVehicle->m_nDoorLock = eCarLock::CARLOCK_LOCKED_PLAYER_INSIDE;
-		}
+	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
+	if (playerVehicle) {
+		playerVehicle->m_nDoorLock = eCarLock::CARLOCK_LOCKED_PLAYER_INSIDE;
 	}
 }
 
