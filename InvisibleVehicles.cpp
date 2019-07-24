@@ -4,12 +4,12 @@ bool* InvisibleVehicles::isEnabled = reinterpret_cast<bool*>(0x96914B);
 
 InvisibleVehicles::InvisibleVehicles(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
 
-void InvisibleVehicles::Enable() {
-	*isEnabled = true;
-}
-
 void InvisibleVehicles::Disable() {
 	*isEnabled = false;
+}
+
+void InvisibleVehicles::HandleTick() {
+	*isEnabled = true;
 }
 
 void InvisibleVehicles::TryRenderAtomic(RwFrame* frame) {
