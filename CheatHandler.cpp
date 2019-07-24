@@ -133,7 +133,7 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	else if (cheat == "ninja_theme") {
 		return new TimedFunctionCheat(CCheat::NinjaCheat, 0x96915C, duration, description);
 	}
-	else if (cheat == "slut_magnet") {
+	else if (cheat == "kinky_theme") {
 		return new TimedFunctionCheat(CCheat::LoveConquersAllCheat, 0x96915D, duration, description);
 	}
 	else if (cheat == "funhouse_theme") {
