@@ -24,6 +24,7 @@ void LongLiveTheRich::Disable() {
 
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney *= 1000;
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney += storedMoney;
 	}
 }
