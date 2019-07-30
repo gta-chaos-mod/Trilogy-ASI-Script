@@ -17,6 +17,7 @@
 #include "CTrain.h"
 #include "CWorld.h"
 #include "CTheScripts.h"
+#include "CCarCtrl.h"
 
 #include "cHandlingDataMgr.h"
 

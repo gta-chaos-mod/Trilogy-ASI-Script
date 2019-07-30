@@ -97,9 +97,11 @@ void Vehicle::PopAllVehicleTires() {
 }
 
 void Vehicle::StairwayToHeaven() {
-	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
-	if (playerVehicle) {
-		playerVehicle->m_vecMoveSpeed.z = 10.0f;
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		if (vehicle->m_pDriver && !vehicle->IsDriver(FindPlayerPed())) {
+			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
+		}
+		vehicle->m_vecMoveSpeed.z = 10.0f;
 	}
 }
 
