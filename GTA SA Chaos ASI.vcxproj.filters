@@ -29,9 +29,6 @@
     <ClCompile Include="Wanted.cpp">
       <Filter>effects\other</Filter>
     </ClCompile>
-    <ClCompile Include="Weapons.cpp">
-      <Filter>effects\other</Filter>
-    </ClCompile>
     <ClCompile Include="EverybodyBleedNow.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
@@ -104,6 +101,9 @@
     <ClCompile Include="ColorHelper.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="RandomHelper.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -154,9 +154,6 @@
       <Filter>effects\other</Filter>
     </ClInclude>
     <ClInclude Include="Wanted.h">
-      <Filter>effects\other</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapons.h">
       <Filter>effects\other</Filter>
     </ClInclude>
     <ClInclude Include="EverybodyBleedNow.h">
@@ -229,6 +226,9 @@
       <Filter>effects\impl</Filter>
     </ClInclude>
     <ClInclude Include="ColorHelper.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomHelper.h">
       <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>

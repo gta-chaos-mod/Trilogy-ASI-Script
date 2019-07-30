@@ -9,6 +9,13 @@ void Player::GivePlayerHealthArmorMoney() {
 	}
 }
 
+void Player::ClearWeapons() {
+	CPlayerPed* player = FindPlayerPed();
+	if (player) {
+		player->ClearWeapons();
+	}
+}
+
 void Player::KillPlayer() {
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {

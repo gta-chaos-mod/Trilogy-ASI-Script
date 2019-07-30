@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="GTASA Release|Win32">
@@ -114,6 +114,7 @@
     <ClCompile Include="Ped.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RainbowCars.cpp" />
+    <ClCompile Include="RandomHelper.cpp" />
     <ClCompile Include="Suspension.cpp" />
     <ClCompile Include="Teleportation.cpp" />
     <ClCompile Include="TimedAddressCheat.cpp" />
@@ -128,7 +129,6 @@
     <ClCompile Include="TruePacifist.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="Wanted.cpp" />
-    <ClCompile Include="Weapons.cpp" />
     <ClCompile Include="WhereIsEverybody.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +151,7 @@
     <ClInclude Include="Ped.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RainbowCars.h" />
+    <ClInclude Include="RandomHelper.h" />
     <ClInclude Include="Suspension.h" />
     <ClInclude Include="Teleportation.h" />
     <ClInclude Include="TimedAddressCheat.h" />
@@ -164,7 +165,6 @@
     <ClInclude Include="TruePacifist.h" />
     <ClInclude Include="Vehicle.h" />
     <ClInclude Include="Wanted.h" />
-    <ClInclude Include="Weapons.h" />
     <ClInclude Include="WhereIsEverybody.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

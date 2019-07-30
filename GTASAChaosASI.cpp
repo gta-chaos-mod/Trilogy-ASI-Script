@@ -12,7 +12,6 @@
 #include "Teleportation.h"
 #include "Vehicle.h"
 #include "Wanted.h"
-#include "Weapons.h"
 
 #include "CheatHandler.h"
 #include "EffectHandler.h"
@@ -22,6 +21,7 @@
 
 #include "EffectPlaceholder.h"
 #include "HookHandler.h"
+#include "RandomHelper.h"
 
 #include <queue>
 #include <thread>
@@ -31,22 +31,22 @@
 using namespace plugin;
 
 enum EffectState {
-	WEAPONS = 1,
-	WANTED = 2,
-	WEATHER = 3,
-	SPAWN_VEHICLE = 4,
-	GAME_SPEED = 5,
-	CHEAT = 6,
-	TIMED_CHEAT = 7,
-	EFFECT = 8,
-	TIMED_EFFECT = 9,
-	GRAVITY = 10,
-	TELEPORT = 11,
-	OTHER = 12,
+	WANTED,
+	WEATHER,
+	SPAWN_VEHICLE,
+	GAME_SPEED,
+	CHEAT,
+	TIMED_CHEAT,
+	EFFECT,
+	TIMED_EFFECT,
+	GRAVITY,
+	TELEPORT,
+	OTHER,
 
-	TEXT = 20,
-	TIME = 21,
-	BIG_TEXT = 22,
+	TEXT,
+	TIME,
+	BIG_TEXT,
+	SET_SEED,
 };
 
 static CdeclEvent<AddressList<0x53E83C, H_CALL, 0x53EBA2, H_CALL>, PRIORITY_AFTER, ArgPickNone, void()> onDrawAfterFade;
@@ -121,10 +121,7 @@ public:
 		std::string description(c_description);
 
 		EffectState currentState;
-		if (state == "weapons") {
-			currentState = EffectState::WEAPONS;
-		}
-		else if (state == "wanted") {
+		if (state == "wanted") {
 			currentState = EffectState::WANTED;
 		}
 		else if (state == "weather") {
@@ -166,18 +163,14 @@ public:
 		else if (state == "big_text") {
 			currentState = EffectState::BIG_TEXT;
 		}
+		else if (state == "set_seed") {
+			currentState = EffectState::SET_SEED;
+		}
 		else {
 			return;
 		}
 
 		switch (currentState) {
-			case EffectState::WEAPONS: {
-				int id = std::stoi(function);
-				QueueFunction(Weapons::GiveByID, id);
-				QueueEffect(new EffectPlaceholder(duration, description));
-
-				break;
-			}
 			case EffectState::WANTED: {
 				if (function == "plus_two") {
 					QueueFunction(Wanted::IncreaseWantedLevel);
@@ -257,7 +250,7 @@ public:
 					QueueFunction(Vehicle::BlowUpAllCars);
 				}
 				else if (function == "clear_weapons") {
-					QueueFunction(Weapons::Clear);
+					QueueFunction(Player::ClearWeapons);
 				}
 				QueueEffect(new EffectPlaceholder(duration, description));
 
@@ -278,12 +271,21 @@ public:
 
 				break;
 			}
+			case EffectState::SET_SEED: {
+				RandomHelper::SetSeed(std::stoi(function));
+
+				break;
+			}
 			default: {
 				break;
 			}
 		}
 
-		if (currentState != EffectState::TEXT && currentState != EffectState::TIME && currentState != EffectState::BIG_TEXT) {
+		if (currentState != EffectState::TEXT
+			&& currentState != EffectState::TIME
+			&& currentState != EffectState::BIG_TEXT
+			&& currentState != EffectState::SET_SEED
+		) {
 			QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
 		}
 		return;

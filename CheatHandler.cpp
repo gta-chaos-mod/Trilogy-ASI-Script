@@ -1,7 +1,16 @@
 #include "CheatHandler.h"
 
 void CheatHandler::HandleCheat(std::string cheat) {
-	if (cheat == "give_health_armor_money") {
+	if (cheat == "weapon_set_1") {
+		CCheat::WeaponCheat1();
+	}
+	else if (cheat == "weapon_set_2") {
+		CCheat::WeaponCheat2();
+	}
+	else if (cheat == "weapon_set_3") {
+		CCheat::WeaponCheat3();
+	}
+	else if (cheat == "give_health_armor_money") {
 		Player::GivePlayerHealthArmorMoney();
 	}
 	else if (cheat == "suicide") {
@@ -10,6 +19,9 @@ void CheatHandler::HandleCheat(std::string cheat) {
 
 	else if (cheat == "jetpack") {
 		CCheat::JetpackCheat();
+	}
+	else if (cheat == "parachute") {
+		CCheat::ParachuteCheat();
 	}
 
 	else if (cheat == "fat_player") {
