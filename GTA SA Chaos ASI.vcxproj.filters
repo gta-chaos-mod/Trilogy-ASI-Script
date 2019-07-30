@@ -104,6 +104,9 @@
     <ClCompile Include="RandomHelper.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="InfiniteHealth.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="RandomHelper.h">
       <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="InfiniteHealth.h">
+      <Filter>effects\impl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

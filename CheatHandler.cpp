@@ -164,9 +164,6 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	else if (cheat == "mega_jump") {
 		return new TimedAddressCheat(0x96916C, duration, description);
 	}
-	else if (cheat == "infinite_health") {
-		return new TimedAddressCheat(0x96916D, duration, description);
-	}
 	else if (cheat == "infinite_oxygen") {
 		return new TimedAddressCheat(0x96916E, duration, description);
 	}

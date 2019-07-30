@@ -97,6 +97,9 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "inverted_controls") {
 		return new InvertedControls(duration, description);
 	}
+	else if (effect == "infinite_health") {
+		return new InfiniteHealth(duration, description);
+	}
 
 	return nullptr;
 }

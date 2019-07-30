@@ -8,6 +8,7 @@
 #include "RainbowCars.h"
 #include "DisableHUD.h"
 #include "DisableRadarBlips.h"
+#include "InfiniteHealth.h"
 
 class HookHandler
 {

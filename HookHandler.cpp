@@ -43,8 +43,14 @@ void __fastcall HookHandler::HookedAccountForPedArmour(CPedDamageResponseCalcula
 }
 
 void __fastcall HookHandler::HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, float* a3, char a4) {
-	if (TruePacifist::isEnabled) {
+	if (InfiniteHealth::isEnabled) {
 		return;
+	}
+	
+	if (TruePacifist::isEnabled) {
+		if (thisCalc->m_pDamager->m_nType == eEntityType::ENTITY_TYPE_PED) {
+			return;
+		}
 	}
 
 	if (LongLiveTheRich::isEnabled) {
