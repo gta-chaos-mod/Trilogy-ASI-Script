@@ -6,7 +6,6 @@ TimedEffect::TimedEffect(int _duration, std::string _description) {
 	if (!_description.empty()) {
 		description = _description;
 	}
-	rng = std::mt19937(std::random_device()());
 }
 
 bool TimedEffect::IsRunning() {
@@ -42,22 +41,4 @@ void TimedEffect::TickDown() {
 			Disable();
 		}
 	}
-}
-
-int TimedEffect::Random(int min, int max) {
-	return Random(min, max, 1);
-}
-
-int TimedEffect::Random(int min, int max, int amplify) {
-	std::uniform_int_distribution unif(min, max);
-	return unif(rng) * amplify;
-}
-
-float TimedEffect::Random(float min, float max) {
-	return Random(min, max, 1);
-}
-
-float TimedEffect::Random(float min, float max, int amplify) {
-	std::uniform_real_distribution<float> unif(min, max);
-	return unif(rng) * amplify;
 }

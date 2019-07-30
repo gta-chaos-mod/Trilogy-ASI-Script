@@ -12,6 +12,6 @@ void LagEffect::HandleTick() {
 		return;
 	}
 
-	CTimer::ms_fTimeScale = Random(0.1f, 2.0f);
-	wait = Random(50, 200);
+	CTimer::ms_fTimeScale = RandomHelper::Random(0.1f, 2.0f);
+	wait = RandomHelper::Random(50, 200);
 }

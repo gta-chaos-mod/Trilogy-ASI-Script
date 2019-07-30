@@ -5,7 +5,7 @@
 
 #include "CTimer.h"
 
-#include <random>
+#include "RandomHelper.h"
 
 using namespace plugin;
 
@@ -17,7 +17,6 @@ public:
 	int remaining = 0;
 	int duration = 0;
 	std::string description = "N/A";
-	std::mt19937 rng;
 
 public:
 	TimedEffect(int _duration, std::string _description);
@@ -38,10 +37,4 @@ public:
 	int CalculateTick() {
 		return (int)((CTimer::ms_fTimeStepNonClipped / CTimer::ms_fTimeScale) * 0.02f * 1000.0f);
 	};
-
-	int Random(int min, int max);
-	int Random(int min, int max, int amplify);
-
-	float Random(float min, float max);
-	float Random(float min, float max, int amplify);
 };

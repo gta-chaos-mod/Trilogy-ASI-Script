@@ -117,7 +117,7 @@ void ColorHelper::HSVtoRGB(float& fR, float& fG, float& fB, float fH, float fS, 
 	fB += fM;
 }
 
-void ColorHelper::HueShift(int& r, int& g, int& b, float shift) {
+void ColorHelper::HueShift(int& r, int& g, int& b, float shift, float value) {
 	float fR = (float)r / 255;
 	float fG = (float)g / 255;
 	float fB = (float)b / 255;
@@ -131,7 +131,7 @@ void ColorHelper::HueShift(int& r, int& g, int& b, float shift) {
 	}
 
 	float retR, retG, retB;
-	HSVtoRGB(retR, retG, retB, h, 1.0f, 1.0f); // Full Saturation and Lightness!
+	HSVtoRGB(retR, retG, retB, h, value, value);
 
 	r = (int)(retR * 255);
 	g = (int)(retG * 255);

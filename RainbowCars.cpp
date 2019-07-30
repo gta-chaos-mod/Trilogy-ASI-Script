@@ -21,7 +21,7 @@ void RainbowCars::Disable() {
 }
 
 void RainbowCars::HandleTick() {
-	hueShift += 5.0f;
+	hueShift += 2.0f;
 	if (hueShift >= 360.0f) {
 		hueShift -= 360.0f;
 	}
@@ -51,7 +51,7 @@ RpMaterial* RainbowCars::MaterialCallback(RpMaterial* material, void* data) {
 	int r = color.r;
 	int g = color.g;
 	int b = color.b;
-	ColorHelper::HueShift(r, g, b, hueShift);
+	ColorHelper::HueShift(r, g, b, hueShift, 0.75f);
 
 	material->color = CRGBA(r, g, b, (unsigned int)material->color.alpha).ToRwRGBA();
 	return material;
