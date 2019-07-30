@@ -76,6 +76,7 @@ void Vehicle::SpawnForPlayer(int modelID) {
 
 void Vehicle::BlowUpAllCars() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		vehicle->m_nPhysicalFlags.bExplosionProof = false;
 		vehicle->BlowUpCar(NULL, false);
 	}
 }
