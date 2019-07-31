@@ -66,14 +66,14 @@ public:
 			effect->TickDown();
 		}
 		activeEffects.remove_if([](TimedEffect* effect) { return !effect->IsRunning(); });
+
+		CCheat::m_bHasPlayerCheated = false;
 	}
 
 	void EmptyQueue() {
 		if (!queue.empty()) {
 			queue.front()();
 			queue.pop();
-
-			CCheat::m_bHasPlayerCheated = false;
 		}
 	}
 
@@ -97,9 +97,7 @@ public:
 			}
 			activeEffects.remove(*it);
 		}
-		else {
 		activeEffects.push_front(effect);
-	}
 	}
 
 	void DrawRemainingTime() {
