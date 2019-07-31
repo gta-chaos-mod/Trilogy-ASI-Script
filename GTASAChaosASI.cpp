@@ -284,13 +284,6 @@ public:
 			}
 		}
 
-		if (currentState != EffectState::TEXT
-			&& currentState != EffectState::TIME
-			&& currentState != EffectState::BIG_TEXT
-			&& currentState != EffectState::SET_SEED
-		) {
-			QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
-		}
 		return;
 	}
 
