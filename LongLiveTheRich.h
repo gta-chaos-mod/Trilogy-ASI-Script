@@ -19,7 +19,7 @@ public:
 	void Enable() override;
 	void Disable() override;
 
-	static void HandleArmour(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, int cDamageResponseInfo);
-	static void HandleHealth(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, float* a3, char a4);
+	static bool HandleArmour(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, int cDamageResponseInfo);
+	static bool HandleHealth(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, float* a3, char a4);
 };
 

@@ -29,11 +29,11 @@ void LongLiveTheRich::Disable() {
 	}
 }
 
-void LongLiveTheRich::HandleArmour(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, int cDamageResponseInfo) {
+bool LongLiveTheRich::HandleArmour(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, int cDamageResponseInfo) {
 	CPlayerPed* player = FindPlayerPed();
 	if (damageResponseCalc->m_pDamager == player && ped != player) {
 		if (ped->m_fArmour == 0.0f) {
-			return;
+			return true;
 		}
 
 		bool isHeadshot = damageResponseCalc->m_pedPieceType == 9;
@@ -47,7 +47,7 @@ void LongLiveTheRich::HandleArmour(CPedDamageResponseCalculator* damageResponseC
 			ped->m_nMoneyCount = 0;
 			ped->m_fHealth = 0.0f;
 		}
-		return;
+		return true;
 	}
 	else if (damageResponseCalc->m_pDamager != player && ped == player) {
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= (int)damageResponseCalc->m_fDamageFactor;
@@ -57,11 +57,12 @@ void LongLiveTheRich::HandleArmour(CPedDamageResponseCalculator* damageResponseC
 			player->m_fHealth = 0.0f;
 		}
 
-		return;
+		return true;
 	}
+	return false;
 }
 
-void LongLiveTheRich::HandleHealth(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, float* a3, char a4) {
+bool LongLiveTheRich::HandleHealth(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, float* a3, char a4) {
 	CPlayerPed* player = FindPlayerPed();
 	if (damageResponseCalc->m_pDamager == player && ped != player) {
 		bool isHeadshot = damageResponseCalc->m_pedPieceType == 9;
@@ -76,7 +77,7 @@ void LongLiveTheRich::HandleHealth(CPedDamageResponseCalculator* damageResponseC
 			ped->m_fHealth = 0.0f;
 		}
 		
-		return;
+		return true;
 	}
 	else if (damageResponseCalc->m_pDamager != player && ped == player) {
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= (int)damageResponseCalc->m_fDamageFactor;
@@ -86,6 +87,7 @@ void LongLiveTheRich::HandleHealth(CPedDamageResponseCalculator* damageResponseC
 			player->m_fHealth = 0.0f;
 		}
 
-		return;
+		return true;
 	}
+	return false;
 }

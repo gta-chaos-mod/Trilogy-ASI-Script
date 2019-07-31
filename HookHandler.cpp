@@ -34,8 +34,7 @@ void __fastcall HookHandler::HookedAccountForPedArmour(CPedDamageResponseCalcula
 		return;
 	}
 
-	if (LongLiveTheRich::isEnabled) {
-		LongLiveTheRich::HandleArmour(thisCalc, ped, cDamageResponseInfo);
+	if (LongLiveTheRich::isEnabled && LongLiveTheRich::HandleArmour(thisCalc, ped, cDamageResponseInfo)) {
 		return;
 	}
 
@@ -53,8 +52,7 @@ void __fastcall HookHandler::HookedComputeWillKillPed(CPedDamageResponseCalculat
 		}
 	}
 
-	if (LongLiveTheRich::isEnabled) {
-		LongLiveTheRich::HandleHealth(thisCalc, ped, a3, a4);
+	if (LongLiveTheRich::isEnabled && LongLiveTheRich::HandleHealth(thisCalc, ped, a3, a4)) {
 		return;
 	}
 
