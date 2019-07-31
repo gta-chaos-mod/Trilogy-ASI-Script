@@ -11,7 +11,6 @@ class Player
 {
 public:
 	static void GivePlayerHealthArmorMoney();
-	static void ClearWeapons();
 	static void KillPlayer();
 
 	static void KickOutOfVehicleAndLock();

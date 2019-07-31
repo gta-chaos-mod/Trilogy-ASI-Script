@@ -250,7 +250,7 @@ public:
 					QueueFunction(Vehicle::BlowUpAllCars);
 				}
 				else if (function == "clear_weapons") {
-					QueueFunction(Player::ClearWeapons);
+					QueueFunction(Ped::ClearWeapons);
 				}
 				QueueEffect(new EffectPlaceholder(duration, description));
 

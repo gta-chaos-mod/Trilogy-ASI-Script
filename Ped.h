@@ -9,5 +9,6 @@ class Ped
 {
 public:
 	static void SetAllOnFire();
+	static void ClearWeapons();
 };
 
