@@ -42,6 +42,8 @@ void ToDriveOrNotToDrive::FixTires() {
 
 void ToDriveOrNotToDrive::PopTires() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		vehicle->m_nPhysicalFlags.bBulletProof = false;
+
 		vehicle->BurstTyre(eWheels::WHEEL_FRONT_LEFT, true);
 		vehicle->BurstTyre(eWheels::WHEEL_REAR_LEFT, true);
 		vehicle->BurstTyre(eWheels::WHEEL_REAR_RIGHT, true);
