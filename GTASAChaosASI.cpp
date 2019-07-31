@@ -4,6 +4,7 @@
 #include "CHud.h"
 #include "CRadar.h"
 #include "CWeather.h"
+#include "CCheat.h"
 
 #include "DrawHelper.h"
 #include "Gravity.h"
@@ -71,6 +72,8 @@ public:
 		if (!queue.empty()) {
 			queue.front()();
 			queue.pop();
+
+			CCheat::m_bHasPlayerCheated = false;
 		}
 	}
 
