@@ -5,6 +5,7 @@ GhostRider::GhostRider(int _duration, std::string _description) : TimedEffect(_d
 void GhostRider::Disable() {
 	CVehicle* currentVehicle = FindPlayerVehicle(-1, false);
 	if (currentVehicle) {
+		currentVehicle->m_nPhysicalFlags.bExplosionProof = false;
 		currentVehicle->BlowUpCar(NULL, false);
 	}
 }
@@ -21,6 +22,7 @@ void GhostRider::HandleTick() {
 				vehicleList[vehicle] -= step;
 				if (vehicleList[vehicle] < 0) {
 					vehicleList.erase(it);
+					vehicle->m_nPhysicalFlags.bExplosionProof = false;
 					vehicle->BlowUpCar(NULL, false);
 				}
 			} 
@@ -42,7 +44,6 @@ void GhostRider::HandleTick() {
 			}
 		}
 
-		currentVehicle->m_fHealth = 249.9f;
 		SetBurnTimer(currentVehicle, 0.0f);
 	}
 	else if (!currentVehicle && lastVehicle && !vehicleList.contains(lastVehicle))
@@ -57,9 +58,11 @@ void GhostRider::HandleTick() {
 void GhostRider::SetBurnTimer(CVehicle* vehicle, float value) {
 	switch (reinterpret_cast<CVehicleModelInfo*>(CModelInfo::ms_modelInfoPtrs[vehicle->m_nModelIndex])->m_nVehicleType) {
 		case VEHICLE_BIKE: {
+			vehicle->m_fHealth = 249.0f;
 			*(float*)((char*)vehicle + 1980) = value;
 		}
 		case VEHICLE_AUTOMOBILE: {
+			vehicle->m_fHealth = 249.0f;
 			*(float*)((char*)vehicle + 2276) = value;
 		}
 	}
