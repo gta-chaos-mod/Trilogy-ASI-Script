@@ -55,7 +55,7 @@ static CdeclEvent<AddressList<0x53E83C, H_CALL, 0x53EBA2, H_CALL>, PRIORITY_AFTE
 class GTASAChaosMod {
 public:
 	std::queue<std::function<void()>> queue;
-	int remaining;
+	int remaining = 0;
 
 	std::list<TimedEffect*> activeEffects;
 
@@ -83,7 +83,7 @@ public:
 		}
 
 		if (effect->isPlaceholder) {
-			activeEffects.push_back(effect);
+			activeEffects.push_front(effect);
 			return;
 		}
 
@@ -96,7 +96,7 @@ public:
 			activeEffects.remove(*it);
 		}
 		else {
-			activeEffects.push_back(effect);
+			activeEffects.push_front(effect);
 		}
 	}
 
