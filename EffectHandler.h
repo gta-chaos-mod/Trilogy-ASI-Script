@@ -26,6 +26,7 @@
 #include "LongLiveTheRich.h"
 #include "InvertedControls.h"
 #include "InfiniteHealth.h"
+#include "DisableOneMovementKey.h"
 
 class EffectHandler
 {

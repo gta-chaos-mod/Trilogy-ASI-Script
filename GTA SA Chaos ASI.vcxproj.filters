@@ -107,6 +107,9 @@
     <ClCompile Include="InfiniteHealth.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="DisableOneMovementKey.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -235,6 +238,9 @@
       <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="InfiniteHealth.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="DisableOneMovementKey.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
   </ItemGroup>

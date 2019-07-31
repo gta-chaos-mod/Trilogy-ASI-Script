@@ -99,6 +99,7 @@
     <ClCompile Include="ColorHelper.cpp" />
     <ClCompile Include="CPedDamageResponseCalculator.cpp" />
     <ClCompile Include="DisableHUD.cpp" />
+    <ClCompile Include="DisableOneMovementKey.cpp" />
     <ClCompile Include="DisableRadarBlips.cpp" />
     <ClCompile Include="EffectHandler.cpp" />
     <ClCompile Include="EverybodyBleedNow.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="ColorHelper.h" />
     <ClInclude Include="CPedDamageResponseCalculator.h" />
     <ClInclude Include="DisableHUD.h" />
+    <ClInclude Include="DisableOneMovementKey.h" />
     <ClInclude Include="DisableRadarBlips.h" />
     <ClInclude Include="EffectHandler.h" />
     <ClInclude Include="EverybodyBleedNow.h" />

@@ -100,6 +100,9 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "infinite_health") {
 		return new InfiniteHealth(duration, description);
 	}
+	else if (effect == "disable_one_movement_key") {
+		return new DisableOneMovementKey(duration, description);
+	}
 
-	return nullptr;
+	return nullptr;            
 }
