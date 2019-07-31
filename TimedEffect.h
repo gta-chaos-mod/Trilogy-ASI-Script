@@ -14,12 +14,15 @@ class TimedEffect
 public:
 	bool isInitialized = false;
 	bool isPlaceholder = false;
+	bool hasType = false;
 	int remaining = 0;
 	int duration = 0;
 	std::string description = "N/A";
+	std::string type = "";
 
 public:
 	TimedEffect(int _duration, std::string _description);
+	TimedEffect(int _duration, std::string _description, std::string type);
 
 	virtual void InitializeHooks() {};
 
@@ -30,6 +33,9 @@ public:
 	int GetRemaining();
 	int GetDuration();
 	std::string GetDescription();
+	bool IsEqualDescription(TimedEffect* otherEffect);
+	std::string GetType();
+	bool IsEqualType(TimedEffect* otherEffect);
 
 	void TickDown();
 	virtual void HandleTick() {};

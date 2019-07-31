@@ -82,12 +82,14 @@ public:
 			return;
 		}
 
+		// If it's a placeholder, just add it (mostly one-time effects)
 		if (effect->isPlaceholder) {
 			activeEffects.push_front(effect);
 			return;
 		}
 
-		auto it = std::find_if(activeEffects.begin(), activeEffects.end(), [effect](TimedEffect* _effect) { return _effect->GetDescription() == effect->GetDescription(); });
+		// If an effect with the same type or description is found, disable it, remove it and add a fresh copy of it
+		auto it = std::find_if(activeEffects.begin(), activeEffects.end(), [effect](TimedEffect* _effect) { return effect->IsEqualType(_effect) || effect->IsEqualDescription(_effect); });
 		if (it != activeEffects.end()) {
 			TimedEffect* _effect = *it;
 			if (_effect) {
@@ -96,8 +98,8 @@ public:
 			activeEffects.remove(*it);
 		}
 		else {
-			activeEffects.push_front(effect);
-		}
+		activeEffects.push_front(effect);
+	}
 	}
 
 	void DrawRemainingTime() {

@@ -1,6 +1,6 @@
 #include "Suspension.h"
 
-Suspension::Suspension(float _suspension, int _duration, std::string _description) : TimedEffect(_duration, _description) {
+Suspension::Suspension(float _suspension, int _duration, std::string _description) : TimedEffect(_duration, _description, "suspension") {
 	suspension = _suspension;
 }
 

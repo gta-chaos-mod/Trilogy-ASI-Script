@@ -8,6 +8,11 @@ TimedEffect::TimedEffect(int _duration, std::string _description) {
 	}
 }
 
+TimedEffect::TimedEffect(int _duration, std::string _description, std::string _type) : TimedEffect::TimedEffect(_duration, _description) {
+	hasType = true;
+	type = _type;
+}
+
 bool TimedEffect::IsRunning() {
 	return remaining > 0;
 }
@@ -22,6 +27,18 @@ int TimedEffect::GetDuration() {
 
 std::string TimedEffect::GetDescription() {
 	return description;
+}
+
+bool TimedEffect::IsEqualDescription(TimedEffect* otherEffect) {
+	return GetDescription() == otherEffect->GetDescription();
+}
+
+std::string TimedEffect::GetType() {
+	return type;
+}
+
+bool TimedEffect::IsEqualType(TimedEffect* otherEffect) {
+	return hasType && otherEffect->hasType && GetType() == otherEffect->GetType();
 }
 
 void TimedEffect::TickDown() {
