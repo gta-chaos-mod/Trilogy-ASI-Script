@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CMenuManager.h"
 #include "CPedDamageResponseCalculator.h"
 
 #include "TruePacifist.h"
@@ -9,6 +10,9 @@
 #include "DisableHUD.h"
 #include "DisableRadarBlips.h"
 #include "InfiniteHealth.h"
+#include "InvertedControls.h"
+#include "LetsTakeABreak.h"
+#include "DisableOneMovementKey.h"
 
 class HookHandler
 {
@@ -22,4 +26,6 @@ public:
 
 	static void HookedHUDDraw();
 	static void HookedBlipsDraw();
+
+	static void __fastcall HookedProcessMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page);
 };

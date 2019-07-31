@@ -51,7 +51,7 @@ void InvertedControls::HandleTick() {
 		ControlsManager.m_actions[i] = invertedActions[i];
 	}
 
-	wait = 3000;
+	wait = 1000;
 }
 
 FILESTREAM InvertedControls::HookedOpenFile(const char* file, const char* mode) {

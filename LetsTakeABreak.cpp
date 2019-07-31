@@ -1,17 +1,44 @@
 #include "LetsTakeABreak.h"
 
-LetsTakeABreak::LetsTakeABreak(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+bool LetsTakeABreak::isEnabled = false;
+
+LetsTakeABreak::LetsTakeABreak(int _duration, std::string _description) : TimedEffect(_duration, _description, "controls") {}
+
+void LetsTakeABreak::InitializeHooks() {
+	patch::RedirectCall(0x57C676, HookedOpenFile);
+}
 
 void LetsTakeABreak::Enable() {
-	CPlayerPed* player = FindPlayerPed();
-	if (player) {
-		player->m_nPedType = 1;
+	isEnabled = true;
+
+	for (int i = 0; i < 59; i++) {
+		origActions[i] = ControlsManager.m_actions[i];
+
+		ControlsManager.m_actions[i] = CControllerAction();
 	}
 }
 
 void LetsTakeABreak::Disable() {
-	CPlayerPed* player = FindPlayerPed();
-	if (player) {
-		player->m_nPedType = 0;
+	isEnabled = false;
+
+	for (int i = 0; i < 59; i++) {
+		ControlsManager.m_actions[i] = origActions[i];
 	}
+}
+
+void LetsTakeABreak::HandleTick() {
+	if (wait > 0) {
+		wait -= CalculateTick();
+		return;
+	}
+
+	for (int i = 0; i < 59; i++) {
+		ControlsManager.m_actions[i] = CControllerAction();
+	}
+
+	wait = 1000;
+}
+
+FILESTREAM LetsTakeABreak::HookedOpenFile(const char* file, const char* mode) {
+	return isEnabled ? 0 : CFileMgr::OpenFile(file, mode);
 }
