@@ -110,6 +110,10 @@ void Vehicle::StairwayToHeaven() {
 
 void Vehicle::TurnVehiclesAround() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		if (vehicle->m_pDriver && !vehicle->IsDriver(FindPlayerPed())) {
+			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
+		}
+
 		CMatrixLink* matrix = vehicle->GetMatrix();
 		InvertVehicle(matrix);
 
