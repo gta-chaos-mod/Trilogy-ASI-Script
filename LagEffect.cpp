@@ -1,6 +1,6 @@
 #include "LagEffect.h"
 
-LagEffect::LagEffect(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+LagEffect::LagEffect(int _duration, std::string _description) : TimedEffect(_duration, _description, "gamespeed") {}
 
 void LagEffect::Disable() {
 	CTimer::ms_fTimeScale = 1.0f;
