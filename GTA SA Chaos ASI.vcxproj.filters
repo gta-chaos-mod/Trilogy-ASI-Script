@@ -110,7 +110,12 @@
     <ClCompile Include="DisableOneMovementKey.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
-    <ClCompile Include="GameSpeed.cpp" />
+    <ClCompile Include="GameSpeed.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionEffect.cpp">
+      <Filter>effects\abstract</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -244,6 +249,11 @@
     <ClInclude Include="DisableOneMovementKey.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
-    <ClInclude Include="GameSpeed.h" />
+    <ClInclude Include="GameSpeed.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionEffect.h">
+      <Filter>effects\abstract</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

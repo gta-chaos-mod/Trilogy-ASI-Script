@@ -41,7 +41,7 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	}
 
 	else if (cheat == "never_wanted") {
-		return new TimedFunctionCheat(CCheat::NotWantedCheat, 0x969171, duration, description);
+		return new TimedFunctionCheat(CCheat::NotWantedCheat, 0x969171, duration, description, "wanted");
 	}
 
 	else if (cheat == "always_midnight") {

@@ -22,6 +22,7 @@
 #include "GameSpeed.h"
 
 #include "EffectPlaceholder.h"
+#include "FunctionEffect.h"
 #include "HookHandler.h"
 #include "RandomHelper.h"
 
@@ -177,15 +178,14 @@ public:
 		switch (currentState) {
 			case EffectState::WANTED: {
 				if (function == "plus_two") {
-					QueueFunction(Wanted::IncreaseWantedLevel);
+					QueueEffect(new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted"));
 				}
 				else if (function == "clear") {
-					QueueFunction(Wanted::ClearWantedLevel);
+					QueueEffect(new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted"));
 				}
 				else if (function == "six_stars") {
-					QueueFunction(Wanted::SixWantedStars);
+					QueueEffect(new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted"));
 				}
-				QueueEffect(new EffectPlaceholder(duration, description));
 
 				break;
 			}
