@@ -4,6 +4,10 @@ TimedAddressCheat::TimedAddressCheat(int _address, int duration, std::string des
 	address = reinterpret_cast<bool*>(_address);
 }
 
+TimedAddressCheat::TimedAddressCheat(int _address, int duration, std::string description, std::string _type) : TimedAddressCheat(_address, duration, description) {
+	type = _type;
+}
+
 void TimedAddressCheat::Disable() {
 	if (address != nullptr) {
 		*address = false;

@@ -9,6 +9,7 @@ public:
 
 public:
 	TimedAddressCheat(int _address, int duration, std::string description);
+	TimedAddressCheat(int _address, int duration, std::string description, std::string type);
 
 	void Disable() override;
 
