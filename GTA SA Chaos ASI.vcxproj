@@ -103,6 +103,7 @@
     <ClCompile Include="DisableRadarBlips.cpp" />
     <ClCompile Include="EffectHandler.cpp" />
     <ClCompile Include="EverybodyBleedNow.cpp" />
+    <ClCompile Include="GameSpeed.cpp" />
     <ClCompile Include="GhostRider.cpp" />
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="HookHandler.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="DisableRadarBlips.h" />
     <ClInclude Include="EffectHandler.h" />
     <ClInclude Include="EverybodyBleedNow.h" />
+    <ClInclude Include="GameSpeed.h" />
     <ClInclude Include="GhostRider.h" />
     <ClInclude Include="Gravity.h" />
     <ClInclude Include="HookHandler.h" />

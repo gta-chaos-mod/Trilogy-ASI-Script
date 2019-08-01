@@ -110,6 +110,7 @@
     <ClCompile Include="DisableOneMovementKey.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="GameSpeed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -243,5 +244,6 @@
     <ClInclude Include="DisableOneMovementKey.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
+    <ClInclude Include="GameSpeed.h" />
   </ItemGroup>
 </Project>

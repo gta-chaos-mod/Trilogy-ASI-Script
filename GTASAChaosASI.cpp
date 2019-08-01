@@ -19,6 +19,7 @@
 
 #include "DisableHUD.h"
 #include "DisableRadarBlips.h"
+#include "GameSpeed.h"
 
 #include "EffectPlaceholder.h"
 #include "HookHandler.h"
@@ -205,8 +206,7 @@ public:
 				float speed;
 				sscanf(function.c_str(), "%f", &speed);
 
-				QueueFunction([speed] { CTimer::ms_fTimeScale = speed; });
-				QueueEffect(new EffectPlaceholder(duration, description));
+				QueueEffect(new GameSpeed(speed, duration, description));
 
 				break;
 			}
