@@ -15,7 +15,9 @@ void InvisibleVehicles::HandleTick() {
 void InvisibleVehicles::TryRenderAtomic(RwFrame* frame) {
 	if (frame) {
 		RpAtomic* atomic = (RpAtomic*)GetFirstObject(frame);
-		atomic->renderCallBack(atomic);
+		if (atomic) {
+			atomic->renderCallBack(atomic);
+		}
 	}
 }
 
