@@ -14,7 +14,6 @@ class TimedEffect
 public:
 	bool isInitialized = false;
 	bool isPlaceholder = false;
-	bool hasType = false;
 	int remaining = 0;
 	int duration = 0;
 	std::string description = "N/A";
