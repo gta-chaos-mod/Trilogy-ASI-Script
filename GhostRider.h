@@ -4,6 +4,7 @@
 
 #include "CAutomobile.h"
 #include "CBike.h"
+#include "CBoat.h"
 #include "CModelInfo.h"
 
 #include <map>
