@@ -2,7 +2,8 @@
 
 bool DisableHUD::isEnabled = false;
 
-DisableHUD::DisableHUD(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+DisableHUD::DisableHUD(int _duration, std::string _description)
+	: TimedEffect(_duration, _description) {}
 
 void DisableHUD::Enable() {
 	isEnabled = true;

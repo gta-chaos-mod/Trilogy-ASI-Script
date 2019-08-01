@@ -2,7 +2,8 @@
 
 bool LongLiveTheRich::isEnabled = false;
 
-LongLiveTheRich::LongLiveTheRich(int _duration, std::string _description) : TimedEffect(_duration, _description) {
+LongLiveTheRich::LongLiveTheRich(int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "health") {
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
 		storedMoney = player->GetPlayerInfoForThisPlayerPed()->m_nMoney;

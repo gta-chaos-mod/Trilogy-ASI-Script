@@ -1,6 +1,7 @@
 #include "OneHitKO.h"
 
-OneHitKO::OneHitKO(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+OneHitKO::OneHitKO(int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "health") {}
 
 void OneHitKO::HandleTick() {
 	for (CPed* ped : CPools::ms_pPedPool) {

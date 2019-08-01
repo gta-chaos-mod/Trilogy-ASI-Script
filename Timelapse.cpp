@@ -1,6 +1,7 @@
 #include "Timelapse.h"
 
-Timelapse::Timelapse(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+Timelapse::Timelapse(int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "timecycle") {}
 
 void Timelapse::Enable() {
 	CClock::ms_nMillisecondsPerGameMinute = 10;

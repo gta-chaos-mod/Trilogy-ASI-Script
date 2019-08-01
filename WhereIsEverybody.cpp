@@ -1,6 +1,7 @@
 #include "WhereIsEverybody.h"
 
-WhereIsEverybody::WhereIsEverybody(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+WhereIsEverybody::WhereIsEverybody(int _duration, std::string _description)
+	: TimedEffect(_duration, _description) {}
 
 void WhereIsEverybody::InitializeHooks() {
 	patch::RedirectCall(0x5E6900, HookedRenderPedShadow);

@@ -2,7 +2,8 @@
 
 bool* InvisibleVehicles::isEnabled = reinterpret_cast<bool*>(0x96914B);
 
-InvisibleVehicles::InvisibleVehicles(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+InvisibleVehicles::InvisibleVehicles(int _duration, std::string _description)
+	: TimedEffect(_duration, _description) {}
 
 void InvisibleVehicles::Disable() {
 	*isEnabled = false;

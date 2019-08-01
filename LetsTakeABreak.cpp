@@ -2,7 +2,8 @@
 
 bool LetsTakeABreak::isEnabled = false;
 
-LetsTakeABreak::LetsTakeABreak(int _duration, std::string _description) : TimedEffect(_duration, _description, "controls") {}
+LetsTakeABreak::LetsTakeABreak(int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "controls") {}
 
 void LetsTakeABreak::InitializeHooks() {
 	patch::RedirectCall(0x57C676, HookedOpenFile);

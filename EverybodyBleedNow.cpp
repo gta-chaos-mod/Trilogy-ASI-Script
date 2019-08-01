@@ -1,6 +1,7 @@
 #include "EverybodyBleedNow.h"
 
-EverybodyBleedNow::EverybodyBleedNow(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+EverybodyBleedNow::EverybodyBleedNow(int _duration, std::string _description)
+	: TimedEffect(_duration, _description) {}
 
 void EverybodyBleedNow::Disable() {
 	for (CPed* ped : CPools::ms_pPedPool) {

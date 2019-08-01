@@ -1,6 +1,7 @@
 #include "GameSpeed.h"
 
-GameSpeed::GameSpeed(float _gameSpeed, int _duration, std::string _description) : TimedEffect(_duration, _description, "gamespeed") {
+GameSpeed::GameSpeed(float _gameSpeed, int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "gamespeed") {
 	gameSpeed = _gameSpeed;
 }
 

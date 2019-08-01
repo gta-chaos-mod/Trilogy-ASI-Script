@@ -2,7 +2,8 @@
 
 bool InvertedControls::isEnabled = false;
 
-InvertedControls::InvertedControls(int _duration, std::string _description) : TimedEffect(_duration, _description, "controls") {}
+InvertedControls::InvertedControls(int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "controls") {}
 
 void InvertedControls::InitializeHooks() {
 	patch::RedirectCall(0x57C676, HookedOpenFile);

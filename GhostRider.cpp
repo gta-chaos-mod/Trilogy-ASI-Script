@@ -1,6 +1,7 @@
 #include "GhostRider.h"
 
-GhostRider::GhostRider(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+GhostRider::GhostRider(int _duration, std::string _description)
+	: TimedEffect(_duration, _description) {}
 
 void GhostRider::Disable() {
 	CVehicle* currentVehicle = FindPlayerVehicle(-1, false);

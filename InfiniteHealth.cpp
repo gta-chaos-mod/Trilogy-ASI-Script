@@ -2,7 +2,8 @@
 
 bool InfiniteHealth::isEnabled = false;
 
-InfiniteHealth::InfiniteHealth(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+InfiniteHealth::InfiniteHealth(int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "health") {}
 
 void InfiniteHealth::Enable() {
 	isEnabled = true;

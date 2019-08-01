@@ -1,6 +1,7 @@
 #include "ToDriveOrNotToDrive.h"
 
-ToDriveOrNotToDrive::ToDriveOrNotToDrive(int _duration, std::string _description) : TimedEffect(_duration, _description) {}
+ToDriveOrNotToDrive::ToDriveOrNotToDrive(int _duration, std::string _description)
+	: TimedEffect(_duration, _description) {}
 
 void ToDriveOrNotToDrive::Disable() {
 	FixTires();
