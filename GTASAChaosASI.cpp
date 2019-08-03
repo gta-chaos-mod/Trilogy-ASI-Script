@@ -29,7 +29,7 @@
 #include <queue>
 #include <thread>
 
-// Version 0.998
+// Version 0.999
 
 using namespace plugin;
 
