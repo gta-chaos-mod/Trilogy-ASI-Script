@@ -27,6 +27,9 @@
 #include "InvertedControls.h"
 #include "InfiniteHealth.h"
 #include "DisableOneMovementKey.h"
+#include "FailMission.h"
+#include "ThermalNightVision.h"
+#include "PassMission.h"
 
 class EffectHandler
 {

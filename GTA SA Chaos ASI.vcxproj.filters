@@ -116,6 +116,15 @@
     <ClCompile Include="FunctionEffect.cpp">
       <Filter>effects\abstract</Filter>
     </ClCompile>
+    <ClCompile Include="FailMission.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="ThermalNightVision.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="PassMission.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -254,6 +263,15 @@
     </ClInclude>
     <ClInclude Include="FunctionEffect.h">
       <Filter>effects\abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="FailMission.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="ThermalNightVision.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="PassMission.h">
+      <Filter>effects\impl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

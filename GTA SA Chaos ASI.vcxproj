@@ -103,6 +103,7 @@
     <ClCompile Include="DisableRadarBlips.cpp" />
     <ClCompile Include="EffectHandler.cpp" />
     <ClCompile Include="EverybodyBleedNow.cpp" />
+    <ClCompile Include="FailMission.cpp" />
     <ClCompile Include="FunctionEffect.cpp" />
     <ClCompile Include="GameSpeed.cpp" />
     <ClCompile Include="GhostRider.cpp" />
@@ -115,12 +116,14 @@
     <ClCompile Include="LetsTakeABreak.cpp" />
     <ClCompile Include="LongLiveTheRich.cpp" />
     <ClCompile Include="OneHitKO.cpp" />
+    <ClCompile Include="PassMission.cpp" />
     <ClCompile Include="Ped.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RainbowCars.cpp" />
     <ClCompile Include="RandomHelper.cpp" />
     <ClCompile Include="Suspension.cpp" />
     <ClCompile Include="Teleportation.cpp" />
+    <ClCompile Include="ThermalNightVision.cpp" />
     <ClCompile Include="TimedAddressCheat.cpp" />
     <ClCompile Include="TimedEffect.cpp" />
     <ClCompile Include="DrawHelper.cpp" />
@@ -144,6 +147,7 @@
     <ClInclude Include="DisableRadarBlips.h" />
     <ClInclude Include="EffectHandler.h" />
     <ClInclude Include="EverybodyBleedNow.h" />
+    <ClInclude Include="FailMission.h" />
     <ClInclude Include="FunctionEffect.h" />
     <ClInclude Include="GameSpeed.h" />
     <ClInclude Include="GhostRider.h" />
@@ -156,12 +160,14 @@
     <ClInclude Include="LetsTakeABreak.h" />
     <ClInclude Include="LongLiveTheRich.h" />
     <ClInclude Include="OneHitKO.h" />
+    <ClInclude Include="PassMission.h" />
     <ClInclude Include="Ped.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RainbowCars.h" />
     <ClInclude Include="RandomHelper.h" />
     <ClInclude Include="Suspension.h" />
     <ClInclude Include="Teleportation.h" />
+    <ClInclude Include="ThermalNightVision.h" />
     <ClInclude Include="TimedAddressCheat.h" />
     <ClInclude Include="TimedEffect.h" />
     <ClInclude Include="DrawHelper.h" />

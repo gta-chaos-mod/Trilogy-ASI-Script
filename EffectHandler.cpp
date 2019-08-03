@@ -103,6 +103,18 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "disable_one_movement_key") {
 		return new DisableOneMovementKey(duration, description);
 	}
+	else if (effect == "fail_mission") {
+		return new FailMission(duration, description);
+	}
+	else if (effect == "night_vision") {
+		return new ThermalNightVision(true, duration, description);
+	}
+	else if (effect == "thermal_vision") {
+		return new ThermalNightVision(false, duration, description);
+	}
+	else if (effect == "pass_mission") {
+		return new PassMission(duration, description);
+	}
 
-	return nullptr;            
+	return nullptr;
 }
