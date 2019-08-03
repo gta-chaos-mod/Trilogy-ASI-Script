@@ -16,8 +16,8 @@ void EffectHandler::HandleEffect(std::string effect) {
 	else if (effect == "pop_vehicle_tires") {
 		Vehicle::PopAllVehicleTires();
 	}
-	else if (effect == "stairway_to_heaven") {
-		Vehicle::StairwayToHeaven();
+	else if (effect == "send_vehicles_to_space") {
+		Vehicle::SendVehiclesToSpace();
 	}
 
 	else if (effect == "max_stamina") {

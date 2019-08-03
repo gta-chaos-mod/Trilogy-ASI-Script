@@ -98,7 +98,7 @@ void Vehicle::PopAllVehicleTires() {
 	}
 }
 
-void Vehicle::StairwayToHeaven() {
+void Vehicle::SendVehiclesToSpace() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		if (vehicle->m_pDriver && !vehicle->IsDriver(FindPlayerPed())) {
 			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);

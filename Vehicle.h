@@ -34,7 +34,7 @@ public:
 
 	static void SetPlayerVehicleOnFire();
 	static void PopAllVehicleTires();
-	static void StairwayToHeaven();
+	static void SendVehiclesToSpace();
 	static void TurnVehiclesAround();
 	static void SetSuspension(float suspension);
 	static void ResetSuspension();
