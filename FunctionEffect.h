@@ -13,4 +13,3 @@ public:
 
 	void Enable() override;
 };
-

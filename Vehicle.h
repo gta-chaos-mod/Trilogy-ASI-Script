@@ -36,8 +36,6 @@ public:
 	static void PopAllVehicleTires();
 	static void SendVehiclesToSpace();
 	static void TurnVehiclesAround();
-	static void SetSuspension(float suspension);
-	static void ResetSuspension();
 
 private:
 	static void InvertVehicle(CMatrix* matrix);

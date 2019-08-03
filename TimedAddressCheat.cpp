@@ -11,13 +11,13 @@ TimedAddressCheat::TimedAddressCheat(int _address, int _duration, std::string _d
 }
 
 void TimedAddressCheat::Disable() {
-	if (address != nullptr) {
+	if (address) {
 		*address = false;
 	}
 }
 
 void TimedAddressCheat::HandleTick() {
-	if (address != nullptr) {
+	if (address) {
 		*address = true;
 	}
 }

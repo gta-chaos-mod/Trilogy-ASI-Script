@@ -30,4 +30,3 @@ public:
 private:
 	void SwapControls(e_ControllerAction source, e_ControllerAction target);
 };
-

@@ -40,6 +40,6 @@ public:
 	virtual void HandleTick() {};
 
 	int CalculateTick() {
-		return (int)((CTimer::ms_fTimeStepNonClipped / CTimer::ms_fTimeScale) * 0.02f * 1000.0f);
+		return (int)((CTimer::ms_fTimeStepNonClipped / max(0.001f, CTimer::ms_fTimeScale)) * 0.02f * 1000.0f);
 	};
 };

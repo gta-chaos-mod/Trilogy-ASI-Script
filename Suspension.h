@@ -8,6 +8,7 @@
 class Suspension : public TimedEffect
 {
 private:
+	tHandlingData origVehicleHandling[210];
 	float suspension = 1.0f;
 
 public:

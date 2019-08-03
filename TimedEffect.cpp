@@ -58,4 +58,7 @@ void TimedEffect::TickDown() {
 			Disable();
 		}
 	}
+	else {
+		Disable();
+	}
 }

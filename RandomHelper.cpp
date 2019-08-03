@@ -6,6 +6,10 @@ void RandomHelper::SetSeed(int seed) {
 	rng.seed(seed);
 }
 
+std::mt19937 RandomHelper::GetRNG() {
+	return rng;
+}
+
 int RandomHelper::Random(int min, int max) {
 	return Random(min, max, 1);
 }

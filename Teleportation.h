@@ -11,4 +11,3 @@ class Teleportation
 public:
 	static void Teleport(CVector destination);
 };
-

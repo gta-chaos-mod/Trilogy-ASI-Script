@@ -16,4 +16,3 @@ public:
 	void Enable() override;
 	void Disable() override;
 };
-

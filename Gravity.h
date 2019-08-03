@@ -13,9 +13,8 @@ private:
 	float gravity = 0.008f;
 
 public:
-	Gravity(float _gravity, int duration, std::string description);
+	Gravity(float _gravity, int _duration, std::string _description);
 
-	void Enable() override;
 	void Disable() override;
 
 	void HandleTick() override;

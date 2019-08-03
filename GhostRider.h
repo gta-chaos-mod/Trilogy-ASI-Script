@@ -25,4 +25,3 @@ public:
 private:
 	void SetBurnTimer(CVehicle* vehicle, float value);
 };
-

@@ -1,7 +1,7 @@
 #include "ToTheLeftToTheRight.h"
 
-ToTheLeftToTheRight::ToTheLeftToTheRight(int duration, std::string description)
-	: TimedEffect(duration, description) {}
+ToTheLeftToTheRight::ToTheLeftToTheRight(int _duration, std::string _description)
+	: TimedEffect(_duration, _description) {}
 
 void ToTheLeftToTheRight::HandleTick() {
 	if (wait > 0) {

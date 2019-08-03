@@ -27,4 +27,3 @@ public:
 
 	static FILESTREAM HookedOpenFile(const char* file, const char* mode);
 };
-

@@ -14,8 +14,6 @@ void LetsTakeABreak::Enable() {
 
 	for (int i = 0; i < 59; i++) {
 		origActions[i] = ControlsManager.m_actions[i];
-
-		ControlsManager.m_actions[i] = CControllerAction();
 	}
 }
 

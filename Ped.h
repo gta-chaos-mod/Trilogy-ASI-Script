@@ -11,4 +11,3 @@ public:
 	static void SetAllOnFire();
 	static void ClearWeapons();
 };
-

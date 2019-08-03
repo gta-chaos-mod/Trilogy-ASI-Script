@@ -31,8 +31,6 @@ void DisableOneMovementKey::Enable() {
 	};
 
 	targetKey = possibleActions[RandomHelper::Random(0, 9)];
-
-	ControlsManager.m_actions[targetKey] = CControllerAction();
 }
 
 void DisableOneMovementKey::Disable() {

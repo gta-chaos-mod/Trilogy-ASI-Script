@@ -29,4 +29,3 @@ public:
 	static RpMaterial* MaterialCallback(RpMaterial* material, void* color);
 	static RpAtomic* AtomicCallback(RpAtomic* atomic, void* color);
 };
-

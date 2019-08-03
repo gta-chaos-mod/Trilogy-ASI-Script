@@ -18,4 +18,3 @@ public:
 	static void HandleCheat(std::string cheat);
 	static TimedEffect* HandleTimedCheat(std::string cheat, int duration, std::string description);
 };
-

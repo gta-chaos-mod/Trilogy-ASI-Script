@@ -1,12 +1,8 @@
 #include "Gravity.h"
 
-Gravity::Gravity(float _gravity, int duration, std::string description)
-	: TimedEffect(duration, description, "gravity") {
+Gravity::Gravity(float _gravity, int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "gravity") {
 	gravity = _gravity;
-}
-
-void Gravity::Enable() {
-	GAME_GRAVITY = gravity;
 }
 
 void Gravity::Disable() {
@@ -19,4 +15,6 @@ void Gravity::HandleTick() {
 			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
 		}
 	}
+
+	GAME_GRAVITY = gravity;
 }

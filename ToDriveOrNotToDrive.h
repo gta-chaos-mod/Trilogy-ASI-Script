@@ -22,4 +22,3 @@ private:
 	void FixTires();
 	void PopTires();
 };
-

@@ -37,4 +37,3 @@ public:
 	static void HandleEffect(std::string effect);
 	static TimedEffect* HandleTimedEffect(std::string effect, int duration, std::string description);
 };
-

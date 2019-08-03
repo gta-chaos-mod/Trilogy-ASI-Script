@@ -1,16 +1,24 @@
 #include "Suspension.h"
 
 Suspension::Suspension(float _suspension, int _duration, std::string _description)
-	: TimedEffect(_duration, _description, "suspension") {
+	: TimedEffect(_duration, _description, "handling") {
 	suspension = _suspension;
 }
 
 void Suspension::Enable() {
-	Vehicle::SetSuspension(suspension);
+	for (int i = 0; i < 210; i++) {
+		origVehicleHandling[i] = gHandlingDataMgr.m_aVehicleHandling[i];
+	}
+
+	for (int i = 0; i < 210; i++) {
+		gHandlingDataMgr.m_aVehicleHandling[i].m_fSuspensionDampingLevel = suspension;
+	}
 }
 
 void Suspension::Disable() {
-	Vehicle::ResetSuspension();
+	for (int i = 0; i < 210; i++) {
+		gHandlingDataMgr.m_aVehicleHandling[i] = origVehicleHandling[i];
+	}
 }
 
 void Suspension::HandleTick() {
