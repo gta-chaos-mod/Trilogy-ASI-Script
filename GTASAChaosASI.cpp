@@ -59,6 +59,7 @@ public:
 	bool* onMission = reinterpret_cast<bool*>(0xA49FC4);
 	int lastPassedMissions = -1;
 	bool canAutoSave = false;
+	bool hasLoadedSave = false;
 
 	std::list<TimedEffect*> activeEffects;
 
@@ -346,12 +347,38 @@ public:
 		t1.detach();
 	}
 
+	void HandleSaveLoad() {
+		if (!hasLoadedSave) {
+			if (KeyPressed(VK_F7)) {
+				hasLoadedSave = true;
+
+				char path[256];
+				char* gamePath = reinterpret_cast<char*>(0xC92368);
+
+				std::sprintf(path, "%s\\chaos_autosave.b", gamePath);
+
+				if (std::filesystem::exists(path)) {
+					strcpy(CGenericGameStorage::ms_LoadFileNameWithPath, path);
+					//CGenericGameStorage::ms_FileHandle = fopen(path, "r");
+
+					bool ignore = false;
+					//CGame::ShutDownForRestart();
+					//CTimer::Stop();
+					FrontEndMenuManager.m_bMenuActive = false;
+					FrontEndMenuManager.m_bLoadingData = true;
+					CGame::InitialiseWhenRestarting();
+				}
+			}
+		}
+	}
+
 	GTASAChaosMod() {
 		SetupPipe();
 
 		HookHandler::Initialize();
 
 		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });
+		//Events::drawMenuBackgroundEvent.Add([this] { this->HandleSaveLoad(); });
 
 		onDrawAfterFade.AddAfter([this] { this->DrawRemainingTime(); });
 	}
