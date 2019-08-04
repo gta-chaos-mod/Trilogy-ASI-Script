@@ -1,8 +1,5 @@
 #pragma once
 
-#include "common.h"
-#include "plugin.h"
-
 #include "TimedEffect.h"
 
 class GameSpeed : public TimedEffect

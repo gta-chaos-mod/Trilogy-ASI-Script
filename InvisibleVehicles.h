@@ -2,11 +2,11 @@
 
 #include "TimedEffect.h"
 
-#include "CPlane.h"
 #include "CBike.h"
 #include "CBmx.h"
 #include "CHeli.h"
 #include "CModelInfo.h"
+#include "CPlane.h"
 #include "CShadows.h"
 
 class InvisibleVehicles : public TimedEffect

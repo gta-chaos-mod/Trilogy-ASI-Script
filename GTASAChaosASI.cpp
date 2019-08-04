@@ -1,36 +1,31 @@
 #include "plugin.h"
 #include "common.h"
 
-#include "CHud.h"
-#include "CRadar.h"
-#include "CWeather.h"
-#include "CCheat.h"
+#include <filesystem>
+#include <queue>
+#include <thread>
 
-#include "DrawHelper.h"
-#include "Gravity.h"
-#include "Ped.h"
-#include "Player.h"
-#include "Teleportation.h"
-#include "Vehicle.h"
-#include "Wanted.h"
-
+#include "Autosave.h"
 #include "CheatHandler.h"
+#include "DrawHelper.h"
 #include "EffectHandler.h"
-
-#include "DisableHUD.h"
-#include "DisableRadarBlips.h"
-#include "GameSpeed.h"
-
 #include "EffectPlaceholder.h"
 #include "FunctionEffect.h"
 #include "HookHandler.h"
 #include "RandomHelper.h"
-#include "Autosave.h"
 
+#include "GameSpeed.h"
+#include "Gravity.h"
+#include "Ped.h"
+#include "Teleportation.h"
+#include "Vehicle.h"
+#include "Wanted.h"
+
+#include "CCheat.h"
+#include "CGenericGameStorage.h"
 #include "CStats.h"
+#include "CWeather.h"
 
-#include <queue>
-#include <thread>
 
 // Version 0.999
 

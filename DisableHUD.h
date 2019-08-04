@@ -2,8 +2,8 @@
 
 #include "TimedEffect.h"
 
-#include "CRadar.h"
 #include "CHud.h"
+#include "CRadar.h"
 
 class DisableHUD : public TimedEffect
 {

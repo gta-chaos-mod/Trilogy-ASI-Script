@@ -1,11 +1,8 @@
 #pragma once
 
-#include "common.h"
-#include "plugin.h"
+#include "TimedEffect.h"
 
 #include "extensions/ScriptCommands.h"
-
-#include "TimedEffect.h"
 
 class ThermalNightVision : public TimedEffect
 {

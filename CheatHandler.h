@@ -3,13 +3,12 @@
 #include "common.h"
 #include "plugin.h"
 
-#include "CCheat.h"
 #include "TimedEffect.h"
 #include "TimedAddressCheat.h"
 #include "TimedFunctionCheat.h"
 
+#include "CCheat.h"
 #include "InvisibleVehicles.h"
-
 #include "Player.h"
 
 class CheatHandler

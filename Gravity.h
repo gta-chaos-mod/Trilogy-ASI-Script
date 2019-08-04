@@ -1,11 +1,8 @@
 #pragma once
 
-#include "common.h"
-#include "plugin.h"
+#include "TimedEffect.h"
 
 #include "CCarCtrl.h"
-
-#include "TimedEffect.h"
 
 class Gravity : public TimedEffect
 {

@@ -3,7 +3,6 @@
 #include "TimedEffect.h"
 
 #include "CGenericGameStorage.h"
-#include "DrawHelper.h"
 
 class Autosave : public TimedEffect
 {

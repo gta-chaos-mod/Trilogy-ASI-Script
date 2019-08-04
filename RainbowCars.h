@@ -1,13 +1,13 @@
 #pragma once
 
-#include "TimedEffect.h"
+#include <map>
 
-#include "CModelInfo.h"
-#include "CVehicleModelInfo.h"
+#include "TimedEffect.h"
 
 #include "ColorHelper.h"
 
-#include <map>
+#include "CModelInfo.h"
+#include "CVehicleModelInfo.h"
 
 class RainbowCars : public TimedEffect
 {

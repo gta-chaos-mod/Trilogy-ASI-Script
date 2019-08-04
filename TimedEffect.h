@@ -3,9 +3,9 @@
 #include "common.h"
 #include "plugin.h"
 
-#include "CTimer.h"
-
 #include "RandomHelper.h"
+
+#include "CTimer.h"
 
 using namespace plugin;
 

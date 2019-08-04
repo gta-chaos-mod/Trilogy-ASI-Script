@@ -1,10 +1,5 @@
 #pragma once
 
-#include "common.h"
-#include "plugin.h"
-
-#include "extensions/ScriptCommands.h"
-
 #include "EffectPlaceholder.h"
 
 class PassMission : public EffectPlaceholder

@@ -4,8 +4,8 @@
 #include "plugin.h"
 
 #include "CPlayerInfo.h"
-#include "CTaskSimpleCarSetPedOut.h"
 #include "CStats.h"
+#include "CTaskSimpleCarSetPedOut.h"
 
 class Player
 {

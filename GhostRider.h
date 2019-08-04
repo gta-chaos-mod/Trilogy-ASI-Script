@@ -1,13 +1,13 @@
 #pragma once
 
+#include <map>
+
 #include "TimedEffect.h"
 
 #include "CAutomobile.h"
 #include "CBike.h"
 #include "CBoat.h"
 #include "CModelInfo.h"
-
-#include <map>
 
 class GhostRider : public TimedEffect
 {

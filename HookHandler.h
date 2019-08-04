@@ -1,18 +1,18 @@
 #pragma once
 
-#include "CMenuManager.h"
-#include "CPedDamageResponseCalculator.h"
-
-#include "TruePacifist.h"
-#include "LongLiveTheRich.h"
-#include "InvisibleVehicles.h"
-#include "RainbowCars.h"
 #include "DisableHUD.h"
+#include "DisableOneMovementKey.h"
 #include "DisableRadarBlips.h"
 #include "InfiniteHealth.h"
 #include "InvertedControls.h"
+#include "InvisibleVehicles.h"
 #include "LetsTakeABreak.h"
-#include "DisableOneMovementKey.h"
+#include "LongLiveTheRich.h"
+#include "RainbowCars.h"
+#include "TruePacifist.h"
+
+#include "CMenuManager.h"
+#include "CPedDamageResponseCalculator.h"
 
 class HookHandler
 {

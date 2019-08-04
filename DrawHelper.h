@@ -3,16 +3,16 @@
 #include "plugin.h"
 #include "common.h"
 
-#include "CFont.h"
-#include "CTimer.h"
-
-#include "TimedEffect.h"
-
 #define _USE_MATH_DEFINES
 
 #include <math.h>
 
 #define deg2rad(angleDegrees) ((angleDegrees) * M_PI / 180.0)
+
+#include "TimedEffect.h"
+
+#include "CFont.h"
+#include "CTimer.h"
 
 class DrawHelper
 {

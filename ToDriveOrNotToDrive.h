@@ -2,8 +2,8 @@
 
 #include "TimedEffect.h"
 
-#include "CBike.h"
 #include "CAutomobile.h"
+#include "CBike.h"
 
 class ToDriveOrNotToDrive : public TimedEffect
 {

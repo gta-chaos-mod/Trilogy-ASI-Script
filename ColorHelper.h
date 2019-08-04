@@ -3,8 +3,6 @@
 #include "plugin.h"
 #include "common.h"
 
-#include "DrawHelper.h"
-
 using namespace plugin;
 
 class ColorHelper

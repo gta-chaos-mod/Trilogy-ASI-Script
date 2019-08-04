@@ -1,11 +1,8 @@
 #pragma once
 
-#include "common.h"
-#include "plugin.h"
+#include "EffectPlaceholder.h"
 
 #include "extensions/ScriptCommands.h"
-
-#include "EffectPlaceholder.h"
 
 class FailMission : public EffectPlaceholder
 {
