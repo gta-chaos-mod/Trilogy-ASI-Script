@@ -95,6 +95,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Autosave.cpp" />
     <ClCompile Include="CheatHandler.cpp" />
     <ClCompile Include="ColorHelper.cpp" />
     <ClCompile Include="CPedDamageResponseCalculator.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="WhereIsEverybody.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Autosave.h" />
     <ClInclude Include="CheatHandler.h" />
     <ClInclude Include="ColorHelper.h" />
     <ClInclude Include="CPedDamageResponseCalculator.h" />

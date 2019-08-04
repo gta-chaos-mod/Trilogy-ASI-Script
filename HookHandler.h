@@ -17,6 +17,9 @@
 class HookHandler
 {
 public:
+	static bool canLoadSave;
+
+public:
 	static void Initialize();
 
 	static void __fastcall HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, int cDamageResponseInfo);

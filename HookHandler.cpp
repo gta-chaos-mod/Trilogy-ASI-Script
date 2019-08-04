@@ -1,5 +1,7 @@
 #include "HookHandler.h"
 
+bool HookHandler::canLoadSave = true;
+
 void HookHandler::Initialize() {
 	// True Pacifist + Long Live The Rich
 	patch::RedirectCall(0x4B5B19, HookedAccountForPedArmour);
@@ -109,6 +111,13 @@ void HookHandler::HookedBlipsDraw() {
 }
 
 void __fastcall HookHandler::HookedProcessMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page) {
+	if (page == eMenuPage::MENUPAGE_START_GAME) { // NO LOADING :AngryBongo:
+		if (!canLoadSave) {
+			return;
+		}
+		canLoadSave = false;
+	}
+
 	if (page == eMenuPage::MENUPAGE_REDEFINE_CONTROLS) {
 		if (InvertedControls::isEnabled || LetsTakeABreak::isEnabled || DisableOneMovementKey::isEnabled) {
 			return;

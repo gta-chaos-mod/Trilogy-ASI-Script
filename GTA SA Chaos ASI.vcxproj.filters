@@ -125,6 +125,9 @@
     <ClCompile Include="PassMission.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="Autosave.cpp">
+      <Filter>effects\abstract</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -272,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="PassMission.h">
       <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Autosave.h">
+      <Filter>effects\abstract</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

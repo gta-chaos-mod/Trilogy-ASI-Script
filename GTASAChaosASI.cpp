@@ -25,6 +25,9 @@
 #include "FunctionEffect.h"
 #include "HookHandler.h"
 #include "RandomHelper.h"
+#include "Autosave.h"
+
+#include "CStats.h"
 
 #include <queue>
 #include <thread>
@@ -58,6 +61,9 @@ class GTASAChaosMod {
 public:
 	std::queue<std::function<void()>> queue;
 	int remaining = 0;
+	bool* onMission = reinterpret_cast<bool*>(0xA49FC4);
+	int lastPassedMissions = -1;
+	bool canAutoSave = false;
 
 	std::list<TimedEffect*> activeEffects;
 
@@ -70,6 +76,20 @@ public:
 		activeEffects.remove_if([](TimedEffect* effect) { return !effect->IsRunning(); });
 
 		CCheat::m_bHasPlayerCheated = false;
+
+		HandleAutoSave();
+	}
+
+	void HandleAutoSave() {
+		int currentPassedMissions = (int) CStats::GetStatValue(eStats::STAT_MISSIONS_PASSED);
+		if (*onMission && !canAutoSave) {
+			lastPassedMissions = currentPassedMissions;
+			canAutoSave = true;
+		}
+		else if (!*onMission && currentPassedMissions > lastPassedMissions && canAutoSave) {
+			QueueEffect(new Autosave());
+			canAutoSave = false;
+		}
 	}
 
 	void EmptyQueue() {
