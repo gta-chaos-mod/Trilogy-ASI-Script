@@ -7,6 +7,8 @@ Gravity::Gravity(float _gravity, int _duration, std::string _description)
 
 void Gravity::Disable() {
 	GAME_GRAVITY = 0.008f;
+
+	TimedEffect::Disable();
 }
 
 void Gravity::HandleTick() {

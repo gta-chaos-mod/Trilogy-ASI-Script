@@ -5,6 +5,8 @@ LagEffect::LagEffect(int _duration, std::string _description)
 
 void LagEffect::Disable() {
 	CTimer::ms_fTimeScale = 1.0f;
+
+	TimedEffect::Disable();
 }
 
 void LagEffect::HandleTick() {

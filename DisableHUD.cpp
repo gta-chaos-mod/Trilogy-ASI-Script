@@ -11,4 +11,6 @@ void DisableHUD::Enable() {
 
 void DisableHUD::Disable() {
 	isEnabled = false;
+
+	TimedEffect::Disable();
 }

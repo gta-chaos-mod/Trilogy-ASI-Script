@@ -40,6 +40,8 @@ void InvertedControls::Disable() {
 	for (int i = 0; i < 59; i++) {
 		ControlsManager.m_actions[i] = origActions[i];
 	}
+
+	TimedEffect::Disable();
 }
 
 void InvertedControls::HandleTick() {

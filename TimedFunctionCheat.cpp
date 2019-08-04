@@ -15,6 +15,8 @@ void TimedFunctionCheat::Disable() {
 	if (function && address && *address) {
 		reinterpret_cast<void(*)()> (function) ();
 	}
+
+	TimedEffect::Disable();
 }
 
 void TimedFunctionCheat::HandleTick() {

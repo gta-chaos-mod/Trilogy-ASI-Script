@@ -52,7 +52,9 @@ void TimedEffect::TickDown() {
 	if (remaining >= 0) {
 		remaining -= CalculateTick();
 
-		HandleTick();
+		if (!isDisabled) {
+			HandleTick();
+		}
 
 		if (remaining <= 0) {
 			Disable();

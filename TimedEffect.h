@@ -12,6 +12,7 @@ using namespace plugin;
 class TimedEffect
 {
 public:
+	bool isDisabled = false;
 	bool isInitialized = false;
 	bool isPlaceholder = false;
 	int remaining = 0;
@@ -26,7 +27,9 @@ public:
 	virtual void InitializeHooks() {};
 
 	virtual void Enable() {};
-	virtual void Disable() {};
+	virtual void Disable() {
+		isDisabled = true;
+	};
 
 	bool IsRunning();
 	int GetRemaining();

@@ -16,6 +16,8 @@ void PassMission::Enable() {
 
 void PassMission::Disable() {
 	isEnabled = false;
+
+	TimedEffect::Disable();
 }
 
 void PassMission::HandleTick() {

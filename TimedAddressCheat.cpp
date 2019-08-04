@@ -14,6 +14,8 @@ void TimedAddressCheat::Disable() {
 	if (address) {
 		*address = false;
 	}
+
+	TimedEffect::Disable();
 }
 
 void TimedAddressCheat::HandleTick() {

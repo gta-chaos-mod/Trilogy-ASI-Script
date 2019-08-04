@@ -8,6 +8,8 @@ void EverybodyBleedNow::Disable() {
 		ped->m_nPedFlags.bDoBloodyFootprints = false;
 		ped->m_nPedFlags.bPedIsBleeding = false;
 	}
+
+	TimedEffect::Disable();
 }
 
 void EverybodyBleedNow::HandleTick() {

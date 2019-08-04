@@ -7,6 +7,8 @@ InvisibleVehicles::InvisibleVehicles(int _duration, std::string _description)
 
 void InvisibleVehicles::Disable() {
 	*isEnabled = false;
+
+	TimedEffect::Disable();
 }
 
 void InvisibleVehicles::HandleTick() {

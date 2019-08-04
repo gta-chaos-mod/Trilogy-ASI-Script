@@ -11,4 +11,6 @@ void DisableRadarBlips::Enable() {
 
 void DisableRadarBlips::Disable() {
 	isEnabled = false;
+
+	TimedEffect::Disable();
 }

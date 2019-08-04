@@ -5,6 +5,8 @@ ToDriveOrNotToDrive::ToDriveOrNotToDrive(int _duration, std::string _description
 
 void ToDriveOrNotToDrive::Disable() {
 	FixTires();
+
+	TimedEffect::Disable();
 }
 
 void ToDriveOrNotToDrive::HandleTick() {

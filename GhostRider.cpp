@@ -9,6 +9,8 @@ void GhostRider::Disable() {
 		currentVehicle->m_nPhysicalFlags.bExplosionProof = false;
 		currentVehicle->BlowUpCar(NULL, false);
 	}
+
+	TimedEffect::Disable();
 }
 
 void GhostRider::HandleTick() {

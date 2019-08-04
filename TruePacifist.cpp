@@ -11,4 +11,6 @@ void TruePacifist::Enable() {
 
 void TruePacifist::Disable() {
 	isEnabled = false;
+
+	TimedEffect::Disable();
 }

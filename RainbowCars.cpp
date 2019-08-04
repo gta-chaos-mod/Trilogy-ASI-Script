@@ -19,6 +19,8 @@ void RainbowCars::Disable() {
 	}
 
 	resetMaterials.clear();
+
+	TimedEffect::Disable();
 }
 
 void RainbowCars::HandleTick() {

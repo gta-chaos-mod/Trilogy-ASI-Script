@@ -7,6 +7,8 @@ GameSpeed::GameSpeed(float _gameSpeed, int _duration, std::string _description)
 
 void GameSpeed::Disable() {
 	CTimer::ms_fTimeScale = 1.0f;
+
+	TimedEffect::Disable();
 }
 
 void GameSpeed::HandleTick() {

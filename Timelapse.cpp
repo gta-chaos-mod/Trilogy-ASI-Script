@@ -9,4 +9,6 @@ void Timelapse::Enable() {
 
 void Timelapse::Disable() {
 	CClock::ms_nMillisecondsPerGameMinute = 1000;
+
+	TimedEffect::Disable();
 }

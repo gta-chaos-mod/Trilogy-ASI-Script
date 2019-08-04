@@ -1,7 +1,7 @@
 #include "HookHandler.h"
 
 void HookHandler::Initialize() {
-	// TruePacifist + MoneyIsHealthy
+	// True Pacifist + Long Live The Rich
 	patch::RedirectCall(0x4B5B19, HookedAccountForPedArmour);
 	patch::RedirectCall(0x4B5B27, HookedComputeWillKillPed);
 

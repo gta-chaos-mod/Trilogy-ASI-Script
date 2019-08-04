@@ -19,6 +19,8 @@ void Suspension::Disable() {
 	for (int i = 0; i < 210; i++) {
 		gHandlingDataMgr.m_aVehicleHandling[i] = origVehicleHandling[i];
 	}
+
+	TimedEffect::Disable();
 }
 
 void Suspension::HandleTick() {

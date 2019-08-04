@@ -21,6 +21,8 @@ void ThermalNightVision::Disable() {
 	else {
 		Command<Commands::SET_INFRARED_VISION>(false);
 	}
+
+	TimedEffect::Disable();
 }
 
 void ThermalNightVision::HandleTick() {

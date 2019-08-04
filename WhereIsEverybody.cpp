@@ -11,6 +11,8 @@ void WhereIsEverybody::Disable() {
 	for (CPed* ped : CPools::ms_pPedPool) {
 		ped->m_nPedFlags.bDontRender = false;
 	}
+
+	TimedEffect::Disable();
 }
 
 void WhereIsEverybody::HandleTick() {

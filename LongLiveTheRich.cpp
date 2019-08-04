@@ -28,6 +28,8 @@ void LongLiveTheRich::Disable() {
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney *= 1000;
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney += storedMoney;
 	}
+
+	TimedEffect::Disable();
 }
 
 bool LongLiveTheRich::HandleArmour(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, int cDamageResponseInfo) {

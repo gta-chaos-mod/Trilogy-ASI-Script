@@ -11,4 +11,6 @@ void InfiniteHealth::Enable() {
 
 void InfiniteHealth::Disable() {
 	isEnabled = false;
+
+	TimedEffect::Disable();
 }
