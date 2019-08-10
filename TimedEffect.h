@@ -17,6 +17,7 @@ public:
 	bool isInitialized = false;
 	bool isPlaceholder = false;
 	bool immuneToCryptic = false;
+	CRGBA effectColor = CRGBA(50, 150, 255, 230);
 	int remaining = 0;
 	int duration = 0;
 	std::string description = "N/A";

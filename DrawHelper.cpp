@@ -112,7 +112,7 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 
 		CFont::SetOrientation(eFontAlignment::ALIGN_RIGHT);
 		CFont::SetJustify(false);
-		CFont::SetProportional(!GenericUtil::areEffectsCryptic && !effect->immuneToCryptic);
+		CFont::SetProportional(!GenericUtil::areEffectsCryptic || effect->immuneToCryptic);
 		CFont::SetFontStyle(FONT_SUBTITLES);
 		CFont::SetDropColor(CRGBA(0, 0, 0, 200));
 		CFont::SetDropShadowPosition(0);
@@ -138,7 +138,7 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 
 			DrawHelper::DrawCircle(center, 20.0f, 360.0f, CRGBA(13, 38, 64, 230));
 
-			DrawHelper::DrawCircle(center, 20.0f, angle, CRGBA(50, 150, 255, 230));
+			DrawHelper::DrawCircle(center, 20.0f, angle, effect->effectColor);
 		}
 
 		i++;
