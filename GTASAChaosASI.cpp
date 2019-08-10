@@ -11,6 +11,7 @@
 #include "EffectHandler.h"
 #include "EffectPlaceholder.h"
 #include "FunctionEffect.h"
+#include "GenericUtil.h"
 #include "HookHandler.h"
 #include "RandomHelper.h"
 
@@ -25,7 +26,6 @@
 #include "CGenericGameStorage.h"
 #include "CStats.h"
 #include "CWeather.h"
-
 
 // Version 0.999
 
@@ -48,6 +48,7 @@ enum EffectState {
 	TIME,
 	BIG_TEXT,
 	SET_SEED,
+	CRYPTIC_EFFECTS
 };
 
 static CdeclEvent<AddressList<0x53E83C, H_CALL, 0x53EBA2, H_CALL>, PRIORITY_AFTER, ArgPickNone, void()> onDrawAfterFade;
@@ -187,6 +188,9 @@ public:
 		else if (state == "set_seed") {
 			currentState = EffectState::SET_SEED;
 		}
+		else if (state == "cryptic_effects") {
+			currentState = EffectState::CRYPTIC_EFFECTS;
+		}
 		else {
 			return;
 		}
@@ -295,6 +299,11 @@ public:
 
 				break;
 			}
+			case EffectState::CRYPTIC_EFFECTS: {
+				GenericUtil::areEffectsCryptic = std::stoi(function);
+
+				break;
+			}
 			default: {
 				break;
 			}
@@ -349,24 +358,28 @@ public:
 
 	void HandleSaveLoad() {
 		if (!hasLoadedSave) {
-			if (KeyPressed(VK_F7)) {
+			if (KeyPressed(VK_LCONTROL) && KeyPressed(VK_F7)) {
 				hasLoadedSave = true;
 
 				char path[256];
 				char* gamePath = reinterpret_cast<char*>(0xC92368);
 
-				std::sprintf(path, "%s\\chaos_autosave.b", gamePath);
+				std::sprintf(path, "%s\\GTASAsf8.b", gamePath);
+
+				DrawHelper::DrawHelpMessage(path, 1000);
 
 				if (std::filesystem::exists(path)) {
-					strcpy(CGenericGameStorage::ms_LoadFileNameWithPath, path);
+					strcpy(CGenericGameStorage::ms_LoadFileName, path);
 					//CGenericGameStorage::ms_FileHandle = fopen(path, "r");
 
 					bool ignore = false;
 					//CGame::ShutDownForRestart();
 					//CTimer::Stop();
+					CGenericGameStorage::GenericLoad(&ignore);
+					//FrontEndMenuManager.DoSettingsBeforeStartingAGame();
 					FrontEndMenuManager.m_bMenuActive = false;
-					FrontEndMenuManager.m_bLoadingData = true;
-					CGame::InitialiseWhenRestarting();
+					//FrontEndMenuManager.m_bLoadingData = true;
+					//CGame::InitialiseWhenRestarting();
 				}
 			}
 		}
@@ -375,6 +388,8 @@ public:
 	GTASAChaosMod() {
 		SetupPipe();
 
+		GenericUtil::InitializeCharReplacements();
+		GenericUtil::InitializeUnprotectedMemory();
 		HookHandler::Initialize();
 
 		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });

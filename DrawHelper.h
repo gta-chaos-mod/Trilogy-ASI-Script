@@ -9,6 +9,7 @@
 
 #define deg2rad(angleDegrees) ((angleDegrees) * M_PI / 180.0)
 
+#include "GenericUtil.h"
 #include "TimedEffect.h"
 
 #include "CFont.h"

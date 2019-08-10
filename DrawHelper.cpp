@@ -112,6 +112,7 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 
 		CFont::SetOrientation(eFontAlignment::ALIGN_RIGHT);
 		CFont::SetJustify(false);
+		CFont::SetProportional(!GenericUtil::areEffectsCryptic && !effect->immuneToCryptic);
 		CFont::SetFontStyle(FONT_SUBTITLES);
 		CFont::SetDropColor(CRGBA(0, 0, 0, 200));
 		CFont::SetDropShadowPosition(0);

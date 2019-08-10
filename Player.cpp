@@ -34,29 +34,35 @@ void Player::LockPlayerInsideVehicle() {
 	}
 }
 
-void Player::SetMaxStamina() {
-	CStats::SetStatValue(eStats::STAT_STAMINA, 1000.0f); // Stamina
+void Player::SetStamina(bool isMax) {
+	float value = isMax ? 1000.0f : 0.0f;
+
+	CStats::SetStatValue(eStats::STAT_STAMINA, value); // Stamina
 }
 
-void Player::SetMaxWeaponSkills() {
-	CStats::SetStatValue(eStats::STAT_PISTOL_SKILL, 1000.0f); // Pistol
-	CStats::SetStatValue(eStats::STAT_SILENCED_PISTOL_SKILL, 1000.0f); // Silenced pistol
-	CStats::SetStatValue(eStats::STAT_DESERT_EAGLE_SKILL, 1000.0f); // Desert eagle
-	CStats::SetStatValue(eStats::STAT_SHOTGUN_SKILL, 1000.0f); // Shotgun
-	CStats::SetStatValue(eStats::STAT_SAWN_OFF_SHOTGUN_SKILL, 1000.0f); // Sawn-off shotgun
-	CStats::SetStatValue(eStats::STAT_COMBAT_SHOTGUN_SKILL, 1000.0f); // Combat shotgun
-	CStats::SetStatValue(eStats::STAT_MACHINE_PISTOL_SKILL, 1000.0f); // Machine pistol
-	CStats::SetStatValue(eStats::STAT_SMG_SKILL, 1000.0f); // SMG
-	CStats::SetStatValue(eStats::STAT_AK_47_SKILL, 1000.0f); // AK47
-	CStats::SetStatValue(eStats::STAT_M4_SKILL, 1000.0f); // M4
-	CStats::SetStatValue(eStats::STAT_RIFLE_SKILL, 1000.0f); // Rifle
+void Player::SetWeaponSkills(bool isMax) {
+	float value = isMax ? 1000.0f : 0.0f;
+
+	CStats::SetStatValue(eStats::STAT_PISTOL_SKILL, value); // Pistol
+	CStats::SetStatValue(eStats::STAT_SILENCED_PISTOL_SKILL, value); // Silenced pistol
+	CStats::SetStatValue(eStats::STAT_DESERT_EAGLE_SKILL, value); // Desert eagle
+	CStats::SetStatValue(eStats::STAT_SHOTGUN_SKILL, value); // Shotgun
+	CStats::SetStatValue(eStats::STAT_SAWN_OFF_SHOTGUN_SKILL, value); // Sawn-off shotgun
+	CStats::SetStatValue(eStats::STAT_COMBAT_SHOTGUN_SKILL, value); // Combat shotgun
+	CStats::SetStatValue(eStats::STAT_MACHINE_PISTOL_SKILL, value); // Machine pistol
+	CStats::SetStatValue(eStats::STAT_SMG_SKILL, value); // SMG
+	CStats::SetStatValue(eStats::STAT_AK_47_SKILL, value); // AK47
+	CStats::SetStatValue(eStats::STAT_M4_SKILL, value); // M4
+	CStats::SetStatValue(eStats::STAT_RIFLE_SKILL, value); // Rifle
 }
 
-void Player::SetMaxDrivingSkills() {
-	CStats::SetStatValue(eStats::STAT_DRIVING_SKILL, 1000.0f); // Driving
-	CStats::SetStatValue(eStats::STAT_FLYING_SKILL, 1000.0f); // Flying
-	CStats::SetStatValue(eStats::STAT_BIKE_SKILL, 1000.0f); // Bike
-	CStats::SetStatValue(eStats::STAT_CYCLING_SKILL, 1000.0f); // Cycling
+void Player::SetDrivingSkills(bool isMax) {
+	float value = isMax ? 1000.0f : 0.0f;
+
+	CStats::SetStatValue(eStats::STAT_DRIVING_SKILL, value); // Driving
+	CStats::SetStatValue(eStats::STAT_FLYING_SKILL, value); // Flying
+	CStats::SetStatValue(eStats::STAT_BIKE_SKILL, value); // Bike
+	CStats::SetStatValue(eStats::STAT_CYCLING_SKILL, value); // Cycling
 }
 
 void Player::DoBusted() {

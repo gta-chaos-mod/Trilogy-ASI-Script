@@ -12,6 +12,7 @@ void CheatHandler::HandleCheat(std::string cheat) {
 	}
 	else if (cheat == "give_health_armor_money") {
 		Player::GivePlayerHealthArmorMoney();
+		Vehicle::FixPlayerVehicle();
 	}
 	else if (cheat == "suicide") {
 		Player::KillPlayer();
@@ -107,7 +108,7 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 		return new TimedAddressCheat(0x96913F, duration, description);
 	}
 	else if (cheat == "elvis_lives") {
-		return new TimedFunctionCheat(CCheat::ElvisLivesCheat, 0x969157, duration, description);
+		return new TimedFunctionCheat(CCheat::ElvisLivesCheat, 0x969157, duration, description, "gang_members");
 	}
 	else if (cheat == "village_people") {
 		return new TimedFunctionCheat(CCheat::VillagePeopleCheat, 0x969158, duration, description);

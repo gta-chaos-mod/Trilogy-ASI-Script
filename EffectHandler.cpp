@@ -21,13 +21,22 @@ void EffectHandler::HandleEffect(std::string effect) {
 	}
 
 	else if (effect == "max_stamina") {
-		Player::SetMaxStamina();
+		Player::SetStamina(true);
+	}
+	else if (effect == "no_stamina") {
+		Player::SetStamina(false);
 	}
 	else if (effect == "max_weapon_skill") {
-		Player::SetMaxWeaponSkills();
+		Player::SetWeaponSkills(true);
+	}
+	else if (effect == "no_weapon_skill") {
+		Player::SetWeaponSkills(false);
 	}
 	else if (effect == "max_driving_skill") {
-		Player::SetMaxDrivingSkills();
+		Player::SetDrivingSkills(true);
+	}
+	else if (effect == "no_driving_skill") {
+		Player::SetDrivingSkills(false);
 	}
 
 	else if (effect == "player_wasted") {
@@ -114,6 +123,9 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	}
 	else if (effect == "pass_mission") {
 		return new PassMission(duration, description);
+	}
+	else if (effect == "cryptic_effects") {
+		return new CrypticEffects(duration, description);
 	}
 
 	return nullptr;

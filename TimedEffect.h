@@ -3,6 +3,7 @@
 #include "common.h"
 #include "plugin.h"
 
+#include "GenericUtil.h"
 #include "RandomHelper.h"
 
 #include "CTimer.h"
@@ -15,14 +16,18 @@ public:
 	bool isDisabled = false;
 	bool isInitialized = false;
 	bool isPlaceholder = false;
+	bool immuneToCryptic = false;
 	int remaining = 0;
 	int duration = 0;
 	std::string description = "N/A";
+	std::string crypticDescription = "";
+	int crypticDescriptionWait = 0;
+	std::vector<std::string> description_split;
 	std::string type = "";
 
 public:
 	TimedEffect(int _duration, std::string _description);
-	TimedEffect(int _duration, std::string _description, std::string type);
+	TimedEffect(int _duration, std::string _description, std::string _type);
 
 	virtual void InitializeHooks() {};
 
@@ -35,6 +40,8 @@ public:
 	int GetRemaining();
 	int GetDuration();
 	std::string GetDescription();
+	void UpdateCrypticDescription();
+	std::string GetCrypticDescription();
 	bool IsEqualDescription(TimedEffect* otherEffect);
 	std::string GetType();
 	bool IsEqualType(TimedEffect* otherEffect);

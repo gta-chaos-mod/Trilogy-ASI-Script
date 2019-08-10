@@ -3,7 +3,7 @@
 bool HookHandler::canLoadSave = true;
 
 void HookHandler::Initialize() {
-	// True Pacifist + Long Live The Rich
+	// True Pacifist + Long Live The Rich + Infinite Health
 	patch::RedirectCall(0x4B5B19, HookedAccountForPedArmour);
 	patch::RedirectCall(0x4B5B27, HookedComputeWillKillPed);
 
@@ -111,7 +111,7 @@ void HookHandler::HookedBlipsDraw() {
 }
 
 void __fastcall HookHandler::HookedProcessMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page) {
-	if (page == eMenuPage::MENUPAGE_START_GAME) { // NO LOADING :AngryBongo:
+	if (page == eMenuPage::MENUPAGE_LOAD_GAME) { // NO LOADING :AngryBongo:
 		if (!canLoadSave) {
 			return;
 		}

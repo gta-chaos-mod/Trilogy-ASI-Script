@@ -7,9 +7,11 @@
 #include "TimedAddressCheat.h"
 #include "TimedFunctionCheat.h"
 
-#include "CCheat.h"
 #include "InvisibleVehicles.h"
 #include "Player.h"
+#include "Vehicle.h"
+
+#include "CCheat.h"
 
 class CheatHandler
 {

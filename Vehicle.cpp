@@ -78,6 +78,16 @@ void Vehicle::BlowUpAllCars() {
 	}
 }
 
+void Vehicle::FixPlayerVehicle() {
+	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
+	if (playerVehicle) {
+		bool isHigherDurability = playerVehicle->m_fHealth > 1000.0f;
+		playerVehicle->Fix();
+		playerVehicle->m_fHealth = isHigherDurability ? 10000.0f : 1000.0f;
+	}
+}
+
+
 void Vehicle::SetPlayerVehicleOnFire() {
 	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
 	if (playerVehicle) {
@@ -88,6 +98,7 @@ void Vehicle::SetPlayerVehicleOnFire() {
 void Vehicle::PopAllVehicleTires() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		vehicle->m_nPhysicalFlags.bBulletProof = false;
+		vehicle->m_nVehicleFlags.bTyresDontBurst = false;
 
 		vehicle->BurstTyre(eWheels::WHEEL_FRONT_LEFT, true);
 		vehicle->BurstTyre(eWheels::WHEEL_REAR_LEFT, true);

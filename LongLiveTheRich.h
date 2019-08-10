@@ -19,6 +19,8 @@ public:
 	void Enable() override;
 	void Disable() override;
 
+	void HandleTick() override;
+
 	static bool HandleArmour(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, int cDamageResponseInfo);
 	static bool HandleHealth(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, float* a3, char a4);
 };

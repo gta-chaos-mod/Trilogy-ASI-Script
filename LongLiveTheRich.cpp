@@ -15,8 +15,8 @@ void LongLiveTheRich::Enable() {
 
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		player->m_fArmour = 0.0f;
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = (int) player->m_fHealth;
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = (int)player->m_fHealth;
+		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = (int)player->m_fHealth;
 	}
 }
 
@@ -25,11 +25,19 @@ void LongLiveTheRich::Disable() {
 
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney *= 1000;
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = min(player->GetPlayerInfoForThisPlayerPed()->m_nMoney * 100, 100000);
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney += storedMoney;
+		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = player->GetPlayerInfoForThisPlayerPed()->m_nMoney;
 	}
 
 	TimedEffect::Disable();
+}
+
+void LongLiveTheRich::HandleTick() {
+	CPlayerPed* player = FindPlayerPed();
+	if (player) {
+		player->m_fHealth = player->m_fMaxHealth;
+	}
 }
 
 bool LongLiveTheRich::HandleArmour(CPedDamageResponseCalculator* damageResponseCalc, CPed* ped, int cDamageResponseInfo) {

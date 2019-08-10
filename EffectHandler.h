@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Vehicle.h"
 
+#include "CrypticEffects.h"
 #include "DisableHUD.h"
 #include "DisableOneMovementKey.h"
 #include "DisableRadarBlips.h"

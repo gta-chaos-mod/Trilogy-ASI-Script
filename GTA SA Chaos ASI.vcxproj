@@ -99,6 +99,7 @@
     <ClCompile Include="CheatHandler.cpp" />
     <ClCompile Include="ColorHelper.cpp" />
     <ClCompile Include="CPedDamageResponseCalculator.cpp" />
+    <ClCompile Include="CrypticEffects.cpp" />
     <ClCompile Include="DisableHUD.cpp" />
     <ClCompile Include="DisableOneMovementKey.cpp" />
     <ClCompile Include="DisableRadarBlips.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="FailMission.cpp" />
     <ClCompile Include="FunctionEffect.cpp" />
     <ClCompile Include="GameSpeed.cpp" />
+    <ClCompile Include="GenericUtil.cpp" />
     <ClCompile Include="GhostRider.cpp" />
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="HookHandler.cpp" />
@@ -144,6 +146,7 @@
     <ClInclude Include="CheatHandler.h" />
     <ClInclude Include="ColorHelper.h" />
     <ClInclude Include="CPedDamageResponseCalculator.h" />
+    <ClInclude Include="CrypticEffects.h" />
     <ClInclude Include="DisableHUD.h" />
     <ClInclude Include="DisableOneMovementKey.h" />
     <ClInclude Include="DisableRadarBlips.h" />
@@ -152,6 +155,7 @@
     <ClInclude Include="FailMission.h" />
     <ClInclude Include="FunctionEffect.h" />
     <ClInclude Include="GameSpeed.h" />
+    <ClInclude Include="GenericUtil.h" />
     <ClInclude Include="GhostRider.h" />
     <ClInclude Include="Gravity.h" />
     <ClInclude Include="HookHandler.h" />

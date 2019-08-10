@@ -24,6 +24,7 @@ void InvertedControls::Enable() {
 	SwapControls(e_ControllerAction::CA_PED_CYCLE_TARGET_LEFT, e_ControllerAction::CA_PED_CYCLE_TARGET_RIGHT);
 	SwapControls(e_ControllerAction::CA_CONVERSATION_YES, e_ControllerAction::CA_CONVERSATION_NO);
 	SwapControls(e_ControllerAction::CA_GROUP_CONTROL_FWD, e_ControllerAction::CA_GROUP_CONTROL_BWD);
+	SwapControls(e_ControllerAction::CA_SNEAK_ABOUT, e_ControllerAction::CA_VEHICLE_ENTER_EXIT);
 
 	SwapControls(e_ControllerAction::CA_VEHICLE_ACCELERATE, e_ControllerAction::CA_VEHICLE_BRAKE);
 	SwapControls(e_ControllerAction::CA_VEHICLE_STEERLEFT, e_ControllerAction::CA_VEHICLE_STEERRIGHT);
