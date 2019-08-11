@@ -5,7 +5,7 @@
 class FunctionEffect : public EffectPlaceholder
 {
 private:
-	void* function;
+	void* function = nullptr;
 
 public:
 	FunctionEffect(void* _function, int _duration, std::string _description);

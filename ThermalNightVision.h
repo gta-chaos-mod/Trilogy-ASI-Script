@@ -7,7 +7,7 @@
 class ThermalNightVision : public TimedEffect
 {
 private:
-	bool isNightVision;
+	bool isNightVision = false;
 
 public:
 	ThermalNightVision(bool _isNightVision, int _duration, std::string _description);

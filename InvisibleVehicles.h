@@ -17,6 +17,8 @@ public:
 public:
 	InvisibleVehicles(int duration, std::string description);
 
+	void InitializeHooks() override;
+
 	void Disable() override;
 
 	void HandleTick() override;

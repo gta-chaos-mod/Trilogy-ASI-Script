@@ -9,10 +9,14 @@ RainbowCars::RainbowCars(int _duration, std::string _description)
 
 void RainbowCars::Enable() {
 	isEnabled = true;
+
+	Events::vehicleRenderEvent += RenderVehicleEvent;
 }
 
 void RainbowCars::Disable() {
 	isEnabled = false;
+
+	Events::vehicleRenderEvent -= RenderVehicleEvent;
 
 	for (auto it = resetMaterials.begin(); it != resetMaterials.end(); ++it) {
 		it->first->color = it->second;
@@ -27,6 +31,12 @@ void RainbowCars::HandleTick() {
 	hueShift += 2.0f;
 	if (hueShift >= 360.0f) {
 		hueShift -= 360.0f;
+	}
+}
+
+void RainbowCars::RenderVehicleEvent(CVehicle* vehicle) {
+	if (isEnabled && vehicle) {
+		ModifyCarPaint(vehicle);
 	}
 }
 

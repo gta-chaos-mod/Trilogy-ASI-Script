@@ -24,6 +24,7 @@ public:
 
 	void HandleTick() override;
 
+	static void RenderVehicleEvent(CVehicle* vehicle);
 	static void ModifyCarPaint(CVehicle* vehicle);
 
 	static RpMaterial* MaterialCallback(RpMaterial* material, void* color);

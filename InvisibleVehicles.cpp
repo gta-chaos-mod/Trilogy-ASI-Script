@@ -5,6 +5,20 @@ bool* InvisibleVehicles::isEnabled = reinterpret_cast<bool*>(0x96914B);
 InvisibleVehicles::InvisibleVehicles(int _duration, std::string _description)
 	: TimedEffect(_duration, _description) {}
 
+void InvisibleVehicles::InitializeHooks() {
+	patch::RedirectCall(0x6C4523, HookedRenderHeli); // Heli
+	patch::RedirectCall(0x6BDE5E, HookedRenderBike); // Bike + Bmx
+	patch::RedirectJump(0x6CAB80, HookedRenderPlane); // Plane
+
+	patch::RedirectCall(0x5343B2, HookedRenderEffects);
+
+	patch::RedirectCall(0x6ABCF5, HookedRenderShadows); // Car Shadows
+	patch::RedirectCall(0x6C0B21, HookedRenderShadows); // BMX Shadows
+	patch::RedirectCall(0x6C58A0, HookedRenderShadows); // Heli Shadows
+	patch::RedirectCall(0x6BD667, HookedRenderShadows); // Bike Shadows
+	patch::RedirectCall(0x6CA73A, HookedRenderShadows); // Plane Shadows
+}
+
 void InvisibleVehicles::Disable() {
 	*isEnabled = false;
 
@@ -25,6 +39,10 @@ void InvisibleVehicles::TryRenderAtomic(RwFrame* frame) {
 }
 
 void __fastcall InvisibleVehicles::HookedRenderHeli(CHeli* thisHeli, void* edx) {
+	if (!thisHeli) {
+		return;
+	}
+
 	if (!*isEnabled) {
 		plugin::CallMethod<0x534310, CVehicle*>(thisHeli);
 	}
@@ -40,6 +58,10 @@ void __fastcall InvisibleVehicles::HookedRenderHeli(CHeli* thisHeli, void* edx) 
 }
 
 void __fastcall InvisibleVehicles::HookedRenderBike(CBike* thisBike, void* edx) {
+	if (!thisBike) {
+		return;
+	}
+
 	if (!*isEnabled) {
 		plugin::CallMethod<0x6D0E60, CVehicle*>(thisBike);
 	}
@@ -50,6 +72,10 @@ void __fastcall InvisibleVehicles::HookedRenderBike(CBike* thisBike, void* edx) 
 }
 
 void __fastcall InvisibleVehicles::HookedRenderPlane(CPlane* thisPlane, void* edx) {
+	if (!thisPlane) {
+		return;
+	}
+
 	if (!*isEnabled) {
 		plugin::CallMethod<0x6D0E60, CVehicle*>(thisPlane);
 	}
@@ -65,6 +91,10 @@ void __fastcall InvisibleVehicles::HookedRenderPlane(CPlane* thisPlane, void* ed
 }
 
 void __fastcall InvisibleVehicles::HookedRenderEffects(CEntity* thisEntity, void* edx) {
+	if (!thisEntity) {
+		return;
+	}
+
 	if (!*isEnabled || !CModelInfo::IsVehicleModelType(thisEntity->m_nModelIndex)) {
 		thisEntity->RenderEffects();
 	}
@@ -83,6 +113,10 @@ void __fastcall InvisibleVehicles::HookedRenderEffects(CEntity* thisEntity, void
 }
 
 void InvisibleVehicles::HookedRenderShadows(CVehicle* thisVehicle, VEH_SHD_TYPE shadowType) {
+	if (!thisVehicle) {
+		return;
+	}
+
 	if (!*isEnabled) {
 		CShadows::StoreShadowForVehicle(thisVehicle, shadowType);
 	}

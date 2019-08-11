@@ -5,7 +5,7 @@
 class PassMission : public EffectPlaceholder
 {
 private:
-	int wait = 3000;
+	int wait = 100;
 
 public:
 	static bool isEnabled;
