@@ -1,26 +1,28 @@
 #pragma once
 
-#include "DisableHUD.h"
-#include "DisableOneMovementKey.h"
-#include "DisableRadarBlips.h"
-#include "InfiniteHealth.h"
-#include "InvertedControls.h"
-#include "InvisibleVehicles.h"
-#include "LetsTakeABreak.h"
-#include "LongLiveTheRich.h"
-#include "RainbowCars.h"
-#include "TruePacifist.h"
+#include <filesystem>
 
+#include "DisableOneMovementKey.h"
+#include "InvertedControls.h"
+#include "LetsTakeABreak.h"
+
+#include "CGame.h"
 #include "CMenuManager.h"
 #include "CPedDamageResponseCalculator.h"
+#include "CText.h"
 
 class HookHandler
 {
-public:
+private:
 	static bool canLoadSave;
+	static char* loadingDisallowedText;
 
 public:
 	static void Initialize();
 
+private:
+	static void TryLoadAutoSave();
+
 	static void __fastcall HookedProcessMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page);
+	static char* __fastcall HookedCTextGet(CText* thisText, void* edx, char* key);
 };

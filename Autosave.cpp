@@ -8,8 +8,7 @@ Autosave::Autosave()
 
 void Autosave::HandleTick() {
 	if (!didSave && !FindPlayerVehicle(-1, false) && FindPlayerPed()) {
-		//std::sprintf(CGenericGameStorage::ms_ValidSaveName, "%s\\chaos_autosave.b", gamePath);
-		std::sprintf(CGenericGameStorage::ms_ValidSaveName, "%s\\GTASAsf8.b", gamePath); // Slot 8 until custom loading works
+		std::sprintf(CGenericGameStorage::ms_ValidSaveName, "%s\\chaos_autosave.b", gamePath);
 
 		CGenericGameStorage::GenericSave(0);
 

@@ -25,6 +25,7 @@
 #include "CCheat.h"
 #include "CGenericGameStorage.h"
 #include "CStats.h"
+#include "CText.h"
 #include "CWeather.h"
 
 // Version 0.999
@@ -57,10 +58,6 @@ class GTASAChaosMod {
 public:
 	std::queue<std::function<void()>> queue;
 	int remaining = 0;
-	bool* onMission = reinterpret_cast<bool*>(0xA49FC4);
-	int lastPassedMissions = -1;
-	bool canAutoSave = false;
-	bool hasLoadedSave = false;
 
 	std::list<TimedEffect*> activeEffects;
 
@@ -73,20 +70,6 @@ public:
 		activeEffects.remove_if([](TimedEffect* effect) { return !effect->IsRunning(); });
 
 		CCheat::m_bHasPlayerCheated = false;
-
-		HandleAutoSave();
-	}
-
-	void HandleAutoSave() {
-		int currentPassedMissions = (int) CStats::GetStatValue(eStats::STAT_MISSIONS_PASSED);
-		if (*onMission && !canAutoSave) {
-			lastPassedMissions = currentPassedMissions;
-			canAutoSave = true;
-		}
-		else if (!*onMission && currentPassedMissions > lastPassedMissions && canAutoSave) {
-			QueueEffect(new Autosave());
-			canAutoSave = false;
-		}
 	}
 
 	void EmptyQueue() {
@@ -127,7 +110,7 @@ public:
 	}
 
 	template<typename _Callable, typename... _Args>
-	void QueueFunction(_Callable&& __f, _Args&&... __args) {
+	void QueueFunction(_Callable&& __f, _Args&& ... __args) {
 		queue.push(std::bind(std::forward<_Callable>(__f), std::forward<_Args>(__args)...));
 	}
 
@@ -196,117 +179,117 @@ public:
 		}
 
 		switch (currentState) {
-			case EffectState::WANTED: {
-				if (function == "plus_two") {
-					QueueEffect(new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted"));
-				}
-				else if (function == "clear") {
-					QueueEffect(new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted"));
-				}
-				else if (function == "six_stars") {
-					QueueEffect(new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted"));
-				}
-
-				break;
+		case EffectState::WANTED: {
+			if (function == "plus_two") {
+				QueueEffect(new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted"));
 			}
-			case EffectState::WEATHER: {
-				QueueFunction(CWeather::ForceWeatherNow, std::stoi(function));
-				QueueEffect(new EffectPlaceholder(duration, description));
-
-				break;
+			else if (function == "clear") {
+				QueueEffect(new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted"));
 			}
-			case EffectState::SPAWN_VEHICLE: {
-				int modelID = std::stoi(function);
-				QueueFunction(Vehicle::SpawnForPlayer, modelID);
-				QueueEffect(new EffectPlaceholder(duration, description));
-
-				break;
+			else if (function == "six_stars") {
+				QueueEffect(new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted"));
 			}
-			case EffectState::GAME_SPEED: {
-				float speed;
-				sscanf(function.c_str(), "%f", &speed);
 
-				QueueEffect(new GameSpeed(speed, duration, description));
+			break;
+		}
+		case EffectState::WEATHER: {
+			QueueFunction(CWeather::ForceWeatherNow, std::stoi(function));
+			QueueEffect(new EffectPlaceholder(duration, description));
 
-				break;
+			break;
+		}
+		case EffectState::SPAWN_VEHICLE: {
+			int modelID = std::stoi(function);
+			QueueFunction(Vehicle::SpawnForPlayer, modelID);
+			QueueEffect(new EffectPlaceholder(duration, description));
+
+			break;
+		}
+		case EffectState::GAME_SPEED: {
+			float speed;
+			sscanf(function.c_str(), "%f", &speed);
+
+			QueueEffect(new GameSpeed(speed, duration, description));
+
+			break;
+		}
+		case EffectState::CHEAT: {
+			QueueFunction([function] { CheatHandler::HandleCheat(function); });
+			QueueEffect(new EffectPlaceholder(duration, description));
+
+			break;
+		}
+		case EffectState::TIMED_CHEAT: {
+			QueueEffect(CheatHandler::HandleTimedCheat(std::string(function), duration, description));
+
+			break;
+		}
+		case EffectState::EFFECT: {
+			QueueFunction([function] { EffectHandler::HandleEffect(function); });
+			QueueEffect(new EffectPlaceholder(duration, description));
+
+			break;
+		}
+		case EffectState::TIMED_EFFECT: {
+			QueueEffect(EffectHandler::HandleTimedEffect(std::string(function), duration, description));
+
+			break;
+		}
+		case EffectState::GRAVITY: {
+			float gravity = std::stof(function);
+
+			QueueEffect(new Gravity(gravity, duration, description));
+
+			break;
+		}
+		case EffectState::TELEPORT: {
+			int x, y, z;
+			sscanf(function.c_str(), "%d,%d,%d", &x, &y, &z);
+
+			QueueFunction(Teleportation::Teleport, CVector((float)x, (float)y, (float)z));
+			QueueEffect(new EffectPlaceholder(duration, description));
+
+			break;
+		}
+		case EffectState::OTHER: {
+			if (function == "explode_cars") {
+				QueueFunction(Vehicle::BlowUpAllCars);
 			}
-			case EffectState::CHEAT: {
-				QueueFunction([function] { CheatHandler::HandleCheat(function); });
-				QueueEffect(new EffectPlaceholder(duration, description));
-
-				break;
+			else if (function == "clear_weapons") {
+				QueueFunction(Ped::ClearWeapons);
 			}
-			case EffectState::TIMED_CHEAT: {
-				QueueEffect(CheatHandler::HandleTimedCheat(std::string(function), duration, description));
+			QueueEffect(new EffectPlaceholder(duration, description));
 
-				break;
-			}
-			case EffectState::EFFECT: {
-				QueueFunction([function] { EffectHandler::HandleEffect(function); });
-				QueueEffect(new EffectPlaceholder(duration, description));
+			break;
+		}
+		case EffectState::TEXT: {
+			QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
 
-				break;
-			}
-			case EffectState::TIMED_EFFECT: {
-				QueueEffect(EffectHandler::HandleTimedEffect(std::string(function), duration, description));
+			break;
+		}
+		case EffectState::TIME: {
+			remaining = std::stoi(function);
 
-				break;
-			}
-			case EffectState::GRAVITY: {
-				float gravity = std::stof(function);
+			break;
+		}
+		case EffectState::BIG_TEXT: {
+			QueueFunction(DrawHelper::DrawBigMessage, function, 10000);
 
-				QueueEffect(new Gravity(gravity, duration, description));
+			break;
+		}
+		case EffectState::SET_SEED: {
+			RandomHelper::SetSeed(std::stoi(function));
 
-				break;
-			}
-			case EffectState::TELEPORT: {
-				int x, y, z;
-				sscanf(function.c_str(), "%d,%d,%d", &x, &y, &z);
+			break;
+		}
+		case EffectState::CRYPTIC_EFFECTS: {
+			GenericUtil::areEffectsCryptic = std::stoi(function);
 
-				QueueFunction(Teleportation::Teleport, CVector((float) x, (float) y, (float) z));
-				QueueEffect(new EffectPlaceholder(duration, description));
-
-				break;
-			}
-			case EffectState::OTHER: {
-				if (function == "explode_cars") {
-					QueueFunction(Vehicle::BlowUpAllCars);
-				}
-				else if (function == "clear_weapons") {
-					QueueFunction(Ped::ClearWeapons);
-				}
-				QueueEffect(new EffectPlaceholder(duration, description));
-
-				break;
-			}
-			case EffectState::TEXT: {
-				QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
-
-				break;
-			}
-			case EffectState::TIME: {
-				remaining = std::stoi(function);
-
-				break;
-			}
-			case EffectState::BIG_TEXT: {
-				QueueFunction(DrawHelper::DrawBigMessage, function, 10000);
-
-				break;
-			}
-			case EffectState::SET_SEED: {
-				RandomHelper::SetSeed(std::stoi(function));
-
-				break;
-			}
-			case EffectState::CRYPTIC_EFFECTS: {
-				GenericUtil::areEffectsCryptic = std::stoi(function);
-
-				break;
-			}
-			default: {
-				break;
-			}
+			break;
+		}
+		default: {
+			break;
+		}
 		}
 
 		return;
@@ -356,33 +339,28 @@ public:
 		t1.detach();
 	}
 
-	void HandleSaveLoad() {
-		if (!hasLoadedSave) {
-			if (KeyPressed(VK_LCONTROL) && KeyPressed(VK_F7)) {
-				hasLoadedSave = true;
-
-				char path[256];
-				char* gamePath = reinterpret_cast<char*>(0xC92368);
-
-				std::sprintf(path, "%s\\GTASAsf8.b", gamePath);
-
-				DrawHelper::DrawHelpMessage(path, 1000);
-
-				if (std::filesystem::exists(path)) {
-					strcpy(CGenericGameStorage::ms_LoadFileName, path);
-					//CGenericGameStorage::ms_FileHandle = fopen(path, "r");
-
-					bool ignore = false;
-					//CGame::ShutDownForRestart();
-					//CTimer::Stop();
-					CGenericGameStorage::GenericLoad(&ignore);
-					//FrontEndMenuManager.DoSettingsBeforeStartingAGame();
-					FrontEndMenuManager.m_bMenuActive = false;
-					//FrontEndMenuManager.m_bLoadingData = true;
-					//CGame::InitialiseWhenRestarting();
-				}
-			}
+	// Autosaving
+	static char* __fastcall HookedCTextGet(CText* thisText, void* edx, char* key) {
+		std::string key_str(key);
+		if (key_str.rfind("M_PASS", 0) == 0) {
+			gtaSAChaosMod.QueueEffect(new Autosave());
 		}
+
+		return thisText->Get(key);
+	}
+
+	// Overwrite OpenFile so we can route the 9th slot to our custom chaos_autosave file
+	static int __cdecl HookedOpenFile(const char* path, const char* mode) {
+		std::string s_path(path),
+			save_path = "GTASAsf9",
+			replace = "chaos_autosave";
+
+		size_t start_pos = s_path.find(save_path);
+		if (start_pos != std::string::npos) {
+			s_path.replace(start_pos, save_path.length(), replace);
+		}
+
+		return CFileMgr::OpenFile(s_path.c_str(), mode);
 	}
 
 	GTASAChaosMod() {
@@ -392,8 +370,11 @@ public:
 		GenericUtil::InitializeUnprotectedMemory();
 		HookHandler::Initialize();
 
+		patch::RedirectCall(0x5D0D66, HookedOpenFile);
+
+		patch::RedirectCall(0x47DA23, HookedCTextGet);
+
 		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });
-		//Events::drawMenuBackgroundEvent.Add([this] { this->HandleSaveLoad(); });
 
 		onDrawAfterFade.AddAfter([this] { this->DrawRemainingTime(); });
 	}
