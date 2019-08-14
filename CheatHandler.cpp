@@ -56,16 +56,16 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	}
 
 	else if (cheat == "pink_traffic") {
-		return new TimedAddressCheat(0x969150, duration, description, "traffic_color");
+		return new TimedFunctionCheat(CCheat::PinkCarsCheat, 0x969150, duration, description, "traffic_color");
 	}
 	else if (cheat == "black_traffic") {
-		return new TimedAddressCheat(0x969151, duration, description, "traffic_color");
+		return new TimedFunctionCheat(CCheat::BlackCarsCheat, 0x969151, duration, description, "traffic_color");
 	}
 	else if (cheat == "cheap_cars") {
-		return new TimedAddressCheat(0x96915E, duration, description, "vehicle_rarity");
+		return new TimedFunctionCheat(CCheat::AllCarsAreShitCheat, 0x96915E, duration, description, "vehicle_rarity");
 	}
 	else if (cheat == "expensive_cars") {
-		return new TimedAddressCheat(0x96915F, duration, description, "vehicle_rarity");
+		return new TimedFunctionCheat(CCheat::AllCarsAreGreatCheat, 0x96915F, duration, description, "vehicle_rarity");
 	}
 	else if (cheat == "invisible_cars") {
 		return new InvisibleVehicles(duration, description);
@@ -102,10 +102,10 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	}
 
 	else if (cheat == "rough_neighbourhood") {
-		return new TimedAddressCheat(0x96913E, duration, description);
+		return new TimedFunctionCheat(CCheat::MayhemCheat, 0x96913E, duration, description);
 	}
 	else if (cheat == "bounty_on_your_head") {
-		return new TimedAddressCheat(0x96913F, duration, description);
+		return new TimedFunctionCheat(CCheat::EverybodyAttacksPlayerCheat, 0x96913F, duration, description);
 	}
 	else if (cheat == "elvis_lives") {
 		return new TimedFunctionCheat(CCheat::ElvisLivesCheat, 0x969157, duration, description, "gang_members");
@@ -120,7 +120,7 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 		return new TimedFunctionCheat(CCheat::GangLandCheat, 0x96915B, duration, description, "gang_members");
 	}
 	else if (cheat == "riot_mode") {
-		return new TimedAddressCheat(0x969175, duration, description);
+		return new TimedFunctionCheat(CCheat::RiotCheat, 0x969175, duration, description);
 	}
 	else if (cheat == "everyone_armed") {
 		return new TimedAddressCheat(0x969140, duration, description);
@@ -157,7 +157,7 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	}
 
 	else if (cheat == "drive_by") {
-		return new TimedAddressCheat(0x969179, duration, description);
+		return new TimedFunctionCheat(CCheat::DrivebyCheat, 0x969179, duration, description);
 	}
 	else if (cheat == "huge_bunny_hop") {
 		return new TimedAddressCheat(0x969161, duration, description);
