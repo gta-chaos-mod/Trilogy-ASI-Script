@@ -16,7 +16,7 @@ void Autosave::HandleTick() {
 		didSave = true;
 
 		effectColor = CRGBA(40, 200, 40, 230);
-		
+
 		Disable();
 
 		description = "Autosave Completed";

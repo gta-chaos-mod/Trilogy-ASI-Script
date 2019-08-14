@@ -24,7 +24,6 @@
 #include "CTrain.h"
 #include "CWorld.h"
 
-
 class Vehicle
 {
 public:

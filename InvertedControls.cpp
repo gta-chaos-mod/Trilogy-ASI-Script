@@ -50,7 +50,7 @@ void InvertedControls::HandleTick() {
 		wait -= CalculateTick();
 		return;
 	}
-	
+
 	for (int i = 0; i < 59; i++) {
 		ControlsManager.m_actions[i] = invertedActions[i];
 	}

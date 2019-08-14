@@ -30,7 +30,7 @@ void DrawHelper::DrawMessages() {
 		float y = SCREEN_COORD_TOP(27.0f);
 
 		char* helpMessage = (char*)message.c_str();
-		
+
 		CFont::SetCentreSize(SCREEN_WIDTH);
 		CFont::SetScaleForCurrentlanguage(SCREEN_MULTIPLIER(1.0f), SCREEN_MULTIPLIER(1.8f));
 
@@ -157,7 +157,7 @@ void DrawHelper::AppendPie(RwIm2DVertex* vertices, int numCount, float radius, C
 	float pie, CRGBA color, float baseRotation)
 {
 	numCount--;
-	float step = ((float) deg2rad(pie)) / (numCount - 1);
+	float step = ((float)deg2rad(pie)) / (numCount - 1);
 	Append(vertices, 0, CVector2D(0, 0), color);
 	for (int i = 0; i < numCount; i++)
 	{

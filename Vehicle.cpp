@@ -87,7 +87,6 @@ void Vehicle::FixPlayerVehicle() {
 	}
 }
 
-
 void Vehicle::SetPlayerVehicleOnFire() {
 	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
 	if (playerVehicle) {

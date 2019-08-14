@@ -54,7 +54,6 @@ void ColorHelper::RGBtoHSV(float fR, float fG, float fB, float& fH, float& fS, f
 	}
 }
 
-
 /*! \brief Convert HSV to RGB color space
 
   Converts a given set of HSV values `h', `s', `v' into RGB
@@ -124,7 +123,7 @@ void ColorHelper::HueShift(int& r, int& g, int& b, float shift, float value) {
 
 	float h, s, v;
 	RGBtoHSV(fR, fG, fB, h, s, v);
-	
+
 	h += shift;
 	if (h > 360.0f) {
 		h -= 360.0f;

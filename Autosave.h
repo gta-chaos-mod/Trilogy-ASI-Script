@@ -15,4 +15,3 @@ public:
 
 	void HandleTick() override;
 };
-
