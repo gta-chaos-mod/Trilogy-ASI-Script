@@ -26,6 +26,13 @@ void InfiniteHealth::Disable() {
 	TimedEffect::Disable();
 }
 
+void InfiniteHealth::HandleTick() {
+	CPlayerPed* player = FindPlayerPed();
+	if (player) {
+		player->m_fHealth = player->m_fMaxHealth;
+	}
+}
+
 void __fastcall InfiniteHealth::HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, int cDamageResponseInfo) {
 	thisCalc->AccountForPedArmour(ped, cDamageResponseInfo);
 }
