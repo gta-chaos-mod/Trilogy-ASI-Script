@@ -13,6 +13,10 @@ LongLiveTheRich::LongLiveTheRich(int _duration, std::string _description)
 void LongLiveTheRich::InitializeHooks() {
 	patch::RedirectCall(0x4B5B19, HookedAccountForPedArmour);
 	patch::RedirectCall(0x4B5B27, HookedComputeWillKillPed);
+
+	for (int address : {0x45902E, 0x459095}) {
+		patch::RedirectCall(address, HookedPickupUpdate);
+	}
 }
 
 void LongLiveTheRich::Enable() {
@@ -47,24 +51,16 @@ void LongLiveTheRich::HandleTick() {
 
 void __fastcall LongLiveTheRich::HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, int cDamageResponseInfo) {
 	if (isEnabled) {
+		float maxDamage = min(ped->m_fArmour, thisCalc->m_fDamageFactor);
+		maxDamage = thisCalc->m_pedPieceType == 9 ? ped->m_fHealth : maxDamage;
+
 		CPlayerPed* player = FindPlayerPed();
 		if (thisCalc->m_pDamager == player && ped != player) {
 			if (ped->m_fArmour == 0.0f) {
 				return;
 			}
 
-			bool isHeadshot = thisCalc->m_pedPieceType == 9;
-
-			player->GetPlayerInfoForThisPlayerPed()->m_nMoney += isHeadshot ? 4 : 1;
-
-			ped->m_fArmour -= thisCalc->m_fDamageFactor;
-			ped->m_fArmour = max(0.0f, ped->m_fArmour);
-
-			if (isHeadshot) {
-				ped->m_nMoneyCount = 0;
-				ped->m_fHealth = 0.0f;
-			}
-			return;
+			player->GetPlayerInfoForThisPlayerPed()->m_nMoney += (int)(maxDamage / 10.0f);
 		}
 		else if (thisCalc->m_pDamager != player && ped == player) {
 			player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= (int)thisCalc->m_fDamageFactor;
@@ -83,21 +79,12 @@ void __fastcall LongLiveTheRich::HookedAccountForPedArmour(CPedDamageResponseCal
 
 void __fastcall LongLiveTheRich::HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, float* a3, char a4) {
 	if (isEnabled) {
+		float maxDamage = min(ped->m_fHealth, thisCalc->m_fDamageFactor);
+		maxDamage = thisCalc->m_pedPieceType == 9 ? ped->m_fHealth : maxDamage;
+
 		CPlayerPed* player = FindPlayerPed();
 		if (thisCalc->m_pDamager == player && ped != player) {
-			bool isHeadshot = thisCalc->m_pedPieceType == 9;
-
-			player->GetPlayerInfoForThisPlayerPed()->m_nMoney += isHeadshot ? 4 : 1;
-
-			ped->m_fHealth -= thisCalc->m_fDamageFactor;
-			ped->m_fHealth = max(0.0f, ped->m_fHealth);
-
-			if (isHeadshot) {
-				ped->m_nMoneyCount = 0;
-				ped->m_fHealth = 0.0f;
-			}
-
-			return;
+			player->GetPlayerInfoForThisPlayerPed()->m_nMoney += (int)(maxDamage / 10.0f);
 		}
 		else if (thisCalc->m_pDamager != player && ped == player) {
 			player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= (int)thisCalc->m_fDamageFactor;
@@ -112,4 +99,17 @@ void __fastcall LongLiveTheRich::HookedComputeWillKillPed(CPedDamageResponseCalc
 	}
 
 	thisCalc->ComputeWillKillPed(ped, a3, a4);
+}
+
+bool __fastcall LongLiveTheRich::HookedPickupUpdate(CPickup* thisPickup, void* edx, CPlayerPed* playerPed, CVehicle* vehicle, int playerId) {
+	bool isMoneyPickup =
+		thisPickup->m_nPickupType == ePickupType::PICKUP_MONEY ||
+		thisPickup->m_nPickupType == ePickupType::PICKUP_MONEY_DOESNTDISAPPEAR ||
+		thisPickup->m_nPickupType == ePickupType::PICKUP_ASSET_REVENUE;
+
+	if (isEnabled && isMoneyPickup) {
+		return false;
+	}
+
+	return plugin::CallMethodAndReturn<bool, 0x457410, CPickup*, CPlayerPed*, CVehicle*, int>(thisPickup, playerPed, vehicle, playerId);
 }
