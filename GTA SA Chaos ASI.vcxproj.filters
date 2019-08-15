@@ -56,9 +56,6 @@
     <ClCompile Include="TimedFunctionCheat.cpp">
       <Filter>effects\cheats</Filter>
     </ClCompile>
-    <ClCompile Include="InvisibleVehicles.cpp">
-      <Filter>effects\cheats</Filter>
-    </ClCompile>
     <ClCompile Include="WhereIsEverybody.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
@@ -132,6 +129,9 @@
       <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="CrypticEffects.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="InvisibleVehicles.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
   </ItemGroup>
@@ -213,9 +213,6 @@
     <ClInclude Include="TimedFunctionCheat.h">
       <Filter>effects\cheats</Filter>
     </ClInclude>
-    <ClInclude Include="InvisibleVehicles.h">
-      <Filter>effects\cheats</Filter>
-    </ClInclude>
     <ClInclude Include="WhereIsEverybody.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
@@ -289,6 +286,9 @@
       <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="CrypticEffects.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="InvisibleVehicles.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
   </ItemGroup>
