@@ -67,9 +67,6 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	else if (cheat == "expensive_cars") {
 		return new TimedFunctionCheat(CCheat::AllCarsAreGreatCheat, 0x96915F, duration, description, "vehicle_rarity");
 	}
-	else if (cheat == "invisible_cars") {
-		return new InvisibleVehicles(duration, description);
-	}
 	else if (cheat == "insane_handling") {
 		return new TimedAddressCheat(0x96914C, duration, description);
 	}

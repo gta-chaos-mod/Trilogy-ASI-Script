@@ -106,9 +106,6 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "inverted_controls") {
 		return new InvertedControls(duration, description);
 	}
-	else if (effect == "infinite_health") {
-		return new InfiniteHealth(duration, description);
-	}
 	else if (effect == "disable_one_movement_key") {
 		return new DisableOneMovementKey(duration, description);
 	}
@@ -126,6 +123,12 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	}
 	else if (effect == "cryptic_effects") {
 		return new CrypticEffects(duration, description);
+	}
+	else if (effect == "infinite_health") {
+		return new InfiniteHealth(duration, description);
+	}
+	else if (effect == "invisible_vehicles") {
+		return new InvisibleVehicles(duration, description);
 	}
 
 	return nullptr;

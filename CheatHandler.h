@@ -7,7 +7,6 @@
 #include "TimedAddressCheat.h"
 #include "TimedFunctionCheat.h"
 
-#include "InvisibleVehicles.h"
 #include "Player.h"
 #include "Vehicle.h"
 

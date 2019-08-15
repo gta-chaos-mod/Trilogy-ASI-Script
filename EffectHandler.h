@@ -18,6 +18,7 @@
 #include "GhostRider.h"
 #include "InfiniteHealth.h"
 #include "InvertedControls.h"
+#include "InvisibleVehicles.h"
 #include "LagEffect.h"
 #include "LetsTakeABreak.h"
 #include "LongLiveTheRich.h"
