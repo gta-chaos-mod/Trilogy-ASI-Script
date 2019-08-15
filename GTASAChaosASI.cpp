@@ -59,6 +59,10 @@ public:
 	std::queue<std::function<void()>> queue;
 	int remaining = 0;
 
+	int lastMissionsPassed = 0;
+	bool* onMission = reinterpret_cast<bool*>(0xA49FC4);
+	bool canAutoSave = false;
+
 	std::list<TimedEffect*> activeEffects;
 
 	void ProcessEvents() {
@@ -70,12 +74,31 @@ public:
 		activeEffects.remove_if([](TimedEffect* effect) { return !effect->IsRunning(); });
 
 		CCheat::m_bHasPlayerCheated = false;
+
+		HandleAutoSave();
 	}
 
 	void EmptyQueue() {
 		if (!queue.empty()) {
 			queue.front()();
 			queue.pop();
+		}
+	}
+
+	void HandleAutoSave() {
+		int missionsPassed = (int)CStats::GetStatValue(eStats::STAT_MISSIONS_PASSED);
+
+		if (!*onMission && canAutoSave && missionsPassed > lastMissionsPassed && (missionsPassed - lastMissionsPassed) < 3) {
+			lastMissionsPassed = missionsPassed;
+
+			gtaSAChaosMod.QueueEffect(new Autosave());
+
+			canAutoSave = false;
+		}
+		else if (*onMission) {
+			lastMissionsPassed = missionsPassed;
+
+			canAutoSave = true;
 		}
 	}
 
@@ -339,16 +362,6 @@ public:
 		t1.detach();
 	}
 
-	// Autosaving
-	static char* __fastcall HookedCTextGet(CText* thisText, void* edx, char* key) {
-		std::string key_str(key);
-		if (key_str.rfind("M_PASS", 0) == 0) {
-			gtaSAChaosMod.QueueEffect(new Autosave());
-		}
-
-		return thisText->Get(key);
-	}
-
 	// Overwrite OpenFile so we can route the 9th slot to our custom chaos_autosave file
 	static int __cdecl HookedOpenFile(const char* path, const char* mode) {
 		std::string s_path(path),
@@ -371,8 +384,6 @@ public:
 		HookHandler::Initialize();
 
 		patch::RedirectCall(0x5D0D66, HookedOpenFile);
-
-		patch::RedirectCall(0x47DA23, HookedCTextGet);
 
 		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });
 

@@ -96,6 +96,11 @@ char* __fastcall HookHandler::HookedCTextGet(CText* thisText, void* edx, char* k
 	if (key_str == "FES_LOA") {
 		return canLoadSave ? "Load Autosave" : loadingDisallowedText;
 	}
+	else if (key_str == "FEP_STG") {
+		if (canLoadSave && CTimer::m_snTimeInMilliseconds < 1000 && !KeyPressed(VK_LCONTROL)) {
+			TryLoadAutoSave();
+		}
+	}
 
 	return thisText->Get(key);
 }
