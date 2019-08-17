@@ -1,6 +1,7 @@
 #include "HookHandler.h"
 
 bool HookHandler::canLoadSave = true;
+bool HookHandler::didTryLoadAutoSave = false;
 char* HookHandler::loadingDisallowedText = "";
 
 void HookHandler::Initialize() {
@@ -97,8 +98,12 @@ char* __fastcall HookHandler::HookedCTextGet(CText* thisText, void* edx, char* k
 		return canLoadSave ? "Load Autosave" : loadingDisallowedText;
 	}
 	else if (key_str == "FEP_STG") {
-		if (canLoadSave && CTimer::m_snTimeInMilliseconds < 1000 && !KeyPressed(VK_LCONTROL)) {
-			TryLoadAutoSave();
+		if (!didTryLoadAutoSave) {
+			didTryLoadAutoSave = true;
+
+			if (!KeyPressed(VK_CONTROL)) {
+				TryLoadAutoSave();
+			}
 		}
 	}
 

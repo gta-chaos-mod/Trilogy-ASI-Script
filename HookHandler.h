@@ -15,6 +15,7 @@ class HookHandler
 {
 private:
 	static bool canLoadSave;
+	static bool didTryLoadAutoSave;
 	static char* loadingDisallowedText;
 
 public:
