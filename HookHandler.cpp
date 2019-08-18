@@ -42,14 +42,14 @@ void HookHandler::TryLoadAutoSave() {
 		return;
 	}
 
-	canLoadSave = false;
-
 	char savePath[256];
 	char* gamePath = reinterpret_cast<char*>(0xC92368);
 
 	std::sprintf(savePath, "%s\\chaos_autosave.b", gamePath);
 
 	if (std::filesystem::exists(savePath)) {
+		canLoadSave = false;
+
 		FrontEndMenuManager.m_bDontDrawFrontEnd = false;
 		FrontEndMenuManager.m_bSelectedSaveGame = 8;
 		CGame::bMissionPackGame = 0;
