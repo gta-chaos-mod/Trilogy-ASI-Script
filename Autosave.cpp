@@ -10,6 +10,9 @@ void Autosave::HandleTick() {
 	if (!didSave && !FindPlayerVehicle(-1, false) && FindPlayerPed()) {
 		std::sprintf(CGenericGameStorage::ms_ValidSaveName, "%s\\chaos_autosave.b", gamePath);
 
+		for (int i = 0; i < 92; i++) {
+			CCheat::m_aCheatsActive[i] = false;
+		}
 		CGenericGameStorage::GenericSave(0);
 
 		didSave = true;
