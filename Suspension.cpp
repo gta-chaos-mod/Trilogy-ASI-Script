@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "Suspension.h"
 
 Suspension::Suspension(float _suspension, int _duration, std::string _description)

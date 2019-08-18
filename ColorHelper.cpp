@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "ColorHelper.h"
 
 /*! \brief Convert RGB to HSV color space

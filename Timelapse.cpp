@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "Timelapse.h"
 
 Timelapse::Timelapse(int _duration, std::string _description)

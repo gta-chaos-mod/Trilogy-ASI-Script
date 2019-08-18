@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "Teleportation.h"
 
 void Teleportation::Teleport(CVector destination) {

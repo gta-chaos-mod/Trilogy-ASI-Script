@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "GenericUtil.h"
 
 std::vector<std::string> GenericUtil::replacements;

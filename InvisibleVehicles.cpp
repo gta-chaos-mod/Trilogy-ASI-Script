@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "InvisibleVehicles.h"
 
 bool* InvisibleVehicles::isEnabled = reinterpret_cast<bool*>(0x96914B);

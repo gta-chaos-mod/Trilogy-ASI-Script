@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "EffectHandler.h"
 
 void EffectHandler::HandleEffect(std::string effect) {

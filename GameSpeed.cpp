@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "GameSpeed.h"
 
 GameSpeed::GameSpeed(float _gameSpeed, int _duration, std::string _description)

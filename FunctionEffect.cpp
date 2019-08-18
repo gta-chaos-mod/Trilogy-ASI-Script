@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "FunctionEffect.h"
 
 FunctionEffect::FunctionEffect(void* _function, int _duration, std::string _description)

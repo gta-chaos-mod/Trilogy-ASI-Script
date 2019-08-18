@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "RandomHelper.h"
 
 std::mt19937 RandomHelper::rng;

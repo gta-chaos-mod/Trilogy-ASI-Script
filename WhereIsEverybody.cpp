@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "WhereIsEverybody.h"
 
 WhereIsEverybody::WhereIsEverybody(int _duration, std::string _description)

@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "Player.h"
 
 void Player::GivePlayerHealthArmorMoney() {

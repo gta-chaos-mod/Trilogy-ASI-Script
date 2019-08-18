@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "TimedFunctionCheat.h"
 
 TimedFunctionCheat::TimedFunctionCheat(void* _function, int _address, int _duration, std::string _description)

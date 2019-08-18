@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "ThermalNightVision.h"
 
 ThermalNightVision::ThermalNightVision(bool _isNightVision, int _duration, std::string _description)

@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #pragma once
 
 #include "common.h"

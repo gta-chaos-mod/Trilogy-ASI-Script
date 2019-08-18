@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "CPedDamageResponseCalculator.h"
 
 unsigned int CPedDamageResponseCalculator::AccountForPedArmour(CPed* a2, int cDamageResponseInfo) {

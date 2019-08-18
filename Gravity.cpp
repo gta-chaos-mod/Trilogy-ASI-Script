@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "Gravity.h"
 
 Gravity::Gravity(float _gravity, int _duration, std::string _description)

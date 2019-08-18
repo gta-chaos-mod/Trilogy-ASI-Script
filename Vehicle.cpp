@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Lordmau5
 #include "Vehicle.h"
 
 void Vehicle::SpawnVehicle(int modelID, CVector position, float orientation) {
