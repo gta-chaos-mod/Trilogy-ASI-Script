@@ -385,6 +385,9 @@ public:
 
 		patch::RedirectCall(0x5D0D66, HookedOpenFile);
 
+		// Disable Replays
+		patch::Nop(0x53C090, 5);
+
 		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });
 
 		onDrawAfterFade.AddAfter([this] { this->DrawRemainingTime(); });
