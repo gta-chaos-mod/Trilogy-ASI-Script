@@ -134,6 +134,9 @@
     <ClCompile Include="InvisibleVehicles.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="Framerate.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -289,6 +292,9 @@
       <Filter>effects\impl</Filter>
     </ClInclude>
     <ClInclude Include="InvisibleVehicles.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Framerate.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
   </ItemGroup>

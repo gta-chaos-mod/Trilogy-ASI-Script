@@ -15,6 +15,7 @@
 #include "DisableRadarBlips.h"
 #include "EverybodyBleedNow.h"
 #include "FailMission.h"
+#include "Framerate.h"
 #include "GhostRider.h"
 #include "InfiniteHealth.h"
 #include "InvertedControls.h"

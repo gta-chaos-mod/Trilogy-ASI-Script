@@ -130,6 +130,12 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "invisible_vehicles") {
 		return new InvisibleVehicles(duration, description);
 	}
+	else if (effect == "framerate_15") {
+		return new Framerate(15, duration, description);
+	}
+	else if (effect == "framerate_60") {
+		return new Framerate(60, duration, description);
+	}
 
 	return nullptr;
 }
