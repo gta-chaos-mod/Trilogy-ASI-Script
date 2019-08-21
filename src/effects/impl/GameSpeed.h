@@ -1,0 +1,17 @@
+// Copyright (c) 2019 Lordmau5
+#pragma once
+
+#include "effects/abstract/TimedEffect.h"
+
+class GameSpeed : public TimedEffect
+{
+private:
+	float gameSpeed = 1.0f;
+
+public:
+	GameSpeed(float _gameSpeed, int _duration, std::string _description);
+
+	void Disable() override;
+
+	void HandleTick() override;
+};
