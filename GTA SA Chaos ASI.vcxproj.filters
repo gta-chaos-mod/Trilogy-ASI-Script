@@ -134,7 +134,9 @@
     <ClCompile Include="src\effects\impl\WhereIsEverybody.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
-    <ClCompile Include="src\effects\impl\LongLiveTheRich.cpp" />
+    <ClCompile Include="src\effects\impl\LongLiveTheRich.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -292,6 +294,8 @@
     <ClInclude Include="src\effects\impl\WhereIsEverybody.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
-    <ClInclude Include="src\effects\impl\LongLiveTheRich.h" />
+    <ClInclude Include="src\effects\impl\LongLiveTheRich.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
