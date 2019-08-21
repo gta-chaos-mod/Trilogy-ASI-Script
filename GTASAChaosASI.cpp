@@ -389,6 +389,10 @@ public:
 		// Disable Replays
 		patch::Nop(0x53C090, 5);
 
+		// Disable Interior Music
+		patch::Nop(0x508450, 6);
+		patch::Nop(0x508817, 6);
+
 		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });
 
 		onDrawAfterFade.AddAfter([this] { this->DrawRemainingTime(); });
