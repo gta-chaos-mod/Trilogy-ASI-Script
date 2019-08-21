@@ -23,7 +23,7 @@ void Player::KickOutOfVehicleAndLock() {
 		CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
 		if (playerVehicle) {
 			player->m_pIntelligence->m_TaskMgr.SetTask(new CTaskSimpleCarSetPedOut(playerVehicle, 0, false), 0, false);
-			playerVehicle->m_nDoorLock = eCarLock::CARLOCK_LOCKED;
+			playerVehicle->m_nVehicleFlags.bConsideredByPlayer = false;
 		}
 	}
 }
