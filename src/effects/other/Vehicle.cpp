@@ -16,38 +16,38 @@ void Vehicle::SpawnVehicle(int modelID, CVector position, float orientation) {
 		}
 		CVehicle* vehicle = nullptr;
 		switch (reinterpret_cast<CVehicleModelInfo*>(CModelInfo::ms_modelInfoPtrs[modelID])->m_nVehicleType) {
-		case VEHICLE_MTRUCK:
-			vehicle = new CMonsterTruck(modelID, 1);
-			break;
-		case VEHICLE_QUAD:
-			vehicle = new CQuadBike(modelID, 1);
-			break;
-		case VEHICLE_HELI:
-			vehicle = new CHeli(modelID, 1);
-			break;
-		case VEHICLE_PLANE:
-			vehicle = new CPlane(modelID, 1);
-			break;
-		case VEHICLE_BIKE:
-			vehicle = new CBike(modelID, 1);
-			reinterpret_cast<CBike*>(vehicle)->m_nDamageFlags |= 0x10;
-			break;
-		case VEHICLE_BMX:
-			vehicle = new CBmx(modelID, 1);
-			reinterpret_cast<CBmx*>(vehicle)->m_nDamageFlags |= 0x10;
-			break;
-		case VEHICLE_TRAILER:
-			vehicle = new CTrailer(modelID, 1);
-			break;
-		case VEHICLE_BOAT:
-			vehicle = new CBoat(modelID, 1);
-			break;
-		case VEHICLE_TRAIN:
-			vehicle = new CBoat(modelID, 1); // Thank you Rockstar, very cool
-			break;
-		default:
-			vehicle = new CAutomobile(modelID, 1, true);
-			break;
+			case VEHICLE_MTRUCK:
+				vehicle = new CMonsterTruck(modelID, 1);
+				break;
+			case VEHICLE_QUAD:
+				vehicle = new CQuadBike(modelID, 1);
+				break;
+			case VEHICLE_HELI:
+				vehicle = new CHeli(modelID, 1);
+				break;
+			case VEHICLE_PLANE:
+				vehicle = new CPlane(modelID, 1);
+				break;
+			case VEHICLE_BIKE:
+				vehicle = new CBike(modelID, 1);
+				reinterpret_cast<CBike*>(vehicle)->m_nDamageFlags |= 0x10;
+				break;
+			case VEHICLE_BMX:
+				vehicle = new CBmx(modelID, 1);
+				reinterpret_cast<CBmx*>(vehicle)->m_nDamageFlags |= 0x10;
+				break;
+			case VEHICLE_TRAILER:
+				vehicle = new CTrailer(modelID, 1);
+				break;
+			case VEHICLE_BOAT:
+				vehicle = new CBoat(modelID, 1);
+				break;
+			case VEHICLE_TRAIN:
+				vehicle = new CBoat(modelID, 1); // Thank you Rockstar, very cool
+				break;
+			default:
+				vehicle = new CAutomobile(modelID, 1, true);
+				break;
 		}
 		if (vehicle) {
 			vehicle->SetPosn(position);

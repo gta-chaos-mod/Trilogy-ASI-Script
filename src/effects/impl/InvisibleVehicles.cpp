@@ -101,14 +101,14 @@ void __fastcall InvisibleVehicles::HookedRenderEffects(CEntity* thisEntity, void
 	}
 	else {
 		switch (((CVehicle*)thisEntity)->m_nVehicleClass) {
-		case VEHICLE_AUTOMOBILE:
-		case VEHICLE_BIKE:
-		case VEHICLE_BMX:
-		case VEHICLE_HELI:
-		case VEHICLE_PLANE:
-			break;
-		default:
-			thisEntity->RenderEffects();
+			case VEHICLE_AUTOMOBILE:
+			case VEHICLE_BIKE:
+			case VEHICLE_BMX:
+			case VEHICLE_HELI:
+			case VEHICLE_PLANE:
+				break;
+			default:
+				thisEntity->RenderEffects();
 		}
 	}
 }
