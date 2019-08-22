@@ -98,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="src\effects\abstract\Autosave.cpp" />
     <ClCompile Include="src\effects\cheats\CheatHandler.cpp" />
+    <ClCompile Include="src\effects\cheats\PedsAttackOther.cpp" />
     <ClCompile Include="src\effects\impl\LongLiveTheRich.cpp" />
     <ClCompile Include="src\util\ColorHelper.cpp" />
     <ClCompile Include="src\extra\CPedDamageResponseCalculator.cpp" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="src\effects\abstract\Autosave.h" />
     <ClInclude Include="src\effects\cheats\CheatHandler.h" />
+    <ClInclude Include="src\effects\cheats\PedsAttackOther.h" />
     <ClInclude Include="src\effects\impl\LongLiveTheRich.h" />
     <ClInclude Include="src\util\ColorHelper.h" />
     <ClInclude Include="src\extra\CPedDamageResponseCalculator.h" />

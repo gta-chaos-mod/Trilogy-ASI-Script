@@ -8,6 +8,8 @@
 #include "TimedAddressCheat.h"
 #include "TimedFunctionCheat.h"
 
+#include "effects/cheats/PedsAttackOther.h"
+
 #include "effects/other/Player.h"
 #include "effects/other/Vehicle.h"
 

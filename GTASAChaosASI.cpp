@@ -87,7 +87,7 @@ public:
 	}
 
 	void HandleAutoSave() {
-		int missionsPassed = (int)CStats::GetStatValue(eStats::STAT_MISSIONS_PASSED);
+		int missionsPassed = GenericUtil::GetRealMissionsPassed();
 
 		if (!*onMission && canAutoSave && missionsPassed > lastMissionsPassed && (missionsPassed - lastMissionsPassed) < 3) {
 			lastMissionsPassed = missionsPassed;

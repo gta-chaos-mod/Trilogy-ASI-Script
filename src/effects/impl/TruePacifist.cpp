@@ -30,7 +30,7 @@ void __fastcall TruePacifist::HookedAccountForPedArmour(CPedDamageResponseCalcul
 }
 
 void __fastcall TruePacifist::HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, float* a3, char a4) {
-	if (isEnabled && thisCalc->m_pDamager->m_nType == eEntityType::ENTITY_TYPE_PED) {
+	if (isEnabled && thisCalc->m_pDamager && thisCalc->m_pDamager->m_nType == eEntityType::ENTITY_TYPE_PED) {
 		return;
 	}
 

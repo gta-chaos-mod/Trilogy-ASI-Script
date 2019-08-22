@@ -137,6 +137,9 @@
     <ClCompile Include="src\effects\impl\LongLiveTheRich.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="src\effects\cheats\PedsAttackOther.cpp">
+      <Filter>effects\cheats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -296,6 +299,9 @@
     </ClInclude>
     <ClInclude Include="src\effects\impl\LongLiveTheRich.h">
       <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\cheats\PedsAttackOther.h">
+      <Filter>effects\cheats</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

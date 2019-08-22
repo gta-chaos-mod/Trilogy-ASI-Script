@@ -11,9 +11,19 @@ private:
 public:
 	static bool areEffectsCryptic;
 
+	static CPedAcquaintance backup_acquaintances[32];
+
 public:
 	static void InitializeUnprotectedMemory();
 	static void InitializeCharReplacements();
 
 	static std::vector<std::string> GetCharReplacements();
+
+	static int GetRealMissionsPassed();
+
+	static CPedAcquaintance* GetPedTypeAcquaintances(int PedType);
+	static void BackupAcquaintances();
+	static void RestoreSavedAcquaintances();
+	static void SaveAcquaintances(CPedAcquaintance* acquaintances);
+	static void LoadAcquaintances(CPedAcquaintance* acquaintances);
 };

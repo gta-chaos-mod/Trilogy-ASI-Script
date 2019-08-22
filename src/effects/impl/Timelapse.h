@@ -10,6 +10,7 @@ class Timelapse : public TimedEffect
 public:
 	Timelapse(int _duration, std::string _description);
 
-	void Enable() override;
 	void Disable() override;
+
+	void HandleTick() override;
 };

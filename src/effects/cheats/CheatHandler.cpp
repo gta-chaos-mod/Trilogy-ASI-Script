@@ -100,7 +100,7 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 	}
 
 	else if (cheat == "rough_neighbourhood") {
-		return new TimedFunctionCheat(CCheat::MayhemCheat, 0x96913E, duration, description);
+		return new PedsAttackOther(duration, description);
 	}
 	else if (cheat == "bounty_on_your_head") {
 		return new TimedFunctionCheat(CCheat::EverybodyAttacksPlayerCheat, 0x96913F, duration, description);

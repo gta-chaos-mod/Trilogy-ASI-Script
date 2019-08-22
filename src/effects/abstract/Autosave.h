@@ -4,6 +4,7 @@
 #include "TimedEffect.h"
 
 #include "CCheat.h"
+#include "CClock.h"
 #include "CGenericGameStorage.h"
 
 class Autosave : public TimedEffect
