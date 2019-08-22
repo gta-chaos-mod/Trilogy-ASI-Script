@@ -85,6 +85,8 @@ void TimedEffect::TickDown() {
 	if (!isInitialized) {
 		InitializeHooks();
 
+		plugin::CallMethod<0x506EA0, void*, int, float, float>((void*)0xB6BC90, 0x20, 0.0f, 1.0f);
+
 		Enable();
 		isInitialized = true;
 	}
