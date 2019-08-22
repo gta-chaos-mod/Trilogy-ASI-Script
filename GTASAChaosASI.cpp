@@ -393,6 +393,9 @@ public:
 		patch::Nop(0x508450, 6);
 		patch::Nop(0x508817, 6);
 
+		// Fix Reefer w/ Invisible Cars
+		patch::Nop(0x6F14DE, 3);
+
 		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });
 
 		onDrawAfterFade.AddAfter([this] { this->DrawRemainingTime(); });
