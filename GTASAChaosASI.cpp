@@ -203,117 +203,117 @@ public:
 		}
 
 		switch (currentState) {
-		case EffectState::WANTED: {
-			if (function == "plus_two") {
-				QueueEffect(new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted"));
+			case EffectState::WANTED: {
+				if (function == "plus_two") {
+					QueueEffect(new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted"));
+				}
+				else if (function == "clear") {
+					QueueEffect(new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted"));
+				}
+				else if (function == "six_stars") {
+					QueueEffect(new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted"));
+				}
+
+				break;
 			}
-			else if (function == "clear") {
-				QueueEffect(new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted"));
+			case EffectState::WEATHER: {
+				QueueFunction(CWeather::ForceWeatherNow, std::stoi(function));
+				QueueEffect(new EffectPlaceholder(duration, description));
+
+				break;
 			}
-			else if (function == "six_stars") {
-				QueueEffect(new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted"));
+			case EffectState::SPAWN_VEHICLE: {
+				int modelID = std::stoi(function);
+				QueueFunction(Vehicle::SpawnForPlayer, modelID);
+				QueueEffect(new EffectPlaceholder(duration, description));
+
+				break;
 			}
+			case EffectState::GAME_SPEED: {
+				float speed;
+				sscanf(function.c_str(), "%f", &speed);
 
-			break;
-		}
-		case EffectState::WEATHER: {
-			QueueFunction(CWeather::ForceWeatherNow, std::stoi(function));
-			QueueEffect(new EffectPlaceholder(duration, description));
+				QueueEffect(new GameSpeed(speed, duration, description));
 
-			break;
-		}
-		case EffectState::SPAWN_VEHICLE: {
-			int modelID = std::stoi(function);
-			QueueFunction(Vehicle::SpawnForPlayer, modelID);
-			QueueEffect(new EffectPlaceholder(duration, description));
-
-			break;
-		}
-		case EffectState::GAME_SPEED: {
-			float speed;
-			sscanf(function.c_str(), "%f", &speed);
-
-			QueueEffect(new GameSpeed(speed, duration, description));
-
-			break;
-		}
-		case EffectState::CHEAT: {
-			QueueFunction([function] { CheatHandler::HandleCheat(function); });
-			QueueEffect(new EffectPlaceholder(duration, description));
-
-			break;
-		}
-		case EffectState::TIMED_CHEAT: {
-			QueueEffect(CheatHandler::HandleTimedCheat(std::string(function), duration, description));
-
-			break;
-		}
-		case EffectState::EFFECT: {
-			QueueFunction([function] { EffectHandler::HandleEffect(function); });
-			QueueEffect(new EffectPlaceholder(duration, description));
-
-			break;
-		}
-		case EffectState::TIMED_EFFECT: {
-			QueueEffect(EffectHandler::HandleTimedEffect(std::string(function), duration, description));
-
-			break;
-		}
-		case EffectState::GRAVITY: {
-			float gravity = std::stof(function);
-
-			QueueEffect(new Gravity(gravity, duration, description));
-
-			break;
-		}
-		case EffectState::TELEPORT: {
-			int x, y, z;
-			sscanf(function.c_str(), "%d,%d,%d", &x, &y, &z);
-
-			QueueFunction(Teleportation::Teleport, CVector((float)x, (float)y, (float)z));
-			QueueEffect(new EffectPlaceholder(duration, description));
-
-			break;
-		}
-		case EffectState::OTHER: {
-			if (function == "explode_cars") {
-				QueueFunction(Vehicle::BlowUpAllCars);
+				break;
 			}
-			else if (function == "clear_weapons") {
-				QueueFunction(Ped::ClearWeapons);
+			case EffectState::CHEAT: {
+				QueueFunction([function] { CheatHandler::HandleCheat(function); });
+				QueueEffect(new EffectPlaceholder(duration, description));
+
+				break;
 			}
-			QueueEffect(new EffectPlaceholder(duration, description));
+			case EffectState::TIMED_CHEAT: {
+				QueueEffect(CheatHandler::HandleTimedCheat(std::string(function), duration, description));
 
-			break;
-		}
-		case EffectState::TEXT: {
-			QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
+				break;
+			}
+			case EffectState::EFFECT: {
+				QueueFunction([function] { EffectHandler::HandleEffect(function); });
+				QueueEffect(new EffectPlaceholder(duration, description));
 
-			break;
-		}
-		case EffectState::TIME: {
-			remaining = std::stoi(function);
+				break;
+			}
+			case EffectState::TIMED_EFFECT: {
+				QueueEffect(EffectHandler::HandleTimedEffect(std::string(function), duration, description));
 
-			break;
-		}
-		case EffectState::BIG_TEXT: {
-			QueueFunction(DrawHelper::DrawBigMessage, function, 10000);
+				break;
+			}
+			case EffectState::GRAVITY: {
+				float gravity = std::stof(function);
 
-			break;
-		}
-		case EffectState::SET_SEED: {
-			RandomHelper::SetSeed(std::stoi(function));
+				QueueEffect(new Gravity(gravity, duration, description));
 
-			break;
-		}
-		case EffectState::CRYPTIC_EFFECTS: {
-			GenericUtil::areEffectsCryptic = std::stoi(function);
+				break;
+			}
+			case EffectState::TELEPORT: {
+				int x, y, z;
+				sscanf(function.c_str(), "%d,%d,%d", &x, &y, &z);
 
-			break;
-		}
-		default: {
-			break;
-		}
+				QueueFunction(Teleportation::Teleport, CVector((float)x, (float)y, (float)z));
+				QueueEffect(new EffectPlaceholder(duration, description));
+
+				break;
+			}
+			case EffectState::OTHER: {
+				if (function == "explode_cars") {
+					QueueFunction(Vehicle::BlowUpAllCars);
+				}
+				else if (function == "clear_weapons") {
+					QueueFunction(Ped::ClearWeapons);
+				}
+				QueueEffect(new EffectPlaceholder(duration, description));
+
+				break;
+			}
+			case EffectState::TEXT: {
+				QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
+
+				break;
+			}
+			case EffectState::TIME: {
+				remaining = std::stoi(function);
+
+				break;
+			}
+			case EffectState::BIG_TEXT: {
+				QueueFunction(DrawHelper::DrawBigMessage, function, 10000);
+
+				break;
+			}
+			case EffectState::SET_SEED: {
+				RandomHelper::SetSeed(std::stoi(function));
+
+				break;
+			}
+			case EffectState::CRYPTIC_EFFECTS: {
+				GenericUtil::areEffectsCryptic = std::stoi(function);
+
+				break;
+			}
+			default: {
+				break;
+			}
 		}
 
 		return;
