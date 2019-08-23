@@ -17,7 +17,6 @@ void DisableOneMovementKey::Enable() {
 		origActions[i] = ControlsManager.m_actions[i];
 	}
 
-	// TODO: List of controller actions, pick one at random, disable it
 	e_ControllerAction possibleActions[10] = {
 		CA_GO_FORWARD,
 		CA_GO_BACK,
