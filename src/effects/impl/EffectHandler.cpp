@@ -137,6 +137,9 @@ TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, 
 	else if (effect == "framerate_60") {
 		return new Framerate(60, duration, description);
 	}
+	else if (effect == "reload_autosave") {
+		return new ReloadAutosave(duration, description);
+	}
 
 	return nullptr;
 }

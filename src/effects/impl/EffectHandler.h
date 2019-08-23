@@ -27,6 +27,7 @@
 #include "OneHitKO.h"
 #include "PassMission.h"
 #include "RainbowCars.h"
+#include "ReloadAutosave.h"
 #include "Suspension.h"
 #include "ThermalNightVision.h"
 #include "Timelapse.h"

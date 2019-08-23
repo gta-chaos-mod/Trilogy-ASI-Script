@@ -276,11 +276,17 @@ public:
 				break;
 			}
 			case EffectState::OTHER: {
-				if (function == "explode_cars") {
-					QueueFunction(Vehicle::BlowUpAllCars);
-				}
-				else if (function == "clear_weapons") {
+				if (function == "clear_weapons") {
 					QueueFunction(Ped::ClearWeapons);
+				}
+				else if (function == "clear_active_effects") {
+					QueueFunction([this, duration, description] {
+						for (TimedEffect* effect : activeEffects) {
+							effect->remaining = 0;
+						}
+
+						QueueEffect(new EffectPlaceholder(duration, description));
+					});
 				}
 				QueueEffect(new EffectPlaceholder(duration, description));
 

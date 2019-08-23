@@ -26,6 +26,10 @@ void CheatHandler::HandleCheat(std::string cheat) {
 		CCheat::ParachuteCheat();
 	}
 
+	else if (cheat == "blow_up_all_cars") {
+		Vehicle::BlowUpAllCars();
+	}
+
 	else if (cheat == "fat_player") {
 		CCheat::FatCheat();
 	}

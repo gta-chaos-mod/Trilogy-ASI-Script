@@ -38,25 +38,34 @@ void HookHandler::Initialize() {
 	patch::RedirectCall(0x579D73, HookedCTextGet);
 }
 
-void HookHandler::TryLoadAutoSave() {
-	if (CTimer::m_snTimeInMilliseconds > 1000 || !canLoadSave) {
-		return;
-	}
-
+bool HookHandler::DoLoadAutoSave() {
 	char savePath[256];
 	char* gamePath = reinterpret_cast<char*>(0xC92368);
 
 	std::sprintf(savePath, "%s\\chaos_autosave.b", gamePath);
 
 	if (std::filesystem::exists(savePath)) {
-		canLoadSave = false;
-
+		FrontEndMenuManager.m_bMenuActive = true;
 		FrontEndMenuManager.m_bDontDrawFrontEnd = false;
 		FrontEndMenuManager.m_bSelectedSaveGame = 8;
 		CGame::bMissionPackGame = 0;
 
 		FrontEndMenuManager.m_nCurrentMenuPage = eMenuPage::MENUPAGE_LOAD_FIRST_SAVE;
 		FrontEndMenuManager.field_1B3C = true;
+
+		return true;
+	}
+
+	return false;
+}
+
+void HookHandler::TryLoadAutoSave() {
+	if (CTimer::m_snTimeInMilliseconds > 1000 || !canLoadSave) {
+		return;
+	}
+
+	if (DoLoadAutoSave()) {
+		canLoadSave = false;
 	}
 }
 
