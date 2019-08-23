@@ -135,11 +135,11 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 
 			float angle = (float)effect->GetRemaining() / (float)effect->GetDuration() * 360.0f;
 
-			DrawHelper::DrawCircle(center, 24.0f, 360.0f, CRGBA(255, 255, 255, 200));
+			DrawHelper::DrawCircle(center, SCREEN_MULTIPLIER(24.0f), 360.0f, CRGBA(255, 255, 255, 200));
 
-			DrawHelper::DrawCircle(center, 20.0f, 360.0f, CRGBA(13, 38, 64, 230));
+			DrawHelper::DrawCircle(center, SCREEN_MULTIPLIER(20.0f), 360.0f, CRGBA(13, 38, 64, 230));
 
-			DrawHelper::DrawCircle(center, 20.0f, angle, effect->effectColor);
+			DrawHelper::DrawCircle(center, SCREEN_MULTIPLIER(20.0f), angle, effect->effectColor);
 		}
 
 		i++;
