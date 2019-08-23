@@ -59,10 +59,10 @@ class GTASAChaosMod {
 public:
 	std::queue<std::function<void()>> queue;
 	int remaining = 0;
+	int lastSaved = 0;
 
-	int lastMissionsPassed = 0;
+	int lastMissionsPassed = -1;
 	bool* onMission = reinterpret_cast<bool*>(0xA49FC4);
-	bool canAutoSave = false;
 
 	std::list<TimedEffect*> activeEffects;
 
@@ -88,18 +88,18 @@ public:
 
 	void HandleAutoSave() {
 		int missionsPassed = GenericUtil::GetRealMissionsPassed();
+		int currentTime = CTimer::m_snTimeInMilliseconds;
 
-		if (!*onMission && canAutoSave && missionsPassed > lastMissionsPassed && (missionsPassed - lastMissionsPassed) < 3) {
+		if (lastMissionsPassed == -1) {
+			lastMissionsPassed = missionsPassed;
+		}
+
+		if (missionsPassed > lastMissionsPassed && lastSaved < currentTime) {
 			lastMissionsPassed = missionsPassed;
 
 			gtaSAChaosMod.QueueEffect(new Autosave());
 
-			canAutoSave = false;
-		}
-		else if (*onMission) {
-			lastMissionsPassed = missionsPassed;
-
-			canAutoSave = true;
+			lastSaved = currentTime + 1000;
 		}
 	}
 
