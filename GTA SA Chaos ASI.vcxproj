@@ -66,6 +66,7 @@
       <AdditionalIncludeDirectories>$(PLUGIN_SDK_DIR)\plugin_sa\;$(PLUGIN_SDK_DIR)\plugin_sa\game_sa\;$(PLUGIN_SDK_DIR)\shared\;$(PLUGIN_SDK_DIR)\shared\game\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;GTASA;GTAGAME_NAME="San Andreas";GTAGAME_ABBR="SA";GTAGAME_ABBRLOW="sa";GTAGAME_PROTAGONISTNAME="CJ";GTAGAME_CITYNAME="San Andreas";_LA_SUPPORT;PLUGIN_SGV_10US;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -96,6 +97,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\effects\cheats\SmashNBoom.cpp" />
     <ClCompile Include="src\effects\abstract\Autosave.cpp" />
     <ClCompile Include="src\effects\cheats\CheatHandler.cpp" />
     <ClCompile Include="src\effects\cheats\PedsAttackOther.cpp" />
@@ -145,6 +147,7 @@
     <ClCompile Include="src\effects\impl\WhereIsEverybody.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\effects\cheats\SmashNBoom.h" />
     <ClInclude Include="src\effects\abstract\Autosave.h" />
     <ClInclude Include="src\effects\cheats\CheatHandler.h" />
     <ClInclude Include="src\effects\cheats\PedsAttackOther.h" />

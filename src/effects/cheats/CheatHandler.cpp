@@ -84,7 +84,7 @@ TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std
 		return new TimedAddressCheat(0x969160, duration, description);
 	}
 	else if (cheat == "smash_n_boom") {
-		return new TimedAddressCheat(0x969164, duration, description);
+		return new SmashNBoom(duration, description);
 	}
 	else if (cheat == "all_cars_nitro") {
 		return new TimedAddressCheat(0x969165, duration, description);

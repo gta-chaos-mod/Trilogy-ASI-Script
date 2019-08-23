@@ -140,6 +140,9 @@
     <ClCompile Include="src\effects\cheats\PedsAttackOther.cpp">
       <Filter>effects\cheats</Filter>
     </ClCompile>
+    <ClCompile Include="src\effects\cheats\SmashNBoom.cpp">
+      <Filter>effects\cheats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -301,6 +304,9 @@
       <Filter>effects\impl</Filter>
     </ClInclude>
     <ClInclude Include="src\effects\cheats\PedsAttackOther.h">
+      <Filter>effects\cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\cheats\SmashNBoom.h">
       <Filter>effects\cheats</Filter>
     </ClInclude>
   </ItemGroup>
