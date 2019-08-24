@@ -34,7 +34,6 @@
 using namespace plugin;
 
 enum EffectState {
-	WANTED,
 	WEATHER,
 	SPAWN_VEHICLE,
 	GAME_SPEED,
@@ -108,12 +107,6 @@ public:
 			return;
 		}
 
-		// If it's a placeholder, just add it (mostly one-time effects)
-		if (effect->isPlaceholder) {
-			activeEffects.push_front(effect);
-			return;
-		}
-
 		// If an effect with the same type or description is found, disable it, remove it and add a fresh copy of it
 		auto it = std::find_if(activeEffects.begin(), activeEffects.end(), [effect](TimedEffect* _effect) { return effect->IsEqualType(_effect) || effect->IsEqualDescription(_effect); });
 		if (it != activeEffects.end()) {
@@ -150,10 +143,7 @@ public:
 		std::string description(c_description);
 
 		EffectState currentState;
-		if (state == "wanted") {
-			currentState = EffectState::WANTED;
-		}
-		else if (state == "weather") {
+		if (state == "weather") {
 			currentState = EffectState::WEATHER;
 		}
 		else if (state == "spawn_vehicle") {
@@ -203,29 +193,16 @@ public:
 		}
 
 		switch (currentState) {
-			case EffectState::WANTED: {
-				if (function == "plus_two") {
-					QueueEffect(new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted"));
-				}
-				else if (function == "clear") {
-					QueueEffect(new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted"));
-				}
-				else if (function == "six_stars") {
-					QueueEffect(new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted"));
-				}
-
-				break;
-			}
 			case EffectState::WEATHER: {
-				QueueFunction(CWeather::ForceWeatherNow, std::stoi(function));
 				QueueEffect(new EffectPlaceholder(duration, description));
+				QueueFunction(CWeather::ForceWeatherNow, std::stoi(function));
 
 				break;
 			}
 			case EffectState::SPAWN_VEHICLE: {
 				int modelID = std::stoi(function);
-				QueueFunction(Vehicle::SpawnForPlayer, modelID);
 				QueueEffect(new EffectPlaceholder(duration, description));
+				QueueFunction(Vehicle::SpawnForPlayer, modelID);
 
 				break;
 			}
@@ -237,25 +214,15 @@ public:
 
 				break;
 			}
-			case EffectState::CHEAT: {
-				QueueFunction([function] { CheatHandler::HandleCheat(function); });
-				QueueEffect(new EffectPlaceholder(duration, description));
-
-				break;
-			}
+			case EffectState::CHEAT:
 			case EffectState::TIMED_CHEAT: {
-				QueueEffect(CheatHandler::HandleTimedCheat(std::string(function), duration, description));
+				QueueEffect(CheatHandler::HandleCheat(function, duration, description));
 
 				break;
 			}
-			case EffectState::EFFECT: {
-				QueueFunction([function] { EffectHandler::HandleEffect(function); });
-				QueueEffect(new EffectPlaceholder(duration, description));
-
-				break;
-			}
+			case EffectState::EFFECT:
 			case EffectState::TIMED_EFFECT: {
-				QueueEffect(EffectHandler::HandleTimedEffect(std::string(function), duration, description));
+				QueueEffect(EffectHandler::HandleEffect(std::string(function), duration, description));
 
 				break;
 			}
@@ -270,16 +237,14 @@ public:
 				int x, y, z;
 				sscanf(function.c_str(), "%d,%d,%d", &x, &y, &z);
 
-				QueueFunction(Teleportation::Teleport, CVector((float)x, (float)y, (float)z));
 				QueueEffect(new EffectPlaceholder(duration, description));
+				QueueFunction(Teleportation::Teleport, CVector((float)x, (float)y, (float)z));
 
 				break;
 			}
 			case EffectState::OTHER: {
-				if (function == "clear_weapons") {
-					QueueFunction(Ped::ClearWeapons);
-				}
-				else if (function == "clear_active_effects") {
+				QueueEffect(new EffectPlaceholder(duration, description));
+				if (function == "clear_active_effects") {
 					QueueFunction([this, duration, description] {
 						for (TimedEffect* effect : activeEffects) {
 							effect->remaining = 0;
@@ -288,7 +253,6 @@ public:
 						QueueEffect(new EffectPlaceholder(duration, description));
 					});
 				}
-				QueueEffect(new EffectPlaceholder(duration, description));
 
 				break;
 			}

@@ -1,59 +1,66 @@
 // Copyright (c) 2019 Lordmau5
 #include "EffectHandler.h"
 
-void EffectHandler::HandleEffect(std::string effect) {
-	if (effect == "hot_potato") {
-		Ped::SetAllOnFire();
+TimedEffect* EffectHandler::HandleEffect(std::string effect, int duration, std::string description) {
+	// *** One-Time Effects ***
+
+	if (effect == "clear_weapons") {
+		return new FunctionEffect(Ped::ClearWeapons, duration, description);
+	}
+	else if (effect == "hot_potato") {
+		return new FunctionEffect(Ped::SetAllOnFire, duration, description);
 	}
 	else if (effect == "kick_out_of_car") {
-		Player::KickOutOfVehicleAndLock();
+		return new FunctionEffect(Player::KickOutOfVehicleAndLock, duration, description);
 	}
 	else if (effect == "there_is_no_escape") {
-		Player::LockPlayerInsideVehicle();
+		return new FunctionEffect(Player::LockPlayerInsideVehicle, duration, description);
 	}
 	else if (effect == "set_vehicle_on_fire") {
-		Vehicle::SetPlayerVehicleOnFire();
+		return new FunctionEffect(Vehicle::SetPlayerVehicleOnFire, duration, description);
 	}
 	else if (effect == "pop_vehicle_tires") {
-		Vehicle::PopAllVehicleTires();
+		return new FunctionEffect(Vehicle::PopAllVehicleTires, duration, description);
 	}
 	else if (effect == "send_vehicles_to_space") {
-		Vehicle::SendVehiclesToSpace();
+		return new FunctionEffect(Vehicle::SendVehiclesToSpace, duration, description);
 	}
 
 	else if (effect == "max_stamina") {
-		Player::SetStamina(true);
+		return new FunctionEffect(Player::MaxStamina, duration, description);
 	}
 	else if (effect == "no_stamina") {
-		Player::SetStamina(false);
+		return new FunctionEffect(Player::NoStamina, duration, description);
 	}
 	else if (effect == "max_weapon_skill") {
-		Player::SetWeaponSkills(true);
+		return new FunctionEffect(Player::MaxWeaponSkills, duration, description);
 	}
 	else if (effect == "no_weapon_skill") {
-		Player::SetWeaponSkills(false);
+		return new FunctionEffect(Player::NoWeaponSkills, duration, description);
 	}
 	else if (effect == "max_driving_skill") {
-		Player::SetDrivingSkills(true);
+		return new FunctionEffect(Player::MaxDrivingSkills, duration, description);
 	}
 	else if (effect == "no_driving_skill") {
-		Player::SetDrivingSkills(false);
+		return new FunctionEffect(Player::NoDrivingSkills, duration, description);
 	}
 
 	else if (effect == "player_wasted") {
-		Player::DoWasted();
+		return new FunctionEffect(Player::DoWasted, duration, description);
 	}
 	else if (effect == "player_busted") {
-		Player::DoBusted();
+		return new FunctionEffect(Player::DoBusted, duration, description);
 	}
 
 	else if (effect == "turn_vehicles_around") {
-		Vehicle::TurnVehiclesAround();
+		return new FunctionEffect(Vehicle::TurnVehiclesAround, duration, description);
 	}
-}
 
-TimedEffect* EffectHandler::HandleTimedEffect(std::string effect, int duration, std::string description) {
-	if (effect == "totheleft_totheright") {
+	// *** End of One-Time Effects ***
+
+	// *** Timed Effects ***
+
+	else if (effect == "totheleft_totheright") {
 		return new ToTheLeftToTheRight(duration, description);
 	}
 	else if (effect == "timelapse") {

@@ -4,6 +4,7 @@
 #include "common.h"
 #include "plugin.h"
 
+#include "effects/abstract/FunctionEffect.h"
 #include "effects/abstract/TimedEffect.h"
 #include "TimedAddressCheat.h"
 #include "TimedFunctionCheat.h"
@@ -13,12 +14,12 @@
 
 #include "effects/other/Player.h"
 #include "effects/other/Vehicle.h"
+#include "effects/other/Wanted.h"
 
 #include "CCheat.h"
 
 class CheatHandler
 {
 public:
-	static void HandleCheat(std::string cheat);
-	static TimedEffect* HandleTimedCheat(std::string cheat, int duration, std::string description);
+	static TimedEffect* HandleCheat(std::string cheat, int duration, std::string description);
 };

@@ -32,7 +32,6 @@ public:
 	static void SpawnForPlayer(int modelID);
 	static void BlowUpAllCars();
 
-	static void FixPlayerVehicle();
 	static void SetPlayerVehicleOnFire();
 	static void PopAllVehicleTires();
 	static void SendVehiclesToSpace();

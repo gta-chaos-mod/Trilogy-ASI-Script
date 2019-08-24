@@ -18,8 +18,16 @@ public:
 	static void LockPlayerInsideVehicle();
 
 	static void SetStamina(bool isMax);
+	static void NoStamina();
+	static void MaxStamina();
+
 	static void SetWeaponSkills(bool isMax);
+	static void NoWeaponSkills();
+	static void MaxWeaponSkills();
+
 	static void SetDrivingSkills(bool isMax);
+	static void NoDrivingSkills();
+	static void MaxDrivingSkills();
 
 	static void DoWasted();
 	static void DoBusted();

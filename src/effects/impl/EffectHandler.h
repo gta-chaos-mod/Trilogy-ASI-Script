@@ -4,6 +4,7 @@
 #include "common.h"
 #include "plugin.h"
 
+#include "effects/abstract/FunctionEffect.h"
 #include "effects/abstract/TimedEffect.h"
 
 #include "effects/other/Ped.h"
@@ -39,6 +40,5 @@
 class EffectHandler
 {
 public:
-	static void HandleEffect(std::string effect);
-	static TimedEffect* HandleTimedEffect(std::string effect, int duration, std::string description);
+	static TimedEffect* HandleEffect(std::string effect, int duration, std::string description);
 };

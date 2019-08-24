@@ -7,6 +7,13 @@ void Player::GivePlayerHealthArmorMoney() {
 		player->m_fHealth = player->m_fMaxHealth;
 		player->m_fArmour = 100.0f;
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney += 250000;
+
+		CVehicle* vehicle = FindPlayerVehicle(-1, false);
+		if (vehicle) {
+			bool isHigherDurability = vehicle->m_fHealth > 1000.0f;
+			vehicle->Fix();
+			vehicle->m_fHealth = isHigherDurability ? 10000.0f : 1000.0f;
+		}
 	}
 }
 
@@ -41,6 +48,14 @@ void Player::SetStamina(bool isMax) {
 	CStats::SetStatValue(eStats::STAT_STAMINA, value); // Stamina
 }
 
+void Player::NoStamina() {
+	SetStamina(false);
+}
+
+void Player::MaxStamina() {
+	SetStamina(true);
+}
+
 void Player::SetWeaponSkills(bool isMax) {
 	float value = isMax ? 1000.0f : 0.0f;
 
@@ -57,6 +72,14 @@ void Player::SetWeaponSkills(bool isMax) {
 	CStats::SetStatValue(eStats::STAT_RIFLE_SKILL, value); // Rifle
 }
 
+void Player::NoWeaponSkills() {
+	SetWeaponSkills(false);
+}
+
+void Player::MaxWeaponSkills() {
+	SetWeaponSkills(true);
+}
+
 void Player::SetDrivingSkills(bool isMax) {
 	float value = isMax ? 1000.0f : 0.0f;
 
@@ -64,6 +87,14 @@ void Player::SetDrivingSkills(bool isMax) {
 	CStats::SetStatValue(eStats::STAT_FLYING_SKILL, value); // Flying
 	CStats::SetStatValue(eStats::STAT_BIKE_SKILL, value); // Bike
 	CStats::SetStatValue(eStats::STAT_CYCLING_SKILL, value); // Cycling
+}
+
+void Player::NoDrivingSkills() {
+	SetDrivingSkills(false);
+}
+
+void Player::MaxDrivingSkills() {
+	SetDrivingSkills(true);
 }
 
 void Player::DoBusted() {

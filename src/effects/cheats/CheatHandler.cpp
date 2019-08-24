@@ -1,48 +1,61 @@
 // Copyright (c) 2019 Lordmau5
 #include "CheatHandler.h"
 
-void CheatHandler::HandleCheat(std::string cheat) {
+TimedEffect* CheatHandler::HandleCheat(std::string cheat, int duration, std::string description) {
+	// *** One-Time Cheats ***
+
 	if (cheat == "weapon_set_1") {
-		CCheat::WeaponCheat1();
+		return new FunctionEffect(CCheat::WeaponCheat1, duration, description);
 	}
 	else if (cheat == "weapon_set_2") {
-		CCheat::WeaponCheat2();
+		return new FunctionEffect(CCheat::WeaponCheat2, duration, description);
 	}
 	else if (cheat == "weapon_set_3") {
-		CCheat::WeaponCheat3();
+		return new FunctionEffect(CCheat::WeaponCheat3, duration, description);
 	}
 	else if (cheat == "give_health_armor_money") {
-		Player::GivePlayerHealthArmorMoney();
-		Vehicle::FixPlayerVehicle();
+		return new FunctionEffect(Player::GivePlayerHealthArmorMoney, duration, description);
 	}
 	else if (cheat == "suicide") {
-		Player::KillPlayer();
+		return new FunctionEffect(Player::KillPlayer, duration, description);
+	}
+
+	else if (cheat == "wanted_plus_two") {
+		return new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted");
+	}
+	else if (cheat == "wanted_clear") {
+		return new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted");
+	}
+	else if (cheat == "wanted_six_stars") {
+		return new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted");
 	}
 
 	else if (cheat == "jetpack") {
-		CCheat::JetpackCheat();
+		return new FunctionEffect(CCheat::JetpackCheat, duration, description);
 	}
 	else if (cheat == "parachute") {
-		CCheat::ParachuteCheat();
+		return new FunctionEffect(CCheat::ParachuteCheat, duration, description);
 	}
 
 	else if (cheat == "blow_up_all_cars") {
-		Vehicle::BlowUpAllCars();
+		return new FunctionEffect(Vehicle::BlowUpAllCars, duration, description);
 	}
 
 	else if (cheat == "fat_player") {
-		CCheat::FatCheat();
+		return new FunctionEffect(CCheat::FatCheat, duration, description);
 	}
 	else if (cheat == "max_muscle") {
-		CCheat::MuscleCheat();
+		return new FunctionEffect(CCheat::MuscleCheat, duration, description);
 	}
 	else if (cheat == "skinny_player") {
-		CCheat::SkinnyCheat();
+		return new FunctionEffect(CCheat::SkinnyCheat, duration, description);
 	}
-}
 
-TimedEffect* CheatHandler::HandleTimedCheat(std::string cheat, int duration, std::string description) {
-	if (cheat == "infinite_ammo") {
+	// *** End of One-Time Cheats ***
+
+	// *** Timed Cheats ***
+
+	else if (cheat == "infinite_ammo") {
 		return new TimedAddressCheat(0x969178, duration, description);
 	}
 

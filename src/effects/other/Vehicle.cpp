@@ -79,15 +79,6 @@ void Vehicle::BlowUpAllCars() {
 	}
 }
 
-void Vehicle::FixPlayerVehicle() {
-	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
-	if (playerVehicle) {
-		bool isHigherDurability = playerVehicle->m_fHealth > 1000.0f;
-		playerVehicle->Fix();
-		playerVehicle->m_fHealth = isHigherDurability ? 10000.0f : 1000.0f;
-	}
-}
-
 void Vehicle::SetPlayerVehicleOnFire() {
 	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
 	if (playerVehicle) {
