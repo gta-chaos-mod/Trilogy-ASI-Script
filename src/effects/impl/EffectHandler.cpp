@@ -60,7 +60,7 @@ TimedEffect* EffectHandler::HandleEffect(std::string effect, int duration, std::
 
 	// *** Timed Effects ***
 
-	else if (effect == "totheleft_totheright") {
+	else if (effect == "to_the_left_to_the_right") {
 		return new ToTheLeftToTheRight(duration, description);
 	}
 	else if (effect == "timelapse") {
