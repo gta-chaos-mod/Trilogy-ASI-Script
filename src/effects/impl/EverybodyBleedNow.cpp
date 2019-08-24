@@ -14,8 +14,20 @@ void EverybodyBleedNow::Disable() {
 }
 
 void EverybodyBleedNow::HandleTick() {
+	bool isLosingHealth = false;
+
+	wait -= CalculateTick();
+	if (wait < 0) {
+		wait = 5000;
+		isLosingHealth = true;
+	}
+
 	for (CPed* ped : CPools::ms_pPedPool) {
 		ped->m_nPedFlags.bDoBloodyFootprints = true;
 		ped->m_nPedFlags.bPedIsBleeding = true;
+
+		if (isLosingHealth) {
+			ped->m_fHealth -= 1.0f;
+		}
 	}
 }
