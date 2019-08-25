@@ -5,6 +5,9 @@ std::vector<std::string> GenericUtil::replacements;
 bool GenericUtil::areEffectsCryptic = false;
 CPedAcquaintance GenericUtil::backup_acquaintances[32];
 
+std::string GenericUtil::loadFilePath;
+char* GenericUtil::gamePath = reinterpret_cast<char*>(0xC92368);
+
 void GenericUtil::InitializeUnprotectedMemory() {
 	DWORD ignore;
 	injector::UnprotectMemory(0x863984, sizeof(GAME_GRAVITY), ignore);
@@ -96,4 +99,48 @@ void GenericUtil::LoadAcquaintances(CPedAcquaintance* acquaintances) {
 	for (int i = 0; i < 32; i++) {
 		memcpy(GetPedTypeAcquaintances(i), &acquaintances[i], sizeof(CPedAcquaintance));
 	}
+}
+
+void GenericUtil::SaveToFile(std::string fileName) {
+	std::sprintf(CGenericGameStorage::ms_ValidSaveName, "%s\\%s", gamePath, fileName.c_str());
+
+	// Temporarily disable cheats and certain effects so they don't get saved
+	for (int i = 0; i < 92; i++) {
+		CCheat::m_aCheatsActive[i] = false;
+	}
+	CClock::ms_nMillisecondsPerGameMinute = 1000;
+
+	CPedAcquaintance temp_acquaintances[32];
+	GenericUtil::SaveAcquaintances(temp_acquaintances);
+	GenericUtil::RestoreSavedAcquaintances();
+
+	CGenericGameStorage::GenericSave(0);
+
+	GenericUtil::LoadAcquaintances(temp_acquaintances);
+}
+
+bool GenericUtil::LoadFromFile(std::string fileName) {
+	char savePath[256];
+
+	loadFilePath = fileName;
+
+	std::sprintf(savePath, "%s\\%s", gamePath, loadFilePath.c_str());
+
+	if (std::filesystem::exists(savePath)) {
+		FrontEndMenuManager.m_bMenuActive = true;
+		FrontEndMenuManager.m_bDontDrawFrontEnd = false;
+		FrontEndMenuManager.m_bSelectedSaveGame = 8;
+		CGame::bMissionPackGame = 0;
+
+		FrontEndMenuManager.m_nCurrentMenuPage = eMenuPage::MENUPAGE_LOAD_FIRST_SAVE;
+		FrontEndMenuManager.field_1B3C = true;
+
+		return true;
+	}
+
+	return false;
+}
+
+std::string GenericUtil::GetLoadFileName() {
+	return loadFilePath;
 }

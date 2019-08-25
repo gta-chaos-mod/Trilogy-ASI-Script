@@ -22,8 +22,6 @@ private:
 public:
 	static void Initialize();
 
-	static bool DoLoadAutoSave();
-
 private:
 	static void TryLoadAutoSave();
 

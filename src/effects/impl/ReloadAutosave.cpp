@@ -5,5 +5,5 @@ ReloadAutosave::ReloadAutosave(int _duration, std::string _description)
 	: EffectPlaceholder(_duration, _description) {}
 
 void ReloadAutosave::Enable() {
-	HookHandler::DoLoadAutoSave();
+	GenericUtil::LoadFromFile("chaos_autosave.b");
 }

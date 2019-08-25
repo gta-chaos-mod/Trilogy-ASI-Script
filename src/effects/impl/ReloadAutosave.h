@@ -3,8 +3,6 @@
 
 #include "effects/abstract/EffectPlaceholder.h"
 
-#include "effects/impl/HookHandler.h"
-
 class ReloadAutosave : public EffectPlaceholder
 {
 public:

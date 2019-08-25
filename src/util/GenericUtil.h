@@ -3,10 +3,20 @@
 
 #include "common.h"
 
+#include <filesystem>
+
+#include "CCheat.h"
+#include "CClock.h"
+#include "CGame.h"
+#include "CGenericGameStorage.h"
+#include "CMenuManager.h"
+
 class GenericUtil
 {
 private:
 	static std::vector<std::string> replacements;
+	static std::string loadFilePath;
+	static char* gamePath;
 
 public:
 	static bool areEffectsCryptic;
@@ -26,4 +36,8 @@ public:
 	static void RestoreSavedAcquaintances();
 	static void SaveAcquaintances(CPedAcquaintance* acquaintances);
 	static void LoadAcquaintances(CPedAcquaintance* acquaintances);
+
+	static void SaveToFile(std::string fileName);
+	static bool LoadFromFile(std::string fileName);
+	static std::string GetLoadFileName();
 };

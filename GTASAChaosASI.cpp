@@ -347,12 +347,11 @@ public:
 	// Overwrite OpenFile so we can route the 9th slot to our custom chaos_autosave file
 	static int __cdecl HookedOpenFile(const char* path, const char* mode) {
 		std::string s_path(path),
-			save_path = "GTASAsf9",
-			replace = "chaos_autosave";
+			save_path = "GTASAsf9.b";
 
 		size_t start_pos = s_path.find(save_path);
 		if (start_pos != std::string::npos) {
-			s_path.replace(start_pos, save_path.length(), replace);
+			s_path.replace(start_pos, save_path.length(), GenericUtil::GetLoadFileName().c_str());
 		}
 
 		return CFileMgr::OpenFile(s_path.c_str(), mode);
