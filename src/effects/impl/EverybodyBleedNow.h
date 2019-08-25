@@ -6,7 +6,7 @@
 class EverybodyBleedNow : public TimedEffect
 {
 private:
-	int wait = 5000;
+	int wait = 0;
 
 public:
 	EverybodyBleedNow(int _duration, std::string _description);

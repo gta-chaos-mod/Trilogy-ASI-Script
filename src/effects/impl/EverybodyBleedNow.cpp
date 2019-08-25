@@ -18,7 +18,7 @@ void EverybodyBleedNow::HandleTick() {
 
 	wait -= CalculateTick();
 	if (wait < 0) {
-		wait = 5000;
+		wait = 3000;
 		isLosingHealth = true;
 	}
 
@@ -27,7 +27,7 @@ void EverybodyBleedNow::HandleTick() {
 		ped->m_nPedFlags.bPedIsBleeding = true;
 
 		if (isLosingHealth) {
-			ped->m_fHealth -= 1.0f;
+			ped->m_fHealth -= RandomHelper::Random(1.0f, 3.0f);
 		}
 	}
 }
