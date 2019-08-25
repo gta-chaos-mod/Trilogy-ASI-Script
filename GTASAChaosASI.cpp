@@ -107,7 +107,7 @@ public:
 		if (!*onMission && missionsPassed > lastMissionsPassed && lastSaved < currentTime && !IsAnyMissionScriptActive()) {
 			lastMissionsPassed = missionsPassed;
 
-			gtaSAChaosMod.QueueEffect(new Autosave());
+			gtaSAChaosMod.QueueEffect(new Autosave(missionsPassed));
 
 			lastSaved = currentTime + 1000;
 		}

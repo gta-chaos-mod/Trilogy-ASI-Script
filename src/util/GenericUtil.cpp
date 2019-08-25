@@ -104,6 +104,9 @@ void GenericUtil::LoadAcquaintances(CPedAcquaintance* acquaintances) {
 void GenericUtil::SaveToFile(std::string fileName) {
 	std::sprintf(CGenericGameStorage::ms_ValidSaveName, "%s\\%s", gamePath, fileName.c_str());
 
+	std::filesystem::path p(CGenericGameStorage::ms_ValidSaveName);
+	std::filesystem::create_directories(p.parent_path());
+
 	// Temporarily disable cheats and certain effects so they don't get saved
 	for (int i = 0; i < 92; i++) {
 		CCheat::m_aCheatsActive[i] = false;

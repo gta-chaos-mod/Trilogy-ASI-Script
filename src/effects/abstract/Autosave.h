@@ -9,9 +9,10 @@ class Autosave : public TimedEffect
 {
 private:
 	bool didSave = false;
+	int missionsPassed = 0;
 
 public:
-	Autosave();
+	Autosave(int _missionsPassed);
 
 	void HandleTick() override;
 };

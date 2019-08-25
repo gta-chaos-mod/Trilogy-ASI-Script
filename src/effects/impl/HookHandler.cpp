@@ -43,7 +43,7 @@ void HookHandler::TryLoadAutoSave() {
 		return;
 	}
 
-	if (GenericUtil::LoadFromFile("chaos_autosave.b")) {
+	if (GenericUtil::LoadFromFile("chaos_mod\\chaos_autosave.b")) {
 		canLoadSave = false;
 	}
 }
