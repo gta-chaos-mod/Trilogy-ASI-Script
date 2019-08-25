@@ -108,7 +108,7 @@ bool __fastcall LongLiveTheRich::HookedPickupUpdate(CPickup* thisPickup, void* e
 		thisPickup->m_nPickupType == ePickupType::PICKUP_MONEY_DOESNTDISAPPEAR ||
 		thisPickup->m_nPickupType == ePickupType::PICKUP_ASSET_REVENUE;
 
-	if (isEnabled && isMoneyPickup) {
+	if (isEnabled && isMoneyPickup && thisPickup->m_nAmmo > 0) {
 		return false;
 	}
 
