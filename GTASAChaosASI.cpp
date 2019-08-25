@@ -27,6 +27,7 @@
 #include "CGenericGameStorage.h"
 #include "CStats.h"
 #include "CText.h"
+#include "CTheScripts.h"
 #include "CWeather.h"
 
 // Version 0.999
@@ -85,6 +86,16 @@ public:
 		}
 	}
 
+	bool IsAnyMissionScriptActive() {
+		for (auto i = CTheScripts::pActiveScripts; i = i->m_pNext;) {
+			if (i->m_bIsMission) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	void HandleAutoSave() {
 		int missionsPassed = GenericUtil::GetRealMissionsPassed();
 		int currentTime = CTimer::m_snTimeInMilliseconds;
@@ -93,7 +104,7 @@ public:
 			lastMissionsPassed = missionsPassed;
 		}
 
-		if (missionsPassed > lastMissionsPassed && lastSaved < currentTime) {
+		if (!*onMission && missionsPassed > lastMissionsPassed && lastSaved < currentTime && !IsAnyMissionScriptActive()) {
 			lastMissionsPassed = missionsPassed;
 
 			gtaSAChaosMod.QueueEffect(new Autosave());
