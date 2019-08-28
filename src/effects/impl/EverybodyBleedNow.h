@@ -7,6 +7,7 @@ class EverybodyBleedNow : public TimedEffect
 {
 private:
 	int wait = 0;
+	bool* neverHungryCheat = reinterpret_cast<bool*>(0x969174);
 
 public:
 	EverybodyBleedNow(int _duration, std::string _description);

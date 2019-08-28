@@ -5,8 +5,13 @@
 
 class OneHitKO : public TimedEffect
 {
+private:
+	bool* neverHungryCheat = reinterpret_cast<bool*>(0x969174);
+
 public:
 	OneHitKO(int _duration, std::string _description);
+
+	void Disable() override;
 
 	void HandleTick() override;
 };
