@@ -82,6 +82,7 @@ void Vehicle::BlowUpAllCars() {
 void Vehicle::SetPlayerVehicleOnFire() {
 	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
 	if (playerVehicle) {
+		playerVehicle->m_nPhysicalFlags.bFireProof = false;
 		playerVehicle->m_fHealth = 249.9f;
 	}
 }

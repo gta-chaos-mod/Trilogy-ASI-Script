@@ -12,6 +12,7 @@ void Wanted::IncreaseWantedLevel() {
 void Wanted::ClearWantedLevel() {
 	CWanted* wanted = FindPlayerWanted(-1);
 	if (wanted) {
+		wanted->ClearWantedLevelAndGoOnParole();
 		wanted->CheatWantedLevel(0);
 	}
 }
