@@ -26,6 +26,7 @@
 #include "LetsTakeABreak.h"
 #include "LongLiveTheRich.h"
 #include "OneHitKO.h"
+#include "OutOfFuel.h"
 #include "PassMission.h"
 #include "RainbowCars.h"
 #include "ReloadAutosave.h"

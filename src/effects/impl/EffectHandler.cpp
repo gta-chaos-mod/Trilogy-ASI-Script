@@ -147,6 +147,9 @@ TimedEffect* EffectHandler::HandleEffect(std::string effect, int duration, std::
 	else if (effect == "reload_autosave") {
 		return new ReloadAutosave(duration, description);
 	}
+	else if (effect == "out_of_fuel") {
+		return new OutOfFuel(duration, description);
+	}
 
 	return nullptr;
 }
