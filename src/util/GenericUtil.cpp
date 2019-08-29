@@ -11,6 +11,7 @@ char* GenericUtil::gamePath = reinterpret_cast<char*>(0xC92368);
 void GenericUtil::InitializeUnprotectedMemory() {
 	DWORD ignore;
 	injector::UnprotectMemory(0x863984, sizeof(GAME_GRAVITY), ignore);
+	injector::UnprotectMemory(0x53E94C, 1, ignore); // Frame-time delay (14ms by default)
 }
 
 void GenericUtil::InitializeCharReplacements() {
