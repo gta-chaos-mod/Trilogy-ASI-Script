@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Lordmau5
+// Copyright (c) 2019 Lordmau5
 #include "TimedEffect.h"
 
 TimedEffect::TimedEffect(int _duration, std::string _description) {
@@ -21,10 +21,6 @@ TimedEffect::TimedEffect(int _duration, std::string _description, std::string _t
 
 bool TimedEffect::IsRunning() {
 	return remaining > 0;
-}
-
-int TimedEffect::GetRemaining() {
-	return remaining;
 }
 
 int TimedEffect::GetDuration() {

@@ -39,7 +39,9 @@ public:
 	};
 
 	bool IsRunning();
-	int GetRemaining();
+	virtual int GetRemaining() {
+		return remaining;
+	};
 	int GetDuration();
 	std::string GetDescription();
 	void UpdateCrypticDescription();
