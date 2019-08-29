@@ -97,6 +97,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\effects\impl\CustomGravity.cpp" />
     <ClCompile Include="src\effects\impl\ReloadAutosave.cpp" />
     <ClCompile Include="src\effects\cheats\SmashNBoom.cpp" />
     <ClCompile Include="src\effects\abstract\Autosave.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="src\effects\impl\WhereIsEverybody.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\effects\impl\CustomGravity.h" />
     <ClInclude Include="src\effects\impl\ReloadAutosave.h" />
     <ClInclude Include="src\effects\cheats\SmashNBoom.h" />
     <ClInclude Include="src\effects\abstract\Autosave.h" />

@@ -151,5 +151,40 @@ TimedEffect* EffectHandler::HandleEffect(std::string effect, int duration, std::
 		return new OutOfFuel(duration, description);
 	}
 
+	else if (effect == "quarter_gravity") {
+		return new Gravity(0.002f, duration, description);
+	}
+	else if (effect == "half_gravity") {
+		return new Gravity(0.004f, duration, description);
+	}
+	else if (effect == "double_gravity") {
+		return new Gravity(0.016f, duration, description);
+	}
+	else if (effect == "quadruple_gravity") {
+		return new Gravity(0.032f, duration, description);
+	}
+	else if (effect == "inverted_gravity") {
+		return new CustomGravity(-0.001f, duration, description);
+	}
+	else if (effect == "zero_gravity") {
+		return new CustomGravity(0.0f, duration, description);
+	}
+	else if (effect == "insane_gravity") {
+		return new CustomGravity(0.64f, duration, description);
+	}
+
+	else if (effect == "quarter_gamespeed") {
+		return new GameSpeed(0.25f, duration, description);
+	}
+	else if (effect == "half_gamespeed") {
+		return new GameSpeed(0.5f, duration, description);
+	}
+	else if (effect == "double_gamespeed") {
+		return new GameSpeed(2.0f, duration, description);
+	}
+	else if (effect == "quadruple_gamespeed") {
+		return new GameSpeed(4.0f, duration, description);
+	}
+
 	return nullptr;
 }

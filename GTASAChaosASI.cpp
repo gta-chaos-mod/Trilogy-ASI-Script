@@ -16,8 +16,6 @@
 #include "util/GenericUtil.h"
 #include "util/RandomHelper.h"
 
-#include "effects/impl/GameSpeed.h"
-#include "effects/impl/Gravity.h"
 #include "effects/other/Ped.h"
 #include "effects/other/Teleportation.h"
 #include "effects/other/Vehicle.h"
@@ -37,12 +35,10 @@ using namespace plugin;
 enum EffectState {
 	WEATHER,
 	SPAWN_VEHICLE,
-	GAME_SPEED,
 	CHEAT,
 	TIMED_CHEAT,
 	EFFECT,
 	TIMED_EFFECT,
-	GRAVITY,
 	TELEPORT,
 	OTHER,
 
@@ -160,9 +156,6 @@ public:
 		else if (state == "spawn_vehicle") {
 			currentState = EffectState::SPAWN_VEHICLE;
 		}
-		else if (state == "game_speed") {
-			currentState = EffectState::GAME_SPEED;
-		}
 		else if (state == "cheat") {
 			currentState = EffectState::CHEAT;
 		}
@@ -174,9 +167,6 @@ public:
 		}
 		else if (state == "timed_effect") {
 			currentState = EffectState::TIMED_EFFECT;
-		}
-		else if (state == "gravity") {
-			currentState = EffectState::GRAVITY;
 		}
 		else if (state == "other") {
 			currentState = EffectState::OTHER;
@@ -217,14 +207,6 @@ public:
 
 				break;
 			}
-			case EffectState::GAME_SPEED: {
-				float speed;
-				sscanf(function.c_str(), "%f", &speed);
-
-				QueueEffect(new GameSpeed(speed, duration, description));
-
-				break;
-			}
 			case EffectState::CHEAT:
 			case EffectState::TIMED_CHEAT: {
 				QueueEffect(CheatHandler::HandleCheat(function, duration, description));
@@ -234,13 +216,6 @@ public:
 			case EffectState::EFFECT:
 			case EffectState::TIMED_EFFECT: {
 				QueueEffect(EffectHandler::HandleEffect(std::string(function), duration, description));
-
-				break;
-			}
-			case EffectState::GRAVITY: {
-				float gravity = std::stof(function);
-
-				QueueEffect(new Gravity(gravity, duration, description));
 
 				break;
 			}

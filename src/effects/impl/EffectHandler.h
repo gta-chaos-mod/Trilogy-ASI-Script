@@ -11,6 +11,7 @@
 #include "effects/other/Player.h"
 #include "effects/other/Vehicle.h"
 
+#include "CustomGravity.h"
 #include "CrypticEffects.h"
 #include "DisableHUD.h"
 #include "DisableOneMovementKey.h"
@@ -18,7 +19,9 @@
 #include "EverybodyBleedNow.h"
 #include "FailMission.h"
 #include "Framerate.h"
+#include "GameSpeed.h"
 #include "GhostRider.h"
+#include "Gravity.h"
 #include "InfiniteHealth.h"
 #include "InvertedControls.h"
 #include "InvisibleVehicles.h"

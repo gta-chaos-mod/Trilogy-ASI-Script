@@ -149,6 +149,9 @@
     <ClCompile Include="src\effects\impl\OutOfFuel.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
+    <ClCompile Include="src\effects\impl\CustomGravity.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -319,6 +322,9 @@
       <Filter>effects\impl</Filter>
     </ClInclude>
     <ClInclude Include="src\effects\impl\OutOfFuel.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\impl\CustomGravity.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
   </ItemGroup>
