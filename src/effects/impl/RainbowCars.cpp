@@ -20,7 +20,9 @@ void RainbowCars::Disable() {
 	Events::vehicleRenderEvent -= RenderVehicleEvent;
 
 	for (auto it = resetMaterials.begin(); it != resetMaterials.end(); ++it) {
-		it->first->color = it->second;
+		if (it->first) {
+			it->first->color = it->second;
+		}
 	}
 
 	resetMaterials.clear();
