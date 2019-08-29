@@ -105,7 +105,9 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 			return;
 		}
 
-		float x = SCREEN_COORD_RIGHT(effect->isPlaceholder ? 25.0f : 90.0f);
+		bool shouldDrawCircle = !effect->isPlaceholder && !effect->isDisabled;
+
+		float x = SCREEN_COORD_RIGHT(shouldDrawCircle ? 90.0f : 25.0f);
 		float y = SCREEN_COORD_BOTTOM(((i + 1) * 70.0f) + 260.0f);
 
 		CFont::SetCentreSize(SCREEN_WIDTH);
@@ -120,10 +122,10 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 		CFont::SetEdge(1);
 		CFont::SetBackground(false, false);
 
-		CFont::SetColor(CRGBA(255, 255, 255, 200));
+		CFont::SetColor(effect->textColor);
 		CFont::PrintString(x, y, (char*)effect->GetDescription().c_str());
 
-		if (!effect->isPlaceholder) {
+		if (shouldDrawCircle) {
 			CVector2D center = CVector2D(SCREEN_COORD_RIGHT(50.0f), y + SCREEN_COORD(22.0f));
 
 			RwTextureFilterMode filter = rwFILTERLINEAR;
@@ -137,7 +139,7 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 
 			DrawHelper::DrawCircle(center, SCREEN_MULTIPLIER(24.0f), 360.0f, CRGBA(255, 255, 255, 200));
 
-			DrawHelper::DrawCircle(center, SCREEN_MULTIPLIER(20.0f), 360.0f, CRGBA(13, 38, 64, 230));
+			DrawHelper::DrawCircle(center, SCREEN_MULTIPLIER(20.0f), 360.0f, CRGBA(13, 38, 64, 200));
 
 			DrawHelper::DrawCircle(center, SCREEN_MULTIPLIER(20.0f), angle, effect->effectColor);
 		}

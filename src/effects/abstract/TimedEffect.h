@@ -18,7 +18,9 @@ public:
 	bool isInitialized = false;
 	bool isPlaceholder = false;
 	bool immuneToCryptic = false;
-	CRGBA effectColor = CRGBA(50, 150, 255, 230);
+	CRGBA textColor = CRGBA(255, 255, 255, 200);
+	int textColorTick = 2400;
+	CRGBA effectColor = CRGBA(50, 150, 255, 200);
 	int remaining = 0;
 	int duration = 0;
 	std::string description = "N/A";
@@ -36,6 +38,7 @@ public:
 	virtual void Enable() {};
 	virtual void Disable() {
 		isDisabled = true;
+		textColor = CRGBA(175, 175, 175, 200);
 	};
 
 	bool IsRunning();

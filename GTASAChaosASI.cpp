@@ -121,7 +121,6 @@ public:
 			if (_effect) {
 				_effect->Disable();
 			}
-			activeEffects.remove(*it);
 		}
 		activeEffects.push_front(effect);
 	}
@@ -229,11 +228,10 @@ public:
 				break;
 			}
 			case EffectState::OTHER: {
-				QueueEffect(new EffectPlaceholder(duration, description));
 				if (function == "clear_active_effects") {
 					QueueFunction([this, duration, description] {
 						for (TimedEffect* effect : activeEffects) {
-							effect->remaining = 0;
+							effect->Disable();
 						}
 
 						QueueEffect(new EffectPlaceholder(duration, description));

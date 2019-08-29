@@ -3,6 +3,7 @@
 
 CrypticEffects::CrypticEffects(int _duration, std::string _description)
 	: TimedEffect(_duration, _description) {
+	duration = remaining = _duration * 3;
 	immuneToCryptic = true;
 	effectColor = CRGBA(255, 50, 50, 200);
 }

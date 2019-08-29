@@ -1,4 +1,4 @@
-// Copyright (c) 2019 Lordmau5
+﻿// Copyright (c) 2019 Lordmau5
 #include "TimedEffect.h"
 
 TimedEffect::TimedEffect(int _duration, std::string _description) {
@@ -90,6 +90,13 @@ void TimedEffect::TickDown() {
 	if (remaining >= 0) {
 		int tick = CalculateTick();
 		remaining -= tick;
+
+		if (textColorTick >= 0) {
+			textColorTick -= tick;
+
+			textColor = (textColorTick / 400) % 2 ? CRGBA(255, 255, 0, 200) : CRGBA(255, 255, 255, 200);
+		}
+
 		crypticDescriptionWait -= tick;
 
 		if (crypticDescriptionWait <= 0) {
