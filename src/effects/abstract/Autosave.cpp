@@ -5,7 +5,7 @@ Autosave::Autosave(int _missionsPassed)
 	: TimedEffect(1000 * 10, "Autosave (Get On Foot)") {
 	missionsPassed = _missionsPassed;
 	immuneToCryptic = true;
-	effectColor = CRGBA(255, 50, 50, 230);
+	effectColor = CRGBA(255, 50, 50, 200);
 }
 
 void Autosave::HandleTick() {
@@ -21,7 +21,7 @@ void Autosave::HandleTick() {
 
 		didSave = true;
 
-		effectColor = CRGBA(40, 200, 40, 230);
+		effectColor = CRGBA(40, 200, 40, 200);
 
 		Disable();
 
