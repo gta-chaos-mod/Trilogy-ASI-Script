@@ -13,6 +13,7 @@ public:
 
 private:
 	int wait = 0;
+	int effectRemaining = 1000 * 10;
 	CControllerAction origActions[59];
 
 public:
@@ -22,6 +23,8 @@ public:
 
 	void Enable() override;
 	void Disable() override;
+
+	int GetRemaining() override;
 
 	void HandleTick() override;
 
