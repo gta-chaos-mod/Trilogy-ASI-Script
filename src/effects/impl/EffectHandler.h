@@ -27,6 +27,7 @@
 #include "InvisibleVehicles.h"
 #include "LagEffect.h"
 #include "LetsTakeABreak.h"
+#include "LockPlayerInsideVehicle.h"
 #include "LongLiveTheRich.h"
 #include "OneHitKO.h"
 #include "OutOfFuel.h"

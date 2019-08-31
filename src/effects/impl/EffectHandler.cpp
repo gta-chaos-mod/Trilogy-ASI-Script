@@ -13,9 +13,6 @@ TimedEffect* EffectHandler::HandleEffect(std::string effect, int duration, std::
 	else if (effect == "kick_out_of_car") {
 		return new FunctionEffect(Player::KickOutOfVehicleAndLock, duration, description);
 	}
-	else if (effect == "there_is_no_escape") {
-		return new FunctionEffect(Player::LockPlayerInsideVehicle, duration, description);
-	}
 	else if (effect == "set_vehicle_on_fire") {
 		return new FunctionEffect(Vehicle::SetPlayerVehicleOnFire, duration, description);
 	}
@@ -184,6 +181,9 @@ TimedEffect* EffectHandler::HandleEffect(std::string effect, int duration, std::
 	}
 	else if (effect == "quadruple_gamespeed") {
 		return new GameSpeed(4.0f, duration, description);
+	}
+	else if (effect == "there_is_no_escape") {
+		return new LockPlayerInsideVehicle(duration, description);
 	}
 
 	return nullptr;
