@@ -51,6 +51,9 @@ Simple:
 	2. Or you just press `Start` right away
 4. Suffer
 
+## Is there a list of all effects?
+Of course! Here's a [spreadsheet](http://bit.ly/gta-sa-chaos-mod) that has all of them!
+
 ## My game's crashing!
 Great! Create an issue with the `.log` and `.dmp` files from the `CrashDumps` folder. (Best to archive them into a `.zip` file or similar)
 
