@@ -114,7 +114,7 @@ public:
 			return;
 		}
 
-		// If an effect with the same type or description is found, disable it, remove it and add a fresh copy of it
+		// If an effect with the same type or description is found, disable it, disable it
 		auto it = std::find_if(activeEffects.begin(), activeEffects.end(), [effect](TimedEffect* _effect) { return effect->IsEqualType(_effect) || effect->IsEqualDescription(_effect); });
 		if (it != activeEffects.end()) {
 			TimedEffect* _effect = *it;
@@ -229,12 +229,11 @@ public:
 			}
 			case EffectState::OTHER: {
 				if (function == "clear_active_effects") {
+					QueueEffect(new EffectPlaceholder(duration, description));
 					QueueFunction([this, duration, description] {
 						for (TimedEffect* effect : activeEffects) {
 							effect->Disable();
 						}
-
-						QueueEffect(new EffectPlaceholder(duration, description));
 					});
 				}
 
