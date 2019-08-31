@@ -78,6 +78,11 @@ There is a license. It's "All Rights Reserved" for now.
 ## I hate you!
 Right back at you 😉
 
+## **ATTENTION, ALL STREAMERS!**
+You don't have to, but it'd be amazing if you could tag your streams with `#chaos` or something similar, maybe even tweet it out with the `#GTA_Chaos_Mod` hashtag.
+
+I wouldn't mind potentially dropping by and seeing you guys suffer with the mod 😁
+
 # Credits
 ## [DK22Pac](https://github.com/DK22Pac) and everyone involved in the [plugin-sdk](https://github.com/DK22Pac/plugin-sdk)
 
