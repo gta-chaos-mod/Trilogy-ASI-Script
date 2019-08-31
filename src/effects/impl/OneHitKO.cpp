@@ -6,6 +6,8 @@ OneHitKO::OneHitKO(int _duration, std::string _description)
 
 void OneHitKO::Disable() {
 	*neverHungryCheat = false;
+
+	TimedEffect::Disable();
 }
 
 void OneHitKO::HandleTick() {
