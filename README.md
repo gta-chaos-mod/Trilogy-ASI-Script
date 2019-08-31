@@ -76,4 +76,32 @@ It could be that it is pretty much impossible to implement, or that I just won't
 There is a license. It's "All Rights Reserved" for now.
 
 ## I hate you!
-Right back at you ;)
+Right back at you 😉
+
+# Credits
+## [DK22Pac](https://github.com/DK22Pac) and everyone involved in the [plugin-sdk](https://github.com/DK22Pac/plugin-sdk)
+
+## [Parik](https://github.com/Zarig)
+who has been helping me with a lot of function hooks and other things in the mod 💖
+
+## Early beta testers
+- [Jugachi](https://twitch.tv/jugachi)
+- [Heinki](https://twitch.tv/heinki)
+- [Naro](https://twitch.tv/naro)
+- [Joshimuz](https://twitch.tv/joshimuz)
+- [English\_Ben](https://twitch.tv/english_ben)
+- [Tezur0](https://twitch.tv/tezur0)
+- [GTA_Madman](https://twitch.tv/gta_madman)
+
+## Everyone in the release race that was held on the 30th of August, 2019
+- [123robot](https://twitch.tv/123robot)
+- [DomoTheRussian](https://twitch.tv/domotherussian)
+- [English\_Ben](https://twitch.tv/english_ben)
+- [Gaël](https://twitch.tv/gaeldemarseille)
+- [Jessey](https://twitch.tv/jesseysnipenl)
+- [Nate](https://twitch.tv/natehotshot)
+- [PizzaFourLife](https://twitch.tv/pizzafourlife)
+- [RoK](https://twitch.tv/rok_24)
+- [SpuG3](https://twitch.tv/spug3)
+- [Terrtail](https://twitch.tv/terrtail)
+- [zoton2](https://twitch.tv/zoton2)
