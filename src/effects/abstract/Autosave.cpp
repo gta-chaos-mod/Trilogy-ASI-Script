@@ -2,14 +2,18 @@
 #include "Autosave.h"
 
 Autosave::Autosave(int _missionsPassed)
-	: TimedEffect(1000 * 10, "Autosave (Get On Foot)") {
+	: TimedEffect(1000 * 10, "Autosaving...") {
 	missionsPassed = _missionsPassed;
 	immuneToCryptic = true;
 	effectColor = CRGBA(255, 50, 50, 200);
 }
 
 void Autosave::HandleTick() {
-	if (!didSave && !FindPlayerVehicle(-1, false) && FindPlayerPed()) {
+	CPlayerPed* player = FindPlayerPed();
+	if (!didSave && player) {
+		bool wasInVehicle = player->m_nPedFlags.bInVehicle;
+		player->m_nPedFlags.bInVehicle = false;
+
 		GenericUtil::SaveToFile("chaos_mod\\chaos_autosave.b");
 
 		std::string missionSave;
@@ -19,6 +23,8 @@ void Autosave::HandleTick() {
 			.append(".b");
 		GenericUtil::SaveToFile(missionSave);
 
+		player->m_nPedFlags.bInVehicle = wasInVehicle;
+
 		didSave = true;
 
 		effectColor = CRGBA(40, 200, 40, 200);
@@ -26,5 +32,7 @@ void Autosave::HandleTick() {
 		Disable();
 
 		description = "Autosave Completed";
+
+		textColorTick = 2400;
 	}
 }
