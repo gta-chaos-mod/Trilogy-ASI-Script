@@ -94,7 +94,7 @@ void TimedEffect::TickDown() {
 		if (textColorTick >= 0) {
 			textColorTick -= tick;
 
-			textColor = (textColorTick / 400) % 2 ? CRGBA(255, 255, 0, 200) : CRGBA(255, 255, 255, 200);
+			textColor = (textColorTick / 400) % 2 ? CRGBA(255, 255, 0, 200) : (isDisabled ? CRGBA(175, 175, 175, 200) : CRGBA(255, 255, 255, 200));
 		}
 
 		crypticDescriptionWait -= tick;
