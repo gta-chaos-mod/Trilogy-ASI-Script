@@ -67,6 +67,7 @@ void GhostRider::SetBurnTimer(CVehicle* vehicle, float value) {
 			bike->m_fHealth = 249.0f;
 			//bike->field_7BC = (int)value; // This should also be a float, until then we use the float pointer
 			*(float*)((char*)vehicle + 1980) = value;
+			break;
 		}
 		case VEHICLE_AUTOMOBILE:
 		case VEHICLE_MTRUCK:
@@ -76,11 +77,13 @@ void GhostRider::SetBurnTimer(CVehicle* vehicle, float value) {
 			automobile->m_fHealth = 249.0f;
 			//automobile->m_dwBurnTimer = (int)value; // This should be a float, until then we use the float pointer
 			*(float*)((char*)vehicle + 2276) = value;
+			break;
 		}
 		case VEHICLE_BOAT: {
 			CBoat* boat = (CBoat*)vehicle;
 			boat->m_fHealth = 249.0f;
 			boat->m_fBurningTimer = value;
+			break;
 		}
 	}
 }
