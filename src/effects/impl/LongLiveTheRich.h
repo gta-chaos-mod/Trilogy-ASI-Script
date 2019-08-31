@@ -11,9 +11,8 @@ class LongLiveTheRich : public TimedEffect
 {
 public:
 	static bool isEnabled;
-
-private:
-	int storedMoney = 0;
+	static int storedMoney;
+	static int gainedMoney;
 
 public:
 	LongLiveTheRich(int _duration, std::string _description);

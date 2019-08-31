@@ -1,6 +1,8 @@
 // Copyright (c) 2019 Lordmau5
 #include "GenericUtil.h"
 
+#include "effects/impl/LongLiveTheRich.h"
+
 std::vector<std::string> GenericUtil::replacements;
 bool GenericUtil::areEffectsCryptic = false;
 CPedAcquaintance GenericUtil::backup_acquaintances[32];
@@ -114,6 +116,12 @@ void GenericUtil::SaveToFile(std::string fileName) {
 	}
 	CClock::ms_nMillisecondsPerGameMinute = 1000;
 
+	CPlayerPed* player = FindPlayerPed();
+	int tempMoney = -1;
+	if (player) {
+		tempMoney = LongLiveTheRich::isEnabled ? LongLiveTheRich::storedMoney : player->GetPlayerInfoForThisPlayerPed()->m_nMoney;
+	}
+
 	CPedAcquaintance temp_acquaintances[32];
 	GenericUtil::SaveAcquaintances(temp_acquaintances);
 	GenericUtil::RestoreSavedAcquaintances();
@@ -121,6 +129,10 @@ void GenericUtil::SaveToFile(std::string fileName) {
 	CGenericGameStorage::GenericSave(0);
 
 	GenericUtil::LoadAcquaintances(temp_acquaintances);
+
+	if (player) {
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = LongLiveTheRich::isEnabled ? LongLiveTheRich::gainedMoney : tempMoney;
+	}
 }
 
 bool GenericUtil::LoadFromFile(std::string fileName) {

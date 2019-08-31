@@ -2,6 +2,8 @@
 #include "LongLiveTheRich.h"
 
 bool LongLiveTheRich::isEnabled = false;
+int LongLiveTheRich::storedMoney = 0;
+int LongLiveTheRich::gainedMoney = 0;
 
 LongLiveTheRich::LongLiveTheRich(int _duration, std::string _description)
 	: TimedEffect(_duration, _description, "health") {
@@ -25,8 +27,7 @@ void LongLiveTheRich::Enable() {
 
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = (int)player->m_fHealth;
-		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = (int)player->m_fHealth;
+		gainedMoney = (int)player->m_fHealth;
 	}
 }
 
@@ -35,7 +36,7 @@ void LongLiveTheRich::Disable() {
 
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = min(player->GetPlayerInfoForThisPlayerPed()->m_nMoney * 100, 100000);
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = min(gainedMoney * 100, 100000);
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney += storedMoney;
 		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = player->GetPlayerInfoForThisPlayerPed()->m_nMoney;
 	}
@@ -47,6 +48,8 @@ void LongLiveTheRich::HandleTick() {
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
 		player->m_fHealth = player->m_fMaxHealth;
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = gainedMoney;
+		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = gainedMoney;
 	}
 }
 
@@ -61,13 +64,13 @@ void __fastcall LongLiveTheRich::HookedAccountForPedArmour(CPedDamageResponseCal
 				return;
 			}
 
-			player->GetPlayerInfoForThisPlayerPed()->m_nMoney += (int)(maxDamage / 10.0f);
+			gainedMoney += (int)(maxDamage / 10.0f);
 		}
 		else if (thisCalc->m_pDamager != player && ped == player) {
-			player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= (int)thisCalc->m_fDamageFactor;
-			player->GetPlayerInfoForThisPlayerPed()->m_nMoney = max(0, player->GetPlayerInfoForThisPlayerPed()->m_nMoney);
+			gainedMoney -= (int)thisCalc->m_fDamageFactor;
+			gainedMoney = max(0, gainedMoney);
 
-			if (player->GetPlayerInfoForThisPlayerPed()->m_nMoney == 0) {
+			if (gainedMoney == 0) {
 				player->m_fHealth = 0.0f;
 			}
 
@@ -85,13 +88,13 @@ void __fastcall LongLiveTheRich::HookedComputeWillKillPed(CPedDamageResponseCalc
 
 		CPlayerPed* player = FindPlayerPed();
 		if (thisCalc->m_pDamager == player && ped != player) {
-			player->GetPlayerInfoForThisPlayerPed()->m_nMoney += (int)(maxDamage / 10.0f);
+			gainedMoney += (int)(maxDamage / 10.0f);
 		}
 		else if (thisCalc->m_pDamager != player && ped == player) {
-			player->GetPlayerInfoForThisPlayerPed()->m_nMoney -= (int)thisCalc->m_fDamageFactor;
-			player->GetPlayerInfoForThisPlayerPed()->m_nMoney = max(0, player->GetPlayerInfoForThisPlayerPed()->m_nMoney);
+			gainedMoney -= (int)thisCalc->m_fDamageFactor;
+			gainedMoney = max(0, gainedMoney);
 
-			if (player->GetPlayerInfoForThisPlayerPed()->m_nMoney == 0) {
+			if (gainedMoney == 0) {
 				player->m_fHealth = 0.0f;
 			}
 
