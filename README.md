@@ -112,3 +112,4 @@ who has been helping me with a lot of function hooks and other things in the mod
 - [SpuG3](https://twitch.tv/spug3)
 - [Terrtail](https://twitch.tv/terrtail)
 - [zoton2](https://twitch.tv/zoton2)
+- [wariscoach](https://twitch.tv/wariscoach)
