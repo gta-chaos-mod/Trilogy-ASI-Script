@@ -59,6 +59,8 @@ Since this mod was built with speedrunners in mind, the `Load Save` option was d
 
 The only way to load the last autosave right now is to restart the game.
 
+You can prevent it from trying to load the autosave by holding `Left CTRL` when booting up the game.
+
 This will be addressed in a config file further down the line.
 
 ## Where are the autosaves being saved to?
