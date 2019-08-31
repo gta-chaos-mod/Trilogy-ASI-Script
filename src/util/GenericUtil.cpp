@@ -136,20 +136,20 @@ void GenericUtil::SaveToFile(std::string fileName) {
 }
 
 bool GenericUtil::LoadFromFile(std::string fileName) {
-	char savePath[256];
-
 	loadFilePath = fileName;
 
-	std::sprintf(savePath, "%s\\%s", gamePath, loadFilePath.c_str());
+	std::sprintf(CGenericGameStorage::ms_LoadFileName, "%s\\%s", gamePath, loadFilePath.c_str());
 
-	if (std::filesystem::exists(savePath)) {
-		FrontEndMenuManager.m_bMenuActive = true;
-		FrontEndMenuManager.m_bDontDrawFrontEnd = false;
-		FrontEndMenuManager.m_bSelectedSaveGame = 8;
-		CGame::bMissionPackGame = 0;
+	if (std::filesystem::exists(CGenericGameStorage::ms_LoadFileName)) {
+		FrontEndMenuManager.m_bLoadingData = true;
+		FrontEndMenuManager.m_bMenuActive = false;
 
-		FrontEndMenuManager.m_nCurrentMenuPage = eMenuPage::MENUPAGE_LOAD_FIRST_SAVE;
-		FrontEndMenuManager.field_1B3C = true;
+		byte gameState = injector::ReadMemory<byte>(0xC8D4C0); // GameState
+
+		if (gameState == 9) {
+			CGame::ShutDownForRestart();
+			CGame::InitialiseWhenRestarting();
+		}
 
 		return true;
 	}
