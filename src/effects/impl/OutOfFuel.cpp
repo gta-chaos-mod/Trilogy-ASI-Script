@@ -2,7 +2,7 @@
 #include "OutOfFuel.h"
 
 OutOfFuel::OutOfFuel(int _duration, std::string _description)
-	: TimedEffect(_duration, _description) {}
+	: EffectPlaceholder(_duration, _description) {}
 
 void OutOfFuel::Enable() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
