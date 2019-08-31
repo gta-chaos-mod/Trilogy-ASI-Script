@@ -54,6 +54,16 @@ Simple:
 ## Is there a list of all effects?
 Of course! Here's a [spreadsheet](http://bit.ly/gta-sa-chaos-mod) that has all of them!
 
+## I can't load any of my saves ingame!
+Since this mod was built with speedrunners in mind, the `Load Save` option was disabled from both the main menu and the pause menu.
+
+The only way to load the last autosave right now is to restart the game.
+
+This will be addressed in a config file further down the line.
+
+## Where are the autosaves being saved to?
+Inside a sub-directory called `chaos_mod` in your corresponding GTA User Files folder.
+
 ## My game's crashing!
 Great! Create an issue with the `.log` and `.dmp` files from the `CrashDumps` folder. (Best to archive them into a `.zip` file or similar)
 
