@@ -19,12 +19,12 @@ void ToDriveOrNotToDrive::HandleTick() {
 	doPop = !doPop;
 	if (doPop) {
 		PopTires();
+		wait = 500;
 	}
 	else {
 		FixTires();
+		wait = Random(2000, 5000);
 	}
-
-	wait = Random(500, 1000);
 }
 
 void ToDriveOrNotToDrive::FixTires() {
