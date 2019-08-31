@@ -61,7 +61,6 @@ RpMaterial* RainbowCars::MaterialCallback(RpMaterial* material, void* data) {
 		resetMaterials[material] = material->color;
 	}
 
-	CVehicleModelInfo* info = (CVehicleModelInfo*)CModelInfo::GetModelInfo(vehicle->m_nModelIndex);
 	CRGBA color = CVehicleModelInfo::ms_vehicleColourTable[vehicle->m_nPrimaryColor];
 
 	int r = color.r;
