@@ -15,7 +15,6 @@ public:
 	static void KillPlayer();
 
 	static void KickOutOfVehicleAndLock();
-	static void LockPlayerInsideVehicle();
 
 	static void SetStamina(bool isMax);
 	static void NoStamina();

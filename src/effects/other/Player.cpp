@@ -35,13 +35,6 @@ void Player::KickOutOfVehicleAndLock() {
 	}
 }
 
-void Player::LockPlayerInsideVehicle() {
-	CVehicle* playerVehicle = FindPlayerVehicle(-1, false);
-	if (playerVehicle) {
-		playerVehicle->m_nDoorLock = eCarLock::CARLOCK_LOCKED_PLAYER_INSIDE;
-	}
-}
-
 void Player::SetStamina(bool isMax) {
 	float value = isMax ? 1000.0f : 0.0f;
 
