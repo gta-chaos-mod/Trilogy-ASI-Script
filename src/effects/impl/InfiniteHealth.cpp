@@ -2,9 +2,12 @@
 #include "InfiniteHealth.h"
 
 bool InfiniteHealth::isEnabled = false;
+bool InfiniteHealth::onlyPlayer = false;
 
-InfiniteHealth::InfiniteHealth(int _duration, std::string _description)
-	: TimedEffect(_duration, _description, "health") {}
+InfiniteHealth::InfiniteHealth(bool _onlyPlayer, int _duration, std::string _description)
+	: TimedEffect(_duration, _description, "health") {
+	onlyPlayer = _onlyPlayer;
+}
 
 void InfiniteHealth::InitializeHooks() {
 	patch::RedirectCall(0x4B5B19, HookedAccountForPedArmour);
@@ -32,6 +35,28 @@ void InfiniteHealth::HandleTick() {
 	if (player) {
 		player->m_fHealth = player->m_fMaxHealth;
 	}
+
+	if (onlyPlayer) {
+		CVehicle* vehicle = FindPlayerVehicle(-1, false);
+		if (vehicle) {
+			vehicle->m_nPhysicalFlags.bInvulnerable = true;
+			vehicle->m_nPhysicalFlags.bBulletProof = true;
+			vehicle->m_nPhysicalFlags.bCollisionProof = true;
+			vehicle->m_nPhysicalFlags.bExplosionProof = true;
+			vehicle->m_nPhysicalFlags.bFireProof = true;
+			vehicle->m_nPhysicalFlags.bMeeleProof = true;
+		}
+	}
+	else {
+		for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+			vehicle->m_nPhysicalFlags.bInvulnerable = true;
+			vehicle->m_nPhysicalFlags.bBulletProof = true;
+			vehicle->m_nPhysicalFlags.bCollisionProof = true;
+			vehicle->m_nPhysicalFlags.bExplosionProof = true;
+			vehicle->m_nPhysicalFlags.bFireProof = true;
+			vehicle->m_nPhysicalFlags.bMeeleProof = true;
+		}
+	}
 }
 
 void __fastcall InfiniteHealth::HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, int cDamageResponseInfo) {
@@ -40,7 +65,9 @@ void __fastcall InfiniteHealth::HookedAccountForPedArmour(CPedDamageResponseCalc
 
 void __fastcall InfiniteHealth::HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, float* a3, char a4) {
 	if (isEnabled) {
-		return;
+		if (onlyPlayer && ped == FindPlayerPed() || !onlyPlayer) {
+			return;
+		}
 	}
 
 	thisCalc->ComputeWillKillPed(ped, a3, a4);

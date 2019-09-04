@@ -160,3 +160,7 @@ bool GenericUtil::LoadFromFile(std::string fileName) {
 std::string GenericUtil::GetLoadFileName() {
 	return loadFilePath;
 }
+
+int GenericUtil::CalculateTick() {
+	return (int)((CTimer::ms_fTimeStepNonClipped / max(0.001f, CTimer::ms_fTimeScale)) * 0.02f * 1000.0f);
+}

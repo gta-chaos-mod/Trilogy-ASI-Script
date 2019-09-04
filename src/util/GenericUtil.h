@@ -40,4 +40,6 @@ public:
 	static void SaveToFile(std::string fileName);
 	static bool LoadFromFile(std::string fileName);
 	static std::string GetLoadFileName();
+
+	static int CalculateTick();
 };

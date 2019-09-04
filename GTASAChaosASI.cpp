@@ -13,6 +13,7 @@
 #include "effects/impl/EffectHandler.h"
 #include "effects/impl/HookHandler.h"
 #include "util/DrawHelper.h"
+#include "util/DrawVoting.h"
 #include "util/GenericUtil.h"
 #include "util/RandomHelper.h"
 
@@ -28,7 +29,7 @@
 #include "CTheScripts.h"
 #include "CWeather.h"
 
-// Version 1.0
+// Version 1.1 Beta
 
 using namespace plugin;
 
@@ -46,7 +47,8 @@ enum EffectState {
 	TIME,
 	BIG_TEXT,
 	SET_SEED,
-	CRYPTIC_EFFECTS
+	CRYPTIC_EFFECTS,
+	VOTES
 };
 
 static CdeclEvent<AddressList<0x53E83C, H_CALL, 0x53EBA2, H_CALL>, PRIORITY_AFTER, ArgPickNone, void()> onDrawAfterFade;
@@ -127,9 +129,12 @@ public:
 
 	void DrawRemainingTime() {
 		DrawHelper::DrawRemainingTimeRects(remaining);
-		DrawHelper::DrawRecentEffects(activeEffects);
-		DrawHelper::DrawMessages();
-		DrawHelper::DrawBigMessages();
+		if (!FrontEndMenuManager.m_bMenuActive) {
+			DrawHelper::DrawRecentEffects(activeEffects);
+			DrawHelper::DrawMessages();
+			DrawHelper::DrawBigMessages();
+			DrawVoting::DrawVotes();
+		}
 	}
 
 	template<typename _Callable, typename... _Args>
@@ -139,14 +144,21 @@ public:
 
 	void CallFunction(std::string text) {
 		char c_state[32];
-		char c_function[64];
+		char c_function[512];
 		int duration;
+		char c_voter[128];
 		char c_description[128];
-		sscanf(text.c_str(), "%[^:]:%[^:]:%d:%[^:]", &c_state, &c_function, &duration, &c_description);
+		int rapid_fire;
+		sscanf(text.c_str(), "%[^:]:%[^:]:%d:%[^:]:%[^:]:%d", &c_state, &c_function, &duration, &c_description, &c_voter, &rapid_fire);
+
+		if (rapid_fire == 1) {
+			duration = 3000;
+		}
 
 		std::string state(c_state);
 		std::string function(c_function);
 		std::string description(c_description);
+		std::string voter(c_voter);
 
 		EffectState currentState;
 		if (state == "weather") {
@@ -188,33 +200,36 @@ public:
 		else if (state == "cryptic_effects") {
 			currentState = EffectState::CRYPTIC_EFFECTS;
 		}
+		else if (state == "votes") {
+			currentState = EffectState::VOTES;
+		}
 		else {
 			return;
 		}
 
 		switch (currentState) {
 			case EffectState::WEATHER: {
-				QueueEffect(new EffectPlaceholder(duration, description));
+				QueueEffect((new EffectPlaceholder(duration, description))->SetVoter(voter)->SetRapidFire(rapid_fire));
 				QueueFunction(CWeather::ForceWeatherNow, std::stoi(function));
 
 				break;
 			}
 			case EffectState::SPAWN_VEHICLE: {
 				int modelID = std::stoi(function);
-				QueueEffect(new EffectPlaceholder(duration, description));
+				QueueEffect((new EffectPlaceholder(duration, description))->SetVoter(voter)->SetRapidFire(rapid_fire));
 				QueueFunction(Vehicle::SpawnForPlayer, modelID);
 
 				break;
 			}
 			case EffectState::CHEAT:
 			case EffectState::TIMED_CHEAT: {
-				QueueEffect(CheatHandler::HandleCheat(function, duration, description));
+				QueueEffect(CheatHandler::HandleCheat(function, duration, description)->SetVoter(voter)->SetRapidFire(rapid_fire));
 
 				break;
 			}
 			case EffectState::EFFECT:
 			case EffectState::TIMED_EFFECT: {
-				QueueEffect(EffectHandler::HandleEffect(std::string(function), duration, description));
+				QueueEffect(EffectHandler::HandleEffect(function, duration, description)->SetVoter(voter)->SetRapidFire(rapid_fire));
 
 				break;
 			}
@@ -222,18 +237,18 @@ public:
 				int x, y, z;
 				sscanf(function.c_str(), "%d,%d,%d", &x, &y, &z);
 
-				QueueEffect(new EffectPlaceholder(duration, description));
+				QueueEffect((new EffectPlaceholder(duration, description))->SetVoter(voter)->SetRapidFire(rapid_fire));
 				QueueFunction(Teleportation::Teleport, CVector((float)x, (float)y, (float)z));
 
 				break;
 			}
 			case EffectState::OTHER: {
 				if (function == "clear_active_effects") {
-					QueueEffect(new EffectPlaceholder(duration, description));
-					QueueFunction([this, duration, description] {
+					QueueFunction([this, duration, description, voter, rapid_fire] {
 						for (TimedEffect* effect : activeEffects) {
 							effect->Disable();
 						}
+						QueueEffect((new EffectPlaceholder(duration, description))->SetVoter(voter)->SetRapidFire(rapid_fire));
 					});
 				}
 
@@ -261,6 +276,21 @@ public:
 			}
 			case EffectState::CRYPTIC_EFFECTS: {
 				GenericUtil::areEffectsCryptic = std::stoi(function);
+
+				break;
+			}
+			case EffectState::VOTES: {
+				char c_effects[3][128];
+				int c_votes[3];
+				int pickedChoice = -1;
+				sscanf(function.c_str(), "%[^;];%d;;%[^;];%d;;%[^;];%d;;%d",
+					&c_effects[0], &c_votes[0],
+					&c_effects[1], &c_votes[1],
+					&c_effects[2], &c_votes[2],
+					&pickedChoice
+				);
+
+				DrawVoting::UpdateVotes(c_effects, c_votes, pickedChoice);
 
 				break;
 			}

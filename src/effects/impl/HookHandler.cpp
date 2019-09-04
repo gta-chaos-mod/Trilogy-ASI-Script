@@ -36,6 +36,10 @@ void HookHandler::Initialize() {
 
 	// Overwrite CText::Get call to show custom text on "Load Game" option in the menu
 	patch::RedirectCall(0x579D73, HookedCTextGet);
+
+	// Properly modify sound pitch and speed
+	patch::RedirectJump(0x561AD0, HookedGetIsSlowMotionActive);
+	injector::WriteMemory(0x8CBA6C, 1.0f);
 }
 
 void HookHandler::TryLoadAutoSave() {
@@ -97,4 +101,8 @@ char* __fastcall HookHandler::HookedCTextGet(CText* thisText, void* edx, char* k
 	}
 
 	return thisText->Get(key);
+}
+
+bool HookHandler::HookedGetIsSlowMotionActive() {
+	return true;
 }

@@ -9,6 +9,7 @@ class CustomGravity : public TimedEffect
 {
 private:
 	float gravity = 0.008f;
+	int effectDuration = 1000 * 10;
 	int effectRemaining = 1000 * 10;
 
 public:
@@ -17,6 +18,9 @@ public:
 	void Disable() override;
 
 	int GetRemaining() override;
+	int GetDuration() override;
+
+	TimedEffect* SetRapidFire(bool is_rapid_fire) override;
 
 	void HandleTick() override;
 };

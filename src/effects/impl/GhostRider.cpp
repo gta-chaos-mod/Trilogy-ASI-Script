@@ -60,6 +60,10 @@ void GhostRider::HandleTick() {
 }
 
 void GhostRider::SetBurnTimer(CVehicle* vehicle, float value) {
+	if (!vehicle) {
+		return;
+	}
+
 	switch (reinterpret_cast<CVehicleModelInfo*>(CModelInfo::ms_modelInfoPtrs[vehicle->m_nModelIndex])->m_nVehicleType) {
 		case VEHICLE_BIKE:
 		case VEHICLE_BMX: {

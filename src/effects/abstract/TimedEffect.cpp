@@ -23,10 +23,6 @@ bool TimedEffect::IsRunning() {
 	return remaining > 0;
 }
 
-int TimedEffect::GetDuration() {
-	return duration;
-}
-
 std::string TimedEffect::GetDescription() {
 	return GenericUtil::areEffectsCryptic && !immuneToCryptic ? crypticDescription : description;
 }
@@ -77,6 +73,17 @@ bool TimedEffect::IsEqualType(TimedEffect* otherEffect) {
 	return GetType() != "" && otherEffect->GetType() != "" && GetType() == otherEffect->GetType();
 }
 
+TimedEffect* TimedEffect::SetVoter(std::string _voter) {
+	voter = _voter;
+	return this;
+}
+bool TimedEffect::HasVoter() {
+	return voter != "N/A";
+}
+std::string TimedEffect::GetVoter() {
+	return voter;
+}
+
 void TimedEffect::TickDown() {
 	if (!isInitialized) {
 		InitializeHooks();
@@ -85,6 +92,10 @@ void TimedEffect::TickDown() {
 
 		Enable();
 		isInitialized = true;
+	}
+
+	if (currentOffset < 1.0f) {
+		currentOffset += 0.05f;
 	}
 
 	if (remaining >= 0) {

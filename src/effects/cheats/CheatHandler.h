@@ -12,6 +12,7 @@
 #include "effects/cheats/PedsAttackOther.h"
 #include "effects/cheats/SmashNBoom.h"
 
+#include "effects/other/Ped.h"
 #include "effects/other/Player.h"
 #include "effects/other/Vehicle.h"
 #include "effects/other/Wanted.h"
@@ -21,5 +22,5 @@
 class CheatHandler
 {
 public:
-	static TimedEffect* HandleCheat(std::string cheat, int duration, std::string description);
+	static TimedEffect* HandleCheat(std::string name, int duration, std::string description);
 };

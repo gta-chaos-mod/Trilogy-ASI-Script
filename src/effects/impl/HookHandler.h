@@ -27,4 +27,5 @@ private:
 
 	static void __fastcall HookedProcessMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page);
 	static char* __fastcall HookedCTextGet(CText* thisText, void* edx, char* key);
+	static bool HookedGetIsSlowMotionActive();
 };

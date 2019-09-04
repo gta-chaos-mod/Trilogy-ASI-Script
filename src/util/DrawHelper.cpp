@@ -8,10 +8,10 @@ static std::string bigMessage;
 static int bigMessage_remainingDuration;
 
 void DrawHelper::DrawRemainingTimeRects(int remaining) {
-	float maxWidth = (SCREEN_WIDTH / 1000.0f * remaining) - SCREEN_COORD(4.0f);
-	if (maxWidth < 0.0f) {
-		maxWidth = 0.0f;
-	}
+	float maxWidth = SCREEN_WIDTH - SCREEN_COORD(4.0f);
+	float barWidth = (SCREEN_WIDTH / 1000.0f * remaining) - SCREEN_COORD(4.0f);
+
+	barWidth = max(0.0f, min(barWidth, maxWidth));
 
 	CRect rect = CRect(SCREEN_COORD_LEFT(0.0f), SCREEN_COORD_TOP(0.0f), SCREEN_WIDTH, SCREEN_COORD_TOP(24.0f));
 	CSprite2d::DrawRect(rect, CRGBA(0, 0, 0, 225));
@@ -19,13 +19,13 @@ void DrawHelper::DrawRemainingTimeRects(int remaining) {
 	rect = CRect(SCREEN_COORD_LEFT(4.0f), SCREEN_COORD_TOP(4.0f), SCREEN_WIDTH - SCREEN_COORD(4.0f), SCREEN_COORD_TOP(20.0f));
 	CSprite2d::DrawRect(rect, CRGBA(25, 75, 128, 200));
 
-	rect = CRect(SCREEN_COORD_LEFT(4.0f), SCREEN_COORD_TOP(4.0f), maxWidth + SCREEN_COORD(4.0f), SCREEN_COORD_TOP(20.0f));
+	rect = CRect(SCREEN_COORD_LEFT(4.0f), SCREEN_COORD_TOP(4.0f), barWidth + SCREEN_COORD(4.0f), SCREEN_COORD_TOP(20.0f));
 	CSprite2d::DrawRect(rect, CRGBA(50, 150, 255, 200));
 }
 
 void DrawHelper::DrawMessages() {
 	if (message_remainingDuration > 0) {
-		message_remainingDuration -= (int)((CTimer::ms_fTimeStepNonClipped / CTimer::ms_fTimeScale) * 0.02f * 1000.0f);
+		message_remainingDuration -= GenericUtil::CalculateTick();
 
 		float x = SCREEN_COORD_LEFT(5.0f);
 		float y = SCREEN_COORD_TOP(27.0f);
@@ -51,7 +51,7 @@ void DrawHelper::DrawMessages() {
 
 void DrawHelper::DrawBigMessages() {
 	if (bigMessage_remainingDuration > 0) {
-		bigMessage_remainingDuration -= (int)((CTimer::ms_fTimeStepNonClipped / CTimer::ms_fTimeScale) * 0.02f * 1000.0f);
+		bigMessage_remainingDuration -= GenericUtil::CalculateTick();
 
 		float x = SCREEN_COORD_CENTER_LEFT(0.0f);
 		float y = SCREEN_COORD_CENTER_UP(150.0f);
@@ -80,22 +80,14 @@ void DrawHelper::DrawHelpMessage(std::string _message, int duration) {
 	message = _message;
 	message_remainingDuration = duration;
 
-	/*
-	// TODO: Let it play the sound
-	eAudioEvents::AE_FRONTEND_DISPLAY_INFO;
-	CAudioEngine::ReportFrontendAudioEvent(&AudioEngine, 32, 0.0, 1.0);
-	*/
+	plugin::CallMethod<0x506EA0, void*, int, float, float>((void*)0xB6BC90, 0x20, 0.0f, 1.0f);
 }
 
 void DrawHelper::DrawBigMessage(std::string _message, int duration) {
 	bigMessage = _message;
 	bigMessage_remainingDuration = duration;
 
-	/*
-	// TODO: Let it play the sound
-	eAudioEvents::AE_FRONTEND_DISPLAY_INFO;
-	CAudioEngine::ReportFrontendAudioEvent(&AudioEngine, 32, 0.0, 1.0);
-	*/
+	plugin::CallMethod<0x506EA0, void*, int, float, float>((void*)0xB6BC90, 0x20, 0.0f, 1.0f);
 }
 
 void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
@@ -107,9 +99,9 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 
 		bool shouldDrawCircle = !effect->isPlaceholder && !effect->isDisabled;
 
-		float x = SCREEN_COORD_RIGHT(shouldDrawCircle ? 90.0f : 25.0f);
-		float y = SCREEN_COORD_BOTTOM(((i + 1) * 70.0f) + 260.0f);
+		float position = shouldDrawCircle ? 90.0f : 25.0f;
 
+		// Draw main text
 		CFont::SetCentreSize(SCREEN_WIDTH);
 		CFont::SetScaleForCurrentlanguage(SCREEN_MULTIPLIER(1.0f), SCREEN_MULTIPLIER(2.0f));
 
@@ -122,11 +114,36 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 		CFont::SetEdge(1);
 		CFont::SetBackground(false, false);
 
+		float stringWidth = CFont::GetStringWidth((char*)effect->GetDescription().c_str(), true, false) - position;
+		float offsetWidth = effect->CalculateFadeInOffset(stringWidth);
+
+		float x = SCREEN_COORD_RIGHT(position) + SCREEN_COORD(stringWidth - offsetWidth);
+		float y = SCREEN_COORD_BOTTOM(((i + 1) * 70.0f) + 260.0f);
+
 		CFont::SetColor(effect->textColor);
 		CFont::PrintString(x, y, (char*)effect->GetDescription().c_str());
 
+		// Draw voter
+		if (effect->HasVoter()) {
+			CFont::SetCentreSize(SCREEN_WIDTH);
+			CFont::SetScaleForCurrentlanguage(SCREEN_MULTIPLIER(0.6f), SCREEN_MULTIPLIER(1.4f));
+
+			CFont::SetOrientation(eFontAlignment::ALIGN_RIGHT);
+			CFont::SetJustify(false);
+			CFont::SetProportional(true);
+			CFont::SetFontStyle(FONT_SUBTITLES);
+			CFont::SetDropColor(CRGBA(0, 0, 0, 200));
+			CFont::SetDropShadowPosition(0);
+			CFont::SetEdge(1);
+			CFont::SetBackground(false, false);
+
+			CFont::SetColor(CRGBA(255, 255, 255, 200));
+			CFont::PrintString(x, y + SCREEN_COORD(35.0f), (char*)effect->GetVoter().c_str());
+		}
+
+		// Draw timed effect circle
 		if (shouldDrawCircle) {
-			CVector2D center = CVector2D(SCREEN_COORD_RIGHT(50.0f), y + SCREEN_COORD(22.0f));
+			CVector2D center = CVector2D(x + SCREEN_COORD(50.0f), y + SCREEN_COORD(22.0f));
 
 			RwTextureFilterMode filter = rwFILTERLINEAR;
 			int alphaBlending = true;

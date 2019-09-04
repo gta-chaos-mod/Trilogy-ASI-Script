@@ -3,7 +3,7 @@
 
 bool RainbowCars::isEnabled = false;
 float RainbowCars::hueShift = 0.0f;
-std::map<RpMaterial*, RwRGBA> RainbowCars::resetMaterials;
+std::list<std::pair<unsigned int*, unsigned int>> RainbowCars::resetEntries;
 
 RainbowCars::RainbowCars(int _duration, std::string _description)
 	: TimedEffect(_duration, _description) {}
@@ -11,21 +11,15 @@ RainbowCars::RainbowCars(int _duration, std::string _description)
 void RainbowCars::Enable() {
 	isEnabled = true;
 
-	Events::vehicleRenderEvent += RenderVehicleEvent;
+	Events::vehicleRenderEvent.before += RenderVehicleEventBefore;
+	Events::vehicleRenderEvent.after += RenderVehicleEventAfter;
 }
 
 void RainbowCars::Disable() {
 	isEnabled = false;
 
-	Events::vehicleRenderEvent -= RenderVehicleEvent;
-
-	for (auto it = resetMaterials.begin(); it != resetMaterials.end(); ++it) {
-		if (it->first) {
-			it->first->color = it->second;
-		}
-	}
-
-	resetMaterials.clear();
+	Events::vehicleRenderEvent.before -= RenderVehicleEventBefore;
+	Events::vehicleRenderEvent.after -= RenderVehicleEventAfter;
 
 	TimedEffect::Disable();
 }
@@ -37,10 +31,18 @@ void RainbowCars::HandleTick() {
 	}
 }
 
-void RainbowCars::RenderVehicleEvent(CVehicle* vehicle) {
+void RainbowCars::RenderVehicleEventBefore(CVehicle* vehicle) {
 	if (isEnabled && vehicle) {
 		ModifyCarPaint(vehicle);
 	}
+}
+
+void RainbowCars::RenderVehicleEventAfter(CVehicle* vehicle) {
+	for (auto& p : resetEntries) {
+		*p.first = p.second;
+	}
+
+	resetEntries.clear();
 }
 
 void RainbowCars::ModifyCarPaint(CVehicle* vehicle) {
@@ -55,20 +57,25 @@ void RainbowCars::ModifyCarPaint(CVehicle* vehicle) {
 }
 
 RpMaterial* RainbowCars::MaterialCallback(RpMaterial* material, void* data) {
+	if (!data) {
+		return material;
+	}
+
 	CVehicle* vehicle = reinterpret_cast<CVehicle*>(data);
 
-	if (!resetMaterials.contains(material)) {
-		resetMaterials[material] = material->color;
-	}
+	resetEntries.push_back(std::make_pair(reinterpret_cast<unsigned int*>(&material->color), *reinterpret_cast<unsigned int*>(&material->color)));
 
 	CRGBA color = CVehicleModelInfo::ms_vehicleColourTable[vehicle->m_nPrimaryColor];
 
 	int r = color.r;
 	int g = color.g;
 	int b = color.b;
-	ColorHelper::HueShift(r, g, b, hueShift, 0.75f);
+	ColorHelper::HueShift(r, g, b, hueShift, 0.85f);
 
-	material->color = CRGBA(r, g, b, (unsigned int)material->color.alpha).ToRwRGBA();
+	material->color.red = r;
+	material->color.green = g;
+	material->color.blue = b;
+
 	return material;
 }
 

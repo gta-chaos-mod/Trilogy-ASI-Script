@@ -1,8 +1,6 @@
 // Copyright (c) 2019 Lordmau5
 #pragma once
 
-#include <map>
-
 #include "effects/abstract/TimedEffect.h"
 
 #include "util/ColorHelper.h"
@@ -15,7 +13,7 @@ class RainbowCars : public TimedEffect
 public:
 	static bool isEnabled;
 	static float hueShift;
-	static std::map<RpMaterial*, RwRGBA> RainbowCars::resetMaterials;
+	static std::list<std::pair<unsigned int*, unsigned int>> RainbowCars::resetEntries;
 
 public:
 	RainbowCars(int _duration, std::string _description);
@@ -25,7 +23,8 @@ public:
 
 	void HandleTick() override;
 
-	static void RenderVehicleEvent(CVehicle* vehicle);
+	static void RenderVehicleEventBefore(CVehicle* vehicle);
+	static void RenderVehicleEventAfter(CVehicle* vehicle);
 	static void ModifyCarPaint(CVehicle* vehicle);
 
 	static RpMaterial* MaterialCallback(RpMaterial* material, void* color);

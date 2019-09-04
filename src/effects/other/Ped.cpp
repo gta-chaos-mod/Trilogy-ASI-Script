@@ -12,3 +12,43 @@ void Ped::ClearWeapons() {
 		ped->ClearWeapons();
 	}
 }
+
+void Ped::MakeBeachParty() {
+	CCheat::BeachPartyCheat();
+
+	RebuildPlayer();
+}
+
+void Ped::MakeNinja() {
+	CCheat::NinjaCheat();
+
+	RebuildPlayer();
+}
+
+void Ped::MakeKinky() {
+	CCheat::LoveConquersAllCheat();
+
+	RebuildPlayer();
+}
+
+void Ped::MakeFunhouse() {
+	CCheat::FunhouseCheat();
+
+	RebuildPlayer();
+}
+
+void Ped::MakeCountry() {
+	CCheat::CountrysideInvasionCheat();
+
+	RebuildPlayer();
+}
+
+void Ped::RebuildPlayer() {
+	CPlayerPed* player = FindPlayerPed();
+	if (player) {
+		ePedState oldState = player->m_nPedState;
+		player->m_nPedState = ePedState::PEDSTATE_IDLE;
+		CClothes::RebuildPlayer(player, false);
+		player->m_nPedState = oldState;
+	}
+}

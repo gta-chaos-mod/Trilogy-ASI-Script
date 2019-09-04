@@ -28,6 +28,9 @@ public:
 	int crypticDescriptionWait = 0;
 	std::vector<std::string> description_split;
 	std::string type = "";
+	std::string voter = "";
+	bool rapidFire = false;
+	float currentOffset = 0.0f;
 
 public:
 	TimedEffect(int _duration, std::string _description);
@@ -45,18 +48,41 @@ public:
 	virtual int GetRemaining() {
 		return remaining;
 	};
-	int GetDuration();
+	virtual int GetDuration() {
+		return duration;
+	};
+
 	std::string GetDescription();
 	void UpdateCrypticDescription();
 	std::string GetCrypticDescription();
 	bool IsEqualDescription(TimedEffect* otherEffect);
+
 	std::string GetType();
 	bool IsEqualType(TimedEffect* otherEffect);
+
+	TimedEffect* SetVoter(std::string _voter);
+	bool HasVoter();
+	std::string GetVoter();
+
+	virtual TimedEffect* SetRapidFire(bool is_rapid_fire) {
+		rapidFire = is_rapid_fire;
+
+		return this;
+	};
 
 	void TickDown();
 	virtual void HandleTick() {};
 
 	int CalculateTick() {
-		return (int)((CTimer::ms_fTimeStepNonClipped / max(0.001f, CTimer::ms_fTimeScale)) * 0.02f * 1000.0f);
+		return GenericUtil::CalculateTick();
 	};
+
+	float easeOutBack(float t) {
+		return 1 + (--t) * t * (2.70158f * t + 1.70158f);
+	}
+
+	float CalculateFadeInOffset(float position) {
+		float adjustment = easeOutBack(currentOffset);
+		return position * adjustment;
+	}
 };

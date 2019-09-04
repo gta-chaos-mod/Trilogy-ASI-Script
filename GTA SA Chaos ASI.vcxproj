@@ -118,6 +118,7 @@
     <ClCompile Include="src\effects\impl\Framerate.cpp" />
     <ClCompile Include="src\effects\abstract\FunctionEffect.cpp" />
     <ClCompile Include="src\effects\impl\GameSpeed.cpp" />
+    <ClCompile Include="src\util\DrawVoting.cpp" />
     <ClCompile Include="src\util\GenericUtil.cpp" />
     <ClCompile Include="src\effects\impl\GhostRider.cpp" />
     <ClCompile Include="src\effects\impl\Gravity.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="src\effects\impl\Framerate.h" />
     <ClInclude Include="src\effects\abstract\FunctionEffect.h" />
     <ClInclude Include="src\effects\impl\GameSpeed.h" />
+    <ClInclude Include="src\util\DrawVoting.h" />
     <ClInclude Include="src\util\GenericUtil.h" />
     <ClInclude Include="src\effects\impl\GhostRider.h" />
     <ClInclude Include="src\effects\impl\Gravity.h" />

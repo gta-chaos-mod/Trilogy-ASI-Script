@@ -8,6 +8,7 @@ Gravity::Gravity(float _gravity, int _duration, std::string _description)
 
 void Gravity::Disable() {
 	GAME_GRAVITY = 0.008f;
+	injector::WriteMemory(0x871494, (-0.008f / 2), true);
 
 	TimedEffect::Disable();
 }
@@ -20,4 +21,7 @@ void Gravity::HandleTick() {
 	}
 
 	GAME_GRAVITY = gravity;
+
+	// Potentially fix bikes disappearing with zero / negative gravity
+	injector::WriteMemory(0x871494, gravity == 0.0f ? -0.00000001f : (-gravity / 2), true);
 }

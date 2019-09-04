@@ -13,6 +13,7 @@ public:
 
 private:
 	int wait = 0;
+	int effectDuration = 1000 * 10;
 	int effectRemaining = 1000 * 10;
 	CControllerAction origActions[59];
 
@@ -25,6 +26,9 @@ public:
 	void Disable() override;
 
 	int GetRemaining() override;
+	int GetDuration() override;
+
+	TimedEffect* SetRapidFire(bool is_rapid_fire) override;
 
 	void HandleTick() override;
 

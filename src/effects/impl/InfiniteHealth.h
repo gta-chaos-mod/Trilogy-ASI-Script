@@ -9,9 +9,10 @@ class InfiniteHealth : public TimedEffect
 {
 public:
 	static bool isEnabled;
+	static bool onlyPlayer;
 
 public:
-	InfiniteHealth(int _duration, std::string _description);
+	InfiniteHealth(bool _onlyPlayer, int _duration, std::string _description);
 
 	void InitializeHooks() override;
 

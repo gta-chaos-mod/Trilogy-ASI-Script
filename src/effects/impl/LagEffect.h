@@ -7,6 +7,7 @@ class LagEffect : public TimedEffect
 {
 private:
 	int wait = 0;
+	float* audioSpeed = reinterpret_cast<float*>(0x8CBA6C);
 
 public:
 	LagEffect(int _duration, std::string _description);
