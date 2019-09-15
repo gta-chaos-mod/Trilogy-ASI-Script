@@ -14,6 +14,10 @@ void Autosave::HandleTick() {
 		bool wasInVehicle = player->m_nPedFlags.bInVehicle;
 		player->m_nPedFlags.bInVehicle = false;
 
+		if (Config::GetOrDefault("Chaos.SaveToSlot8", false)) {
+			GenericUtil::SaveToFile("GTASAsf8.b");
+		}
+
 		GenericUtil::SaveToFile("chaos_mod\\chaos_autosave.b");
 
 		std::string missionSave;

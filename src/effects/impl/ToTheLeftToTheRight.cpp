@@ -10,11 +10,9 @@ void ToTheLeftToTheRight::HandleTick() {
 		return;
 	}
 
-	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
-		if (vehicle->m_pDriver && !vehicle->IsDriver(FindPlayerPed())) {
-			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
-		}
+	GenericUtil::SetVehiclesRealPhysics();
 
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		int amplify = 2;
 		if (RandomHelper::Random(0, 9) == 0) {
 			amplify = 4;
@@ -25,5 +23,5 @@ void ToTheLeftToTheRight::HandleTick() {
 		vehicle->m_vecMoveSpeed.z += RandomHelper::Random(-0.05f, 0.05f, amplify);
 	}
 
-	wait = Random(2000, 5000);
+	wait = Random(5000, 10000);
 }

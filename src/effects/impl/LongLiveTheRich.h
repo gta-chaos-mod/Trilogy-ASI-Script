@@ -2,6 +2,7 @@
 #pragma once
 
 #include "effects/abstract/TimedEffect.h"
+#include "util/DrawHelper.h"
 
 #include "CPickup.h"
 #include "extra/CPedDamageResponseCalculator.h"
@@ -12,7 +13,9 @@ class LongLiveTheRich : public TimedEffect
 public:
 	static bool isEnabled;
 	static int storedMoney;
-	static int gainedMoney;
+	static float gainedMoney;
+
+	bool* neverHungryCheat = reinterpret_cast<bool*>(0x969174);
 
 public:
 	LongLiveTheRich(int _duration, std::string _description);
@@ -25,7 +28,6 @@ public:
 	void HandleTick() override;
 
 private:
-	static void __fastcall HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, int cDamageResponseInfo);
-	static void __fastcall HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, float* a3, char a4);
+	static void __fastcall HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, uint8_t* cDamageResponseInfo, char a4);
 	static bool __fastcall HookedPickupUpdate(CPickup* thisPickup, void* edx, CPlayerPed* ped, CVehicle* vehicle, int playerId);
 };

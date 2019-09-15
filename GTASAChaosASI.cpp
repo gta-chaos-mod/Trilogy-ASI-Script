@@ -12,20 +12,16 @@
 #include "effects/cheats/CheatHandler.h"
 #include "effects/impl/EffectHandler.h"
 #include "effects/impl/HookHandler.h"
+#include "util/Config.h"
 #include "util/DrawHelper.h"
 #include "util/DrawVoting.h"
 #include "util/GenericUtil.h"
 #include "util/RandomHelper.h"
 
-#include "effects/other/Ped.h"
 #include "effects/other/Teleportation.h"
 #include "effects/other/Vehicle.h"
-#include "effects/other/Wanted.h"
 
 #include "CCheat.h"
-#include "CGenericGameStorage.h"
-#include "CStats.h"
-#include "CText.h"
 #include "CTheScripts.h"
 #include "CWeather.h"
 
@@ -51,16 +47,15 @@ enum EffectState {
 	VOTES
 };
 
-static CdeclEvent<AddressList<0x53E83C, H_CALL, 0x53EBA2, H_CALL>, PRIORITY_AFTER, ArgPickNone, void()> onDrawAfterFade;
-
 class GTASAChaosMod {
 public:
 	std::queue<std::function<void()>> queue;
 	int remaining = 0;
 	int lastSaved = 0;
+	int lastLoaded = 0;
 
 	int lastMissionsPassed = -1;
-	bool* onMission = reinterpret_cast<bool*>(0xA49FC4);
+	bool readyToSave = false;
 
 	std::list<TimedEffect*> activeEffects;
 
@@ -75,6 +70,10 @@ public:
 		CCheat::m_bHasPlayerCheated = false;
 
 		HandleAutoSave();
+		HandleCtrlF7SaveLoading();
+
+		HandleVehicleRadio();
+		HandleVehicleRealPhysics();
 	}
 
 	void EmptyQueue() {
@@ -84,16 +83,6 @@ public:
 		}
 	}
 
-	bool IsAnyMissionScriptActive() {
-		for (auto i = CTheScripts::pActiveScripts; i = i->m_pNext;) {
-			if (i->m_bIsMission) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	void HandleAutoSave() {
 		int missionsPassed = GenericUtil::GetRealMissionsPassed();
 		int currentTime = CTimer::m_snTimeInMilliseconds;
@@ -101,39 +90,105 @@ public:
 		if (lastMissionsPassed == -1) {
 			lastMissionsPassed = missionsPassed;
 		}
+		else if (lastMissionsPassed > missionsPassed) {
+			lastMissionsPassed = missionsPassed;
+		}
 
-		if (!*onMission && missionsPassed > lastMissionsPassed && lastSaved < currentTime && !IsAnyMissionScriptActive()) {
+		if (missionsPassed > lastMissionsPassed && lastSaved < currentTime && !CTheScripts::IsPlayerOnAMission()) {
 			lastMissionsPassed = missionsPassed;
 
-			gtaSAChaosMod.QueueEffect(new Autosave(missionsPassed));
+			gtaSAChaosMod.QueueEffect(new Autosave(missionsPassed), true);
 
 			lastSaved = currentTime + 1000;
 		}
 	}
 
-	void QueueEffect(TimedEffect* effect) {
+	void HandleCtrlF7SaveLoading() {
+		if (Config::GetOrDefault("Chaos.LoadAutosaveByPressingCtrlF7", false)) {
+			if (KeyPressed(VK_CONTROL) && KeyPressed(VK_F7)) {
+				int currentTime = CTimer::m_snTimeInMilliseconds;
+
+				if (lastLoaded < currentTime) {
+					GenericUtil::LoadFromFile("chaos_mod\\chaos_autosave.b");
+					lastLoaded = currentTime + 1000;
+				}
+			}
+		}
+	}
+
+	void HandleVehicleRadio() {
+		if (Config::GetOrDefault("Fixes.AllowRadioInEveryVehicle", false)) {
+			CVehicle* vehicle = FindPlayerVehicle(-1, false);
+			if (vehicle) {
+				vehicle->m_vehicleAudio.m_settings.m_nRadioType = eRadioType::RADIO_CIVILIAN;
+			}
+		}
+	}
+
+	void HandleVehicleRealPhysics() {
+		if (Config::GetOrDefault("Fixes.SwitchAllVehiclesToRealPhysics", true)) {
+			GenericUtil::SetVehiclesRealPhysics();
+		}
+	}
+
+	static void __fastcall HookedOnGangWarHoodCaptured() {
+		Call<0x446400>();
+
+		if (!CTheScripts::IsPlayerOnAMission()) {
+			gtaSAChaosMod.QueueEffect(new Autosave(gtaSAChaosMod.lastMissionsPassed), true);
+		}
+	}
+
+	static void __fastcall HookedGenericLoadTheScriptsLoad() {
+		CTheScripts::Load();
+
+		gtaSAChaosMod.lastMissionsPassed = -1;
+	}
+
+	void QueueEffect(TimedEffect* effect, bool executeNow = false) {
 		if (effect == nullptr) {
 			return;
 		}
 
-		// If an effect with the same type or description is found, disable it, disable it
-		auto it = std::find_if(activeEffects.begin(), activeEffects.end(), [effect](TimedEffect* _effect) { return effect->IsEqualType(_effect) || effect->IsEqualDescription(_effect); });
-		if (it != activeEffects.end()) {
-			TimedEffect* _effect = *it;
-			if (_effect) {
-				_effect->Disable();
+		auto effectFunction = [this, effect]() {
+			// If an effect with the same type or description is found, disable it, disable it
+			auto it = std::find_if(activeEffects.begin(), activeEffects.end(), [effect](TimedEffect* _effect) { return !effect->isDisabled && (effect->IsEqualType(_effect) || effect->IsEqualDescription(_effect)); });
+			if (it != activeEffects.end()) {
+				TimedEffect* _effect = *it;
+				if (_effect) {
+					_effect->Disable();
+				}
 			}
+			activeEffects.push_front(effect);
+			effect->TickDown();
+		};
+
+		if (executeNow) {
+			effectFunction();
 		}
-		activeEffects.push_front(effect);
+		else {
+			QueueFunction(effectFunction);
+		}
 	}
 
 	void DrawRemainingTime() {
-		DrawHelper::DrawRemainingTimeRects(remaining);
+		if (Config::GetOrDefault("Drawing.DrawRemainingTimeBar", true)) {
+			DrawHelper::DrawRemainingTimeBar(remaining);
+		}
+
 		if (!FrontEndMenuManager.m_bMenuActive) {
-			DrawHelper::DrawRecentEffects(activeEffects);
-			DrawHelper::DrawMessages();
-			DrawHelper::DrawBigMessages();
-			DrawVoting::DrawVotes();
+			if (Config::GetOrDefault("Drawing.DrawActiveEffects", true)) {
+				DrawHelper::DrawRecentEffects(activeEffects);
+			}
+
+			if (Config::GetOrDefault("Drawing.DrawVoting", true)) {
+				DrawVoting::DrawVotes();
+			}
+
+			if (Config::GetOrDefault("Drawing.DrawInformationMessages", true)) {
+				DrawHelper::DrawMessages();
+				DrawHelper::DrawBigMessages();
+			}
 		}
 	}
 
@@ -146,13 +201,13 @@ public:
 		char c_state[32];
 		char c_function[512];
 		int duration;
-		char c_voter[128];
-		char c_description[128];
+		char c_description[128] = {};
+		char c_voter[128] = {};
 		int rapid_fire;
 		sscanf(text.c_str(), "%[^:]:%[^:]:%d:%[^:]:%[^:]:%d", &c_state, &c_function, &duration, &c_description, &c_voter, &rapid_fire);
 
 		if (rapid_fire == 1) {
-			duration = 3000;
+			duration = 1000 * 15; // 15 Seconds
 		}
 
 		std::string state(c_state);
@@ -255,7 +310,7 @@ public:
 				break;
 			}
 			case EffectState::TEXT: {
-				QueueFunction(DrawHelper::DrawHelpMessage, description, 5000);
+				QueueFunction(DrawHelper::DrawHelpMessage, description, 5000, true);
 
 				break;
 			}
@@ -265,7 +320,7 @@ public:
 				break;
 			}
 			case EffectState::BIG_TEXT: {
-				QueueFunction(DrawHelper::DrawBigMessage, function, 10000);
+				QueueFunction(DrawHelper::DrawBigMessage, function, 10000, true);
 
 				break;
 			}
@@ -362,24 +417,48 @@ public:
 	GTASAChaosMod() {
 		SetupPipe();
 
-		GenericUtil::InitializeCharReplacements();
-		GenericUtil::InitializeUnprotectedMemory();
+		Config::Init();
+
+		GenericUtil::Initialize();
 		HookHandler::Initialize();
 
 		patch::RedirectCall(0x5D0D66, HookedOpenFile);
 
-		// Disable Replays
-		patch::Nop(0x53C090, 5);
+		if (Config::GetOrDefault("Fixes.DisableReplays", true)) {
+			// Disable Replays
+			patch::Nop(0x53C090, 5);
+		}
 
-		// Disable Interior Music
-		patch::Nop(0x508450, 6);
-		patch::Nop(0x508817, 6);
+		if (Config::GetOrDefault("Fixes.DisableInteriorMusic", true)) {
+			// Disable Interior Music
+			patch::Nop(0x508450, 6);
+			patch::Nop(0x508817, 6);
+		}
+
+		if (Config::GetOrDefault("Fixes.RemoveFrameDelay", false)) {
+			// Fix frame delay so the game runs at proper 30 FPS and not 30 - 5 / "25 FPS"
+			injector::WriteMemory<byte>(0x53E94C, 0, true);
+		}
+
+		if (Config::GetOrDefault("Chaos.AutosaveAfterGangWar", true)) {
+			patch::RedirectCall(0x44690B, HookedOnGangWarHoodCaptured);
+		}
+
+		patch::RedirectCall(0x5D18F0, HookedGenericLoadTheScriptsLoad);
+
+		// Disable radio volume => -100 if slowmo is active
+		patch::Nop(0x4EA044, 8);
 
 		// Fix Reefer w/ Invisible Cars
 		patch::Nop(0x6F14DE, 3);
 
-		Events::gameProcessEvent.Add([this] { this->ProcessEvents(); });
+		// Easter Eggs
+		injector::WriteMemory(0x8CBA6C, GenericUtil::GetAudioPitchOrOverride(1.0f), true);
 
-		onDrawAfterFade.AddAfter([this] { this->DrawRemainingTime(); });
+		Events::gameProcessEvent.after += [this] { this->ProcessEvents(); };
+
+		if (Config::GetOrDefault("Drawing.Enabled", true)) {
+			Events::drawAfterFadeEvent.after += [this] { this->DrawRemainingTime(); };
+		}
 	}
 } gtaSAChaosMod;

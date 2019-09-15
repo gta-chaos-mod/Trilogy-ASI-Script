@@ -3,7 +3,7 @@
 
 bool RainbowCars::isEnabled = false;
 float RainbowCars::hueShift = 0.0f;
-std::list<std::pair<unsigned int*, unsigned int>> RainbowCars::resetEntries;
+std::map<RpMaterial*, RwRGBA> RainbowCars::resetMaterials;
 
 RainbowCars::RainbowCars(int _duration, std::string _description)
 	: TimedEffect(_duration, _description) {}
@@ -11,15 +11,21 @@ RainbowCars::RainbowCars(int _duration, std::string _description)
 void RainbowCars::Enable() {
 	isEnabled = true;
 
-	Events::vehicleRenderEvent.before += RenderVehicleEventBefore;
-	Events::vehicleRenderEvent.after += RenderVehicleEventAfter;
+	Events::vehicleRenderEvent += RenderVehicleEvent;
 }
 
 void RainbowCars::Disable() {
 	isEnabled = false;
 
-	Events::vehicleRenderEvent.before -= RenderVehicleEventBefore;
-	Events::vehicleRenderEvent.after -= RenderVehicleEventAfter;
+	Events::vehicleRenderEvent -= RenderVehicleEvent;
+
+	for (auto it = resetMaterials.begin(); it != resetMaterials.end(); ++it) {
+		if (it->first) {
+			it->first->color = it->second;
+		}
+	}
+
+	resetMaterials.clear();
 
 	TimedEffect::Disable();
 }
@@ -31,18 +37,10 @@ void RainbowCars::HandleTick() {
 	}
 }
 
-void RainbowCars::RenderVehicleEventBefore(CVehicle* vehicle) {
+void RainbowCars::RenderVehicleEvent(CVehicle* vehicle) {
 	if (isEnabled && vehicle) {
 		ModifyCarPaint(vehicle);
 	}
-}
-
-void RainbowCars::RenderVehicleEventAfter(CVehicle* vehicle) {
-	for (auto& p : resetEntries) {
-		*p.first = p.second;
-	}
-
-	resetEntries.clear();
 }
 
 void RainbowCars::ModifyCarPaint(CVehicle* vehicle) {
@@ -63,7 +61,9 @@ RpMaterial* RainbowCars::MaterialCallback(RpMaterial* material, void* data) {
 
 	CVehicle* vehicle = reinterpret_cast<CVehicle*>(data);
 
-	resetEntries.push_back(std::make_pair(reinterpret_cast<unsigned int*>(&material->color), *reinterpret_cast<unsigned int*>(&material->color)));
+	if (!resetMaterials.contains(material)) {
+		resetMaterials[material] = material->color;
+	}
 
 	CRGBA color = CVehicleModelInfo::ms_vehicleColourTable[vehicle->m_nPrimaryColor];
 

@@ -19,14 +19,14 @@
 class DrawHelper
 {
 public:
-	static void DrawRemainingTimeRects(int remaining);
+	static void DrawRemainingTimeBar(int remaining);
 
 	static void DrawRecentEffects(std::list<TimedEffect*> activeEffects);
 
 	static void DrawMessages();
 	static void DrawBigMessages();
-	static void DrawHelpMessage(std::string message, int duration);
-	static void DrawBigMessage(std::string message, int duration);
+	static void DrawHelpMessage(std::string message, int duration, bool playSound = false);
+	static void DrawBigMessage(std::string message, int duration, bool playSound = false);
 
 	static void DrawCircle(CVector2D position, float radius, float angle, CRGBA color);
 	static void AppendPie(RwIm2DVertex* vertices, int numCount, float radius, CVector2D center,

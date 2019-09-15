@@ -11,6 +11,7 @@
 #include "effects/other/Player.h"
 #include "effects/other/Vehicle.h"
 
+#include "AudioPitch.h"
 #include "CustomGravity.h"
 #include "CrypticEffects.h"
 #include "DisableHUD.h"
@@ -32,6 +33,7 @@
 #include "OneHitKO.h"
 #include "OutOfFuel.h"
 #include "PassMission.h"
+#include "PitchShifter.h"
 #include "RainbowCars.h"
 #include "ReloadAutosave.h"
 #include "Suspension.h"
@@ -41,6 +43,7 @@
 #include "ToTheLeftToTheRight.h"
 #include "TruePacifist.h"
 #include "WhereIsEverybody.h"
+#include "WoozieMode.h"
 
 class EffectHandler
 {

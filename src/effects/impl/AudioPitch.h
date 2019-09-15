@@ -5,16 +5,14 @@
 
 #include "util/Config.h"
 
-class LagEffect : public TimedEffect
+class AudioPitch : public TimedEffect
 {
 private:
 	static bool isEnabled;
-	static float speed;
-
-	int wait = 0;
+	static float audioPitch;
 
 public:
-	LagEffect(int _duration, std::string _description);
+	AudioPitch(float _audioPitch, int _duration, std::string _description);
 
 	void InitializeHooks() override;
 

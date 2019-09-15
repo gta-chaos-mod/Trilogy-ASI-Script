@@ -7,9 +7,9 @@ static int message_remainingDuration;
 static std::string bigMessage;
 static int bigMessage_remainingDuration;
 
-void DrawHelper::DrawRemainingTimeRects(int remaining) {
-	float maxWidth = SCREEN_WIDTH - SCREEN_COORD(4.0f);
-	float barWidth = (SCREEN_WIDTH / 1000.0f * remaining) - SCREEN_COORD(4.0f);
+void DrawHelper::DrawRemainingTimeBar(int remaining) {
+	float maxWidth = SCREEN_WIDTH - SCREEN_COORD(8.0f);
+	float barWidth = (SCREEN_WIDTH / 1000.0f * remaining) - SCREEN_COORD(8.0f);
 
 	barWidth = max(0.0f, min(barWidth, maxWidth));
 
@@ -76,18 +76,22 @@ void DrawHelper::DrawBigMessages() {
 	}
 }
 
-void DrawHelper::DrawHelpMessage(std::string _message, int duration) {
+void DrawHelper::DrawHelpMessage(std::string _message, int duration, bool playSound) {
 	message = _message;
 	message_remainingDuration = duration;
 
-	plugin::CallMethod<0x506EA0, void*, int, float, float>((void*)0xB6BC90, 0x20, 0.0f, 1.0f);
+	if (playSound) {
+		plugin::CallMethod<0x506EA0, void*, int, float, float>((void*)0xB6BC90, 0x20, 0.0f, 1.0f);
+	}
 }
 
-void DrawHelper::DrawBigMessage(std::string _message, int duration) {
+void DrawHelper::DrawBigMessage(std::string _message, int duration, bool playSound) {
 	bigMessage = _message;
 	bigMessage_remainingDuration = duration;
 
-	plugin::CallMethod<0x506EA0, void*, int, float, float>((void*)0xB6BC90, 0x20, 0.0f, 1.0f);
+	if (playSound) {
+		plugin::CallMethod<0x506EA0, void*, int, float, float>((void*)0xB6BC90, 0x20, 0.0f, 1.0f);
+	}
 }
 
 void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {

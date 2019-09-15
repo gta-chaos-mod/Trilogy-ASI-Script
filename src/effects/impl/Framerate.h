@@ -8,7 +8,8 @@ class Framerate : public TimedEffect
 private:
 	int oldFramerate = 25;
 	int framerate = 25;
-	static byte* frameTimeWait;
+
+	static byte oldFrameTimeWait;
 
 public:
 	Framerate(int _framerate, int _duration, std::string _description);

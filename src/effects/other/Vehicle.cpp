@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "Vehicle.h"
 
-void Vehicle::SpawnVehicle(int modelID, CVector position, float orientation) {
+CVehicle* Vehicle::SpawnVehicle(int modelID, CVector position, float orientation) {
 	if (modelID == 569) {
 		modelID = 537; // 569 Crashes when being placed as a boat, so replace with 537
 	}
@@ -60,15 +60,18 @@ void Vehicle::SpawnVehicle(int modelID, CVector position, float orientation) {
 				reinterpret_cast<CBike*>(vehicle)->PlaceOnRoadProperly();
 			else if (vehicle->m_nVehicleClass != VEHICLE_BOAT)
 				reinterpret_cast<CAutomobile*>(vehicle)->PlaceOnRoadProperly();
+
+			return vehicle;
 		}
 	}
+	return nullptr;
 }
 
 void Vehicle::SpawnForPlayer(int modelID) {
 	CPlayerPed* player = FindPlayerPed();
 	if (player && !player->m_nAreaCode) {
 		CVector position = player->TransformFromObjectSpace(CVector(0.0f, 5.0f, 0.0f));
-		Vehicle::SpawnVehicle(modelID, position, player->m_fCurrentRotation + 1.5707964f);
+		CVehicle* vehicle = Vehicle::SpawnVehicle(modelID, position, player->m_fCurrentRotation + 1.5707964f);
 	}
 }
 

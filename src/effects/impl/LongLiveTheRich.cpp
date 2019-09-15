@@ -3,7 +3,7 @@
 
 bool LongLiveTheRich::isEnabled = false;
 int LongLiveTheRich::storedMoney = 0;
-int LongLiveTheRich::gainedMoney = 0;
+float LongLiveTheRich::gainedMoney = 0.0f;
 
 LongLiveTheRich::LongLiveTheRich(int _duration, std::string _description)
 	: TimedEffect(_duration, _description, "health") {
@@ -14,10 +14,9 @@ LongLiveTheRich::LongLiveTheRich(int _duration, std::string _description)
 }
 
 void LongLiveTheRich::InitializeHooks() {
-	patch::RedirectCall(0x4B5B19, HookedAccountForPedArmour);
 	patch::RedirectCall(0x4B5B27, HookedComputeWillKillPed);
 
-	for (int address : {0x45902E, 0x459095}) {
+	for (int address : { 0x45902E, 0x459095 }) {
 		patch::RedirectCall(address, HookedPickupUpdate);
 	}
 }
@@ -25,18 +24,23 @@ void LongLiveTheRich::InitializeHooks() {
 void LongLiveTheRich::Enable() {
 	isEnabled = true;
 
+	*neverHungryCheat = true;
+
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		gainedMoney = (int)player->m_fHealth;
+		gainedMoney = player->m_fHealth;
+		player->m_fHealth = player->m_fMaxHealth;
 	}
 }
 
 void LongLiveTheRich::Disable() {
 	isEnabled = false;
 
+	*neverHungryCheat = false;
+
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = min(gainedMoney * 100, 100000);
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = min((int)gainedMoney * 100, 100000);
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney += storedMoney;
 		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = player->GetPlayerInfoForThisPlayerPed()->m_nMoney;
 	}
@@ -47,62 +51,34 @@ void LongLiveTheRich::Disable() {
 void LongLiveTheRich::HandleTick() {
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		player->m_fHealth = player->m_fMaxHealth;
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = gainedMoney;
-		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = gainedMoney;
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = (int)gainedMoney;
+		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = (int)gainedMoney;
 	}
 }
 
-void __fastcall LongLiveTheRich::HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, int cDamageResponseInfo) {
-	if (isEnabled) {
-		float maxDamage = min(ped->m_fArmour, thisCalc->m_fDamageFactor);
-		maxDamage = thisCalc->m_pedPieceType == 9 ? ped->m_fHealth : maxDamage;
-
-		CPlayerPed* player = FindPlayerPed();
-		if (thisCalc->m_pDamager == player && ped != player) {
-			if (ped->m_fArmour == 0.0f) {
-				return;
-			}
-
-			gainedMoney += (int)(maxDamage / 10.0f);
-		}
-		else if (thisCalc->m_pDamager != player && ped == player) {
-			gainedMoney -= (int)thisCalc->m_fDamageFactor;
-			gainedMoney = max(0, gainedMoney);
-
-			if (gainedMoney == 0) {
-				player->m_fHealth = 0.0f;
-			}
-
-			return;
-		}
-	}
-
-	thisCalc->AccountForPedArmour(ped, cDamageResponseInfo);
-}
-
-void __fastcall LongLiveTheRich::HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, float* a3, char a4) {
+void __fastcall LongLiveTheRich::HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, uint8_t* cDamageResponseInfo, char a4) {
 	if (isEnabled) {
 		float maxDamage = min(ped->m_fHealth, thisCalc->m_fDamageFactor);
 		maxDamage = thisCalc->m_pedPieceType == 9 ? ped->m_fHealth : maxDamage;
 
 		CPlayerPed* player = FindPlayerPed();
 		if (thisCalc->m_pDamager == player && ped != player) {
-			gainedMoney += (int)(maxDamage / 10.0f);
+			gainedMoney += maxDamage / 10.0f;
 		}
-		else if (thisCalc->m_pDamager != player && ped == player) {
-			gainedMoney -= (int)thisCalc->m_fDamageFactor;
-			gainedMoney = max(0, gainedMoney);
+		else if (ped == player) {
+			gainedMoney -= thisCalc->m_fDamageFactor;
+			gainedMoney = max(0.0f, gainedMoney);
 
-			if (gainedMoney == 0) {
+			if (gainedMoney == 0.0f) {
 				player->m_fHealth = 0.0f;
+				thisCalc->ComputeWillKillPed(ped, cDamageResponseInfo, a4);
 			}
 
 			return;
 		}
 	}
 
-	thisCalc->ComputeWillKillPed(ped, a3, a4);
+	thisCalc->ComputeWillKillPed(ped, cDamageResponseInfo, a4);
 }
 
 bool __fastcall LongLiveTheRich::HookedPickupUpdate(CPickup* thisPickup, void* edx, CPlayerPed* playerPed, CVehicle* vehicle, int playerId) {

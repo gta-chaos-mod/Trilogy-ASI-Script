@@ -25,6 +25,6 @@ public:
 	byte m_bUnk;
 	char _padding[3];
 
-	unsigned int AccountForPedArmour(CPed* a2, int cDamageResponseInfo);
-	void ComputeWillKillPed(CPed* a2, float* a3, char a4);
+	void AccountForPedArmour(CPed* ped, uint8_t* cDamageResponseInfo);
+	void ComputeWillKillPed(CPed* ped, uint8_t* cDamageResponseInfo, char a4);
 };

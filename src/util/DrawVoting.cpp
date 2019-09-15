@@ -38,23 +38,14 @@ void DrawVoting::UpdateVotes(char _effects[3][128], int _votes[3], int _pickedCh
 		effects[i] = std::string(_effects[i]);
 		votes[i] = _votes[i];
 
-		totalVotes += votes[i];
+		if (votes[i] > 0) {
+			totalVotes += votes[i];
+		}
 	}
 
 	pickedChoice = _pickedChoice;
 
-	drawRemaining = 5000;
-}
-
-void DrawVoting::UpdateVote(int choice, std::string _effect, int _votes) {
-	if (choice < 0 || choice > 2) {
-		return;
-	}
-
-	effects[choice] = _effect;
-	votes[choice] = _votes;
-
-	drawRemaining = 5000;
+	drawRemaining = 15000;
 }
 
 void DrawVoting::DrawVote(int choice) {
@@ -126,10 +117,9 @@ void DrawVoting::DrawVote(int choice) {
 
 	// Draw Percentage
 	float percentage_x = barStart + SCREEN_COORD(150.0f);
-	y -= SCREEN_COORD(2.0f);
 
 	CFont::SetCentreSize(SCREEN_WIDTH);
-	CFont::SetScaleForCurrentlanguage(SCREEN_MULTIPLIER(0.4f), SCREEN_MULTIPLIER(1.0f));
+	CFont::SetScaleForCurrentlanguage(SCREEN_MULTIPLIER(0.4f), SCREEN_MULTIPLIER(0.8f));
 
 	CFont::SetOrientation(eFontAlignment::ALIGN_CENTER);
 	CFont::SetJustify(false);
@@ -154,7 +144,7 @@ float DrawVoting::CalculateYOffset(int choice) {
 }
 
 float DrawVoting::CalculateBarWidth(int choice, float maxWidth) {
-	if (totalVotes == 0) {
+	if (totalVotes == 0 || votes[choice] == -1) {
 		return 0.0f;
 	}
 
@@ -164,10 +154,20 @@ float DrawVoting::CalculateBarWidth(int choice, float maxWidth) {
 std::string DrawVoting::GetPercentage(int choice) {
 	std::string percentage;
 
-	int i_percentage = totalVotes == 0 ? 0 : (int)((float)votes[choice] / (float)totalVotes * 100.0f);
+	if (votes[choice] > -1) {
+		int i_percentage = totalVotes == 0 ? 0 : (int)round((float)votes[choice] / (float)totalVotes * 100.0f);
 
-	percentage.append(std::to_string(i_percentage));
-	percentage.append("%");
+		percentage.append(std::to_string(i_percentage));
+		percentage.append("%");
+		percentage.append(" (");
+		percentage.append(std::to_string(votes[choice]));
+		percentage.append("/");
+		percentage.append(std::to_string(totalVotes));
+		percentage.append(")");
+	}
+	else {
+		percentage.append("?%");
+	}
 
 	return percentage;
 }

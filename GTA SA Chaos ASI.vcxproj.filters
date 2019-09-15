@@ -158,6 +158,18 @@
     <ClCompile Include="src\util\DrawVoting.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="src\effects\impl\WoozieMode.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\effects\impl\AudioPitch.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\effects\impl\PitchShifter.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\Config.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -337,6 +349,21 @@
       <Filter>effects\impl</Filter>
     </ClInclude>
     <ClInclude Include="src\util\DrawVoting.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\impl\WoozieMode.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\impl\AudioPitch.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\cpptoml.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\impl\PitchShifter.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\Config.h">
       <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>

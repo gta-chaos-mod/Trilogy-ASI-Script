@@ -134,8 +134,11 @@ TimedEffect* EffectHandler::HandleEffect(std::string name, int duration, std::st
 	else if (name == "infinite_health") {
 		effect = new InfiniteHealth(false, duration, description);
 	}
+	else if (name == "wheels_only_please") {
+		effect = new InvisibleVehicles(true, duration, description);
+	}
 	else if (name == "invisible_vehicles") {
-		effect = new InvisibleVehicles(duration, description);
+		effect = new InvisibleVehicles(false, duration, description);
 	}
 	else if (name == "framerate_15") {
 		effect = new Framerate(15, duration, description);
@@ -173,10 +176,10 @@ TimedEffect* EffectHandler::HandleEffect(std::string name, int duration, std::st
 	}
 
 	else if (name == "quarter_gamespeed") {
-		effect = new GameSpeed(0.25f, duration, description);
+		effect = new GameSpeed(0.25f, duration / 3, description);
 	}
 	else if (name == "half_gamespeed") {
-		effect = new GameSpeed(0.5f, duration, description);
+		effect = new GameSpeed(0.5f, duration / 3 * 2, description);
 	}
 	else if (name == "double_gamespeed") {
 		effect = new GameSpeed(2.0f, duration, description);
@@ -190,6 +193,15 @@ TimedEffect* EffectHandler::HandleEffect(std::string name, int duration, std::st
 
 	else if (name == "infinite_health_player") {
 		effect = new InfiniteHealth(true, duration, description);
+	}
+	else if (name == "woozie_mode") {
+		effect = new WoozieMode(duration, description);
+	}
+	else if (name == "chipmunks") {
+		effect = new AudioPitch(1.5f, duration, description);
+	}
+	else if (name == "vocal_range") {
+		effect = new PitchShifter(duration, description);
 	}
 
 	return effect;

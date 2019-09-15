@@ -118,13 +118,13 @@ void TimedEffect::TickDown() {
 
 		if (!isDisabled) {
 			HandleTick();
-		}
 
-		if (remaining <= 0) {
-			Disable();
+			if (remaining <= 0) {
+				Disable();
+			}
 		}
 	}
-	else {
+	else if (!isDisabled) {
 		Disable();
 	}
 }

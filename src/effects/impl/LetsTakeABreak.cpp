@@ -38,6 +38,7 @@ int LetsTakeABreak::GetDuration() {
 
 TimedEffect* LetsTakeABreak::SetRapidFire(bool is_rapid_fire) {
 	if (is_rapid_fire) {
+		duration = min(duration, effectDuration);
 		effectRemaining = duration;
 	}
 

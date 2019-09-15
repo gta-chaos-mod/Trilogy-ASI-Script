@@ -1,0 +1,98 @@
+########################################################
+# Chaos Mod
+#######################################################
+
+#######################################################
+# Chaos Settings
+[Chaos]
+
+# Disables the "Load Game" option
+# Default: true
+DisableLoadGame = true
+
+# Additionally save the Autosave into Slot 8
+# Default: false
+SaveToSlot8 = false
+
+# Load the autosave on game load (Can be skipped by holding Left CTRL)
+# Default: true
+LoadAutosaveOnGameLoad = true
+
+# Allows you to load the last autosave by pressing Ctrl+F7 whilst ingame
+# Default: false
+LoadAutosaveByPressingCtrlF7 = false
+
+# Autosave after successfully finishing a gangwar
+# Default: true
+AutosaveAfterGangWar = true
+
+#######################################################
+
+#######################################################
+# Fixes
+[Fixes]
+
+# Disables the option to play replays
+# Default: true
+DisableReplays = true
+
+# Disables interior music in places such as Caligula's Casino (Helps against copyright)
+# Default: true
+DisableInteriorMusic = true
+
+# Allow radio in every vehicle (Cop vehicles, BMX, ...)
+# Default: false
+AllowRadioInEveryVehicle = false
+
+# Disable / mute the radio when it's at it's normal speed, but let it play during certain effects
+# (Game Speed, Pitch Shifter, High Pitched Audio, ...)
+# Default: false
+DisableRadioWhenNormalSpeed = false
+
+# Switch all vehicles to real game physics every tick
+# This will prevent vehicles on highways or other places to go absurdly fast whilst they're on their AI path
+# Default: true
+SwitchAllVehiclesToRealPhysics = true
+
+# Remove the 14ms frame delay to make the game run in proper 30 FPS instead of 30 FPS - 5 / "25 FPS"
+# Default: false
+RemoveFrameDelay = false
+
+#######################################################
+
+#######################################################
+# Drawing Settings
+[Drawing]
+
+# Whether or not to enable the drawing functionality in the first place
+# Default: true
+Enabled = true
+
+# Draw the top bar showing the remaining time until the next effect happens
+# Default: true
+DrawRemainingTimeBar = true
+
+# Draw the currently active / last effects
+# Default: true
+DrawActiveEffects = true
+
+# Draw voting for Twitch integration
+# Default: true
+DrawVoting = true
+
+# Draw information messages (both big and large)
+# (This is currently not in use anywhere but it might be in the future)
+# Default: true
+DrawInformationMessages = true
+
+#######################################################
+
+#######################################################
+# Easter Eggs
+[EasterEggs]
+
+# Audio Pitch Changer
+# This will force a specific pitch / speed for voice lines, sounds, radio, ...
+# Possible values: 0 = Disabled, 1 = 0.6x, 2 = 0.8x, 3 = 1.25x, 4 = 1.5x, 5 = Pitch Shifter (Going up and down)
+# Default: 0
+AudioPitchChanger = 0
