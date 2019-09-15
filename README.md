@@ -38,7 +38,7 @@ If you don't need any of that, Silent's ASI Loader will be all you need.
 ## How do I download the mod then?
 Head on over to the the `Releases` tab or [click here](https://github.com/gta-chaos-mod/asi-script/releases/latest).
 
-Installation is as simple as installing an ASI Loader (see previous section) and dropping the `.asi` file into either the `scripts` folder or into the game directory.
+Installation is as simple as installing an ASI Loader (see previous section) and copying all the files into your game directory. (So the `chaos_mod` folder, the `scripts` folder and the `.exe`)
 
 The `.exe` can be anywhere you want, as long as it has write permissions since it automatically saves the settings in a file called `config.cfg` in the same directory.
 
