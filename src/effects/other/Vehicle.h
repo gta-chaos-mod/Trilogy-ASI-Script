@@ -28,7 +28,7 @@
 class Vehicle
 {
 public:
-	static void SpawnVehicle(int modelID, CVector position, float orientation);
+	static CVehicle* SpawnVehicle(int modelID, CVector position, float orientation);
 	static void SpawnForPlayer(int modelID);
 	static void BlowUpAllCars();
 

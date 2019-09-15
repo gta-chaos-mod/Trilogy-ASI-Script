@@ -25,9 +25,5 @@ void Suspension::Disable() {
 }
 
 void Suspension::HandleTick() {
-	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
-		if (vehicle->m_pDriver && !vehicle->IsDriver(FindPlayerPed())) {
-			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
-		}
-	}
+	GenericUtil::SetVehiclesRealPhysics();
 }

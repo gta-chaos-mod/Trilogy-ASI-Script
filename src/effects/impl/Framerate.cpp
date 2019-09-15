@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "Framerate.h"
 
-byte* Framerate::frameTimeWait = reinterpret_cast<byte*>(0x53E94C);
+byte Framerate::oldFrameTimeWait = 0;
 
 Framerate::Framerate(int _framerate, int _duration, std::string _description)
 	: TimedEffect(_duration, _description, "framerate") {
@@ -9,12 +9,14 @@ Framerate::Framerate(int _framerate, int _duration, std::string _description)
 }
 
 void Framerate::Enable() {
-	*Framerate::frameTimeWait = 0;
+	oldFrameTimeWait = injector::ReadMemory<byte>(0x53E94C, true);
+	injector::WriteMemory<byte>(0x53E94C, 0, true);
+
 	oldFramerate = RsGlobal.frameLimit;
 }
 
 void Framerate::Disable() {
-	*Framerate::frameTimeWait = 14;
+	injector::WriteMemory<byte>(0x53E94C, oldFrameTimeWait, true);
 	RsGlobal.frameLimit = oldFramerate;
 
 	TimedEffect::Disable();
@@ -22,4 +24,6 @@ void Framerate::Disable() {
 
 void Framerate::HandleTick() {
 	RsGlobal.frameLimit = framerate;
+
+	GenericUtil::SetVehiclesRealPhysics();
 }

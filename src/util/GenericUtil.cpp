@@ -10,10 +10,13 @@ CPedAcquaintance GenericUtil::backup_acquaintances[32];
 std::string GenericUtil::loadFilePath;
 char* GenericUtil::gamePath = reinterpret_cast<char*>(0xC92368);
 
-void GenericUtil::InitializeUnprotectedMemory() {
-	DWORD ignore;
-	injector::UnprotectMemory(0x863984, sizeof(GAME_GRAVITY), ignore);
-	injector::UnprotectMemory(0x53E94C, 1, ignore); // Frame-time delay (14ms by default)
+float GenericUtil::audioPitchOverride = 1.0f;
+bool GenericUtil::audioPitchGoingUp = true;
+
+void GenericUtil::Initialize() {
+	InitializeCharReplacements();
+
+	Events::gameProcessEvent.after += ModifyAudioPitchOverride;
 }
 
 void GenericUtil::InitializeCharReplacements() {
@@ -28,6 +31,21 @@ void GenericUtil::InitializeCharReplacements() {
 
 	// Symbols
 	replacements.push_back("!?\"$%&(),.=+-_*/");
+}
+
+void GenericUtil::ModifyAudioPitchOverride() {
+	if (audioPitchGoingUp) {
+		audioPitchOverride += RandomHelper::Random(0.005f, 0.02f);
+		if (audioPitchOverride >= 1.5f) {
+			audioPitchGoingUp = false;
+		}
+	}
+	else {
+		audioPitchOverride -= RandomHelper::Random(0.005f, 0.02f);
+		if (audioPitchOverride <= 0.5f) {
+			audioPitchGoingUp = true;
+		}
+	}
 }
 
 std::vector<std::string> GenericUtil::GetCharReplacements() {
@@ -122,6 +140,8 @@ void GenericUtil::SaveToFile(std::string fileName) {
 		tempMoney = LongLiveTheRich::isEnabled ? LongLiveTheRich::storedMoney : player->GetPlayerInfoForThisPlayerPed()->m_nMoney;
 	}
 
+	player->GetPlayerInfoForThisPlayerPed()->m_nMoney = tempMoney;
+
 	CPedAcquaintance temp_acquaintances[32];
 	GenericUtil::SaveAcquaintances(temp_acquaintances);
 	GenericUtil::RestoreSavedAcquaintances();
@@ -131,7 +151,7 @@ void GenericUtil::SaveToFile(std::string fileName) {
 	GenericUtil::LoadAcquaintances(temp_acquaintances);
 
 	if (player) {
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = LongLiveTheRich::isEnabled ? LongLiveTheRich::gainedMoney : tempMoney;
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = LongLiveTheRich::isEnabled ? (int)LongLiveTheRich::gainedMoney : tempMoney;
 	}
 }
 
@@ -159,4 +179,56 @@ bool GenericUtil::LoadFromFile(std::string fileName) {
 
 std::string GenericUtil::GetLoadFileName() {
 	return loadFilePath;
+}
+
+int GenericUtil::CalculateTick() {
+	return (int)((CTimer::ms_fTimeStepNonClipped / max(0.001f, CTimer::ms_fTimeScale)) * 0.02f * 1000.0f);
+}
+
+void GenericUtil::SetVehiclesRealPhysics() {
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		if (vehicle->m_pDriver && !vehicle->IsDriver(FindPlayerPed())) {
+			if (vehicle->m_autoPilot.m_nCarMission < eCarMission::MISSION_RAMPLAYER_FARAWAY
+				&& vehicle->m_autoPilot.m_nCarMission > eCarMission::MISSION_BLOCKPLAYER_HANDBRAKESTOP) {
+				CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
+			}
+		}
+	}
+}
+
+float GenericUtil::GetAudioPitchOrOverride(float pitch) {
+	if (pitch > 0.0f) {
+		switch (Config::GetOrDefault("EasterEggs.AudioPitchChanger", 0)) {
+			default:
+			case 0: {
+				return pitch;
+			}
+			case 1: {
+				return 0.6f;
+			}
+			case 2: {
+				return 0.8f;
+			}
+			case 3: {
+				return 1.25f;
+			}
+			case 4: {
+				return 1.5f;
+			}
+			case 5: {
+				return audioPitchOverride;
+			}
+		}
+	}
+	return pitch;
+}
+
+float GenericUtil::GetAudioVolumeOrOverride(float volume, bool nonNormalSpeed) {
+	if (Config::GetOrDefault("Fixes.DisableRadioWhenNormalSpeed", false)) {
+		if (Config::GetOrDefault("EasterEggs.AudioPitchChanger", 0) == 0 && !nonNormalSpeed) {
+			volume = -100.0f;
+		}
+	}
+
+	return volume;
 }

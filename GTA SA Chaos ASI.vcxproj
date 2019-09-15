@@ -47,7 +47,7 @@
     <IntDir>$(ProjectDir).obj\GTASA\Release\</IntDir>
     <TargetName>GTASAChaosASI.SA</TargetName>
     <TargetExt>.asi</TargetExt>
-    <IncludePath>$(ProjectDir)src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GTASA zDebug|Win32'">
     <OutDir>$(GTA_SA_DIR)\scripts\</OutDir>
@@ -97,6 +97,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\effects\impl\PitchShifter.cpp" />
+    <ClCompile Include="src\effects\impl\AudioPitch.cpp" />
     <ClCompile Include="src\effects\impl\CustomGravity.cpp" />
     <ClCompile Include="src\effects\impl\LockPlayerInsideVehicle.cpp" />
     <ClCompile Include="src\effects\impl\ReloadAutosave.cpp" />
@@ -118,6 +120,8 @@
     <ClCompile Include="src\effects\impl\Framerate.cpp" />
     <ClCompile Include="src\effects\abstract\FunctionEffect.cpp" />
     <ClCompile Include="src\effects\impl\GameSpeed.cpp" />
+    <ClCompile Include="src\util\Config.cpp" />
+    <ClCompile Include="src\util\DrawVoting.cpp" />
     <ClCompile Include="src\util\GenericUtil.cpp" />
     <ClCompile Include="src\effects\impl\GhostRider.cpp" />
     <ClCompile Include="src\effects\impl\Gravity.cpp" />
@@ -149,8 +153,12 @@
     <ClCompile Include="src\effects\other\Vehicle.cpp" />
     <ClCompile Include="src\effects\other\Wanted.cpp" />
     <ClCompile Include="src\effects\impl\WhereIsEverybody.cpp" />
+    <ClCompile Include="src\effects\impl\WoozieMode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\util\Config.h" />
+    <ClInclude Include="src\effects\impl\PitchShifter.h" />
+    <ClInclude Include="src\effects\impl\AudioPitch.h" />
     <ClInclude Include="src\effects\impl\CustomGravity.h" />
     <ClInclude Include="src\effects\impl\LockPlayerInsideVehicle.h" />
     <ClInclude Include="src\effects\impl\ReloadAutosave.h" />
@@ -172,6 +180,8 @@
     <ClInclude Include="src\effects\impl\Framerate.h" />
     <ClInclude Include="src\effects\abstract\FunctionEffect.h" />
     <ClInclude Include="src\effects\impl\GameSpeed.h" />
+    <ClInclude Include="src\util\cpptoml.h" />
+    <ClInclude Include="src\util\DrawVoting.h" />
     <ClInclude Include="src\util\GenericUtil.h" />
     <ClInclude Include="src\effects\impl\GhostRider.h" />
     <ClInclude Include="src\effects\impl\Gravity.h" />
@@ -202,6 +212,7 @@
     <ClInclude Include="src\effects\other\Vehicle.h" />
     <ClInclude Include="src\effects\other\Wanted.h" />
     <ClInclude Include="src\effects\impl\WhereIsEverybody.h" />
+    <ClInclude Include="src\effects\impl\WoozieMode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

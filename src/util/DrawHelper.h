@@ -19,19 +19,19 @@
 class DrawHelper
 {
 public:
-	static void DrawHelper::DrawRemainingTimeRects(int remaining);
+	static void DrawRemainingTimeBar(int remaining);
 
-	static void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects);
+	static void DrawRecentEffects(std::list<TimedEffect*> activeEffects);
 
-	static void DrawHelper::DrawMessages();
-	static void DrawHelper::DrawBigMessages();
-	static void DrawHelper::DrawHelpMessage(std::string message, int duration);
-	static void DrawHelper::DrawBigMessage(std::string message, int duration);
+	static void DrawMessages();
+	static void DrawBigMessages();
+	static void DrawHelpMessage(std::string message, int duration, bool playSound = false);
+	static void DrawBigMessage(std::string message, int duration, bool playSound = false);
 
-	static void DrawHelper::DrawCircle(CVector2D position, float radius, float angle, CRGBA color);
-	static void DrawHelper::AppendPie(RwIm2DVertex* vertices, int numCount, float radius, CVector2D center,
+	static void DrawCircle(CVector2D position, float radius, float angle, CRGBA color);
+	static void AppendPie(RwIm2DVertex* vertices, int numCount, float radius, CVector2D center,
 		float pie, CRGBA color, float baseRotation);
-	static void DrawHelper::Transform(RwIm2DVertex* vertices, int numCount, CVector2D transformation);
-	static void DrawHelper::Append(RwIm2DVertex* vertices, int index, CVector2D coord, CRGBA color);
-	static void DrawHelper::Rotate(RwIm2DVertex* vertices, int numCount, CVector2D origin, float angle);
+	static void Transform(RwIm2DVertex* vertices, int numCount, CVector2D transformation);
+	static void Append(RwIm2DVertex* vertices, int index, CVector2D coord, CRGBA color);
+	static void Rotate(RwIm2DVertex* vertices, int numCount, CVector2D origin, float angle);
 };

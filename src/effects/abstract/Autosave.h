@@ -3,6 +3,7 @@
 
 #include "TimedEffect.h"
 
+#include "util/Config.h"
 #include "util/GenericUtil.h"
 
 class Autosave : public TimedEffect

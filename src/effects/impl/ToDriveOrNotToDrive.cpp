@@ -16,6 +16,8 @@ void ToDriveOrNotToDrive::HandleTick() {
 		return;
 	}
 
+	GenericUtil::SetVehiclesRealPhysics();
+
 	doPop = !doPop;
 	if (doPop) {
 		PopTires();

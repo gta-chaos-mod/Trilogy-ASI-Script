@@ -55,6 +55,10 @@ void RainbowCars::ModifyCarPaint(CVehicle* vehicle) {
 }
 
 RpMaterial* RainbowCars::MaterialCallback(RpMaterial* material, void* data) {
+	if (!data) {
+		return material;
+	}
+
 	CVehicle* vehicle = reinterpret_cast<CVehicle*>(data);
 
 	if (!resetMaterials.contains(material)) {
@@ -66,9 +70,12 @@ RpMaterial* RainbowCars::MaterialCallback(RpMaterial* material, void* data) {
 	int r = color.r;
 	int g = color.g;
 	int b = color.b;
-	ColorHelper::HueShift(r, g, b, hueShift, 0.75f);
+	ColorHelper::HueShift(r, g, b, hueShift, 0.85f);
 
-	material->color = CRGBA(r, g, b, (unsigned int)material->color.alpha).ToRwRGBA();
+	material->color.red = r;
+	material->color.green = g;
+	material->color.blue = b;
+
 	return material;
 }
 

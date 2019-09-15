@@ -4,9 +4,7 @@
 bool LetsTakeABreak::isEnabled = false;
 
 LetsTakeABreak::LetsTakeABreak(int _duration, std::string _description)
-	: TimedEffect(_duration, _description, "controls") {
-	duration = effectRemaining;
-}
+	: TimedEffect(_duration, _description, "controls") {}
 
 void LetsTakeABreak::InitializeHooks() {
 	patch::RedirectCall(0x57C676, HookedOpenFile);
@@ -32,6 +30,19 @@ void LetsTakeABreak::Disable() {
 
 int LetsTakeABreak::GetRemaining() {
 	return effectRemaining >= 0 ? effectRemaining : remaining;
+}
+
+int LetsTakeABreak::GetDuration() {
+	return rapidFire ? duration : effectDuration;
+}
+
+TimedEffect* LetsTakeABreak::SetRapidFire(bool is_rapid_fire) {
+	if (is_rapid_fire) {
+		duration = min(duration, effectDuration);
+		effectRemaining = duration;
+	}
+
+	return TimedEffect::SetRapidFire(is_rapid_fire);
 }
 
 void LetsTakeABreak::HandleTick() {

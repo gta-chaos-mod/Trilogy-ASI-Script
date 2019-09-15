@@ -9,14 +9,16 @@
 #include "CModelInfo.h"
 #include "CPlane.h"
 #include "CShadows.h"
+#include "CTrain.h"
 
 class InvisibleVehicles : public TimedEffect
 {
 public:
-	static bool* isEnabled;
+	static bool onlyWheels;
+	static bool isEnabled;
 
 public:
-	InvisibleVehicles(int duration, std::string description);
+	InvisibleVehicles(bool _onlyWheels, int duration, std::string description);
 
 	void InitializeHooks() override;
 
@@ -24,11 +26,15 @@ public:
 
 	void HandleTick() override;
 
-	static void TryRenderAtomic(RwFrame* frame);
+	static void TryRenderAtomic(RwFrame* frameArray[], int size, int slot);
 
+	static void __fastcall HookedRenderAutomobile(CAutomobile* thisAutomobile, void* edx);
 	static void __fastcall HookedRenderHeli(CHeli* thisHeli, void* edx);
 	static void __fastcall HookedRenderBike(CBike* thisBike, void* edx);
 	static void __fastcall HookedRenderPlane(CPlane* thisPlane, void* edx);
 	static void __fastcall HookedRenderEffects(CEntity* thisEntity, void* edx);
 	static void HookedRenderShadows(CVehicle* thisVehicle, VEH_SHD_TYPE shadowType);
+
+	static void __fastcall HookedCVehicleDoHeadLightBeam(CVehicle* thisVehicle, void* edx, int a2, CMatrix* matrix, char a4);
+	static void __fastcall HookedCVehicleDoVehicleLights(CVehicle* thisVehicle, void* edx, int a2, CMatrix* matrix, int st);
 };

@@ -4,37 +4,26 @@
 GhostRider::GhostRider(int _duration, std::string _description)
 	: TimedEffect(_duration, _description) {}
 
-void GhostRider::Disable() {
-	CVehicle* currentVehicle = FindPlayerVehicle(-1, false);
-	if (currentVehicle) {
-		currentVehicle->m_nPhysicalFlags.bExplosionProof = false;
-		currentVehicle->BlowUpCar(NULL, false);
-	}
-
-	TimedEffect::Disable();
-}
-
 void GhostRider::HandleTick() {
 	int step = CalculateTick();
 
 	if (vehicleList.size() > 0) {
-		auto it = vehicleList.begin();
-		while (it != vehicleList.end()) {
+		for (auto it = vehicleList.begin(); it != vehicleList.end(); ++it) {
 			CVehicle* vehicle = it->first;
 
 			if (vehicle) {
 				vehicleList[vehicle] -= step;
 				if (vehicleList[vehicle] < 0) {
+					if (CPools::ms_pVehiclePool->IsObjectValid(vehicle)) {
+						vehicle->m_nPhysicalFlags.bExplosionProof = false;
+						vehicle->BlowUpCar(NULL, false);
+					}
 					vehicleList.erase(it);
-					vehicle->m_nPhysicalFlags.bExplosionProof = false;
-					vehicle->BlowUpCar(NULL, false);
 				}
 			}
 			else {
 				vehicleList.erase(it);
 			}
-
-			it++;
 		}
 	}
 
@@ -60,9 +49,22 @@ void GhostRider::HandleTick() {
 }
 
 void GhostRider::SetBurnTimer(CVehicle* vehicle, float value) {
-	switch (reinterpret_cast<CVehicleModelInfo*>(CModelInfo::ms_modelInfoPtrs[vehicle->m_nModelIndex])->m_nVehicleType) {
-		case VEHICLE_BIKE:
-		case VEHICLE_BMX: {
+	if (!vehicle || !CPools::ms_pVehiclePool->IsObjectValid(vehicle)) {
+		return;
+	}
+
+	CBaseModelInfo* model = CModelInfo::ms_modelInfoPtrs[vehicle->m_nModelIndex];
+	if (!model) {
+		return;
+	}
+
+	CVehicleModelInfo* vehicleModelInfo = reinterpret_cast<CVehicleModelInfo*>(model);
+	if (!vehicleModelInfo) {
+		return;
+	}
+
+	switch (vehicleModelInfo->m_nVehicleType) {
+		case VEHICLE_BIKE: {
 			CBike* bike = (CBike*)vehicle;
 			bike->m_fHealth = 249.0f;
 			//bike->field_7BC = (int)value; // This should also be a float, until then we use the float pointer

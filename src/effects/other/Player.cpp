@@ -10,11 +10,33 @@ void Player::GivePlayerHealthArmorMoney() {
 
 		CVehicle* vehicle = FindPlayerVehicle(-1, false);
 		if (vehicle) {
-			bool isHigherDurability = vehicle->m_fHealth > 1000.0f;
+			float setHealth = vehicle->m_fHealth > 1000.0f ? 100000.0f : 1000.0f;
 			vehicle->Fix();
-			vehicle->m_fHealth = isHigherDurability ? 10000.0f : 1000.0f;
+			vehicle->m_fHealth = setHealth;
 		}
 	}
+}
+
+void Player::WeaponSet4() {
+	CPlayerPed* player = FindPlayerPed();
+	if (!player) {
+		return;
+	}
+
+	bool hasNightVision = player->DoWeHaveWeaponAvailable(WEAPON_NIGHTVISION);
+
+	CStreaming::RequestModel(MODEL_MINIGUN, 2); // Minigun
+	CStreaming::RequestModel(MODEL_GUN_DILDO2, 2); // Dildo 2
+	CStreaming::RequestModel(hasNightVision ? MODEL_IRGOGGLES : MODEL_NVGOGGLES, 2); // Thermal Vision / Night Vision
+	CStreaming::LoadAllRequestedModels(0);
+
+	player->GiveWeapon(WEAPON_MINIGUN, 500, 1);
+	player->GiveWeapon(WEAPON_DILDO2, 1, 1);
+	player->GiveWeapon(hasNightVision ? WEAPON_INFRARED : WEAPON_NIGHTVISION, 1, 1);
+
+	CStreaming::SetModelIsDeletable(MODEL_MINIGUN);
+	CStreaming::SetModelIsDeletable(MODEL_GUN_DILDO2);
+	CStreaming::SetModelIsDeletable(hasNightVision ? MODEL_IRGOGGLES : MODEL_NVGOGGLES);
 }
 
 void Player::KillPlayer() {
@@ -33,6 +55,25 @@ void Player::KickOutOfVehicleAndLock() {
 			playerVehicle->m_nVehicleFlags.bConsideredByPlayer = false;
 		}
 	}
+}
+
+void Player::MakeFat() {
+	CStats::SetStatValue(eStats::STAT_FAT, 1000.0f);
+
+	RebuildPlayer();
+}
+
+void Player::MakeMuscle() {
+	CStats::SetStatValue(eStats::STAT_MUSCLE, 1000.0f);
+
+	RebuildPlayer();
+}
+
+void Player::MakeSkinny() {
+	CStats::SetStatValue(eStats::STAT_FAT, 0.0f);
+	CStats::SetStatValue(eStats::STAT_MUSCLE, 0.0f);
+
+	RebuildPlayer();
 }
 
 void Player::SetStamina(bool isMax) {
@@ -101,5 +142,15 @@ void Player::DoWasted() {
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
 		player->SetPedState(ePedState::PEDSTATE_DEAD);
+	}
+}
+
+void Player::RebuildPlayer() {
+	CPlayerPed* player = FindPlayerPed();
+	if (player) {
+		ePedState oldState = player->m_nPedState;
+		player->m_nPedState = ePedState::PEDSTATE_IDLE;
+		CClothes::RebuildPlayer(player, false);
+		player->m_nPedState = oldState;
 	}
 }

@@ -5,6 +5,9 @@
 
 #include <filesystem>
 
+#include "Config.h"
+
+#include "CCarCtrl.h"
 #include "CCheat.h"
 #include "CClock.h"
 #include "CGame.h"
@@ -18,14 +21,19 @@ private:
 	static std::string loadFilePath;
 	static char* gamePath;
 
+	static float audioPitchOverride;
+	static bool audioPitchGoingUp;
+
 public:
 	static bool areEffectsCryptic;
 
 	static CPedAcquaintance backup_acquaintances[32];
 
 public:
-	static void InitializeUnprotectedMemory();
+	static void Initialize();
 	static void InitializeCharReplacements();
+
+	static void ModifyAudioPitchOverride();
 
 	static std::vector<std::string> GetCharReplacements();
 
@@ -40,4 +48,9 @@ public:
 	static void SaveToFile(std::string fileName);
 	static bool LoadFromFile(std::string fileName);
 	static std::string GetLoadFileName();
+
+	static int CalculateTick();
+	static void SetVehiclesRealPhysics();
+	static float GetAudioPitchOrOverride(float pitch);
+	static float GetAudioVolumeOrOverride(float volume, bool nonNormalSpeed = false);
 };

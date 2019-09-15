@@ -1,201 +1,206 @@
 // Copyright (c) 2019 Lordmau5
 #include "CheatHandler.h"
 
-TimedEffect* CheatHandler::HandleCheat(std::string cheat, int duration, std::string description) {
+TimedEffect* CheatHandler::HandleCheat(std::string name, int duration, std::string description) {
 	// *** One-Time Cheats ***
 
-	if (cheat == "weapon_set_1") {
-		return new FunctionEffect(CCheat::WeaponCheat1, duration, description);
+	TimedEffect* effect = nullptr;
+
+	if (name == "weapon_set_1") {
+		effect = new FunctionEffect(CCheat::WeaponCheat1, duration, description);
 	}
-	else if (cheat == "weapon_set_2") {
-		return new FunctionEffect(CCheat::WeaponCheat2, duration, description);
+	else if (name == "weapon_set_2") {
+		effect = new FunctionEffect(CCheat::WeaponCheat2, duration, description);
 	}
-	else if (cheat == "weapon_set_3") {
-		return new FunctionEffect(CCheat::WeaponCheat3, duration, description);
+	else if (name == "weapon_set_3") {
+		effect = new FunctionEffect(CCheat::WeaponCheat3, duration, description);
 	}
-	else if (cheat == "give_health_armor_money") {
-		return new FunctionEffect(Player::GivePlayerHealthArmorMoney, duration, description);
+	else if (name == "weapon_set_4") {
+		effect = new FunctionEffect(Player::WeaponSet4, duration, description);
 	}
-	else if (cheat == "suicide") {
-		return new FunctionEffect(Player::KillPlayer, duration, description);
+	else if (name == "give_health_armor_money") {
+		effect = new FunctionEffect(Player::GivePlayerHealthArmorMoney, duration, description);
+	}
+	else if (name == "suicide") {
+		effect = new FunctionEffect(Player::KillPlayer, duration, description);
 	}
 
-	else if (cheat == "wanted_plus_two") {
-		return new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted");
+	else if (name == "wanted_plus_two") {
+		effect = new FunctionEffect(Wanted::IncreaseWantedLevel, duration, description, "wanted");
 	}
-	else if (cheat == "wanted_clear") {
-		return new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted");
+	else if (name == "wanted_clear") {
+		effect = new FunctionEffect(Wanted::ClearWantedLevel, duration, description, "wanted");
 	}
-	else if (cheat == "wanted_six_stars") {
-		return new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted");
-	}
-
-	else if (cheat == "jetpack") {
-		return new FunctionEffect(CCheat::JetpackCheat, duration, description);
-	}
-	else if (cheat == "parachute") {
-		return new FunctionEffect(CCheat::ParachuteCheat, duration, description);
+	else if (name == "wanted_six_stars") {
+		effect = new FunctionEffect(Wanted::SixWantedStars, duration, description, "wanted");
 	}
 
-	else if (cheat == "blow_up_all_cars") {
-		return new FunctionEffect(Vehicle::BlowUpAllCars, duration, description);
+	else if (name == "jetpack") {
+		effect = new FunctionEffect(CCheat::JetpackCheat, duration, description);
+	}
+	else if (name == "parachute") {
+		effect = new FunctionEffect(CCheat::ParachuteCheat, duration, description);
 	}
 
-	else if (cheat == "fat_player") {
-		return new FunctionEffect(CCheat::FatCheat, duration, description);
+	else if (name == "blow_up_all_cars") {
+		effect = new FunctionEffect(Vehicle::BlowUpAllCars, duration, description);
 	}
-	else if (cheat == "max_muscle") {
-		return new FunctionEffect(CCheat::MuscleCheat, duration, description);
+
+	else if (name == "fat_player") {
+		effect = new FunctionEffect(Player::MakeFat, duration, description);
 	}
-	else if (cheat == "skinny_player") {
-		return new FunctionEffect(CCheat::SkinnyCheat, duration, description);
+	else if (name == "max_muscle") {
+		effect = new FunctionEffect(Player::MakeMuscle, duration, description);
+	}
+	else if (name == "skinny_player") {
+		effect = new FunctionEffect(Player::MakeSkinny, duration, description);
 	}
 
 	// *** End of One-Time Cheats ***
 
 	// *** Timed Cheats ***
 
-	else if (cheat == "infinite_ammo") {
-		return new TimedAddressCheat(0x969178, duration, description);
+	else if (name == "infinite_ammo") {
+		effect = new TimedAddressCheat(0x969178, duration, description);
 	}
 
-	else if (cheat == "never_wanted") {
-		return new TimedFunctionCheat(CCheat::NotWantedCheat, 0x969171, duration, description, "wanted");
+	else if (name == "never_wanted") {
+		effect = new TimedFunctionCheat(CCheat::NotWantedCheat, 0x969171, duration, description, "wanted");
 	}
 
-	else if (cheat == "always_midnight") {
-		return new TimedFunctionCheat(CCheat::MidnightCheat, 0x969167, duration, description, "timecycle");
+	else if (name == "always_midnight") {
+		effect = new TimedFunctionCheat(CCheat::MidnightCheat, 0x969167, duration, description, "timecycle");
 	}
-	else if (cheat == "orange_sky") {
-		return new TimedFunctionCheat(CCheat::DuskCheat, 0x969168, duration, description, "timecycle");
+	else if (name == "orange_sky") {
+		effect = new TimedFunctionCheat(CCheat::DuskCheat, 0x969168, duration, description, "timecycle");
 	}
-	else if (cheat == "faster_clock") {
-		return new TimedAddressCheat(0x96913B, duration, description, "timecycle");
-	}
-
-	else if (cheat == "pink_traffic") {
-		return new TimedFunctionCheat(CCheat::PinkCarsCheat, 0x969150, duration, description, "traffic_color");
-	}
-	else if (cheat == "black_traffic") {
-		return new TimedFunctionCheat(CCheat::BlackCarsCheat, 0x969151, duration, description, "traffic_color");
-	}
-	else if (cheat == "cheap_cars") {
-		return new TimedFunctionCheat(CCheat::AllCarsAreShitCheat, 0x96915E, duration, description, "vehicle_rarity");
-	}
-	else if (cheat == "expensive_cars") {
-		return new TimedFunctionCheat(CCheat::AllCarsAreGreatCheat, 0x96915F, duration, description, "vehicle_rarity");
-	}
-	else if (cheat == "insane_handling") {
-		return new TimedAddressCheat(0x96914C, duration, description);
-	}
-	else if (cheat == "all_green_lights") {
-		return new TimedAddressCheat(0x96914E, duration, description);
-	}
-	else if (cheat == "cars_on_water") {
-		return new TimedAddressCheat(0x969152, duration, description);
-	}
-	else if (cheat == "boats_fly") {
-		return new TimedAddressCheat(0x969153, duration, description);
-	}
-	else if (cheat == "cars_fly") {
-		return new TimedAddressCheat(0x969160, duration, description);
-	}
-	else if (cheat == "smash_n_boom") {
-		return new SmashNBoom(duration, description);
-	}
-	else if (cheat == "all_cars_nitro") {
-		return new TimedAddressCheat(0x969165, duration, description);
-	}
-	else if (cheat == "bubble_cars") {
-		return new TimedAddressCheat(0x969166, duration, description);
-	}
-	else if (cheat == "reduced_traffic") {
-		return new TimedAddressCheat(0x96917A, duration, description);
-	}
-	else if (cheat == "all_taxis_nitro") {
-		return new TimedAddressCheat(0x96918B, duration, description);
+	else if (name == "faster_clock") {
+		effect = new TimedAddressCheat(0x96913B, duration, description, "timecycle");
 	}
 
-	else if (cheat == "rough_neighbourhood") {
-		return new PedsAttackOther(duration, description);
+	else if (name == "pink_traffic") {
+		effect = new TimedFunctionCheat(CCheat::PinkCarsCheat, 0x969150, duration, description, "traffic_color");
 	}
-	else if (cheat == "bounty_on_your_head") {
-		return new TimedFunctionCheat(CCheat::EverybodyAttacksPlayerCheat, 0x96913F, duration, description);
+	else if (name == "black_traffic") {
+		effect = new TimedFunctionCheat(CCheat::BlackCarsCheat, 0x969151, duration, description, "traffic_color");
 	}
-	else if (cheat == "elvis_lives") {
-		return new TimedFunctionCheat(CCheat::ElvisLivesCheat, 0x969157, duration, description, "gang_members");
+	else if (name == "cheap_cars") {
+		effect = new TimedFunctionCheat(CCheat::AllCarsAreShitCheat, 0x96915E, duration, description, "vehicle_rarity");
 	}
-	else if (cheat == "village_people") {
-		return new TimedFunctionCheat(CCheat::VillagePeopleCheat, 0x969158, duration, description);
+	else if (name == "expensive_cars") {
+		effect = new TimedFunctionCheat(CCheat::AllCarsAreGreatCheat, 0x96915F, duration, description, "vehicle_rarity");
 	}
-	else if (cheat == "only_homies") {
-		return new TimedFunctionCheat(CCheat::GangsCheat, 0x96915A, duration, description, "gang_members");
+	else if (name == "insane_handling") {
+		effect = new TimedAddressCheat(0x96914C, duration, description);
 	}
-	else if (cheat == "stay_indoors") {
-		return new TimedFunctionCheat(CCheat::GangLandCheat, 0x96915B, duration, description, "gang_members");
+	else if (name == "all_green_lights") {
+		effect = new TimedAddressCheat(0x96914E, duration, description);
 	}
-	else if (cheat == "riot_mode") {
-		return new TimedFunctionCheat(CCheat::RiotCheat, 0x969175, duration, description);
+	else if (name == "cars_on_water") {
+		effect = new TimedAddressCheat(0x969152, duration, description);
 	}
-	else if (cheat == "everyone_armed") {
-		return new TimedAddressCheat(0x969140, duration, description);
+	else if (name == "boats_fly") {
+		effect = new TimedAddressCheat(0x969153, duration, description);
 	}
-	else if (cheat == "aggressive_drivers") {
-		return new TimedAddressCheat(0x96914F, duration, description);
+	else if (name == "cars_fly") {
+		effect = new TimedAddressCheat(0x969160, duration, description);
 	}
-	else if (cheat == "recruit_9mm") {
-		return new TimedAddressCheat(0x96917C, duration, description, "npc_recruit");
+	else if (name == "smash_n_boom") {
+		effect = new SmashNBoom(duration, description);
 	}
-	else if (cheat == "recruit_ak47") {
-		return new TimedAddressCheat(0x96917D, duration, description, "npc_recruit");
+	else if (name == "all_cars_nitro") {
+		effect = new TimedAddressCheat(0x969165, duration, description);
 	}
-	else if (cheat == "recruit_rockets") {
-		return new TimedAddressCheat(0x96917E, duration, description, "npc_recruit");
+	else if (name == "bubble_cars") {
+		effect = new TimedAddressCheat(0x969166, duration, description);
 	}
-	else if (cheat == "reverse_hooker") {
-		return new TimedAddressCheat(0x96918A, duration, description);
+	else if (name == "reduced_traffic") {
+		effect = new TimedAddressCheat(0x96917A, duration, description);
 	}
-	else if (cheat == "beach_party") {
-		return new TimedFunctionCheat(CCheat::BeachPartyCheat, 0x969159, duration, description, "themes");
-	}
-	else if (cheat == "ninja_theme") {
-		return new TimedFunctionCheat(CCheat::NinjaCheat, 0x96915C, duration, description, "themes");
-	}
-	else if (cheat == "kinky_theme") {
-		return new TimedFunctionCheat(CCheat::LoveConquersAllCheat, 0x96915D, duration, description, "themes");
-	}
-	else if (cheat == "funhouse_theme") {
-		return new TimedFunctionCheat(CCheat::FunhouseCheat, 0x969176, duration, description, "themes");
-	}
-	else if (cheat == "country_traffic") {
-		return new TimedFunctionCheat(CCheat::CountrysideInvasionCheat, 0x96917B, duration, description, "themes");
+	else if (name == "all_taxis_nitro") {
+		effect = new TimedAddressCheat(0x96918B, duration, description);
 	}
 
-	else if (cheat == "drive_by") {
-		return new TimedFunctionCheat(CCheat::DrivebyCheat, 0x969179, duration, description);
+	else if (name == "rough_neighbourhood") {
+		effect = new PedsAttackOther(duration, description);
 	}
-	else if (cheat == "huge_bunny_hop") {
-		return new TimedAddressCheat(0x969161, duration, description);
+	else if (name == "bounty_on_your_head") {
+		effect = new TimedFunctionCheat(CCheat::EverybodyAttacksPlayerCheat, 0x96913F, duration, description);
 	}
-	else if (cheat == "mega_jump") {
-		return new TimedAddressCheat(0x96916C, duration, description);
+	else if (name == "elvis_lives") {
+		effect = new TimedFunctionCheat(CCheat::ElvisLivesCheat, 0x969157, duration, description, "gang_members");
 	}
-	else if (cheat == "infinite_oxygen") {
-		return new TimedAddressCheat(0x96916E, duration, description);
+	else if (name == "village_people") {
+		effect = new TimedFunctionCheat(CCheat::VillagePeopleCheat, 0x969158, duration, description);
 	}
-	else if (cheat == "mega_punch") {
-		return new TimedAddressCheat(0x969173, duration, description);
+	else if (name == "only_homies") {
+		effect = new TimedFunctionCheat(CCheat::GangsCheat, 0x96915A, duration, description, "gang_members");
+	}
+	else if (name == "stay_indoors") {
+		effect = new TimedFunctionCheat(CCheat::GangLandCheat, 0x96915B, duration, description, "gang_members");
+	}
+	else if (name == "riot_mode") {
+		effect = new TimedFunctionCheat(CCheat::RiotCheat, 0x969175, duration, description);
+	}
+	else if (name == "everyone_armed") {
+		effect = new TimedAddressCheat(0x969140, duration, description);
+	}
+	else if (name == "aggressive_drivers") {
+		effect = new TimedAddressCheat(0x96914F, duration, description);
+	}
+	else if (name == "recruit_9mm") {
+		effect = new TimedAddressCheat(0x96917C, duration, description, "npc_recruit");
+	}
+	else if (name == "recruit_ak47") {
+		effect = new TimedAddressCheat(0x96917D, duration, description, "npc_recruit");
+	}
+	else if (name == "recruit_rockets") {
+		effect = new TimedAddressCheat(0x96917E, duration, description, "npc_recruit");
+	}
+	else if (name == "reverse_hooker") {
+		effect = new TimedAddressCheat(0x96918A, duration, description);
+	}
+	else if (name == "beach_party") {
+		effect = new TimedFunctionCheat(Ped::MakeBeachParty, 0x969159, duration, description, "themes");
+	}
+	else if (name == "ninja_theme") {
+		effect = new TimedFunctionCheat(Ped::MakeNinja, 0x96915C, duration, description, "themes");
+	}
+	else if (name == "kinky_theme") {
+		effect = new TimedFunctionCheat(Ped::MakeKinky, 0x96915D, duration, description, "themes");
+	}
+	else if (name == "funhouse_theme") {
+		effect = new TimedFunctionCheat(Ped::MakeFunhouse, 0x969176, duration, description, "themes");
+	}
+	else if (name == "country_traffic") {
+		effect = new TimedFunctionCheat(Ped::MakeCountry, 0x96917B, duration, description, "themes");
 	}
 
-	else if (cheat == "never_hungry") {
-		return new TimedAddressCheat(0x969173, duration, description);
+	else if (name == "drive_by") {
+		effect = new TimedFunctionCheat(CCheat::DrivebyCheat, 0x969179, duration, description);
 	}
-	else if (cheat == "lock_respect") {
-		return new TimedAddressCheat(0x969173, duration, description);
+	else if (name == "huge_bunny_hop") {
+		effect = new TimedAddressCheat(0x969161, duration, description);
 	}
-	else if (cheat == "lock_sex_appeal") {
-		return new TimedAddressCheat(0x969173, duration, description);
+	else if (name == "mega_jump") {
+		effect = new TimedAddressCheat(0x96916C, duration, description);
+	}
+	else if (name == "infinite_oxygen") {
+		effect = new TimedAddressCheat(0x96916E, duration, description);
+	}
+	else if (name == "mega_punch") {
+		effect = new TimedAddressCheat(0x969173, duration, description);
 	}
 
-	return nullptr;
+	else if (name == "never_hungry") {
+		effect = new TimedAddressCheat(0x969173, duration, description);
+	}
+	else if (name == "lock_respect") {
+		effect = new TimedAddressCheat(0x969173, duration, description);
+	}
+	else if (name == "lock_sex_appeal") {
+		effect = new TimedAddressCheat(0x969173, duration, description);
+	}
+
+	return effect;
 }
