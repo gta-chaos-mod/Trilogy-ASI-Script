@@ -1,31 +1,24 @@
 // Copyright (c) 2019 Lordmau5
 #include "RainbowCars.h"
 
-bool RainbowCars::isEnabled = false;
 float RainbowCars::hueShift = 0.0f;
-std::map<RpMaterial*, RwRGBA> RainbowCars::resetMaterials;
+std::vector< std::pair<RwRGBA*, RwRGBA> > RainbowCars::resetMaterialColors;
+
+// Custom events for CVehicle::SetupRender and CVehicle::ResetAfterRender
+static ThiscallEvent <AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE, ArgPickN<CVehicle*, 0>, void(CVehicle*)> setupRenderEvent;
+static ThiscallEvent <AddressList<0x55332A, H_CALL>, PRIORITY_AFTER, ArgPickN<CVehicle*, 0>, void(CVehicle*)> resetAfterRenderEvent;
 
 RainbowCars::RainbowCars(int _duration, std::string _description)
-	: TimedEffect(_duration, _description) {}
+	: TimedEffect(_duration, std::move(_description)) {}
 
 void RainbowCars::Enable() {
-	isEnabled = true;
-
-	Events::vehicleRenderEvent += RenderVehicleEvent;
+	setupRenderEvent += SetupRenderEvent;
+	resetAfterRenderEvent += ResetAfterRenderEvent;
 }
 
 void RainbowCars::Disable() {
-	isEnabled = false;
-
-	Events::vehicleRenderEvent -= RenderVehicleEvent;
-
-	for (auto it = resetMaterials.begin(); it != resetMaterials.end(); ++it) {
-		if (it->first) {
-			it->first->color = it->second;
-		}
-	}
-
-	resetMaterials.clear();
+	resetAfterRenderEvent -= ResetAfterRenderEvent;
+	setupRenderEvent -= SetupRenderEvent;
 
 	TimedEffect::Disable();
 }
@@ -37,10 +30,17 @@ void RainbowCars::HandleTick() {
 	}
 }
 
-void RainbowCars::RenderVehicleEvent(CVehicle* vehicle) {
-	if (isEnabled && vehicle) {
-		ModifyCarPaint(vehicle);
+void RainbowCars::SetupRenderEvent(CVehicle* vehicle) {
+	ModifyCarPaint(vehicle);
+}
+
+void RainbowCars::ResetAfterRenderEvent(CVehicle* /*vehicle*/) {
+	// In case some material got added more than once, restore in reverse order
+	for (auto it = resetMaterialColors.rbegin(); it != resetMaterialColors.rend(); ++it) {
+		*it->first = it->second;
 	}
+
+	resetMaterialColors.clear();
 }
 
 void RainbowCars::ModifyCarPaint(CVehicle* vehicle) {
@@ -61,9 +61,7 @@ RpMaterial* RainbowCars::MaterialCallback(RpMaterial* material, void* data) {
 
 	CVehicle* vehicle = reinterpret_cast<CVehicle*>(data);
 
-	if (!resetMaterials.contains(material)) {
-		resetMaterials[material] = material->color;
-	}
+	resetMaterialColors.emplace_back(&material->color, material->color);
 
 	CRGBA color = CVehicleModelInfo::ms_vehicleColourTable[vehicle->m_nPrimaryColor];
 
