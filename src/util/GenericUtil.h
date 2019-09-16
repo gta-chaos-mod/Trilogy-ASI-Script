@@ -49,7 +49,7 @@ public:
 	static bool LoadFromFile(std::string fileName);
 	static std::string GetLoadFileName();
 
-	static int CalculateTick();
+	static float CalculateTick(float multiplier = 1.0f);
 	static void SetVehiclesRealPhysics();
 	static float GetAudioPitchOrOverride(float pitch);
 	static float GetAudioVolumeOrOverride(float volume, bool nonNormalSpeed = false);

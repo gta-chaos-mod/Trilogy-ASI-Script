@@ -25,7 +25,7 @@ void DrawHelper::DrawRemainingTimeBar(int remaining) {
 
 void DrawHelper::DrawMessages() {
 	if (message_remainingDuration > 0) {
-		message_remainingDuration -= GenericUtil::CalculateTick();
+		message_remainingDuration -= (int)GenericUtil::CalculateTick();
 
 		float x = SCREEN_COORD_LEFT(5.0f);
 		float y = SCREEN_COORD_TOP(27.0f);
@@ -51,7 +51,7 @@ void DrawHelper::DrawMessages() {
 
 void DrawHelper::DrawBigMessages() {
 	if (bigMessage_remainingDuration > 0) {
-		bigMessage_remainingDuration -= GenericUtil::CalculateTick();
+		bigMessage_remainingDuration -= (int)GenericUtil::CalculateTick();
 
 		float x = SCREEN_COORD_CENTER_LEFT(0.0f);
 		float y = SCREEN_COORD_CENTER_UP(150.0f);

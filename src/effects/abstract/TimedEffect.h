@@ -74,7 +74,11 @@ public:
 	virtual void HandleTick() {};
 
 	int CalculateTick() {
-		return GenericUtil::CalculateTick();
+		return (int)CalculateTick(1.0f);
+	}
+
+	float CalculateTick(float multiplier) {
+		return GenericUtil::CalculateTick(multiplier);
 	};
 
 	float easeOutBack(float t) {
