@@ -84,22 +84,24 @@ public:
 	}
 
 	void HandleAutoSave() {
-		int missionsPassed = GenericUtil::GetRealMissionsPassed();
-		int currentTime = CTimer::m_snTimeInMilliseconds;
+		if (Config::GetOrDefault("Chaos.AutosaveAfterMissionPassed", true)) {
+			int missionsPassed = GenericUtil::GetRealMissionsPassed();
+			int currentTime = CTimer::m_snTimeInMilliseconds;
 
-		if (lastMissionsPassed == -1) {
-			lastMissionsPassed = missionsPassed;
-		}
-		else if (lastMissionsPassed > missionsPassed) {
-			lastMissionsPassed = missionsPassed;
-		}
+			if (lastMissionsPassed == -1) {
+				lastMissionsPassed = missionsPassed;
+			}
+			else if (lastMissionsPassed > missionsPassed) {
+				lastMissionsPassed = missionsPassed;
+			}
 
-		if (missionsPassed > lastMissionsPassed && lastSaved < currentTime && !CTheScripts::IsPlayerOnAMission()) {
-			lastMissionsPassed = missionsPassed;
+			if (missionsPassed > lastMissionsPassed && lastSaved < currentTime && !CTheScripts::IsPlayerOnAMission()) {
+				lastMissionsPassed = missionsPassed;
 
-			gtaSAChaosMod.QueueEffect(new Autosave(missionsPassed), true);
+				gtaSAChaosMod.QueueEffect(new Autosave(missionsPassed), true);
 
-			lastSaved = currentTime + 1000;
+				lastSaved = currentTime + 1000;
+			}
 		}
 	}
 

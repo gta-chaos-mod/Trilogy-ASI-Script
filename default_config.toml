@@ -6,6 +6,10 @@
 # Chaos Settings
 [Chaos]
 
+# Autosave after completing a mission
+# Default: true
+AutosaveAfterMissionPassed = true
+
 # Disables the "Load Game" option
 # Default: true
 DisableLoadGame = true
