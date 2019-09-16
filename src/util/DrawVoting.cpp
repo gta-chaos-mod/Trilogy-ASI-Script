@@ -22,7 +22,7 @@ void DrawVoting::DrawVotes() {
 			}
 		}
 
-		drawRemaining -= GenericUtil::CalculateTick();
+		drawRemaining -= (int)GenericUtil::CalculateTick();
 		return;
 	}
 
