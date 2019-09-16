@@ -55,13 +55,7 @@ Simple:
 Of course! Here's a [spreadsheet](http://bit.ly/gta-sa-chaos-mod) that has all of them!
 
 ## I can't load any of my saves ingame!
-Since this mod was built with speedrunners in mind, the `Load Save` option was disabled from both the main menu and the pause menu.
-
-The only way to load the last autosave right now is to restart the game.
-
-You can prevent it from trying to load the autosave by holding `Left CTRL` when booting up the game.
-
-This will be addressed in a config file further down the line.
+Make sure the setting `DisableLoadGame` is set to `false` in the config.
 
 ## Where are the autosaves being saved to?
 Inside a sub-directory called `chaos_mod` in your corresponding GTA User Files folder.
