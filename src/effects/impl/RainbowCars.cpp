@@ -2,11 +2,11 @@
 #include "RainbowCars.h"
 
 float RainbowCars::hueShift = 0.0f;
-std::vector< std::pair<RwRGBA*, RwRGBA> > RainbowCars::resetMaterialColors;
+std::vector<std::pair<RwRGBA*, RwRGBA>> RainbowCars::resetMaterialColors;
 
 // Custom events for CVehicle::SetupRender and CVehicle::ResetAfterRender
-static ThiscallEvent <AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE, ArgPickN<CVehicle*, 0>, void(CVehicle*)> setupRenderEvent;
-static ThiscallEvent <AddressList<0x55332A, H_CALL>, PRIORITY_AFTER, ArgPickN<CVehicle*, 0>, void(CVehicle*)> resetAfterRenderEvent;
+static ThiscallEvent<AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE, ArgPickN<CVehicle*, 0>, void(CVehicle*)> setupRenderEvent;
+static ThiscallEvent<AddressList<0x55332A, H_CALL>, PRIORITY_AFTER, ArgPickN<CVehicle*, 0>, void(CVehicle*)> resetAfterRenderEvent;
 
 RainbowCars::RainbowCars(int _duration, std::string _description)
 	: TimedEffect(_duration, std::move(_description)) {}
@@ -24,8 +24,8 @@ void RainbowCars::Disable() {
 }
 
 void RainbowCars::HandleTick() {
-	hueShift += 2.0f;
-	if (hueShift >= 360.0f) {
+	hueShift += CalculateTick(0.075f);
+	if (hueShift > 360.0f) {
 		hueShift -= 360.0f;
 	}
 }
@@ -34,7 +34,7 @@ void RainbowCars::SetupRenderEvent(CVehicle* vehicle) {
 	ModifyCarPaint(vehicle);
 }
 
-void RainbowCars::ResetAfterRenderEvent(CVehicle* /*vehicle*/) {
+void RainbowCars::ResetAfterRenderEvent(CVehicle* vehicle) {
 	// In case some material got added more than once, restore in reverse order
 	for (auto it = resetMaterialColors.rbegin(); it != resetMaterialColors.rend(); ++it) {
 		*it->first = it->second;
@@ -68,7 +68,7 @@ RpMaterial* RainbowCars::MaterialCallback(RpMaterial* material, void* data) {
 	int r = color.r;
 	int g = color.g;
 	int b = color.b;
-	ColorHelper::HueShift(r, g, b, hueShift, 0.85f);
+	ColorHelper::HueShift(r, g, b, hueShift, 0.9f);
 
 	material->color.red = r;
 	material->color.green = g;

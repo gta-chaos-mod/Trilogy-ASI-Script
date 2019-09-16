@@ -13,6 +13,10 @@
 
 class RainbowCars : public TimedEffect
 {
+private:
+	static float hueShift;
+	static std::vector<std::pair<RwRGBA*, RwRGBA>> resetMaterialColors;
+
 public:
 	RainbowCars(int _duration, std::string _description);
 
@@ -28,8 +32,4 @@ private:
 
 	static RpMaterial* MaterialCallback(RpMaterial* material, void* color);
 	static RpAtomic* AtomicCallback(RpAtomic* atomic, void* color);
-
-private:
-	static float hueShift;
-	static std::vector< std::pair<RwRGBA*, RwRGBA> > resetMaterialColors;
 };
