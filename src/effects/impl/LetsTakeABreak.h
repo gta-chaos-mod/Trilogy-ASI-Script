@@ -18,7 +18,7 @@ private:
 	CControllerAction origActions[59];
 
 public:
-	LetsTakeABreak(int _duration, std::string _description);
+	LetsTakeABreak(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

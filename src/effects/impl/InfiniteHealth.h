@@ -14,7 +14,7 @@ public:
 	static bool onlyPlayer;
 
 public:
-	InfiniteHealth(bool _onlyPlayer, int _duration, std::string _description);
+	InfiniteHealth(bool _onlyPlayer, int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

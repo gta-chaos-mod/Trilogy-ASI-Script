@@ -3,7 +3,7 @@
 
 bool DisableHUD::isEnabled = false;
 
-DisableHUD::DisableHUD(int _duration, std::string _description)
+DisableHUD::DisableHUD(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "hud_blips") {}
 
 void DisableHUD::InitializeHooks() {

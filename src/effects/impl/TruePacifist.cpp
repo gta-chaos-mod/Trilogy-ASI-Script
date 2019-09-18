@@ -3,7 +3,7 @@
 
 bool TruePacifist::isEnabled = false;
 
-TruePacifist::TruePacifist(int _duration, std::string _description)
+TruePacifist::TruePacifist(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "health") {}
 
 void TruePacifist::InitializeHooks() {

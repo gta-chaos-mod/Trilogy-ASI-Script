@@ -10,8 +10,8 @@ public:
 	bool* address = nullptr;
 
 public:
-	TimedFunctionCheat(void* _function, int _address, int _duration, std::string _description);
-	TimedFunctionCheat(void* _function, int _address, int _duration, std::string _description, std::string _type);
+	TimedFunctionCheat(void* _function, int _address, int _duration, const std::string& _description);
+	TimedFunctionCheat(void* _function, int _address, int _duration, const std::string& _description, const char* _type);
 
 	void Disable() override;
 

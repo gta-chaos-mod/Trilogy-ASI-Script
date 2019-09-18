@@ -1,7 +1,7 @@
-// Copyright (c) 2019 Lordmau5
+﻿// Copyright (c) 2019 Lordmau5
 #include "TimedEffect.h"
 
-TimedEffect::TimedEffect(int _duration, std::string _description) {
+TimedEffect::TimedEffect(int _duration, const std::string& _description) {
 	isInitialized = false;
 	remaining = duration = _duration;
 	if (!_description.empty()) {
@@ -14,10 +14,19 @@ TimedEffect::TimedEffect(int _duration, std::string _description) {
 	}
 }
 
-TimedEffect::TimedEffect(int _duration, std::string _description, std::string _type)
+TimedEffect::TimedEffect(int _duration, const char* _description)
+	: TimedEffect(_duration, std::string(_description)) {}
+
+TimedEffect::TimedEffect(int _duration, const std::string& _description, const std::string& _type)
 	: TimedEffect(_duration, _description) {
 	type = _type;
 }
+
+TimedEffect::TimedEffect(int _duration, const std::string& _description, const char* _type)
+	: TimedEffect(_duration, _description, std::string(_type)) {}
+
+TimedEffect::TimedEffect(int _duration, const char* _description, const char* _type)
+	: TimedEffect(_duration, std::string(_description), std::string(_type)) {}
 
 bool TimedEffect::IsRunning() {
 	return remaining > 0;

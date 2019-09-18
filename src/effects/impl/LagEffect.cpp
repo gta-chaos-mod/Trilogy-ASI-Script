@@ -4,7 +4,7 @@
 bool LagEffect::isEnabled = false;
 float LagEffect::speed = 1.0f;
 
-LagEffect::LagEffect(int _duration, std::string _description)
+LagEffect::LagEffect(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "game_speed") {}
 
 void LagEffect::InitializeHooks() {

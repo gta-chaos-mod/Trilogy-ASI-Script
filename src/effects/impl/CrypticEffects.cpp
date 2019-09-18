@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "CrypticEffects.h"
 
-CrypticEffects::CrypticEffects(int _duration, std::string _description)
+CrypticEffects::CrypticEffects(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description) {
 	duration = remaining = _duration * 3;
 	immuneToCryptic = true;

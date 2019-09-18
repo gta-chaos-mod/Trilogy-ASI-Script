@@ -8,7 +8,7 @@
 class Timelapse : public TimedEffect
 {
 public:
-	Timelapse(int _duration, std::string _description);
+	Timelapse(int _duration, const std::string& _description);
 
 	void Disable() override;
 

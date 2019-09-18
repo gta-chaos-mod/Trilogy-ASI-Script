@@ -11,7 +11,7 @@ private:
 	int wait = 0;
 
 public:
-	ToTheLeftToTheRight(int _duration, std::string _description);
+	ToTheLeftToTheRight(int _duration, const std::string& _description);
 
 	void HandleTick();
 };

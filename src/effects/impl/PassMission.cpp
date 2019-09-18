@@ -3,7 +3,7 @@
 
 bool PassMission::isEnabled = false;
 
-PassMission::PassMission(int _duration, std::string _description)
+PassMission::PassMission(int _duration, const std::string& _description)
 	: EffectPlaceholder(_duration, _description) {}
 
 void PassMission::InitializeHooks() {

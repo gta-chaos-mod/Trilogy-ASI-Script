@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "WoozieMode.h"
 
-WoozieMode::WoozieMode(int _duration, std::string _description)
+WoozieMode::WoozieMode(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description) {}
 
 void WoozieMode::Enable() {

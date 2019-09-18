@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "OutOfFuel.h"
 
-OutOfFuel::OutOfFuel(int _duration, std::string _description)
+OutOfFuel::OutOfFuel(int _duration, const std::string& _description)
 	: EffectPlaceholder(_duration, _description) {}
 
 void OutOfFuel::Enable() {

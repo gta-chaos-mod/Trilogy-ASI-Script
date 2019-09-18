@@ -12,7 +12,7 @@ public:
 	static bool isEnabled;
 
 public:
-	DisableHUD(int _duration, std::string _description);
+	DisableHUD(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "ToDriveOrNotToDrive.h"
 
-ToDriveOrNotToDrive::ToDriveOrNotToDrive(int _duration, std::string _description)
+ToDriveOrNotToDrive::ToDriveOrNotToDrive(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description) {}
 
 void ToDriveOrNotToDrive::Disable() {

@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "EffectHandler.h"
 
-TimedEffect* EffectHandler::HandleEffect(std::string name, int duration, std::string description) {
+TimedEffect* EffectHandler::HandleEffect(const std::string& name, int duration, const std::string& description) {
 	// *** One-Time Effects ***
 
 	TimedEffect* effect = nullptr;

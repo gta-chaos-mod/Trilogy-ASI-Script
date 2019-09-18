@@ -6,7 +6,7 @@
 class ReloadAutosave : public EffectPlaceholder
 {
 public:
-	ReloadAutosave(int _duration, std::string _description);
+	ReloadAutosave(int _duration, const std::string& _description);
 
 	void Enable() override;
 };

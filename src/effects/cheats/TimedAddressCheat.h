@@ -9,8 +9,8 @@ public:
 	bool* address = nullptr;
 
 public:
-	TimedAddressCheat(int _address, int duration, std::string description);
-	TimedAddressCheat(int _address, int duration, std::string description, std::string type);
+	TimedAddressCheat(int _address, int duration, const std::string& description);
+	TimedAddressCheat(int _address, int duration, const std::string& description, const char* type);
 
 	void Disable() override;
 

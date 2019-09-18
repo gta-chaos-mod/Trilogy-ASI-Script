@@ -18,7 +18,7 @@ public:
 	static bool isEnabled;
 
 public:
-	InvisibleVehicles(bool _onlyWheels, int duration, std::string description);
+	InvisibleVehicles(bool _onlyWheels, int duration, const std::string& description);
 
 	void InitializeHooks() override;
 

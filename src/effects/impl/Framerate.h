@@ -12,7 +12,7 @@ private:
 	static byte oldFrameTimeWait;
 
 public:
-	Framerate(int _framerate, int _duration, std::string _description);
+	Framerate(int _framerate, int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;

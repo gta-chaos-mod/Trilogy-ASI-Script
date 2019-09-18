@@ -12,7 +12,7 @@ public:
 	static bool isEnabled;
 
 public:
-	PassMission(int _duration, std::string _description);
+	PassMission(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

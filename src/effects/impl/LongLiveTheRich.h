@@ -18,7 +18,7 @@ public:
 	bool* neverHungryCheat = reinterpret_cast<bool*>(0x969174);
 
 public:
-	LongLiveTheRich(int _duration, std::string _description);
+	LongLiveTheRich(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

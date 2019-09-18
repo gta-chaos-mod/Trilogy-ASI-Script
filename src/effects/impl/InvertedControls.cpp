@@ -3,7 +3,7 @@
 
 bool InvertedControls::isEnabled = false;
 
-InvertedControls::InvertedControls(int _duration, std::string _description)
+InvertedControls::InvertedControls(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "controls") {}
 
 void InvertedControls::InitializeHooks() {

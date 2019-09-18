@@ -17,7 +17,7 @@ private:
 	float gameSpeed = 1.0f;
 
 public:
-	GameSpeed(float _gameSpeed, int _duration, std::string _description);
+	GameSpeed(float _gameSpeed, int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

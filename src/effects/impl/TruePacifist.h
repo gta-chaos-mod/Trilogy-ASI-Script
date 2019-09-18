@@ -11,7 +11,7 @@ public:
 	static bool isEnabled;
 
 public:
-	TruePacifist(int _duration, std::string _description);
+	TruePacifist(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

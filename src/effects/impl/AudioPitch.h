@@ -12,7 +12,7 @@ private:
 	static float audioPitch;
 
 public:
-	AudioPitch(float _audioPitch, int _duration, std::string _description);
+	AudioPitch(float _audioPitch, int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

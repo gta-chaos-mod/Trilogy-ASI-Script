@@ -48,5 +48,5 @@
 class EffectHandler
 {
 public:
-	static TimedEffect* HandleEffect(std::string name, int duration, std::string description);
+	static TimedEffect* HandleEffect(const std::string& name, int duration, const std::string& description);
 };

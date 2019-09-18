@@ -18,7 +18,7 @@ private:
 	static std::vector<std::pair<RwRGBA*, RwRGBA>> resetMaterialColors;
 
 public:
-	RainbowCars(int _duration, std::string _description);
+	RainbowCars(int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;

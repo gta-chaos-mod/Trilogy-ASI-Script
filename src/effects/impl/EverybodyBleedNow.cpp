@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "EverybodyBleedNow.h"
 
-EverybodyBleedNow::EverybodyBleedNow(int _duration, std::string _description)
+EverybodyBleedNow::EverybodyBleedNow(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "health") {}
 
 void EverybodyBleedNow::Disable() {

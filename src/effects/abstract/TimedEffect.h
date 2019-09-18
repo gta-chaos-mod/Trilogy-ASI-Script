@@ -37,8 +37,11 @@ public:
 	bool wasPlayerOnAMission = false;
 
 public:
-	TimedEffect(int _duration, std::string _description);
-	TimedEffect(int _duration, std::string _description, std::string _type);
+	TimedEffect(int _duration, const std::string& _description);
+	TimedEffect::TimedEffect(int _duration, const char* _description);
+	TimedEffect(int _duration, const std::string& _description, const std::string& _type);
+	TimedEffect(int _duration, const std::string& _description, const char* _type);
+	TimedEffect(int _duration, const char* _description, const char* _type);
 
 	virtual void InitializeHooks() {};
 

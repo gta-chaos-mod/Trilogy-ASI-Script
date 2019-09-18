@@ -13,7 +13,7 @@ private:
 	bool* pedsAttackOtherCheat = reinterpret_cast<bool*>(0x96913E);
 
 public:
-	PedsAttackOther(int _duration, std::string _description);
+	PedsAttackOther(int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;

@@ -10,7 +10,7 @@ private:
 	bool* neverHungryCheat = reinterpret_cast<bool*>(0x969174);
 
 public:
-	EverybodyBleedNow(int _duration, std::string _description);
+	EverybodyBleedNow(int _duration, const std::string& _description);
 
 	void Disable() override;
 

@@ -6,7 +6,7 @@
 class WoozieMode : public TimedEffect
 {
 public:
-	WoozieMode(int _duration, std::string _description);
+	WoozieMode(int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;

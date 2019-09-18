@@ -8,7 +8,7 @@
 class WhereIsEverybody : public TimedEffect
 {
 public:
-	WhereIsEverybody(int _duration, std::string _description);
+	WhereIsEverybody(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

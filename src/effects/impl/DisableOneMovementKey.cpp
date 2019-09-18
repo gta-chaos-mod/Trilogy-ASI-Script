@@ -3,7 +3,7 @@
 
 bool DisableOneMovementKey::isEnabled = false;
 
-DisableOneMovementKey::DisableOneMovementKey(int _duration, std::string _description)
+DisableOneMovementKey::DisableOneMovementKey(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "controls") {}
 
 void DisableOneMovementKey::InitializeHooks() {

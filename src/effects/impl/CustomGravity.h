@@ -13,7 +13,7 @@ private:
 	int effectRemaining = 1000 * 10;
 
 public:
-	CustomGravity(float _gravity, int _duration, std::string _description);
+	CustomGravity(float _gravity, int _duration, const std::string& _description);
 
 	void Disable() override;
 

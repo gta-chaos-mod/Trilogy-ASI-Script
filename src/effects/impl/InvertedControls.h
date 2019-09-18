@@ -17,7 +17,7 @@ private:
 	CControllerAction invertedActions[59];
 
 public:
-	InvertedControls(int _duration, std::string _description);
+	InvertedControls(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

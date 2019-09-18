@@ -8,7 +8,7 @@
 class FailMission : public EffectPlaceholder
 {
 public:
-	FailMission(int _duration, std::string _description);
+	FailMission(int _duration, const std::string& _description);
 
 	void Enable() override;
 };

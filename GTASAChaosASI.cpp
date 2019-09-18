@@ -213,10 +213,10 @@ public:
 			duration = 1000 * 15; // 15 Seconds
 		}
 
-		std::string state(c_state);
-		std::string function(c_function);
-		std::string description(c_description);
-		std::string voter(c_voter);
+		const std::string state(c_state);
+		const std::string function(c_function);
+		const std::string description(c_description);
+		const std::string voter(c_voter);
 
 		EffectState currentState;
 		if (state == "weather") {

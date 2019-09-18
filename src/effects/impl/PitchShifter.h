@@ -14,7 +14,7 @@ private:
 	bool countUp = true;
 
 public:
-	PitchShifter(int _duration, std::string _description);
+	PitchShifter(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

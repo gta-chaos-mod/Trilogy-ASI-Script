@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "PedsAttackOther.h"
 
-PedsAttackOther::PedsAttackOther(int _duration, std::string _description)
+PedsAttackOther::PedsAttackOther(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description) {}
 
 void PedsAttackOther::Enable() {

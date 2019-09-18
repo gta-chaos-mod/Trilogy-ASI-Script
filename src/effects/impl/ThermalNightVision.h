@@ -11,7 +11,7 @@ private:
 	bool isNightVision = false;
 
 public:
-	ThermalNightVision(bool _isNightVision, int _duration, std::string _description);
+	ThermalNightVision(bool _isNightVision, int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;

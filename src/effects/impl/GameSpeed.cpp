@@ -4,7 +4,7 @@
 bool GameSpeed::isEnabled = false;
 float GameSpeed::speed = 1.0f;
 
-GameSpeed::GameSpeed(float _gameSpeed, int _duration, std::string _description)
+GameSpeed::GameSpeed(float _gameSpeed, int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "game_speed") {
 	gameSpeed = _gameSpeed;
 }

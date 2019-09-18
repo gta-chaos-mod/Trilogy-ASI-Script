@@ -9,7 +9,7 @@ private:
 	bool* smashNBoomCheat = reinterpret_cast<bool*>(0x969164);
 
 public:
-	SmashNBoom(int _duration, std::string _description);
+	SmashNBoom(int _duration, const std::string& _description);
 
 	void Disable() override;
 

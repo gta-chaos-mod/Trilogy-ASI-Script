@@ -17,7 +17,7 @@ private:
 	CVehicle* lastVehicle = nullptr;
 
 public:
-	GhostRider(int _duration, std::string _description);
+	GhostRider(int _duration, const std::string& _description);
 
 	void HandleTick() override;
 

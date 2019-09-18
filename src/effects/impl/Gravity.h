@@ -11,7 +11,7 @@ private:
 	float gravity = 0.008f;
 
 public:
-	Gravity(float _gravity, int _duration, std::string _description);
+	Gravity(float _gravity, int _duration, const std::string& _description);
 
 	void Disable() override;
 

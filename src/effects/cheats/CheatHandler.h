@@ -22,5 +22,5 @@
 class CheatHandler
 {
 public:
-	static TimedEffect* HandleCheat(std::string name, int duration, std::string description);
+	static TimedEffect* HandleCheat(const std::string& name, int duration, const std::string& description);
 };

@@ -4,7 +4,7 @@
 bool InfiniteHealth::isEnabled = false;
 bool InfiniteHealth::onlyPlayer = false;
 
-InfiniteHealth::InfiniteHealth(bool _onlyPlayer, int _duration, std::string _description)
+InfiniteHealth::InfiniteHealth(bool _onlyPlayer, int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "health") {
 	onlyPlayer = _onlyPlayer;
 }

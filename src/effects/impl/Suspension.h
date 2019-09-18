@@ -14,7 +14,7 @@ private:
 	float suspension = 1.0f;
 
 public:
-	Suspension(float _suspension, int _duration, std::string _description);
+	Suspension(float _suspension, int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;

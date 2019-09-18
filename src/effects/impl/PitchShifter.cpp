@@ -4,7 +4,7 @@
 bool PitchShifter::isEnabled = false;
 float PitchShifter::speed = 1.0f;
 
-PitchShifter::PitchShifter(int _duration, std::string _description)
+PitchShifter::PitchShifter(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "audio_pitch") {}
 
 void PitchShifter::InitializeHooks() {

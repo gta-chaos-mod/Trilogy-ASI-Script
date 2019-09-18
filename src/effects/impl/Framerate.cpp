@@ -3,7 +3,7 @@
 
 byte Framerate::oldFrameTimeWait = 0;
 
-Framerate::Framerate(int _framerate, int _duration, std::string _description)
+Framerate::Framerate(int _framerate, int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "framerate") {
 	framerate = _framerate;
 }

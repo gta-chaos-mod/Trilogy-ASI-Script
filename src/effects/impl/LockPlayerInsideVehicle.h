@@ -6,7 +6,7 @@
 class LockPlayerInsideVehicle : public TimedEffect
 {
 public:
-	LockPlayerInsideVehicle(int _duration, std::string _description);
+	LockPlayerInsideVehicle(int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;

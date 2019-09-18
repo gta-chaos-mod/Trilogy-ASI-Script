@@ -3,7 +3,7 @@
 
 bool LetsTakeABreak::isEnabled = false;
 
-LetsTakeABreak::LetsTakeABreak(int _duration, std::string _description)
+LetsTakeABreak::LetsTakeABreak(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "controls") {}
 
 void LetsTakeABreak::InitializeHooks() {

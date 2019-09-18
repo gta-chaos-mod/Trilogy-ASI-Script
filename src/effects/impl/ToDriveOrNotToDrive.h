@@ -13,7 +13,7 @@ private:
 	int wait = 0;
 
 public:
-	ToDriveOrNotToDrive(int _duration, std::string _description);
+	ToDriveOrNotToDrive(int _duration, const std::string& _description);
 
 	void Disable() override;
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "CheatHandler.h"
 
-TimedEffect* CheatHandler::HandleCheat(std::string name, int duration, std::string description) {
+TimedEffect* CheatHandler::HandleCheat(const std::string& name, int duration, const std::string& description) {
 	// *** One-Time Cheats ***
 
 	TimedEffect* effect = nullptr;

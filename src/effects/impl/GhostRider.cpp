@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "GhostRider.h"
 
-GhostRider::GhostRider(int _duration, std::string _description)
+GhostRider::GhostRider(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description) {}
 
 void GhostRider::HandleTick() {

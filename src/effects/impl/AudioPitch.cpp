@@ -4,7 +4,7 @@
 bool AudioPitch::isEnabled = false;
 float AudioPitch::audioPitch = 1.0f;
 
-AudioPitch::AudioPitch(float _audioPitch, int _duration, std::string _description)
+AudioPitch::AudioPitch(float _audioPitch, int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "audio_pitch") {
 	audioPitch = _audioPitch;
 }

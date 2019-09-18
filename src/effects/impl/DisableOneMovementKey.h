@@ -17,7 +17,7 @@ private:
 	CControllerAction origActions[59];
 
 public:
-	DisableOneMovementKey(int _duration, std::string _description);
+	DisableOneMovementKey(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

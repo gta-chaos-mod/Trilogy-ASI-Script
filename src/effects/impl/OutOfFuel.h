@@ -10,7 +10,7 @@
 class OutOfFuel : public EffectPlaceholder
 {
 public:
-	OutOfFuel(int _duration, std::string _description);
+	OutOfFuel(int _duration, const std::string& _description);
 
 	void Enable() override;
 };

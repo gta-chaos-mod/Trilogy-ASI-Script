@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "LockPlayerInsideVehicle.h"
 
-LockPlayerInsideVehicle::LockPlayerInsideVehicle(int _duration, std::string _description)
+LockPlayerInsideVehicle::LockPlayerInsideVehicle(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description) {}
 
 void LockPlayerInsideVehicle::Enable() {

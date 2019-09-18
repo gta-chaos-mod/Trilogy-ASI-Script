@@ -11,7 +11,7 @@ public:
 	static bool isEnabled;
 
 public:
-	DisableRadarBlips(int _duration, std::string _description);
+	DisableRadarBlips(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
 

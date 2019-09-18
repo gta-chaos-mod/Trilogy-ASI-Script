@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "CustomGravity.h"
 
-CustomGravity::CustomGravity(float _gravity, int _duration, std::string _description)
+CustomGravity::CustomGravity(float _gravity, int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "gravity") {
 	gravity = _gravity;
 }

@@ -11,7 +11,7 @@ private:
 	bool wereEffectsCryptic = false;
 
 public:
-	CrypticEffects(int _duration, std::string _description);
+	CrypticEffects(int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;

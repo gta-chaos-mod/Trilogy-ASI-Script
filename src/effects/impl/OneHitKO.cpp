@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Lordmau5
 #include "OneHitKO.h"
 
-OneHitKO::OneHitKO(int _duration, std::string _description)
+OneHitKO::OneHitKO(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "health") {}
 
 void OneHitKO::Disable() {
