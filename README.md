@@ -42,6 +42,8 @@ Installation is as simple as installing an ASI Loader (see previous section) and
 
 The `.exe` can be anywhere you want, as long as it has write permissions since it automatically saves the settings in a file called `config.cfg` in the same directory.
 
+**You also need to have [.NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework/net472) installed.**
+
 ## ... and how do I use it?
 Simple:
 1. Start the game
