@@ -30,6 +30,12 @@ LoadAutosaveByPressingCtrlF7 = false
 # Default: true
 AutosaveAfterGangWar = true
 
+# Disable certain effects during missions
+# This currently includes "Peds Attack Each Other", "Have A Bounty On Your Head" and "Peds Attack You With Rockets".
+# The reason for this is that they can crash the game. Turn off at your own risk.
+# Default: true
+DisableEffectsDuringMissions = true
+
 #######################################################
 
 #######################################################

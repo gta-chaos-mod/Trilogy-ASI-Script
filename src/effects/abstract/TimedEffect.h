@@ -81,7 +81,9 @@ public:
 	};
 
 	TimedEffect* SetDisabledForMissions(bool disabled_for_missions = true) {
-		disabledForMissions = disabled_for_missions;
+		if (Config::GetOrDefault("Chaos.DisableEffectsDuringMissions", true)) {
+			disabledForMissions = disabled_for_missions;
+		}
 
 		return this;
 	};
