@@ -8,13 +8,15 @@
 #include "util/RandomHelper.h"
 
 #include "CTimer.h"
+#include "CTheScripts.h"
 
 using namespace plugin;
 
 class TimedEffect
 {
 public:
-	bool isDisabled = false;
+	bool enabled = true;
+	bool disabledByOtherEffect = false;
 	bool isInitialized = false;
 	bool isPlaceholder = false;
 	bool immuneToCryptic = false;
@@ -31,6 +33,8 @@ public:
 	std::string voter = "";
 	bool rapidFire = false;
 	float currentOffset = 0.0f;
+	bool disabledForMissions = false;
+	bool wasPlayerOnAMission = false;
 
 public:
 	TimedEffect(int _duration, std::string _description);
@@ -38,9 +42,12 @@ public:
 
 	virtual void InitializeHooks() {};
 
-	virtual void Enable() {};
+	virtual void Enable() {
+		enabled = true;
+		textColor = CRGBA(255, 255, 255, 200);
+	};
 	virtual void Disable() {
-		isDisabled = true;
+		enabled = false;
 		textColor = CRGBA(175, 175, 175, 200);
 	};
 
@@ -64,8 +71,14 @@ public:
 	bool HasVoter();
 	std::string GetVoter();
 
-	virtual TimedEffect* SetRapidFire(bool is_rapid_fire) {
+	virtual TimedEffect* SetRapidFire(bool is_rapid_fire = true) {
 		rapidFire = is_rapid_fire;
+
+		return this;
+	};
+
+	TimedEffect* SetDisabledForMissions(bool disabled_for_missions = true) {
+		disabledForMissions = disabled_for_missions;
 
 		return this;
 	};

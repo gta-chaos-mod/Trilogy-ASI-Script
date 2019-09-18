@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Lordmau5
+// Copyright (c) 2019 Lordmau5
 #include "TimedEffect.h"
 
 TimedEffect::TimedEffect(int _duration, std::string _description) {
@@ -85,12 +85,16 @@ std::string TimedEffect::GetVoter() {
 }
 
 void TimedEffect::TickDown() {
+	bool isPlayerOnAMission = CTheScripts::IsPlayerOnAMission();
+
 	if (!isInitialized) {
 		InitializeHooks();
 
 		plugin::CallMethod<0x506EA0, void*, int, float, float>((void*)0xB6BC90, 0x20, 0.0f, 1.0f);
 
-		Enable();
+		if (!disabledForMissions || (disabledForMissions && !isPlayerOnAMission)) {
+			Enable();
+		}
 		isInitialized = true;
 	}
 
@@ -105,7 +109,7 @@ void TimedEffect::TickDown() {
 		if (textColorTick >= 0) {
 			textColorTick -= tick;
 
-			textColor = (textColorTick / 400) % 2 ? CRGBA(255, 255, 0, 200) : (isDisabled ? CRGBA(175, 175, 175, 200) : CRGBA(255, 255, 255, 200));
+			textColor = (textColorTick / 400) % 2 ? CRGBA(255, 255, 0, 200) : (enabled ? CRGBA(255, 255, 255, 200) : CRGBA(175, 175, 175, 200));
 		}
 
 		crypticDescriptionWait -= tick;
@@ -116,15 +120,35 @@ void TimedEffect::TickDown() {
 			crypticDescriptionWait = 10;
 		}
 
-		if (!isDisabled) {
-			HandleTick();
+		if (remaining <= 0) {
+			Disable();
+			return;
+		}
 
-			if (remaining <= 0) {
-				Disable();
+		if (disabledByOtherEffect) {
+			return;
+		}
+
+		if (enabled) {
+			if (disabledForMissions) {
+				if (isPlayerOnAMission && !wasPlayerOnAMission) {
+					Disable();
+					wasPlayerOnAMission = isPlayerOnAMission;
+					return;
+				}
+			}
+
+			HandleTick();
+		}
+		else if (disabledForMissions) {
+			if (!isPlayerOnAMission && wasPlayerOnAMission) {
+				Enable();
 			}
 		}
 	}
-	else if (!isDisabled) {
+	else if (enabled) {
 		Disable();
 	}
+
+	wasPlayerOnAMission = isPlayerOnAMission;
 }

@@ -122,16 +122,16 @@ TimedEffect* CheatHandler::HandleCheat(std::string name, int duration, std::stri
 	}
 
 	else if (name == "rough_neighbourhood") {
-		effect = new PedsAttackOther(duration, description);
+		effect = (new PedsAttackOther(duration, description))->SetDisabledForMissions();
 	}
 	else if (name == "bounty_on_your_head") {
-		effect = new TimedFunctionCheat(CCheat::EverybodyAttacksPlayerCheat, 0x96913F, duration, description);
+		effect = (new TimedFunctionCheat(CCheat::EverybodyAttacksPlayerCheat, 0x96913F, duration, description))->SetDisabledForMissions();
 	}
 	else if (name == "elvis_lives") {
 		effect = new TimedFunctionCheat(CCheat::ElvisLivesCheat, 0x969157, duration, description, "gang_members");
 	}
 	else if (name == "village_people") {
-		effect = new TimedFunctionCheat(CCheat::VillagePeopleCheat, 0x969158, duration, description);
+		effect = (new TimedFunctionCheat(CCheat::VillagePeopleCheat, 0x969158, duration, description))->SetDisabledForMissions();
 	}
 	else if (name == "only_homies") {
 		effect = new TimedFunctionCheat(CCheat::GangsCheat, 0x96915A, duration, description, "gang_members");

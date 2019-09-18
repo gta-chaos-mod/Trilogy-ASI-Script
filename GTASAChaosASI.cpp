@@ -154,11 +154,12 @@ public:
 
 		auto effectFunction = [this, effect]() {
 			// If an effect with the same type or description is found, disable it, disable it
-			auto it = std::find_if(activeEffects.begin(), activeEffects.end(), [effect](TimedEffect* _effect) { return !effect->isDisabled && (effect->IsEqualType(_effect) || effect->IsEqualDescription(_effect)); });
+			auto it = std::find_if(activeEffects.begin(), activeEffects.end(), [effect](TimedEffect* _effect) { return effect->enabled && (effect->IsEqualType(_effect) || effect->IsEqualDescription(_effect)); });
 			if (it != activeEffects.end()) {
 				TimedEffect* _effect = *it;
 				if (_effect) {
 					_effect->Disable();
+					_effect->disabledByOtherEffect = true;
 				}
 			}
 			activeEffects.push_front(effect);

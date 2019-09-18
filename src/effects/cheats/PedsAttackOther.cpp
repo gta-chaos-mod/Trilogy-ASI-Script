@@ -5,6 +5,8 @@ PedsAttackOther::PedsAttackOther(int _duration, std::string _description)
 	: TimedEffect(_duration, _description) {}
 
 void PedsAttackOther::Enable() {
+	TimedEffect::Enable();
+
 	GenericUtil::BackupAcquaintances();
 
 	if (!*pedsAttackOtherCheat) {
