@@ -16,23 +16,29 @@ class TimedEffect
 {
 public:
 	bool enabled = true;
-	bool disabledByOtherEffect = false;
 	bool isInitialized = false;
+	bool disabledByOtherEffect = false;
+
 	bool isPlaceholder = false;
 	bool immuneToCryptic = false;
+
 	CRGBA textColor = CRGBA(255, 255, 255, 200);
 	int textColorTick = 2400;
 	CRGBA effectColor = CRGBA(50, 150, 255, 200);
+
 	int remaining = 0;
 	int duration = 0;
+
 	std::string description = "N/A";
 	std::string crypticDescription = "";
 	int crypticDescriptionWait = 0;
 	std::vector<std::string> description_split;
 	std::string type = "";
 	std::string voter = "";
+
 	bool rapidFire = false;
 	float currentOffset = 0.0f;
+
 	bool disabledForMissions = false;
 	bool wasPlayerOnAMission = false;
 
