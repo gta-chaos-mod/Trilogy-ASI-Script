@@ -101,7 +101,7 @@ void DrawHelper::DrawRecentEffects(std::list<TimedEffect*> activeEffects) {
 			return;
 		}
 
-		bool shouldDrawCircle = !effect->isPlaceholder && effect->IsRunning() && !effect->disabledByOtherEffect;
+		bool shouldDrawCircle = !effect->isPlaceholder && effect->IsRunning() && effect->enabled;
 
 		float position = shouldDrawCircle ? 90.0f : 25.0f;
 
