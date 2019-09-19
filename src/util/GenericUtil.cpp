@@ -110,6 +110,12 @@ void GenericUtil::RestoreSavedAcquaintances() {
 	LoadAcquaintances(backup_acquaintances);
 }
 
+CPedAcquaintance* GenericUtil::GetSavedAcquaintance(int type) {
+	if (type < 0 || type > 32) return nullptr;
+
+	return &backup_acquaintances[type];
+}
+
 void GenericUtil::SaveAcquaintances(CPedAcquaintance* acquaintances) {
 	for (int i = 0; i < 32; i++) {
 		memcpy(&acquaintances[i], GetPedTypeAcquaintances(i), sizeof(CPedAcquaintance));

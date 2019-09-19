@@ -42,6 +42,7 @@ public:
 	static CPedAcquaintance* GetPedTypeAcquaintances(int PedType);
 	static void BackupAcquaintances();
 	static void RestoreSavedAcquaintances();
+	static CPedAcquaintance* GetSavedAcquaintance(int type);
 	static void SaveAcquaintances(CPedAcquaintance* acquaintances);
 	static void LoadAcquaintances(CPedAcquaintance* acquaintances);
 
