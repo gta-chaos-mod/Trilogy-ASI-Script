@@ -167,6 +167,9 @@
     <ClCompile Include="src\util\Config.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="src\effects\cheats\AlwaysMidnight.cpp">
+      <Filter>effects\cheats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -359,6 +362,9 @@
     </ClInclude>
     <ClInclude Include="src\util\Config.h">
       <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\cheats\AlwaysMidnight.h">
+      <Filter>effects\cheats</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
