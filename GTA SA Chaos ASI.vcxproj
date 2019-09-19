@@ -107,7 +107,6 @@
     <ClCompile Include="src\effects\cheats\CheatHandler.cpp" />
     <ClCompile Include="src\effects\cheats\PedsAttackOther.cpp" />
     <ClCompile Include="src\effects\impl\LongLiveTheRich.cpp" />
-    <ClCompile Include="src\effects\impl\OutOfFuel.cpp" />
     <ClCompile Include="src\util\ColorHelper.cpp" />
     <ClCompile Include="src\extra\CPedDamageResponseCalculator.cpp" />
     <ClCompile Include="src\effects\impl\CrypticEffects.cpp" />
@@ -167,7 +166,6 @@
     <ClInclude Include="src\effects\cheats\CheatHandler.h" />
     <ClInclude Include="src\effects\cheats\PedsAttackOther.h" />
     <ClInclude Include="src\effects\impl\LongLiveTheRich.h" />
-    <ClInclude Include="src\effects\impl\OutOfFuel.h" />
     <ClInclude Include="src\util\ColorHelper.h" />
     <ClInclude Include="src\extra\CPedDamageResponseCalculator.h" />
     <ClInclude Include="src\effects\impl\CrypticEffects.h" />

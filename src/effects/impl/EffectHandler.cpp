@@ -149,9 +149,6 @@ TimedEffect* EffectHandler::HandleEffect(const std::string& name, int duration, 
 	else if (name == "reload_autosave") {
 		effect = new ReloadAutosave(duration, description);
 	}
-	else if (name == "out_of_fuel") {
-		effect = new OutOfFuel(duration, description);
-	}
 
 	else if (name == "quarter_gravity") {
 		effect = new Gravity(0.002f, duration, description);

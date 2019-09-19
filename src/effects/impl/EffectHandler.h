@@ -31,7 +31,6 @@
 #include "LockPlayerInsideVehicle.h"
 #include "LongLiveTheRich.h"
 #include "OneHitKO.h"
-#include "OutOfFuel.h"
 #include "PassMission.h"
 #include "PitchShifter.h"
 #include "RainbowCars.h"
