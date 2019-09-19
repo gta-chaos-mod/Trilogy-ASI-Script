@@ -9,7 +9,7 @@ static ThiscallEvent<AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE, ArgPickN<CV
 static ThiscallEvent<AddressList<0x55332A, H_CALL>, PRIORITY_AFTER, ArgPickN<CVehicle*, 0>, void(CVehicle*)> resetAfterRenderEvent;
 
 RainbowCars::RainbowCars(int _duration, const std::string& _description)
-	: TimedEffect(_duration, std::move(_description)) {}
+	: TimedEffect(_duration, _description) {}
 
 void RainbowCars::Enable() {
 	setupRenderEvent += SetupRenderEvent;
