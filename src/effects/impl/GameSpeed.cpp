@@ -23,10 +23,6 @@ void GameSpeed::InitializeHooks() {
 	// Something something get track play time?
 }
 
-void GameSpeed::Enable() {
-	isEnabled = true;
-}
-
 void GameSpeed::Disable() {
 	isEnabled = false;
 
@@ -37,6 +33,8 @@ void GameSpeed::Disable() {
 }
 
 void GameSpeed::HandleTick() {
+	isEnabled = true;
+
 	CTimer::ms_fTimeScale = gameSpeed;
 
 	speed = gameSpeed;

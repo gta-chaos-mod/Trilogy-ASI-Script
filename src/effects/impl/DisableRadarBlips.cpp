@@ -12,14 +12,14 @@ void DisableRadarBlips::InitializeHooks() {
 	patch::RedirectCall(0x575B44, HookedBlipsDraw);
 }
 
-void DisableRadarBlips::Enable() {
-	isEnabled = true;
-}
-
 void DisableRadarBlips::Disable() {
 	isEnabled = false;
 
 	TimedEffect::Disable();
+}
+
+void DisableRadarBlips::HandleTick() {
+	isEnabled = true;
 }
 
 void DisableRadarBlips::HookedBlipsDraw() {

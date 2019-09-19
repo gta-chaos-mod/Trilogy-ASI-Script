@@ -11,8 +11,6 @@ void LetsTakeABreak::InitializeHooks() {
 }
 
 void LetsTakeABreak::Enable() {
-	isEnabled = true;
-
 	for (int i = 0; i < 59; i++) {
 		origActions[i] = ControlsManager.m_actions[i];
 	}
@@ -46,6 +44,8 @@ TimedEffect* LetsTakeABreak::SetRapidFire(bool is_rapid_fire) {
 }
 
 void LetsTakeABreak::HandleTick() {
+	isEnabled = true;
+
 	effectRemaining -= CalculateTick();
 	if (effectRemaining <= 0) {
 		Disable();

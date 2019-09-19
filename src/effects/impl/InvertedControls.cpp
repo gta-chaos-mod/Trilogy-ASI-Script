@@ -11,8 +11,6 @@ void InvertedControls::InitializeHooks() {
 }
 
 void InvertedControls::Enable() {
-	isEnabled = true;
-
 	for (int i = 0; i < 59; i++) {
 		origActions[i] = invertedActions[i] = ControlsManager.m_actions[i];
 	}
@@ -46,6 +44,8 @@ void InvertedControls::Disable() {
 }
 
 void InvertedControls::HandleTick() {
+	isEnabled = true;
+
 	if (wait > 0) {
 		wait -= CalculateTick();
 		return;

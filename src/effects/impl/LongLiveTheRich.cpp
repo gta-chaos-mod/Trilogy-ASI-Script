@@ -22,8 +22,6 @@ void LongLiveTheRich::InitializeHooks() {
 }
 
 void LongLiveTheRich::Enable() {
-	isEnabled = true;
-
 	*neverHungryCheat = true;
 
 	CPlayerPed* player = FindPlayerPed();
@@ -49,6 +47,8 @@ void LongLiveTheRich::Disable() {
 }
 
 void LongLiveTheRich::HandleTick() {
+	isEnabled = true;
+
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = (int)gainedMoney;

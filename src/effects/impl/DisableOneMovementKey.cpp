@@ -11,8 +11,6 @@ void DisableOneMovementKey::InitializeHooks() {
 }
 
 void DisableOneMovementKey::Enable() {
-	isEnabled = true;
-
 	for (int i = 0; i < 59; i++) {
 		origActions[i] = ControlsManager.m_actions[i];
 	}
@@ -44,6 +42,8 @@ void DisableOneMovementKey::Disable() {
 }
 
 void DisableOneMovementKey::HandleTick() {
+	isEnabled = true;
+
 	if (wait > 0) {
 		wait -= CalculateTick();
 		return;

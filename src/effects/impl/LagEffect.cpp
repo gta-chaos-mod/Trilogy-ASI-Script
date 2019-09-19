@@ -17,10 +17,6 @@ void LagEffect::InitializeHooks() {
 	}
 }
 
-void LagEffect::Enable() {
-	isEnabled = true;
-}
-
 void LagEffect::Disable() {
 	isEnabled = false;
 
@@ -31,6 +27,8 @@ void LagEffect::Disable() {
 }
 
 void LagEffect::HandleTick() {
+	isEnabled = true;
+
 	if (wait > 0) {
 		wait -= CalculateTick();
 		return;

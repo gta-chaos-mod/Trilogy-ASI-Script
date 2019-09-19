@@ -17,10 +17,6 @@ void PitchShifter::InitializeHooks() {
 	}
 }
 
-void PitchShifter::Enable() {
-	isEnabled = true;
-}
-
 void PitchShifter::Disable() {
 	isEnabled = false;
 
@@ -30,6 +26,8 @@ void PitchShifter::Disable() {
 }
 
 void PitchShifter::HandleTick() {
+	isEnabled = true;
+
 	if (countUp) {
 		speed += RandomHelper::Random(0.005f, 0.02f);
 		if (speed >= 1.5f) {

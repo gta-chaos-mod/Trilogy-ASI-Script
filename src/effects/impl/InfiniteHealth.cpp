@@ -17,10 +17,6 @@ void InfiniteHealth::InitializeHooks() {
 	}
 }
 
-void InfiniteHealth::Enable() {
-	isEnabled = true;
-}
-
 void InfiniteHealth::Disable() {
 	isEnabled = false;
 
@@ -28,6 +24,8 @@ void InfiniteHealth::Disable() {
 }
 
 void InfiniteHealth::HandleTick() {
+	isEnabled = true;
+
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
 		player->m_fHealth = player->m_fMaxHealth;

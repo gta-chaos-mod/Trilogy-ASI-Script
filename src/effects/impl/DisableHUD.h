@@ -16,8 +16,9 @@ public:
 
 	void InitializeHooks() override;
 
-	void Enable() override;
 	void Disable() override;
+
+	void HandleTick() override;
 
 private:
 	static void HookedHUDDraw();

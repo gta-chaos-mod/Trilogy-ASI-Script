@@ -19,10 +19,6 @@ void AudioPitch::InitializeHooks() {
 	}
 }
 
-void AudioPitch::Enable() {
-	isEnabled = true;
-}
-
 void AudioPitch::Disable() {
 	isEnabled = false;
 
@@ -32,6 +28,8 @@ void AudioPitch::Disable() {
 }
 
 void AudioPitch::HandleTick() {
+	isEnabled = true;
+
 	injector::WriteMemory(0x8CBA6C, GenericUtil::GetAudioPitchOrOverride(audioPitch), true);
 }
 

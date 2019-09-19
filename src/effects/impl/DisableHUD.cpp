@@ -15,14 +15,14 @@ void DisableHUD::InitializeHooks() {
 	patch::RedirectCall(0x575B44, HookedBlipsDraw);
 }
 
-void DisableHUD::Enable() {
-	isEnabled = true;
-}
-
 void DisableHUD::Disable() {
 	isEnabled = false;
 
 	TimedEffect::Disable();
+}
+
+void DisableHUD::HandleTick() {
+	isEnabled = true;
 }
 
 void DisableHUD::HookedHUDDraw() {
