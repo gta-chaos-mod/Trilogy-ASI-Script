@@ -3,6 +3,8 @@
 
 #include "effects/abstract/EffectPlaceholder.h"
 
+#include "CGangWars.h"
+#include "CTheScripts.h"
 #include "extensions/ScriptCommands.h"
 
 class FailMission : public EffectPlaceholder
