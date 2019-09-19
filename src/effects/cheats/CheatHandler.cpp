@@ -69,7 +69,7 @@ TimedEffect* CheatHandler::HandleCheat(const std::string& name, int duration, co
 	}
 
 	else if (name == "always_midnight") {
-		effect = new TimedFunctionCheat(CCheat::MidnightCheat, 0x969167, duration, description, "timecycle");
+		effect = new AlwaysMidnight(duration, description);
 	}
 	else if (name == "orange_sky") {
 		effect = new TimedFunctionCheat(CCheat::DuskCheat, 0x969168, duration, description, "timecycle");

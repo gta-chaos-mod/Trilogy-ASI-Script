@@ -9,8 +9,9 @@
 #include "TimedAddressCheat.h"
 #include "TimedFunctionCheat.h"
 
-#include "effects/cheats/PedsAttackOther.h"
-#include "effects/cheats/SmashNBoom.h"
+#include "AlwaysMidnight.h"
+#include "PedsAttackOther.h"
+#include "SmashNBoom.h"
 
 #include "effects/other/Ped.h"
 #include "effects/other/Player.h"
