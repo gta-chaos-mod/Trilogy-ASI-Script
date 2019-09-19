@@ -23,6 +23,26 @@ void DrawHelper::DrawRemainingTimeBar(int remaining) {
 	CSprite2d::DrawRect(rect, CRGBA(50, 150, 255, 200));
 }
 
+void DrawHelper::DrawVersion() {
+	if (KeyPressed(VK_F7) && FrontEndMenuManager.m_bMenuActive) {
+		float x = SCREEN_COORD_LEFT(20.0f);
+		float y = SCREEN_COORD_BOTTOM(45.0f);
+
+		CFont::SetScaleForCurrentlanguage(SCREEN_MULTIPLIER(1.0f), SCREEN_MULTIPLIER(1.8f));
+
+		CFont::SetOrientation(eFontAlignment::ALIGN_LEFT);
+		CFont::SetJustify(false);
+		CFont::SetFontStyle(FONT_SUBTITLES);
+		CFont::SetDropColor(CRGBA(0, 0, 0, 255));
+		CFont::SetDropShadowPosition(0);
+		CFont::SetEdge(2);
+		CFont::SetBackground(false, false);
+
+		CFont::SetColor(CRGBA(255, 255, 255, 255));
+		CFont::PrintString(x, y, GenericUtil::GetModVersion());
+	}
+}
+
 void DrawHelper::DrawMessages() {
 	if (message_remainingDuration > 0) {
 		message_remainingDuration -= (int)GenericUtil::CalculateTick();

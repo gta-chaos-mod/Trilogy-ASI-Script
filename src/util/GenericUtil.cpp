@@ -3,6 +3,8 @@
 
 #include "effects/impl/LongLiveTheRich.h"
 
+char* GenericUtil::modVersion = "Chaos Mod v1.1.3";
+
 std::vector<std::string> GenericUtil::replacements;
 bool GenericUtil::areEffectsCryptic = false;
 CPedAcquaintance GenericUtil::backup_acquaintances[32];
@@ -31,6 +33,10 @@ void GenericUtil::InitializeCharReplacements() {
 
 	// Symbols
 	replacements.push_back("!?\"$%&(),.=+-_*/");
+}
+
+char* GenericUtil::GetModVersion() {
+	return modVersion;
 }
 
 void GenericUtil::ModifyAudioPitchOverride() {

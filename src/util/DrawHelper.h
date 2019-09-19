@@ -19,6 +19,8 @@
 class DrawHelper
 {
 public:
+	static void DrawVersion();
+
 	static void DrawRemainingTimeBar(int remaining);
 
 	static void DrawRecentEffects(std::list<TimedEffect*> activeEffects);

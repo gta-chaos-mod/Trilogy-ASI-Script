@@ -25,7 +25,7 @@
 #include "CTheScripts.h"
 #include "CWeather.h"
 
-// Version 1.1.2
+// Version 1.1.3
 
 using namespace plugin;
 
@@ -175,6 +175,8 @@ public:
 	}
 
 	void DrawRemainingTime() {
+		DrawHelper::DrawVersion();
+
 		if (Config::GetOrDefault("Drawing.DrawRemainingTimeBar", true)) {
 			DrawHelper::DrawRemainingTimeBar(remaining);
 		}

@@ -17,6 +17,8 @@
 class GenericUtil
 {
 private:
+	static char* modVersion;
+
 	static std::vector<std::string> replacements;
 	static std::string loadFilePath;
 	static char* gamePath;
@@ -32,6 +34,8 @@ public:
 public:
 	static void Initialize();
 	static void InitializeCharReplacements();
+
+	static char* GetModVersion();
 
 	static void ModifyAudioPitchOverride();
 
