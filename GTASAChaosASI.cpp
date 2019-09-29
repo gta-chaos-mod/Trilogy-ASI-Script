@@ -177,22 +177,24 @@ public:
 	void DrawRemainingTime() {
 		DrawHelper::DrawVersion();
 
-		if (Config::GetOrDefault("Drawing.DrawRemainingTimeBar", true)) {
-			DrawHelper::DrawRemainingTimeBar(remaining);
-		}
-
-		if (!FrontEndMenuManager.m_bMenuActive) {
-			if (Config::GetOrDefault("Drawing.DrawActiveEffects", true)) {
-				DrawHelper::DrawRecentEffects(activeEffects);
+		if (Config::GetOrDefault("Drawing.Enabled", true)) {
+			if (Config::GetOrDefault("Drawing.DrawRemainingTimeBar", true)) {
+				DrawHelper::DrawRemainingTimeBar(remaining);
 			}
 
-			if (Config::GetOrDefault("Drawing.DrawVoting", true)) {
-				DrawVoting::DrawVotes();
-			}
+			if (!FrontEndMenuManager.m_bMenuActive) {
+				if (Config::GetOrDefault("Drawing.DrawActiveEffects", true)) {
+					DrawHelper::DrawRecentEffects(activeEffects);
+				}
 
-			if (Config::GetOrDefault("Drawing.DrawInformationMessages", true)) {
-				DrawHelper::DrawMessages();
-				DrawHelper::DrawBigMessages();
+				if (Config::GetOrDefault("Drawing.DrawVoting", true)) {
+					DrawVoting::DrawVotes();
+				}
+
+				if (Config::GetOrDefault("Drawing.DrawInformationMessages", true)) {
+					DrawHelper::DrawMessages();
+					DrawHelper::DrawBigMessages();
+				}
 			}
 		}
 	}
@@ -462,8 +464,6 @@ public:
 
 		Events::gameProcessEvent.after += [this] { this->ProcessEvents(); };
 
-		if (Config::GetOrDefault("Drawing.Enabled", true)) {
-			Events::drawAfterFadeEvent.after += [this] { this->DrawRemainingTime(); };
-		}
+		Events::drawAfterFadeEvent.after += [this] { this->DrawRemainingTime(); };
 	}
 } gtaSAChaosMod;
