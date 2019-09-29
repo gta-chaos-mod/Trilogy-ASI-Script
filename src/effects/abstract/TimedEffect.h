@@ -23,6 +23,7 @@ public:
 	bool immuneToCryptic = false;
 
 	CRGBA textColor = CRGBA(255, 255, 255, 200);
+	CRGBA actualTextColor = CRGBA(255, 255, 255, 200);
 	int textColorTick = 2400;
 	CRGBA effectColor = CRGBA(50, 150, 255, 200);
 
@@ -44,7 +45,7 @@ public:
 
 public:
 	TimedEffect(int _duration, const std::string& _description);
-	TimedEffect::TimedEffect(int _duration, const char* _description);
+	TimedEffect(int _duration, const char* _description);
 	TimedEffect(int _duration, const std::string& _description, const std::string& _type);
 	TimedEffect(int _duration, const std::string& _description, const char* _type);
 	TimedEffect(int _duration, const char* _description, const char* _type);
@@ -53,11 +54,18 @@ public:
 
 	virtual void Enable() {
 		enabled = true;
-		textColor = CRGBA(255, 255, 255, 200);
-	};
+		SetTextColor(true);
+	}
+
 	virtual void Disable() {
 		enabled = false;
-		textColor = CRGBA(175, 175, 175, 200);
+		SetTextColor(false);
+
+		RestoreHooks();
+	}
+
+	void SetTextColor(bool enabled = false) {
+		textColor = actualTextColor = enabled ? CRGBA(255, 255, 255, 200) : CRGBA(175, 175, 175, 200);
 	};
 
 	bool IsRunning();
