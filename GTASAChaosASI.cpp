@@ -300,7 +300,7 @@ public:
 				sscanf(function.c_str(), "%d,%d,%d", &x, &y, &z);
 
 				QueueEffect((new EffectPlaceholder(duration, description))->SetVoter(voter)->SetRapidFire(rapid_fire));
-				QueueFunction(Teleportation::Teleport, CVector((float)x, (float)y, (float)z));
+				QueueFunction(Teleportation::Teleport, CVector((float)x, (float)y, (float)z), true);
 
 				break;
 			}
