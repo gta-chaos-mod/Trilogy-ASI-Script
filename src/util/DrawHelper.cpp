@@ -35,7 +35,7 @@ void DrawHelper::DrawVersion() {
 		CFont::SetFontStyle(FONT_SUBTITLES);
 		CFont::SetDropColor(CRGBA(0, 0, 0, 255));
 		CFont::SetDropShadowPosition(0);
-		CFont::SetEdge(2);
+		CFont::SetEdge(1);
 		CFont::SetBackground(false, false);
 
 		CFont::SetColor(CRGBA(255, 255, 255, 255));
