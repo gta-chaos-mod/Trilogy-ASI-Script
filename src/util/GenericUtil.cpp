@@ -246,3 +246,8 @@ float GenericUtil::GetAudioVolumeOrOverride(float volume, bool nonNormalSpeed) {
 
 	return volume;
 }
+
+std::string GenericUtil::ToUpper(std::string string) {
+	std::transform(string.begin(), string.end(), string.begin(), [](unsigned char c) { return std::toupper(c); });
+	return string;
+}

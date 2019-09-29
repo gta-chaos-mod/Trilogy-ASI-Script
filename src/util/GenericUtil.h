@@ -58,4 +58,6 @@ public:
 	static void SetVehiclesRealPhysics();
 	static float GetAudioPitchOrOverride(float pitch);
 	static float GetAudioVolumeOrOverride(float volume, bool nonNormalSpeed = false);
+
+	static std::string ToUpper(std::string string);
 };
