@@ -199,11 +199,13 @@ float GenericUtil::CalculateTick(float multiplier) {
 
 void GenericUtil::SetVehiclesRealPhysics() {
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
-		if (vehicle->m_pDriver && !vehicle->IsDriver(FindPlayerPed())) {
-			if (vehicle->m_autoPilot.m_nCarMission < eCarMission::MISSION_RAMPLAYER_FARAWAY
-				&& vehicle->m_autoPilot.m_nCarMission > eCarMission::MISSION_BLOCKPLAYER_HANDBRAKESTOP) {
-				CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
-			}
+		if (vehicle->m_pDriver
+			&& vehicle->CanBeDriven()
+			&& vehicle->m_nStatus != eEntityStatus::STATUS_WRECKED
+			&& vehicle->m_nStatus != eEntityStatus::STATUS_PHYSICS
+			&& !vehicle->IsDriver(FindPlayerPed())
+			) {
+			CCarCtrl::SwitchVehicleToRealPhysics(vehicle);
 		}
 	}
 }
