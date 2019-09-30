@@ -17,6 +17,7 @@
 #include "DisableHUD.h"
 #include "DisableOneMovementKey.h"
 #include "DisableRadarBlips.h"
+#include "DVDScreensaver.h"
 #include "EverybodyBleedNow.h"
 #include "FailMission.h"
 #include "Framerate.h"

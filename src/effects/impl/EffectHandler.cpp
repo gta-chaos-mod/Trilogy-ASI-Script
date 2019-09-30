@@ -203,6 +203,9 @@ TimedEffect* EffectHandler::HandleEffect(const std::string& name, int duration, 
 	else if (name == "fail_pass_mission") {
 		effect = new FailMission(true, duration, description);
 	}
+	else if (name == "dvd_screensaver") {
+		effect = new DVDScreensaver(duration / 3, description);
+	}
 
 	return effect;
 }
