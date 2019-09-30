@@ -117,7 +117,7 @@ TimedEffect* EffectHandler::HandleEffect(const std::string& name, int duration, 
 		effect = new DisableOneMovementKey(duration, description);
 	}
 	else if (name == "fail_mission") {
-		effect = new FailMission(duration, description);
+		effect = new FailMission(false, duration, description);
 	}
 	else if (name == "night_vision") {
 		effect = new ThermalNightVision(true, duration, description);
@@ -199,6 +199,9 @@ TimedEffect* EffectHandler::HandleEffect(const std::string& name, int duration, 
 	}
 	else if (name == "vocal_range") {
 		effect = new PitchShifter(duration, description);
+	}
+	else if (name == "fail_pass_mission") {
+		effect = new FailMission(true, duration, description);
 	}
 
 	return effect;
