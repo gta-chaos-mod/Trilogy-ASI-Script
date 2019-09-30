@@ -8,12 +8,10 @@
 
 class DisableOneMovementKey : public TimedEffect
 {
-public:
-	static bool isEnabled;
-
 private:
 	int wait = 0;
-	int targetKey = -1;
+	std::pair<e_ControllerAction, e_ControllerAction> targetAction;
+	std::vector<std::pair<e_ControllerAction, e_ControllerAction>> possibleActions;
 	CControllerAction origActions[59];
 
 public:
@@ -27,4 +25,5 @@ public:
 	void HandleTick() override;
 
 	static FILESTREAM HookedOpenFile(const char* file, const char* mode);
+	static void __fastcall HookedCMenuManagerProcessPCMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page);
 };
