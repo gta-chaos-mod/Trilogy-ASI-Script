@@ -8,7 +8,6 @@
 class LagEffect : public TimedEffect
 {
 private:
-	static bool isEnabled;
 	static float speed;
 
 	int wait = 0;

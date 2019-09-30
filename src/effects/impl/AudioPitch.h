@@ -8,7 +8,6 @@
 class AudioPitch : public TimedEffect
 {
 private:
-	static bool isEnabled;
 	static float audioPitch;
 
 public:

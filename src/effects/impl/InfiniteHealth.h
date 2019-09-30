@@ -25,5 +25,5 @@ public:
 private:
 	static void __fastcall HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, uint8_t* cDamageReponseInfo, char a4);
 
-	static void __fastcall HookedKillPedsInVehicle(CVehicle* thisVehicle, void* edx);
+	static void __fastcall HookedKillPedsInVehicle(CVehicle* thisVehicle);
 };

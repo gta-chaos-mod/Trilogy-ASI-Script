@@ -8,7 +8,6 @@
 class PitchShifter : public TimedEffect
 {
 private:
-	static bool isEnabled;
 	static float speed;
 
 	bool countUp = true;

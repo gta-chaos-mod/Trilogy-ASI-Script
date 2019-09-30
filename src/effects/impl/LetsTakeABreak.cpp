@@ -1,13 +1,13 @@
 // Copyright (c) 2019 Lordmau5
 #include "LetsTakeABreak.h"
 
-bool LetsTakeABreak::isEnabled = false;
-
 LetsTakeABreak::LetsTakeABreak(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "controls") {}
 
 void LetsTakeABreak::InitializeHooks() {
-	patch::RedirectCall(0x57C676, HookedOpenFile);
+	HookCall(0x57C676, HookedOpenFile);
+
+	HookCall(0x577244, HookedCMenuManagerProcessPCMenuOptions);
 }
 
 void LetsTakeABreak::Enable() {
@@ -17,8 +17,6 @@ void LetsTakeABreak::Enable() {
 }
 
 void LetsTakeABreak::Disable() {
-	isEnabled = false;
-
 	for (int i = 0; i < 59; i++) {
 		ControlsManager.m_actions[i] = origActions[i];
 	}
@@ -44,8 +42,6 @@ TimedEffect* LetsTakeABreak::SetRapidFire(bool is_rapid_fire) {
 }
 
 void LetsTakeABreak::HandleTick() {
-	isEnabled = true;
-
 	effectRemaining -= CalculateTick();
 	if (effectRemaining <= 0) {
 		Disable();
@@ -65,5 +61,14 @@ void LetsTakeABreak::HandleTick() {
 }
 
 FILESTREAM LetsTakeABreak::HookedOpenFile(const char* file, const char* mode) {
-	return isEnabled ? 0 : CFileMgr::OpenFile(file, mode);
+	return 0;
+}
+
+#include "util/HookHandler.h"
+void __fastcall LetsTakeABreak::HookedCMenuManagerProcessPCMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page) {
+	if (page == eMenuPage::MENUPAGE_REDEFINE_CONTROLS) {
+		return;
+	}
+
+	HookHandler::HookedProcessMenuOptions(thisManager, edx, page);
 }

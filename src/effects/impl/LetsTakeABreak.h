@@ -8,9 +8,6 @@
 
 class LetsTakeABreak : public TimedEffect
 {
-public:
-	static bool isEnabled;
-
 private:
 	int wait = 0;
 	int effectDuration = 1000 * 10;
@@ -33,4 +30,5 @@ public:
 	void HandleTick() override;
 
 	static FILESTREAM HookedOpenFile(const char* file, const char* mode);
+	static void __fastcall HookedCMenuManagerProcessPCMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page);
 };

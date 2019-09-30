@@ -8,15 +8,9 @@
 class TruePacifist : public TimedEffect
 {
 public:
-	static bool isEnabled;
-
-public:
 	TruePacifist(int _duration, const std::string& _description);
 
 	void InitializeHooks() override;
-
-	void Enable() override;
-	void Disable() override;
 
 private:
 	static void __fastcall HookedAccountForPedArmour(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, uint8_t* cDamageReponseInfo);

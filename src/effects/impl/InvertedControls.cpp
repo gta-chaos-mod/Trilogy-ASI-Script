@@ -1,13 +1,13 @@
 // Copyright (c) 2019 Lordmau5
 #include "InvertedControls.h"
 
-bool InvertedControls::isEnabled = false;
-
 InvertedControls::InvertedControls(int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "controls") {}
 
 void InvertedControls::InitializeHooks() {
-	patch::RedirectCall(0x57C676, HookedOpenFile);
+	HookCall(0x57C676, HookedOpenFile);
+
+	HookCall(0x577244, HookedCMenuManagerProcessPCMenuOptions);
 }
 
 void InvertedControls::Enable() {
@@ -34,8 +34,6 @@ void InvertedControls::Enable() {
 }
 
 void InvertedControls::Disable() {
-	isEnabled = false;
-
 	for (int i = 0; i < 59; i++) {
 		ControlsManager.m_actions[i] = origActions[i];
 	}
@@ -44,8 +42,6 @@ void InvertedControls::Disable() {
 }
 
 void InvertedControls::HandleTick() {
-	isEnabled = true;
-
 	if (wait > 0) {
 		wait -= CalculateTick();
 		return;
@@ -58,11 +54,20 @@ void InvertedControls::HandleTick() {
 	wait = 1000;
 }
 
-FILESTREAM InvertedControls::HookedOpenFile(const char* file, const char* mode) {
-	return isEnabled ? 0 : CFileMgr::OpenFile(file, mode);
-}
-
 void InvertedControls::SwapControls(e_ControllerAction target, e_ControllerAction source) {
 	invertedActions[(int)target] = origActions[(int)source];
 	invertedActions[(int)source] = origActions[(int)target];
+}
+
+FILESTREAM InvertedControls::HookedOpenFile(const char* file, const char* mode) {
+	return 0;
+}
+
+#include "util/HookHandler.h"
+void __fastcall InvertedControls::HookedCMenuManagerProcessPCMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page) {
+	if (page == eMenuPage::MENUPAGE_REDEFINE_CONTROLS) {
+		return;
+	}
+
+	HookHandler::HookedProcessMenuOptions(thisManager, edx, page);
 }

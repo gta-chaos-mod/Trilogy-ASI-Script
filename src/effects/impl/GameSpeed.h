@@ -11,7 +11,6 @@
 class GameSpeed : public TimedEffect
 {
 private:
-	static bool isEnabled;
 	static float speed;
 
 	float gameSpeed = 1.0f;
@@ -27,5 +26,4 @@ public:
 
 	static int __fastcall HookedSetFrequencyScalingFactor(uint8_t* thisAudioHardware, void* edx, int slot, int offset, float factor);
 	static int __fastcall HookedRadioSetVolume(uint8_t* thisAudioHardware, void* edx, int a2, int a3, float volume, int a5);
-	static int __fastcall HookedAudioHardwareGetTrackPlayTime(uint8_t* thisStreamThread, void* edx);
 };

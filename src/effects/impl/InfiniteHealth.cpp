@@ -10,10 +10,10 @@ InfiniteHealth::InfiniteHealth(bool _onlyPlayer, int _duration, const std::strin
 }
 
 void InfiniteHealth::InitializeHooks() {
-	patch::RedirectCall(0x4B5B27, HookedComputeWillKillPed);
+	HookCall(0x4B5B27, HookedComputeWillKillPed);
 
-	for (int address : {0x6B3950, 0x6B3D6C, 0x6BEAA3, 0x6C6F44, 0x6CCF83, 0x6F225A}) {
-		patch::RedirectCall(address, HookedKillPedsInVehicle);
+	for (int address : { 0x6B3950, 0x6B3D6C, 0x6BEAA3, 0x6C6F44, 0x6CCF83, 0x6F225A }) {
+		HookCall(address, HookedKillPedsInVehicle);
 	}
 }
 
@@ -55,20 +55,13 @@ void InfiniteHealth::HandleTick() {
 }
 
 void __fastcall InfiniteHealth::HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, uint8_t* cDamageReponseInfo, char a4) {
-	if (isEnabled) {
-		if (onlyPlayer && ped == FindPlayerPed() || !onlyPlayer) {
-			return;
-		}
+	if (onlyPlayer && ped == FindPlayerPed() || !onlyPlayer) {
+		return;
 	}
 
 	thisCalc->ComputeWillKillPed(ped, cDamageReponseInfo, a4);
 }
 
-void __fastcall InfiniteHealth::HookedKillPedsInVehicle(CVehicle* thisVehicle, void* edx) {
-	if (isEnabled) {
-		thisVehicle->m_nStatus = eEntityStatus::STATUS_SIMPLE;
-		return;
-	}
-
-	thisVehicle->KillPedsInVehicle();
+void __fastcall InfiniteHealth::HookedKillPedsInVehicle(CVehicle* thisVehicle) {
+	thisVehicle->m_nStatus = eEntityStatus::STATUS_SIMPLE;
 }
