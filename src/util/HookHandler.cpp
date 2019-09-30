@@ -1,39 +1,13 @@
 // Copyright (c) 2019 Lordmau5
 #include "HookHandler.h"
 
-bool HookHandler::canLoadSave = true;
 bool HookHandler::didTryLoadAutoSave = false;
 char* HookHandler::loadingDisallowedText = "";
 
 void HookHandler::Initialize() {
 	// #####################################
-	// Inverted Controls / Lets Take A Break / Disable One Movement Key / Disable Loading The Game
-	int processMenuOptions[] = {
-		0x0576AE9,
-		0x0577244,
-		0x0577266,
-		0x05772C2,
-		0x05772E5,
-		0x057730F,
-		0x0578E26,
-		0x0578EA1,
-		0x057B73A,
-		0x057C4AB,
-		0x057C4B3,
-		0x057C4BB,
-		0x057C4C3,
-		0x057D2D9,
-		0x057D306,
-		0x057D315,
-		0x057D335,
-		0x057D379,
-		0x057D38A,
-		0x057D6AB,
-		0x057D6BA
-	};
-	for (int address : processMenuOptions) {
-		patch::RedirectCall(address, HookedProcessMenuOptions);
-	}
+	// Load Game Override
+	patch::RedirectCall(0x577244, HookedProcessMenuOptions);
 	// #####################################
 
 	// #####################################
@@ -43,62 +17,39 @@ void HookHandler::Initialize() {
 
 	// #####################################
 	// Properly modify sound pitch and speed
-	patch::RedirectJump(0x561AD0, HookedGetIsSlowMotionActive);
+	for (int address : { 0x4EA03B, 0x4EF446 }) {
+		patch::RedirectCall(address, HookedGetIsSlowMotionActive);
+	}
 	injector::WriteMemory(0x8CBA6C, 1.0f, true);
 
 	for (int address : { 0x4D6E34, 0x4D6E48, 0x4DBF9B, 0x4EA62D, 0x4F0871, 0x4F0A58 }) {
 		patch::RedirectCall(address, HookedSetFrequencyScalingFactor);
 	}
 
-	for (int address : { 0x4EA258, 0x4EA258 }) {
-		patch::RedirectCall(address, HookedRadioSetVolume);
-	}
+	patch::RedirectCall(0x4EA258, HookedRadioSetVolume);
 	// #####################################
 
 	// #####################################
-	// Fix some issues related to a game crash caused by randomly generated planes
-	patch::RedirectCall(0x46E42F, HookedCPlaneIsAlreadyFlying);
+	// Fix Cesar Vialpando fade-out when it shouldn't happen
+	patch::RedirectCall(0x47C7C7, HookedCRunningScriptCollectParameters); // OPCODE: 016A, Fade
+	// #####################################
+
+	// #####################################
+	// Fix certain cheats cancelling each other out
+	for (int address : { 0x43934E, 0x4394C6, 0x4394F6, 0x439856 }) {
+		patch::RedirectCall(address, HookedCheatCancelEachOther);
+	}
 	// #####################################
 }
 
 void HookHandler::TryLoadAutoSave() {
-	if (CTimer::m_snTimeInMilliseconds > 1000 || !canLoadSave) {
-		return;
-	}
-
-	if (GenericUtil::LoadFromFile("chaos_mod\\chaos_autosave.b")) {
-		canLoadSave = false;
-	}
+	GenericUtil::LoadFromFile("chaos_mod\\chaos_autosave.b");
 }
 
 void __fastcall HookHandler::HookedProcessMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page) {
-	if (page == eMenuPage::MENUPAGE_START_GAME) {
-		char* randomText[5] = {
-			"No Load, Only Play!",
-			"Nice Try ;)",
-			"Really...?",
-			"Nope :)",
-			""
-		};
-
-		char* randomPick = "";
-
-		do {
-			randomPick = randomText[rand() % 5];
-		} while (strcmp(randomPick, loadingDisallowedText) == 0);
-
-		loadingDisallowedText = randomPick;
-	}
-
 	if (page == eMenuPage::MENUPAGE_LOAD_GAME) {
 		if (Config::GetOrDefault("Chaos.DisableLoadGame", true)) {
 			TryLoadAutoSave();
-			return;
-		}
-	}
-
-	if (page == eMenuPage::MENUPAGE_REDEFINE_CONTROLS) {
-		if (DisableOneMovementKey::isEnabled || InvertedControls::isEnabled || LetsTakeABreak::isEnabled) {
 			return;
 		}
 	}
@@ -110,7 +61,7 @@ char* __fastcall HookHandler::HookedCTextGet(CText* thisText, void* edx, char* k
 	std::string key_str(key);
 	if (key_str == "FES_LOA") {
 		if (Config::GetOrDefault("Chaos.DisableLoadGame", true)) {
-			return canLoadSave ? "Load Autosave" : loadingDisallowedText;
+			return "Load Autosave";
 		}
 	}
 	else if (key_str == "FEP_STG") {
@@ -145,9 +96,19 @@ int __fastcall HookHandler::HookedRadioSetVolume(uint8_t* thisAudioHardware, voi
 	return CallMethodAndReturn<int, 0x4D8870, uint8_t*>(thisAudioHardware, a2, a3, volume, a5);
 }
 
-int __fastcall HookHandler::HookedCPlaneIsAlreadyFlying(CPlane* thisPlane, void* edx) {
-	if (thisPlane) {
-		return CallMethodAndReturn<int, 0x6CAB90, CPlane*>(thisPlane);
+__int16 __fastcall HookHandler::HookedCRunningScriptCollectParameters(CRunningScript* thisScript, void* edx, unsigned __int16 num) {
+	__int16 result = CallMethodAndReturn<__int16, 0x464080, CRunningScript*>(thisScript, num);
+
+	std::string missionName = GenericUtil::ToUpper(std::string(thisScript->m_szName));
+	if (missionName == "CESAR1") {
+		if (CTheScripts::ScriptParams[0].iParam == 0 && CTheScripts::ScriptParams[1].iParam == 0) {
+			CTheScripts::ScriptParams[1].iParam = 1;
+		}
 	}
-	return CTimer::m_snTimeInMilliseconds - 20000;
+
+	return result;
+}
+
+char HookHandler::HookedCheatCancelEachOther(int id) {
+	return 0;
 }
