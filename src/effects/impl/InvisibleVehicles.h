@@ -16,7 +16,6 @@ class InvisibleVehicles : public TimedEffect
 {
 public:
 	static bool onlyWheels;
-	static bool isEnabled;
 
 	bool oldForceVehicleLightsOff = false;
 

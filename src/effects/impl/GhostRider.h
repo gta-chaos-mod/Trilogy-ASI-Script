@@ -13,7 +13,7 @@
 class GhostRider : public TimedEffect
 {
 private:
-	std::map<CVehicle*, int> vehicleList;
+	std::map<CVehicle*, int> vehicleList = {};
 	CVehicle* lastVehicle = nullptr;
 
 public:

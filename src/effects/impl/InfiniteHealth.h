@@ -10,7 +10,6 @@
 class InfiniteHealth : public TimedEffect
 {
 public:
-	static bool isEnabled;
 	static bool onlyPlayer;
 
 public:

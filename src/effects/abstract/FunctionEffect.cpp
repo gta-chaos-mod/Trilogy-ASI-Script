@@ -8,7 +8,7 @@ FunctionEffect::FunctionEffect(void* _function, int _duration, const std::string
 
 FunctionEffect::FunctionEffect(void* _function, int _duration, const std::string& _description, const char* _type)
 	: FunctionEffect(_function, _duration, _description) {
-	type = _type;
+	AddType(_type);
 }
 
 void FunctionEffect::Enable() {

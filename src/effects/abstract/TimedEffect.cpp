@@ -19,7 +19,7 @@ TimedEffect::TimedEffect(int _duration, const char* _description)
 
 TimedEffect::TimedEffect(int _duration, const std::string& _description, const std::string& _type)
 	: TimedEffect(_duration, _description) {
-	type = _type;
+	types.push_back(_type);
 }
 
 TimedEffect::TimedEffect(int _duration, const std::string& _description, const char* _type)
@@ -74,12 +74,25 @@ bool TimedEffect::IsEqualDescription(TimedEffect* otherEffect) {
 	return GetDescription() == otherEffect->GetDescription();
 }
 
-std::string TimedEffect::GetType() {
-	return type;
+void TimedEffect::AddType(std::string type) {
+	types.push_back(type);
+}
+
+std::vector<std::string> TimedEffect::GetTypes() {
+	return types;
 }
 
 bool TimedEffect::IsEqualType(TimedEffect* otherEffect) {
-	return GetType() != "" && otherEffect->GetType() != "" && GetType() == otherEffect->GetType();
+	if (GetTypes().size() && otherEffect->GetTypes().size()) {
+		for (auto stringA : GetTypes()) {
+			for (auto stringB : otherEffect->GetTypes()) {
+				if (stringA == stringB) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }
 
 TimedEffect* TimedEffect::SetVoter(std::string _voter) {

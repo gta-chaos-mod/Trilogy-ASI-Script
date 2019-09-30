@@ -17,8 +17,8 @@ private:
 	static bool isEnabled;
 
 private:
-	std::map<std::string, int> offsetMap;
-	std::map<std::string, bool> debugCodeMap;
+	std::map<std::string, int> offsetMap = {};
+	std::map<std::string, bool> debugCodeMap = {};
 	bool triedPassingMission = false;
 	int missionPassWait = 100;
 

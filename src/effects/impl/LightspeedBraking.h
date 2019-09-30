@@ -10,7 +10,7 @@
 class LightspeedBraking : public TimedEffect
 {
 private:
-	tHandlingData origVehicleHandling[210];
+	tHandlingData origVehicleHandling[210] = {};
 
 public:
 	LightspeedBraking(int _duration, const std::string& _description);

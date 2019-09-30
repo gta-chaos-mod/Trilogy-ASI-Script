@@ -10,9 +10,9 @@ class DisableOneMovementKey : public TimedEffect
 {
 private:
 	int wait = 0;
-	std::pair<e_ControllerAction, e_ControllerAction> targetAction;
-	std::vector<std::pair<e_ControllerAction, e_ControllerAction>> possibleActions;
-	CControllerAction origActions[59];
+	std::pair<e_ControllerAction, e_ControllerAction> targetAction = {};
+	std::vector<std::pair<e_ControllerAction, e_ControllerAction>> possibleActions = {};
+	CControllerAction origActions[59] = {};
 
 public:
 	DisableOneMovementKey(int _duration, const std::string& _description);

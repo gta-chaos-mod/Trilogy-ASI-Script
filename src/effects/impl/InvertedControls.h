@@ -10,8 +10,8 @@ class InvertedControls : public TimedEffect
 {
 private:
 	int wait = 0;
-	CControllerAction origActions[59];
-	CControllerAction invertedActions[59];
+	CControllerAction origActions[59] = {};
+	CControllerAction invertedActions[59] = {};
 
 public:
 	InvertedControls(int _duration, const std::string& _description);

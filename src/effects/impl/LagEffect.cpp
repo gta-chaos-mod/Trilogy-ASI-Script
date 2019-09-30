@@ -4,7 +4,9 @@
 float LagEffect::speed = 1.0f;
 
 LagEffect::LagEffect(int _duration, const std::string& _description)
-	: TimedEffect(_duration, _description, "game_speed") {}
+	: TimedEffect(_duration, _description, "game_speed") {
+	AddType("audio_pitch");
+}
 
 void LagEffect::InitializeHooks() {
 	for (int address : { 0x4D6E34, 0x4D6E48, 0x4DBF9B, 0x4EA62D, 0x4F0871, 0x4F0A58 }) {

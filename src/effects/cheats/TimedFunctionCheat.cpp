@@ -9,7 +9,7 @@ TimedFunctionCheat::TimedFunctionCheat(void* _function, int _address, int _durat
 
 TimedFunctionCheat::TimedFunctionCheat(void* _function, int _address, int _duration, const std::string& _description, const char* _type)
 	: TimedFunctionCheat(_function, _address, _duration, _description) {
-	type = _type;
+	AddType(_type);
 }
 
 void TimedFunctionCheat::Disable() {

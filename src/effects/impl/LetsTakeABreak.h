@@ -12,7 +12,7 @@ private:
 	int wait = 0;
 	int effectDuration = 1000 * 10;
 	int effectRemaining = 1000 * 10;
-	CControllerAction origActions[59];
+	CControllerAction origActions[59] = {};
 
 public:
 	LetsTakeABreak(int _duration, const std::string& _description);

@@ -2,7 +2,6 @@
 #include "InvisibleVehicles.h"
 
 bool InvisibleVehicles::onlyWheels = false;
-bool InvisibleVehicles::isEnabled = false;
 
 InvisibleVehicles::InvisibleVehicles(bool _onlyWheels, int _duration, const std::string& _description)
 	: TimedEffect(_duration, _description, "invisible_vehicles") {

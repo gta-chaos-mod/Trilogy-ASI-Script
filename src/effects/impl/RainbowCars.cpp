@@ -2,7 +2,7 @@
 #include "RainbowCars.h"
 
 float RainbowCars::hueShift = 0.0f;
-std::vector<std::pair<RwRGBA*, RwRGBA>> RainbowCars::resetMaterialColors;
+std::vector<std::pair<RwRGBA*, RwRGBA>> RainbowCars::resetMaterialColors = {};
 
 // Custom events for CVehicle::SetupRender and CVehicle::ResetAfterRender
 static ThiscallEvent<AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE, ArgPickN<CVehicle*, 0>, void(CVehicle*)> setupRenderEvent;

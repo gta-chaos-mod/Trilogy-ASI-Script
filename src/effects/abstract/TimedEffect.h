@@ -35,8 +35,8 @@ public:
 	std::string description = "N/A";
 	std::string crypticDescription = "";
 	int crypticDescriptionWait = 0;
-	std::vector<std::string> description_split;
-	std::string type = "";
+	std::vector<std::string> description_split = {};
+	std::vector<std::string> types = {};
 	std::string voter = "";
 
 	bool rapidFire = false;
@@ -97,7 +97,8 @@ public:
 	std::string GetCrypticDescription();
 	bool IsEqualDescription(TimedEffect* otherEffect);
 
-	std::string GetType();
+	void AddType(std::string type);
+	std::vector<std::string> GetTypes();
 	bool IsEqualType(TimedEffect* otherEffect);
 
 	TimedEffect* SetVoter(std::string _voter);

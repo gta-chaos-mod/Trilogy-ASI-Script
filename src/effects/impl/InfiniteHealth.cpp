@@ -1,7 +1,6 @@
 // Copyright (c) 2019 Lordmau5
 #include "InfiniteHealth.h"
 
-bool InfiniteHealth::isEnabled = false;
 bool InfiniteHealth::onlyPlayer = false;
 
 InfiniteHealth::InfiniteHealth(bool _onlyPlayer, int _duration, const std::string& _description)
@@ -18,14 +17,10 @@ void InfiniteHealth::InitializeHooks() {
 }
 
 void InfiniteHealth::Disable() {
-	isEnabled = false;
-
 	TimedEffect::Disable();
 }
 
 void InfiniteHealth::HandleTick() {
-	isEnabled = true;
-
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
 		player->m_fHealth = player->m_fMaxHealth;

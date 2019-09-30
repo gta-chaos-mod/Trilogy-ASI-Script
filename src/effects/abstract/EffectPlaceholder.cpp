@@ -8,5 +8,5 @@ EffectPlaceholder::EffectPlaceholder(int _duration, const std::string& _descript
 
 EffectPlaceholder::EffectPlaceholder(int _duration, const std::string& _description, const char* _type)
 	: EffectPlaceholder(_duration, _description) {
-	type = _type;
+	AddType(_type);
 }
