@@ -145,6 +145,17 @@ void Player::DoWasted() {
 	}
 }
 
+void Player::RemoveBalaclava() {
+	CPlayerPed* player = FindPlayerPed();
+	if (player) {
+		CPedClothesDesc* clothes = player->m_pPlayerData->m_pPedClothesDesc;
+		if (clothes && clothes->GetIsWearingBalaclava()) {
+			clothes->SetTextureAndModel((unsigned int)0, (unsigned int)0, 17);
+			RebuildPlayer();
+		}
+	}
+}
+
 void Player::RebuildPlayer() {
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {

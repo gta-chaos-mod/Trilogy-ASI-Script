@@ -10,6 +10,9 @@
 #include "CStreaming.h"
 #include "CTaskSimpleCarSetPedOut.h"
 
+#include "CTheScripts.h"
+#include "extensions/ScriptCommands.h"
+
 class Player
 {
 public:
@@ -38,6 +41,6 @@ public:
 	static void DoWasted();
 	static void DoBusted();
 
-private:
+	static void RemoveBalaclava();
 	static void RebuildPlayer();
 };
