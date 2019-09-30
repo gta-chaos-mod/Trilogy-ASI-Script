@@ -191,8 +191,8 @@ TimedEffect* EffectHandler::HandleEffect(const std::string& name, int duration, 
 	else if (name == "infinite_health_player") {
 		effect = new InfiniteHealth(true, duration, description);
 	}
-	else if (name == "woozie_mode") {
-		effect = new WoozieMode(duration, description);
+	else if (name == "tunnel_vision") {
+		effect = new TunnelVision(duration / 3, description);
 	}
 	else if (name == "chipmunks") {
 		effect = new AudioPitch(1.5f, duration, description);

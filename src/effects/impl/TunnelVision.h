@@ -3,13 +3,13 @@
 
 #include "effects/abstract/TimedEffect.h"
 
-class WoozieMode : public TimedEffect
+class TunnelVision : public TimedEffect
 {
 public:
-	WoozieMode(int _duration, const std::string& _description);
+	TunnelVision(int _duration, const std::string& _description);
 
 	void Enable() override;
 	void Disable() override;
 
-	static void DrawWoozieMode();
+	static void DrawTunnelVision();
 };

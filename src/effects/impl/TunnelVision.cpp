@@ -1,20 +1,20 @@
 // Copyright (c) 2019 Lordmau5
-#include "WoozieMode.h"
+#include "TunnelVision.h"
 
-WoozieMode::WoozieMode(int _duration, const std::string& _description)
-	: TimedEffect(_duration, _description) {}
+TunnelVision::TunnelVision(int _duration, const std::string& _description)
+	: TimedEffect(_duration, _description, "drawing") {}
 
-void WoozieMode::Enable() {
-	Events::drawAfterFadeEvent.before += DrawWoozieMode;
+void TunnelVision::Enable() {
+	Events::drawHudEvent.before += DrawTunnelVision;
 }
 
-void WoozieMode::Disable() {
-	Events::drawAfterFadeEvent.before -= DrawWoozieMode;
+void TunnelVision::Disable() {
+	Events::drawHudEvent.before -= DrawTunnelVision;
 
 	TimedEffect::Disable();
 }
 
-void WoozieMode::DrawWoozieMode() {
+void TunnelVision::DrawTunnelVision() {
 	if (FrontEndMenuManager.m_bMenuActive) {
 		return;
 	}

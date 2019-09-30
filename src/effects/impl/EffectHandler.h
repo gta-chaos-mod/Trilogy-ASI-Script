@@ -40,9 +40,9 @@
 #include "Timelapse.h"
 #include "ToDriveOrNotToDrive.h"
 #include "ToTheLeftToTheRight.h"
+#include "TunnelVision.h"
 #include "TruePacifist.h"
 #include "WhereIsEverybody.h"
-#include "WoozieMode.h"
 
 class EffectHandler
 {
