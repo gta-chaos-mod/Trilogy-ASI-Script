@@ -86,9 +86,6 @@
     <ClCompile Include="src\effects\impl\Gravity.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
-    <ClCompile Include="src\effects\impl\HookHandler.cpp">
-      <Filter>effects\impl</Filter>
-    </ClCompile>
     <ClCompile Include="src\effects\impl\InfiniteHealth.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
@@ -155,9 +152,6 @@
     <ClCompile Include="src\util\DrawVoting.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="src\effects\impl\WoozieMode.cpp">
-      <Filter>effects\impl</Filter>
-    </ClCompile>
     <ClCompile Include="src\effects\impl\AudioPitch.cpp">
       <Filter>effects\impl</Filter>
     </ClCompile>
@@ -170,8 +164,20 @@
     <ClCompile Include="src\effects\cheats\AlwaysMidnight.cpp">
       <Filter>effects\cheats</Filter>
     </ClCompile>
+    <ClCompile Include="src\effects\impl\TunnelVision.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\effects\impl\DVDScreensaver.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\effects\impl\LightspeedBraking.cpp">
+      <Filter>effects\impl</Filter>
+    </ClCompile>
     <ClCompile Include="src\effects\cheats\HaveABountyOnYourHead.cpp">
       <Filter>effects\cheats</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\HookHandler.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -282,9 +288,6 @@
     <ClInclude Include="src\effects\impl\Gravity.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
-    <ClInclude Include="src\effects\impl\HookHandler.h">
-      <Filter>effects\impl</Filter>
-    </ClInclude>
     <ClInclude Include="src\effects\impl\InfiniteHealth.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
@@ -351,9 +354,6 @@
     <ClInclude Include="src\util\DrawVoting.h">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="src\effects\impl\WoozieMode.h">
-      <Filter>effects\impl</Filter>
-    </ClInclude>
     <ClInclude Include="src\effects\impl\AudioPitch.h">
       <Filter>effects\impl</Filter>
     </ClInclude>
@@ -369,8 +369,20 @@
     <ClInclude Include="src\effects\cheats\AlwaysMidnight.h">
       <Filter>effects\cheats</Filter>
     </ClInclude>
+    <ClInclude Include="src\effects\impl\TunnelVision.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\impl\DVDScreensaver.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\impl\LightspeedBraking.h">
+      <Filter>effects\impl</Filter>
+    </ClInclude>
     <ClInclude Include="src\effects\cheats\HaveABountyOnYourHead.h">
       <Filter>effects\cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\HookHandler.h">
+      <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

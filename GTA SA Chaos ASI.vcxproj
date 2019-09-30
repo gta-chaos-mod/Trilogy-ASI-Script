@@ -99,7 +99,9 @@
   <ItemGroup>
     <ClCompile Include="src\effects\cheats\AlwaysMidnight.cpp" />
     <ClCompile Include="src\effects\cheats\HaveABountyOnYourHead.cpp" />
+    <ClCompile Include="src\effects\impl\DVDScreensaver.cpp" />
     <ClCompile Include="src\util\HookHandler.cpp" />
+    <ClCompile Include="src\effects\impl\LightspeedBraking.cpp" />
     <ClCompile Include="src\effects\impl\PitchShifter.cpp" />
     <ClCompile Include="src\effects\impl\AudioPitch.cpp" />
     <ClCompile Include="src\effects\impl\CustomGravity.cpp" />
@@ -154,12 +156,14 @@
     <ClCompile Include="src\effects\other\Vehicle.cpp" />
     <ClCompile Include="src\effects\other\Wanted.cpp" />
     <ClCompile Include="src\effects\impl\WhereIsEverybody.cpp" />
-    <ClCompile Include="src\effects\impl\WoozieMode.cpp" />
+    <ClCompile Include="src\effects\impl\TunnelVision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\effects\cheats\AlwaysMidnight.h" />
     <ClInclude Include="src\effects\cheats\HaveABountyOnYourHead.h" />
+    <ClInclude Include="src\effects\impl\DVDScreensaver.h" />
     <ClInclude Include="src\util\HookHandler.h" />
+    <ClInclude Include="src\effects\impl\LightspeedBraking.h" />
     <ClInclude Include="src\util\Config.h" />
     <ClInclude Include="src\effects\impl\PitchShifter.h" />
     <ClInclude Include="src\effects\impl\AudioPitch.h" />
@@ -214,7 +218,7 @@
     <ClInclude Include="src\effects\other\Vehicle.h" />
     <ClInclude Include="src\effects\other\Wanted.h" />
     <ClInclude Include="src\effects\impl\WhereIsEverybody.h" />
-    <ClInclude Include="src\effects\impl\WoozieMode.h" />
+    <ClInclude Include="src\effects\impl\TunnelVision.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

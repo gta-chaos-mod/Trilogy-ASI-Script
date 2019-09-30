@@ -11,11 +11,11 @@
 #include "effects/abstract/FunctionEffect.h"
 #include "effects/cheats/CheatHandler.h"
 #include "effects/impl/EffectHandler.h"
-#include "effects/impl/HookHandler.h"
 #include "util/Config.h"
 #include "util/DrawHelper.h"
 #include "util/DrawVoting.h"
 #include "util/GenericUtil.h"
+#include "util/HookHandler.h"
 #include "util/RandomHelper.h"
 
 #include "effects/other/Teleportation.h"
@@ -52,7 +52,7 @@ public:
 	std::queue<std::function<void()>> queue;
 	int remaining = 0;
 	int lastSaved = 0;
-	int lastLoaded = 0;
+	int lastPressed = 0;
 
 	int lastMissionsPassed = -1;
 	bool readyToSave = false;
@@ -110,9 +110,9 @@ public:
 			if (KeyPressed(VK_CONTROL) && KeyPressed(VK_F7)) {
 				int currentTime = CTimer::m_snTimeInMilliseconds;
 
-				if (lastLoaded < currentTime) {
+				if (lastPressed < currentTime) {
 					GenericUtil::LoadFromFile("chaos_mod\\chaos_autosave.b");
-					lastLoaded = currentTime + 1000;
+					lastPressed = currentTime + 1000;
 				}
 			}
 		}

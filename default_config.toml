@@ -10,7 +10,7 @@
 # Default: true
 AutosaveAfterMissionPassed = true
 
-# Disables the "Load Game" option
+# Disables the "Load Game" option and replaces it with a "Load Autosave" option
 # Default: true
 DisableLoadGame = true
 
