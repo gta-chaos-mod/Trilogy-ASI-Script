@@ -3,7 +3,7 @@
 
 #include "effects/impl/LongLiveTheRich.h"
 
-char* GenericUtil::modVersion = "Chaos Mod v1.1.3";
+char* GenericUtil::modVersion = "Chaos Mod v1.1.4";
 
 std::vector<std::string> GenericUtil::replacements;
 bool GenericUtil::areEffectsCryptic = false;

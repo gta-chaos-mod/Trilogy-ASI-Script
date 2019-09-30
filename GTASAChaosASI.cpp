@@ -25,7 +25,7 @@
 #include "CTheScripts.h"
 #include "CWeather.h"
 
-// Version 1.1.3
+// Version 1.1.4
 
 using namespace plugin;
 
