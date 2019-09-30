@@ -29,6 +29,7 @@
 #include "InvisibleVehicles.h"
 #include "LagEffect.h"
 #include "LetsTakeABreak.h"
+#include "LightspeedBraking.h"
 #include "LockPlayerInsideVehicle.h"
 #include "LongLiveTheRich.h"
 #include "OneHitKO.h"

@@ -206,6 +206,9 @@ TimedEffect* EffectHandler::HandleEffect(const std::string& name, int duration, 
 	else if (name == "dvd_screensaver") {
 		effect = new DVDScreensaver(duration / 3, description);
 	}
+	else if (name == "lightspeed_braking") {
+		effect = new LightspeedBraking(duration, description);
+	}
 
 	return effect;
 }
