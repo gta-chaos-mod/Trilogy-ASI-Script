@@ -10,9 +10,6 @@
 #include "CStreaming.h"
 #include "CTaskSimpleCarSetPedOut.h"
 
-#include "CTheScripts.h"
-#include "extensions/ScriptCommands.h"
-
 class Player
 {
 public:
