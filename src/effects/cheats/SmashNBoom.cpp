@@ -14,10 +14,11 @@ void SmashNBoom::HandleTick() {
 	*smashNBoomCheat = true;
 
 	CPlayerPed* player = FindPlayerPed();
-	CVehicle* vehicle = FindPlayerVehicle(-1, false);
-	if (player && player->m_pVehicle) {
-		bool proof = player->m_pVehicle == vehicle && player->m_pVehicle->IsDriver(player);
-		player->m_pVehicle->m_nPhysicalFlags.bInvulnerable = proof;
-		player->m_pVehicle->m_nPhysicalFlags.bExplosionProof = proof;
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		bool proof = (player && player->m_pVehicle == vehicle && player->m_pVehicle->IsDriver(player));
+		vehicle->m_nPhysicalFlags.bInvulnerable = proof;
+		vehicle->m_nPhysicalFlags.bExplosionProof = proof;
+		vehicle->m_nPhysicalFlags.bFireProof = proof;
+		vehicle->m_nPhysicalFlags.bCollisionProof = proof;
 	}
 }
