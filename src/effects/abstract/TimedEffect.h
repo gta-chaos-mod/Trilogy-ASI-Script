@@ -4,6 +4,8 @@
 #include "common.h"
 #include "plugin.h"
 
+#include <map>
+
 #include "util/GenericUtil.h"
 #include "util/RandomHelper.h"
 
@@ -42,6 +44,20 @@ public:
 
 	bool disabledForMissions = false;
 	bool wasPlayerOnAMission = false;
+
+	class HookElement {
+	public:
+		int address = 0;
+		injector::memory_pointer_raw pointer = nullptr;
+		bool isCall = false;
+
+		HookElement(int _address, injector::memory_pointer_raw _pointer, bool _isCall) {
+			address = _address;
+			pointer = _pointer;
+			isCall = _isCall;
+		}
+	};
+	std::map<int, HookElement*> originalHooks;
 
 public:
 	TimedEffect(int _duration, const std::string& _description);
@@ -120,5 +136,36 @@ public:
 	float CalculateFadeInOffset(float position) {
 		float adjustment = easeOutBack(currentOffset);
 		return position * adjustment;
+	}
+
+	void HookCall(int address, void* func, bool vp = true) {
+		if (originalHooks.contains(address)) {
+			RestoreHook(originalHooks[address]);
+		}
+		originalHooks[address] = new HookElement(address, injector::MakeCALL(GetGlobalAddress(address), func, vp), true);
+	}
+
+	void HookJump(int address, void* func, bool vp = true) {
+		if (originalHooks.contains(address)) {
+			RestoreHook(originalHooks[address]);
+		}
+		originalHooks[address] = new HookElement(address, injector::MakeJMP(GetGlobalAddress(address), func, vp), false);
+	}
+
+	void RestoreHook(HookElement* hook) {
+		if (hook->isCall) {
+			injector::MakeCALL(GetGlobalAddress(hook->address), hook->pointer);
+		}
+		else {
+			injector::MakeJMP(GetGlobalAddress(hook->address), hook->pointer);
+		}
+	}
+
+	void RestoreHooks() {
+		for (auto [address, hook] : originalHooks) {
+			RestoreHook(hook);
+		}
+
+		originalHooks.clear();
 	}
 };
