@@ -125,7 +125,7 @@ TimedEffect* CheatHandler::HandleCheat(const std::string& name, int duration, co
 		effect = (new PedsAttackOther(duration, description))->SetDisabledForMissions();
 	}
 	else if (name == "bounty_on_your_head") {
-		effect = (new TimedFunctionCheat(CCheat::EverybodyAttacksPlayerCheat, 0x96913F, duration, description))->SetDisabledForMissions();
+		effect = (new HaveABountyOnYourHead(duration, description))->SetDisabledForMissions();
 	}
 	else if (name == "elvis_lives") {
 		effect = new TimedFunctionCheat(CCheat::ElvisLivesCheat, 0x969157, duration, description, "gang_members");

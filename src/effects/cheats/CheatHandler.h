@@ -10,6 +10,7 @@
 #include "TimedFunctionCheat.h"
 
 #include "AlwaysMidnight.h"
+#include "HaveABountyOnYourHead.h"
 #include "PedsAttackOther.h"
 #include "SmashNBoom.h"
 

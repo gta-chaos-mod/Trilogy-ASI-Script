@@ -98,6 +98,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\effects\cheats\AlwaysMidnight.cpp" />
+    <ClCompile Include="src\effects\cheats\HaveABountyOnYourHead.cpp" />
     <ClCompile Include="src\effects\impl\PitchShifter.cpp" />
     <ClCompile Include="src\effects\impl\AudioPitch.cpp" />
     <ClCompile Include="src\effects\impl\CustomGravity.cpp" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\effects\cheats\AlwaysMidnight.h" />
+    <ClInclude Include="src\effects\cheats\HaveABountyOnYourHead.h" />
     <ClInclude Include="src\util\Config.h" />
     <ClInclude Include="src\effects\impl\PitchShifter.h" />
     <ClInclude Include="src\effects\impl\AudioPitch.h" />

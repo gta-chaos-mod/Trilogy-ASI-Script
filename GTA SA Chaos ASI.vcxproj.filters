@@ -170,6 +170,9 @@
     <ClCompile Include="src\effects\cheats\AlwaysMidnight.cpp">
       <Filter>effects\cheats</Filter>
     </ClCompile>
+    <ClCompile Include="src\effects\cheats\HaveABountyOnYourHead.cpp">
+      <Filter>effects\cheats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="effects">
@@ -364,6 +367,9 @@
       <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="src\effects\cheats\AlwaysMidnight.h">
+      <Filter>effects\cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effects\cheats\HaveABountyOnYourHead.h">
       <Filter>effects\cheats</Filter>
     </ClInclude>
   </ItemGroup>
