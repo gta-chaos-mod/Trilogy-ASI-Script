@@ -1,0 +1,110 @@
+########################################################
+# Chaos Mod
+#######################################################
+
+#######################################################
+# Chaos Settings
+[Chaos]
+
+# Autosave after completing a mission
+# Default: true
+AutosaveAfterMissionPassed = true
+
+# Additionally save the Autosave into Slot 8
+# Default: false
+SaveToSlot8 = false
+
+# Load the autosave on game load (Can be skipped by holding Left CTRL)
+# Default: true
+LoadAutosaveOnGameLoad = true
+
+# Autosave after successfully finishing a gangwar
+# Default: true
+AutosaveAfterGangWar = true
+
+# Disable certain effects during missions
+# This currently includes "Peds Attack Each Other", "Have A Bounty On Your Head" and "Peds Attack You With Rockets".
+# The reason for this is that they can crash the game. Turn off at your own risk.
+# Default: true
+DisableEffectsDuringMissions = true
+
+# Whether or not the game should delete the autosave when starting a new game
+# This is so when "Reload Autosave" is coming up it won't "wrong-wrap" you to that
+# Useful for speedruns, mainly, so they don't get disqualified.
+# Default: true
+DeleteAutosaveOnNewGame = true
+
+# Whether or not the game should play a sound when an effect get's enabled
+# Default: true
+PlayEffectSound = true
+
+# Prevent losing weapons when dying or getting busted without the need of Katie or Barbara as girlfriends.
+# Default: false
+PreventLosingWeapons = false
+
+#######################################################
+
+#######################################################
+# Fixes
+[Fixes]
+
+# Disables the option to play replays
+# Default: true
+DisableReplays = true
+
+# Disables interior music in places such as Caligula's Casino (Helps against copyright)
+# Default: true
+DisableInteriorMusic = true
+
+# Allow radio in every vehicle (Cop vehicles, BMX, ...)
+# Default: false
+AllowRadioInEveryVehicle = false
+
+# Disable / mute the radio when it's at it's normal speed, but let it play during certain effects
+# (Game Speed, Pitch Shifter, High Pitched Audio, ...)
+# Default: false
+DisableRadioWhenNormalSpeed = false
+
+# Switch all vehicles to real game physics every tick
+# This will prevent vehicles on highways or other places to go absurdly fast whilst they're on their AI path
+# Default: true
+SwitchAllVehiclesToRealPhysics = true
+
+# Remove the 14ms frame delay to make the game run in proper 30 FPS instead of 30 FPS - 5 / "25 FPS"
+# Default: false
+RemoveFrameDelay = false
+
+# Disables input of cheats so no accidental cheats can be input.
+# This will COMPLETELY disable cheat input - not just accidental hash collisions.
+# Cheats can still be input when holding SHIFT.
+# Default: false
+DisableCheatInput = false
+
+#######################################################
+
+#######################################################
+# Drawing Settings
+[Drawing]
+
+# Whether or not to enable the drawing functionality in the first place
+# Default: true
+Enabled = true
+
+# Draw the top bar showing the remaining time until the next effect happens
+# Default: true
+DrawRemainingTimeBar = true
+
+# Draw the currently active / last effects
+# Default: true
+DrawActiveEffects = true
+
+# Draw the remaining time of effects as circles instead of a "minute:second" text
+# If you don't see circles next to effects, try turning this option off.
+# Default: true
+DrawCircles = true
+
+# Draw voting for Twitch integration
+# Default: true
+DrawVoting = true
+
+#######################################################

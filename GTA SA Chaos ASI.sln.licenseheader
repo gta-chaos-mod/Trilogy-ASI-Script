@@ -1,7 +1,0 @@
-﻿extensions: designer.cs generated.cs
-extensions: .cs .cpp .h
-// Copyright (c) 2019 Lordmau5
-extensions: .aspx .ascx
-<%-- 
-Copyright (c) 2019 Lordmau5
---%>

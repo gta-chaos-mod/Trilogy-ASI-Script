@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\*.cpp" />
+    <ClCompile Include="src\gtasa\*.cpp" />
+    <ClCompile Include="src\shared\*.cpp" />
+    <ClCompile Include="src\gtasa\**\*.cpp" />
+    <ClCompile Include="src\shared\**\*.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\*.h" />
+    <ClInclude Include="src\gtasa\*.h" />
+    <ClInclude Include="src\shared\*.h" />
+    <ClInclude Include="src\gtasa\**\*.h" />
+    <ClInclude Include="src\shared\**\*.h" />
+  </ItemGroup>
+</Project>
