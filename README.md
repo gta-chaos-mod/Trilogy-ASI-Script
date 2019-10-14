@@ -1,5 +1,5 @@
-# GTA Chaos Mod
-Welcome to the official GTA Chaos Mod repository!
+# GTA Trilogy Chaos Mod
+Welcome to the official GTA Trilogy Chaos Mod repository!
 
 This repository, together with this README, is still very much WIP.
 
@@ -7,13 +7,17 @@ This repository, together with this README, is still very much WIP.
 Similar to the old [Vice City Chaos% mod](https://github.com/Lighnat0r-pers/gta-vc-chaos) by [Lightnat0r](https://github.com/Lighnat0r), it activates effects in the corresponding game every X seconds / minutes (cooldown can be defined in the GUI tool).
 
 ## Which GTA games does it support?
-Right now it only supports **San Andreas**, though due to utilizing the [plugin-sdk](https://github.com/DK22Pac/plugin-sdk) it *should* be possible to also support **Vice City** and **III** in the future.
+It started off as a mod for **San Andreas**, which is the one that is mainly supported right now.  
+However, there is already basic support for **Vice City** and **III** implemented. It will take longer to bring all (if possible) custom effects over, and also implement their corresponding ingame cheats though.
 
 ## Which versions of the games does it support?
-**GTA San Andreas**: v1.0 US (EU *might* work, but I don't have an EU copy to test it with...)
+**GTA San Andreas**: v1.0 US  
+**GTA Vice City**: v1.0 US  
+**GTA III**: v1.0 US
 
 ## How do I downgrade my game to the required version?
-**GTA San Andreas**: https://dl1.rockstarnexus.com/gta/sa/GTASA_12-9-14_Steam_to_V1_DG.exe
+There's a handy thread over on the GTA Forums that has downgraders vor GTA III, Vice City and even San Andreas.  
+https://gtaforums.com/topic/936600-iii-iv-various-gta-downgraders/
 
 ## What ASI Loader is recommended to play the mod with?
 I **highly** recommend using the [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader) by [ThirteenAG](https://github.com/ThirteenAG) purely due to the fact that it supports saving CrashDumps.
@@ -47,7 +51,7 @@ The `.exe` can be anywhere you want, as long as it has write permissions since i
 ## ... and how do I use it?
 Simple:
 1. Start the game
-2. Launch the corresponding `Chaos Mod.exe`
+2. Launch the corresponding `Trilogy Chaos Mod.exe`
 3. Now you have 2 options:
 	1. Either press `Auto-Start` in the GUI, which will make it wait for you starting a new game and skipping the first cutscene (just like the autosplitter when doing a speedrun)
 	2. Or you just press `Start` right away
@@ -56,8 +60,8 @@ Simple:
 ## Is there a list of all effects?
 Of course! Here's a [spreadsheet](http://bit.ly/gta-sa-chaos-mod) that has all of them!
 
-## I can't load any of my saves ingame!
-Make sure the setting `DisableLoadGame` is set to `false` in the config.
+## How do I load the last autosave when ingame?
+Hold down `Left CTRL` when hovering over the `Load Game` option in the menu.
 
 ## Where are the autosaves being saved to?
 Inside a sub-directory called `chaos_mod` in your corresponding GTA User Files folder.
@@ -69,9 +73,6 @@ Great! Create an issue with the `.log` and `.dmp` files from the `CrashDumps` fo
 Also great! Feel free to create an issue with that as well, best to explain what it should do in detail.
 
 It could be that it is pretty much impossible to implement, or that I just won't consider working on it because there are already effects that are similar to it though, so keep that in mind.
-
-## Why is there no license?!
-There is a license. It's "All Rights Reserved" for now.
 
 ## I hate you!
 Right back at you 😉
@@ -88,13 +89,13 @@ I wouldn't mind potentially dropping by and seeing you guys suffer with the mod 
 who has been helping me with a lot of function hooks and other things in the mod 💖
 
 ## Early beta testers
-- [Jugachi](https://twitch.tv/jugachi)
-- [Heinki](https://twitch.tv/heinki)
-- [Naro](https://twitch.tv/naro)
-- [Joshimuz](https://twitch.tv/joshimuz)
 - [English\_Ben](https://twitch.tv/english_ben)
-- [Tezur0](https://twitch.tv/tezur0)
 - [GTA_Madman](https://twitch.tv/gta_madman)
+- [Heinki](https://twitch.tv/heinki)
+- [Joshimuz](https://twitch.tv/joshimuz)
+- [Jugachi](https://twitch.tv/jugachi)
+- [Naro](https://twitch.tv/naro)
+- [Tezur0](https://twitch.tv/tezur0)
 
 ## Everyone in the release race that was held on the 30th of August, 2019
 - [123robot](https://twitch.tv/123robot)
