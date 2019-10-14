@@ -37,7 +37,9 @@ void GameFixes::Initialise() {
 
 	// #####################################
 	// Hook "Start New Game" menu
-	patch::RedirectCall(0x573383, HookedCStatsUpdateRespectStats);
+	for (int address : { 0x573827, 0x57733B }) {
+		patch::RedirectCall(address, HookedCMenuManagerDoSettingsBeforeStartingAGame);
+	}
 	// #####################################
 }
 
@@ -53,7 +55,7 @@ void __fastcall GameFixes::HookedProcessMenuOptions(CMenuManager* thisManager, v
 		}
 	}
 	else if (page == eMenuPage::MENUPAGE_NEW_GAME_ASK) {
-		if (KeyPressed(VK_CONTROL)) {
+		if (Config::GetOrDefault("Chaos.DeleteAutosaveOnNewGame", true) || KeyPressed(VK_CONTROL)) {
 			GameUtil::DeleteAutosave();
 		}
 	}
@@ -64,7 +66,7 @@ void __fastcall GameFixes::HookedProcessMenuOptions(CMenuManager* thisManager, v
 char* __fastcall GameFixes::HookedCTextGet(CText* thisText, void* edx, char* key) {
 	std::string key_str(key);
 	if (key_str == "FES_NGA") {
-		if (KeyPressed(VK_CONTROL)) {
+		if (Config::GetOrDefault("Chaos.DeleteAutosaveOnNewGame", true) || KeyPressed(VK_CONTROL)) {
 			return "New Game (Delete Autosave)";
 		}
 	}
@@ -114,9 +116,9 @@ char GameFixes::HookedCheatCancelEachOther(int id) {
 	return 0;
 }
 
-void GameFixes::HookedCStatsUpdateRespectStats(char amount) {
-	/*if (KeyPressed(VK_CONTROL)) {
+int __fastcall GameFixes::HookedCMenuManagerDoSettingsBeforeStartingAGame(CMenuManager* thisManager) {
+	if (Config::GetOrDefault("Chaos.DeleteAutosaveOnNewGame", true) || KeyPressed(VK_CONTROL)) {
 		GameUtil::DeleteAutosave();
-	}*/
-	Call<0x55BC50>(amount);
+	}
+	return thisManager->DoSettingsBeforeStartingAGame();
 }

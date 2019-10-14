@@ -33,5 +33,5 @@ public:
 	static int __fastcall HookedRadioSetVolume(uint8_t* thisAudioHardware, void* edx, int a2, int a3, float volume, int a5);
 	static __int16 __fastcall HookedCRunningScriptCollectParameters(CRunningScript* thisScript, void* edx, unsigned __int16 num);
 	static char HookedCheatCancelEachOther(int id);
-	static void HookedCStatsUpdateRespectStats(char amount);
+	static int __fastcall HookedCMenuManagerDoSettingsBeforeStartingAGame(CMenuManager* thisManager);
 };
