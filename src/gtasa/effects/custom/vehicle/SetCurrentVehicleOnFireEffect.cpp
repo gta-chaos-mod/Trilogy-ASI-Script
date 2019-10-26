@@ -1,7 +1,7 @@
 #include "SetCurrentVehicleOnFireEffect.h"
 
 SetCurrentVehicleOnFireEffect::SetCurrentVehicleOnFireEffect()
-	: EffectPlaceholder("cheat_set_current_vehicle_on_fire") {}
+	: EffectPlaceholder("effect_set_current_vehicle_on_fire") {}
 
 void SetCurrentVehicleOnFireEffect::Enable() {
 	EffectPlaceholder::Enable();

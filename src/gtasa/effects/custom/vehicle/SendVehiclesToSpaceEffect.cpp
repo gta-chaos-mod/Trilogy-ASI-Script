@@ -1,7 +1,7 @@
 #include "SendVehiclesToSpaceEffect.h"
 
 SendVehiclesToSpaceEffect::SendVehiclesToSpaceEffect()
-	: EffectPlaceholder("cheat_send_vehicles_to_space") {}
+	: EffectPlaceholder("effect_send_vehicles_to_space") {}
 
 void SendVehiclesToSpaceEffect::Enable() {
 	EffectPlaceholder::Enable();

@@ -1,7 +1,7 @@
 #include "PopTiresOfAllVehiclesEffect.h"
 
 PopTiresOfAllVehiclesEffect::PopTiresOfAllVehiclesEffect()
-	: EffectPlaceholder("cheat_pop_tires_of_all_vehicles") {}
+	: EffectPlaceholder("effect_pop_tires_of_all_vehicles") {}
 
 void PopTiresOfAllVehiclesEffect::Enable() {
 	EffectPlaceholder::Enable();

@@ -1,7 +1,7 @@
 #include "Weather.h"
 
 Weather::Weather(int weatherID)
-	: EffectPlaceholder("weather")
+	: EffectPlaceholder("effect_weather")
 {
 	this->weatherID = weatherID;
 }

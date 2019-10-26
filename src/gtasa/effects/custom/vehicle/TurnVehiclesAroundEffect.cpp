@@ -1,7 +1,7 @@
 #include "TurnVehiclesAroundEffect.h"
 
 TurnVehiclesAroundEffect::TurnVehiclesAroundEffect()
-	: EffectPlaceholder("cheat_blow_up_all_cars") {}
+	: EffectPlaceholder("effect_turn_vehicles_around") {}
 
 void TurnVehiclesAroundEffect::Enable() {
 	EffectPlaceholder::Enable();
