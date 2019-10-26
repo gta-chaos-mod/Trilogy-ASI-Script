@@ -2,7 +2,7 @@
 
 void Teleportation::Teleport(CVector destination, int interior) {
 	CEntity* entity = FindPlayerEntity(-1);
-	if (entity) {
+	if (entity && !CCutsceneMgr::ms_running) {
 		entity->Teleport(destination, false);
 
 		CGame::currArea = interior;

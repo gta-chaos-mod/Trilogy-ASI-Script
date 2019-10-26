@@ -2,6 +2,7 @@
 
 #include "util/EffectBase.h"
 
+#include "CCutsceneMgr.h"
 #include "CEntryExitManager.h"
 #include "CGame.h"
 #include "CPopulation.h"
