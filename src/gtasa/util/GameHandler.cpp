@@ -27,9 +27,11 @@ void GameHandler::Initialise() {
 	}
 
 	if (Config::GetOrDefault("Chaos.AutosaveAfterGangWar", true)) {
+		// Trigger autosave when successfully finishing a gangwar (all 3 waves, not 2 and starting a sub-mission!)
 		patch::RedirectCall(0x44690B, HookedOnGangWarHoodCaptured);
 	}
 
+	// Make sure to disable effects / delete autosave when starting a new game
 	patch::RedirectCall(0x5D18F0, HookedGenericLoadTheScriptsLoad);
 
 	// Disable radio volume => -100 if slowmo is active
