@@ -5,10 +5,6 @@ CPedAcquaintance GameUtil::backup_acquaintances[32];
 std::string GameUtil::loadFilePath;
 char* GameUtil::gamePath = reinterpret_cast<char*>(0xC92368);
 
-std::string GameUtil::GetModVersion() {
-	return "Chaos Mod v2.0.0";
-}
-
 CPedAcquaintance* GameUtil::GetPedTypeAcquaintances(int PedType) {
 	return plugin::CallAndReturn<CPedAcquaintance*, 0x6089B0>(PedType);
 }

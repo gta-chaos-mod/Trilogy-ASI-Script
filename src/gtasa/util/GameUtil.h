@@ -26,8 +26,6 @@ private:
 	static char* gamePath;
 
 public:
-	static std::string GetModVersion();
-
 	static CPedAcquaintance* GetPedTypeAcquaintances(int PedType);
 	static void BackupAcquaintances();
 	static void RestoreSavedAcquaintances();
