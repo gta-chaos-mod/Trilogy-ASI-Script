@@ -1,4 +1,4 @@
 #include "LockRespectAtMaxCheat.h"
 
 LockRespectAtMaxCheat::LockRespectAtMaxCheat()
-	: TimedAddressEffect("cheat_lock_respect_at_max", 0x969173) {}
+	: TimedAddressEffect("cheat_lock_respect_at_max", 0x96917F) {}
