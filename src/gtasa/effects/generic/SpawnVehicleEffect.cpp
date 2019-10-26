@@ -58,10 +58,8 @@ CVehicle* SpawnVehicleEffect::CreateVehicle(CVector position, float orientation)
 				vehicle = new CTrailer(this->vehicleID, 1);
 				break;
 			case VEHICLE_BOAT:
+			case VEHICLE_TRAIN: // Thank you Rockstar, very cool
 				vehicle = new CBoat(this->vehicleID, 1);
-				break;
-			case VEHICLE_TRAIN:
-				vehicle = new CBoat(this->vehicleID, 1); // Thank you Rockstar, very cool
 				break;
 			default:
 				vehicle = new CAutomobile(this->vehicleID, 1, true);
