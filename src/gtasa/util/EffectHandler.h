@@ -153,6 +153,6 @@ public:
 	static EffectBase* Get(std::string state, std::string function);
 
 private:
-	static EffectBase* HandleEffect(std::string name);
 	static EffectBase* HandleCheat(std::string name);
+	static EffectBase* HandleEffect(std::string name);
 };

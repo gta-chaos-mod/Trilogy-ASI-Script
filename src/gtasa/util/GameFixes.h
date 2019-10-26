@@ -5,6 +5,7 @@
 #include <filesystem>
 
 #include "util/Config.h"
+#include "util/EffectDatabase.h"
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 #include "util/CPedDamageResponseCalculator.h"

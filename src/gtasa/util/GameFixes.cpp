@@ -120,5 +120,8 @@ int __fastcall GameFixes::HookedCMenuManagerDoSettingsBeforeStartingAGame(CMenuM
 	if (Config::GetOrDefault("Chaos.DeleteAutosaveOnNewGame", true) || KeyPressed(VK_CONTROL)) {
 		GameUtil::DeleteAutosave();
 	}
+	for (EffectBase* effect : EffectDatabase::GetActiveEffects()) {
+		effect->Clear();
+	}
 	return thisManager->DoSettingsBeforeStartingAGame();
 }
