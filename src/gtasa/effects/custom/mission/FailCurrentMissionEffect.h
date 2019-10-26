@@ -14,4 +14,6 @@ public:
 	FailCurrentMissionEffect();
 
 	void Enable() override;
+
+	void ClearPlayerStatus();
 };

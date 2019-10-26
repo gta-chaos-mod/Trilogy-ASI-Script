@@ -25,4 +25,6 @@ public:
 	FakePassCurrentMissionEffect();
 
 	void HandleTick() override;
+
+	void ClearPlayerStatus();
 };
