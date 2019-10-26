@@ -1,7 +1,7 @@
 #include "GenericUtil.h"
 
 std::string GenericUtil::GetModVersion() {
-	return "Chaos Mod v2.0.1";
+	return "Chaos Mod v2.0.2";
 }
 
 float GenericUtil::CalculateTick(float multiplier) {
