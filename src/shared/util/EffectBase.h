@@ -243,6 +243,10 @@ public:
 	virtual void HandleTick() {};
 
 	/* Generic Helper Methods */
+	void Clear() {
+		this->baseInfo.remaining = this->baseInfo.effectRemaining = 1;
+	}
+
 	bool IsEqual(EffectBase* otherEffect) {
 		return IsEqualID(otherEffect)
 			|| IsEqualDescription(otherEffect)

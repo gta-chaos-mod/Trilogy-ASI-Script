@@ -6,8 +6,7 @@ void NamedPipe::OnAttach() {
 	char text[1024] = "";
 	DWORD dwRead;
 
-	//std::string myProcID = "\\\\.\\pipe\\TrilogyChaosModPipe"; // TODO: Refactor to this pipe, or this with suffixes (_III, _VC, _SA)
-	std::string myProcID = "\\\\.\\pipe\\GTASAChaosPipe";
+	std::string myProcID = "\\\\.\\pipe\\GTATrilogyChaosModPipe";
 	std::string To(myProcID.begin(), myProcID.end());
 
 	hPipe = CreateNamedPipe(To.c_str(),
