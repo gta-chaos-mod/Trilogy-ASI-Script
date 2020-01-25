@@ -153,6 +153,7 @@
 #include "effects/custom/player/RingRingEffect.h"
 #include "effects/custom/ped/PedsExplodeWhenRunOverEffect.h"
 #include "effects/custom/vehicle/HonkVehicleEffect.h"
+#include "effects/custom/player/QuakeFOVEffect.h"
 
 #include "CCheat.h"
 

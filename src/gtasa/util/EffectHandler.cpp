@@ -440,6 +440,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "honk_vehicle") {
 		effect = new HonkVehicleEffect();
 	}
+	else if (name == "quake_fov") {
+		effect = new QuakeFOVEffect();
+	}
 
 	return effect;
 }
