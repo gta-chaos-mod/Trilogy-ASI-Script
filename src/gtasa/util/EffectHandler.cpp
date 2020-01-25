@@ -455,6 +455,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "drunk_player") {
 		effect = new DrunkPlayerEffect();
 	}
+	else if (name == "force_vehicle_mouse_steering") {
+		effect = new ForceVehicleMouseSteering();
+	}
 
 	return effect;
 }

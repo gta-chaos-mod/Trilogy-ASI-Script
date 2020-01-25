@@ -158,6 +158,7 @@
 #include "effects/custom/player/WeaponRouletteEffect.h"
 #include "effects/custom/player/NoNeedToHurryEffect.h"
 #include "effects/custom/player/DrunkPlayerEffect.h"
+#include "effects/custom/controls/ForceVehicleMouseSteering.h"
 
 #include "CCheat.h"
 
