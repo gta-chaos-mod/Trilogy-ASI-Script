@@ -154,6 +154,7 @@
 #include "effects/custom/ped/PedsExplodeWhenRunOverEffect.h"
 #include "effects/custom/vehicle/HonkVehicleEffect.h"
 #include "effects/custom/player/QuakeFOVEffect.h"
+#include "effects/custom/vehicle/BeybladeEffect.h"
 
 #include "CCheat.h"
 

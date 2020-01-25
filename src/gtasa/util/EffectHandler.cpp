@@ -443,6 +443,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "quake_fov") {
 		effect = new QuakeFOVEffect();
 	}
+	else if (name == "beyblade") {
+		effect = new BeybladeEffect();
+	}
 
 	return effect;
 }
