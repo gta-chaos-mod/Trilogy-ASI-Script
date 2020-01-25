@@ -42,6 +42,10 @@ PlayEffectSound = true
 # Default: false
 PreventLosingWeapons = false
 
+# Whether or not to clear all active effects when a new game is started (Useful for speedruns)
+# Default: true
+ClearEffectsOnNewGame = true
+
 #######################################################
 
 #######################################################

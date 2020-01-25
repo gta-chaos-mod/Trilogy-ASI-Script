@@ -120,8 +120,11 @@ int __fastcall GameFixes::HookedCMenuManagerDoSettingsBeforeStartingAGame(CMenuM
 	if (Config::GetOrDefault("Chaos.DeleteAutosaveOnNewGame", true) || KeyPressed(VK_CONTROL)) {
 		GameUtil::DeleteAutosave();
 	}
-	for (EffectBase* effect : EffectDatabase::GetActiveEffects()) {
-		effect->Clear();
+
+	if (Config::GetOrDefault("Chaos.ClearEffectsOnNewGame", true) && !Config::GetOrDefault("CrowdControl.Enabled", false)) {
+		for (EffectBase* effect : EffectDatabase::GetActiveEffects()) {
+			effect->Clear();
+		}
 	}
 	return thisManager->DoSettingsBeforeStartingAGame();
 }
