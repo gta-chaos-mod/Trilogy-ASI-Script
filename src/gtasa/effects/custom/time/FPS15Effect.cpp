@@ -1,7 +1,5 @@
 #include "FPS15Effect.h"
 
-byte FPS15Effect::oldFrameTimeWait = 0;
-
 FPS15Effect::FPS15Effect()
 	: EffectBase("effect_fps_15")
 {

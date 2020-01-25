@@ -3,7 +3,6 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 
-#include "CCarCtrl.h"
 #include "cHandlingDataMgr.h"
 
 class LittleSuspensionDampingEffect : public EffectBase

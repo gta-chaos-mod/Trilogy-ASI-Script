@@ -8,7 +8,7 @@ private:
 	int oldFramerate = 25;
 	int framerate = 15;
 
-	static byte oldFrameTimeWait;
+	byte oldFrameTimeWait = 14;
 
 public:
 	FPS15Effect();

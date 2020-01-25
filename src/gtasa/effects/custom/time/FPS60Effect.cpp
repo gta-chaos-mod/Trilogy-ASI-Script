@@ -1,9 +1,7 @@
 #include "FPS60Effect.h"
 
-byte FPS60Effect::oldFrameTimeWait = 0;
-
 FPS60Effect::FPS60Effect()
-	: EffectBase("effect_fps_15")
+	: EffectBase("effect_fps_60")
 {
 	AddType("framerate");
 }
