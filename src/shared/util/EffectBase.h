@@ -104,13 +104,26 @@ public:
 		return this->baseInfo.isInitialized;
 	}
 
-	EffectBase* SetCanTickWhenDisabled() {
-		this->baseInfo.canTickWhenDisabled = true;
+	EffectBase* SetCanTickWhenDisabled(bool canTick = true) {
+		this->baseInfo.canTickWhenDisabled = canTick;
 		return this;
 	}
 
 	bool CanTickWhenDisabled() {
 		return this->baseInfo.canTickWhenDisabled;
+	}
+
+	virtual bool CanActivate() {
+		return true;
+	}
+
+	EffectBase* SetCrowdControlID(int id) {
+		this->baseInfo.crowdControlID = id;
+		return this;
+	}
+
+	int GetCrowdControlID() {
+		return this->baseInfo.crowdControlID;
 	}
 
 	void Initialize();
@@ -150,7 +163,7 @@ public:
 	}
 
 	/* Placeholder Info */
-	bool IsPlaceholder() {
+	virtual bool IsPlaceholder() {
 		return this->baseInfo.isPlaceholder;
 	}
 
