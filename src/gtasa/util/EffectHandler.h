@@ -147,6 +147,7 @@
 #include "effects/custom/vehicle/LightspeedBrakingEffect.h"
 #include "effects/custom/vehicle/OhHeyTanksEffect.h"
 #include "effects/custom/wanted/AlwaysWantedEffect.h"
+#include "effects/custom/player/CinematicVehicleCameraEffect.h"
 
 #include "CCheat.h"
 

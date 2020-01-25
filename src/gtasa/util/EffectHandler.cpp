@@ -422,6 +422,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "always_wanted") {
 		effect = new AlwaysWantedEffect();
 	}
+	else if (name == "cinematic_vehicle_camera") {
+		effect = new CinematicVehicleCameraEffect();
+	}
 
 	return effect;
 }
