@@ -53,8 +53,8 @@ ClearEffectsOnNewGame = true
 [Fixes]
 
 # Disables the option to play replays
-# Default: true
-DisableReplays = true
+# Default: false
+DisableReplays = false
 
 # Disables interior music in places such as Caligula's Casino (Helps against copyright)
 # Default: true

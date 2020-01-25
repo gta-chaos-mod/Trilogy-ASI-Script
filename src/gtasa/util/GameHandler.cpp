@@ -25,7 +25,7 @@ void GameHandler::Initialise() {
 
 	patch::RedirectCall(0x5D0D66, HookedOpenFile);
 
-	if (Config::GetOrDefault("Fixes.DisableReplays", true)) {
+	if (Config::GetOrDefault("Fixes.DisableReplays", false)) {
 		// Disable Replays
 		patch::Nop(0x53C090, 5);
 	}
