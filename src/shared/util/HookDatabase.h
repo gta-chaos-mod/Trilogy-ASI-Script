@@ -24,7 +24,7 @@ private:
 		}
 	};
 
-	// TODO: Turn into map<int, vecto<HookElement>>
+	// TODO: Turn into map<int, vector<HookElement>>
 	// Scenario:
 	// - Normal cooldown Pitch Shifter
 	// - Rapid Fire turns 2x Game Speed on
