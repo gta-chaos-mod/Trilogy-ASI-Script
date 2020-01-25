@@ -1,7 +1,16 @@
 #include "LockPlayerInsideVehicleEffect.h"
 
 LockPlayerInsideVehicleEffect::LockPlayerInsideVehicleEffect()
-	: EffectBase("effect_lock_player_inside_vehicle") {}
+	: EffectBase("effect_lock_player_inside_vehicle")
+{
+	SetCanTickWhenDisabled();
+}
+
+bool LockPlayerInsideVehicleEffect::CanActivate() {
+	CVehicle* vehicle = FindPlayerVehicle(-1, false);
+
+	return vehicle != nullptr;
+}
 
 void LockPlayerInsideVehicleEffect::Enable() {
 	EffectBase::Enable();
@@ -39,5 +48,8 @@ void LockPlayerInsideVehicleEffect::HandleTick() {
 	CVehicle* vehicle = FindPlayerVehicle(-1, false);
 	if (!vehicle) {
 		Disable();
+	}
+	else {
+		Enable();
 	}
 }

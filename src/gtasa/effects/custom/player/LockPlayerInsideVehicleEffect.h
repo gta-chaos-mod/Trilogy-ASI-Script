@@ -7,6 +7,8 @@ class LockPlayerInsideVehicleEffect : public EffectBase
 public:
 	LockPlayerInsideVehicleEffect();
 
+	bool CanActivate() override;
+
 	void Enable() override;
 	void Disable() override;
 
