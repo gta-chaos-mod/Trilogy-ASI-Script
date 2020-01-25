@@ -157,6 +157,7 @@
 #include "effects/custom/vehicle/BeybladeEffect.h"
 #include "effects/custom/player/WeaponRouletteEffect.h"
 #include "effects/custom/player/NoNeedToHurryEffect.h"
+#include "effects/custom/player/DrunkPlayerEffect.h"
 
 #include "CCheat.h"
 

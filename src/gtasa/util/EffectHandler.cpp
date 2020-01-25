@@ -452,6 +452,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "no_need_to_hurry") {
 		effect = new NoNeedToHurryEffect();
 	}
+	else if (name == "drunk_player") {
+		effect = new DrunkPlayerEffect();
+	}
 
 	return effect;
 }
