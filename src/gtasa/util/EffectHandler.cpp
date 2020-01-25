@@ -269,8 +269,11 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "get_busted") {
 		effect = new GetBustedEffect();
 	}
-	else if (name == "set_all_peds_on_fire") {
-		effect = new SetAllPedsOnFireEffect();
+	else if (name == "get_wasted") {
+		effect = new GetWastedEffect();
+	}
+	else if (name == "set_everyone_on_fire") {
+		effect = new SetEveryoneOnFireEffect();
 	}
 	else if (name == "kick_player_out_of_vehicle") {
 		effect = new KickPlayerOutOfVehicleEffect();

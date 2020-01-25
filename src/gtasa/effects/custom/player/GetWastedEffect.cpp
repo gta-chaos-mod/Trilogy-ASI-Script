@@ -1,19 +1,19 @@
-#include "GetBustedEffect.h"
+#include "GetWastedEffect.h"
 
-GetBustedEffect::GetBustedEffect()
-	: EffectPlaceholder("effect_get_busted")
+GetWastedEffect::GetWastedEffect()
+	: EffectPlaceholder("effect_get_wasted")
 {
 	if (Config::GetOrDefault("CrowdControl.Enabled", false)) {
 		AddType("health");
 	}
 }
 
-void GetBustedEffect::Enable() {
+void GetWastedEffect::Enable() {
 	EffectPlaceholder::Enable();
 
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		player->SetPedState(ePedState::PEDSTATE_ARRESTED);
+		player->SetPedState(ePedState::PEDSTATE_DEAD);
 
 		CCutsceneMgr::SkipCutscene();
 	}

@@ -94,12 +94,13 @@
 #include "effects/cheats/vehicle/WheelsOnlyPleaseCheat.h"
 
 #include "effects/custom/ped/RemoveAllWeaponsEffect.h"
-#include "effects/custom/ped/SetAllPedsOnFireEffect.h"
+#include "effects/custom/ped/SetEveryoneOnFireEffect.h"
 #include "effects/custom/player/KickPlayerOutOfVehicleEffect.h"
 #include "effects/custom/vehicle/SetCurrentVehicleOnFireEffect.h"
 #include "effects/custom/vehicle/PopTiresOfAllVehiclesEffect.h"
 #include "effects/custom/vehicle/SendVehiclesToSpaceEffect.h"
 #include "effects/custom/player/GetBustedEffect.h"
+#include "effects/custom/player/GetWastedEffect.h"
 #include "effects/custom/vehicle/TurnVehiclesAroundEffect.h"
 
 #include "effects/custom/vehicle/ToTheLeftToTheRightEffect.h"

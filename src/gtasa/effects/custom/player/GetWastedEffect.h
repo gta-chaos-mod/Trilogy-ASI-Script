@@ -4,10 +4,10 @@
 
 #include "CCutsceneMgr.h"
 
-class GetBustedEffect : public EffectPlaceholder
+class GetWastedEffect : public EffectPlaceholder
 {
 public:
-	GetBustedEffect();
+	GetWastedEffect();
 
 	void Enable() override;
 };
