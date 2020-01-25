@@ -145,6 +145,7 @@
 #include "effects/custom/hud/DVDScreensaverEffect.h"
 #include "effects/custom/vehicle/TurnVehiclesAroundEffect.h"
 #include "effects/custom/vehicle/LightspeedBrakingEffect.h"
+#include "effects/custom/wanted/AlwaysWantedEffect.h"
 
 #include "CCheat.h"
 

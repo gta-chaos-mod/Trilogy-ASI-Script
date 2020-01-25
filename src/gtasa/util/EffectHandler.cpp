@@ -416,6 +416,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "lightspeed_braking") {
 		effect = new LightspeedBrakingEffect();
 	}
+	else if (name == "always_wanted") {
+		effect = new AlwaysWantedEffect();
+	}
 
 	return effect;
 }
