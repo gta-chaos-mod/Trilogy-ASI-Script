@@ -10,11 +10,24 @@ AutosaveEffect::AutosaveEffect(int missionsPassed)
 	SetCanTickWhenDisabled();
 }
 
+bool AutosaveEffect::IsPlaceholder() {
+	return didSave;
+}
+
 void AutosaveEffect::HandleTick() {
 	EffectPlaceholder::HandleTick();
 
 	CPlayerPed* player = FindPlayerPed();
 	if (player && !didSave && !CTheScripts::IsPlayerOnAMission()) {
+		CRunningScript* script = CTheScripts::pActiveScripts->m_pNext;
+		while (script != nullptr) {
+			if (script->m_bIsMission && script->m_bIsActive) {
+				return;
+			}
+
+			script = script->m_pNext;
+		}
+
 		bool wasInVehicle = player->m_nPedFlags.bInVehicle;
 		player->m_nPedFlags.bInVehicle = false;
 
@@ -34,6 +47,7 @@ void AutosaveEffect::HandleTick() {
 		player->m_nPedFlags.bInVehicle = wasInVehicle;
 
 		SetDescription("Autosave Completed");
+		SetEffectDuration(GetEffectDuration());
 
 		didSave = true;
 	}

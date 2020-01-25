@@ -14,5 +14,7 @@ private:
 public:
 	AutosaveEffect(int missionsPassed);
 
+	bool IsPlaceholder() override;
+
 	void HandleTick() override;
 };
