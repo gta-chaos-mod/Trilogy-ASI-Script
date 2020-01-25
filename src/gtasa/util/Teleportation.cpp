@@ -45,8 +45,11 @@ bool Teleportation::CanTeleport() {
 }
 
 void Teleportation::Teleport(CVector destination, int interior) {
-	CEntity* entity = FindPlayerEntity(-1);
+	CPhysical* entity = (CPhysical*)FindPlayerEntity(-1);
 	if (entity && !CCutsceneMgr::ms_running) {
+		CVector moveSpeed = entity->m_vecMoveSpeed;
+		CVector turnSpeed = entity->m_vecTurnSpeed;
+
 		entity->Teleport(destination, false);
 
 		CGame::currArea = interior;
@@ -59,7 +62,7 @@ void Teleportation::Teleport(CVector destination, int interior) {
 		CWorld::Remove(entity);
 		CWorld::Add(entity);
 
-		CPed* player = FindPlayerPed();
+		CPlayerPed* player = FindPlayerPed();
 		if (player) {
 			player->m_nAreaCode = interior;
 			if (interior == 0) {
@@ -69,6 +72,9 @@ void Teleportation::Teleport(CVector destination, int interior) {
 			CWorld::Remove(player);
 			CWorld::Add(player);
 		}
+
+		entity->m_vecMoveSpeed = moveSpeed;
+		entity->m_vecTurnSpeed = turnSpeed;
 
 		CStreaming::StreamZoneModels(&destination);
 		CTimeCycle::StopExtraColour(false);
