@@ -71,7 +71,7 @@ void DrawVoting::DrawVote(int choice) {
 #else
 	float y = SCREEN_COORD_BOTTOM(CalculateYOffset(choice, 75.0f));
 #endif
-	gamefont::PrintUnscaled(votes[choice].description, x, y, FONT_DEFAULT, 0.8f, 1.0f,
+	gamefont::PrintUnscaled(votes[choice].description, x, y, FONT_DEFAULT, SCREEN_MULTIPLIER(0.8f), SCREEN_MULTIPLIER(1.0f),
 		(pickedVote == -1 || pickedVote == choice) ? CRGBA(255, 255, 255, 255) : CRGBA(175, 175, 175, 255), gamefont::AlignCenter, 1, CRGBA(0, 0, 0, 255), true);
 
 	// Vote Bars
@@ -94,7 +94,7 @@ void DrawVoting::DrawVote(int choice) {
 	// Draw Percentage
 	float percentage_x = barStart + 150.0f;
 
-	gamefont::PrintUnscaled(GetPercentage(choice), x, y - SCREEN_COORD(5.0f), FONT_DEFAULT, 0.4f, 0.6f,
+	gamefont::PrintUnscaled(GetPercentage(choice), x, y - SCREEN_COORD(5.0f), FONT_DEFAULT, SCREEN_MULTIPLIER(0.4f), SCREEN_MULTIPLIER(0.6f),
 		(pickedVote == -1 || pickedVote == choice) ? CRGBA(255, 255, 255, 255) : CRGBA(175, 175, 175, 255), gamefont::AlignCenter, 1, CRGBA(0, 0, 0, 255), true);
 }
 
