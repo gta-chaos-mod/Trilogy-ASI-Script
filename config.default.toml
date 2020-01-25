@@ -42,6 +42,11 @@ PlayEffectSound = true
 # Default: false
 PreventLosingWeapons = false
 
+# Skips the help messages that appear the first time you get wasted or busted.
+# It removes the pickups so the messages won't appear in the first place
+# Default: false
+SkipWastedBustedMessages = false
+
 # Whether or not to clear all active effects when a new game is started (Useful for speedruns)
 # Default: true
 ClearEffectsOnNewGame = true
