@@ -11,10 +11,15 @@
 
 class NamedPipe
 {
+private:
+	static DWORD WINAPI SendMessageThread(LPVOID lpvParam);
+
 public:
 	static void OnAttach();
 
+	static void SendCrowdControlResponse(int effectID, int response);
+
 	static void SetupPipe();
 
-	static void CallFunction(std::string text);
+	static void CallFunction(std::string);
 };

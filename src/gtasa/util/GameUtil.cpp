@@ -254,6 +254,22 @@ CVehicle* GameUtil::CreateVehicle(int vehicleID, CVector position, float orienta
 	return nullptr;
 }
 
+bool GameUtil::CanCrowdControlEffectActivate() {
+	CPlayerPed* player = FindPlayerPed();
+	if (player) {
+		switch (player->m_nPedState) {
+			case ePedState::PEDSTATE_ARRESTED:
+			case ePedState::PEDSTATE_ARREST_PLAYER:
+			case ePedState::PEDSTATE_DEAD:
+			case ePedState::PEDSTATE_DIE:
+			case ePedState::PEDSTATE_DIE_BY_STEALTH:
+				return false;
+			default: {}
+		}
+	}
+	return true;
+}
+
 void GameUtil::ClearWeaponsExceptParachute(CPed* ped) {
 	if (ped) {
 		for (int i = eWeaponType::WEAPON_BRASSKNUCKLE; i < eWeaponType::WEAPON_FLARE; i++) {

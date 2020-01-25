@@ -44,11 +44,11 @@
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='GTASA zDebug|Win32' OR '$(Configuration)|$(Platform)'=='GTASA Release|Win32'">
     <ClCompile Include="src\gtasa\*.cpp" />
-    <ClCompile Include="src\gtasa\**\*.cpp" />
+	<ClCompile Include="src\gtasa\**\*.cpp" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='GTASA zDebug|Win32' OR '$(Configuration)|$(Platform)'=='GTASA Release|Win32'">
     <ClInclude Include="src\gtasa\*.h" />
-    <ClInclude Include="src\gtasa\**\*.h" />
+	<ClInclude Include="src\gtasa\**\*.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\shared\**\*.cpp" />

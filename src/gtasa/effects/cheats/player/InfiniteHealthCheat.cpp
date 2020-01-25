@@ -14,6 +14,8 @@ void InfiniteHealthCheat::InitializeHooks() {
 	for (int address : { 0x6B3950, 0x6B3D6C, 0x6BEAA3, 0x6C6F44, 0x6CCF83, 0x6F225A }) {
 		HookCall(address, HookedKillPedsInVehicle);
 	}
+
+	// TODO: Implement vehicle upside-down check
 }
 
 void InfiniteHealthCheat::HandleTick() {

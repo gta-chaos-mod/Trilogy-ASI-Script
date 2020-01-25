@@ -18,6 +18,8 @@ private:
 public:
 	GhostRiderEffect();
 
+	void Disable() override;
+
 	void HandleTick() override;
 
 private:

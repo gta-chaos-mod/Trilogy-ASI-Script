@@ -29,6 +29,8 @@ private:
 
 		std::string description = "N/A";
 		std::list<std::string> types = {};
+
+		int crowdControlID = -1;
 	} baseInfo;
 
 	struct DrawInfo {

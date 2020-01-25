@@ -65,5 +65,7 @@ public:
 
 	static CVehicle* CreateVehicle(int vehicleID, CVector position, float orientation, bool clearSpace = true);
 
+	static bool CanCrowdControlEffectActivate();
+
 	static void ClearWeaponsExceptParachute(CPed* ped);
 };

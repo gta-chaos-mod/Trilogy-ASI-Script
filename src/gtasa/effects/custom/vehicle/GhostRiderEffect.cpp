@@ -3,6 +3,18 @@
 GhostRiderEffect::GhostRiderEffect()
 	: EffectBase("effect_ghost_rider") {}
 
+void GhostRiderEffect::Disable() {
+	if (Config::GetOrDefault("CrowdControl.Enabled", false)) {
+		CVehicle* vehicle = FindPlayerVehicle(-1, false);
+		if (vehicle) {
+			vehicle->m_nPhysicalFlags.bExplosionProof = false;
+			vehicle->BlowUpCar(NULL, false);
+		}
+	}
+
+	EffectBase::Disable();
+}
+
 void GhostRiderEffect::HandleTick() {
 	EffectBase::HandleTick();
 

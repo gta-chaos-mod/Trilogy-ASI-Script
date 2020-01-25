@@ -1,7 +1,12 @@
 #include "HealthArmorMoneyCheat.h"
 
 HealthArmorMoneyCheat::HealthArmorMoneyCheat()
-	: EffectPlaceholder("cheat_health_armor_money") {}
+	: EffectPlaceholder("cheat_health_armor_money")
+{
+	if (Config::GetOrDefault("CrowdControl.Enabled", false)) {
+		AddType("health");
+	}
+}
 
 void HealthArmorMoneyCheat::Enable() {
 	EffectPlaceholder::Enable();

@@ -1,6 +1,8 @@
 #include "EffectDatabase.h"
 
+#include "Config.h"
 #include "DrawHelper.h"
+#include "NamedPipe.h"
 
 std::queue<std::function<void()>> EffectDatabase::effectQueue = {};
 std::list<EffectBase*> EffectDatabase::effects = {};
@@ -31,7 +33,19 @@ void EffectDatabase::QueueEffect(EffectBase* effect, bool executeNow) {
 		return;
 	}
 
+	if (Config::GetOrDefault("CrowdControl.Enabled", false)) {
+		if (GenericUtil::IsMenuActive() || !GameUtil::CanCrowdControlEffectActivate()) {
+			NamedPipe::SendCrowdControlResponse(effect->GetCrowdControlID(), 2);
+			return;
+		}
+	}
+
 	auto effectFunction = [effect]() {
+		if (!effect->CanActivate() && Config::GetOrDefault("CrowdControl.Enabled", false)) {
+			NamedPipe::SendCrowdControlResponse(effect->GetCrowdControlID(), 2);
+			return;
+		}
+
 		// If an effect with the same type or description is found, disable it, then add the effect and tick it down to start it
 		auto it = std::find_if(effects.begin(), effects.end(), [effect](EffectBase* _effect) {
 			if (_effect->IsEnabled() || _effect->IsDisabledByOtherEffect() || (!_effect->IsEnabled() && _effect->IsDisabledForMissions())) {
@@ -39,12 +53,20 @@ void EffectDatabase::QueueEffect(EffectBase* effect, bool executeNow) {
 			}
 			return false;
 		});
+
 		if (it != effects.end()) {
 			EffectBase* effect = *it;
 			if (effect) {
+				if (Config::GetOrDefault("CrowdControl.Enabled", false)) {
+					NamedPipe::SendCrowdControlResponse(effect->GetCrowdControlID(), 2);
+					return;
+				}
 				effect->DisableByOtherEffect();
 			}
 		}
+
+		NamedPipe::SendCrowdControlResponse(effect->GetCrowdControlID(), 1);
+
 		effects.push_front(effect);
 		effect->Tick();
 	};
@@ -63,7 +85,8 @@ void EffectDatabase::HandleFunction(std::string state, std::string text) {
 	char c_description[128] = {};
 	char c_voter[64] = {};
 	int rapid_fire = 0;
-	sscanf(text.c_str(), "%[^:]:%d:%[^:]:%[^:]:%d", &c_function, &duration, &c_description, &c_voter, &rapid_fire);
+	int crowd_control_id = -1;
+	sscanf(text.c_str(), "%[^:]:%d:%[^:]:%[^:]:%d:%d", &c_function, &duration, &c_description, &c_voter, &rapid_fire, &crowd_control_id);
 
 	if (rapid_fire == 1) {
 		duration = 1000 * 15; // 15 Seconds
@@ -95,6 +118,10 @@ void EffectDatabase::HandleFunction(std::string state, std::string text) {
 		}
 		effect->SetDuration(duration);
 		effect->SetTwitchVoter(voter);
+
+		if (crowd_control_id > -1) {
+			effect->SetCrowdControlID(crowd_control_id);
+		}
 
 		QueueEffect(effect);
 	}

@@ -1,27 +1,29 @@
 #include "NamedPipe.h"
 
+#include "npipe.h"
+
 void NamedPipe::OnAttach() {
-	HANDLE hPipe;
+	LPCTSTR pipeName = TEXT("\\\\.\\pipe\\GTATrilogyChaosModPipe");
+
 	char buffer[1024] = "";
 	char text[1024] = "";
-	DWORD dwRead;
 
-	std::string myProcID = "\\\\.\\pipe\\GTATrilogyChaosModPipe";
-	std::string To(myProcID.begin(), myProcID.end());
-
-	hPipe = CreateNamedPipe(To.c_str(),
+	CNamedPipe pipeHandle;
+	pipeHandle.Create(
+		pipeName,
 		PIPE_ACCESS_DUPLEX | PIPE_TYPE_BYTE | PIPE_READMODE_BYTE,
-		PIPE_WAIT,
-		1,
+		PIPE_TYPE_BYTE | PIPE_TYPE_MESSAGE | PIPE_WAIT,
+		PIPE_UNLIMITED_INSTANCES,
 		1024 * 16,
 		1024 * 16,
-		NMPWAIT_USE_DEFAULT_WAIT,
-		NULL);
-	while (hPipe != NULL)
+		NMPWAIT_USE_DEFAULT_WAIT
+	);
+
+	while (pipeHandle != NULL)
 	{
-		if (ConnectNamedPipe(hPipe, NULL) != FALSE)
+		if (pipeHandle.Connect() != FALSE)
 		{
-			while (ReadFile(hPipe, buffer, sizeof(buffer) - 1, &dwRead, NULL) != FALSE)
+			while (pipeHandle.Read(buffer, sizeof(buffer) - 1) != FALSE)
 			{
 				for (unsigned int i = 0; i < strlen(buffer); i++)
 				{
@@ -33,10 +35,64 @@ void NamedPipe::OnAttach() {
 				CallFunction(std::string(text));
 				memset(text, 0, sizeof(text));
 			}
-			FlushFileBuffers(hPipe);
+			pipeHandle.Flush();
 		}
-		DisconnectNamedPipe(hPipe);
+		pipeHandle.Disconnect();
 	}
+}
+
+void NamedPipe::SendCrowdControlResponse(int effectID, int response) {
+	std::string message(std::to_string(effectID));
+	message.append(":");
+	message.append(std::to_string(response));
+
+	DWORD dwThreadId = 0;
+
+	char cstr[1024];
+	strcpy(cstr, message.c_str());
+
+	HANDLE hThread = CreateThread(
+		NULL,
+		0,
+		SendMessageThread,
+		(LPVOID)cstr,
+		0,
+		&dwThreadId
+	);
+
+	if (hThread == NULL) {
+		return;
+	}
+	else {
+		CloseHandle(hThread);
+	}
+}
+
+DWORD WINAPI NamedPipe::SendMessageThread(LPVOID lpvParam) {
+	if (lpvParam == NULL) {
+		return -1;
+	}
+
+	char* message = (char*)lpvParam;
+
+	LPCTSTR pipeName = TEXT("\\\\.\\pipe\\GTASA_CC_SERVER");
+
+	if (!WaitNamedPipe(pipeName, 500)) {
+		return -1;
+	}
+
+	CNamedPipe pipe;
+	if (!pipe.Open(pipeName, GENERIC_READ | GENERIC_WRITE | FILE_SHARE_READ, 0)) {
+		return -1;
+	}
+
+	if (!pipe.Write(message, strlen(message))) {
+		return -1;
+	}
+
+	pipe.Flush();
+
+	return 1;
 }
 
 void NamedPipe::SetupPipe() {
