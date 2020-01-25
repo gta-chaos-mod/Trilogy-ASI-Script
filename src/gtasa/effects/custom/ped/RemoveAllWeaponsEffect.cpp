@@ -1,7 +1,10 @@
 #include "RemoveAllWeaponsEffect.h"
 
 RemoveAllWeaponsEffect::RemoveAllWeaponsEffect()
-	: EffectPlaceholder("effect_remove_all_weapons") {}
+	: EffectPlaceholder("effect_remove_all_weapons")
+{
+	AddType("weapons");
+}
 
 void RemoveAllWeaponsEffect::Enable() {
 	EffectPlaceholder::Enable();

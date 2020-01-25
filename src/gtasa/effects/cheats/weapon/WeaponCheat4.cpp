@@ -1,7 +1,10 @@
 #include "WeaponCheat4.h"
 
 WeaponCheat4::WeaponCheat4()
-	: EffectPlaceholder("cheat_weapons_4") {}
+	: EffectPlaceholder("cheat_weapons_4")
+{
+	AddType("weapons");
+}
 
 void WeaponCheat4::Enable() {
 	EffectPlaceholder::Enable();
