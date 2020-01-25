@@ -149,6 +149,7 @@
 #include "effects/custom/wanted/AlwaysWantedEffect.h"
 #include "effects/custom/player/CinematicVehicleCameraEffect.h"
 #include "effects/custom/player/TopDownCameraEffect.h"
+#include "effects/custom/vehicle/YourCarFloatsAwayWhenHitEffect.h"
 
 #include "CCheat.h"
 

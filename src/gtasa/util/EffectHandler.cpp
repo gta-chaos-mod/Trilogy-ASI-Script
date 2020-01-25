@@ -428,6 +428,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "top_down_camera") {
 		effect = new TopDownCameraEffect();
 	}
+	else if (name == "your_car_floats_away_when_hit") {
+		effect = new YourCarFloatsAwayWhenHitEffect();
+	}
 
 	return effect;
 }
