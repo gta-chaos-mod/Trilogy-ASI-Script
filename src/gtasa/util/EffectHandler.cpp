@@ -449,6 +449,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "weapon_roulette") {
 		effect = new WeaponRouletteEffect();
 	}
+	else if (name == "no_need_to_hurry") {
+		effect = new NoNeedToHurryEffect();
+	}
 
 	return effect;
 }

@@ -156,6 +156,7 @@
 #include "effects/custom/player/QuakeFOVEffect.h"
 #include "effects/custom/vehicle/BeybladeEffect.h"
 #include "effects/custom/player/WeaponRouletteEffect.h"
+#include "effects/custom/player/NoNeedToHurryEffect.h"
 
 #include "CCheat.h"
 
