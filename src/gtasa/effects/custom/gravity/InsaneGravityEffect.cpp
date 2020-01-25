@@ -3,8 +3,8 @@
 InsaneGravityEffect::InsaneGravityEffect()
 	: EffectBase("effect_insane_gravity")
 {
-	SetEffectDuration(1000 * 5);
 	AddType("gravity");
+	SetEffectDuration(1000 * 5);
 }
 
 void InsaneGravityEffect::Disable() {

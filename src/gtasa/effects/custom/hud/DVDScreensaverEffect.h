@@ -15,8 +15,6 @@ private:
 public:
 	DVDScreensaverEffect();
 
-	EffectBase* SetEffectDuration(int duration) override;
-
 	void Enable() override;
 	void Disable() override;
 

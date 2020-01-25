@@ -6,11 +6,6 @@ TunnelVisionEffect::TunnelVisionEffect()
 	AddType("hud");
 }
 
-EffectBase* TunnelVisionEffect::SetEffectDuration(int duration) {
-	EffectBase::SetEffectDuration(duration / 3);
-	return this;
-}
-
 void TunnelVisionEffect::Enable() {
 	EffectBase::Enable();
 

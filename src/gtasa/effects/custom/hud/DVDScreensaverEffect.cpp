@@ -12,11 +12,6 @@ DVDScreensaverEffect::DVDScreensaverEffect()
 	AddType("hud");
 }
 
-EffectBase* DVDScreensaverEffect::SetEffectDuration(int duration) {
-	EffectBase::SetEffectDuration(duration / 3);
-	return this;
-}
-
 void DVDScreensaverEffect::Enable() {
 	EffectBase::Enable();
 

@@ -3,8 +3,8 @@
 LetsTakeABreakEffect::LetsTakeABreakEffect()
 	: EffectBase("effect_lets_take_a_break")
 {
-	SetEffectDuration(1000 * 10);
 	AddType("controls");
+	SetEffectDuration(1000 * 10);
 }
 
 void LetsTakeABreakEffect::InitializeHooks() {
