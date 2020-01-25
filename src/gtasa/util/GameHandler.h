@@ -7,6 +7,8 @@
 #include "util/EffectDatabase.h"
 #include "effects/generic/AutosaveEffect.h"
 
+#include "CPickups.h"
+
 class GameHandler
 {
 private:
@@ -26,6 +28,7 @@ public:
 	static void HandleVehicleToRealPhysics();
 	static void HandleNoWeaponRemoval();
 	static void HandleNoCheatInput();
+	static void HandleSkipWastedBustedHelpMessages();
 
 	static void __fastcall HookedGenericLoadTheScriptsLoad();
 	static void __fastcall HookedOnGangWarHoodCaptured();

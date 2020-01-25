@@ -67,6 +67,7 @@ void GameHandler::ProcessGame() {
 
 	HandleNoWeaponRemoval();
 	HandleNoCheatInput();
+	HandleSkipWastedBustedHelpMessages();
 }
 
 int GameHandler::HookedOpenFile(const char* path, const char* mode) {
@@ -131,6 +132,14 @@ void GameHandler::HandleNoWeaponRemoval() {
 void GameHandler::HandleNoCheatInput() {
 	if (Config::GetOrDefault("Fixes.DisableCheatInput", false) && !KeyPressed(VK_SHIFT)) {
 		CCheat::m_CheatString[0] = 0;
+	}
+}
+
+void GameHandler::HandleSkipWastedBustedHelpMessages() {
+	if (Config::GetOrDefault("Chaos.SkipWastedBustedMessages", false)) {
+		CPickups::RemovePickUp(CTheScripts::ScriptSpace[669]);
+		CPickups::RemovePickUp(CTheScripts::ScriptSpace[670]);
+		CPickups::RemovePickUp(CTheScripts::ScriptSpace[671]);
 	}
 }
 
