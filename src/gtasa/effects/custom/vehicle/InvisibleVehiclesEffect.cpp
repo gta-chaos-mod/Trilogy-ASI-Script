@@ -4,6 +4,7 @@ InvisibleVehiclesEffect::InvisibleVehiclesEffect()
 	: EffectBase("effect_invisible_vehicles")
 {
 	AddType("invisible_vehicles");
+	AddType("vehicle_color");
 }
 
 void InvisibleVehiclesEffect::InitializeHooks() {

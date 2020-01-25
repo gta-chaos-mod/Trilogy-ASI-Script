@@ -4,6 +4,7 @@ WheelsOnlyPleaseCheat::WheelsOnlyPleaseCheat()
 	: EffectBase("cheat_wheels_only_please")
 {
 	AddType("invisible_vehicles");
+	AddType("vehicle_color");
 }
 
 void WheelsOnlyPleaseCheat::InitializeHooks() {
