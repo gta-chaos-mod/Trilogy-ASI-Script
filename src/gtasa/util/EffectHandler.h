@@ -151,6 +151,7 @@
 #include "effects/custom/player/TopDownCameraEffect.h"
 #include "effects/custom/vehicle/YourCarFloatsAwayWhenHitEffect.h"
 #include "effects/custom/player/RingRingEffect.h"
+#include "effects/custom/ped/PedsExplodeWhenRunOverEffect.h"
 
 #include "CCheat.h"
 

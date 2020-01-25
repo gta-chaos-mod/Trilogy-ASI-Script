@@ -434,6 +434,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "ring_ring") {
 		effect = new RingRingEffect();
 	}
+	else if (name == "peds_explode_when_run_over") {
+		effect = new PedsExplodeWhenRunOverEffect();
+	}
 
 	return effect;
 }
