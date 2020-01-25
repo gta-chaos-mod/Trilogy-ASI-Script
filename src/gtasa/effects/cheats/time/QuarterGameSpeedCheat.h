@@ -15,8 +15,6 @@ private:
 public:
 	QuarterGameSpeedCheat();
 
-	EffectBase* SetEffectDuration(int duration) override;
-
 	void InitializeHooks() override;
 
 	void Disable() override;

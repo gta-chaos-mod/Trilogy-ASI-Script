@@ -9,11 +9,6 @@ HalfGameSpeedCheat::HalfGameSpeedCheat()
 	AddType("audio_pitch");
 }
 
-EffectBase* HalfGameSpeedCheat::SetEffectDuration(int duration) {
-	EffectBase::SetEffectDuration(duration / 3 * 2);
-	return this;
-}
-
 void HalfGameSpeedCheat::InitializeHooks() {
 	EffectBase::InitializeHooks();
 
