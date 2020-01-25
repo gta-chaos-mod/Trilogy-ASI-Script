@@ -187,3 +187,65 @@ int GameUtil::GetRealMissionsPassed() {
 
 	return passed;
 }
+
+CVehicle* GameUtil::CreateVehicle(int vehicleID, CVector position, float orientation, bool clearSpace) {
+	unsigned char oldFlags = CStreaming::ms_aInfoForModel[vehicleID].m_nFlags;
+	CStreaming::RequestModel(vehicleID, GAME_REQUIRED);
+	CStreaming::LoadAllRequestedModels(false);
+	if (CStreaming::ms_aInfoForModel[vehicleID].m_nLoadState == LOADSTATE_LOADED) {
+		if (!(oldFlags & GAME_REQUIRED)) {
+			CStreaming::SetModelIsDeletable(vehicleID);
+			CStreaming::SetModelTxdIsDeletable(vehicleID);
+		}
+		CVehicle* vehicle = nullptr;
+		switch (reinterpret_cast<CVehicleModelInfo*>(CModelInfo::ms_modelInfoPtrs[vehicleID])->m_nVehicleType) {
+			case VEHICLE_MTRUCK:
+				vehicle = new CMonsterTruck(vehicleID, 1);
+				break;
+			case VEHICLE_QUAD:
+				vehicle = new CQuadBike(vehicleID, 1);
+				break;
+			case VEHICLE_HELI:
+				vehicle = new CHeli(vehicleID, 1);
+				break;
+			case VEHICLE_PLANE:
+				vehicle = new CPlane(vehicleID, 1);
+				break;
+			case VEHICLE_BIKE:
+				vehicle = new CBike(vehicleID, 1);
+				reinterpret_cast<CBike*>(vehicle)->m_nDamageFlags |= 0x10;
+				break;
+			case VEHICLE_BMX:
+				vehicle = new CBmx(vehicleID, 1);
+				reinterpret_cast<CBmx*>(vehicle)->m_nDamageFlags |= 0x10;
+				break;
+			case VEHICLE_TRAILER:
+				vehicle = new CTrailer(vehicleID, 1);
+				break;
+			case VEHICLE_BOAT:
+			case VEHICLE_TRAIN: // Thank you Rockstar, very cool
+				vehicle = new CBoat(vehicleID, 1);
+				break;
+			default:
+				vehicle = new CAutomobile(vehicleID, 1, true);
+				break;
+		}
+		if (vehicle) {
+			vehicle->SetPosn(position);
+			vehicle->SetOrientation(0.0f, 0.0f, orientation);
+			vehicle->m_nStatus = eEntityStatus::STATUS_ABANDONED;
+			vehicle->m_nDoorLock = CARLOCK_UNLOCKED;
+			if (clearSpace) {
+				CTheScripts::ClearSpaceForMissionEntity(position, vehicle);
+			}
+			CWorld::Add(vehicle);
+			if (vehicle->m_nVehicleClass == VEHICLE_BIKE)
+				reinterpret_cast<CBike*>(vehicle)->PlaceOnRoadProperly();
+			else if (vehicle->m_nVehicleClass != VEHICLE_BOAT)
+				reinterpret_cast<CAutomobile*>(vehicle)->PlaceOnRoadProperly();
+
+			return vehicle;
+		}
+	}
+	return nullptr;
+}

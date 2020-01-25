@@ -7,7 +7,7 @@ EffectBase* EffectHandler::Get(std::string state, std::string function) {
 		effect = new Weather(std::stoi(function));
 	}
 	else if (state == "spawn_vehicle") {
-		effect = new SpawnVehicleEffect(std::stoi(function));
+		effect = new SpawnVehicleEffect(std::stoi(function), false); // "true" for experimental "put player in vehicle" mode
 	}
 	else if (state == "effect") {
 		effect = HandleCheat(function);

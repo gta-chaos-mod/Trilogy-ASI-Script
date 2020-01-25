@@ -13,7 +13,21 @@
 #include "CGame.h"
 #include "CGenericGameStorage.h"
 #include "CMenuManager.h"
+#include "CModelInfo.h"
 #include "CPlayerInfo.h"
+#include "CStreaming.h"
+#include "CVehicleModelInfo.h"
+#include "CWorld.h"
+
+#include "CAutomobile.h"
+#include "CBike.h"
+#include "CBmx.h"
+#include "CBoat.h"
+#include "CHeli.h"
+#include "CMonsterTruck.h"
+#include "CPlane.h"
+#include "CQuadBike.h"
+#include "CTrailer.h"
 
 #include "effects/custom/ped/LongLiveTheRichEffect.h"
 
@@ -46,4 +60,6 @@ public:
 	static float GetAudioVolumeOrOverride(float volume);
 
 	static int GetRealMissionsPassed();
+
+	static CVehicle* CreateVehicle(int vehicleID, CVector position, float orientation, bool clearSpace = true);
 };

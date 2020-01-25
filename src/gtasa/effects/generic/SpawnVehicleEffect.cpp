@@ -9,76 +9,109 @@ SpawnVehicleEffect::SpawnVehicleEffect(int vehicleID)
 	}
 }
 
+SpawnVehicleEffect::SpawnVehicleEffect(int vehicleID, bool setPlayerAsDriver)
+	: SpawnVehicleEffect(vehicleID)
+{
+	this->setPlayerAsDriver = setPlayerAsDriver;
+}
+
 void SpawnVehicleEffect::Enable() {
 	EffectPlaceholder::Enable();
 
 	SpawnForPlayer();
 }
 
+bool SpawnVehicleEffect::CanActivate() {
+	CPlayerPed* player = FindPlayerPed();
+	return player && !player->m_nAreaCode;
+}
+
 void SpawnVehicleEffect::SpawnForPlayer() {
 	CPlayerPed* player = FindPlayerPed();
 	if (player && !player->m_nAreaCode) {
-		CVector position = player->TransformFromObjectSpace(CVector(0.0f, 5.0f, 0.0f));
-		CVehicle* vehicle = CreateVehicle(position, player->m_fCurrentRotation + 1.5707964f);
-	}
-}
+		if (setPlayerAsDriver) {
+			// TODO: Fix this somehow
+			std::vector<CPed*> passengers = {};
 
-CVehicle* SpawnVehicleEffect::CreateVehicle(CVector position, float orientation) {
-	unsigned char oldFlags = CStreaming::ms_aInfoForModel[this->vehicleID].m_nFlags;
-	CStreaming::RequestModel(this->vehicleID, GAME_REQUIRED);
-	CStreaming::LoadAllRequestedModels(false);
-	if (CStreaming::ms_aInfoForModel[this->vehicleID].m_nLoadState == LOADSTATE_LOADED) {
-		if (!(oldFlags & GAME_REQUIRED)) {
-			CStreaming::SetModelIsDeletable(this->vehicleID);
-			CStreaming::SetModelTxdIsDeletable(this->vehicleID);
-		}
-		CVehicle* vehicle = nullptr;
-		switch (reinterpret_cast<CVehicleModelInfo*>(CModelInfo::ms_modelInfoPtrs[this->vehicleID])->m_nVehicleType) {
-			case VEHICLE_MTRUCK:
-				vehicle = new CMonsterTruck(this->vehicleID, 1);
-				break;
-			case VEHICLE_QUAD:
-				vehicle = new CQuadBike(this->vehicleID, 1);
-				break;
-			case VEHICLE_HELI:
-				vehicle = new CHeli(this->vehicleID, 1);
-				break;
-			case VEHICLE_PLANE:
-				vehicle = new CPlane(this->vehicleID, 1);
-				break;
-			case VEHICLE_BIKE:
-				vehicle = new CBike(this->vehicleID, 1);
-				reinterpret_cast<CBike*>(vehicle)->m_nDamageFlags |= 0x10;
-				break;
-			case VEHICLE_BMX:
-				vehicle = new CBmx(this->vehicleID, 1);
-				reinterpret_cast<CBmx*>(vehicle)->m_nDamageFlags |= 0x10;
-				break;
-			case VEHICLE_TRAILER:
-				vehicle = new CTrailer(this->vehicleID, 1);
-				break;
-			case VEHICLE_BOAT:
-			case VEHICLE_TRAIN: // Thank you Rockstar, very cool
-				vehicle = new CBoat(this->vehicleID, 1);
-				break;
-			default:
-				vehicle = new CAutomobile(this->vehicleID, 1, true);
-				break;
-		}
-		if (vehicle) {
-			vehicle->SetPosn(position);
-			vehicle->SetOrientation(0.0f, 0.0f, orientation);
-			vehicle->m_nStatus = eEntityStatus::STATUS_ABANDONED;
-			vehicle->m_nDoorLock = CARLOCK_UNLOCKED;
-			CTheScripts::ClearSpaceForMissionEntity(position, vehicle);
-			CWorld::Add(vehicle);
-			if (vehicle->m_nVehicleClass == VEHICLE_BIKE)
-				reinterpret_cast<CBike*>(vehicle)->PlaceOnRoadProperly();
-			else if (vehicle->m_nVehicleClass != VEHICLE_BOAT)
-				reinterpret_cast<CAutomobile*>(vehicle)->PlaceOnRoadProperly();
+			CVehicle* vehicle = FindPlayerVehicle(-1, false);
+			if (vehicle) {
+				CStreaming::RequestModel(vehicleID, 1);
+				CStreaming::LoadAllRequestedModels(0);
 
-			return vehicle;
+				auto moveSpeed = vehicle->m_vecMoveSpeed;
+				auto turnSpeed = vehicle->m_vecTurnSpeed;
+				auto matrix = vehicle->GetMatrix();
+				auto createdBy = vehicle->m_nCreatedBy;
+
+				Command<eScriptCommands::COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION>(FindPlayerPed(), vehicle);
+
+				for (CPed* ped : vehicle->m_apPassengers) {
+					if (ped) {
+						passengers.push_back(ped);
+						Command<eScriptCommands::COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION>(ped, vehicle);
+					}
+				}
+
+				memset(vehicle, 0, sizeof(CHeli));
+				switch (reinterpret_cast<CVehicleModelInfo*>(CModelInfo::ms_modelInfoPtrs[vehicleID])->m_nVehicleType) {
+					case VEHICLE_MTRUCK:
+						plugin::CallMethod<0x6C8D60>(vehicle, vehicleID, 1);
+						break;
+					case VEHICLE_QUAD:
+						plugin::CallMethod<0x6CE370>(vehicle, vehicleID, 1);
+						break;
+					case VEHICLE_HELI:
+						plugin::CallMethod<0x6C4190>(vehicle, vehicleID, 1);
+						break;
+					case VEHICLE_PLANE:
+						plugin::CallMethod<0x6C8E20>(vehicle, vehicleID, 1);
+						break;
+					case VEHICLE_BIKE:
+						plugin::CallMethod<0x6BF430>(vehicle, vehicleID, 1);
+						break;
+					case VEHICLE_BMX:
+						plugin::CallMethod<0x6BF820>(vehicle, vehicleID, 1);
+						reinterpret_cast<CBmx*>(vehicle)->m_nDamageFlags |= 0x10;
+						break;
+					case VEHICLE_TRAILER:
+						plugin::CallMethod<0x6D03A0>(vehicle, vehicleID, 1);
+						break;
+					case VEHICLE_BOAT:
+					case VEHICLE_TRAIN: // Thank you Rockstar, very cool
+						plugin::CallMethod<0x6F2940>(vehicle, vehicleID, 1);
+						break;
+					default:
+						plugin::CallMethod<0x6B0A90>(vehicle, vehicleID, 1, 1);
+						break;
+				}
+
+				vehicle->m_matrix = matrix;
+				vehicle->m_vecMoveSpeed = moveSpeed;
+				vehicle->m_vecTurnSpeed = turnSpeed;
+				vehicle->m_nCreatedBy = createdBy;
+
+				Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR>(player, vehicle);
+				if (passengers.size() > 0) {
+					for (unsigned int i = 0; i < vehicle->m_nMaxPassengers && i < passengers.size(); i++) {
+						Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR_AS_PASSENGER>(passengers[i], vehicle, i);
+					}
+				}
+			}
+
+			/*CVehicle* vehicle = GameUtil::CreateVehicle(this->vehicleID, position, player->m_fCurrentRotation, true);
+			if (playerWasInVehicle) {
+				vehicle->m_vecMoveSpeed = moveSpeed;
+				vehicle->m_vecTurnSpeed = turnSpeed;
+				vehicle->SetMatrix(matrix);
+				vehicle->m_nCreatedBy = createdBy;
+				vehicle->m_pDriver = playerVehicle->m_pDriver;
+			}*/
+
+			Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT>();
+		}
+		else {
+			CVector position = player->TransformFromObjectSpace(CVector(0.0f, 5.0f, 0.0f));
+			CVehicle* vehicle = GameUtil::CreateVehicle(this->vehicleID, position, player->m_fCurrentRotation + 1.5707964f);
 		}
 	}
-	return nullptr;
 }
