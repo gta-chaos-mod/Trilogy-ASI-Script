@@ -431,6 +431,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "your_car_floats_away_when_hit") {
 		effect = new YourCarFloatsAwayWhenHitEffect();
 	}
+	else if (name == "ring_ring") {
+		effect = new RingRingEffect();
+	}
 
 	return effect;
 }
