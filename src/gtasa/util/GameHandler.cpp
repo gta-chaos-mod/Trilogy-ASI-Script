@@ -57,6 +57,9 @@ void GameHandler::Initialise() {
 }
 
 void GameHandler::ProcessGame() {
+	// Make sure the player never cheated
+	CCheat::m_bHasPlayerCheated = false;
+
 	HandleAutosave();
 
 	HandleVehicleRadio();
