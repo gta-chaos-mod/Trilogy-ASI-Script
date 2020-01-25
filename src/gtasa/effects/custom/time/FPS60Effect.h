@@ -9,6 +9,7 @@ private:
 	int framerate = 60;
 
 	byte oldFrameTimeWait = 14;
+	bool oldFrameLimiter = false;
 
 public:
 	FPS60Effect();

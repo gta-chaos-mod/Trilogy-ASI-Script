@@ -9,6 +9,7 @@ private:
 	int framerate = 15;
 
 	byte oldFrameTimeWait = 14;
+	bool oldFrameLimiter = false;
 
 public:
 	FPS15Effect();
