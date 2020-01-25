@@ -152,6 +152,7 @@
 #include "effects/custom/vehicle/YourCarFloatsAwayWhenHitEffect.h"
 #include "effects/custom/player/RingRingEffect.h"
 #include "effects/custom/ped/PedsExplodeWhenRunOverEffect.h"
+#include "effects/custom/vehicle/HonkVehicleEffect.h"
 
 #include "CCheat.h"
 

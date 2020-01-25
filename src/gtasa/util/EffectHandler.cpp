@@ -437,6 +437,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "peds_explode_when_run_over") {
 		effect = new PedsExplodeWhenRunOverEffect();
 	}
+	else if (name == "honk_vehicle") {
+		effect = new HonkVehicleEffect();
+	}
 
 	return effect;
 }
