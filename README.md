@@ -66,6 +66,41 @@ Hold down `Left CTRL` when hovering over the `Load Game` option in the menu.
 ## Where are the autosaves being saved to?
 Inside a sub-directory called `chaos_mod` in your corresponding GTA User Files folder.
 
+## How do I setup the Twitch voting?
+In the Twitch tab you have to fill out the `Channel`, `Username` and `OAuth Token` fields.
+
+Channel: *The channel you want to have the voting in*  
+Username: *The username of the account to do the voting from (can be your own, can be a channel moderator)*  
+OAuth Token: *An OAuth Token for the specified username (Can be generated [here](https://twitchtokengenerator.com/quick/xnaEGgziJl))*
+
+![https://i.imgur.com/dEQ9Fam.png](https://i.imgur.com/dEQ9Fam.png)
+
+## How do I use the polls feature for Twitch voting?
+Polls are still very experimental due to Twitch not offering a decent-- err, an API at all, to utilize them.
+
+SirStendec was kind enough to provide a FrankerFaceZ Add-On that provides access to the polls functionality.
+
+First make sure to enable `Use Twitch Polls For Votes` in the `Settings` tab.
+
+![https://i.imgur.com/nj6hRWU.png](https://i.imgur.com/nj6hRWU.png)
+
+To use it, first you need to install [FrankerFaceZ](https://www.frankerfacez.com/) in your browser.
+
+Navigate to your dashboard and open the FrankerFaceZ control center (upside-down FrankerZ icon in the top right next to your user avatar).  
+Then head into `Add-Ons`, scroll down until you see `Add Unlisted...`, type in `poll-shim` and click `Add`.  
+Afterwards, make sure to install said Add-On.
+
+![https://i.imgur.com/56fm1ID.png](https://i.imgur.com/56fm1ID.png)
+
+Now head into the Poll-Shim menu to the left (or click on `Settings` after installing it).
+
+Make sure `Enable Poll-Shim` is checked and enter any passphrase into the `Passphrase` field.  
+The passphrase you have entered also needs to be put into the GTA Trilogy Chaos Mod program.
+
+Also make sure to have your dashboard open (or, optionally, after doing this setup, a popout chat from your channel will work, too).
+
+![https://i.imgur.com/B3ZbToe.png](https://i.imgur.com/B3ZbToe.png)
+
 ## My game's crashing!
 Great! Create an issue with the `.log` and `.dmp` files from the `CrashDumps` folder. (Best to archive them into a `.zip` file or similar)
 
