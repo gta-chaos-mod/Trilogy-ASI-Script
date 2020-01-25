@@ -9,6 +9,8 @@ void SendVehiclesToSpaceEffect::Enable() {
 	GameUtil::SetVehiclesToRealPhysics();
 
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
-		vehicle->m_vecMoveSpeed.z = 10.0f;
+		vehicle->m_vecMoveSpeed.x += RandomHelper::Random(-2.5f, 2.5f);
+		vehicle->m_vecMoveSpeed.y += RandomHelper::Random(-2.5f, 2.5f);
+		vehicle->m_vecMoveSpeed.z += 10.0f;
 	}
 }
