@@ -64,4 +64,6 @@ public:
 	static int GetRealMissionsPassed();
 
 	static CVehicle* CreateVehicle(int vehicleID, CVector position, float orientation, bool clearSpace = true);
+
+	static void ClearWeaponsExceptParachute(CPed* ped);
 };

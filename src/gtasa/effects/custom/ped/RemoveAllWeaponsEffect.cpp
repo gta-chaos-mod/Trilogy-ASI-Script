@@ -10,6 +10,6 @@ void RemoveAllWeaponsEffect::Enable() {
 	EffectPlaceholder::Enable();
 
 	for (CPed* ped : CPools::ms_pPedPool) {
-		ped->ClearWeapons();
+		GameUtil::ClearWeaponsExceptParachute(ped);
 	}
 }

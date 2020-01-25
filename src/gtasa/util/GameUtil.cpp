@@ -253,3 +253,14 @@ CVehicle* GameUtil::CreateVehicle(int vehicleID, CVector position, float orienta
 	}
 	return nullptr;
 }
+
+void GameUtil::ClearWeaponsExceptParachute(CPed* ped) {
+	if (ped) {
+		for (int i = eWeaponType::WEAPON_BRASSKNUCKLE; i < eWeaponType::WEAPON_FLARE; i++) {
+			eWeaponType type = static_cast<eWeaponType>(i);
+			if (type != eWeaponType::WEAPON_PARACHUTE) {
+				ped->ClearWeapon(type);
+			}
+		}
+	}
+}
