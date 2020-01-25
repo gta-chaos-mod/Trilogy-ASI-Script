@@ -3,6 +3,7 @@
 PedsAttackEachOtherCheat::PedsAttackEachOtherCheat()
 	: EffectBase("cheat_peds_attack_each_other")
 {
+	AddType("peds_attack");
 	SetDisabledForMissions();
 }
 

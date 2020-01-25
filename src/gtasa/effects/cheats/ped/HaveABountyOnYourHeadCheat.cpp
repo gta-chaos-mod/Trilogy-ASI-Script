@@ -3,6 +3,7 @@
 HaveABountyOnYourHeadCheat::HaveABountyOnYourHeadCheat()
 	: EffectBase("cheat_have_a_bounty_on_your_head")
 {
+	AddType("peds_attack");
 	SetDisabledForMissions();
 }
 
