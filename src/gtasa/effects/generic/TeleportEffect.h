@@ -1,16 +1,19 @@
 #pragma once
 
-#include "effects/EffectPlaceholder.h"
+#include "util/EffectBase.h"
 
 #include "util/Teleportation.h"
 
-class TeleportEffect : public EffectPlaceholder
+class TeleportEffect : public EffectBase
 {
 private:
-	CVector destination;
+	CVector destination = CVector();
+	bool hasTeleported = false;
 
 public:
 	TeleportEffect(CVector destination);
 
-	void Enable() override;
+	bool CanActivate() override;
+
+	void HandleTick() override;
 };

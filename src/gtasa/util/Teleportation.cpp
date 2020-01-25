@@ -1,5 +1,49 @@
 #include "Teleportation.h"
 
+#include "CEntryExitManager.h"
+
+bool Teleportation::CanTeleport() {
+	CPlayerPed* player = FindPlayerPed();
+	if (!player) {
+		return false;
+	}
+
+	if (!player->CanPlayerStartMission() || !player->IsPedInControl()) {
+		return false;
+	}
+
+	CPlayerData* data = player->m_pPlayerData;
+	if (!data || !data->m_bCanBeDamaged) {
+		return false;
+	}
+
+	CPad* pad = player->GetPadFromPlayer();
+	if (!pad) {
+		return false;
+	}
+
+	if (pad->bPlayerOnInteriorTransition || pad->bPlayerSafe || pad->bPlayerSafeForCutscene) {
+		return false;
+	}
+
+	if (CCutsceneMgr::ms_cutsceneProcessing || CCutsceneMgr::ms_running) {
+		return false;
+	}
+
+	if (CEntryExitManager::WeAreInInteriorTransition()) {
+		return false;
+	}
+
+	CVehicle* vehicle = FindPlayerVehicle(-1, true);
+	if (vehicle) {
+		if (Command<eScriptCommands::COMMAND_IS_RECORDING_GOING_ON_FOR_CAR>(vehicle)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void Teleportation::Teleport(CVector destination, int interior) {
 	CEntity* entity = FindPlayerEntity(-1);
 	if (entity && !CCutsceneMgr::ms_running) {

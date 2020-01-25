@@ -1,13 +1,25 @@
 #include "TeleportEffect.h"
 
 TeleportEffect::TeleportEffect(CVector destination)
-	: EffectPlaceholder("effect_teleport")
+	: EffectBase("effect_teleport")
 {
 	this->destination = destination;
 }
 
-void TeleportEffect::Enable() {
-	EffectPlaceholder::Enable();
+bool TeleportEffect::CanActivate() {
+	return Teleportation::CanTeleport();
+}
+
+void TeleportEffect::HandleTick() {
+	EffectBase::HandleTick();
+
+	if (this->hasTeleported) {
+		Disable();
+		return;
+	}
+
+	if (!CanActivate()) return;
 
 	Teleportation::Teleport(this->destination);
+	this->hasTeleported = true;
 }
