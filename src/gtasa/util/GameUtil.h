@@ -40,6 +40,8 @@ private:
 	static char* gamePath;
 
 public:
+	static bool IsRainbomizerLoaded();
+
 	static CPedAcquaintance* GetPedTypeAcquaintances(int PedType);
 	static void BackupAcquaintances();
 	static void RestoreSavedAcquaintances();

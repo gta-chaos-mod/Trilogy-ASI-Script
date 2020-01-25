@@ -5,6 +5,10 @@ CPedAcquaintance GameUtil::backup_acquaintances[32];
 std::string GameUtil::loadFilePath;
 char* GameUtil::gamePath = reinterpret_cast<char*>(0xC92368);
 
+bool GameUtil::IsRainbomizerLoaded() {
+	return *reinterpret_cast<bool*>(0xBED001);
+}
+
 CPedAcquaintance* GameUtil::GetPedTypeAcquaintances(int PedType) {
 	return plugin::CallAndReturn<CPedAcquaintance*, 0x6089B0>(PedType);
 }
