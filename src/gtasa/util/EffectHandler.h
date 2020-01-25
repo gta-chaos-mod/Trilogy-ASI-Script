@@ -148,6 +148,7 @@
 #include "effects/custom/vehicle/OhHeyTanksEffect.h"
 #include "effects/custom/wanted/AlwaysWantedEffect.h"
 #include "effects/custom/player/CinematicVehicleCameraEffect.h"
+#include "effects/custom/player/TopDownCameraEffect.h"
 
 #include "CCheat.h"
 

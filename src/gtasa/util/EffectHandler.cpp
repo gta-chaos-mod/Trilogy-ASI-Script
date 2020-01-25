@@ -425,6 +425,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "cinematic_vehicle_camera") {
 		effect = new CinematicVehicleCameraEffect();
 	}
+	else if (name == "top_down_camera") {
+		effect = new TopDownCameraEffect();
+	}
 
 	return effect;
 }
