@@ -14,5 +14,7 @@ private:
 public:
 	ToTheLeftToTheRightEffect();
 
-	void HandleTick();
+	void Disable() override;
+
+	void HandleTick() override;
 };
