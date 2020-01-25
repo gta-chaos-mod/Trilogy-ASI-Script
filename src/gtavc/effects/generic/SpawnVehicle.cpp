@@ -10,7 +10,7 @@ SpawnVehicle::SpawnVehicle(int vehicleID)
 }
 
 void SpawnVehicle::Enable() {
-	EffectBase::Enable();
+	EffectPlaceholder::Enable();
 
 	SpawnForPlayer();
 }
@@ -19,7 +19,7 @@ void SpawnVehicle::SpawnForPlayer() {
 	CPlayerPed* player = FindPlayerPed();
 	if (player && !player->m_nInterior) {
 		CVector position = player->TransformFromObjectSpace(CVector(0.0f, 5.0f, 1.0f));
-		CVehicle* vehicle = CreateVehicle(position, player->m_fRotationCur);
+		CVehicle* vehicle = CreateVehicle(position, player->m_fRotationCur + 1.5707964f);
 	}
 }
 
@@ -39,6 +39,8 @@ CVehicle* SpawnVehicle::CreateVehicle(CVector position, float orientation) {
 
 		if (vehicle) {
 			CTheScripts::ClearSpaceForMissionEntity(position, vehicle);
+
+			vehicle->m_placement.SetOrientation(0.0f, 0.0f, orientation);
 		}
 	}
 	return vehicle;

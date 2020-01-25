@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/EffectBase.h"
+#include "effects/EffectPlaceholder.h"
 
 #include "CGame.h"
 #include "CPopulation.h"
@@ -8,7 +8,7 @@
 #include "CTimeCycle.h"
 #include "CWorld.h"
 
-class Teleport : public EffectBase
+class Teleport : public EffectPlaceholder
 {
 private:
 	CVector destination;

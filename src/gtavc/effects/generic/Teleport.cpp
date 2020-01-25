@@ -1,12 +1,12 @@
 #include "Teleport.h"
 
 Teleport::Teleport(CVector destination)
-	: EffectBase("teleport") {
+	: EffectPlaceholder("teleport") {
 	this->destination = destination;
 }
 
 void Teleport::Enable() {
-	EffectBase::Enable();
+	EffectPlaceholder::Enable();
 
 	CEntity* entity = FindPlayerEntity();
 	if (entity) {

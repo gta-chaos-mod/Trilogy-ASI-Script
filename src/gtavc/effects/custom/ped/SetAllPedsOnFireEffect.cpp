@@ -7,6 +7,6 @@ void SetAllPedsOnFireEffect::Enable() {
 	EffectPlaceholder::Enable();
 
 	for (CPed* ped : CPools::ms_pPedPool) {
-		gFireManager.StartFire(ped, NULL, 1.0f, 1, 7000, 100);
+		gFireManager.StartFire(ped, NULL, 1.0f, 100);
 	}
 }
