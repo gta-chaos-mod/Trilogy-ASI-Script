@@ -8,6 +8,21 @@ void GameHandler::Initialise() {
 	Config::Init();
 	GameFixes::Initialise();
 
+	// Check if the mod is already loaded / installed once
+	if (injector::ReadMemory<bool>(0xBED000, true)) {
+		MessageBox(
+			NULL,
+			"Chaos Mod is already installed - make sure it isn't installed multiple times!",
+			"Chaos Mod Error",
+			0
+		);
+		exit(0);
+		return;
+	}
+
+	// Write to unused memory space so other mods know that the Chaos mod is installed
+	injector::WriteMemory<bool>(0xBED000, true, true);
+
 	patch::RedirectCall(0x5D0D66, HookedOpenFile);
 
 	if (Config::GetOrDefault("Fixes.DisableReplays", true)) {
