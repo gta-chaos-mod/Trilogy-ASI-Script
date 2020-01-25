@@ -1,12 +1,12 @@
 #pragma once
 
-#include "effects/EffectPlaceholder.h"
+#include "util/EffectBase.h"
 #include "util/GameUtil.h"
 
-class PopTiresOfAllVehiclesEffect : public EffectPlaceholder
+class PopTiresOfAllVehiclesEffect : public EffectBase
 {
 public:
 	PopTiresOfAllVehiclesEffect();
 
-	void Enable() override;
+	void HandleTick() override;
 };
