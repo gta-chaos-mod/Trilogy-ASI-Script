@@ -446,6 +446,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "beyblade") {
 		effect = new BeybladeEffect();
 	}
+	else if (name == "weapon_roulette") {
+		effect = new WeaponRouletteEffect();
+	}
 
 	return effect;
 }

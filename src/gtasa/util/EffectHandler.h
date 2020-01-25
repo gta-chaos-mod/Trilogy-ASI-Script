@@ -155,6 +155,7 @@
 #include "effects/custom/vehicle/HonkVehicleEffect.h"
 #include "effects/custom/player/QuakeFOVEffect.h"
 #include "effects/custom/vehicle/BeybladeEffect.h"
+#include "effects/custom/player/WeaponRouletteEffect.h"
 
 #include "CCheat.h"
 
