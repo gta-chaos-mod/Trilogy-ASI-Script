@@ -3,13 +3,18 @@
 InvertedGravityEffect::InvertedGravityEffect()
 	: EffectBase("effect_inverted_gravity")
 {
-	SetEffectDuration(1000 * 10);
 	AddType("gravity");
+	SetEffectDuration(1000 * 10);
 }
 
 void InvertedGravityEffect::Disable() {
-	injector::WriteMemory(0x863984, 0.008f, true);
-	injector::WriteMemory(0x871494, (-0.008f / 2), true);
+	for (CPed* ped : CPools::ms_pPedPool) {
+		ped->m_nPhysicalFlags.bApplyGravity = true;
+	}
+
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		vehicle->m_nPhysicalFlags.bApplyGravity = true;
+	}
 
 	EffectBase::Disable();
 }
@@ -19,8 +24,15 @@ void InvertedGravityEffect::HandleTick() {
 
 	GameUtil::SetVehiclesToRealPhysics();
 
-	injector::WriteMemory(0x863984, gravity, true);
+	for (CPed* ped : CPools::ms_pPedPool) {
+		ped->m_nPhysicalFlags.bApplyGravity = false;
 
-	// Potentially fix bikes disappearing with zero / negative gravity
-	injector::WriteMemory(0x871494, gravity == 0.0f ? -0.00000001f : (-gravity / 2), true);
+		ped->m_vecMoveSpeed.z = min(ped->m_vecMoveSpeed.z + 0.001f, 1.0f);
+	}
+
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		vehicle->m_nPhysicalFlags.bApplyGravity = false;
+
+		vehicle->m_vecMoveSpeed.z = min(vehicle->m_vecMoveSpeed.z + 0.001f, 1.0f);
+	}
 }

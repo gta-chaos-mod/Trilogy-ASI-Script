@@ -7,9 +7,6 @@
 
 class ZeroGravityEffect : public EffectBase
 {
-private:
-	float gravity = 0.0f;
-
 public:
 	ZeroGravityEffect();
 

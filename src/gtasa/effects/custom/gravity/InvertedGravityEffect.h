@@ -7,9 +7,6 @@
 
 class InvertedGravityEffect : public EffectBase
 {
-private:
-	float gravity = -0.002f;
-
 public:
 	InvertedGravityEffect();
 

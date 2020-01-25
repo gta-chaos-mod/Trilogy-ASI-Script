@@ -3,13 +3,18 @@
 ZeroGravityEffect::ZeroGravityEffect()
 	: EffectBase("effect_zero_gravity")
 {
-	SetEffectDuration(1000 * 10);
 	AddType("gravity");
+	SetEffectDuration(1000 * 10);
 }
 
 void ZeroGravityEffect::Disable() {
-	injector::WriteMemory(0x863984, 0.008f, true);
-	injector::WriteMemory(0x871494, (-0.008f / 2), true);
+	for (CPed* ped : CPools::ms_pPedPool) {
+		ped->m_nPhysicalFlags.bApplyGravity = true;
+	}
+
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		vehicle->m_nPhysicalFlags.bApplyGravity = true;
+	}
 
 	EffectBase::Disable();
 }
@@ -19,8 +24,11 @@ void ZeroGravityEffect::HandleTick() {
 
 	GameUtil::SetVehiclesToRealPhysics();
 
-	injector::WriteMemory(0x863984, gravity, true);
+	for (CPed* ped : CPools::ms_pPedPool) {
+		ped->m_nPhysicalFlags.bApplyGravity = false;
+	}
 
-	// Potentially fix bikes disappearing with zero / negative gravity
-	injector::WriteMemory(0x871494, gravity == 0.0f ? -0.00000001f : (-gravity / 2), true);
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		vehicle->m_nPhysicalFlags.bApplyGravity = false;
+	}
 }
