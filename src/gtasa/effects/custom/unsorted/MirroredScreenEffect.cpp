@@ -17,6 +17,12 @@ void MirroredScreenEffect::Enable() {
 	showRasterEvent += ShowRasterEvent;
 }
 
+void MirroredScreenEffect::Disable() {
+	showRasterEvent -= ShowRasterEvent;
+
+	EffectBase::Disable();
+}
+
 inline RwRGBA* GetPixel(RwRaster* raster, int x, int y) {
 	return (RwRGBA*) (raster->cpPixels + y * raster->stride + (x * 4));
 }
@@ -45,10 +51,4 @@ void MirroredScreenEffect::ShowRasterEvent(RwCamera* camera) {
 		}
 	}
 	RwRasterUnlock(raster);
-}
-
-void MirroredScreenEffect::Disable() {
-	showRasterEvent -= ShowRasterEvent;
-
-	EffectBase::Disable();
 }

@@ -17,6 +17,12 @@ void GreyscaleScreenEffect::Enable() {
 	showRasterEvent += ShowRasterEvent;
 }
 
+void GreyscaleScreenEffect::Disable() {
+	showRasterEvent -= ShowRasterEvent;
+
+	EffectBase::Disable();
+}
+
 inline RwRGBA* GetPixel(RwRaster* raster, int x, int y) {
 	return (RwRGBA*) (raster->cpPixels + y * raster->stride + (x * 4));
 }
@@ -39,10 +45,4 @@ void GreyscaleScreenEffect::ShowRasterEvent(RwCamera* camera) {
 		}
 	}
 	RwRasterUnlock(raster);
-}
-
-void GreyscaleScreenEffect::Disable() {
-	showRasterEvent -= ShowRasterEvent;
-
-	EffectBase::Disable();
 }

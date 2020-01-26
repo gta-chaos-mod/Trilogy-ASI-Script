@@ -17,6 +17,12 @@ void UpsideDownScreenEffect::Enable() {
 	showRasterEvent += ShowRasterEvent;
 }
 
+void UpsideDownScreenEffect::Disable() {
+	showRasterEvent -= ShowRasterEvent;
+
+	EffectBase::Disable();
+}
+
 inline RwRGBA* GetPixel(RwRaster* raster, int x, int y) {
 	return (RwRGBA*) (raster->cpPixels + y * raster->stride + (x * 4));
 }
@@ -42,10 +48,4 @@ void UpsideDownScreenEffect::ShowRasterEvent(RwCamera* camera) {
 		}
 	}
 	RwRasterUnlock(raster);
-}
-
-void UpsideDownScreenEffect::Disable() {
-	showRasterEvent -= ShowRasterEvent;
-
-	EffectBase::Disable();
 }
