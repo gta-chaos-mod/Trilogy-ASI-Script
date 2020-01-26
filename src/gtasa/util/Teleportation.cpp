@@ -78,6 +78,9 @@ void Teleportation::Teleport(CVector destination, int interior) {
 
 		CStreaming::StreamZoneModels(&destination);
 		CTimeCycle::StopExtraColour(false);
+
+		CStreaming::LoadScene(&destination);
+		CStreaming::LoadAllRequestedModels(false);
 	}
 }
 
