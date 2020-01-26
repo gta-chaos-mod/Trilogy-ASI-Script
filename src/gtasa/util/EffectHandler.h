@@ -126,7 +126,6 @@
 #include "effects/custom/unsorted/UpsideDownScreenEffect.h"
 #include "effects/custom/unsorted/MirroredScreenEffect.h"
 #include "effects/custom/unsorted/GreyscaleScreenEffect.h"
-#include "effects/custom/unsorted/SepiaScreenEffect.h"
 #include "effects/custom/unsorted/ThermalVisionEffect.h"
 #include "effects/custom/mission/PassCurrentMissionEffect.h"
 #include "effects/custom/ped/InfiniteHealthEveryoneEffect.h"
