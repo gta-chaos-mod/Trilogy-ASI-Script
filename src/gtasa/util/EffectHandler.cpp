@@ -458,6 +458,15 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "force_vehicle_mouse_steering") {
 		effect = new ForceVehicleMouseSteering();
 	}
+	else if (name == "upside_down_screen") {
+		effect = new UpsideDownScreenEffect();
+	}
+	else if (name == "mirrored_screen") {
+		effect = new MirroredScreenEffect();
+	}
+	else if (name == "greyscale_screen") {
+		effect = new GreyscaleScreenEffect();
+	}
 
 	return effect;
 }
