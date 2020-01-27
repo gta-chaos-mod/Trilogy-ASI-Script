@@ -7,6 +7,7 @@ void NamedPipe::OnAttach() {
 
 	char buffer[1024] = "";
 	char text[1024] = "";
+	DWORD dwRead;
 
 	CNamedPipe pipeHandle;
 	pipeHandle.Create(
@@ -23,7 +24,7 @@ void NamedPipe::OnAttach() {
 	{
 		if (pipeHandle.Connect() != FALSE)
 		{
-			while (pipeHandle.Read(buffer, sizeof(buffer) - 1) != FALSE)
+			while (pipeHandle.Read(buffer, sizeof(buffer) - 1, &dwRead) != FALSE)
 			{
 				for (unsigned int i = 0; i < strlen(buffer); i++)
 				{
