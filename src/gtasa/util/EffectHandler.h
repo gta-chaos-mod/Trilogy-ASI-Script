@@ -147,7 +147,7 @@
 #include "effects/custom/mission/FakePassCurrentMissionEffect.h"
 #include "effects/custom/hud/DVDScreensaverEffect.h"
 #include "effects/custom/vehicle/TurnVehiclesAroundEffect.h"
-#include "effects/custom/vehicle/LightspeedBrakingEffect.h"
+#include "effects/custom/vehicle/HonkBoostEffect.h"
 #include "effects/custom/vehicle/OhHeyTanksEffect.h"
 #include "effects/custom/wanted/AlwaysWantedEffect.h"
 #include "effects/custom/player/CinematicVehicleCameraEffect.h"

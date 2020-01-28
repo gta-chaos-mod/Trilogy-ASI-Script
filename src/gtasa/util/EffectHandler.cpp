@@ -413,8 +413,8 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "dvd_screensaver") {
 		effect = new DVDScreensaverEffect();
 	}
-	else if (name == "lightspeed_braking") {
-		effect = new LightspeedBrakingEffect();
+	else if (name == "honk_boost") {
+		effect = new HonkBoostEffect();
 	}
 	else if (name == "oh_hey_tanks") {
 		effect = new OhHeyTanksEffect();
