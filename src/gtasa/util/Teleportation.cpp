@@ -1,14 +1,23 @@
 #include "Teleportation.h"
 
 #include "CEntryExitManager.h"
+#include "CCamera.h"
 
 bool Teleportation::CanTeleport() {
 	CPlayerPed* player = FindPlayerPed();
-	if (!player) {
+	if (!player || !player->CanSetPedState() || !player->IsAlive()) {
 		return false;
 	}
 
-	if (!player->CanPlayerStartMission() || !player->IsPedInControl()) {
+	switch (TheCamera.m_PlayerWeaponMode.m_nMode) {
+		case eCamMode::MODE_HELICANNON_1STPERSON:
+		case eCamMode::MODE_CAMERA:
+		case eCamMode::MODE_AIMWEAPON_ATTACHED:
+			return false;
+		default: {}
+	}
+
+	if (!player->IsPedInControl()) {
 		return false;
 	}
 
@@ -34,8 +43,12 @@ bool Teleportation::CanTeleport() {
 		return false;
 	}
 
-	CVehicle* vehicle = FindPlayerVehicle(-1, true);
+	CVehicle* vehicle = FindPlayerVehicle(-1, false);
 	if (vehicle) {
+		if (!vehicle->IsDriver(player)) {
+			return false;
+		}
+
 		if (Command<eScriptCommands::COMMAND_IS_RECORDING_GOING_ON_FOR_CAR>(vehicle)) {
 			return false;
 		}
