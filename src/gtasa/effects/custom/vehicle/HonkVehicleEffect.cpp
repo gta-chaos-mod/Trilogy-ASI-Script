@@ -17,6 +17,14 @@ void HonkVehicleEffect::Disable() {
 	EffectBase::Disable();
 }
 
+void HonkVehicleEffect::HandleTick() {
+	EffectBase::HandleTick();
+
+	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
+		vehicle->m_nHornCounter = 1;
+	}
+}
+
 char __fastcall HonkVehicleEffect::HookedPlayHornOrSiren(CAEVehicleAudioEntity* thisAudioEntity, void* edx, char counter, char sirenOrAlarm, char playHorn, cVehicleParams* data) {
 	bool siren = thisAudioEntity->m_bModelWithSiren;
 	int _counter = siren ? 0 : 1;
