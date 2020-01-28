@@ -1,13 +1,13 @@
 #pragma once
 
-#include "effects/EffectPlaceholder.h"
+#include "util/EffectBase.h"
 
 #include "CCutsceneMgr.h"
 
-class GetBustedEffect : public EffectPlaceholder
+class GetBustedEffect : public EffectBase
 {
 public:
 	GetBustedEffect();
 
-	void Enable() override;
+	void HandleTick() override;
 };
