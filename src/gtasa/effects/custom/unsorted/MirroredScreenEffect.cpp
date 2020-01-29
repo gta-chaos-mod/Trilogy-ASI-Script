@@ -1,50 +1,64 @@
 #include "MirroredScreenEffect.h"
-#include "rw/rwcore.h"
-#include <memory>
 #include "CMenuManager.h"
+#include "util/DrawHelper.h"
+#include "Color.h"
+#include "CScene.h"
 
-static CdeclEvent<AddressList<0x53EBF5, H_CALL>, PRIORITY_BEFORE, ArgPickN<RwCamera*, 0>, RwCamera * (RwCamera*)> showRasterEvent;
+static CdeclEvent<AddressList<0x53EBF5, H_CALL>, PRIORITY_BEFORE, ArgPickN<RwCamera*, 0>, RwCamera * (RwCamera*)> endUpdateEvent;
+static CdeclEvent<AddressList<0x745C7D, H_CALL>, PRIORITY_BEFORE, ArgPickNone, void ()> createCameraSubRasterEvent;
+
+
+RwRaster* MirroredScreenEffect::raster = nullptr;
+RwIm2DVertex MirroredScreenEffect::vertices[4] = {};
 
 MirroredScreenEffect::MirroredScreenEffect()
-	: EffectBase("effect_mirrored_screen") {}
+	: EffectBase("effect_upside_down") {}
 
 void MirroredScreenEffect::Enable() {
 	EffectBase::Enable();
 
-	showRasterEvent += ShowRasterEvent;
+	ResetRaster();
+	
+	endUpdateEvent += EndUpdateEvent;
+	createCameraSubRasterEvent += ResetRaster;
 }
 
 void MirroredScreenEffect::Disable() {
-	showRasterEvent -= ShowRasterEvent;
+	endUpdateEvent -= EndUpdateEvent;
+	createCameraSubRasterEvent -= ResetRaster;
 
 	EffectBase::Disable();
 }
 
-inline RwRGBA* GetPixel(RwRaster* raster, int x, int y) {
-	return (RwRGBA*)(raster->cpPixels + y * raster->stride + (x * 4));
+void MirroredScreenEffect::ResetRaster() {
+	if(raster) {
+		RwRasterDestroy(raster);
+            }
+	auto cameraRaster = Scene.m_pRwCamera->frameBuffer;
+	raster = RwRasterCreate(cameraRaster->width, cameraRaster->height,
+				cameraRaster->depth, rwRASTERTYPECAMERATEXTURE);
+
+	// Reset raster and vertices
+	DrawHelper::Append(vertices, 0, CVector2D(0, 0), plugin::color::White, 1, 0);
+	DrawHelper::Append(vertices, 1, CVector2D(cameraRaster->width, 0), plugin::color::White, 0, 0);
+	DrawHelper::Append(vertices, 3, CVector2D(cameraRaster->width, cameraRaster->height), plugin::color::White, 0, 1);
+	DrawHelper::Append(vertices, 2, CVector2D(0, cameraRaster->height), plugin::color::White, 1, 1);
 }
 
-void MirroredScreenEffect::ShowRasterEvent(RwCamera* camera) {
+void MirroredScreenEffect::EndUpdateEvent(RwCamera* camera) {
 	if (FrontEndMenuManager.m_bMenuActive) {
 		return;
 	}
 
-	RwRaster* raster = camera->frameBuffer;
+	SetRenderState(rwRENDERSTATESHADEMODE, rwSHADEMODEFLAT);
+	
+	RwCameraEndUpdate(camera);
+	RwRasterPushContext(raster);
+	RwRasterRenderFast(camera->frameBuffer, 0, 0);
+	RwRasterPopContext();
+	RwCameraBeginUpdate(camera);
 
-	RwRasterLock(raster, 0, rwRASTERLOCKREADWRITE);
-
-	static RwUInt8* tmp = new RwUInt8[raster->stride];
-
-	for (int y = 0; y < raster->height; y++) {
-		for (int x = 0; x < raster->width / 2; x++) {
-			RwRGBA tmp = *GetPixel(raster, x, y);
-			memcpy(GetPixel(raster, x, y),
-				GetPixel(raster, raster->width - 1 - x, y),
-				4);
-			memcpy(GetPixel(raster, raster->width - 1 - x, y),
-				&tmp,
-				4);
-		}
-	}
-	RwRasterUnlock(raster);
+	SetRenderState(rwRENDERSTATETEXTURERASTER, (int) raster);
+	
+	RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vertices, 4);
 }

@@ -4,6 +4,12 @@
 
 class MirroredScreenEffect : public EffectBase
 {
+
+	static RwRaster* raster;
+	static RwIm2DVertex vertices[4];
+
+	static void ResetRaster();
+	
 public:
 	MirroredScreenEffect();
 
@@ -11,5 +17,5 @@ public:
 	
 	void Disable() override;
 
-	static void ShowRasterEvent(RwCamera* camera);
+	static void EndUpdateEvent(RwCamera* camera);
 };
