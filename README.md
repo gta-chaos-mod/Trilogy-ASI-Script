@@ -12,8 +12,11 @@ However, there is already basic support for **Vice City** and **III** implemente
 
 ## Which versions of the games does it support?
 **GTA San Andreas**: v1.0 US  
-**GTA Vice City**: v1.0 US  
-**GTA III**: v1.0 US
+~~**GTA Vice City**: v1.0 US~~  
+~~**GTA III**: v1.0 US~~
+
+So far only San Andreas is officially supported.  
+Vice City and III have some sort of basic support in already, but the GUI Tool doesn't support them yet.
 
 ## How do I downgrade my game to the required version?
 There's a handy thread over on the GTA Forums that has downgraders vor GTA III, Vice City and even San Andreas.  
@@ -125,7 +128,7 @@ I wouldn't mind potentially dropping by and seeing you guys suffer with the mod 
 # Credits
 ## [DK22Pac](https://github.com/DK22Pac) and everyone involved in the [plugin-sdk](https://github.com/DK22Pac/plugin-sdk)
 
-## [Parik](https://github.com/Zarig)
+## [Parik](https://github.com/Parik27)
 who has been helping me with a lot of function hooks and other things in the mod 💖
 
 ## Early beta testers
