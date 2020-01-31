@@ -27,12 +27,12 @@ void InvertedGravityEffect::HandleTick() {
 	for (CPed* ped : CPools::ms_pPedPool) {
 		ped->m_nPhysicalFlags.bApplyGravity = false;
 
-		ped->m_vecMoveSpeed.z = min(ped->m_vecMoveSpeed.z + 0.001f, 1.0f);
+		ped->m_vecMoveSpeed.z = std::min(ped->m_vecMoveSpeed.z + 0.001f, 1.0f);
 	}
 
 	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
 		vehicle->m_nPhysicalFlags.bApplyGravity = false;
 
-		vehicle->m_vecMoveSpeed.z = min(vehicle->m_vecMoveSpeed.z + 0.001f, 1.0f);
+		vehicle->m_vecMoveSpeed.z = std::min(vehicle->m_vecMoveSpeed.z + 0.001f, 1.0f);
 	}
 }

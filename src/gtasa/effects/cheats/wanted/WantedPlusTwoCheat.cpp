@@ -11,7 +11,7 @@ void WantedPlusTwoCheat::Enable() {
 
 	CWanted* wanted = FindPlayerWanted(-1);
 	if (wanted) {
-		int targetWanted = min(wanted->m_nWantedLevel + 2, 6);
+		int targetWanted = std::min(wanted->m_nWantedLevel + 2u, 6u);
 		wanted->CheatWantedLevel(targetWanted);
 	}
 }

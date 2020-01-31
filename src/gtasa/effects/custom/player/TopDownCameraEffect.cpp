@@ -27,7 +27,7 @@ void TopDownCameraEffect::HandleTick() {
 			speed = 1.2f;
 		}
 
-		offset += max(0.0f, min(speed * 40.0f, 40.0f));
+		offset += std::max(0.0f, std::min(speed * 40.0f, 40.0f));
 	}
 
 	CVector playerOffset = CVector(pos.x, pos.y, pos.z + 2.0f);

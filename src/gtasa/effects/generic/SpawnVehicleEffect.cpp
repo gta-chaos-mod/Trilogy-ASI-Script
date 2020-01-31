@@ -3,7 +3,7 @@
 SpawnVehicleEffect::SpawnVehicleEffect(int vehicleID)
 	: EffectPlaceholder("effect_spawn_vehicle")
 {
-	this->vehicleID = max(400, min(vehicleID, 611));
+	this->vehicleID = std::max(400, std::min(vehicleID, 611));
 	if (this->vehicleID == 569) {
 		this->vehicleID = 537; // 569 crashes the game when spawned in apparently
 	}

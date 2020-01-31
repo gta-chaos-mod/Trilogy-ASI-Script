@@ -13,8 +13,8 @@
   \param fV Hue component, used as output, range: [0, 1]
 */
 void ColorHelper::RGBtoHSV(float fR, float fG, float fB, float& fH, float& fS, float& fV) {
-	float fCMax = max(max(fR, fG), fB);
-	float fCMin = min(min(fR, fG), fB);
+	float fCMax = std::max(std::max(fR, fG), fB);
+	float fCMin = std::min(std::min(fR, fG), fB);
 	float fDelta = fCMax - fCMin;
 
 	if (fDelta > 0.0f) {

@@ -45,9 +45,9 @@ void LongLiveTheRichEffect::Disable() {
 
 	CPlayerPed* player = FindPlayerPed();
 	if (player) {
-		player->m_fHealth = min(gainedMoney, player->m_fMaxHealth);
+		player->m_fHealth = std::min(gainedMoney, player->m_fMaxHealth);
 
-		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = min((int)gainedMoney * 100, 100000);
+		player->GetPlayerInfoForThisPlayerPed()->m_nMoney = std::min((int)gainedMoney * 100, 100000);
 		player->GetPlayerInfoForThisPlayerPed()->m_nMoney += storedMoney;
 		player->GetPlayerInfoForThisPlayerPed()->m_nDisplayMoney = player->GetPlayerInfoForThisPlayerPed()->m_nMoney;
 	}
@@ -68,7 +68,7 @@ void LongLiveTheRichEffect::HandleTick() {
 }
 
 void __fastcall LongLiveTheRichEffect::HookedComputeWillKillPed(CPedDamageResponseCalculator* thisCalc, void* edx, CPed* ped, uint8_t* cDamageResponseInfo, char a4) {
-	float maxDamage = min(ped->m_fHealth, thisCalc->m_fDamageFactor);
+	float maxDamage = std::min(ped->m_fHealth, thisCalc->m_fDamageFactor);
 	maxDamage = thisCalc->m_pedPieceType == 9 ? ped->m_fHealth : maxDamage;
 
 	CPlayerPed* player = FindPlayerPed();
@@ -78,7 +78,7 @@ void __fastcall LongLiveTheRichEffect::HookedComputeWillKillPed(CPedDamageRespon
 	}
 	else if (ped == player) {
 		gainedMoney -= thisCalc->m_fDamageFactor;
-		gainedMoney = max(0.0f, gainedMoney);
+		gainedMoney = std::max(0.0f, gainedMoney);
 
 		if (gainedMoney == 0.0f) {
 			player->m_fHealth = 0.0f;

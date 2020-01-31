@@ -5,11 +5,11 @@ std::string GenericUtil::GetModVersion() {
 }
 
 float GenericUtil::CalculateTick(float multiplier) {
-	return (CTimer::ms_fTimeStepNonClipped / max(0.00001f, CTimer::ms_fTimeScale)) * 0.02f * 1000.0f * multiplier;
+	return (CTimer::ms_fTimeStepNonClipped / std::max(0.000001f, CTimer::ms_fTimeScale)) * 0.02005f * 1000.0f * multiplier;
 }
 
 std::string GenericUtil::FormatTime(int duration, bool onlySeconds) {
-	int seconds = max(0, duration) / 1000, minutes = 0;
+	int seconds = std::max(0, duration) / 1000, minutes = 0;
 	while (seconds >= 60) {
 		minutes += 1;
 		seconds -= 60;

@@ -45,7 +45,9 @@ void YourCarFloatsAwayWhenHitEffect::HandleTick() {
 		applyCollisionEvent -= ApplyCollision;
 		collisionHappened = false;
 
-		SetEffectDuration(1000 * 30);
+		if (!Config::GetOrDefault("CrowdControl.Enabled", false)) {
+			SetEffectRemaining(std::min(GetEffectRemaining(), 1000 * 30));
+		}
 	}
 }
 
