@@ -1,9 +1,15 @@
 #include "UpsideDownScreenEffect.h"
-#include "rw/rwcore.h"
-#include <memory>
 #include "CMenuManager.h"
+#include "util/DrawHelper.h"
+#include "Color.h"
+#include "CScene.h"
 
-static CdeclEvent<AddressList<0x53EBF5, H_CALL>, PRIORITY_BEFORE, ArgPickN<RwCamera*, 0>, RwCamera * (RwCamera*)> showRasterEvent;
+static CdeclEvent<AddressList<0x53EBF5, H_CALL>, PRIORITY_BEFORE, ArgPickN<RwCamera*, 0>, RwCamera * (RwCamera*)> endUpdateEvent;
+static CdeclEvent<AddressList<0x745C7D, H_CALL>, PRIORITY_BEFORE, ArgPickNone, void ()> createCameraSubRasterEvent;
+
+
+RwRaster* UpsideDownScreenEffect::raster = nullptr;
+RwIm2DVertex UpsideDownScreenEffect::vertices[4] = {};
 
 UpsideDownScreenEffect::UpsideDownScreenEffect()
 	: EffectBase("effect_upside_down") {}
@@ -11,37 +17,48 @@ UpsideDownScreenEffect::UpsideDownScreenEffect()
 void UpsideDownScreenEffect::Enable() {
 	EffectBase::Enable();
 
-	showRasterEvent += ShowRasterEvent;
+	ResetRaster();
+	
+	endUpdateEvent += EndUpdateEvent;
+	createCameraSubRasterEvent += ResetRaster;
 }
 
 void UpsideDownScreenEffect::Disable() {
-	showRasterEvent -= ShowRasterEvent;
+	endUpdateEvent -= EndUpdateEvent;
+	createCameraSubRasterEvent -= ResetRaster;
 
 	EffectBase::Disable();
 }
 
-inline RwRGBA* GetPixel(RwRaster* raster, int x, int y) {
-	return (RwRGBA*)(raster->cpPixels + y * raster->stride + (x * 4));
+void UpsideDownScreenEffect::ResetRaster() {
+	if(raster) {
+		RwRasterDestroy(raster);
+            }
+	auto cameraRaster = Scene.m_pRwCamera->frameBuffer;
+	raster = RwRasterCreate(cameraRaster->width, cameraRaster->height,
+				cameraRaster->depth, rwRASTERTYPECAMERATEXTURE);
+
+	// Reset raster and vertices
+	DrawHelper::Append(vertices, 0, CVector2D(0, 0), plugin::color::White, 0, 1);
+	DrawHelper::Append(vertices, 1, CVector2D(cameraRaster->width, 0), plugin::color::White, 1, 1);
+	DrawHelper::Append(vertices, 3, CVector2D(cameraRaster->width, cameraRaster->height), plugin::color::White, 1, 0);
+	DrawHelper::Append(vertices, 2, CVector2D(0, cameraRaster->height), plugin::color::White, 0, 0);
 }
 
-void UpsideDownScreenEffect::ShowRasterEvent(RwCamera* camera) {
+void UpsideDownScreenEffect::EndUpdateEvent(RwCamera* camera) {
 	if (FrontEndMenuManager.m_bMenuActive) {
 		return;
 	}
 
-	RwRaster* raster = camera->frameBuffer;
-	RwRasterLock(raster, 0, rwRASTERLOCKREADWRITE);
+	SetRenderState(rwRENDERSTATESHADEMODE, rwSHADEMODEFLAT);
+	
+	RwCameraEndUpdate(camera);
+	RwRasterPushContext(raster);
+	RwRasterRenderFast(camera->frameBuffer, 0, 0);
+	RwRasterPopContext();
+	RwCameraBeginUpdate(camera);
 
-	for (int y = 0; y < raster->height / 2; y++) {
-		for (int x = 0; x < raster->width; x++) {
-			RwRGBA tmp = *GetPixel(raster, x, y);
-			memcpy(GetPixel(raster, x, y),
-				GetPixel(raster, x, raster->height - y - 1),
-				4);
-			memcpy(GetPixel(raster, x, raster->height - y - 1),
-				&tmp,
-				4);
-		}
-	}
-	RwRasterUnlock(raster);
+	SetRenderState(rwRENDERSTATETEXTURERASTER, (int) raster);
+	
+	RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vertices, 4);
 }
