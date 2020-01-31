@@ -114,7 +114,7 @@ void EffectDatabase::HandleFunction(std::string state, std::string text) {
 	if (effect) {
 		effect->SetDescription(description);
 		if (rapid_fire) {
-			effect->SetEffectDuration(min(effect->GetEffectDuration(), duration));
+			effect->SetEffectDuration(std::min(effect->GetEffectDuration(), duration));
 		}
 		effect->SetDuration(duration);
 		effect->SetTwitchVoter(voter);

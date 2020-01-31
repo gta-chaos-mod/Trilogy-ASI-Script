@@ -50,7 +50,7 @@ void DrawHelper::DrawTopBar() {
 	float maxWidth = SCREEN_WIDTH - SCREEN_COORD(8.0f);
 	float barWidth = CalculateBarWidth() - SCREEN_COORD(8.0f);
 
-	barWidth = max(0.0f, min(barWidth, maxWidth));
+	barWidth = std::max(0.0f, std::min(barWidth, maxWidth));
 
 	CRect rect = CRect(0.0f, -1.0f, SCREEN_WIDTH, SCREEN_COORD_TOP(30.0f));
 	CSprite2d::DrawRect(rect, CRGBA(0, 0, 0, 255));
@@ -208,9 +208,9 @@ void DrawHelper::Transform(RwIm2DVertex* vertices, int numCount, CVector2D trans
 	}
 }
 
-void DrawHelper::Append(RwIm2DVertex* vertices, int index, CVector2D coord, CRGBA color)
+void DrawHelper::Append(RwIm2DVertex* vertices, int index, CVector2D coord, CRGBA color, RwReal u, RwReal v)
 {
-	vertices[index].u = 0; vertices[index].v = 0;
+	vertices[index].u = u; vertices[index].v = v;
 	RwIm2DVertexSetRealRGBA(&vertices[index], color.r, color.g, color.b, color.a);
 	vertices[index].x = coord.x;
 	vertices[index].y = coord.y;
