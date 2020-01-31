@@ -18,7 +18,13 @@ void TeleportEffect::HandleTick() {
 		return;
 	}
 
-	if (!CanActivate()) return;
+	if (!CanActivate()) {
+		if (Config::GetOrDefault("CrowdControl.Enabled", false)) {
+			SetDuration(GetDuration());
+			SetEffectRemaining(GetDuration());
+		}
+		return;
+	}
 
 	Teleportation::Teleport(this->destination);
 	this->hasTeleported = true;

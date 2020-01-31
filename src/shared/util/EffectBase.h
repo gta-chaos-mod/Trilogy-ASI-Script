@@ -154,6 +154,11 @@ public:
 		return this->baseInfo.effectRemaining;
 	}
 
+	virtual EffectBase* SetEffectRemaining(int duration) {
+		this->baseInfo.effectRemaining = duration;
+		return this;
+	}
+
 	/* Effect Duration */
 	int GetEffectDuration() {
 		return this->baseInfo.effectDuration;
