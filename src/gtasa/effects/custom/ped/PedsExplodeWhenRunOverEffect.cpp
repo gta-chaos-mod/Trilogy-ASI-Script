@@ -11,6 +11,7 @@ void PedsExplodeWhenRunOverEffect::InitializeHooks() {
 	}
 
 	HookCall(0x7374DA, HookedCWorldTriggerExplosion);
+	HookCall(0x568271, HookedDamageAffectsPed);
 }
 
 void __fastcall PedsExplodeWhenRunOverEffect::HookedCPedKillPedWithCar(CPed* thisPed, void* edx, CVehicle* car, float arg1, bool arg2) {
@@ -25,8 +26,13 @@ void __fastcall PedsExplodeWhenRunOverEffect::HookedCPedKillPedWithCar(CPed* thi
 void PedsExplodeWhenRunOverEffect::HookedCWorldTriggerExplosion(CVector* point, float radius, float visibleDistance, CEntity* victim, CEntity* creator, bool a7, float damage) {
 	if (hasRunOverPed) {
 		damage = 0.0f;
-		hasRunOverPed = false;
 	}
 
 	CWorld::TriggerExplosion(*point, radius, visibleDistance, victim, creator, a7, damage);
+
+	hasRunOverPed = false;
+}
+
+bool __fastcall PedsExplodeWhenRunOverEffect::HookedDamageAffectsPed(CEventDamage* thisDamage, void* edx, CPed* ped) {
+	return !hasRunOverPed;
 }
