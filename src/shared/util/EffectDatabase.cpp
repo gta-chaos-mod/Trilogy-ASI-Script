@@ -120,6 +120,10 @@ void EffectDatabase::HandleFunction(std::string state, std::string text) {
 		effect->SetTwitchVoter(voter);
 
 		if (crowd_control_id > -1) {
+			if (!Config::GetOrDefault("CrowdControl.Enabled", false)) {
+				NamedPipe::SendCrowdControlResponse(effect->GetCrowdControlID(), 2);
+				return;
+			}
 			effect->SetCrowdControlID(crowd_control_id);
 		}
 
