@@ -12,7 +12,7 @@ RwRaster* MirroredScreenEffect::raster = nullptr;
 RwIm2DVertex MirroredScreenEffect::vertices[4] = {};
 
 MirroredScreenEffect::MirroredScreenEffect()
-	: EffectBase("effect_upside_down") {}
+	: EffectBase("effect_mirrored") {}
 
 void MirroredScreenEffect::Enable() {
 	EffectBase::Enable();
