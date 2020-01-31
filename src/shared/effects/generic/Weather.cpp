@@ -1,13 +1,13 @@
 #include "Weather.h"
 
 Weather::Weather(int weatherID)
-	: EffectPlaceholder("effect_weather")
+	: EffectBase("effect_weather")
 {
 	this->weatherID = weatherID;
 }
 
-void Weather::Enable() {
-	EffectPlaceholder::Enable();
+void Weather::HandleTick() {
+	EffectBase::HandleTick();
 
 	CWeather::ForceWeatherNow(weatherID);
 }

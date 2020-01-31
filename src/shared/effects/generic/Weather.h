@@ -1,10 +1,10 @@
 #pragma once
 
-#include "effects/EffectPlaceholder.h"
+#include "util/EffectBase.h"
 
 #include "CWeather.h"
 
-class Weather : public EffectPlaceholder
+class Weather : public EffectBase
 {
 private:
 	int weatherID = 0;
@@ -12,5 +12,5 @@ private:
 public:
 	Weather(int id);
 
-	void Enable() override;
+	void HandleTick() override;
 };
