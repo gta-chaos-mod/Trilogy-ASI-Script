@@ -29,7 +29,6 @@ void GreyscaleScreenEffect::ShowRasterEvent(RwCamera* camera) {
 		return;
 	}
 
-	//
 	RwRaster* raster = camera->frameBuffer;
 	RwRasterLock(raster, 0, rwRASTERLOCKREADWRITE);
 
