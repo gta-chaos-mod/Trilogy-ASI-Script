@@ -5,20 +5,19 @@
 #include "CScene.h"
 
 static CdeclEvent<AddressList<0x53EBF5, H_CALL>, PRIORITY_BEFORE, ArgPickN<RwCamera*, 0>, RwCamera * (RwCamera*)> endUpdateEvent;
-static CdeclEvent<AddressList<0x745C7D, H_CALL>, PRIORITY_BEFORE, ArgPickNone, void ()> createCameraSubRasterEvent;
-
+static CdeclEvent<AddressList<0x745C7D, H_CALL>, PRIORITY_BEFORE, ArgPickNone, void()> createCameraSubRasterEvent;
 
 RwRaster* UpsideDownScreenEffect::raster = nullptr;
 RwIm2DVertex UpsideDownScreenEffect::vertices[4] = {};
 
 UpsideDownScreenEffect::UpsideDownScreenEffect()
-	: EffectBase("effect_upside_down") {}
+	: EffectBase("effect_upside_down_screen") {}
 
 void UpsideDownScreenEffect::Enable() {
 	EffectBase::Enable();
 
 	ResetRaster();
-	
+
 	endUpdateEvent += EndUpdateEvent;
 	createCameraSubRasterEvent += ResetRaster;
 }
@@ -31,12 +30,12 @@ void UpsideDownScreenEffect::Disable() {
 }
 
 void UpsideDownScreenEffect::ResetRaster() {
-	if(raster) {
+	if (raster) {
 		RwRasterDestroy(raster);
-            }
+	}
 	auto cameraRaster = Scene.m_pRwCamera->frameBuffer;
 	raster = RwRasterCreate(cameraRaster->width, cameraRaster->height,
-				cameraRaster->depth, rwRASTERTYPECAMERATEXTURE);
+		cameraRaster->depth, rwRASTERTYPECAMERATEXTURE);
 
 	// Reset raster and vertices
 	DrawHelper::Append(vertices, 0, CVector2D(0, 0), plugin::color::White, 0, 1);
@@ -51,14 +50,14 @@ void UpsideDownScreenEffect::EndUpdateEvent(RwCamera* camera) {
 	}
 
 	SetRenderState(rwRENDERSTATESHADEMODE, rwSHADEMODEFLAT);
-	
+
 	RwCameraEndUpdate(camera);
 	RwRasterPushContext(raster);
 	RwRasterRenderFast(camera->frameBuffer, 0, 0);
 	RwRasterPopContext();
 	RwCameraBeginUpdate(camera);
 
-	SetRenderState(rwRENDERSTATETEXTURERASTER, (int) raster);
-	
+	SetRenderState(rwRENDERSTATETEXTURERASTER, (int)raster);
+
 	RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vertices, 4);
 }

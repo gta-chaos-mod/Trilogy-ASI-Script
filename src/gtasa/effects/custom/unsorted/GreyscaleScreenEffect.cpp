@@ -6,7 +6,7 @@
 static CdeclEvent<AddressList<0x53EC01, H_CALL>, PRIORITY_BEFORE, ArgPickN<RwCamera*, 0>, RwCamera * (RwCamera*)> showRasterEvent;
 
 GreyscaleScreenEffect::GreyscaleScreenEffect()
-	: EffectBase("effect_upside_down") {}
+	: EffectBase("effect_greyscale_screen") {}
 
 void GreyscaleScreenEffect::Enable() {
 	EffectBase::Enable();
