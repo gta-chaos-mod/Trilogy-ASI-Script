@@ -20,7 +20,7 @@ void DrawVoting::DrawVotes() {
 		// Make sure to bring back the picked one
 		for (int i = 0; i < 3; i++) {
 			if (pickedVote == -1) {
-				votes[i].offset = min(votes[i].offset + GenericUtil::CalculateTick(0.0015f), 1.0f);
+				votes[i].offset = std::min(votes[i].offset + GenericUtil::CalculateTick(0.0015f), 1.0f);
 			}
 		}
 
@@ -30,7 +30,7 @@ void DrawVoting::DrawVotes() {
 
 	// Finally get rid of every effect again
 	for (int i = 0; i < 3; i++) {
-		votes[i].offset = max(0.0f, votes[i].offset - GenericUtil::CalculateTick(0.0015f));
+		votes[i].offset = std::max(0.0f, votes[i].offset - GenericUtil::CalculateTick(0.0015f));
 	}
 }
 

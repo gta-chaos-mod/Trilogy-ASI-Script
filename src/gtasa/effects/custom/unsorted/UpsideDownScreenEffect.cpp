@@ -39,9 +39,9 @@ void UpsideDownScreenEffect::ResetRaster() {
 
 	// Reset raster and vertices
 	DrawHelper::Append(vertices, 0, CVector2D(0, 0), plugin::color::White, 0, 1);
-	DrawHelper::Append(vertices, 1, CVector2D(cameraRaster->width, 0), plugin::color::White, 1, 1);
-	DrawHelper::Append(vertices, 3, CVector2D(cameraRaster->width, cameraRaster->height), plugin::color::White, 1, 0);
-	DrawHelper::Append(vertices, 2, CVector2D(0, cameraRaster->height), plugin::color::White, 0, 0);
+	DrawHelper::Append(vertices, 1, CVector2D((float)cameraRaster->width, 0), plugin::color::White, 1, 1);
+	DrawHelper::Append(vertices, 3, CVector2D((float)cameraRaster->width, (float)cameraRaster->height), plugin::color::White, 1, 0);
+	DrawHelper::Append(vertices, 2, CVector2D(0, (float)cameraRaster->height), plugin::color::White, 0, 0);
 }
 
 void UpsideDownScreenEffect::EndUpdateEvent(RwCamera* camera) {

@@ -40,10 +40,10 @@ void EffectBase::Tick() {
 	}
 
 	if (GetRemaining() > 1000) {
-		this->drawInfo.offset = min(this->drawInfo.offset + CalculateTick(0.0015f), 1.0f);
+		this->drawInfo.offset = std::min(this->drawInfo.offset + CalculateTick(0.0015f), 1.0f);
 	}
 	else {
-		this->drawInfo.offset = max(0.0f, this->drawInfo.offset - CalculateTick(0.0015f));
+		this->drawInfo.offset = std::max(0.0f, this->drawInfo.offset - CalculateTick(0.0015f));
 	}
 
 	int tick = CalculateTick();
