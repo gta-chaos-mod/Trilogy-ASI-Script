@@ -464,6 +464,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "mirrored_screen") {
 		effect = new MirroredScreenEffect();
 	}
+	else if (name == "bobble_heads") {
+		effect = new BobbleHeadsEffect();
+	}
 	else if (name == "mirrored_world") {
 		effect = new MirroredWorldEffect();
 	}

@@ -95,6 +95,7 @@
 
 #include "effects/custom/ped/RemoveAllWeaponsEffect.h"
 #include "effects/custom/ped/SetEveryoneOnFireEffect.h"
+#include "effects/custom/ped/BobbleHeadsEffect.h"
 #include "effects/custom/player/KickPlayerOutOfVehicleEffect.h"
 #include "effects/custom/vehicle/SetCurrentVehicleOnFireEffect.h"
 #include "effects/custom/vehicle/PopTiresOfAllVehiclesEffect.h"
