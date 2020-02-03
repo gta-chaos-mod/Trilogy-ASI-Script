@@ -1,26 +1,52 @@
 #include "ForceVehicleMouseSteering.h"
 
+bool ForceVehicleMouseSteering::overrideMouseSteering = true;
+
 ForceVehicleMouseSteering::ForceVehicleMouseSteering()
 	: EffectBase("effect_force_vehicle_mouse_steering")
 {
 	AddType("controls");
 }
 
+void ForceVehicleMouseSteering::InitializeHooks() {
+	EffectBase::InitializeHooks();
+
+	HookCall(0x57C676, HookedOpenFile);
+
+	HookCall(0x577244, HookedCMenuManagerProcessPCMenuOptions);
+}
+
 void ForceVehicleMouseSteering::Enable() {
 	EffectBase::Enable();
+
+	for (int address : {
+		0x52565D + 2,
+			0x6AD7AC + 1,
+			0x6BE39C + 1,
+			0x6CE03D + 1,
+			0x6F0AFA + 1
+	}) {
+		injector::WriteMemory<bool*>(address, &overrideMouseSteering);
+	}
 
 	for (int i = 0; i < 59; i++) {
 		origActions[i] = ControlsManager.m_actions[i];
 	}
-
-	oldMouseSteering = CVehicle::m_bEnableMouseSteering;
 }
 
 void ForceVehicleMouseSteering::Disable() {
-	CVehicle::m_bEnableMouseSteering = oldMouseSteering;
-
 	for (int i = 0; i < 59; i++) {
 		ControlsManager.m_actions[i] = origActions[i];
+	}
+
+	for (int address : {
+		0x52565D + 2,
+		0x6AD7AC + 1,
+		0x6BE39C + 1,
+		0x6CE03D + 1,
+		0x6F0AFA + 1
+	}) {
+		injector::WriteMemory<bool*>(address, &CVehicle::m_bEnableMouseSteering);
 	}
 
 	EffectBase::Disable();
@@ -29,17 +55,8 @@ void ForceVehicleMouseSteering::Disable() {
 void ForceVehicleMouseSteering::HandleTick() {
 	EffectBase::HandleTick();
 
-	if (wait > 0) {
-		wait -= CalculateTick();
-		return;
-	}
-
-	ControlsManager.m_actions[CA_VEHICLE_STEERLEFT] = CControllerAction();
-	ControlsManager.m_actions[CA_VEHICLE_STEERRIGHT] = CControllerAction();
-
-	CVehicle::m_bEnableMouseSteering = true;
-
-	wait = 100;
+	ControlsManager.m_actions[e_ControllerAction::CA_VEHICLE_STEERLEFT] = CControllerAction();
+	ControlsManager.m_actions[e_ControllerAction::CA_VEHICLE_STEERRIGHT] = CControllerAction();
 }
 
 FILESTREAM ForceVehicleMouseSteering::HookedOpenFile(const char* file, const char* mode) {

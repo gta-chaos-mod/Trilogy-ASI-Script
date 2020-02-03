@@ -126,6 +126,7 @@
 #include "effects/custom/unsorted/NightVisionEffect.h"
 #include "effects/custom/unsorted/UpsideDownScreenEffect.h"
 #include "effects/custom/unsorted/MirroredScreenEffect.h"
+#include "effects/custom/unsorted/MirroredWorldEffect.h"
 #include "effects/custom/unsorted/GreyscaleScreenEffect.h"
 #include "effects/custom/unsorted/ThermalVisionEffect.h"
 #include "effects/custom/mission/PassCurrentMissionEffect.h"

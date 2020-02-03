@@ -37,7 +37,7 @@ void ExperienceTheLagEffect::HandleTick() {
 	speed = RandomHelper::Random(0.1f, 2.0f);
 	CTimer::ms_fTimeScale = speed;
 
-	float max_speed = max(0.6f, speed);
+	float max_speed = std::max(0.6f, speed);
 	if (max_speed > 1.0f) {
 		max_speed = 1.0f + ((max_speed - 1.0f) * 0.175f);
 	}

@@ -467,6 +467,9 @@ EffectBase* EffectHandler::HandleEffect(std::string name) {
 	else if (name == "bobble_heads") {
 		effect = new BobbleHeadsEffect();
 	}
+	else if (name == "mirrored_world") {
+		effect = new MirroredWorldEffect();
+	}
 	/*
 	// TODO: Add support for new RwRenderFast system like in Upside-Down and Mirrored Screen effects
 	else if (name == "greyscale_screen") {
