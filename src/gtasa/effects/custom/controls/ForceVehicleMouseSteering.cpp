@@ -20,11 +20,15 @@ void ForceVehicleMouseSteering::Enable() {
 	EffectBase::Enable();
 
 	for (int address : {
-		0x52565D + 2,
-			0x6AD7AC + 1,
-			0x6BE39C + 1,
-			0x6CE03D + 1,
-			0x6F0AFA + 1
+		0x52565D + 2, // Mouse Steering
+		0x6AD7AC + 1,
+		0x6BE39C + 1,
+		0x6CE03D + 1,
+		0x6F0AFA + 1,
+
+		0x525665 + 2, // Mouse Flying
+		0x6C4880 + 1,
+		0x6CAE07 + 1
 	}) {
 		injector::WriteMemory<bool*>(address, &overrideMouseSteering);
 	}
@@ -40,13 +44,21 @@ void ForceVehicleMouseSteering::Disable() {
 	}
 
 	for (int address : {
-		0x52565D + 2,
+		0x52565D + 2, // Mouse Steering
 		0x6AD7AC + 1,
 		0x6BE39C + 1,
 		0x6CE03D + 1,
-		0x6F0AFA + 1
+		0x6F0AFA + 1,
 	}) {
 		injector::WriteMemory<bool*>(address, &CVehicle::m_bEnableMouseSteering);
+	}
+
+	for (int address : {
+		0x525665 + 2, // Mouse Flying
+			0x6C4880 + 1,
+			0x6CAE07 + 1
+	}) {
+		injector::WriteMemory<bool*>(address, &CVehicle::m_bEnableMouseFlying);
 	}
 
 	EffectBase::Disable();
@@ -55,6 +67,8 @@ void ForceVehicleMouseSteering::Disable() {
 void ForceVehicleMouseSteering::HandleTick() {
 	EffectBase::HandleTick();
 
+	ControlsManager.m_actions[e_ControllerAction::CA_VEHICLE_STEERUP] = CControllerAction();
+	ControlsManager.m_actions[e_ControllerAction::CA_VEHICLE_STEERDOWN] = CControllerAction();
 	ControlsManager.m_actions[e_ControllerAction::CA_VEHICLE_STEERLEFT] = CControllerAction();
 	ControlsManager.m_actions[e_ControllerAction::CA_VEHICLE_STEERRIGHT] = CControllerAction();
 }
