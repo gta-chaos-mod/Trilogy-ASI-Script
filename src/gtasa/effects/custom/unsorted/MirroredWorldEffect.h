@@ -13,6 +13,7 @@ class MirroredWorldEffect : public EffectBase
 	static __int16 __fastcall HookedPedWalkLeftRight(CPad* thisPad);
 	static char __fastcall HookedGedLookLeft(CPad* thisPad);
 	static char __fastcall HookedGedLookRight(CPad* thisPad);
+	static int HookedSetVertices(int primType, RwD3D9Vertex* vertices, int numVertices);
 
 public:
 	MirroredWorldEffect();

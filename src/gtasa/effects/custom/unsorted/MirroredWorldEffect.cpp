@@ -118,6 +118,10 @@ void MirroredWorldEffect::InitializeHooks() {
 	// TODO:
 	// - Invert Radar (0x586976, https://cdn.discordapp.com/attachments/597796844906741770/673648028229566520/unknown.png)
 	// - Invert Pause Menu Map (0x575130)
+	// - Fix Crosshair (Also applies to upside-down screen and mirrored screen)
+
+	// WIP Radar Flip Code?...
+	//HookCall(0x586500, HookedSetVertices);
 }
 
 __int16 __fastcall MirroredWorldEffect::HookedGetSteeringLeftRight(CPad* thisPad) {
@@ -134,6 +138,14 @@ char __fastcall MirroredWorldEffect::HookedGedLookLeft(CPad* thisPad) {
 
 char __fastcall MirroredWorldEffect::HookedGedLookRight(CPad* thisPad) {
 	return CallMethodAndReturn<char, 0x53FDD0, CPad*>(thisPad);
+}
+
+int MirroredWorldEffect::HookedSetVertices(int primType, RwD3D9Vertex* vertices, int numVertices) {
+	SetRenderState(rwRENDERSTATETEXTUREADDRESS, rwTEXTUREADDRESSWRAP);
+	for (int i = 0; i < numVertices; i++) {
+		vertices[i].u *= -1;
+	}
+	return CallAndReturn<int, 0x734E90>(primType, vertices, numVertices);
 }
 
 void MirroredWorldEffect::Enable() {
