@@ -8,7 +8,7 @@
 class ArmedFemalePedsCheat : public EffectPlaceholder
 {
 public:
-	ArmedFemalePedsCheat();
+    ArmedFemalePedsCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

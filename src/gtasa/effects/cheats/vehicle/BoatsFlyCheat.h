@@ -5,5 +5,5 @@
 class BoatsFlyCheat : public TimedAddressEffect
 {
 public:
-	BoatsFlyCheat();
+    BoatsFlyCheat ();
 };

@@ -9,14 +9,14 @@
 class LittleSuspensionDampingEffect : public EffectBase
 {
 private:
-	tHandlingData origVehicleHandling[106] = {};
-	float suspension = 0.001f;
+    tHandlingData origVehicleHandling[106] = {};
+    float         suspension               = 0.001f;
 
 public:
-	LittleSuspensionDampingEffect();
+    LittleSuspensionDampingEffect ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

@@ -7,9 +7,9 @@
 class NoNeedToHurryEffect : public EffectBase
 {
 public:
-	NoNeedToHurryEffect();
+    NoNeedToHurryEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

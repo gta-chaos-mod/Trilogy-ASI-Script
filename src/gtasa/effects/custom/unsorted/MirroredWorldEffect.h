@@ -4,24 +4,33 @@
 
 class MirroredWorldEffect : public EffectBase
 {
-	static RwRaster* raster;
-	static RwIm2DVertex vertices[4];
+    static RwRaster *   raster;
+    static RwIm2DVertex vertices[4];
 
-	static void ResetRaster();
+    static void ResetRaster ();
 
-	static __int16 __fastcall HookedGetSteeringLeftRight(CPad* thisPad);
-	static __int16 __fastcall HookedPedWalkLeftRight(CPad* thisPad);
-	static char __fastcall HookedGedLookLeft(CPad* thisPad);
-	static char __fastcall HookedGedLookRight(CPad* thisPad);
-	static int HookedSetVertices(int primType, RwD3D9Vertex* vertices, int numVertices);
+    static __int16 __fastcall HookedGetSteeringLeftRight (CPad *thisPad);
+    static __int16 __fastcall HookedPedWalkLeftRight (CPad *thisPad);
+    static __int16 __fastcall HookedGetPedWalkLeftRightAim (CPad *thisPad,
+                                                            void *edx,
+                                                            CPed *ped);
+    static char __fastcall HookedPedLookLeft (CPad *thisPad);
+    static char __fastcall HookedPedLookRight (CPad *thisPad);
+    static void __fastcall HookedRenderCrossHair (CSprite2d *sprite, void *edx,
+                                                  CRect *rect, CRGBA *color);
+    static void HookedRenderCrossHairDot (CRect *rect, RwRGBA *rgbaColor);
+    static void HookedDrawRadarEmpty ();
+    static void __fastcall HookedCSprite2dDraw (CSprite2d *thisSprite,
+                                                void *edx, CRect *rect,
+                                                CRGBA *color);
 
 public:
-	MirroredWorldEffect();
+    MirroredWorldEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	static void RenderEffectsEvent();
+    static void Render2dStuffEvent ();
 };

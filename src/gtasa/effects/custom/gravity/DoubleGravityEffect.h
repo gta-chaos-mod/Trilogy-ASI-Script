@@ -8,12 +8,12 @@
 class DoubleGravityEffect : public EffectBase
 {
 private:
-	float gravity = 0.016f;
+    float gravity = 0.016f;
 
 public:
-	DoubleGravityEffect();
+    DoubleGravityEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

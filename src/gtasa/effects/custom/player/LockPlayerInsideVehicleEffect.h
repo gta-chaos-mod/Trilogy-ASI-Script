@@ -5,12 +5,12 @@
 class LockPlayerInsideVehicleEffect : public EffectBase
 {
 public:
-	LockPlayerInsideVehicleEffect();
+    LockPlayerInsideVehicleEffect ();
 
-	bool CanActivate() override;
+    bool CanActivate () override;
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

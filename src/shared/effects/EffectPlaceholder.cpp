@@ -1,13 +1,14 @@
 #include "EffectPlaceholder.h"
 
-EffectPlaceholder::EffectPlaceholder(std::string id)
-	: EffectBase(id)
+EffectPlaceholder::EffectPlaceholder (std::string id) : EffectBase (id)
 {
-	SetPlaceholder();
+    SetPlaceholder ();
 }
 
-void EffectPlaceholder::Enable() {
-	EffectBase::Enable();
+void
+EffectPlaceholder::Enable ()
+{
+    EffectBase::Enable ();
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }

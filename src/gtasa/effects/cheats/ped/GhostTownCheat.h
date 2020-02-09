@@ -5,5 +5,5 @@
 class GhostTownCheat : public TimedAddressEffect
 {
 public:
-	GhostTownCheat();
+    GhostTownCheat ();
 };

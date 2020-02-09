@@ -6,7 +6,7 @@
 class PopTiresOfAllVehiclesEffect : public EffectBase
 {
 public:
-	PopTiresOfAllVehiclesEffect();
+    PopTiresOfAllVehiclesEffect ();
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

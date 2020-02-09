@@ -7,13 +7,13 @@
 class TeleportEffect : public EffectBase
 {
 private:
-	CVector destination = CVector();
-	bool hasTeleported = false;
+    CVector destination   = CVector ();
+    bool    hasTeleported = false;
 
 public:
-	TeleportEffect(CVector destination);
+    TeleportEffect (CVector destination);
 
-	bool CanActivate() override;
+    bool CanActivate () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

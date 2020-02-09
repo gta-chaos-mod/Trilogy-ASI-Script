@@ -8,15 +8,21 @@
 class PedsExplodeWhenRunOverEffect : public EffectBase
 {
 private:
-	static bool hasRunOverPed;
+    static bool hasRunOverPed;
 
 public:
-	PedsExplodeWhenRunOverEffect();
+    PedsExplodeWhenRunOverEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
 private:
-	static void __fastcall HookedCPedKillPedWithCar(CPed* thisPed, void* edx, CVehicle* car, float arg1, bool arg2);
-	static void HookedCWorldTriggerExplosion(CVector* point, float radius, float visibleDistance, CEntity* victim, CEntity* creator, bool a7, float damage);
-	static bool __fastcall HookedDamageAffectsPed(CEventDamage* thisDamage, void* edx, CPed* ped);
+    static void __fastcall HookedCPedKillPedWithCar (CPed *thisPed, void *edx,
+                                                     CVehicle *car, float arg1,
+                                                     bool arg2);
+    static void HookedCWorldTriggerExplosion (CVector *point, float radius,
+                                              float    visibleDistance,
+                                              CEntity *victim, CEntity *creator,
+                                              bool a7, float damage);
+    static bool __fastcall HookedDamageAffectsPed (CEventDamage *thisDamage,
+                                                   void *edx, CPed *ped);
 };

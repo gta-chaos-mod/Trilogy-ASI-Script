@@ -5,5 +5,5 @@
 class InsaneHandlingCheat : public TimedAddressEffect
 {
 public:
-	InsaneHandlingCheat();
+    InsaneHandlingCheat ();
 };

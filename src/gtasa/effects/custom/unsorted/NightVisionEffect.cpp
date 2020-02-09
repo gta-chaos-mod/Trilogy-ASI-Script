@@ -1,19 +1,22 @@
 #include "NightVisionEffect.h"
 
-NightVisionEffect::NightVisionEffect()
-	: EffectBase("effect_night_vision")
+NightVisionEffect::NightVisionEffect () : EffectBase ("effect_night_vision")
 {
-	AddType("vision");
+    AddType ("vision");
 }
 
-void NightVisionEffect::Disable() {
-	Command<Commands::SET_NIGHT_VISION>(false);
+void
+NightVisionEffect::Disable ()
+{
+    Command<Commands::SET_NIGHT_VISION> (false);
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }
 
-void NightVisionEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+NightVisionEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	Command<Commands::SET_NIGHT_VISION>(true);
+    Command<Commands::SET_NIGHT_VISION> (true);
 }

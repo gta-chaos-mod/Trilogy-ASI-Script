@@ -11,273 +11,363 @@
 class EffectBase
 {
 private:
-	struct BaseInfo {
-		std::string id = "";
+    struct BaseInfo
+    {
+        std::string id = "";
 
-		bool isEnabled = false;
-		bool disabledByOtherEffect = false;
-		bool isInitialized = false;
-		bool canTickWhenDisabled = false;
+        bool isEnabled             = false;
+        bool disabledByOtherEffect = false;
+        bool isInitialized         = false;
+        bool canTickWhenDisabled   = false;
 
-		int remaining = 0;
-		int duration = 0;
+        int remaining = 0;
+        int duration  = 0;
 
-		int effectRemaining = 0;
-		int effectDuration = 0;
+        int effectRemaining = 0;
+        int effectDuration  = 0;
 
-		bool isPlaceholder = false;
+        bool isPlaceholder = false;
 
-		std::string description = "N/A";
-		std::list<std::string> types = {};
+        std::string            description = "N/A";
+        std::list<std::string> types       = {};
 
-		int crowdControlID = -1;
-	} baseInfo;
+        int crowdControlID = -1;
+    } baseInfo;
 
-	struct DrawInfo {
-		CRGBA textColor = CRGBA(255, 255, 255, 255);
-		CRGBA highlightColor = CRGBA(255, 255, 0, 255);
+    struct DrawInfo
+    {
+        CRGBA textColor      = CRGBA (255, 255, 255, 255);
+        CRGBA highlightColor = CRGBA (255, 255, 0, 255);
 
 #ifdef GTASA
-		CRGBA effectColor = CRGBA(0, 160, 227, 255);
+        CRGBA effectColor = CRGBA (0, 160, 227, 255);
 #elif GTAVC
-		CRGBA effectColor = CRGBA(225, 0, 159, 255);
+        CRGBA effectColor = CRGBA (225, 0, 159, 255);
 #elif GTA3
-		CRGBA effectColor = CRGBA(227, 118, 0, 255);
+        CRGBA effectColor = CRGBA (227, 118, 0, 255);
 #endif
 
-		int textColorTick = 2400;
-		bool textColorHighlight = true;
-		float offset = 0.0f;
-	} drawInfo;
+        int   textColorTick      = 2400;
+        bool  textColorHighlight = true;
+        float offset             = 0.0f;
+    } drawInfo;
 
-	struct TwitchInfo {
-		std::string voter = "";
-	} twitchInfo;
+    struct TwitchInfo
+    {
+        std::string voter = "";
+    } twitchInfo;
 
-	struct MissionInfo {
-		bool disabledForMissions = false;
-		bool isPlayerOnAMission = false;
-		bool wasPlayerOnAMission = false;
-	} missionInfo;
+    struct MissionInfo
+    {
+        bool disabledForMissions = false;
+        bool isPlayerOnAMission  = false;
+        bool wasPlayerOnAMission = false;
+    } missionInfo;
 
 public:
-	/* Constructor */
-	EffectBase(std::string id) {
-		this->baseInfo.id = id;
-	};
+    /* Constructor */
+    EffectBase (std::string id) { this->baseInfo.id = id; };
 
-	/* Effect ID */
-	std::string GetID() {
-		return this->baseInfo.id;
-	}
+    /* Effect ID */
+    std::string
+    GetID ()
+    {
+        return this->baseInfo.id;
+    }
 
-	bool IsEqualID(EffectBase* effect) {
-		return GetID() == effect->GetID();
-	}
+    bool
+    IsEqualID (EffectBase *effect)
+    {
+        return GetID () == effect->GetID ();
+    }
 
-	/* General Effect Related Methods */
-	bool IsEnabled() {
-		return this->baseInfo.isEnabled;
-	}
+    /* General Effect Related Methods */
+    bool
+    IsEnabled ()
+    {
+        return this->baseInfo.isEnabled;
+    }
 
-	virtual void Enable() {
-		this->baseInfo.isEnabled = true;
-		this->drawInfo.textColor = CRGBA(255, 255, 255, 255);
-	}
+    virtual void
+    Enable ()
+    {
+        this->baseInfo.isEnabled = true;
+        this->drawInfo.textColor = CRGBA (255, 255, 255, 255);
+    }
 
-	virtual void Disable() {
-		if (this->baseInfo.isEnabled) {
-			RestoreHooks();
-		}
-		this->drawInfo.textColor = CRGBA(175, 175, 175, 255);
-		this->baseInfo.isEnabled = false;
-	}
+    virtual void
+    Disable ()
+    {
+        if (this->baseInfo.isEnabled)
+        {
+            RestoreHooks ();
+        }
+        this->drawInfo.textColor = CRGBA (175, 175, 175, 255);
+        this->baseInfo.isEnabled = false;
+    }
 
-	void DisableByOtherEffect() {
-		this->baseInfo.disabledByOtherEffect = true;
-		Disable();
-	}
+    void
+    DisableByOtherEffect ()
+    {
+        this->baseInfo.disabledByOtherEffect = true;
+        Disable ();
+    }
 
-	bool IsDisabledByOtherEffect() {
-		return this->baseInfo.disabledByOtherEffect;
-	}
+    bool
+    IsDisabledByOtherEffect ()
+    {
+        return this->baseInfo.disabledByOtherEffect;
+    }
 
-	bool IsInitialized() {
-		return this->baseInfo.isInitialized;
-	}
+    bool
+    IsInitialized ()
+    {
+        return this->baseInfo.isInitialized;
+    }
 
-	EffectBase* SetCanTickWhenDisabled(bool canTick = true) {
-		this->baseInfo.canTickWhenDisabled = canTick;
-		return this;
-	}
+    EffectBase *
+    SetCanTickWhenDisabled (bool canTick = true)
+    {
+        this->baseInfo.canTickWhenDisabled = canTick;
+        return this;
+    }
 
-	bool CanTickWhenDisabled() {
-		return this->baseInfo.canTickWhenDisabled;
-	}
+    bool
+    CanTickWhenDisabled ()
+    {
+        return this->baseInfo.canTickWhenDisabled;
+    }
 
-	virtual bool CanActivate() {
-		return true;
-	}
+    virtual bool
+    CanActivate ()
+    {
+        return true;
+    }
 
-	EffectBase* SetCrowdControlID(int id) {
-		this->baseInfo.crowdControlID = id;
-		return this;
-	}
+    EffectBase *
+    SetCrowdControlID (int id)
+    {
+        this->baseInfo.crowdControlID = id;
+        return this;
+    }
 
-	int GetCrowdControlID() {
-		return this->baseInfo.crowdControlID;
-	}
+    int
+    GetCrowdControlID ()
+    {
+        return this->baseInfo.crowdControlID;
+    }
 
-	void Initialize();
+    void Initialize ();
 
-	/* Remaining Effect Time */
-	int GetRemaining() {
-		return this->baseInfo.remaining;
-	}
+    /* Remaining Effect Time */
+    int
+    GetRemaining ()
+    {
+        return this->baseInfo.remaining;
+    }
 
-	bool IsRunning() {
-		return GetRemaining() > 0;
-	}
+    bool
+    IsRunning ()
+    {
+        return GetRemaining () > 0;
+    }
 
-	/* History Duration */
-	int GetDuration() {
-		return this->baseInfo.duration;
-	}
+    /* History Duration */
+    int
+    GetDuration ()
+    {
+        return this->baseInfo.duration;
+    }
 
-	virtual EffectBase* SetDuration(int duration) {
-		this->baseInfo.duration = this->baseInfo.remaining = duration;
-		return GetEffectDuration() == 0 ? SetEffectDuration(duration) : this;
-	}
+    virtual EffectBase *
+    SetDuration (int duration)
+    {
+        this->baseInfo.duration = this->baseInfo.remaining = duration;
+        return GetEffectDuration () == 0 ? SetEffectDuration (duration) : this;
+    }
 
-	/* Effect Remaining */
-	int GetEffectRemaining() {
-		return this->baseInfo.effectRemaining;
-	}
+    /* Effect Remaining */
+    int
+    GetEffectRemaining ()
+    {
+        return this->baseInfo.effectRemaining;
+    }
 
-	virtual EffectBase* SetEffectRemaining(int duration) {
-		this->baseInfo.effectRemaining = duration;
-		return this;
-	}
+    virtual EffectBase *
+    SetEffectRemaining (int duration)
+    {
+        this->baseInfo.effectRemaining = duration;
+        return this;
+    }
 
-	/* Effect Duration */
-	int GetEffectDuration() {
-		return this->baseInfo.effectDuration;
-	}
+    /* Effect Duration */
+    int
+    GetEffectDuration ()
+    {
+        return this->baseInfo.effectDuration;
+    }
 
-	virtual EffectBase* SetEffectDuration(int duration) {
-		this->baseInfo.effectDuration = this->baseInfo.effectRemaining = duration;
-		return this;
-	}
+    virtual EffectBase *
+    SetEffectDuration (int duration)
+    {
+        this->baseInfo.effectDuration = this->baseInfo.effectRemaining
+            = duration;
+        return this;
+    }
 
-	/* Placeholder Info */
-	virtual bool IsPlaceholder() {
-		return this->baseInfo.isPlaceholder;
-	}
+    /* Placeholder Info */
+    virtual bool
+    IsPlaceholder ()
+    {
+        return this->baseInfo.isPlaceholder;
+    }
 
-	EffectBase* SetPlaceholder() {
-		this->baseInfo.isPlaceholder = true;
-		return this;
-	}
+    EffectBase *
+    SetPlaceholder ()
+    {
+        this->baseInfo.isPlaceholder = true;
+        return this;
+    }
 
-	/* Effect Description */
-	std::string GetDescription() {
-		return this->baseInfo.description;
-	}
+    /* Effect Description */
+    std::string
+    GetDescription ()
+    {
+        return this->baseInfo.description;
+    }
 
-	EffectBase* SetDescription(std::string description) {
-		this->baseInfo.description = std::move(description);
-		return this;
-	}
+    EffectBase *
+    SetDescription (std::string description)
+    {
+        this->baseInfo.description = std::move (description);
+        return this;
+    }
 
-	bool IsEqualDescription(EffectBase* effect) {
-		return GetDescription() == effect->GetDescription();
-	}
+    bool
+    IsEqualDescription (EffectBase *effect)
+    {
+        return GetDescription () == effect->GetDescription ();
+    }
 
-	/* Effect Types */
-	std::list<std::string> GetTypes() {
-		return this->baseInfo.types;
-	}
+    /* Effect Types */
+    std::list<std::string>
+    GetTypes ()
+    {
+        return this->baseInfo.types;
+    }
 
-	EffectBase* AddType(std::string type) {
-		this->baseInfo.types.push_back(std::move(type));
-		return this;
-	}
+    EffectBase *
+    AddType (std::string type)
+    {
+        this->baseInfo.types.push_back (std::move (type));
+        return this;
+    }
 
-	bool IsEqualType(EffectBase* otherEffect);
+    bool IsEqualType (EffectBase *otherEffect);
 
-	/* Draw Info */
-	CRGBA GetTextColor() {
-		return this->drawInfo.textColorHighlight ? this->drawInfo.highlightColor : this->drawInfo.textColor;
-	}
+    /* Draw Info */
+    CRGBA
+    GetTextColor ()
+    {
+        return this->drawInfo.textColorHighlight ? this->drawInfo.highlightColor
+                                                 : this->drawInfo.textColor;
+    }
 
-	CRGBA GetEffectColor() {
-		return this->drawInfo.effectColor;
-	}
+    CRGBA
+    GetEffectColor ()
+    {
+        return this->drawInfo.effectColor;
+    }
 
-	float CalculateFadeInOffset(float position) {
-		float adjustment = GenericUtil::EaseOutBack(this->drawInfo.offset);
-		return position * adjustment;
-	}
+    float
+    CalculateFadeInOffset (float position)
+    {
+        float adjustment = GenericUtil::EaseOutBack (this->drawInfo.offset);
+        return position * adjustment;
+    }
 
-	/* Twitch Info */
-	EffectBase* SetTwitchVoter(std::string voter) {
-		this->twitchInfo.voter = std::move(voter);
-		return this;
-	}
+    /* Twitch Info */
+    EffectBase *
+    SetTwitchVoter (std::string voter)
+    {
+        this->twitchInfo.voter = std::move (voter);
+        return this;
+    }
 
-	bool HasTwitchVoter() {
-		return this->twitchInfo.voter != "N/A";
-	}
+    bool
+    HasTwitchVoter ()
+    {
+        return this->twitchInfo.voter != "N/A";
+    }
 
-	std::string GetTwitchVoter() {
-		return this->twitchInfo.voter;
-	}
+    std::string
+    GetTwitchVoter ()
+    {
+        return this->twitchInfo.voter;
+    }
 
-	/* Mission Info */
-	EffectBase* SetDisabledForMissions() {
-		this->missionInfo.disabledForMissions = true;
-		return this;
-	}
+    /* Mission Info */
+    EffectBase *
+    SetDisabledForMissions ()
+    {
+        this->missionInfo.disabledForMissions = true;
+        return this;
+    }
 
-	bool IsDisabledForMissions() {
-		return this->missionInfo.disabledForMissions;
-	}
+    bool
+    IsDisabledForMissions ()
+    {
+        return this->missionInfo.disabledForMissions;
+    }
 
-	/* Hooking Related */
-	virtual void InitializeHooks() {};
+    /* Hooking Related */
+    virtual void InitializeHooks (){};
 
-	void HookCall(int address, void* func, bool vp = true) {
-		HookDatabase::HookCall(GetID(), address, func, vp);
-	}
+    void
+    HookCall (int address, void *func, bool vp = true)
+    {
+        HookDatabase::HookCall (GetID (), address, func, vp);
+    }
 
-	void HookJump(int address, void* func, bool vp = true) {
-		HookDatabase::HookJump(GetID(), address, func, vp);
-	}
+    void
+    HookJump (int address, void *func, bool vp = true)
+    {
+        HookDatabase::HookJump (GetID (), address, func, vp);
+    }
 
-	void RestoreHooks() {
-		HookDatabase::RestoreHooks(GetID());
-	}
+    void
+    RestoreHooks ()
+    {
+        HookDatabase::RestoreHooks (GetID ());
+    }
 
-	/* Effect Ticking */
-	void Tick();
-	virtual void HandleTick() {};
+    /* Effect Ticking */
+    void         Tick ();
+    virtual void HandleTick (){};
 
-	/* Generic Helper Methods */
-	void Clear() {
-		this->baseInfo.remaining = this->baseInfo.effectRemaining = 1;
-	}
+    /* Generic Helper Methods */
+    void
+    Clear ()
+    {
+        this->baseInfo.remaining = this->baseInfo.effectRemaining = 1;
+    }
 
-	bool IsEqual(EffectBase* otherEffect) {
-		return IsEqualID(otherEffect)
-			|| IsEqualDescription(otherEffect)
-			|| IsEqualType(otherEffect);
-	}
+    bool
+    IsEqual (EffectBase *otherEffect)
+    {
+        return IsEqualID (otherEffect) || IsEqualDescription (otherEffect)
+               || IsEqualType (otherEffect);
+    }
 
-	int CalculateTick() {
-		return (int)CalculateTick(1.0f);
-	}
+    int
+    CalculateTick ()
+    {
+        return (int) CalculateTick (1.0f);
+    }
 
-	float CalculateTick(float multiplier) {
-		return GenericUtil::CalculateTick(multiplier);
-	};
+    float
+    CalculateTick (float multiplier)
+    {
+        return GenericUtil::CalculateTick (multiplier);
+    };
 };

@@ -5,7 +5,7 @@
 class HostilePedsCheat : public EffectPlaceholder
 {
 public:
-	HostilePedsCheat();
+    HostilePedsCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

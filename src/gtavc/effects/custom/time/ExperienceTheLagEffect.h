@@ -9,12 +9,12 @@
 class ExperienceTheLagEffect : public EffectBase
 {
 private:
-	int wait = 0;
+    int wait = 0;
 
 public:
-	ExperienceTheLagEffect();
+    ExperienceTheLagEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

@@ -16,14 +16,14 @@ using namespace plugin;
 class GameUtil
 {
 private:
-	static bool* extraSplash;
-	static char* loadPath;
-	static char* savePath;
+    static bool *extraSplash;
+    static char *loadPath;
+    static char *savePath;
 
 public:
-	static void SaveToFile(std::string fileName);
-	static bool LoadFromFile(std::string fileName);
-	static std::string GetLoadFileName();
+    static void        SaveToFile (std::string fileName);
+    static bool        LoadFromFile (std::string fileName);
+    static std::string GetLoadFileName ();
 
-	static void SetVehiclesToRealPhysics();
+    static void SetVehiclesToRealPhysics ();
 };

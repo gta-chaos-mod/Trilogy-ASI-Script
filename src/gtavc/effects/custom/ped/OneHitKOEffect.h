@@ -5,12 +5,12 @@
 class OneHitKOEffect : public EffectBase
 {
 public:
-	OneHitKOEffect();
+    OneHitKOEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 
 private:
-	static void HookedCFontPrintString(float x, float y, char* text);
+    static void HookedCFontPrintString (float x, float y, char *text);
 };

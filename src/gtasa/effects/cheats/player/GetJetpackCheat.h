@@ -7,7 +7,7 @@
 class GetJetpackCheat : public EffectPlaceholder
 {
 public:
-	GetJetpackCheat();
+    GetJetpackCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

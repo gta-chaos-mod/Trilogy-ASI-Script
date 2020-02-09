@@ -5,5 +5,5 @@
 class LockSexAppealAtMaxCheat : public TimedAddressEffect
 {
 public:
-	LockSexAppealAtMaxCheat();
+    LockSexAppealAtMaxCheat ();
 };

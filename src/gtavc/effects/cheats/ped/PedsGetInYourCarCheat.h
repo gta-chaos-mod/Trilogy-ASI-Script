@@ -7,7 +7,7 @@
 class PedsGetInYourCarCheat : public EffectPlaceholder
 {
 public:
-	PedsGetInYourCarCheat();
+    PedsGetInYourCarCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

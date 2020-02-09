@@ -5,5 +5,5 @@
 class InfiniteOxygenCheat : public TimedAddressEffect
 {
 public:
-	InfiniteOxygenCheat();
+    InfiniteOxygenCheat ();
 };

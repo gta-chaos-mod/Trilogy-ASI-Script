@@ -5,10 +5,10 @@
 class FatSkinCheat : public EffectPlaceholder
 {
 private:
-	float* bodyWidth = reinterpret_cast<float*>(0x68E058);
+    float *bodyWidth = reinterpret_cast<float *> (0x68E058);
 
 public:
-	FatSkinCheat();
+    FatSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

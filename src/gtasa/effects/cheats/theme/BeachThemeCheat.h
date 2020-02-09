@@ -8,8 +8,8 @@
 class BeachThemeCheat : public TimedFunctionEffect
 {
 public:
-	BeachThemeCheat();
+    BeachThemeCheat ();
 
 private:
-	static void BeachTheme();
+    static void BeachTheme ();
 };

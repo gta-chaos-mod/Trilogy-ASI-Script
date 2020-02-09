@@ -8,20 +8,21 @@
 class ForceVehicleMouseSteering : public EffectBase
 {
 private:
-	static bool overrideMouseSteering;
+    static bool overrideMouseSteering;
 
-	CControllerAction origActions[59] = {};
+    CControllerAction origActions[59] = {};
 
 public:
-	ForceVehicleMouseSteering();
+    ForceVehicleMouseSteering ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 
-	static FILESTREAM HookedOpenFile(const char* file, const char* mode);
-	static void __fastcall HookedCMenuManagerProcessPCMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page);
+    static FILESTREAM HookedOpenFile (const char *file, const char *mode);
+    static void __fastcall HookedCMenuManagerProcessPCMenuOptions (
+        CMenuManager *thisManager, void *edx, eMenuPage page);
 };

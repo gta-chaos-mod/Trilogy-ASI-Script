@@ -5,5 +5,5 @@
 class HugeBunnyHopCheat : public TimedAddressEffect
 {
 public:
-	HugeBunnyHopCheat();
+    HugeBunnyHopCheat ();
 };

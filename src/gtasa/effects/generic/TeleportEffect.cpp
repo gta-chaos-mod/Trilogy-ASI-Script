@@ -1,31 +1,38 @@
 #include "TeleportEffect.h"
 
-TeleportEffect::TeleportEffect(CVector destination)
-	: EffectBase("effect_teleport")
+TeleportEffect::TeleportEffect (CVector destination)
+    : EffectBase ("effect_teleport")
 {
-	this->destination = destination;
+    this->destination = destination;
 }
 
-bool TeleportEffect::CanActivate() {
-	return Teleportation::CanTeleport();
+bool
+TeleportEffect::CanActivate ()
+{
+    return Teleportation::CanTeleport ();
 }
 
-void TeleportEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+TeleportEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	if (this->hasTeleported) {
-		Disable();
-		return;
-	}
+    if (this->hasTeleported)
+    {
+        Disable ();
+        return;
+    }
 
-	if (!CanActivate()) {
-		if (Config::GetOrDefault("CrowdControl.Enabled", false)) {
-			SetDuration(GetDuration());
-			SetEffectRemaining(GetDuration());
-		}
-		return;
-	}
+    if (!CanActivate ())
+    {
+        if (Config::GetOrDefault ("CrowdControl.Enabled", false))
+        {
+            SetDuration (GetDuration ());
+            SetEffectRemaining (GetDuration ());
+        }
+        return;
+    }
 
-	Teleportation::Teleport(this->destination);
-	this->hasTeleported = true;
+    Teleportation::Teleport (this->destination);
+    this->hasTeleported = true;
 }

@@ -7,5 +7,5 @@
 class PedsAttackYou : public TimedFunctionEffect
 {
 public:
-	PedsAttackYou();
+    PedsAttackYou ();
 };

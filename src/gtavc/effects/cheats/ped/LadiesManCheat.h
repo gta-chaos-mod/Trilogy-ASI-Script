@@ -5,5 +5,5 @@
 class LadiesManCheat : public TimedAddressEffect
 {
 public:
-	LadiesManCheat();
+    LadiesManCheat ();
 };

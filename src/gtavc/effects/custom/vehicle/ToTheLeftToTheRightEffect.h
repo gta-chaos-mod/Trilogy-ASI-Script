@@ -9,10 +9,10 @@
 class ToTheLeftToTheRightEffect : public EffectBase
 {
 private:
-	int wait = 0;
+    int wait = 0;
 
 public:
-	ToTheLeftToTheRightEffect();
+    ToTheLeftToTheRightEffect ();
 
-	void HandleTick();
+    void HandleTick ();
 };

@@ -1,13 +1,14 @@
 #include "WeaponCheat1.h"
 
-WeaponCheat1::WeaponCheat1()
-	: EffectPlaceholder("cheat_weapons_1")
+WeaponCheat1::WeaponCheat1 () : EffectPlaceholder ("cheat_weapons_1")
 {
-	AddType("weapons");
+    AddType ("weapons");
 }
 
-void WeaponCheat1::Enable() {
-	EffectPlaceholder::Enable();
+void
+WeaponCheat1::Enable ()
+{
+    EffectPlaceholder::Enable ();
 
-	CCheat::WeaponCheat1();
+    CCheat::WeaponCheat1 ();
 }

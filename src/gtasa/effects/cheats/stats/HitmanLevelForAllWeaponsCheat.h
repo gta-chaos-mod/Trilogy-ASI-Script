@@ -7,7 +7,7 @@
 class HitmanLevelForAllWeaponsCheat : public EffectPlaceholder
 {
 public:
-	HitmanLevelForAllWeaponsCheat();
+    HitmanLevelForAllWeaponsCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

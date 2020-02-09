@@ -8,12 +8,12 @@
 class HalfGravityEffect : public EffectBase
 {
 private:
-	float gravity = 0.004f;
+    float gravity = 0.004f;
 
 public:
-	HalfGravityEffect();
+    HalfGravityEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

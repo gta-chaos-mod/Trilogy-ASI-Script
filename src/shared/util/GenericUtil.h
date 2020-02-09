@@ -8,15 +8,15 @@
 class GenericUtil
 {
 public:
-	static std::string GetModVersion();
+    static std::string GetModVersion ();
 
-	static float CalculateTick(float multiplier = 1.0f);
+    static float CalculateTick (float multiplier = 1.0f);
 
-	static std::string FormatTime(int duration, bool onlySeconds = false);
+    static std::string FormatTime (int duration, bool onlySeconds = false);
 
-	static bool IsMenuActive();
+    static bool IsMenuActive ();
 
-	static float EaseOutBack(float t);
+    static float EaseOutBack (float t);
 
-	static std::string ToUpper(std::string string);
+    static std::string ToUpper (std::string string);
 };

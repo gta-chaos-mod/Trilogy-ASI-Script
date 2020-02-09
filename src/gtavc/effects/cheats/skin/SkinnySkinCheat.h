@@ -5,10 +5,10 @@
 class SkinnySkinCheat : public EffectPlaceholder
 {
 private:
-	float* bodyWidth = reinterpret_cast<float*>(0x68E058);
+    float *bodyWidth = reinterpret_cast<float *> (0x68E058);
 
 public:
-	SkinnySkinCheat();
+    SkinnySkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

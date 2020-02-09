@@ -5,7 +5,7 @@
 class RiotCheat : public EffectPlaceholder
 {
 public:
-	RiotCheat();
+    RiotCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

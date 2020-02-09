@@ -1,10 +1,14 @@
 #include "GetParachuteCheat.h"
 
-GetParachuteCheat::GetParachuteCheat()
-	: EffectPlaceholder("cheat_get_parachute") {}
+GetParachuteCheat::GetParachuteCheat ()
+    : EffectPlaceholder ("cheat_get_parachute")
+{
+}
 
-void GetParachuteCheat::Enable() {
-	EffectPlaceholder::Enable();
+void
+GetParachuteCheat::Enable ()
+{
+    EffectPlaceholder::Enable ();
 
-	CCheat::ParachuteCheat();
+    CCheat::ParachuteCheat ();
 }

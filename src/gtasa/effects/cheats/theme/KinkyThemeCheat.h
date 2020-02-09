@@ -8,8 +8,8 @@
 class KinkyThemeCheat : public TimedFunctionEffect
 {
 public:
-	KinkyThemeCheat();
+    KinkyThemeCheat ();
 
 private:
-	static void KinkyTheme();
+    static void KinkyTheme ();
 };

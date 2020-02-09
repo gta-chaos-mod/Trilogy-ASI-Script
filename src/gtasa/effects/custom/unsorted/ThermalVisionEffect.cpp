@@ -1,19 +1,23 @@
 #include "ThermalVisionEffect.h"
 
-ThermalVisionEffect::ThermalVisionEffect()
-	: EffectBase("effect_thermal_vision")
+ThermalVisionEffect::ThermalVisionEffect ()
+    : EffectBase ("effect_thermal_vision")
 {
-	AddType("vision");
+    AddType ("vision");
 }
 
-void ThermalVisionEffect::Disable() {
-	Command<Commands::SET_INFRARED_VISION>(false);
+void
+ThermalVisionEffect::Disable ()
+{
+    Command<Commands::SET_INFRARED_VISION> (false);
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }
 
-void ThermalVisionEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+ThermalVisionEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	Command<Commands::SET_INFRARED_VISION>(true);
+    Command<Commands::SET_INFRARED_VISION> (true);
 }

@@ -7,7 +7,7 @@
 class AlwaysMidnightCheat : public TimedAddressEffect
 {
 public:
-	AlwaysMidnightCheat();
+    AlwaysMidnightCheat ();
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

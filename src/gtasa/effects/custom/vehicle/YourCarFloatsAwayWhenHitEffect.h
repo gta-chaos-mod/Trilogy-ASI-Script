@@ -5,15 +5,16 @@
 class YourCarFloatsAwayWhenHitEffect : public EffectBase
 {
 private:
-	static bool collisionHappened;
+    static bool collisionHappened;
 
 public:
-	YourCarFloatsAwayWhenHitEffect();
+    YourCarFloatsAwayWhenHitEffect ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 
-	static void ApplyCollision(CVehicle* thisVehicle, CVehicle* a2, int a3, float* a4, int a5);
+    static void ApplyCollision (CVehicle *thisVehicle, CVehicle *a2, int a3,
+                                float *a4, int a5);
 };

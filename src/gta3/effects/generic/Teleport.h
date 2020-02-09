@@ -11,10 +11,10 @@
 class Teleport : public EffectBase
 {
 private:
-	CVector destination;
+    CVector destination;
 
 public:
-	Teleport(CVector destination);
+    Teleport (CVector destination);
 
-	void Enable() override;
+    void Enable () override;
 };

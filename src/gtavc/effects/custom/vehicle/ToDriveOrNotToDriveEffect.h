@@ -9,17 +9,17 @@
 class ToDriveOrNotToDriveEffect : public EffectBase
 {
 private:
-	bool doPop = true;
-	int wait = 0;
+    bool doPop = true;
+    int  wait  = 0;
 
 public:
-	ToDriveOrNotToDriveEffect();
+    ToDriveOrNotToDriveEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 
 private:
-	void FixTires();
-	void PopTires();
+    void FixTires ();
+    void PopTires ();
 };

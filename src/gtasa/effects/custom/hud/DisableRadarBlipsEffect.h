@@ -7,10 +7,10 @@
 class DisableRadarBlipsEffect : public EffectBase
 {
 public:
-	DisableRadarBlipsEffect();
+    DisableRadarBlipsEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
 private:
-	static void HookedBlipsDraw();
+    static void HookedBlipsDraw ();
 };

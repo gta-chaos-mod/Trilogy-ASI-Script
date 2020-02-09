@@ -5,7 +5,7 @@
 class HilarySkinCheat : public EffectPlaceholder
 {
 public:
-	HilarySkinCheat();
+    HilarySkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

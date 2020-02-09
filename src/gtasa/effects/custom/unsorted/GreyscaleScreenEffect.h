@@ -5,11 +5,11 @@
 class GreyscaleScreenEffect : public EffectBase
 {
 public:
-	GreyscaleScreenEffect();
+    GreyscaleScreenEffect ();
 
-	void Enable() override;
+    void Enable () override;
 
-	void Disable() override;
+    void Disable () override;
 
-	static void ShowRasterEvent(RwCamera* camera);
+    static void ShowRasterEvent (RwCamera *camera);
 };

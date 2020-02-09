@@ -1,28 +1,35 @@
 #include "PedsAttackEachOtherCheat.h"
 
-PedsAttackEachOtherCheat::PedsAttackEachOtherCheat()
-	: EffectBase("cheat_peds_attack_each_other")
+PedsAttackEachOtherCheat::PedsAttackEachOtherCheat ()
+    : EffectBase ("cheat_peds_attack_each_other")
 {
-	AddType("peds_attack");
-	SetDisabledForMissions();
+    AddType ("peds_attack");
+    AddType ("ped_spawns");
+    SetDisabledForMissions ();
 }
 
-void PedsAttackEachOtherCheat::Enable() {
-	EffectBase::Enable();
+void
+PedsAttackEachOtherCheat::Enable ()
+{
+    EffectBase::Enable ();
 
-	GameUtil::BackupAcquaintances();
+    GameUtil::BackupAcquaintances ();
 
-	if (!*pedsAttackEachOtherCheat) {
-		CCheat::MayhemCheat();
-	}
+    if (!*pedsAttackEachOtherCheat)
+    {
+        CCheat::MayhemCheat ();
+    }
 }
 
-void PedsAttackEachOtherCheat::Disable() {
-	if (*pedsAttackEachOtherCheat) {
-		CCheat::MayhemCheat();
-	}
+void
+PedsAttackEachOtherCheat::Disable ()
+{
+    if (*pedsAttackEachOtherCheat)
+    {
+        CCheat::MayhemCheat ();
+    }
 
-	GameUtil::RestoreSavedAcquaintances();
+    GameUtil::RestoreSavedAcquaintances ();
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }

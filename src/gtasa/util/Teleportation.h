@@ -15,9 +15,9 @@
 class Teleportation
 {
 public:
-	static bool CanTeleport();
+    static bool CanTeleport ();
 
-	static void Teleport(CVector destination, int interior = 0);
+    static void Teleport (CVector destination, int interior = 0);
 
-	static void TeleportOutOfMission(std::string missionName);
+    static void TeleportOutOfMission (std::string missionName);
 };

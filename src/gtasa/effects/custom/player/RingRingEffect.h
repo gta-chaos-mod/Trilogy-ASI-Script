@@ -9,14 +9,14 @@
 class RingRingEffect : public EffectBase
 {
 private:
-	int wait = 0;
+    int wait = 0;
 
 public:
-	RingRingEffect();
+    RingRingEffect ();
 
-	bool CanActivate() override;
+    bool CanActivate () override;
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

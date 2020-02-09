@@ -7,5 +7,5 @@
 class WeaponAimingWhileDrivingCheat : public TimedFunctionEffect
 {
 public:
-	WeaponAimingWhileDrivingCheat();
+    WeaponAimingWhileDrivingCheat ();
 };

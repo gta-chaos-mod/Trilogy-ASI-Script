@@ -5,7 +5,7 @@
 class BlowUpAllCarsCheat : public EffectPlaceholder
 {
 public:
-	BlowUpAllCarsCheat();
+    BlowUpAllCarsCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

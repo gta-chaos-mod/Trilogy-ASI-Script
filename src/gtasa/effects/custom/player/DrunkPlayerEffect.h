@@ -7,9 +7,9 @@
 class DrunkPlayerEffect : public EffectBase
 {
 public:
-	DrunkPlayerEffect();
+    DrunkPlayerEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

@@ -6,13 +6,13 @@
 class EverybodyBleedNowEffect : public EffectBase
 {
 private:
-	int wait = 0;
-	bool* neverHungryCheat = reinterpret_cast<bool*>(0x969174);
+    int   wait             = 0;
+    bool *neverHungryCheat = reinterpret_cast<bool *> (0x969174);
 
 public:
-	EverybodyBleedNowEffect();
+    EverybodyBleedNowEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

@@ -9,14 +9,14 @@
 class ZeroSuspensionDampingEffect : public EffectBase
 {
 private:
-	tHandlingData origVehicleHandling[210] = {};
-	float suspension = -1.0f;
+    tHandlingData origVehicleHandling[210] = {};
+    float         suspension               = -1.0f;
 
 public:
-	ZeroSuspensionDampingEffect();
+    ZeroSuspensionDampingEffect ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

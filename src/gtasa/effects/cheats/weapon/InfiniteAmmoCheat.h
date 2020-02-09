@@ -5,5 +5,5 @@
 class InfiniteAmmoCheat : public TimedAddressEffect
 {
 public:
-	InfiniteAmmoCheat();
+    InfiniteAmmoCheat ();
 };

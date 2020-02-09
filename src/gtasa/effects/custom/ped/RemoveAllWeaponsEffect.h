@@ -7,7 +7,7 @@
 class RemoveAllWeaponsEffect : public EffectPlaceholder
 {
 public:
-	RemoveAllWeaponsEffect();
+    RemoveAllWeaponsEffect ();
 
-	void Enable() override;
+    void Enable () override;
 };

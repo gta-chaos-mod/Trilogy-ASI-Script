@@ -3,42 +3,57 @@
 #include <memory>
 #include "CMenuManager.h"
 
-static CdeclEvent<AddressList<0x53EC01, H_CALL>, PRIORITY_BEFORE, ArgPickN<RwCamera*, 0>, RwCamera * (RwCamera*)> showRasterEvent;
+static CdeclEvent<AddressList<0x53EC01, H_CALL>, PRIORITY_BEFORE,
+                  ArgPickN<RwCamera *, 0>, RwCamera *(RwCamera *)>
+    showRasterEvent;
 
-GreyscaleScreenEffect::GreyscaleScreenEffect()
-	: EffectBase("effect_greyscale_screen") {}
-
-void GreyscaleScreenEffect::Enable() {
-	EffectBase::Enable();
-
-	showRasterEvent += ShowRasterEvent;
+GreyscaleScreenEffect::GreyscaleScreenEffect ()
+    : EffectBase ("effect_greyscale_screen")
+{
 }
 
-void GreyscaleScreenEffect::Disable() {
-	showRasterEvent -= ShowRasterEvent;
+void
+GreyscaleScreenEffect::Enable ()
+{
+    EffectBase::Enable ();
 
-	EffectBase::Disable();
+    showRasterEvent += ShowRasterEvent;
 }
 
-inline RwRGBA* GetPixel(RwRaster* raster, int x, int y) {
-	return (RwRGBA*)(raster->cpPixels + y * raster->stride + (x * 4));
+void
+GreyscaleScreenEffect::Disable ()
+{
+    showRasterEvent -= ShowRasterEvent;
+
+    EffectBase::Disable ();
 }
 
-void GreyscaleScreenEffect::ShowRasterEvent(RwCamera* camera) {
-	if (FrontEndMenuManager.m_bMenuActive) {
-		return;
-	}
+inline RwRGBA *
+GetPixel (RwRaster *raster, int x, int y)
+{
+    return (RwRGBA *) (raster->cpPixels + y * raster->stride + (x * 4));
+}
 
-	RwRaster* raster = camera->frameBuffer;
-	RwRasterLock(raster, 0, rwRASTERLOCKREADWRITE);
+void
+GreyscaleScreenEffect::ShowRasterEvent (RwCamera *camera)
+{
+    if (FrontEndMenuManager.m_bMenuActive)
+    {
+        return;
+    }
 
-	for (int y = 0; y < raster->height; y++) {
-		for (int x = 0; x < raster->width; x++) {
-			RwRGBA* pixel = GetPixel(raster, x, y);
-			int value = (pixel->red + pixel->green + pixel->blue) / 3;
+    RwRaster *raster = camera->frameBuffer;
+    RwRasterLock (raster, 0, rwRASTERLOCKREADWRITE);
 
-			pixel->red = pixel->green = pixel->blue = value;
-		}
-	}
-	RwRasterUnlock(raster);
+    for (int y = 0; y < raster->height; y++)
+    {
+        for (int x = 0; x < raster->width; x++)
+        {
+            RwRGBA *pixel = GetPixel (raster, x, y);
+            int     value = (pixel->red + pixel->green + pixel->blue) / 3;
+
+            pixel->red = pixel->green = pixel->blue = value;
+        }
+    }
+    RwRasterUnlock (raster);
 }

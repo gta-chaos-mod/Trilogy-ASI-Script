@@ -5,5 +5,5 @@
 class NeverGetHungryCheat : public TimedAddressEffect
 {
 public:
-	NeverGetHungryCheat();
+    NeverGetHungryCheat ();
 };

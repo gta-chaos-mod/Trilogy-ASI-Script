@@ -7,7 +7,7 @@
 class FullArmorCheat : public EffectPlaceholder
 {
 public:
-	FullArmorCheat();
+    FullArmorCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

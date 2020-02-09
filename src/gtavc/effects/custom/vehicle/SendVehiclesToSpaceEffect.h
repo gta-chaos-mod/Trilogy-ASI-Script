@@ -6,7 +6,7 @@
 class SendVehiclesToSpaceEffect : public EffectPlaceholder
 {
 public:
-	SendVehiclesToSpaceEffect();
+    SendVehiclesToSpaceEffect ();
 
-	void Enable() override;
+    void Enable () override;
 };

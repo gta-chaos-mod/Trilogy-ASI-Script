@@ -5,5 +5,5 @@
 class MegaJumpCheat : public TimedAddressEffect
 {
 public:
-	MegaJumpCheat();
+    MegaJumpCheat ();
 };

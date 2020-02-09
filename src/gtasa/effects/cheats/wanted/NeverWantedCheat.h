@@ -7,5 +7,5 @@
 class NeverWantedCheat : public TimedFunctionEffect
 {
 public:
-	NeverWantedCheat();
+    NeverWantedCheat ();
 };

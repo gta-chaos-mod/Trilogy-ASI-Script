@@ -5,9 +5,9 @@
 class DoubleGameSpeedCheat : public EffectBase
 {
 public:
-	DoubleGameSpeedCheat();
+    DoubleGameSpeedCheat ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

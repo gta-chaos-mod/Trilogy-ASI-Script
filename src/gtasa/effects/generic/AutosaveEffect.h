@@ -8,13 +8,13 @@
 class AutosaveEffect : public EffectPlaceholder
 {
 private:
-	bool didSave = false;
-	int missionsPassed = 0;
+    bool didSave        = false;
+    int  missionsPassed = 0;
 
 public:
-	AutosaveEffect(int missionsPassed);
+    AutosaveEffect (int missionsPassed);
 
-	bool IsPlaceholder() override;
+    bool IsPlaceholder () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

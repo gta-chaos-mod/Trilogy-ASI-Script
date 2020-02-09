@@ -5,17 +5,18 @@
 class OneHitKOEffect : public EffectBase
 {
 private:
-	bool* neverHungryCheat = reinterpret_cast<bool*>(0x969174);
+    bool *neverHungryCheat = reinterpret_cast<bool *> (0x969174);
 
 public:
-	OneHitKOEffect();
+    OneHitKOEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 
 private:
-	static void HookedCHudRenderHealthBar(int playerId, signed int x, signed int y);
+    static void HookedCHudRenderHealthBar (int playerId, signed int x,
+                                           signed int y);
 };

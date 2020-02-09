@@ -1,13 +1,15 @@
 #include "BeachThemeCheat.h"
 
-BeachThemeCheat::BeachThemeCheat()
-	: TimedFunctionEffect("cheat_beach_theme", BeachTheme, 0x969159)
+BeachThemeCheat::BeachThemeCheat ()
+    : TimedFunctionEffect ("cheat_beach_theme", BeachTheme, 0x969159)
 {
-	AddType("theme");
+    AddType ("theme");
 }
 
-void BeachThemeCheat::BeachTheme() {
-	CCheat::BeachPartyCheat();
+void
+BeachThemeCheat::BeachTheme ()
+{
+    CCheat::BeachPartyCheat ();
 
-	GameUtil::RebuildPlayer();
+    GameUtil::RebuildPlayer ();
 }

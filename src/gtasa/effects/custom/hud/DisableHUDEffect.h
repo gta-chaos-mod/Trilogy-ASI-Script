@@ -9,16 +9,18 @@
 class DisableHUDEffect : public EffectBase
 {
 public:
-	DisableHUDEffect();
+    DisableHUDEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
 private:
-	static void HookedHUDDraw();
-	static void HookedBlipsDraw();
+    static void HookedHUDDraw ();
+    static void HookedBlipsDraw ();
 
-	static tMenuPanel* HookedCMenuSystemDisplayGridMenu(unsigned __int8 a1, unsigned __int8 a2);
-	static void HookedCMenuSystemDisplayStandardMenu(unsigned __int8 panelId, bool bBrightFont);
+    static tMenuPanel *HookedCMenuSystemDisplayGridMenu (unsigned __int8 a1,
+                                                         unsigned __int8 a2);
+    static void HookedCMenuSystemDisplayStandardMenu (unsigned __int8 panelId,
+                                                      bool bBrightFont);
 
-	static void HookedCHudDrawAreaName();
+    static void HookedCHudDrawAreaName ();
 };

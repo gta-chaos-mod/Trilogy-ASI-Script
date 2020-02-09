@@ -5,12 +5,14 @@
 class InfiniteHealthEveryoneEffect : public EffectBase
 {
 public:
-	InfiniteHealthEveryoneEffect();
+    InfiniteHealthEveryoneEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 
 private:
-	static bool __fastcall HookedCPedInflictDamage(CPed* thisPed, void* edx, CEntity* source, eWeaponType weapon, float damage, ePedPieceTypes pedPiece, uchar unknown);
+    static bool __fastcall HookedCPedInflictDamage (
+        CPed *thisPed, void *edx, CEntity *source, eWeaponType weapon,
+        float damage, ePedPieceTypes pedPiece, uchar unknown);
 };

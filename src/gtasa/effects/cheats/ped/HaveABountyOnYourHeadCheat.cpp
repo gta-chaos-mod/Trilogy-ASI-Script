@@ -1,28 +1,35 @@
 #include "HaveABountyOnYourHeadCheat.h"
 
-HaveABountyOnYourHeadCheat::HaveABountyOnYourHeadCheat()
-	: EffectBase("cheat_have_a_bounty_on_your_head")
+HaveABountyOnYourHeadCheat::HaveABountyOnYourHeadCheat ()
+    : EffectBase ("cheat_have_a_bounty_on_your_head")
 {
-	AddType("peds_attack");
-	SetDisabledForMissions();
+    AddType ("peds_attack");
+    AddType ("ped_spawns");
+    SetDisabledForMissions ();
 }
 
-void HaveABountyOnYourHeadCheat::Enable() {
-	EffectBase::Enable();
+void
+HaveABountyOnYourHeadCheat::Enable ()
+{
+    EffectBase::Enable ();
 
-	GameUtil::BackupAcquaintances();
+    GameUtil::BackupAcquaintances ();
 
-	if (!*haveABountyOnYourHeadCheat) {
-		CCheat::EverybodyAttacksPlayerCheat();
-	}
+    if (!*haveABountyOnYourHeadCheat)
+    {
+        CCheat::EverybodyAttacksPlayerCheat ();
+    }
 }
 
-void HaveABountyOnYourHeadCheat::Disable() {
-	if (*haveABountyOnYourHeadCheat) {
-		CCheat::EverybodyAttacksPlayerCheat();
-	}
+void
+HaveABountyOnYourHeadCheat::Disable ()
+{
+    if (*haveABountyOnYourHeadCheat)
+    {
+        CCheat::EverybodyAttacksPlayerCheat ();
+    }
 
-	GameUtil::RestoreSavedAcquaintances();
+    GameUtil::RestoreSavedAcquaintances ();
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }

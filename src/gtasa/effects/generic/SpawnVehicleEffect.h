@@ -9,17 +9,17 @@
 class SpawnVehicleEffect : public EffectPlaceholder
 {
 private:
-	int vehicleID = 0;
-	bool setPlayerAsDriver = false;
+    int  vehicleID         = 0;
+    bool setPlayerAsDriver = false;
 
 public:
-	SpawnVehicleEffect(int vehicleID);
-	SpawnVehicleEffect(int vehicleID, bool setPlayerAsDriver);
+    SpawnVehicleEffect (int vehicleID);
+    SpawnVehicleEffect (int vehicleID, bool setPlayerAsDriver);
 
-	void Enable() override;
+    void Enable () override;
 
-	bool CanActivate() override;
+    bool CanActivate () override;
 
 private:
-	void SpawnForPlayer();
+    void SpawnForPlayer ();
 };

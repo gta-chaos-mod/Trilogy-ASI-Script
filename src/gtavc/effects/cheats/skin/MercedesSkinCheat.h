@@ -5,7 +5,7 @@
 class MercedesSkinCheat : public EffectPlaceholder
 {
 public:
-	MercedesSkinCheat();
+    MercedesSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

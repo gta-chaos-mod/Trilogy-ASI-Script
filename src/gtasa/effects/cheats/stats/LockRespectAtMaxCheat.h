@@ -5,5 +5,5 @@
 class LockRespectAtMaxCheat : public TimedAddressEffect
 {
 public:
-	LockRespectAtMaxCheat();
+    LockRespectAtMaxCheat ();
 };

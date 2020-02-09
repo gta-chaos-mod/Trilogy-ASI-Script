@@ -7,7 +7,7 @@
 class BeginnerLevelForAllWeaponsCheat : public EffectPlaceholder
 {
 public:
-	BeginnerLevelForAllWeaponsCheat();
+    BeginnerLevelForAllWeaponsCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

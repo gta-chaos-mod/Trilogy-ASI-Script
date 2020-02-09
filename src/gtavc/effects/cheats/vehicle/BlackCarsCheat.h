@@ -5,5 +5,5 @@
 class BlackCarsCheat : public TimedAddressEffect
 {
 public:
-	BlackCarsCheat();
+    BlackCarsCheat ();
 };

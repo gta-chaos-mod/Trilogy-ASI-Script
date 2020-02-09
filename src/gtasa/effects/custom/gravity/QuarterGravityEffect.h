@@ -8,12 +8,12 @@
 class QuarterGravityEffect : public EffectBase
 {
 private:
-	float gravity = 0.002f;
+    float gravity = 0.002f;
 
 public:
-	QuarterGravityEffect();
+    QuarterGravityEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

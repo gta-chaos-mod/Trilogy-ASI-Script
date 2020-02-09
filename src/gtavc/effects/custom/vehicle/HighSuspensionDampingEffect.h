@@ -9,14 +9,14 @@
 class HighSuspensionDampingEffect : public EffectBase
 {
 private:
-	tHandlingData origVehicleHandling[106] = {};
-	float suspension = 10.0f;
+    tHandlingData origVehicleHandling[106] = {};
+    float         suspension               = 10.0f;
 
 public:
-	HighSuspensionDampingEffect();
+    HighSuspensionDampingEffect ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

@@ -7,7 +7,7 @@
 class GetBustedEffect : public EffectBase
 {
 public:
-	GetBustedEffect();
+    GetBustedEffect ();
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

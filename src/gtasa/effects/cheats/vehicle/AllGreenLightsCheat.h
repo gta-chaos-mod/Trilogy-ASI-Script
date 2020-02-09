@@ -5,5 +5,5 @@
 class AllGreenLightsCheat : public TimedAddressEffect
 {
 public:
-	AllGreenLightsCheat();
+    AllGreenLightsCheat ();
 };

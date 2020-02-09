@@ -1,22 +1,32 @@
 #include "CinematicVehicleCameraEffect.h"
 
-CinematicVehicleCameraEffect::CinematicVehicleCameraEffect()
-	: EffectBase("effect_cinematic_vehicle_camera") {}
-
-bool CinematicVehicleCameraEffect::CanActivate() {
-	CVehicle* vehicle = FindPlayerVehicle(-1, false);
-	return vehicle != nullptr;
+CinematicVehicleCameraEffect::CinematicVehicleCameraEffect ()
+    : EffectBase ("effect_cinematic_vehicle_camera")
+{
+    AddType ("camera");
 }
 
-void CinematicVehicleCameraEffect::Disable() {
-	Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA>(false);
+bool
+CinematicVehicleCameraEffect::CanActivate ()
+{
+    CVehicle *vehicle = FindPlayerVehicle (-1, false);
 
-	EffectBase::Disable();
+    return vehicle != nullptr;
 }
 
-void CinematicVehicleCameraEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+CinematicVehicleCameraEffect::Disable ()
+{
+    Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA> (false);
 
-	CVehicle* vehicle = FindPlayerVehicle(-1, false);
-	Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA>(vehicle != nullptr);
+    EffectBase::Disable ();
+}
+
+void
+CinematicVehicleCameraEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
+
+    CVehicle *vehicle = FindPlayerVehicle (-1, false);
+    Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA> (vehicle != nullptr);
 }

@@ -6,10 +6,10 @@
 class TurnVehiclesAroundEffect : public EffectPlaceholder
 {
 public:
-	TurnVehiclesAroundEffect();
+    TurnVehiclesAroundEffect ();
 
-	void Enable() override;
+    void Enable () override;
 
 private:
-	void InvertVehicle(CMatrix matrix);
+    void InvertVehicle (CMatrix matrix);
 };

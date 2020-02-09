@@ -7,7 +7,7 @@
 class SetEveryoneOnFireEffect : public EffectPlaceholder
 {
 public:
-	SetEveryoneOnFireEffect();
+    SetEveryoneOnFireEffect ();
 
-	void Enable() override;
+    void Enable () override;
 };

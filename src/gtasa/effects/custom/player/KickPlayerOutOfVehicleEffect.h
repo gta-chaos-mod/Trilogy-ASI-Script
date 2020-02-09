@@ -7,9 +7,9 @@
 class KickPlayerOutOfVehicleEffect : public EffectPlaceholder
 {
 public:
-	KickPlayerOutOfVehicleEffect();
+    KickPlayerOutOfVehicleEffect ();
 
-	bool CanActivate() override;
+    bool CanActivate () override;
 
-	void Enable() override;
+    void Enable () override;
 };

@@ -1,33 +1,42 @@
 #include "LightspeedBrakingEffect.h"
 
-LightspeedBrakingEffect::LightspeedBrakingEffect()
-	: EffectBase("effect_lightspeed_braking")
+LightspeedBrakingEffect::LightspeedBrakingEffect ()
+    : EffectBase ("effect_lightspeed_braking")
 {
-	AddType("handling");
+    AddType ("handling");
 }
 
-void LightspeedBrakingEffect::Enable() {
-	EffectBase::Enable();
+void
+LightspeedBrakingEffect::Enable ()
+{
+    EffectBase::Enable ();
 
-	for (int i = 0; i < 106; i++) {
-		origVehicleHandling[i] = gHandlingDataMgr.m_aVehicleHandling[i];
-	}
+    for (int i = 0; i < 106; i++)
+    {
+        origVehicleHandling[i] = gHandlingDataMgr.m_aVehicleHandling[i];
+    }
 
-	for (int i = 0; i < 106; i++) {
-		gHandlingDataMgr.m_aVehicleHandling[i].fBrakeDeceleration *= -1.0f;
-	}
+    for (int i = 0; i < 106; i++)
+    {
+        gHandlingDataMgr.m_aVehicleHandling[i].fBrakeDeceleration *= -1.0f;
+    }
 }
 
-void LightspeedBrakingEffect::Disable() {
-	for (int i = 0; i < 106; i++) {
-		gHandlingDataMgr.m_aVehicleHandling[i] = origVehicleHandling[i];
-	}
+void
+LightspeedBrakingEffect::Disable ()
+{
+    for (int i = 0; i < 106; i++)
+    {
+        gHandlingDataMgr.m_aVehicleHandling[i] = origVehicleHandling[i];
+    }
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }
 
-void LightspeedBrakingEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+LightspeedBrakingEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	GameUtil::SetVehiclesToRealPhysics();
+    GameUtil::SetVehiclesToRealPhysics ();
 }

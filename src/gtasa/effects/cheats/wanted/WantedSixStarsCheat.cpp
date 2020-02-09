@@ -1,16 +1,19 @@
 #include "WantedSixStarsCheat.h"
 
-WantedSixStarsCheat::WantedSixStarsCheat()
-	: EffectPlaceholder("cheat_wanted_six_stars")
+WantedSixStarsCheat::WantedSixStarsCheat ()
+    : EffectPlaceholder ("cheat_wanted_six_stars")
 {
-	AddType("wanted");
+    AddType ("wanted");
 }
 
-void WantedSixStarsCheat::Enable() {
-	EffectPlaceholder::Enable();
+void
+WantedSixStarsCheat::Enable ()
+{
+    EffectPlaceholder::Enable ();
 
-	CWanted* wanted = FindPlayerWanted(-1);
-	if (wanted) {
-		wanted->CheatWantedLevel(6);
-	}
+    CWanted *wanted = FindPlayerWanted (-1);
+    if (wanted)
+    {
+        wanted->CheatWantedLevel (6);
+    }
 }

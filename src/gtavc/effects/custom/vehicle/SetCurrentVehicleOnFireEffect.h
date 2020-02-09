@@ -5,7 +5,7 @@
 class SetCurrentVehicleOnFireEffect : public EffectPlaceholder
 {
 public:
-	SetCurrentVehicleOnFireEffect();
+    SetCurrentVehicleOnFireEffect ();
 
-	void Enable() override;
+    void Enable () override;
 };

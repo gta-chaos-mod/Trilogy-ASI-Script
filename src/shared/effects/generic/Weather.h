@@ -7,10 +7,10 @@
 class Weather : public EffectBase
 {
 private:
-	int weatherID = 0;
+    int weatherID = 0;
 
 public:
-	Weather(int id);
+    Weather (int id);
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

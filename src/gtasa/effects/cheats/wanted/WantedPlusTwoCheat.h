@@ -5,7 +5,7 @@
 class WantedPlusTwoCheat : public EffectPlaceholder
 {
 public:
-	WantedPlusTwoCheat();
+    WantedPlusTwoCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

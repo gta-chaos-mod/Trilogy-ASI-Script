@@ -1,14 +1,19 @@
 #include "SendVehiclesToSpaceEffect.h"
 
-SendVehiclesToSpaceEffect::SendVehiclesToSpaceEffect()
-	: EffectPlaceholder("effect_send_vehicles_to_space") {}
+SendVehiclesToSpaceEffect::SendVehiclesToSpaceEffect ()
+    : EffectPlaceholder ("effect_send_vehicles_to_space")
+{
+}
 
-void SendVehiclesToSpaceEffect::Enable() {
-	EffectPlaceholder::Enable();
+void
+SendVehiclesToSpaceEffect::Enable ()
+{
+    EffectPlaceholder::Enable ();
 
-	GameUtil::SetVehiclesToRealPhysics();
+    GameUtil::SetVehiclesToRealPhysics ();
 
-	for (CVehicle* vehicle : CPools::ms_pVehiclePool) {
-		vehicle->m_vecMoveSpeed.z = 10.0f;
-	}
+    for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+    {
+        vehicle->m_vecMoveSpeed.z = 10.0f;
+    }
 }

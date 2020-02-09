@@ -5,7 +5,7 @@
 class AlwaysWantedEffect : public EffectBase
 {
 public:
-	AlwaysWantedEffect();
+    AlwaysWantedEffect ();
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

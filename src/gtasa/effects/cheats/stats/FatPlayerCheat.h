@@ -8,7 +8,7 @@
 class FatPlayerCheat : public EffectPlaceholder
 {
 public:
-	FatPlayerCheat();
+    FatPlayerCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

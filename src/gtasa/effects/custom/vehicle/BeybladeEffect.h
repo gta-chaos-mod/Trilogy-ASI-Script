@@ -8,9 +8,9 @@
 class BeybladeEffect : public EffectBase
 {
 public:
-	BeybladeEffect();
+    BeybladeEffect ();
 
-	void Enable();
+    void Enable ();
 
-	void HandleTick();
+    void HandleTick ();
 };

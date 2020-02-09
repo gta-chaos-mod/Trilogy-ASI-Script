@@ -7,5 +7,5 @@
 class ElvisIsEverywhereCheat : public TimedFunctionEffect
 {
 public:
-	ElvisIsEverywhereCheat();
+    ElvisIsEverywhereCheat ();
 };

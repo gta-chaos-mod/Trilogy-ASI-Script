@@ -5,7 +5,7 @@
 class RicardoSkinCheat : public EffectPlaceholder
 {
 public:
-	RicardoSkinCheat();
+    RicardoSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

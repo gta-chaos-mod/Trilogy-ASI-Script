@@ -5,7 +5,7 @@
 class KenSkinCheat : public EffectPlaceholder
 {
 public:
-	KenSkinCheat();
+    KenSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

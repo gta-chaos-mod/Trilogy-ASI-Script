@@ -7,10 +7,10 @@
 class DisableHUDEffect : public EffectBase
 {
 public:
-	DisableHUDEffect();
+    DisableHUDEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
 private:
-	static void HookedHUDDraw();
+    static void HookedHUDDraw ();
 };

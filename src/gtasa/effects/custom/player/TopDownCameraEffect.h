@@ -9,11 +9,11 @@
 class TopDownCameraEffect : public EffectBase
 {
 public:
-	TopDownCameraEffect();
+    TopDownCameraEffect ();
 
-	bool CanActivate() override;
+    bool CanActivate () override;
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

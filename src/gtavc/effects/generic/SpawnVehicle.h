@@ -19,14 +19,14 @@
 class SpawnVehicle : public EffectPlaceholder
 {
 private:
-	int vehicleID = 0;
+    int vehicleID = 0;
 
 public:
-	SpawnVehicle(int vehicleID);
+    SpawnVehicle (int vehicleID);
 
-	void Enable() override;
+    void Enable () override;
 
 private:
-	void SpawnForPlayer();
-	CVehicle* CreateVehicle(CVector position, float orientation);
+    void      SpawnForPlayer ();
+    CVehicle *CreateVehicle (CVector position, float orientation);
 };

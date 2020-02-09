@@ -8,8 +8,8 @@
 class CountryThemeCheat : public TimedFunctionEffect
 {
 public:
-	CountryThemeCheat();
+    CountryThemeCheat ();
 
 private:
-	static void CountryTheme();
+    static void CountryTheme ();
 };

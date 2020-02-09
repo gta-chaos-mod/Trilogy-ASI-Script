@@ -7,7 +7,7 @@
 class MaxStaminaCheat : public EffectPlaceholder
 {
 public:
-	MaxStaminaCheat();
+    MaxStaminaCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

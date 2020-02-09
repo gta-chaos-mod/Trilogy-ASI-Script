@@ -5,10 +5,10 @@
 class TunnelVisionEffect : public EffectBase
 {
 public:
-	TunnelVisionEffect();
+    TunnelVisionEffect ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	static void DrawTunnelVision();
+    static void DrawTunnelVision ();
 };

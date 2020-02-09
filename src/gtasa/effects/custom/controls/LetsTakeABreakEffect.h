@@ -7,9 +7,9 @@
 class LetsTakeABreakEffect : public EffectBase
 {
 public:
-	LetsTakeABreakEffect();
+    LetsTakeABreakEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

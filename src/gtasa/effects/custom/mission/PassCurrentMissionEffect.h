@@ -12,25 +12,25 @@
 class PassCurrentMissionEffect : public EffectBase
 {
 private:
-	static bool isEnabled;
+    static bool isEnabled;
 
 private:
-	std::map<std::string, int> offsetMap = {};
-	std::map<std::string, bool> debugCodeMap = {};
-	bool triedPassingMission = false;
-	int missionPassWait = 100;
+    std::map<std::string, int>  offsetMap           = {};
+    std::map<std::string, bool> debugCodeMap        = {};
+    bool                        triedPassingMission = false;
+    int                         missionPassWait     = 100;
 
 public:
-	PassCurrentMissionEffect();
+    PassCurrentMissionEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 
-	void ClearPlayerStatus();
+    void ClearPlayerStatus ();
 
-	static char __stdcall HookedDebugGetKeyDown(int keyCode, int a2, int a3);
+    static char __stdcall HookedDebugGetKeyDown (int keyCode, int a2, int a3);
 };

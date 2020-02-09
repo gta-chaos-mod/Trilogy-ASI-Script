@@ -5,7 +5,7 @@
 class LanceSkinCheat : public EffectPlaceholder
 {
 public:
-	LanceSkinCheat();
+    LanceSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

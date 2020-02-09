@@ -5,5 +5,5 @@
 class AggressiveDriversCheat : public TimedAddressEffect
 {
 public:
-	AggressiveDriversCheat();
+    AggressiveDriversCheat ();
 };

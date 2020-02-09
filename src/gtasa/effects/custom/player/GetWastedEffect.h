@@ -7,7 +7,7 @@
 class GetWastedEffect : public EffectBase
 {
 public:
-	GetWastedEffect();
+    GetWastedEffect ();
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

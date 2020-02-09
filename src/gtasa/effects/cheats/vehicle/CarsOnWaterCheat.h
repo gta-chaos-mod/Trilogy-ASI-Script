@@ -5,5 +5,5 @@
 class CarsOnWaterCheat : public TimedAddressEffect
 {
 public:
-	CarsOnWaterCheat();
+    CarsOnWaterCheat ();
 };

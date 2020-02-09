@@ -8,12 +8,12 @@
 class InsaneGravityEffect : public EffectBase
 {
 private:
-	float gravity = 0.64f;
+    float gravity = 0.64f;
 
 public:
-	InsaneGravityEffect();
+    InsaneGravityEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

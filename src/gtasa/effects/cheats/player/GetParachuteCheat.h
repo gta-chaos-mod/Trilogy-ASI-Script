@@ -7,7 +7,7 @@
 class GetParachuteCheat : public EffectPlaceholder
 {
 public:
-	GetParachuteCheat();
+    GetParachuteCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

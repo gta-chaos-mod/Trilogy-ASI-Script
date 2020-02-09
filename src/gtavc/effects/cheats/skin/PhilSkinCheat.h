@@ -5,7 +5,7 @@
 class PhilSkinCheat : public EffectPlaceholder
 {
 public:
-	PhilSkinCheat();
+    PhilSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

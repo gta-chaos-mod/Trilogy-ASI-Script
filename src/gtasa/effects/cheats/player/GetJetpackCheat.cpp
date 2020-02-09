@@ -1,10 +1,11 @@
 #include "GetJetpackCheat.h"
 
-GetJetpackCheat::GetJetpackCheat()
-	: EffectPlaceholder("cheat_get_jetpack") {}
+GetJetpackCheat::GetJetpackCheat () : EffectPlaceholder ("cheat_get_jetpack") {}
 
-void GetJetpackCheat::Enable() {
-	EffectPlaceholder::Enable();
+void
+GetJetpackCheat::Enable ()
+{
+    EffectPlaceholder::Enable ();
 
-	CCheat::JetpackCheat();
+    CCheat::JetpackCheat ();
 }

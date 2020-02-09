@@ -34,38 +34,39 @@
 class GameUtil
 {
 private:
-	static CPedAcquaintance backup_acquaintances[32];
+    static CPedAcquaintance backup_acquaintances[32];
 
-	static std::string loadFilePath;
-	static char* gamePath;
+    static std::string loadFilePath;
+    static char *      gamePath;
 
 public:
-	static bool IsRainbomizerLoaded();
+    static bool IsRainbomizerLoaded ();
 
-	static CPedAcquaintance* GetPedTypeAcquaintances(int PedType);
-	static void BackupAcquaintances();
-	static void RestoreSavedAcquaintances();
-	static CPedAcquaintance* GetSavedAcquaintance(int type);
-	static void SaveAcquaintances(CPedAcquaintance* acquaintances);
-	static void LoadAcquaintances(CPedAcquaintance* acquaintances);
+    static CPedAcquaintance *GetPedTypeAcquaintances (int PedType);
+    static void              BackupAcquaintances ();
+    static void              RestoreSavedAcquaintances ();
+    static CPedAcquaintance *GetSavedAcquaintance (int type);
+    static void SaveAcquaintances (CPedAcquaintance *acquaintances);
+    static void LoadAcquaintances (CPedAcquaintance *acquaintances);
 
-	static void DeleteAutosave();
-	static void SaveToFile(std::string fileName);
-	static bool LoadFromFile(std::string fileName);
-	static std::string GetLoadFileName();
+    static void        DeleteAutosave ();
+    static void        SaveToFile (std::string fileName);
+    static bool        LoadFromFile (std::string fileName);
+    static std::string GetLoadFileName ();
 
-	static void SetVehiclesToRealPhysics();
+    static void SetVehiclesToRealPhysics ();
 
-	static void RemovePlayerBalaclava();
-	static void RebuildPlayer();
+    static void RemovePlayerBalaclava ();
+    static void RebuildPlayer ();
 
-	static float GetAudioVolumeOrOverride(float volume);
+    static float GetAudioVolumeOrOverride (float volume);
 
-	static int GetRealMissionsPassed();
+    static int GetRealMissionsPassed ();
 
-	static CVehicle* CreateVehicle(int vehicleID, CVector position, float orientation, bool clearSpace = true);
+    static CVehicle *CreateVehicle (int vehicleID, CVector position,
+                                    float orientation, bool clearSpace = true);
 
-	static bool CanCrowdControlEffectActivate();
+    static bool CanCrowdControlEffectActivate ();
 
-	static void ClearWeaponsExceptParachute(CPed* ped);
+    static void ClearWeaponsExceptParachute (CPed *ped);
 };

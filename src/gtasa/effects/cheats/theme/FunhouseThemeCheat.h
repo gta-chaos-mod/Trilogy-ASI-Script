@@ -8,8 +8,8 @@
 class FunhouseThemeCheat : public TimedFunctionEffect
 {
 public:
-	FunhouseThemeCheat();
+    FunhouseThemeCheat ();
 
 private:
-	static void FunhouseTheme();
+    static void FunhouseTheme ();
 };

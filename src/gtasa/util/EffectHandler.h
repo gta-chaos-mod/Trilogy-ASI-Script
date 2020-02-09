@@ -95,7 +95,7 @@
 
 #include "effects/custom/ped/RemoveAllWeaponsEffect.h"
 #include "effects/custom/ped/SetEveryoneOnFireEffect.h"
-#include "effects/custom/ped/BobbleHeadsEffect.h"
+#include "effects/custom/ped/BigHeadsEffect.h"
 #include "effects/custom/player/KickPlayerOutOfVehicleEffect.h"
 #include "effects/custom/vehicle/SetCurrentVehicleOnFireEffect.h"
 #include "effects/custom/vehicle/PopTiresOfAllVehiclesEffect.h"
@@ -164,15 +164,16 @@
 #include "effects/custom/player/NoNeedToHurryEffect.h"
 #include "effects/custom/player/DrunkPlayerEffect.h"
 #include "effects/custom/controls/ForceVehicleMouseSteering.h"
+#include "effects/custom/controls/PedalToTheMetalEffect.h"
 
 #include "CCheat.h"
 
 class EffectHandler
 {
 public:
-	static EffectBase* Get(std::string state, std::string function);
+    static EffectBase *Get (std::string state, std::string function);
 
 private:
-	static EffectBase* HandleCheat(std::string name);
-	static EffectBase* HandleEffect(std::string name);
+    static EffectBase *HandleCheat (std::string name);
+    static EffectBase *HandleEffect (std::string name);
 };

@@ -10,26 +10,18 @@
 class DisableOneMovementKeyEffect : public EffectBase
 {
 private:
-	int wait = 0;
-	std::pair<e_ControllerAction, e_ControllerAction> targetAction = {};
-	CControllerAction origActions[59] = {};
-	std::pair<e_ControllerAction, e_ControllerAction> possibleActions[4] = {
-		std::make_pair(CA_GO_FORWARD, CA_VEHICLE_ACCELERATE),
-		std::make_pair(CA_GO_BACK, CA_VEHICLE_BRAKE),
-		std::make_pair(CA_GO_LEFT, CA_VEHICLE_STEERLEFT),
-		std::make_pair(CA_GO_RIGHT, CA_VEHICLE_STEERRIGHT)
-	};
+    static int mode;
 
 public:
-	DisableOneMovementKeyEffect();
+    DisableOneMovementKeyEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
 
-	void HandleTick() override;
-
-	static FILESTREAM HookedOpenFile(const char* file, const char* mode);
-	static void __fastcall HookedCMenuManagerProcessPCMenuOptions(CMenuManager* thisManager, void* edx, eMenuPage page);
+    static __int16 __fastcall HookedGetSteeringLeftRight (CPad *thisPad);
+    static __int16 __fastcall HookedPedWalkLeftRight (CPad *thisPad);
+    static __int16 __fastcall HookedPedWalkUpDown (CPad *thisPad);
+    static __int16 __fastcall HookedGetAccelerate (CPad *thisPad);
+    static __int16 __fastcall HookedGetBrake (CPad *thisPad);
 };

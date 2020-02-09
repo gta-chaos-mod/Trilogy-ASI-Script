@@ -1,13 +1,15 @@
 #include "CountryThemeCheat.h"
 
-CountryThemeCheat::CountryThemeCheat()
-	: TimedFunctionEffect("cheat_country_theme", CountryTheme, 0x96917B)
+CountryThemeCheat::CountryThemeCheat ()
+    : TimedFunctionEffect ("cheat_country_theme", CountryTheme, 0x96917B)
 {
-	AddType("theme");
+    AddType ("theme");
 }
 
-void CountryThemeCheat::CountryTheme() {
-	CCheat::CountrysideInvasionCheat();
+void
+CountryThemeCheat::CountryTheme ()
+{
+    CCheat::CountrysideInvasionCheat ();
 
-	GameUtil::RebuildPlayer();
+    GameUtil::RebuildPlayer ();
 }

@@ -7,5 +7,5 @@
 class CheapCarsCheat : public TimedFunctionEffect
 {
 public:
-	CheapCarsCheat();
+    CheapCarsCheat ();
 };

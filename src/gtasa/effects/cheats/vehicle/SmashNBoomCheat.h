@@ -5,9 +5,9 @@
 class SmashNBoomCheat : public TimedAddressEffect
 {
 public:
-	SmashNBoomCheat();
+    SmashNBoomCheat ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

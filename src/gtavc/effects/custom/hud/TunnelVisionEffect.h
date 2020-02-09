@@ -5,12 +5,12 @@
 class TunnelVisionEffect : public EffectBase
 {
 public:
-	TunnelVisionEffect();
+    TunnelVisionEffect ();
 
-	EffectBase* SetEffectDuration(int duration) override;
+    EffectBase *SetEffectDuration (int duration) override;
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	static void DrawTunnelVision();
+    static void DrawTunnelVision ();
 };

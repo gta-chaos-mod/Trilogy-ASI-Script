@@ -7,5 +7,5 @@
 class GangsControlTheStreetsCheat : public TimedFunctionEffect
 {
 public:
-	GangsControlTheStreetsCheat();
+    GangsControlTheStreetsCheat ();
 };

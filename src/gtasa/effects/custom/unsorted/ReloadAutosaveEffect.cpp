@@ -1,10 +1,14 @@
 #include "ReloadAutosaveEffect.h"
 
-ReloadAutosaveEffect::ReloadAutosaveEffect()
-	: EffectPlaceholder("effect_reload_autosave") {}
+ReloadAutosaveEffect::ReloadAutosaveEffect ()
+    : EffectPlaceholder ("effect_reload_autosave")
+{
+}
 
-void ReloadAutosaveEffect::Enable() {
-	EffectPlaceholder::Enable();
+void
+ReloadAutosaveEffect::Enable ()
+{
+    EffectPlaceholder::Enable ();
 
-	GameUtil::LoadFromFile("chaos_mod\\chaos_autosave.b");
+    GameUtil::LoadFromFile ("chaos_mod\\chaos_autosave.b");
 }

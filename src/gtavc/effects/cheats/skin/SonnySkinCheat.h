@@ -5,7 +5,7 @@
 class SonnySkinCheat : public EffectPlaceholder
 {
 public:
-	SonnySkinCheat();
+    SonnySkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

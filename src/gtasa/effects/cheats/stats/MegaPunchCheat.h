@@ -7,9 +7,11 @@
 class MegaPunchCheat : public TimedAddressEffect
 {
 public:
-	MegaPunchCheat();
+    MegaPunchCheat ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	static void __fastcall HookedFightHitCar(CTaskSimpleFight* thisTask, void* edx, CPed* ped, CVehicle* vehicle, CVector* colCoord, CVector* colDir, int colComp, int a7);
+    static void __fastcall HookedFightHitCar (
+        CTaskSimpleFight *thisTask, void *edx, CPed *ped, CVehicle *vehicle,
+        CVector *colCoord, CVector *colDir, int colComp, int a7);
 };

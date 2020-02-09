@@ -5,7 +5,7 @@
 class WantedSixStarsCheat : public EffectPlaceholder
 {
 public:
-	WantedSixStarsCheat();
+    WantedSixStarsCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

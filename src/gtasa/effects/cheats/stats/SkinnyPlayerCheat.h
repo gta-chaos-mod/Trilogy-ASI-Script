@@ -8,7 +8,7 @@
 class SkinnyPlayerCheat : public EffectPlaceholder
 {
 public:
-	SkinnyPlayerCheat();
+    SkinnyPlayerCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

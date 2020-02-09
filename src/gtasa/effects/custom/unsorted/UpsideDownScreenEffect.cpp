@@ -4,60 +4,83 @@
 #include "Color.h"
 #include "CScene.h"
 
-static CdeclEvent<AddressList<0x53EBF5, H_CALL>, PRIORITY_BEFORE, ArgPickN<RwCamera*, 0>, RwCamera * (RwCamera*)> endUpdateEvent;
-static CdeclEvent<AddressList<0x745C7D, H_CALL>, PRIORITY_BEFORE, ArgPickNone, void()> createCameraSubRasterEvent;
+static CdeclEvent<AddressList<0x53EBF5, H_CALL>, PRIORITY_BEFORE,
+                  ArgPickN<RwCamera *, 0>, RwCamera *(RwCamera *)>
+    endUpdateEvent;
+static CdeclEvent<AddressList<0x745C7D, H_CALL>, PRIORITY_BEFORE, ArgPickNone,
+                  void ()>
+    createCameraSubRasterEvent;
 
-RwRaster* UpsideDownScreenEffect::raster = nullptr;
+RwRaster *   UpsideDownScreenEffect::raster      = nullptr;
 RwIm2DVertex UpsideDownScreenEffect::vertices[4] = {};
 
-UpsideDownScreenEffect::UpsideDownScreenEffect()
-	: EffectBase("effect_upside_down_screen") {}
-
-void UpsideDownScreenEffect::Enable() {
-	EffectBase::Enable();
-
-	ResetRaster();
-
-	endUpdateEvent += EndUpdateEvent;
-	createCameraSubRasterEvent += ResetRaster;
+UpsideDownScreenEffect::UpsideDownScreenEffect ()
+    : EffectBase ("effect_upside_down_screen")
+{
 }
 
-void UpsideDownScreenEffect::Disable() {
-	endUpdateEvent -= EndUpdateEvent;
-	createCameraSubRasterEvent -= ResetRaster;
+void
+UpsideDownScreenEffect::Enable ()
+{
+    EffectBase::Enable ();
 
-	EffectBase::Disable();
+    ResetRaster ();
+
+    endUpdateEvent += EndUpdateEvent;
+    createCameraSubRasterEvent += ResetRaster;
 }
 
-void UpsideDownScreenEffect::ResetRaster() {
-	if (raster) {
-		RwRasterDestroy(raster);
-	}
-	auto cameraRaster = Scene.m_pRwCamera->frameBuffer;
-	raster = RwRasterCreate(cameraRaster->width, cameraRaster->height,
-		cameraRaster->depth, rwRASTERTYPECAMERATEXTURE);
+void
+UpsideDownScreenEffect::Disable ()
+{
+    endUpdateEvent -= EndUpdateEvent;
+    createCameraSubRasterEvent -= ResetRaster;
 
-	// Reset raster and vertices
-	DrawHelper::Append(vertices, 0, CVector2D(0, 0), plugin::color::White, 0, 1);
-	DrawHelper::Append(vertices, 1, CVector2D((float)cameraRaster->width, 0), plugin::color::White, 1, 1);
-	DrawHelper::Append(vertices, 3, CVector2D((float)cameraRaster->width, (float)cameraRaster->height), plugin::color::White, 1, 0);
-	DrawHelper::Append(vertices, 2, CVector2D(0, (float)cameraRaster->height), plugin::color::White, 0, 0);
+    EffectBase::Disable ();
 }
 
-void UpsideDownScreenEffect::EndUpdateEvent(RwCamera* camera) {
-	if (FrontEndMenuManager.m_bMenuActive) {
-		return;
-	}
+void
+UpsideDownScreenEffect::ResetRaster ()
+{
+    if (raster)
+    {
+        RwRasterDestroy (raster);
+    }
+    auto cameraRaster = Scene.m_pRwCamera->frameBuffer;
+    raster = RwRasterCreate (cameraRaster->width, cameraRaster->height,
+                             cameraRaster->depth, rwRASTERTYPECAMERATEXTURE);
 
-	SetRenderState(rwRENDERSTATESHADEMODE, rwSHADEMODEFLAT);
+    // Reset raster and vertices
+    DrawHelper::Append (vertices, 0, CVector2D (0, 0), plugin::color::White, 0,
+                        1);
+    DrawHelper::Append (vertices, 1, CVector2D ((float) cameraRaster->width, 0),
+                        plugin::color::White, 1, 1);
+    DrawHelper::Append (vertices, 3,
+                        CVector2D ((float) cameraRaster->width,
+                                   (float) cameraRaster->height),
+                        plugin::color::White, 1, 0);
+    DrawHelper::Append (vertices, 2,
+                        CVector2D (0, (float) cameraRaster->height),
+                        plugin::color::White, 0, 0);
+}
 
-	RwCameraEndUpdate(camera);
-	RwRasterPushContext(raster);
-	RwRasterRenderFast(camera->frameBuffer, 0, 0);
-	RwRasterPopContext();
-	RwCameraBeginUpdate(camera);
+void
+UpsideDownScreenEffect::EndUpdateEvent (RwCamera *camera)
+{
+    if (FrontEndMenuManager.m_bMenuActive)
+    {
+        return;
+    }
 
-	SetRenderState(rwRENDERSTATETEXTURERASTER, (int)raster);
+    SetRenderState (rwRENDERSTATESHADEMODE, rwSHADEMODEFLAT);
 
-	RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vertices, 4);
+    RwCameraEndUpdate (camera);
+    RwRasterPushContext (raster);
+    RwRasterRenderFast (camera->frameBuffer, 0, 0);
+    RwRasterPopContext ();
+    RwCameraBeginUpdate (camera);
+
+    SetRenderState (rwRENDERSTATETEXTURERASTER, (int) raster);
+
+    RwIm2DRenderPrimitive (rwPRIMTYPETRISTRIP, vertices, 4);
 }

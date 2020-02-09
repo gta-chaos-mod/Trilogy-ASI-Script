@@ -15,16 +15,16 @@
 class FakePassCurrentMissionEffect : public EffectPlaceholder
 {
 private:
-	bool handledEverything = false;
-	bool handledMission = false;
-	bool lastIsOnMission = false;
+    bool handledEverything = false;
+    bool handledMission    = false;
+    bool lastIsOnMission   = false;
 
-	int wait = 500;
+    int wait = 500;
 
 public:
-	FakePassCurrentMissionEffect();
+    FakePassCurrentMissionEffect ();
 
-	void HandleTick() override;
+    void HandleTick () override;
 
-	void ClearPlayerStatus();
+    void ClearPlayerStatus ();
 };

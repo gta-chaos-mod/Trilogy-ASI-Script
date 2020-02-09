@@ -8,12 +8,12 @@
 class QuadrupleGravityEffect : public EffectBase
 {
 private:
-	float gravity = 0.032f;
+    float gravity = 0.032f;
 
 public:
-	QuadrupleGravityEffect();
+    QuadrupleGravityEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

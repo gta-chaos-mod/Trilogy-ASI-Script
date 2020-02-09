@@ -7,7 +7,7 @@
 class NoStaminaCheat : public EffectPlaceholder
 {
 public:
-	NoStaminaCheat();
+    NoStaminaCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

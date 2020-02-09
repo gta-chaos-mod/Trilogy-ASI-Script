@@ -8,9 +8,9 @@
 class ZeroGravityEffect : public EffectBase
 {
 public:
-	ZeroGravityEffect();
+    ZeroGravityEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

@@ -1,33 +1,43 @@
 #include "HighSuspensionDampingEffect.h"
 
-HighSuspensionDampingEffect::HighSuspensionDampingEffect()
-	: EffectBase("effect_high_suspension_damping")
+HighSuspensionDampingEffect::HighSuspensionDampingEffect ()
+    : EffectBase ("effect_high_suspension_damping")
 {
-	AddType("handling");
+    AddType ("handling");
 }
 
-void HighSuspensionDampingEffect::Enable() {
-	EffectBase::Enable();
+void
+HighSuspensionDampingEffect::Enable ()
+{
+    EffectBase::Enable ();
 
-	for (int i = 0; i < 106; i++) {
-		origVehicleHandling[i] = gHandlingDataMgr.m_aVehicleHandling[i];
-	}
+    for (int i = 0; i < 106; i++)
+    {
+        origVehicleHandling[i] = gHandlingDataMgr.m_aVehicleHandling[i];
+    }
 
-	for (int i = 0; i < 106; i++) {
-		gHandlingDataMgr.m_aVehicleHandling[i].fSuspensionDampingLevel = suspension;
-	}
+    for (int i = 0; i < 106; i++)
+    {
+        gHandlingDataMgr.m_aVehicleHandling[i].fSuspensionDampingLevel
+            = suspension;
+    }
 }
 
-void HighSuspensionDampingEffect::Disable() {
-	for (int i = 0; i < 106; i++) {
-		gHandlingDataMgr.m_aVehicleHandling[i] = origVehicleHandling[i];
-	}
+void
+HighSuspensionDampingEffect::Disable ()
+{
+    for (int i = 0; i < 106; i++)
+    {
+        gHandlingDataMgr.m_aVehicleHandling[i] = origVehicleHandling[i];
+    }
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }
 
-void HighSuspensionDampingEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+HighSuspensionDampingEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	GameUtil::SetVehiclesToRealPhysics();
+    GameUtil::SetVehiclesToRealPhysics ();
 }

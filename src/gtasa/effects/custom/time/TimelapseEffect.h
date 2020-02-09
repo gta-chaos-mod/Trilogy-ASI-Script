@@ -7,9 +7,9 @@
 class TimelapseEffect : public EffectBase
 {
 public:
-	TimelapseEffect();
+    TimelapseEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

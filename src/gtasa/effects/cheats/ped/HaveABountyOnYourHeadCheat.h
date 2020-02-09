@@ -8,11 +8,11 @@
 class HaveABountyOnYourHeadCheat : public EffectBase
 {
 private:
-	bool* haveABountyOnYourHeadCheat = reinterpret_cast<bool*>(0x96913F);
+    bool *haveABountyOnYourHeadCheat = reinterpret_cast<bool *> (0x96913F);
 
 public:
-	HaveABountyOnYourHeadCheat();
+    HaveABountyOnYourHeadCheat ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 };

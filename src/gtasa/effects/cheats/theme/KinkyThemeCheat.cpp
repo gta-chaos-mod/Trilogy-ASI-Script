@@ -1,13 +1,15 @@
 #include "KinkyThemeCheat.h"
 
-KinkyThemeCheat::KinkyThemeCheat()
-	: TimedFunctionEffect("cheat_kinky_theme", KinkyTheme, 0x96915D)
+KinkyThemeCheat::KinkyThemeCheat ()
+    : TimedFunctionEffect ("cheat_kinky_theme", KinkyTheme, 0x96915D)
 {
-	AddType("theme");
+    AddType ("theme");
 }
 
-void KinkyThemeCheat::KinkyTheme() {
-	CCheat::LoveConquersAllCheat();
+void
+KinkyThemeCheat::KinkyTheme ()
+{
+    CCheat::LoveConquersAllCheat ();
 
-	GameUtil::RebuildPlayer();
+    GameUtil::RebuildPlayer ();
 }

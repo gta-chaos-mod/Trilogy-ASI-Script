@@ -7,5 +7,5 @@
 class RiotModeCheat : public TimedFunctionEffect
 {
 public:
-	RiotModeCheat();
+    RiotModeCheat ();
 };

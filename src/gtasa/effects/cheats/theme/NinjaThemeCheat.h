@@ -8,8 +8,8 @@
 class NinjaThemeCheat : public TimedFunctionEffect
 {
 public:
-	NinjaThemeCheat();
+    NinjaThemeCheat ();
 
 private:
-	static void NinjaTheme();
+    static void NinjaTheme ();
 };

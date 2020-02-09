@@ -5,7 +5,7 @@
 class EffectPlaceholder : public EffectBase
 {
 public:
-	EffectPlaceholder(std::string id);
+    EffectPlaceholder (std::string id);
 
-	void Enable() override;
+    void Enable () override;
 };

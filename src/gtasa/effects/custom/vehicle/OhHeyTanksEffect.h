@@ -10,14 +10,14 @@
 class OhHeyTanksEffect : public EffectPlaceholder
 {
 public:
-	OhHeyTanksEffect();
+    OhHeyTanksEffect ();
 
-	void Enable() override;
+    void Enable () override;
 
-	bool CanActivate() override;
+    bool CanActivate () override;
 
 private:
-	void SpawnTanks();
+    void SpawnTanks ();
 
-	float ToRadians(float angle);
+    float ToRadians (float angle);
 };

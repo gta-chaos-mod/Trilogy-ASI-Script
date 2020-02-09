@@ -9,7 +9,7 @@
 class HonkBoostEffect : public EffectBase
 {
 public:
-	HonkBoostEffect();
+    HonkBoostEffect ();
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

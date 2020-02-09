@@ -5,11 +5,11 @@
 class HalfGameSpeedCheat : public EffectBase
 {
 public:
-	HalfGameSpeedCheat();
+    HalfGameSpeedCheat ();
 
-	EffectBase* SetEffectDuration(int duration) override;
+    EffectBase *SetEffectDuration (int duration) override;
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

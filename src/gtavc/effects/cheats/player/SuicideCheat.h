@@ -5,7 +5,7 @@
 class SuicideCheat : public EffectPlaceholder
 {
 public:
-	SuicideCheat();
+    SuicideCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

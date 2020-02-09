@@ -5,5 +5,5 @@
 class PinkCarsCheat : public TimedAddressEffect
 {
 public:
-	PinkCarsCheat();
+    PinkCarsCheat ();
 };

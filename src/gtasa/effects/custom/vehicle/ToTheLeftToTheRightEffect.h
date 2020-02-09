@@ -9,12 +9,12 @@
 class ToTheLeftToTheRightEffect : public EffectBase
 {
 private:
-	int wait = 0;
+    int wait = 0;
 
 public:
-	ToTheLeftToTheRightEffect();
+    ToTheLeftToTheRightEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

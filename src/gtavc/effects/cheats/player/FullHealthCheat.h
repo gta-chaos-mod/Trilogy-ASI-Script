@@ -5,7 +5,7 @@
 class FullHealthCheat : public EffectPlaceholder
 {
 public:
-	FullHealthCheat();
+    FullHealthCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

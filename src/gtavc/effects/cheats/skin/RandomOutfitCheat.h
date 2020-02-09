@@ -5,12 +5,12 @@
 class RandomOutfitCheat : public EffectPlaceholder
 {
 public:
-	RandomOutfitCheat();
+    RandomOutfitCheat ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	void Enable() override;
+    void Enable () override;
 
 private:
-	static void HookedCHudSetHelpMessage(int a1, char a2, char a3);
+    static void HookedCHudSetHelpMessage (int a1, char a2, char a3);
 };

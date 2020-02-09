@@ -5,5 +5,5 @@
 class WheelsOnlyCheat : public TimedAddressEffect
 {
 public:
-	WheelsOnlyCheat();
+    WheelsOnlyCheat ();
 };

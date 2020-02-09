@@ -5,5 +5,5 @@
 class ArmedPedsCheat : public TimedAddressEffect
 {
 public:
-	ArmedPedsCheat();
+    ArmedPedsCheat ();
 };

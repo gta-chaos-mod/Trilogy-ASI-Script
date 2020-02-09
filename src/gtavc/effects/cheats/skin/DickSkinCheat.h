@@ -5,7 +5,7 @@
 class DickSkinCheat : public EffectPlaceholder
 {
 public:
-	DickSkinCheat();
+    DickSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

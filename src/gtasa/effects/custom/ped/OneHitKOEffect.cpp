@@ -1,30 +1,40 @@
 #include "OneHitKOEffect.h"
 
-OneHitKOEffect::OneHitKOEffect()
-	: EffectBase("effect_one_hit_ko")
+OneHitKOEffect::OneHitKOEffect () : EffectBase ("effect_one_hit_ko")
 {
-	AddType("health");
+    AddType ("health");
 }
 
-void OneHitKOEffect::InitializeHooks() {
-	HookCall(0x58EE9A, HookedCHudRenderHealthBar);
+void
+OneHitKOEffect::InitializeHooks ()
+{
+    HookCall (0x58EE9A, HookedCHudRenderHealthBar);
 }
 
-void OneHitKOEffect::Disable() {
-	*neverHungryCheat = false;
+void
+OneHitKOEffect::Disable ()
+{
+    *neverHungryCheat = false;
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }
 
-void OneHitKOEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+OneHitKOEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	*neverHungryCheat = true;
+    *neverHungryCheat = true;
 
-	for (CPed* ped : CPools::ms_pPedPool) {
-		ped->m_fHealth = std::max(0.0f, std::min(ped->m_fHealth, 1.0f));
-		ped->m_fArmour = 0.0f;
-	}
+    for (CPed *ped : CPools::ms_pPedPool)
+    {
+        ped->m_fHealth = std::max (0.0f, std::min (ped->m_fHealth, 1.0f));
+        ped->m_fArmour = 0.0f;
+    }
 }
 
-void OneHitKOEffect::HookedCHudRenderHealthBar(int playerId, signed int x, signed int y) {}
+void
+OneHitKOEffect::HookedCHudRenderHealthBar (int playerId, signed int x,
+                                           signed int y)
+{
+}

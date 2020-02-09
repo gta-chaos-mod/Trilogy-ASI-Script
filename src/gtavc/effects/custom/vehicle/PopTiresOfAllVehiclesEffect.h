@@ -6,7 +6,7 @@
 class PopTiresOfAllVehiclesEffect : public EffectPlaceholder
 {
 public:
-	PopTiresOfAllVehiclesEffect();
+    PopTiresOfAllVehiclesEffect ();
 
-	void Enable() override;
+    void Enable () override;
 };

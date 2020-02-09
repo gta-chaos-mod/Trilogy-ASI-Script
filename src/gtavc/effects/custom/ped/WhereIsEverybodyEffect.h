@@ -5,9 +5,9 @@
 class WhereIsEverybodyEffect : public EffectBase
 {
 public:
-	WhereIsEverybodyEffect();
+    WhereIsEverybodyEffect ();
 
-	void InitializeHooks() override;
+    void InitializeHooks () override;
 
-	static char __fastcall HookedCPedRender(CPed* thisPed);
+    static char __fastcall HookedCPedRender (CPed *thisPed);
 };

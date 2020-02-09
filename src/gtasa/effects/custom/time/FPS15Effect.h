@@ -5,17 +5,17 @@
 class FPS15Effect : public EffectBase
 {
 private:
-	int oldFramerate = 25;
-	int framerate = 15;
+    int oldFramerate = 25;
+    int framerate    = 15;
 
-	byte oldFrameTimeWait = 14;
-	bool oldFrameLimiter = false;
+    byte oldFrameTimeWait = 14;
+    bool oldFrameLimiter  = false;
 
 public:
-	FPS15Effect();
+    FPS15Effect ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

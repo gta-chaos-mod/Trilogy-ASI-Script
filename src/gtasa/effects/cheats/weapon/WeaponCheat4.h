@@ -7,7 +7,7 @@
 class WeaponCheat4 : public EffectPlaceholder
 {
 public:
-	WeaponCheat4();
+    WeaponCheat4 ();
 
-	void Enable() override;
+    void Enable () override;
 };

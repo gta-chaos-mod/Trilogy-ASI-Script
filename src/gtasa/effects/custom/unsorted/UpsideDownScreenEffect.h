@@ -6,18 +6,17 @@
 class UpsideDownScreenEffect : public EffectBase
 {
 private:
+    static RwRaster *   raster;
+    static RwIm2DVertex vertices[4];
 
-	static RwRaster* raster;
-	static RwIm2DVertex vertices[4];
-
-	static void ResetRaster();
+    static void ResetRaster ();
 
 public:
-	UpsideDownScreenEffect();
+    UpsideDownScreenEffect ();
 
-	void Enable() override;
+    void Enable () override;
 
-	void Disable() override;
+    void Disable () override;
 
-	static void EndUpdateEvent(RwCamera* camera);
+    static void EndUpdateEvent (RwCamera *camera);
 };

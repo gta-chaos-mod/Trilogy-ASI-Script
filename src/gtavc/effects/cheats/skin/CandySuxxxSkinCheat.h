@@ -5,7 +5,7 @@
 class CandySuxxxSkinCheat : public EffectPlaceholder
 {
 public:
-	CandySuxxxSkinCheat();
+    CandySuxxxSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

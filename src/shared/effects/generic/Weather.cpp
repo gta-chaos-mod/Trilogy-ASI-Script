@@ -1,13 +1,14 @@
 #include "Weather.h"
 
-Weather::Weather(int weatherID)
-	: EffectBase("effect_weather")
+Weather::Weather (int weatherID) : EffectBase ("effect_weather")
 {
-	this->weatherID = weatherID;
+    this->weatherID = weatherID;
 }
 
-void Weather::HandleTick() {
-	EffectBase::HandleTick();
+void
+Weather::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	CWeather::ForceWeatherNow(weatherID);
+    CWeather::ForceWeatherNow (weatherID);
 }

@@ -5,7 +5,7 @@
 class ClearWantedLevelCheat : public EffectPlaceholder
 {
 public:
-	ClearWantedLevelCheat();
+    ClearWantedLevelCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

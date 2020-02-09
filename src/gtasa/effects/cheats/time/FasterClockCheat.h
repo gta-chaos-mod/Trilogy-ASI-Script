@@ -5,5 +5,5 @@
 class FasterClockCheat : public TimedAddressEffect
 {
 public:
-	FasterClockCheat();
+    FasterClockCheat ();
 };

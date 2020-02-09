@@ -7,5 +7,5 @@
 class GangMembersEverywhereCheat : public TimedFunctionEffect
 {
 public:
-	GangMembersEverywhereCheat();
+    GangMembersEverywhereCheat ();
 };

@@ -1,28 +1,33 @@
 #include "ExperienceTheLagEffect.h"
 
-ExperienceTheLagEffect::ExperienceTheLagEffect()
-	: EffectBase("effect_experience_the_lag")
+ExperienceTheLagEffect::ExperienceTheLagEffect ()
+    : EffectBase ("effect_experience_the_lag")
 {
-	AddType("game_speed");
+    AddType ("game_speed");
 }
 
-void ExperienceTheLagEffect::Disable() {
-	CTimer::ms_fTimeScale = 1.0f;
+void
+ExperienceTheLagEffect::Disable ()
+{
+    CTimer::ms_fTimeScale = 1.0f;
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }
 
-void ExperienceTheLagEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+ExperienceTheLagEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	if (wait > 0) {
-		wait -= CalculateTick();
-		return;
-	}
+    if (wait > 0)
+    {
+        wait -= CalculateTick ();
+        return;
+    }
 
-	CTimer::ms_fTimeScale = RandomHelper::Random(0.1f, 2.0f);
+    CTimer::ms_fTimeScale = RandomHelper::Random (0.1f, 2.0f);
 
-	GameUtil::SetVehiclesToRealPhysics();
+    GameUtil::SetVehiclesToRealPhysics ();
 
-	wait = RandomHelper::Random(50, 200);
+    wait = RandomHelper::Random (50, 200);
 }

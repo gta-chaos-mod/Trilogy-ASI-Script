@@ -7,14 +7,14 @@
 class StopGameClockCheat : public TimedAddressEffect
 {
 private:
-	int hours = 0;
-	int minutes = 0;
-	int seconds = 0;
+    int hours   = 0;
+    int minutes = 0;
+    int seconds = 0;
 
 public:
-	StopGameClockCheat();
+    StopGameClockCheat ();
 
-	void Enable() override;
+    void Enable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

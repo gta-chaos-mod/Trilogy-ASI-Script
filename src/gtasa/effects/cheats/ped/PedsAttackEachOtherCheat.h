@@ -8,11 +8,11 @@
 class PedsAttackEachOtherCheat : public EffectBase
 {
 private:
-	bool* pedsAttackEachOtherCheat = reinterpret_cast<bool*>(0x96913E);
+    bool *pedsAttackEachOtherCheat = reinterpret_cast<bool *> (0x96913E);
 
 public:
-	PedsAttackEachOtherCheat();
+    PedsAttackEachOtherCheat ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 };

@@ -7,7 +7,7 @@
 class SetAllPedsOnFireEffect : public EffectPlaceholder
 {
 public:
-	SetAllPedsOnFireEffect();
+    SetAllPedsOnFireEffect ();
 
-	void Enable() override;
+    void Enable () override;
 };

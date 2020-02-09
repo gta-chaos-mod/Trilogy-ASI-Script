@@ -8,7 +8,7 @@
 class MusclePlayerCheat : public EffectPlaceholder
 {
 public:
-	MusclePlayerCheat();
+    MusclePlayerCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

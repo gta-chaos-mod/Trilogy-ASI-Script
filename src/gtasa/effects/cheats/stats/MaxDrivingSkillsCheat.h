@@ -7,7 +7,7 @@
 class MaxDrivingSkillsCheat : public EffectPlaceholder
 {
 public:
-	MaxDrivingSkillsCheat();
+    MaxDrivingSkillsCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

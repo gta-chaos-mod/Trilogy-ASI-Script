@@ -7,7 +7,7 @@
 class NoDrivingSkillsCheat : public EffectPlaceholder
 {
 public:
-	NoDrivingSkillsCheat();
+    NoDrivingSkillsCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

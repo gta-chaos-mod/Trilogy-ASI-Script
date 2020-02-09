@@ -8,9 +8,9 @@
 class InvertedGravityEffect : public EffectBase
 {
 public:
-	InvertedGravityEffect();
+    InvertedGravityEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

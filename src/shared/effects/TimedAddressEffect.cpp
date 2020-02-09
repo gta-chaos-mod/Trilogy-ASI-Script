@@ -1,25 +1,32 @@
 #include "TimedAddressEffect.h"
 
-TimedAddressEffect::TimedAddressEffect(std::string id, int address)
-	: EffectBase(id)
+TimedAddressEffect::TimedAddressEffect (std::string id, int address)
+    : EffectBase (id)
 {
-	if (address) {
-		this->address = reinterpret_cast<bool*>(address);
-	}
+    if (address)
+    {
+        this->address = reinterpret_cast<bool *> (address);
+    }
 }
 
-void TimedAddressEffect::Disable() {
-	if (address && *address) {
-		*address = false;
-	}
+void
+TimedAddressEffect::Disable ()
+{
+    if (address && *address)
+    {
+        *address = false;
+    }
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }
 
-void TimedAddressEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+TimedAddressEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	if (address && !*address) {
-		*address = true;
-	}
+    if (address && !*address)
+    {
+        *address = true;
+    }
 }

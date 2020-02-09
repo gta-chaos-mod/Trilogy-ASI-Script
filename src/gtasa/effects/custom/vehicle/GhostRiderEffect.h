@@ -12,16 +12,16 @@
 class GhostRiderEffect : public EffectBase
 {
 private:
-	std::map<CVehicle*, int> vehicleList = {};
-	CVehicle* lastVehicle = nullptr;
+    std::map<CVehicle *, int> vehicleList = {};
+    CVehicle *                lastVehicle = nullptr;
 
 public:
-	GhostRiderEffect();
+    GhostRiderEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 
 private:
-	void SetBurnTimer(CVehicle* vehicle, float value);
+    void SetBurnTimer (CVehicle *vehicle, float value);
 };

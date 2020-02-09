@@ -5,5 +5,5 @@
 class AllCarsHaveNitroCheat : public TimedAddressEffect
 {
 public:
-	AllCarsHaveNitroCheat();
+    AllCarsHaveNitroCheat ();
 };

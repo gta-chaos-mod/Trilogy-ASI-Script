@@ -6,7 +6,7 @@
 class ReloadAutosaveEffect : public EffectPlaceholder
 {
 public:
-	ReloadAutosaveEffect();
+    ReloadAutosaveEffect ();
 
-	void Enable() override;
+    void Enable () override;
 };

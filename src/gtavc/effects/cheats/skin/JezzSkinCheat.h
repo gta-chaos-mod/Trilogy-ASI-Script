@@ -5,7 +5,7 @@
 class JezzSkinCheat : public EffectPlaceholder
 {
 public:
-	JezzSkinCheat();
+    JezzSkinCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

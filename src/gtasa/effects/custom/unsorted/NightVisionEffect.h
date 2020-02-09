@@ -7,9 +7,9 @@
 class NightVisionEffect : public EffectBase
 {
 public:
-	NightVisionEffect();
+    NightVisionEffect ();
 
-	void Disable() override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

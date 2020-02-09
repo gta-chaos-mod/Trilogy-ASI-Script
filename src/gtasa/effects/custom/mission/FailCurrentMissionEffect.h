@@ -11,9 +11,9 @@
 class FailCurrentMissionEffect : public EffectPlaceholder
 {
 public:
-	FailCurrentMissionEffect();
+    FailCurrentMissionEffect ();
 
-	void Enable() override;
+    void Enable () override;
 
-	void ClearPlayerStatus();
+    void ClearPlayerStatus ();
 };

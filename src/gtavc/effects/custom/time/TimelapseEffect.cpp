@@ -1,19 +1,22 @@
 #include "TimelapseEffect.h"
 
-TimelapseEffect::TimelapseEffect()
-	: EffectBase("effect_timelapse")
+TimelapseEffect::TimelapseEffect () : EffectBase ("effect_timelapse")
 {
-	AddType("time");
+    AddType ("time");
 }
 
-void TimelapseEffect::Disable() {
-	CClock::ms_nMillisecondsPerGameMinute = 1000;
+void
+TimelapseEffect::Disable ()
+{
+    CClock::ms_nMillisecondsPerGameMinute = 1000;
 
-	EffectBase::Disable();
+    EffectBase::Disable ();
 }
 
-void TimelapseEffect::HandleTick() {
-	EffectBase::HandleTick();
+void
+TimelapseEffect::HandleTick ()
+{
+    EffectBase::HandleTick ();
 
-	CClock::ms_nMillisecondsPerGameMinute = 10;
+    CClock::ms_nMillisecondsPerGameMinute = 10;
 }

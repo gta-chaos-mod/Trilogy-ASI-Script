@@ -5,5 +5,5 @@
 class RecruitAnyoneAK47Cheat : public TimedAddressEffect
 {
 public:
-	RecruitAnyoneAK47Cheat();
+    RecruitAnyoneAK47Cheat ();
 };

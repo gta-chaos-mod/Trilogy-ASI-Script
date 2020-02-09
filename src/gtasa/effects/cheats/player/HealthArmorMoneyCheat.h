@@ -7,7 +7,7 @@
 class HealthArmorMoneyCheat : public EffectPlaceholder
 {
 public:
-	HealthArmorMoneyCheat();
+    HealthArmorMoneyCheat ();
 
-	void Enable() override;
+    void Enable () override;
 };

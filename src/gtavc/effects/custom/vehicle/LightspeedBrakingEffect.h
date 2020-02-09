@@ -9,13 +9,13 @@
 class LightspeedBrakingEffect : public EffectBase
 {
 private:
-	tHandlingData origVehicleHandling[106] = {};
+    tHandlingData origVehicleHandling[106] = {};
 
 public:
-	LightspeedBrakingEffect();
+    LightspeedBrakingEffect ();
 
-	void Enable() override;
-	void Disable() override;
+    void Enable () override;
+    void Disable () override;
 
-	void HandleTick() override;
+    void HandleTick () override;
 };

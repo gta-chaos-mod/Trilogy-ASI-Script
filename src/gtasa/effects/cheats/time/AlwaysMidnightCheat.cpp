@@ -1,15 +1,19 @@
 #include "AlwaysMidnightCheat.h"
 
-AlwaysMidnightCheat::AlwaysMidnightCheat()
-	: TimedAddressEffect("cheat_always_midnight", 0x969167)
+AlwaysMidnightCheat::AlwaysMidnightCheat ()
+    : TimedAddressEffect ("cheat_always_midnight", 0x969167)
 {
-	AddType("time");
+    AddType ("time");
 }
 
-void AlwaysMidnightCheat::HandleTick() {
-	TimedAddressEffect::HandleTick();
+void
+AlwaysMidnightCheat::HandleTick ()
+{
+    TimedAddressEffect::HandleTick ();
 
-	CClock::ms_nGameClockHours = 0;
-	CClock::ms_nGameClockMinutes = 0;
-	CClock::ms_nGameClockSeconds = 0;
+    CClock::ms_nGameClockHours   = 0;
+    CClock::ms_nGameClockMinutes = 0;
+    CClock::ms_nGameClockSeconds = 0;
+
+    // TODO: Store weather and keep setting it to prevent timecycle weirdness
 }
