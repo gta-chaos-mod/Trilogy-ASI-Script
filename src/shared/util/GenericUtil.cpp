@@ -3,7 +3,7 @@
 std::string
 GenericUtil::GetModVersion ()
 {
-    return "Chaos Mod v2.1.2";
+    return "Chaos Mod v2.2.0";
 }
 
 float
