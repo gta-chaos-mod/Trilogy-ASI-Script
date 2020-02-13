@@ -15,8 +15,7 @@ Teleportation::CanTeleport ()
     switch (TheCamera.m_PlayerWeaponMode.m_nMode)
     {
     case eCamMode::MODE_HELICANNON_1STPERSON:
-    case eCamMode::MODE_CAMERA:
-    case eCamMode::MODE_AIMWEAPON_ATTACHED: return false;
+    case eCamMode::MODE_CAMERA: return false;
     default:
     {
     }

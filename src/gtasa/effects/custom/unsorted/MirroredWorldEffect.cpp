@@ -18,6 +18,7 @@ MirroredWorldEffect::MirroredWorldEffect ()
     : EffectBase ("effect_mirrored_world")
 {
     AddType ("mirrored");
+    AddType ("controls");
 }
 
 void
