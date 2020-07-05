@@ -116,7 +116,7 @@
 #include "effects/custom/hud/DisableRadarBlipsEffect.h"
 #include "effects/custom/ped/DisableAllWeaponDamageEffect.h"
 #include "effects/custom/controls/LetsTakeABreakEffect.h"
-#include "effects/custom/vehicle/RainbowCarsEffect.h"
+#include "effects/custom/vehicle/PrideCarsEffect.h"
 #include "effects/custom/vehicle/HighSuspensionDampingEffect.h"
 #include "effects/custom/vehicle/LittleSuspensionDampingEffect.h"
 #include "effects/custom/vehicle/ZeroSuspensionDampingEffect.h"

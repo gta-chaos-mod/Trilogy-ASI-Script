@@ -435,9 +435,9 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new LetsTakeABreakEffect ();
     }
-    else if (name == "rainbow_cars")
+    else if (name == "pride_cars")
     {
-        effect = new RainbowCarsEffect ();
+        effect = new PrideCarsEffect ();
     }
     else if (name == "high_suspension_damping")
     {
