@@ -18,6 +18,7 @@ MirroredScreenEffect::MirroredScreenEffect ()
     : EffectBase ("effect_mirrored_screen")
 {
     AddType ("mirrored");
+    AddType ("controls");
 }
 
 void
@@ -29,11 +30,15 @@ MirroredScreenEffect::Enable ()
 
     endUpdateEvent += EndUpdateEvent;
     createCameraSubRasterEvent += ResetRaster;
+
+    CMenuManager::bInvertMouseX = true;
 }
 
 void
 MirroredScreenEffect::Disable ()
 {
+    CMenuManager::bInvertMouseX = false;
+
     endUpdateEvent -= EndUpdateEvent;
     createCameraSubRasterEvent -= ResetRaster;
 

@@ -17,6 +17,7 @@ RwIm2DVertex UpsideDownScreenEffect::vertices[4] = {};
 UpsideDownScreenEffect::UpsideDownScreenEffect ()
     : EffectBase ("effect_upside_down_screen")
 {
+    AddType ("controls");
 }
 
 void
@@ -28,11 +29,15 @@ UpsideDownScreenEffect::Enable ()
 
     endUpdateEvent += EndUpdateEvent;
     createCameraSubRasterEvent += ResetRaster;
+
+    CMenuManager::bInvertMouseY = true;
 }
 
 void
 UpsideDownScreenEffect::Disable ()
 {
+    CMenuManager::bInvertMouseY = false;
+
     endUpdateEvent -= EndUpdateEvent;
     createCameraSubRasterEvent -= ResetRaster;
 
