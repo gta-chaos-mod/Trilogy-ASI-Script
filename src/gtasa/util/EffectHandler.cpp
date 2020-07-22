@@ -443,9 +443,9 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new HighSuspensionDampingEffect ();
     }
-    else if (name == "little_suspension_damping")
+    else if (name == "unflippable_vehicles")
     {
-        effect = new LittleSuspensionDampingEffect ();
+        effect = new UnflippableVehiclesEffect ();
     }
     else if (name == "zero_suspension_damping")
     {

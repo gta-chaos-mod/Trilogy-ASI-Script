@@ -1,7 +1,7 @@
 #include "ZeroSuspensionDampingEffect.h"
 
 ZeroSuspensionDampingEffect::ZeroSuspensionDampingEffect ()
-    : EffectBase ("effect_high_suspension_damping")
+    : EffectBase ("effect_zero_suspension_damping")
 {
     AddType ("handling");
 }
