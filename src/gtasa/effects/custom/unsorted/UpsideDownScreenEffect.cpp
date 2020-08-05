@@ -29,15 +29,11 @@ UpsideDownScreenEffect::Enable ()
 
     endUpdateEvent += EndUpdateEvent;
     createCameraSubRasterEvent += ResetRaster;
-
-    CMenuManager::bInvertMouseY = true;
 }
 
 void
 UpsideDownScreenEffect::Disable ()
 {
-    CMenuManager::bInvertMouseY = false;
-
     endUpdateEvent -= EndUpdateEvent;
     createCameraSubRasterEvent -= ResetRaster;
 

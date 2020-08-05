@@ -30,15 +30,11 @@ MirroredScreenEffect::Enable ()
 
     endUpdateEvent += EndUpdateEvent;
     createCameraSubRasterEvent += ResetRaster;
-
-    CMenuManager::bInvertMouseX = true;
 }
 
 void
 MirroredScreenEffect::Disable ()
 {
-    CMenuManager::bInvertMouseX = false;
-
     endUpdateEvent -= EndUpdateEvent;
     createCameraSubRasterEvent -= ResetRaster;
 
