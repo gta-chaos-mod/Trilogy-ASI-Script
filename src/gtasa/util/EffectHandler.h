@@ -118,7 +118,6 @@
 #include "effects/custom/controls/LetsTakeABreakEffect.h"
 #include "effects/custom/vehicle/PrideCarsEffect.h"
 #include "effects/custom/vehicle/HighSuspensionDampingEffect.h"
-#include "effects/custom/vehicle/UnflippableVehiclesEffect.h"
 #include "effects/custom/vehicle/ZeroSuspensionDampingEffect.h"
 #include "effects/custom/controls/InvertedControlsEffect.h"
 #include "effects/custom/controls/DisableOneMovementKeyEffect.h"
@@ -165,6 +164,9 @@
 #include "effects/custom/player/DrunkPlayerEffect.h"
 #include "effects/custom/controls/ForceVehicleMouseSteering.h"
 #include "effects/custom/controls/PedalToTheMetalEffect.h"
+#include "effects/custom/vehicle/UnflippableVehiclesEffect.h"
+#include "effects/custom/player/FreefallEffect.h"
+#include "effects/custom/vehicle/VehicularRainEffect.h"
 
 #include "CCheat.h"
 

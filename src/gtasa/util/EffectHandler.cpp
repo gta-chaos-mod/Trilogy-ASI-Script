@@ -443,10 +443,6 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new HighSuspensionDampingEffect ();
     }
-    else if (name == "unflippable_vehicles")
-    {
-        effect = new UnflippableVehiclesEffect ();
-    }
     else if (name == "zero_suspension_damping")
     {
         effect = new ZeroSuspensionDampingEffect ();
@@ -625,8 +621,19 @@ EffectHandler::HandleEffect (std::string name)
     }
     else if (name == "pedal_to_the_metal")
     {
-
         effect = new PedalToTheMetalEffect ();
+    }
+    else if (name == "unflippable_vehicles")
+    {
+        effect = new UnflippableVehiclesEffect ();
+    }
+    else if (name == "freefall")
+    {
+        effect = new FreefallEffect ();
+    }
+    else if (name == "vehicular_rain")
+    {
+        effect = new VehicularRainEffect ();
     }
     /*
     // TODO: Add support for new RwRenderFast system like in Upside-Down and
