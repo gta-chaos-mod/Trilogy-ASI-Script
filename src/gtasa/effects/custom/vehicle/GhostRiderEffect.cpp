@@ -41,12 +41,12 @@ GhostRiderEffect::HandleTick ()
                         vehicle->m_nPhysicalFlags.bExplosionProof = false;
                         vehicle->BlowUpCar (NULL, false);
                     }
-                    vehicleList.erase (it);
+                    it = vehicleList.erase (it);
                 }
             }
             else
             {
-                vehicleList.erase (it);
+                it = vehicleList.erase (it);
             }
         }
     }
@@ -60,7 +60,7 @@ GhostRiderEffect::HandleTick ()
             auto it = vehicleList.find (currentVehicle);
             if (it != vehicleList.end ())
             {
-                vehicleList.erase (it);
+                it = vehicleList.erase (it);
             }
         }
 
