@@ -18,6 +18,4 @@ public:
 
 private:
     void SpawnTanks ();
-
-    float ToRadians (float angle);
 };

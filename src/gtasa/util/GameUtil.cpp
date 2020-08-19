@@ -258,6 +258,11 @@ CVehicle *
 GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
                          bool clearSpace)
 {
+    if (vehicleID == 569)
+    {
+        vehicleID = 537; // 569 crashes the game when spawned in apparently
+    }
+
     unsigned char oldFlags = CStreaming::ms_aInfoForModel[vehicleID].m_nFlags;
     CStreaming::RequestModel (vehicleID, GAME_REQUIRED);
     CStreaming::LoadAllRequestedModels (false);
@@ -352,4 +357,10 @@ GameUtil::ClearWeaponsExceptParachute (CPed *ped)
             }
         }
     }
+}
+
+float
+GameUtil::ToRadians (float angle)
+{
+    return (angle * (float) M_PI) / 180.0f;
 }

@@ -2,6 +2,8 @@
 
 #include "plugin.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <filesystem>
 
 #include "util/Config.h"
@@ -69,4 +71,6 @@ public:
     static bool CanCrowdControlEffectActivate ();
 
     static void ClearWeaponsExceptParachute (CPed *ped);
+    
+    static float ToRadians (float angle);
 };
