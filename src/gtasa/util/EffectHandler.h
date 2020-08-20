@@ -167,6 +167,7 @@
 #include "effects/custom/vehicle/UnflippableVehiclesEffect.h"
 #include "effects/custom/player/FreefallEffect.h"
 #include "effects/custom/vehicle/VehicularRainEffect.h"
+#include "effects/custom/player/UsainBoltEffect.h"
 
 #include "CCheat.h"
 

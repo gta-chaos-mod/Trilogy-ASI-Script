@@ -635,6 +635,10 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new VehicularRainEffect ();
     }
+    else if (name == "usain_bolt")
+    {
+        effect = new UsainBoltEffect ();
+    }
     /*
     // TODO: Add support for new RwRenderFast system like in Upside-Down and
     Mirrored Screen effects else if (name == "greyscale_screen") { effect = new
