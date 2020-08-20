@@ -41,4 +41,7 @@ public:
     static char HookedCheatCancelEachOther (int id);
     static int __fastcall HookedCMenuManagerDoSettingsBeforeStartingAGame (
         CMenuManager *thisManager);
+
+    static void __fastcall HookedProcessTrainTrackSound (
+        CAEVehicleAudioEntity *, void *, cVehicleParams *);
 };
