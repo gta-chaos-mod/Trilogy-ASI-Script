@@ -166,7 +166,9 @@
 #include "effects/custom/controls/PedalToTheMetalEffect.h"
 #include "effects/custom/vehicle/UnflippableVehiclesEffect.h"
 #include "effects/custom/player/FreefallEffect.h"
-#include "effects/custom/vehicle/VehicularRainEffect.h"
+#include "effects/custom/vehicle/Carpocalypse.h"
+#include "effects/custom/player/UsainBoltEffect.h"
+#include "effects/custom/unsorted/RollCreditsEffect.h"
 
 #include "CCheat.h"
 

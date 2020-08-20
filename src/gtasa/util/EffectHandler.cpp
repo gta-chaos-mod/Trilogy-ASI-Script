@@ -631,9 +631,17 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new FreefallEffect ();
     }
-    else if (name == "vehicular_rain")
+    else if (name == "carpocalypse")
     {
-        effect = new VehicularRainEffect ();
+        effect = new CarpocalypseEffect ();
+    }
+    else if (name == "usain_bolt")
+    {
+        effect = new UsainBoltEffect ();
+    }
+    else if (name == "roll_credits")
+    {
+        effect = new RollCreditsEffect ();
     }
     /*
     // TODO: Add support for new RwRenderFast system like in Upside-Down and

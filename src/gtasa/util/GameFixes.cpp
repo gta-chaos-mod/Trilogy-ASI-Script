@@ -49,6 +49,9 @@ GameFixes::Initialise ()
                              HookedCMenuManagerDoSettingsBeforeStartingAGame);
     }
     // #####################################
+    // Fix crash on trying to spawn a train as a boat
+    patch::RedirectCall (0x501F3B, HookedProcessTrainTrackSound);
+    // #####################################
 }
 
 void
@@ -178,4 +181,19 @@ int __fastcall GameFixes::HookedCMenuManagerDoSettingsBeforeStartingAGame (
         }
     }
     return thisManager->DoSettingsBeforeStartingAGame ();
+}
+
+void __fastcall GameFixes::HookedProcessTrainTrackSound (
+    CAEVehicleAudioEntity *thisEntity, void *, cVehicleParams *params)
+{
+    if (params->m_nVehicleSubclass == VEHICLE_BOAT)
+    {
+        switch (params->m_pVehicle->m_nModelIndex)
+        {
+        case MODEL_FREIGHT:
+        case MODEL_FREIFLAT: return;
+        }
+    }
+
+    CallMethod<0x4FA3F0> (thisEntity, params);
 }
