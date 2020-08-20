@@ -7,8 +7,11 @@
 class VehicularRainEffect : public EffectBase
 {
 private:
-    int wait = 0;
+    int                       wait        = 0;
     std::map<CVehicle *, int> vehicleList = {};
+
+    void  RemoveExplodedVehicles (int step);
+    float GetSpawnDistance ();
 
 public:
     VehicularRainEffect ();

@@ -1,4 +1,6 @@
 #include "VehicularRainEffect.h"
+#include "CPopulation.h"
+#include "CStreaming.h"
 
 VehicularRainEffect::VehicularRainEffect ()
     : EffectBase ("effect_vehicular_rain")
@@ -6,49 +8,53 @@ VehicularRainEffect::VehicularRainEffect ()
 }
 
 void
+VehicularRainEffect::RemoveExplodedVehicles (int step)
+{
+    const int DESPAWN_TIME = 5000;
+
+    for (auto it = vehicleList.begin (); it != vehicleList.end (); ++it)
+    {
+        CVehicle *vehicle = it->first;
+        int &     time    = it->second;
+
+        if (vehicle->m_fHealth <= 0.0f)
+            time += step;
+
+        if (time > DESPAWN_TIME)
+        {
+            if (CPools::ms_pVehiclePool->IsObjectValid (vehicle))
+                vehicle->m_nVehicleFlags.bFadeOut = true;
+
+            it = vehicleList.erase (it);
+        }
+    }
+}
+
+float
+VehicularRainEffect::GetSpawnDistance ()
+{
+    float spawnDistance = 25.0f;
+
+    CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
+    if (playerVehicle)
+        spawnDistance += playerVehicle->m_vecMoveSpeed.Magnitude2D () * 10.0f;
+
+    return spawnDistance;
+}
+
+void
 VehicularRainEffect::HandleTick ()
 {
     EffectBase::HandleTick ();
 
-    // Make sure we delete vehicles after they've exploded
     int step = CalculateTick ();
 
-    if (vehicleList.size () > 0)
-    {
-        for (auto it = vehicleList.begin (); it != vehicleList.end (); ++it)
-        {
-            CVehicle *vehicle = it->first;
-
-            if (vehicle)
-            {
-                if (vehicle->m_fHealth == 0.0f && vehicleList[vehicle] == -1)
-                {
-                    vehicleList[vehicle] = 5000;
-                }
-                else if (vehicleList[vehicle] > 0)
-                {
-                    vehicleList[vehicle] -= step;
-                    if (vehicleList[vehicle] < 0)
-                    {
-                        if (CPools::ms_pVehiclePool->IsObjectValid (vehicle))
-                        {
-                            vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                            CCarCtrl::PossiblyRemoveVehicle (vehicle);
-                        }
-                        it = vehicleList.erase (it);
-                    }
-                }
-            }
-            else
-            {
-                it = vehicleList.erase (it);
-            }
-        }
-    }
+    // Make sure we delete vehicles after they've exploded
+    RemoveExplodedVehicles (step);
 
     if (wait > 0)
     {
-        wait -= CalculateTick ();
+        wait -= step;
         return;
     }
 
@@ -57,26 +63,42 @@ VehicularRainEffect::HandleTick ()
     {
         CVector spawnPosition = player->GetPosition ();
 
+        // Spawn a vehicle at a specified distance and a random angle from the
+        // player
+        float spawnDistance = GetSpawnDistance ();
         float thats_rad
             = GameUtil::ToRadians (RandomHelper::Random (0.0f, 360.0f));
-        spawnPosition
-            += CVector (25.0f * sin (thats_rad), 25.0f * cos (thats_rad), 100.0f);
-
-        CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
-        if (playerVehicle)
-        {
-            spawnPosition -= (playerVehicle->m_vecMoveSpeed * 5);
-        }
+        spawnPosition += CVector (spawnDistance * sin (thats_rad),
+                                  spawnDistance * cos (thats_rad), 100.0f);
 
         for (int i = 0; i < RandomHelper::Random (1, 3); i++)
         {
-            CVehicle *vehicle
-                = GameUtil::CreateVehicle (RandomHelper::Random (400, 611),
-                                           spawnPosition, 0.0f, false);
-            vehicle->m_vecMoveSpeed.z -= 2.5f;
-            vehicle->m_fHealth = 250.0f;
+            int carToSpawn = RandomHelper::Random (400, 611);
 
-            vehicleList[vehicle] = -1;
+            // If too many vehicles are loaded, choose an already loaded
+            // vehicle. Game limit is 22.
+            int loadedVehicles = CStreaming::ms_vehiclesLoaded.CountMembers ();
+            if (loadedVehicles > 20)
+                carToSpawn = CStreaming::ms_vehiclesLoaded.GetMember (
+                    RandomHelper::Random (0, loadedVehicles - 1));
+
+            // If too many vehicles are in the pool, don't spawn any more
+            // vehicles until there's room.
+            if (CPools::ms_pVehiclePool->GetNoOfFreeSpaces () < 5
+                || carToSpawn == -1)
+                return;
+
+            CVehicle *vehicle
+                = GameUtil::CreateVehicle (carToSpawn, spawnPosition, 0.0f,
+                                           false);
+
+            if (vehicle)
+            {
+                vehicle->m_vecMoveSpeed.z -= 2.5f;
+                vehicle->m_fHealth = 250.0f;
+
+                vehicleList[vehicle] = 0;
+            }
         }
     }
 
