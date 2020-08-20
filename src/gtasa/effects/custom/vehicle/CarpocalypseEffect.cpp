@@ -1,14 +1,14 @@
-#include "VehicularRainEffect.h"
+#include "CarpocalypseEffect.h"
 #include "CPopulation.h"
 #include "CStreaming.h"
 
-VehicularRainEffect::VehicularRainEffect ()
-    : EffectBase ("effect_vehicular_rain")
+CarpocalypseEffect::CarpocalypseEffect ()
+    : EffectBase ("effect_carpocalypse")
 {
 }
 
 void
-VehicularRainEffect::RemoveExplodedVehicles (int step)
+CarpocalypseEffect::RemoveExplodedVehicles (int step)
 {
     const int DESPAWN_TIME = 5000;
 
@@ -31,7 +31,7 @@ VehicularRainEffect::RemoveExplodedVehicles (int step)
 }
 
 float
-VehicularRainEffect::GetSpawnDistance ()
+CarpocalypseEffect::GetSpawnDistance ()
 {
     float spawnDistance = 25.0f;
 
@@ -43,7 +43,7 @@ VehicularRainEffect::GetSpawnDistance ()
 }
 
 void
-VehicularRainEffect::HandleTick ()
+CarpocalypseEffect::HandleTick ()
 {
     EffectBase::HandleTick ();
 
@@ -95,7 +95,7 @@ VehicularRainEffect::HandleTick ()
             if (vehicle)
             {
                 vehicle->m_vecMoveSpeed.z -= 2.5f;
-                vehicle->m_fHealth = 250.0f;
+                vehicle->m_fHealth = 249.0f;
 
                 vehicleList[vehicle] = 0;
             }
