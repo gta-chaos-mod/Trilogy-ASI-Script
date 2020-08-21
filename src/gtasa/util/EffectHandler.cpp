@@ -647,6 +647,10 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new InstantlyHungryEffect ();
     }
+    else if (name == "vehicle_bumper_camera")
+    {
+        effect = new VehicleBumperCameraEffect ();
+    }
     /*
     // TODO: Add support for new RwRenderFast system like in Upside-Down and
     Mirrored Screen effects else if (name == "greyscale_screen") { effect = new

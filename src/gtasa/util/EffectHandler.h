@@ -170,6 +170,7 @@
 #include "effects/custom/player/IAmSpeedEffect.h"
 #include "effects/custom/unsorted/RollCreditsEffect.h"
 #include "effects/custom/player/InstantlyHungryEffect.h"
+#include "effects/custom/player/VehicleBumperCameraEffect.h"
 
 #include "CCheat.h"
 
