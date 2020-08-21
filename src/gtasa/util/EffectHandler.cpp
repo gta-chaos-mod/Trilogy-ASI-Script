@@ -635,9 +635,9 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new CarpocalypseEffect ();
     }
-    else if (name == "usain_bolt")
+    else if (name == "i_am_speed")
     {
-        effect = new UsainBoltEffect ();
+        effect = new IAmSpeedEffect ();
     }
     else if (name == "roll_credits")
     {

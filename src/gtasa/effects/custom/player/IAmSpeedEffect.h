@@ -2,10 +2,10 @@
 
 #include "util/EffectBase.h"
 
-class UsainBoltEffect : public EffectBase
+class IAmSpeedEffect : public EffectBase
 {
 public:
-    UsainBoltEffect ();
+    IAmSpeedEffect ();
 
     void Enable () override;
     void Disable () override;
