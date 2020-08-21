@@ -651,6 +651,10 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new VehicleBumperCameraEffect ();
     }
+    else if (name == "random_teleport")
+    {
+        effect = new RandomTeleportEffect ();
+    }
     /*
     // TODO: Add support for new RwRenderFast system like in Upside-Down and
     Mirrored Screen effects else if (name == "greyscale_screen") { effect = new
