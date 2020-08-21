@@ -643,6 +643,10 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new RollCreditsEffect ();
     }
+    else if (name == "instantly_hungry")
+    {
+        effect = new InstantlyHungryEffect ();
+    }
     /*
     // TODO: Add support for new RwRenderFast system like in Upside-Down and
     Mirrored Screen effects else if (name == "greyscale_screen") { effect = new

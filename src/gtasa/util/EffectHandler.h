@@ -169,6 +169,7 @@
 #include "effects/custom/vehicle/CarpocalypseEffect.h"
 #include "effects/custom/player/IAmSpeedEffect.h"
 #include "effects/custom/unsorted/RollCreditsEffect.h"
+#include "effects/custom/player/InstantlyHungryEffect.h"
 
 #include "CCheat.h"
 
