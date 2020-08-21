@@ -9,8 +9,6 @@ class CinematicVehicleCameraEffect : public EffectBase
 public:
     CinematicVehicleCameraEffect ();
 
-    bool CanActivate () override;
-
     void Disable () override;
 
     void HandleTick () override;

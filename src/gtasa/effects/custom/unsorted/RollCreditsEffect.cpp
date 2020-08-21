@@ -5,7 +5,7 @@
 #include "ePedBones.h"
 #include <CCredits.h>
 
-RollCreditsEffect::RollCreditsEffect () : EffectBase ("roll_credits_effect") {}
+RollCreditsEffect::RollCreditsEffect () : EffectBase ("effect_roll_credits") {}
 
 void
 RollCreditsEffect::Enable ()

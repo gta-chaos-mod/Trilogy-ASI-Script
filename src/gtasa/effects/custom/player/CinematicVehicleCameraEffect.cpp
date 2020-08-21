@@ -6,18 +6,10 @@ CinematicVehicleCameraEffect::CinematicVehicleCameraEffect ()
     AddType ("camera");
 }
 
-bool
-CinematicVehicleCameraEffect::CanActivate ()
-{
-    CVehicle *vehicle = FindPlayerVehicle (-1, false);
-
-    return vehicle != nullptr;
-}
-
 void
 CinematicVehicleCameraEffect::Disable ()
 {
-    Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA> (false);
+    Command<eScriptCommands::COMMAND_SET_PLAYER_IN_CAR_CAMERA_MODE> (2);
 
     EffectBase::Disable ();
 }
@@ -27,6 +19,5 @@ CinematicVehicleCameraEffect::HandleTick ()
 {
     EffectBase::HandleTick ();
 
-    CVehicle *vehicle = FindPlayerVehicle (-1, false);
-    Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA> (vehicle != nullptr);
+    Command<eScriptCommands::COMMAND_SET_PLAYER_IN_CAR_CAMERA_MODE> (5);
 }
