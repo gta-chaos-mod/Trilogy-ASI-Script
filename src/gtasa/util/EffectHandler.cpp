@@ -423,9 +423,9 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new DisableHUDEffect ();
     }
-    else if (name == "disable_radar_blips")
+    else if (name == "disable_blips_markers_pickups")
     {
-        effect = new DisableRadarBlipsEffect ();
+        effect = new DisableBlipsMarkersPickupsEffect ();
     }
     else if (name == "disable_all_weapon_damage")
     {

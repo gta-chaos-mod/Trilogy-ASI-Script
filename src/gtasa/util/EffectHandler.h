@@ -113,7 +113,7 @@
 #include "effects/custom/time/ExperienceTheLagEffect.h"
 #include "effects/custom/vehicle/GhostRiderEffect.h"
 #include "effects/custom/hud/DisableHUDEffect.h"
-#include "effects/custom/hud/DisableRadarBlipsEffect.h"
+#include "effects/custom/hud/DisableBlipsMarkersPickupsEffect.h"
 #include "effects/custom/ped/DisableAllWeaponDamageEffect.h"
 #include "effects/custom/controls/LetsTakeABreakEffect.h"
 #include "effects/custom/vehicle/PrideCarsEffect.h"
