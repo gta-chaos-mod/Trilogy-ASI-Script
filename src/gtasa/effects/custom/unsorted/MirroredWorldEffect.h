@@ -16,9 +16,7 @@ class MirroredWorldEffect : public EffectBase
                                                             CPed *ped);
     static char __fastcall HookedPedLookLeft (CPad *thisPad);
     static char __fastcall HookedPedLookRight (CPad *thisPad);
-    static void __fastcall HookedRenderCrossHair (CSprite2d *sprite, void *edx,
-                                                  CRect *rect, CRGBA *color);
-    static void HookedRenderCrossHairDot (CRect *rect, RwRGBA *rgbaColor);
+    static void HookedRenderCrossHairsEmpty ();
     static void HookedDrawRadarEmpty ();
     static void __fastcall HookedCSprite2dDraw (CSprite2d *thisSprite,
                                                 void *edx, CRect *rect,

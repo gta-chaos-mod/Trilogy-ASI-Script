@@ -64,12 +64,12 @@ MirroredWorldEffect::InitializeHooks ()
         HookCall (address, HookedPedLookRight);
     }
 
-    for (int address : {0x58E3A5, 0x58E3FA, 0x58E44F, 0x58E49C})
+    /*for (int address : {0x58E3A5, 0x58E3FA, 0x58E44F, 0x58E49C})
     {
         HookCall (address, HookedRenderCrossHair);
-    }
+    }*/
 
-    HookCall (0x58E2DD, HookedRenderCrossHairDot);
+    HookCall (0x58FBBF, HookedRenderCrossHairsEmpty);
     HookCall (0x58FC53, HookedDrawRadarEmpty);
     HookCall (0x5860F7, HookedCSprite2dDraw);
 
@@ -104,22 +104,9 @@ char __fastcall MirroredWorldEffect::HookedPedLookRight (CPad *thisPad)
     return CallMethodAndReturn<char, 0x53FDD0, CPad *> (thisPad);
 }
 
-void __fastcall MirroredWorldEffect::HookedRenderCrossHair (CSprite2d *sprite,
-                                                            void *     edx,
-                                                            CRect *    rect,
-                                                            CRGBA *    color)
-{
-    rect->left -= SCREEN_COORD (85.75f);
-    rect->right -= SCREEN_COORD (85.75f);
-    CallMethod<0x728350, CSprite2d *> (sprite, rect, color);
-}
-
 void
-MirroredWorldEffect::HookedRenderCrossHairDot (CRect *rect, RwRGBA *rgbaColor)
+MirroredWorldEffect::HookedRenderCrossHairsEmpty ()
 {
-    rect->left -= SCREEN_COORD (85.75f);
-    rect->right -= SCREEN_COORD (85.75f);
-    Call<0x727B60> (rect, rgbaColor);
 }
 
 void
@@ -218,9 +205,14 @@ MirroredWorldEffect::Render2dStuffEvent ()
     SetRenderState (rwRENDERSTATEALPHATESTFUNCTION, 5u);
     SetRenderState (rwRENDERSTATEALPHATESTFUNCTIONREF, 0);
 
-    CPlayerPed *player = FindPlayerPed ();
-    if (!CHud::bScriptDontDisplayRadar && !TheCamera.m_bWideScreenOn && player)
+    if (!TheCamera.m_bWideScreenOn)
     {
+        CHud::DrawCrossHairs ();
+    }
+
+    if (!CHud::bScriptDontDisplayRadar && !TheCamera.m_bWideScreenOn)
+    {
+        CPlayerPed *player = FindPlayerPed ();
         CPad *pad = player->GetPadFromPlayer ();
         if ((!pad || !pad->GetDisplayVitalStats (player))
             || FindPlayerVehicle (-1, false))
