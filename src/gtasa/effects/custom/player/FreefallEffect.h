@@ -9,6 +9,9 @@
 
 class FreefallEffect : public EffectBase
 {
+private:
+    bool isInVehicle = false;
+
 public:
     FreefallEffect ();
 
