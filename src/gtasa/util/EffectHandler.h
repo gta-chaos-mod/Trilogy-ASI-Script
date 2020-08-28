@@ -166,7 +166,7 @@
 #include "effects/custom/controls/PedalToTheMetalEffect.h"
 #include "effects/custom/vehicle/UnflippableVehiclesEffect.h"
 #include "effects/custom/player/FreefallEffect.h"
-#include "effects/custom/vehicle/CarpocalypseEffect.h"
+#include "effects/custom/vehicle/CarmageddonEffect.h"
 #include "effects/custom/player/IAmSpeedEffect.h"
 #include "effects/custom/unsorted/RollCreditsEffect.h"
 #include "effects/custom/player/InstantlyHungryEffect.h"

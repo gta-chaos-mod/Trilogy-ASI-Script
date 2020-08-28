@@ -631,9 +631,9 @@ EffectHandler::HandleEffect (std::string name)
     {
         effect = new FreefallEffect ();
     }
-    else if (name == "carpocalypse")
+    else if (name == "carmageddon")
     {
-        effect = new CarpocalypseEffect ();
+        effect = new CarmageddonEffect ();
     }
     else if (name == "i_am_speed")
     {
