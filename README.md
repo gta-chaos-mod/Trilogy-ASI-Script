@@ -3,12 +3,6 @@ Welcome to the official GTA Trilogy Chaos Mod repository!
 
 This repository, together with this README, is still very much WIP.
 
-# Foreword and Discord server
-Since I know most people won't read this entire bulk of a README, I've decided to put the link to the Discord here:
-## https://discord.gg/crtKX4Y
-In case you need help or want to easily stay up to date on what's happening, make sure to join it.  
-(It's my personal Discord but it has a dedicated Chaos Mod channel)
-
 # What does this mod do?
 Similar to the old [Vice City Chaos% mod](https://github.com/Lighnat0r-pers/gta-vc-chaos) by [Lightnat0r](https://github.com/Lighnat0r), it activates effects in the corresponding game every X seconds / minutes (cooldown can be defined in the GUI tool).
 
@@ -130,6 +124,12 @@ Right back at you 😉
 You don't have to, but it'd be amazing if you could tag your streams with `#chaos` or something similar, maybe even tweet it out with the `#GTA_Chaos_Mod` hashtag.
 
 I wouldn't mind potentially dropping by and seeing you guys suffer with the mod 😁
+
+# Discord server
+There's a Discord server for asking smaller questions in case they weren't answered by this guide:
+## https://discord.gg/crtKX4Y
+In case you need help or want to easily stay up to date on what's happening, make sure to join it.  
+(It's my personal Discord but it has a dedicated Chaos Mod channel)
 
 # Credits
 ## [DK22Pac](https://github.com/DK22Pac) and everyone involved in the [plugin-sdk](https://github.com/DK22Pac/plugin-sdk)
