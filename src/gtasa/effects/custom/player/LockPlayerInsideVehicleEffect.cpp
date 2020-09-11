@@ -32,6 +32,8 @@ LockPlayerInsideVehicleEffect::Enable ()
     {
         player->m_nPedFlags.CantBeKnockedOffBike = 1;
     }
+
+    wasInVehicle = true;
 }
 
 void
@@ -65,7 +67,8 @@ LockPlayerInsideVehicleEffect::HandleTick ()
     else
     {
         if (Config::GetOrDefault ("Chaos.LockPlayerInVehicleAfterDisable",
-                                  false))
+                                  false)
+            || !wasInVehicle)
         {
             Enable ();
         }

@@ -4,6 +4,9 @@
 
 class LockPlayerInsideVehicleEffect : public EffectBase
 {
+private:
+    bool wasInVehicle = false;
+
 public:
     LockPlayerInsideVehicleEffect ();
 
