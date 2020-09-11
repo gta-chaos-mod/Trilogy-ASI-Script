@@ -32,4 +32,5 @@ public:
 
     static void __fastcall HookedGenericLoadTheScriptsLoad ();
     static void __fastcall HookedOnGangWarHoodCaptured ();
+    static void HookedCGangWarsUpdate ();
 };

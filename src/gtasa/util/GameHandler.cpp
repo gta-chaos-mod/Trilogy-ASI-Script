@@ -52,6 +52,10 @@ GameHandler::Initialise ()
         // Trigger autosave when successfully finishing a gangwar (all 3 waves,
         // not 2 and starting a sub-mission!)
         patch::RedirectCall (0x44690B, HookedOnGangWarHoodCaptured);
+
+        // Trigger autosave when ending the gangwar after the 2nd wave or
+        // something?
+        patch::RedirectCall (0x53C122, HookedCGangWarsUpdate);
     }
 
     // Make sure to disable effects / delete autosave when starting a new game
@@ -190,7 +194,7 @@ void __fastcall GameHandler::HookedGenericLoadTheScriptsLoad ()
 
 void __fastcall GameHandler::HookedOnGangWarHoodCaptured ()
 {
-    Call<0x446400> ();
+    Call<0x446400> (); // _onGWHoodCaptured
 
     if (!CTheScripts::IsPlayerOnAMission ())
     {
@@ -198,3 +202,17 @@ void __fastcall GameHandler::HookedOnGangWarHoodCaptured ()
                                      true);
     }
 }
+
+void
+GameHandler::HookedCGangWarsUpdate ()
+{
+    float territories_before = patch::Get<float> (0x96AB9C);
+    Call<0x446610> (); // CGangWars::Update
+    float territories_after = patch::Get<float> (0x96AB9C);
+
+    if (territories_after > territories_before)
+    {
+        EffectDatabase::QueueEffect (new AutosaveEffect (lastMissionsPassed),
+                                     true);
+    }
+}
