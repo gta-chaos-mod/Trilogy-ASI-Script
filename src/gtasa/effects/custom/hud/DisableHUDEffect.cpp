@@ -1,5 +1,7 @@
 #include "DisableHUDEffect.h"
 
+bool DisableHUDEffect::isEnabled = false;
+
 DisableHUDEffect::DisableHUDEffect () : EffectBase ("effect_disable_hud")
 {
     AddType ("hud");
@@ -26,6 +28,22 @@ DisableHUDEffect::InitializeHooks ()
     }
 
     HookCall (0x58D542, HookedCHudDrawAreaName);
+}
+
+void
+DisableHUDEffect::Enable ()
+{
+    EffectBase::Enable ();
+
+    isEnabled = true;
+}
+
+void
+DisableHUDEffect::Disable ()
+{
+    isEnabled = false;
+
+    EffectBase::Disable ();
 }
 
 void

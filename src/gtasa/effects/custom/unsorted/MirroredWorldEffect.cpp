@@ -64,11 +64,6 @@ MirroredWorldEffect::InitializeHooks ()
         HookCall (address, HookedPedLookRight);
     }
 
-    /*for (int address : {0x58E3A5, 0x58E3FA, 0x58E44F, 0x58E49C})
-    {
-        HookCall (address, HookedRenderCrossHair);
-    }*/
-
     HookCall (0x58FBBF, HookedRenderCrossHairsEmpty);
     HookCall (0x58FC53, HookedDrawRadarEmpty);
     HookCall (0x5860F7, HookedCSprite2dDraw);
@@ -205,23 +200,26 @@ MirroredWorldEffect::Render2dStuffEvent ()
     SetRenderState (rwRENDERSTATEALPHATESTFUNCTION, 5u);
     SetRenderState (rwRENDERSTATEALPHATESTFUNCTIONREF, 0);
 
-    if (!TheCamera.m_bWideScreenOn)
+    if (!DisableHUDEffect::isEnabled)
     {
-        CHud::DrawCrossHairs ();
-    }
-
-    if (!CHud::bScriptDontDisplayRadar && !TheCamera.m_bWideScreenOn)
-    {
-        CPlayerPed *player = FindPlayerPed ();
-        CPad *pad = player->GetPadFromPlayer ();
-        if ((!pad || !pad->GetDisplayVitalStats (player))
-            || FindPlayerVehicle (-1, false))
+        if (!TheCamera.m_bWideScreenOn)
         {
-            float radarWidth = injector::ReadMemory<float> (0x866B78);
-            float oldX       = injector::ReadMemory<float> (0x858A10);
-            injector::WriteMemory<float> (0x858A10, 600 - radarWidth);
-            CHud::DrawRadar ();
-            injector::WriteMemory<float> (0x858A10, oldX);
+            CHud::DrawCrossHairs ();
+        }
+
+        if (!CHud::bScriptDontDisplayRadar && !TheCamera.m_bWideScreenOn)
+        {
+            CPlayerPed *player = FindPlayerPed ();
+            CPad *      pad    = player->GetPadFromPlayer ();
+            if ((!pad || !pad->GetDisplayVitalStats (player))
+                || FindPlayerVehicle (-1, false))
+            {
+                float radarWidth = injector::ReadMemory<float> (0x866B78);
+                float oldX       = injector::ReadMemory<float> (0x858A10);
+                injector::WriteMemory<float> (0x858A10, 600 - radarWidth);
+                CHud::DrawRadar ();
+                injector::WriteMemory<float> (0x858A10, oldX);
+            }
         }
     }
 

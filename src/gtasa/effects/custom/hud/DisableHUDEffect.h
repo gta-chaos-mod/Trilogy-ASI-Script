@@ -9,9 +9,15 @@
 class DisableHUDEffect : public EffectBase
 {
 public:
+    static bool isEnabled;
+
+public:
     DisableHUDEffect ();
 
     void InitializeHooks () override;
+
+    void Enable () override;
+    void Disable () override;
 
 private:
     static void HookedHUDDraw ();
