@@ -33,10 +33,11 @@ DisableBlipsMarkersPickupsEffect::HookedCCoronasRender ()
 }
 
 void
-DisableBlipsMarkersPickupsEffect::HookedCEntityRender (
-    CEntity *thisEntity)
+DisableBlipsMarkersPickupsEffect::HookedCEntityRender (CEntity *thisEntity)
 {
-    if (!thisEntity || thisEntity->m_nType == eEntityType::ENTITY_TYPE_OBJECT && static_cast<CObject*>(thisEntity)->m_nObjectType == 5)
+    if (!thisEntity
+        || thisEntity->m_nType == eEntityType::ENTITY_TYPE_OBJECT
+               && static_cast<CObject *> (thisEntity)->m_nObjectType == 5)
     {
         // Rendern't
         return;

@@ -18,7 +18,7 @@ UnflippableVehiclesEffect::Enable ()
 
     for (int i = 0; i < 210; i++)
     {
-        gHandlingDataMgr.m_aVehicleHandling[i].m_vecCentreOfMass.z = -2.5f;
+        gHandlingDataMgr.m_aVehicleHandling[i].m_vecCentreOfMass.z = -2.0f;
     }
 }
 

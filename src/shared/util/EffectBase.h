@@ -274,10 +274,7 @@ public:
     }
 
     CRGBA
-    GetEffectColor ()
-    {
-        return this->drawInfo.effectColor;
-    }
+    GetEffectColor () { return this->drawInfo.effectColor; }
 
     float
     CalculateFadeInOffset (float position)

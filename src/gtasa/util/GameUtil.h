@@ -71,6 +71,6 @@ public:
     static bool CanCrowdControlEffectActivate ();
 
     static void ClearWeaponsExceptParachute (CPed *ped);
-    
+
     static float ToRadians (float angle);
 };

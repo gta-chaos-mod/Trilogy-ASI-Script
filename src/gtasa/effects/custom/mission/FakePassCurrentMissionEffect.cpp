@@ -21,14 +21,19 @@ FakePassCurrentMissionEffect::HandleTick ()
         bool wasOnMission = CTheScripts::IsPlayerOnAMission ();
         if (wasOnMission)
         {
+            int randomMoney = RandomHelper::Random (1000, 25000);
+
             Command<Commands::CLEAR_SMALL_PRINTS> ();
-            Command<Commands::PRINT_BIG_Q> ("M_PASSD", 5000, 1);
+            Command<eScriptCommands::COMMAND_PRINT_WITH_NUMBER_BIG> (
+                "M_PASSS", randomMoney, 5000, 1);
             Command<Commands::PLAY_MISSION_PASSED_TUNE> (1);
 
             CPlayerPed *player = FindPlayerPed ();
             if (player)
             {
                 player->SetWantedLevel (0);
+                player->GetPlayerInfoForThisPlayerPed ()->m_nMoney
+                    += randomMoney;
             }
 
             for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)

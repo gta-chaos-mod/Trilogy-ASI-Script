@@ -1,6 +1,7 @@
 #include "InstantlyHungryEffect.h"
 
-InstantlyHungryEffect::InstantlyHungryEffect () : EffectPlaceholder ("effect_instantly_hungry")
+InstantlyHungryEffect::InstantlyHungryEffect ()
+    : EffectPlaceholder ("effect_instantly_hungry")
 {
 }
 
@@ -13,7 +14,8 @@ InstantlyHungryEffect::Enable ()
     if (player)
     {
         player->GetPlayerInfoForThisPlayerPed ()->m_nNumHoursDidntEat = 60;
-        CallMethod<0x56E610, CPlayerInfo *> (player->GetPlayerInfoForThisPlayerPed());
+        CallMethod<0x56E610, CPlayerInfo *> (
+            player->GetPlayerInfoForThisPlayerPed ());
         injector::WriteMemory (0xB9B8F0, true); // bHungryMessageShown
     }
 }

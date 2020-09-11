@@ -2,10 +2,7 @@
 #include "CPopulation.h"
 #include "CStreaming.h"
 
-CarmageddonEffect::CarmageddonEffect ()
-    : EffectBase ("effect_carmageddon")
-{
-}
+CarmageddonEffect::CarmageddonEffect () : EffectBase ("effect_carmageddon") {}
 
 void
 CarmageddonEffect::RemoveExplodedVehicles (int step)
@@ -63,7 +60,7 @@ CarmageddonEffect::HandleTick ()
     {
         // Spawn a vehicle at a specified distance and a random angle from the
         // player
-        float spawnDistance = GetSpawnDistance ();
+        float   spawnDistance = GetSpawnDistance ();
         CVector spawnPosition = player->TransformFromObjectSpace (
             CVector (0.0f, spawnDistance, 50.0f));
 
@@ -87,7 +84,8 @@ CarmageddonEffect::HandleTick ()
 
             // Non valid vehicle
             if (std::find (possibleVehicles.begin (), possibleVehicles.end (),
-                           carToSpawn) == possibleVehicles.end())
+                           carToSpawn)
+                == possibleVehicles.end ())
             {
                 i--;
                 return;
@@ -100,7 +98,8 @@ CarmageddonEffect::HandleTick ()
                 return;
 
             CVehicle *vehicle
-                = GameUtil::CreateVehicle (carToSpawn, spawnPosition, RandomHelper::Random(0.0f, 360.0f),
+                = GameUtil::CreateVehicle (carToSpawn, spawnPosition,
+                                           RandomHelper::Random (0.0f, 360.0f),
                                            false);
 
             if (vehicle)

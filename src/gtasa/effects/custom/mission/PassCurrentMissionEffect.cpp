@@ -288,7 +288,7 @@ PassCurrentMissionEffect::HandleTick ()
                 break;
             }
             else if (missionName == "CPRACE")
-            {   // High Stakes, Low-Rider / Wu Zi Mu / Farewell, My Love...
+            { // High Stakes, Low-Rider / Wu Zi Mu / Farewell, My Love...
                 /*
                 // TODO: Races are handled differently.
                 // We need to increase global variables, which during initial

@@ -2,9 +2,12 @@
 
 #include "util/EffectBase.h"
 
+#include "CCredits.h"
+
 class RollCreditsEffect : public EffectBase
 {
-    int CreditsStartTime;
+private:
+    int CreditsStartTime = 0;
 
 public:
     RollCreditsEffect ();
