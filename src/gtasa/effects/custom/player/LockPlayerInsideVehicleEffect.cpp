@@ -64,6 +64,10 @@ LockPlayerInsideVehicleEffect::HandleTick ()
     }
     else
     {
-        Enable ();
+        if (Config::GetOrDefault ("Chaos.LockPlayerInVehicleAfterDisable",
+                                  false))
+        {
+            Enable ();
+        }
     }
 }
