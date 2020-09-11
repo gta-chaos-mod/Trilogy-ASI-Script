@@ -96,7 +96,8 @@ Teleportation::Teleport (CVector destination, int interior)
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
-            player->m_nAreaCode = interior;
+            player->GetPadFromPlayer ()->bDisablePlayerEnterCar = false;
+            player->m_nAreaCode                                 = interior;
             if (interior == 0)
             {
                 player->m_pEnex = 0;
