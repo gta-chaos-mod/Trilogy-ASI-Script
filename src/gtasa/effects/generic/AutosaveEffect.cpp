@@ -22,7 +22,8 @@ AutosaveEffect::HandleTick ()
     EffectPlaceholder::HandleTick ();
 
     CPlayerPed *player = FindPlayerPed ();
-    if (player && !didSave && !CTheScripts::IsPlayerOnAMission ())
+    if (player && !didSave && !CTheScripts::IsPlayerOnAMission ()
+        && !CGangWars::State)
     {
         CRunningScript *script = CTheScripts::pActiveScripts->m_pNext;
         while (script != nullptr)

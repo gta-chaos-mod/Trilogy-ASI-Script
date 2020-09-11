@@ -5,6 +5,8 @@
 
 #include "util/Config.h"
 
+#include "CGangWars.h"
+
 class AutosaveEffect : public EffectPlaceholder
 {
 private:
