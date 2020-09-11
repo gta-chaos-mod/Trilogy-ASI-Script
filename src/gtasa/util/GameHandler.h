@@ -33,4 +33,7 @@ public:
     static void __fastcall HookedGenericLoadTheScriptsLoad ();
     static void __fastcall HookedOnGangWarHoodCaptured ();
     static void HookedCGangWarsUpdate ();
+    static __int16 __fastcall HookedFinaleGetGangTerritories (
+        CRunningScript *thisScript, void *edx, __int16 count);
+    static double HookedOpCodeGetStatValue (int statid);
 };

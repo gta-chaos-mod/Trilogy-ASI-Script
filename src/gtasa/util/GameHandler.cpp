@@ -66,6 +66,14 @@ GameHandler::Initialise ()
 
     // Fix Reefer w/ Invisible Cars
     patch::Nop (0x6F14DE, 3);
+
+    // Overwrite gang territories check for the finale of the game
+    patch::RedirectCall (0x4759B0, HookedFinaleGetGangTerritories);
+
+    // Overwrite "GetStatValue" OpCode for mission checks
+    // Right now it can help with Amphibious Assault, Black Project and Green
+    // Goo
+    patch::RedirectCall (0x49444E, HookedOpCodeGetStatValue);
 }
 
 void
@@ -215,4 +223,35 @@ GameHandler::HookedCGangWarsUpdate ()
         EffectDatabase::QueueEffect (new AutosaveEffect (lastMissionsPassed),
                                      true);
     }
-}
+}
+
+__int16 __fastcall GameHandler::HookedFinaleGetGangTerritories (
+    CRunningScript *thisScript, void *edx, __int16 count)
+{
+    if (Config::GetOrDefault ("Chaos.SkipGangTerritoriesCheck", false))
+    {
+        CTheScripts::ScriptParams[0].iParam
+            = std::max (35, CTheScripts::ScriptParams[0].iParam);
+    }
+    return CallMethodAndReturn<__int16, 0x464370, CRunningScript *> (
+        thisScript,
+        count); // CRunningScript::StoreParameters
+}
+
+double
+GameHandler::HookedOpCodeGetStatValue (int statid)
+{
+    double stat
+        = CallAndReturn<double, 0x558E40> (statid); // CStats::GetStatValue
+    if (statid == eStats::STAT_FAT
+        && Config::GetOrDefault ("Chaos.SkipFatCheck", false))
+    {
+        stat = std::min (stat, 600.0);
+    }
+    else if (statid == eStats::STAT_LUNG_CAPACITY
+             && Config::GetOrDefault ("Chaos.SkipLungCapacityCheck", false))
+    {
+        stat = std::max (51.0, stat);
+    }
+    return stat;
+}
