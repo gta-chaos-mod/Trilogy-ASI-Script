@@ -92,14 +92,14 @@ char *__fastcall GameFixes::HookedCTextGet (CText *thisText, void *edx,
         if (Config::GetOrDefault ("Chaos.DeleteAutosaveOnNewGame", true)
             || KeyPressed (VK_CONTROL))
         {
-            return "New Game (Delete Autosave)";
+            return (char *) "(New Game (Delete Autosave))";
         }
     }
     else if (key_str == "FES_LOA")
     {
         if (KeyPressed (VK_CONTROL))
         {
-            return "Load Autosave";
+            return (char *) "Load Autosave";
         }
     }
     else if (key_str == "FEP_STG")

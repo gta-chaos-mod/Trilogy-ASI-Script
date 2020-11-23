@@ -6,7 +6,7 @@ void
 Config::Init ()
 {
     const std::filesystem::path config_path (
-        GAME_PATH ("/chaos_mod/config.toml"));
+        GAME_PATH ((char *) "/chaos_mod/config.toml"));
 
     std::filesystem::create_directories (config_path.parent_path ());
 
