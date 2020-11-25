@@ -6,6 +6,7 @@
 
 #include "util/EffectDatabase.h"
 #include "effects/generic/AutosaveEffect.h"
+#include "effects/generic/QuickSaveEffect.h"
 
 #include "CPickups.h"
 
@@ -15,6 +16,7 @@ private:
     static int lastMissionsPassed;
     static int lastSaved;
     static int lastPressed;
+    static int lastQuickSave;
 
 public:
     static void Initialise ();
@@ -29,6 +31,7 @@ public:
     static void HandleNoWeaponRemoval ();
     static void HandleNoCheatInput ();
     static void HandleSkipWastedBustedHelpMessages ();
+    static void HandleQuickSave ();
 
     static void __fastcall HookedGenericLoadTheScriptsLoad ();
     static void __fastcall HookedOnGangWarHoodCaptured ();

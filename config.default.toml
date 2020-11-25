@@ -23,7 +23,7 @@ LoadAutosaveOnGameLoad = true
 AutosaveAfterGangWar = true
 
 # Disable certain effects during missions
-# This currently includes "Peds Attack Each Other", "Have A Bounty On Your Head" and "Peds Attack You With Rockets".
+# This currently includes "Peds Attack Each Other", "Have A Bounty On Your Head" and "Peds Attack You".
 # The reason for this is that they can crash the game. Turn off at your own risk.
 # Default: true
 DisableEffectsDuringMissions = true
@@ -50,6 +50,28 @@ SkipWastedBustedMessages = false
 # Whether or not to clear all active effects when a new game is started (Useful for speedruns)
 # Default: true
 ClearEffectsOnNewGame = true
+
+# Whether or not to skip the final gang territories check (34% needed)
+# Default: false
+SkipGangTerritoriesCheck = false
+
+# Whether to skip the fat stat check for missions like Black Project and Green Goo
+# Default: false
+SkipFatCheck = false
+
+# Whether to skip the lung capacity stat check for Amphibious Assault
+# Default: false
+SkipLungCapacityCheck = false
+
+# Whether to lock the player in the vehicle again when "Lock Player Inside Vehicle"
+# is disabling itself but still "active" in the background
+# Default: false
+LockPlayerInVehicleAfterDisable = false
+
+# Allow Quicksaves at any time by pressing F7
+# This is doable every 10 seconds. It will also not save during missions.
+# Will be saved to Slot 8.
+QuickSave = true
 
 #######################################################
 
@@ -115,16 +137,5 @@ DrawCircles = true
 # Draw voting for Twitch integration
 # Default: true
 DrawVoting = true
-
-#######################################################
-
-#######################################################
-# Crowd Control Settings
-[CrowdControl]
-
-# Whether or not to enable the Crowd Control mode
-# WARNING: THIS IS MANDATORY TO BE ENABLED WHEN PLAYING WITH CROWD CONTROL!
-# Default: false
-Enabled = false
 
 #######################################################

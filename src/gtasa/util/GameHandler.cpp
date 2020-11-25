@@ -3,6 +3,7 @@
 int GameHandler::lastMissionsPassed = -1;
 int GameHandler::lastSaved          = 0;
 int GameHandler::lastPressed        = 0;
+int GameHandler::lastQuickSave      = 0;
 
 void
 GameHandler::Initialise ()
@@ -86,6 +87,22 @@ GameHandler::ProcessGame ()
     HandleNoWeaponRemoval ();
     HandleNoCheatInput ();
     HandleSkipWastedBustedHelpMessages ();
+
+    HandleQuickSave ();
+}
+
+void
+GameHandler::HandleQuickSave ()
+{
+    if (Config::GetOrDefault ("Chaos.QuickSave", true))
+    {
+        int currentTime = CTimer::m_snTimeInMilliseconds;
+        if (KeyPressed (VK_F7) && lastQuickSave < currentTime)
+        {
+            lastQuickSave = currentTime + 10000;
+            EffectDatabase::QueueEffect (new QuickSaveEffect (), true);
+        }
+    }
 }
 
 int
