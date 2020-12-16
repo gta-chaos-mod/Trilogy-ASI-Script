@@ -92,7 +92,7 @@ char *__fastcall GameFixes::HookedCTextGet (CText *thisText, void *edx,
         if (Config::GetOrDefault ("Chaos.DeleteAutosaveOnNewGame", true)
             || KeyPressed (VK_CONTROL))
         {
-            return (char *) "(New Game (Delete Autosave))";
+            return (char *) "New Game (Delete Autosave)";
         }
     }
     else if (key_str == "FES_LOA")
