@@ -248,7 +248,7 @@ PassCurrentMissionEffect::HandleTick ()
     }
 
     if (triedPassingMission || CCutsceneMgr::ms_running
-        || FrontEndMenuManager.m_bWidescreenOn)
+        || TheCamera.m_bWideScreenOn)
     {
         return;
     }

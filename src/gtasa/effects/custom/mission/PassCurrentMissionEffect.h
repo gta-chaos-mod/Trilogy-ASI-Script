@@ -6,6 +6,7 @@
 #include "util/GameUtil.h"
 #include "util/Teleportation.h"
 
+#include "CCamera.h"
 #include "CCutsceneMgr.h"
 #include "extensions/ScriptCommands.h"
 
