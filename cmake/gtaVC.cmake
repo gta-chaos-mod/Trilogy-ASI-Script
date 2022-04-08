@@ -10,7 +10,23 @@ set_target_properties(${CHAOS_VC} PROPERTIES SUFFIX ".asi")
 
 target_include_directories(${CHAOS_VC} PUBLIC "src/shared/" "src/gtavc")
 
-target_link_libraries(${CHAOS_VC} PUBLIC plugin_vc)
+target_link_libraries(${CHAOS_VC} PUBLIC plugin_vc nlohmann_json uWebSockets)
 
 target_compile_definitions(${CHAOS_VC} PUBLIC NOMINMAX)
+
+# Include global definitions like colors
+target_precompile_headers(
+    ${CHAOS_VC}
+    PUBLIC 
+    src/shared/_include/Definitions.h
+)
+
+# Include specific libraries for easier use
+target_precompile_headers(
+    ${CHAOS_VC}
+    PRIVATE
+    <plugin.h>
+    <nlohmann/json.hpp>
+    <App.h>
+)
 ######################################################################

@@ -10,7 +10,23 @@ set_target_properties(${CHAOS_3} PROPERTIES SUFFIX ".asi")
 
 target_include_directories(${CHAOS_3} PUBLIC "src/shared/" "src/gta3")
 
-target_link_libraries(${CHAOS_3} PUBLIC plugin_III)
+target_link_libraries(${CHAOS_3} PUBLIC plugin_III nlohmann_json uWebSockets)
 
 target_compile_definitions(${CHAOS_3} PUBLIC NOMINMAX)
+
+# Include global definitions like colors
+target_precompile_headers(
+    ${CHAOS_3}
+    PUBLIC 
+    src/shared/_include/Definitions.h
+)
+
+# Include specific libraries for easier use
+target_precompile_headers(
+    ${CHAOS_3}
+    PRIVATE
+    <plugin.h>
+    <nlohmann/json.hpp>
+    <App.h>
+)
 ######################################################################

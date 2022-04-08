@@ -10,7 +10,23 @@ set_target_properties(${CHAOS_SA} PROPERTIES SUFFIX ".asi")
 
 target_include_directories(${CHAOS_SA} PUBLIC "src/shared/" "src/gtasa")
 
-target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa)
+target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa nlohmann_json uWebSockets)
 
 target_compile_definitions(${CHAOS_SA} PUBLIC NOMINMAX)
+
+# Include global definitions like colors
+target_precompile_headers(
+    ${CHAOS_SA}
+    PUBLIC 
+    src/shared/_include/Definitions.h
+)
+
+# Include specific libraries for easier use
+target_precompile_headers(
+    ${CHAOS_SA}
+    PRIVATE
+    <plugin.h>
+    <nlohmann/json.hpp>
+    <App.h>
+)
 ######################################################################
