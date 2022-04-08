@@ -23,5 +23,5 @@ target_include_directories(uWebSockets PUBLIC
   ${LIB_uWebSockets_SOURCE_DIR}/uSockets/src
   ${LIB_ZLIB_SOURCE_DIR}
   ${LIB_ZLIB_BINARY_DIR})
-target_compile_definitions(uWebSockets PUBLIC -DLIBUS_NO_SSL)
+target_compile_definitions(uWebSockets PUBLIC -DLIBUS_NO_SSL -D_WINSOCKAPI_)
 target_link_libraries(uWebSockets PUBLIC uv_a zlibstatic)

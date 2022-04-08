@@ -111,7 +111,16 @@ Websocket::OnWebsocketAttach ()
     auto app = uWS::App ();
 
     auto socketConfig = uWS::App::WebSocketBehavior<PerSocketData> ();
-    socketConfig.open = [] (auto *ws) { ws->send ("test"); };
+    socketConfig.open
+        = [] (auto *ws) { ws->send ("Hello!", uWS::OpCode::TEXT, true); };
+    socketConfig.message
+        = [] (auto *ws, std::string_view message, uWS::OpCode opCode)
+    {
+        std::thread messagebox (
+            [message] ()
+            { MessageBox (NULL, std::string (message).c_str (), NULL, NULL); });
+        messagebox.detach ();
+    };
 
     app.ws<PerSocketData> ("/*", std::move (socketConfig));
 
