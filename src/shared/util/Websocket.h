@@ -2,6 +2,7 @@
 
 #include <thread>
 
+#include "Config.h"
 #include "DrawHelper.h"
 #include "DrawVoting.h"
 // #include "EffectDatabase.h"
@@ -10,7 +11,9 @@
 class Websocket
 {
 private:
-    static DWORD WINAPI SendMessageThread (LPVOID lpvParam);
+    static inline uWS::App *globalApp;
+
+    static void SendCCMessage (std::string message);
 
     struct PerSocketData
     {

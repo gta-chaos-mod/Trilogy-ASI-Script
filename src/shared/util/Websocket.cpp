@@ -46,34 +46,13 @@ Websocket::SendCrowdControlResponse (int effectID, int response)
     message.append (":");
     message.append (std::to_string (response));
 
-    DWORD dwThreadId = 0;
-
-    char cstr[1024];
-    strcpy (cstr, message.c_str ());
-
-    HANDLE hThread = CreateThread (NULL, 0, SendMessageThread, (LPVOID) cstr, 0,
-                                   &dwThreadId);
-
-    if (hThread == NULL)
-    {
-        return;
-    }
-    else
-    {
-        CloseHandle (hThread);
-    }
+    std::thread t1 ([message] () { SendCCMessage (message); });
+    t1.detach ();
 }
 
-DWORD WINAPI
-Websocket::SendMessageThread (LPVOID lpvParam)
+void
+Websocket::SendCCMessage (std::string message)
 {
-    // if (lpvParam == NULL)
-    // {
-    //     return -1;
-    // }
-
-    // char *message = (char *) lpvParam;
-
     // LPCTSTR pipeName = TEXT ("\\\\.\\pipe\\GTASA_CC_SERVER");
 
     // if (!WaitNamedPipe (pipeName, 500))
@@ -94,8 +73,6 @@ Websocket::SendMessageThread (LPVOID lpvParam)
     // }
 
     // pipe.Flush ();
-
-    return 1;
 }
 
 void
@@ -111,27 +88,25 @@ Websocket::OnWebsocketAttach ()
     auto app = uWS::App ();
 
     auto socketConfig = uWS::App::WebSocketBehavior<PerSocketData> ();
-    socketConfig.open
-        = [] (auto *ws) { ws->send ("Hello!", uWS::OpCode::TEXT, true); };
+    socketConfig.open = [] (auto *ws)
+    {
+        ws->subscribe ("broadcast");
+        globalApp->publish ("broadcast", "Hello!", uWS::OpCode::TEXT, true);
+    };
     socketConfig.message
         = [] (auto *ws, std::string_view message, uWS::OpCode opCode)
     {
+        auto        msg = std::string (message);
         std::thread messagebox (
-            [message] ()
-            { MessageBox (NULL, std::string (message).c_str (), NULL, NULL); });
+            [msg] () { MessageBox (NULL, msg.c_str (), NULL, NULL); });
         messagebox.detach ();
     };
 
     app.ws<PerSocketData> ("/*", std::move (socketConfig));
 
-    app.listen (9001,
-                [] (auto *listen_socket)
-                {
-                    if (listen_socket)
-                    {
-                        // TODO
-                    }
-                });
+    app.listen (9001, [] (auto *listen_socket) {});
+
+    globalApp = &app;
 
     app.run ();
 }
