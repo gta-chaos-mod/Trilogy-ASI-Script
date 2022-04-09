@@ -3,14 +3,16 @@
 void
 Websocket::SendCrowdControlResponse (int effectID, int response)
 {
-    // TODO: JSONify
-    std::string message (std::to_string (effectID));
-    message.append (":");
-    message.append (std::to_string (response));
+    nlohmann::json json;
+
+    json["type"]             = "CrowdControl";
+    json["data"]["id"]       = effectID;
+    json["data"]["response"] = response;
 
     std::thread sendMessageThread (
-        [message] () {
-            globalApp->publish ("broadcast", message, uWS::OpCode::TEXT, true);
+        [json] () {
+            globalApp->publish ("broadcast", json.dump (), uWS::OpCode::TEXT,
+                                true);
         });
     sendMessageThread.detach ();
 }
