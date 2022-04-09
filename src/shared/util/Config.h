@@ -46,18 +46,13 @@ DisableEffectsDuringMissions = true
 # Default: true
 DeleteAutosaveOnNewGame = true
 
-# Whether or not the game should play a sound when an effect get's enabled
+# Whether or not the game should play a simple sound when an effect get's enabled
 # Default: true
 PlayEffectSound = true
 
 # Whether or not to clear all active effects when a new game is started (Useful for speedruns)
 # Default: true
 ClearEffectsOnNewGame = true
-
-# Whether to lock the player in the vehicle again when "Lock Player Inside Vehicle"
-# is disabling itself but still "active" in the background
-# Default: false
-LockPlayerInVehicleAfterDisable = false
 
 # Allow Quicksaves at any time by pressing F7
 # This is doable every 10 seconds. It will also not save during missions.
