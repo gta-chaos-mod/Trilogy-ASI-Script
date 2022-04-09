@@ -19,6 +19,7 @@ target_precompile_headers(
     ${CHAOS_VC}
     PUBLIC 
     src/shared/_include/Definitions.h
+    src/shared/_include/cpptoml.h
 )
 
 # Include specific libraries for easier use

@@ -2,8 +2,6 @@
 
 #include <filesystem>
 
-#include "cpptoml.h"
-
 class Config
 {
 private:
@@ -111,36 +109,36 @@ public:
         const std::string configFilename
             = "/" + pluginFilename.substr (0, pluginFilename.size () - 4)
               + ".toml";
-        const std::filesystem::path config_path
+        const std::filesystem::path configPath
             = PLUGIN_PATH ((char *) configFilename.c_str ());
 
-        std::filesystem::create_directories (config_path.parent_path ());
+        std::filesystem::create_directories (configPath.parent_path ());
 
-        if (!std::filesystem::exists (config_path))
+        if (!std::filesystem::exists (configPath))
         {
             // Write default configuration file
-            std::ofstream ConfigFile (config_path);
+            std::ofstream ConfigFile (configPath);
 
             ConfigFile << configContent;
 
             ConfigFile.close ();
         }
 
-        if (std::filesystem::exists (config_path))
+        if (std::filesystem::exists (configPath))
         {
-            config = cpptoml::parse_file (config_path.string ());
+            config = cpptoml::parse_file (configPath.string ());
         }
     }
 
     template <class T>
     static T
-    GetOrDefault (std::string key, T default_val)
+    GetOrDefault (std::string key, T defaultValue)
     {
         if (!config)
         {
-            return default_val;
+            return defaultValue;
         }
 
-        return config->get_qualified_as<T> (key).value_or (default_val);
+        return config->get_qualified_as<T> (key).value_or (defaultValue);
     }
 };
