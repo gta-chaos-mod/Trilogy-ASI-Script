@@ -1,8 +1,6 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
-
-#include <math.h>
+#include <util/MathHelper.h>
 
 #include "CMenuManager.h"
 #include "CTimer.h"
@@ -26,6 +24,4 @@ public:
 
     static void RotateWithRoot (RwMatrix *matrix, RwMatrix *root, int axis,
                                 float angle);
-
-    static float ToRadians (float angle);
 };

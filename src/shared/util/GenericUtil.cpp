@@ -102,7 +102,7 @@ GenericUtil::RotateWithRoot (RwMatrix *matrix, RwMatrix *root, int axis,
     float y = matrix->pos.y - root->pos.y;
     float z = matrix->pos.z - root->pos.z;
 
-    float angle = ToRadians (angleDegrees);
+    float angle = MathHelper::ToRadians (angleDegrees);
 
     if (axis == 0)
     {
@@ -119,10 +119,4 @@ GenericUtil::RotateWithRoot (RwMatrix *matrix, RwMatrix *root, int axis,
         matrix->pos.x = root->pos.x + (x * cos (angle)) - (y * sin (angle));
         matrix->pos.y = root->pos.y + (y * cos (angle)) + (x * sin (angle));
     }
-}
-
-float
-GenericUtil::ToRadians (float angle)
-{
-    return (angle * (float) M_PI) / 180.0f;
 }
