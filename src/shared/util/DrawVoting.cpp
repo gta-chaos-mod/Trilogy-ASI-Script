@@ -42,7 +42,8 @@ DrawVoting::DrawVotes ()
 }
 
 void
-DrawVoting::UpdateVotes (char effects[3][128], int _votes[3], int _pickedVote)
+DrawVoting::UpdateVotes (std::vector<std::string> effects,
+                         std::vector<int> _votes, int _pickedVote)
 {
     totalVotes = 0;
     for (int i = 0; i < 3; i++)

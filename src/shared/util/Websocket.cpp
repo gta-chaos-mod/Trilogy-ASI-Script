@@ -3,6 +3,7 @@
 void
 Websocket::SendCrowdControlResponse (int effectID, int response)
 {
+    // TODO: JSONify
     std::string message (std::to_string (effectID));
     message.append (":");
     message.append (std::to_string (response));
@@ -17,12 +18,12 @@ Websocket::SendCrowdControlResponse (int effectID, int response)
 void
 Websocket::Setup ()
 {
-    std::thread setupThread ([] () { OnWebsocketAttach (); });
+    std::thread setupThread ([] () { SetupWebsocketThread (); });
     setupThread.detach ();
 }
 
 void
-Websocket::OnWebsocketAttach ()
+Websocket::SetupWebsocketThread ()
 {
     auto app = uWS::App ();
 
@@ -48,39 +49,47 @@ Websocket::OnWebsocketAttach ()
 void
 Websocket::CallFunction (std::string text)
 {
-    char c_state[32] = {};
-    char c_rest[512] = {};
-    sscanf (text.c_str (), "%[^:]:%[^\t\n]", &c_state, &c_rest);
-
-    std::string state (c_state);
-    std::string rest (c_rest);
-
-    if (state == "time")
+    // Empty try-catch to make sure the game doesn't crash if we get invalid
+    // JSON data that can't be parsed
+    try
     {
-        int  remaining = 0;
-        int  cooldown  = 0;
-        char mode[64]  = {};
-        sscanf (rest.c_str (), "%d,%d,%[^:]", &remaining, &cooldown, &mode);
+        auto json = nlohmann::json::parse (text);
 
-        DrawHelper::UpdateCooldown (remaining, cooldown, std::string (mode));
+        std::string type = json["type"];
+
+        if (type == "time")
+        {
+            auto data = json["data"];
+
+            int         remaining = data["remaining"];
+            int         cooldown  = data["cooldown"];
+            std::string mode      = data["mode"];
+
+            DrawHelper::UpdateCooldown (remaining, cooldown, mode);
+        }
+        else if (type == "seed")
+        {
+            int seed = json["data"];
+
+            RandomHelper::SetSeed (seed);
+        }
+        else if (type == "votes")
+        {
+            auto data = json["data"];
+
+            std::vector<std::string> effects      = data["effects"];
+            std::vector<int>         votes        = data["votes"];
+            int                      pickedChoice = data["pickedChoice"];
+
+            DrawVoting::UpdateVotes (effects, votes, pickedChoice);
+        }
+        else
+        {
+            // EffectDatabase::HandleFunction (state, rest);
+        }
     }
-    else if (state == "set_seed")
+    catch (...)
     {
-        RandomHelper::SetSeed (std::stoi (rest));
-    }
-    else if (state == "votes")
-    {
-        char c_effects[3][128];
-        int  c_votes[3];
-        int  pickedChoice = -1;
-        sscanf (rest.c_str (), "%[^;];%d;;%[^;];%d;;%[^;];%d;;%d",
-                &c_effects[0], &c_votes[0], &c_effects[1], &c_votes[1],
-                &c_effects[2], &c_votes[2], &pickedChoice);
-
-        DrawVoting::UpdateVotes (c_effects, c_votes, pickedChoice);
-    }
-    else
-    {
-        // EffectDatabase::HandleFunction (state, rest);
+        // Wrong JSON data received, do nothing
     }
 }

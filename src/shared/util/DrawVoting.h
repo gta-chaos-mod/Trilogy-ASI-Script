@@ -33,8 +33,8 @@ private:
 
 public:
     static void DrawVotes ();
-    static void UpdateVotes (char effects[3][128], int _votes[3],
-                             int _pickedVote);
+    static void UpdateVotes (std::vector<std::string> effects,
+                             std::vector<int> _votes, int _pickedVote);
 
     static void        DrawVote (int choice);
     static float       CalculateYOffset (int choice, float adjustment);

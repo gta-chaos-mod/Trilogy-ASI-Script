@@ -17,10 +17,10 @@ private:
     {
     };
 
+    static void SetupWebsocketThread ();
+
 public:
     static void Setup ();
-
-    static void OnWebsocketAttach ();
 
     static void SendCrowdControlResponse (int effectID, int response);
 
