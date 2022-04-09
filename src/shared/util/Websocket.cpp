@@ -39,7 +39,7 @@ Websocket::SetupWebsocketThread ()
 
     app.ws<EmptySocketData> ("/*", std::move (socketConfig));
 
-    app.listen (9001, [] (auto *listen_socket) {});
+    app.listen (9001, [] (auto *listenSocket) {});
 
     globalApp = &app;
 
