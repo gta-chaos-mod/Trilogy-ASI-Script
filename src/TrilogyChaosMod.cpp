@@ -1,5 +1,6 @@
 #include <util/DrawHelper.h>
 #include <util/GameHandler.cpp>
+#include <util/EffectHandler.h>
 #include <util/Websocket.h>
 
 #ifdef GTASA
@@ -24,7 +25,7 @@ public:
 
         GameHandler::Initialise ();
 
-        // Events::gameProcessEvent.after += EffectDatabase::Tick;
+        Events::gameProcessEvent.after += EffectHandler::Tick;
         Events::gameProcessEvent.after += GameHandler::ProcessGame;
 
         drawAfterFadeEvent.after += DrawHelper::Draw;
