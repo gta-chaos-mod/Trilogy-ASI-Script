@@ -95,7 +95,7 @@ DrawHelper::DrawTopBar ()
                              FONT_DEFAULT, SCREEN_MULTIPLIER (0.8f),
                              SCREEN_MULTIPLIER (0.8f), color::White,
                              gamefont::AlignCenter, 1, color::Black, true,
-                             9999.0F, false);
+                             9999.0F, true);
 
 #ifdef GTASA
     CFont::SetProportional (true);
@@ -110,7 +110,7 @@ DrawHelper::DrawRecentEffects ()
     if (GenericUtil::IsMenuActive ())
         return;
 
-    EffectDrawHandler::DrawRecentEffects(5);    
+    EffectDrawHandler::DrawRecentEffects (5);
 }
 
 // ######################################################
@@ -162,10 +162,10 @@ DrawHelper::Append (RwIm2DVertex *vertices, int index, CVector2D coord,
     vertices[index].v = v;
     RwIm2DVertexSetIntRGBA (&vertices[index], color.r, color.g, color.b,
                             color.a);
-    vertices[index].x   = coord.x;
-    vertices[index].y   = coord.y;
+    vertices[index].x = coord.x;
+    vertices[index].y = coord.y;
 #ifndef GTA3
-    vertices[index].z   = CSprite2d::NearScreenZ;
+    vertices[index].z = CSprite2d::NearScreenZ;
 #endif
     vertices[index].rhw = CSprite2d::RecipNearClip;
 }
