@@ -58,37 +58,39 @@ Websocket::CallFunction (std::string text)
     {
         auto json = nlohmann::json::parse (text);
 
-        std::string type = json["type"];
+        std::string type = json.at ("type");
 
         if (type == "time")
         {
-            auto data = json["data"];
+            auto data = json.at ("data");
 
-            int         remaining = data["remaining"];
-            int         cooldown  = data["cooldown"];
-            std::string mode      = data["mode"];
+            int         remaining = data.at ("remaining");
+            int         cooldown  = data.at ("cooldown");
+            std::string mode      = data.at ("mode");
 
             DrawHelper::UpdateCooldown (remaining, cooldown, mode);
         }
         else if (type == "seed")
         {
-            int seed = json["data"];
+            int seed = json.at ("data");
 
             RandomHelper::SetSeed (seed);
         }
         else if (type == "votes")
         {
-            auto data = json["data"];
+            auto data = json.at ("data");
 
-            std::vector<std::string> effects      = data["effects"];
-            std::vector<int>         votes        = data["votes"];
-            int                      pickedChoice = data["pickedChoice"];
+            std::vector<std::string> effects      = data.at ("effects");
+            std::vector<int>         votes        = data.at ("votes");
+            int                      pickedChoice = data.at ("pickedChoice");
 
             DrawVoting::UpdateVotes (effects, votes, pickedChoice);
         }
         else if (type == "effect")
         {
-            EffectHandler::HandleFunction (json.at("data"));
+            auto data = json.at ("data");
+
+            EffectHandler::HandleFunction (data);
         }
     }
     catch (...)
