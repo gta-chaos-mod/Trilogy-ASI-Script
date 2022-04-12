@@ -7,6 +7,7 @@ set (CMAKE_CXX_STANDARD 20)
 if (MSVC_VERSION GREATER_EQUAL "1900")
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+  add_compile_options(/Zc:preprocessor)
 endif()
 
 # Include CMakes

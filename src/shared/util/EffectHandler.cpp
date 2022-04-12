@@ -4,11 +4,6 @@
 void
 EffectHandler::Tick ()
 {
-    if (GetAsyncKeyState (VK_F7) < 0)
-    {
-        HandleFunction ("effect_box", "?");
-    }
-
     EmptyQueue ();
 
     for (auto &effect : effects)
@@ -17,15 +12,7 @@ EffectHandler::Tick ()
     }
 
     effects.remove_if ([] (EffectInstance &effect)
-        {
-            if (!effect.IsRunning ())
-            {
-                effect.End ();
-                return true;
-            }
-
-            return false;            
-        });
+                       { return !effect.IsRunning (); });
 }
 
 void
@@ -47,9 +34,7 @@ EffectHandler::QueueFunction (_Callable &&__f, _Args &&... __args)
 }
 
 void
-EffectHandler::QueueEffect (EffectBase *effect, bool executeNow, int duration,
-                            std::string_view twitchVoter,
-                            std::string_view description)
+EffectHandler::QueueEffect (EffectBase *effect, bool executeNow, const nlohmann::json &data)
 {
     if (!effect)
     {
@@ -116,63 +101,32 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow, int duration,
 
         
         effects.push_front (effect->CreateInstance());
-        auto &inst = effects.back ();
+        auto &inst = effects.front ();
 
-        inst.Start ();
+        inst.Enable ();
+        inst.SetDuration (data["duration"]);
+
+        if (data.contains("displayName"))
+            inst.OverrideName (data["displayName"]);
+            
         inst.Tick ();
-        inst.SetDuration (duration);
-        inst.SetTwitchVoter (twitchVoter);
     };
 
     if (executeNow)
-    {
         effectFunction ();
-    }
     else
-    {
         QueueFunction (effectFunction);
-    }
 }
 
 void
-EffectHandler::HandleFunction (std::string state, std::string text)
+EffectHandler::HandleFunction (const nlohmann::json &effectData)
 {
-    // TODO: GET THESE WITH JSON/WS
-    std::string function;
-    std::string description;
-    std::string voter;
-
-    bool rapid_fire       = 0;
-    int  crowd_control_id = -1;
-    int  duration         = 0;
-
     EffectBase *effect = nullptr;
-    if (state == "other")
-    {
-        if (function == "clear_active_effects")
-        {
-            QueueFunction ([duration, description, voter, rapid_fire] {
-                for (auto &effect : effects)
-                {
-                    effect.Disable ();
-                }
-            });
 
-            // TODO: Implement EffectPlaceholder
-            // effect = new EffectPlaceholder ("clear_active_effects");
-        }
-    }
-    else
-    {
-        effect = EffectDatabase::FindEffectById (state);
-    }
-    assert (effect);
+    effect = EffectDatabase::FindEffectById (effectData.at ("effectID"));
 
     if (effect)
     {
-        if (rapid_fire)
-            duration = std::min (effect->GetMetadata ().duration, duration);
-
 #if (0)
         if (crowd_control_id > -1)
         {
@@ -186,8 +140,14 @@ EffectHandler::HandleFunction (std::string state, std::string text)
         }
 #endif
 
-        QueueEffect (effect, false, duration, voter, description);
+        QueueEffect (effect, false, effectData);
     }
+    else
+        {
+#ifndef _NDEBUG
+            MessageBox (NULL, std::string(effectData.at("effectID")).c_str(), "Effect naht found", MB_ICONHAND);
+#endif
+        }
 
 #if (0)
     char c_function[128]    = {};

@@ -8,7 +8,6 @@
 
 class EffectBase
 {
-protected:
     struct EffectMetadata
     {
         std::string id;
@@ -16,16 +15,21 @@ protected:
         int         duration;
     } metadata;
 
+    void SetMetadata (const EffectMetadata &metadata)
+    {
+        this->metadata = metadata;
+    }
+
 public:
-    
-    template <typename T>
+    template <typename T, int N, typename... Args>
     static T &
-    Register ()
+    Register (const EffectMetadata &metadata, Args... args)
     {
         static_assert (std::is_base_of_v<EffectBase, T>,
                        "Invalid Effect base class");
 
-        static T sm_Instance;
+        static T sm_Instance (args...);
+        sm_Instance.SetMetadata (metadata);
         return sm_Instance;
     }
 
@@ -43,13 +47,17 @@ public:
         return EffectInstance (this);
     };
 
-    EffectBase (EffectMetadata metadata) : metadata (metadata)
+    EffectBase ()
     {
         EffectDatabase::GetInstance ().RegisterEffect (this);
     }
 };
 
+#define CONCAT(a, b) CONCAT_INNER(a, b)
+#define CONCAT_INNER(a, b) a ## b
 
-#define DEFINE_EFFECT(className, effectId, effectName, effectDuration)         \
-    className () : EffectBase ({effectId, effectName, effectDuration}) {}      \
-    inline static auto &sm_Instance = EffectBase::Register<className> ();
+#define DEFINE_EFFECT(className, effectId, effectName, effectDuration, ...)    \
+    auto &CONCAT (className##_inst_, __LINE__)                                 \
+        = className::Register<className, __LINE__> (                           \
+            {effectId, effectName, effectDuration} __VA_OPT__ (, )             \
+                __VA_ARGS__);\

@@ -1,4 +1,5 @@
 #include "Websocket.h"
+#include "util/EffectHandler.h"
 
 void
 Websocket::SendCrowdControlResponse (int effectID, int response)
@@ -85,9 +86,9 @@ Websocket::CallFunction (std::string text)
 
             DrawVoting::UpdateVotes (effects, votes, pickedChoice);
         }
-        else
+        else if (type == "effect")
         {
-            // EffectDatabase::HandleFunction (state, rest);
+            EffectHandler::HandleFunction (json.at("data"));
         }
     }
     catch (...)

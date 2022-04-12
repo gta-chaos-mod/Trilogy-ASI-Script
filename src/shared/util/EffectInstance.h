@@ -1,69 +1,129 @@
 #pragma once
 
+#include "util/EffectDrawHandler.h"
+
 #include <string>
 #include <memory>
 
 class EffectBase;
 
-struct EffectInstance
+class EffectInstance
 {
-  EffectBase* effect;
-  
-  std::string overrideName;
-  std::string twitchVoter;
-  std::string description;
+    EffectBase *effect;
 
-  int crowdControlID = -1;
+    std::string overrideName;
+    std::string twitchVoter;
 
-  int remaining = 0;
-  int duration = 0;
+    int crowdControlID = -1;
 
-  std::shared_ptr<void*> customData;
+    int remaining = 0;
+    int duration  = 0;
 
-  EffectInstance (EffectBase* effect);
+    bool timerVisible = true;
+    bool isRunning = false;
 
-  EffectInstance (const EffectInstance &other) = delete;
-  EffectInstance (EffectInstance &&other) = default;
+    std::shared_ptr<void *> customData;
 
-  void SetDuration (int duration) 
-  {
-      this->duration = remaining = duration;
-  };
+    EffectDrawHandler drawHandler;
 
-  void
-  SetTwitchVoter (std::string_view voter)
-  {
-      twitchVoter = voter;
-  };
+public:
+    EffectInstance (EffectBase *effect);
 
-  void
-  OverrideName (std::string_view name)
-  {
-      overrideName = name;
-  };
+    EffectInstance (const EffectInstance &other) = delete;
+    EffectInstance (EffectInstance &&other)      = default;
 
-  void
-  SetDescription (std::string_view description)
-  {
-      this->description = description;
-  };
+    // Setters
+    void
+    SetDuration (int duration)
+    {
+        this->duration = remaining = duration;
+    };
 
-  bool
-  IsRunning ()
-  {
-      return true;
-  };
+    void
+    SetTwitchVoter (std::string_view voter)
+    {
+        twitchVoter = voter;
+    };
 
-  std::string_view GetName ();
+    void
+    OverrideName (std::string_view name)
+    {
+        overrideName = name;
+    };
 
-  void Start ();
-  void End ();
-  void Tick ();
+    void
+    SetTimerVisible (bool timerVisible)
+    {
+        this->timerVisible = timerVisible;
+    }
 
-  void
-  Disable ()
-  {
-      SetDuration (0);
-      End ();
-  };
+    // Getters
+    bool
+    HasTwitchVoter () const
+    {
+        return twitchVoter != "";
+    }
+
+    std::string_view
+    GetTwitchVoter () const
+    {
+        return twitchVoter;
+    }
+
+    bool
+    IsRunning () const
+    {
+        return isRunning;
+    };
+
+    bool
+    DoesEffectDrawTimer () const
+    {
+        return IsRunning () && timerVisible;
+    }
+
+    int GetEffectDuration () const
+    {
+        return duration;
+    }
+    
+    int GetEffectRemaining () const
+    {
+        return remaining;
+    }
+
+    std::string_view GetName () const;
+
+    // Handler functions
+    void Start ();
+    void End ();
+    void Tick ();
+
+    /* Enable/Disable functions */
+    void
+    Disable ()
+    {
+        if (isRunning)
+        {
+            End ();
+            isRunning = false;
+        }
+    };
+
+    void
+    Enable ()
+    {
+        if (!isRunning) {
+            isRunning = true;
+            Start ();
+        }
+    };
+
+    void
+    Draw (int idx, bool inset)
+    {
+        this->drawHandler.Draw (this, idx, inset);
+    }
+
+    
 };

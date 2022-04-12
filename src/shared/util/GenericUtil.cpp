@@ -63,7 +63,8 @@ GenericUtil::IsMenuActive ()
 float
 GenericUtil::EaseOutBack (float t)
 {
-    return 1 + (--t) * t * (2.70158f * t + 1.70158f);
+    t -= 1;
+    return 1 + (t) * t * (2.70158f * t + 1.70158f);
 }
 
 std::string

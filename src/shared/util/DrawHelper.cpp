@@ -1,4 +1,7 @@
 #include "DrawHelper.h"
+#include "util/EffectDrawHandler.h"
+#include "util/EffectHandler.h"
+#include "util/EffectInstance.h"
 
 std::string
 DrawHelper::GetCooldownString ()
@@ -104,167 +107,11 @@ DrawHelper::DrawTopBar ()
 void
 DrawHelper::DrawRecentEffects ()
 {
+    if (GenericUtil::IsMenuActive ())
+        return;
+
+    EffectDrawHandler::DrawRecentEffects(5);    
 }
-//     if (GenericUtil::IsMenuActive ())
-//     {
-//         return;
-//     }
-
-//     int  i       = 1;
-//     bool isInset = false;
-//     for (EffectBase *effect : EffectDatabase::GetActiveEffects ())
-//     {
-//         if (i > 5)
-//         {
-//             break;
-//         }
-
-//         if (!effect->IsPlaceholder ()
-//             && (effect->IsEnabled () || effect->IsDisabledForMissions ()))
-//         {
-//             isInset = true;
-//             break;
-//         }
-//     }
-
-//     i = 1;
-//     for (EffectBase *effect : EffectDatabase::GetActiveEffects ())
-//     {
-//         if (i > 5)
-//         {
-//             break;
-//         }
-
-//         bool timedEffect
-//             = !effect->IsPlaceholder ()
-//               && (effect->IsEnabled () || effect->IsDisabledForMissions ());
-
-//         float position = isInset ? 90.0f : 25.0f;
-
-// #ifdef GTASA
-//         CFont::SetScaleForCurrentlanguage (1.0f, 1.2f);
-//         float renderWidth
-//             = CFont::GetStringWidth (
-//                   (char *) effect->GetDescription ().c_str (), true, false)
-//               + position;
-// #elif GTAVC
-//         CFont::SetScale (1.0f, 1.2f);
-//         std::string description = effect->GetDescription ();
-//         float       renderWidth = CFont::GetStringWidth (
-//                                       (wchar_t *) std::wstring
-//                                       (description.begin (),
-//                                                                 description.end
-//                                                                 ())
-//                                           .c_str (),
-//                                       true)
-//                             + position;
-// #elif GTA3
-//         CFont::SetScale (1.0f, 1.2f);
-//         float renderWidth
-//             = CFont::GetStringWidth (
-//                   (char *) effect->GetDescription ().c_str (), true)
-//               + position;
-// #endif
-//         float offsetWidth
-//             = effect->CalculateFadeInOffset (renderWidth + position);
-
-//         float x = offsetWidth - renderWidth;
-//         float y = ((i + 1) * 65.0f) + 240.0f;
-
-//         gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-//                          effect->GetDescription (), x, y, FONT_DEFAULT, 1.0f,
-//                          1.2f, effect->GetTextColor (), 1, color::Black,
-//                          true);
-
-//         // Draw voter
-//         if (effect->HasTwitchVoter ())
-//         {
-//             gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-//                              effect->GetTwitchVoter (), x, y - 30.0f,
-//                              FONT_DEFAULT, 0.8f, 1.0f, effect->GetTextColor
-//                              (), 1, color::Black, true);
-//         }
-
-//         // Draw timed effect circle
-//         if (timedEffect)
-//         {
-//             if (Config::GetOrDefault ("Drawing.DrawCircles", true))
-//             {
-//                 if (effect->HasTwitchVoter ())
-//                 {
-//                     y -= 10.0f;
-//                 }
-
-//                 CVector2D center
-//                     = CVector2D (SCREEN_COORD_RIGHT (x) + SCREEN_COORD
-//                     (50.0f),
-//                                  SCREEN_COORD_BOTTOM (y)
-//                                      + SCREEN_COORD (20.0f));
-
-//                 RwTextureFilterMode filter        = rwFILTERLINEAR;
-//                 int                 alphaBlending = true;
-
-//                 RwRenderStateSet (rwRENDERSTATEVERTEXALPHAENABLE,
-//                                   &alphaBlending);
-//                 RwRenderStateSet (rwRENDERSTATETEXTUREFILTER,
-//                                   (void *) (filter));
-//                 RwRenderStateSet (rwRENDERSTATETEXTURERASTER, NULL);
-
-//                 float angle = (float) effect->GetEffectRemaining ()
-//                               / (float) effect->GetEffectDuration () *
-//                               360.0f;
-
-//                 DrawHelper::DrawCircle (center, SCREEN_MULTIPLIER (24.0f),
-//                                         360.0f, color::White);
-
-//                 DrawHelper::DrawCircle (center, SCREEN_MULTIPLIER (20.0f),
-//                                         360.0f, CHAOS_BACKGROUND_COLOR);
-
-//                 DrawHelper::DrawCircle (center, SCREEN_MULTIPLIER (20.0f),
-//                                         angle, effect->GetEffectColor ());
-
-//                 if (effect->GetEffectRemaining () <= 60000)
-//                 {
-//                     gamefont::Print (
-//                         gamefont::RightBottom, gamefont::AlignRight,
-//                         GenericUtil::FormatTime (effect->GetEffectRemaining
-//                         (),
-//                                                  true),
-//                         x - 57.0f, y - 2.0f, FONT_DEFAULT, 0.6f, 1.0f,
-//                         color::White, 1, color::Black, true, 9999.0f, false);
-
-//                     // gamefont::Print (
-//                     //     gamefont::RightBottom, gamefont::AlignRight,
-//                     //     GenericUtil::FormatTime
-//                     (effect->GetEffectRemaining
-//                     //     (),
-//                     //                              true),
-//                     //     x - 57.0f, y - 2.0f, FONT_DEFAULT, 0.6f, 1.0f,
-//                     //     CRGBA (255, 255, 255, 200), 1, CRGBA (0, 0, 0,
-//                     200),
-//                     //     true, 9999.0f, false);
-//                 }
-//             }
-//             else
-//             {
-//                 gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-//                                  GenericUtil::FormatTime (
-//                                      effect->GetEffectRemaining ()),
-//                                  x - 60.0f, y - 10.0f, FONT_DEFAULT, 0.6f,
-//                                  0.8f, effect->GetTextColor (), 1,
-//                                  color::White, true, 9999.0f, false);
-//             }
-//         }
-
-//         i++;
-//     }
-
-// #ifdef GTASA
-//     CFont::SetProportional (true);
-// #else
-//     CFont::SetPropOn ();
-// #endif
-// }
 
 // ######################################################
 /* Drawing Circles! - Big thanks to Parik for the code */
@@ -317,7 +164,9 @@ DrawHelper::Append (RwIm2DVertex *vertices, int index, CVector2D coord,
                             color.a);
     vertices[index].x   = coord.x;
     vertices[index].y   = coord.y;
+#ifndef GTA3
     vertices[index].z   = CSprite2d::NearScreenZ;
+#endif
     vertices[index].rhw = CSprite2d::RecipNearClip;
 }
 

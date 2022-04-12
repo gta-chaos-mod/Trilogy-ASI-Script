@@ -20,13 +20,12 @@ public:
     template <typename _Callable, typename... _Args>
     static void QueueFunction (_Callable &&__f, _Args &&... __args);
 
-    static void QueueEffect (EffectBase *effect, bool executeNow, int duration,
-                             std::string_view twitchVoter,
-                             std::string_view description);
+    static void QueueEffect (EffectBase *effect, bool executeNow,
+                             const nlohmann::json &effectData);
 
-    static void HandleFunction (std::string state, std::string text);
+    static void HandleFunction (const nlohmann::json &effectData);
     
-    const std::list<EffectInstance> &
+    static std::list<EffectInstance> &
     GetActiveEffects ()
     {
         return effects;
