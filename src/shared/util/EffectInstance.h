@@ -14,8 +14,8 @@ class EffectBase;
 class EffectInstance
 {
 public:
-    using Subhandlers_t
-        = EffectSubhandlers<EffectCrowdControlHandler, EffectTwitchHandler>;
+    using SubHandlers_t
+        = EffectSubHandlers<EffectCrowdControlHandler, EffectTwitchHandler>;
 
 private:
     EffectBase *effect;
@@ -31,7 +31,7 @@ private:
     nlohmann::json customData = {{"seed", 0}};
 
     EffectDrawHandler drawHandler;
-    Subhandlers_t     subhandlers;
+    SubHandlers_t     subHandlers;
 
     RandomHelper randomHelper;
 
@@ -100,16 +100,16 @@ public:
     }
 
     void
-    SetSubhandlers (const Subhandlers_t &other)
+    SetSubHandlers (const SubHandlers_t &other)
     {
-        this->subhandlers = other;
+        this->subHandlers = other;
     }
 
     template <typename T>
     T &
     GetSubhandler ()
     {
-        return subhandlers.Get<T> ();
+        return subHandlers.Get<T> ();
     }
 
     void

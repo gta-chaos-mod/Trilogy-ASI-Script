@@ -2,7 +2,7 @@
 
 #include "EffectSubHandlers.h"
 
-class EffectTwitchHandler : public EffectSubhandler
+class EffectTwitchHandler : public EffectSubHandler
 {
     std::string voter = "";
 

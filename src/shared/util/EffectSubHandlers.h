@@ -5,7 +5,7 @@
 class EffectBase;
 
 // Subhandler that always returns true
-class EffectSubhandler
+class EffectSubHandler
 {
 public:
     bool
@@ -31,9 +31,9 @@ public:
 };
 
 // Class to manage multiple subhandlers.
-template <class... Subhandlers> class EffectSubhandlers
+template <class... SubHandler> class EffectSubHandlers
 {
-    std::tuple<Subhandlers...> handlers;
+    std::tuple<SubHandler...> handlers;
 
     class SpecialBool
     {
@@ -51,18 +51,18 @@ template <class... Subhandlers> class EffectSubhandlers
     };
 
 public:
-    EffectSubhandlers (const nlohmann::json &effectData)
+    EffectSubHandlers (const nlohmann::json &effectData)
     {
-        (..., (std::get<Subhandlers> (handlers).Initialise (effectData)));
+        (..., (std::get<SubHandler> (handlers).Initialise (effectData)));
     }
 
-    EffectSubhandlers () = default;
+    EffectSubHandlers () = default;
 
     bool
     HandleOnQueue () const
     {
         SpecialBool ret;
-        (..., (ret = std::get<Subhandlers> (handlers).HandleOnQueue ()));
+        (..., (ret = std::get<SubHandler> (handlers).HandleOnQueue ()));
 
         return ret;
     }
@@ -72,7 +72,7 @@ public:
     {
         SpecialBool ret;
         (...,
-         (ret = std::get<Subhandlers> (handlers).HandleOnAddEffect (effect)));
+         (ret = std::get<SubHandler> (handlers).HandleOnAddEffect (effect)));
 
         return ret;
     }
@@ -83,7 +83,7 @@ public:
         SpecialBool ret;
         (...,
          (ret
-          = std::get<Subhandlers> (handlers).HandleOnEffectIncompatibility ()));
+          = std::get<SubHandler> (handlers).HandleOnEffectIncompatibility ()));
 
         return ret;
     }
@@ -93,7 +93,7 @@ public:
     {
         SpecialBool ret;
         (...,
-         (ret = std::get<Subhandlers> (handlers).HandleOnEffectActivated ()));
+         (ret = std::get<SubHandler> (handlers).HandleOnEffectActivated ()));
 
         return ret;
     }

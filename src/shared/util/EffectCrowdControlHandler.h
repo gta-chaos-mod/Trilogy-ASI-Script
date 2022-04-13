@@ -2,7 +2,7 @@
 
 #include "util/EffectSubHandlers.h"
 
-class EffectCrowdControlHandler : public EffectSubhandler
+class EffectCrowdControlHandler : public EffectSubHandler
 {
     int crowdControlId = -1;
 

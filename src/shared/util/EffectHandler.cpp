@@ -43,7 +43,7 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
         return;
     }
 
-    EffectInstance::Subhandlers_t handlers (data);
+    EffectInstance::SubHandlers_t handlers (data);
 
     if (!handlers.HandleOnQueue ())
         return;
@@ -71,7 +71,7 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
         if (!handlers.HandleOnEffectActivated ())
             return;
 
-        inst.SetSubhandlers (handlers);
+        inst.SetSubHandlers (handlers);
         inst.SetDuration (data["duration"]);
         inst.SetCustomData (data["effectData"]);
 
