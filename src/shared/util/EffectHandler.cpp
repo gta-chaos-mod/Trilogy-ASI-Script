@@ -12,8 +12,8 @@ EffectHandler::Tick ()
         effect.Tick ();
     }
 
-    effects.remove_if ([] (EffectInstance &effect)
-                       { return !effect.IsShownOnScreen (); });
+    std::erase_if (effects, [] (EffectInstance &effect)
+                   { return !effect.IsShownOnScreen (); });
 }
 
 void
