@@ -3,50 +3,13 @@
 bool
 Teleportation::CanTeleport ()
 {
+    if (!GameUtil::IsPlayerSafe ())
+    {
+        return false;
+    }
+
     CPlayerPed *player = FindPlayerPed ();
-    if (!player || !player->CanSetPedState () || !player->IsAlive ())
-    {
-        return false;
-    }
-
-    switch (TheCamera.m_PlayerWeaponMode.m_nMode)
-    {
-    case eCamMode::MODE_HELICANNON_1STPERSON:
-    case eCamMode::MODE_CAMERA: return false;
-    default:
-    {
-    }
-    }
-
-    if (!player->IsPedInControl ())
-    {
-        return false;
-    }
-
-    CPlayerData *data = player->m_pPlayerData;
-    if (!data || !data->m_bCanBeDamaged)
-    {
-        return false;
-    }
-
-    CPad *pad = player->GetPadFromPlayer ();
-    if (!pad)
-    {
-        return false;
-    }
-
-    if (pad->bPlayerOnInteriorTransition || pad->bPlayerSafe
-        || pad->bPlayerSafeForCutscene)
-    {
-        return false;
-    }
-
-    if (CCutsceneMgr::ms_cutsceneProcessing || CCutsceneMgr::ms_running)
-    {
-        return false;
-    }
-
-    if (CEntryExitManager::WeAreInInteriorTransition ())
+    if (!player)
     {
         return false;
     }

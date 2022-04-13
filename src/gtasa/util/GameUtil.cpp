@@ -318,22 +318,67 @@ GameUtil::ClearWeaponsExceptParachute (CPed *ped)
 }
 
 bool
-GameUtil::CanCrowdControlEffectActivate ()
+GameUtil::IsPlayerSafe ()
 {
     CPlayerPed *player = FindPlayerPed ();
-    if (player)
+    if (!player || !player->CanSetPedState () || !player->IsAlive ())
     {
-        switch (player->m_nPedState)
-        {
-        case ePedState::PEDSTATE_ARRESTED:
-        case ePedState::PEDSTATE_ARREST_PLAYER:
-        case ePedState::PEDSTATE_DEAD:
-        case ePedState::PEDSTATE_DIE:
-        case ePedState::PEDSTATE_DIE_BY_STEALTH: return false;
-        default:
-        {
-        }
-        }
+        return false;
     }
+
+    switch (player->m_nPedState)
+    {
+    case ePedState::PEDSTATE_ARRESTED:
+    case ePedState::PEDSTATE_ARREST_PLAYER:
+    case ePedState::PEDSTATE_DEAD:
+    case ePedState::PEDSTATE_DIE:
+    case ePedState::PEDSTATE_DIE_BY_STEALTH: return false;
+    default:
+    {
+    }
+    }
+
+    switch (TheCamera.m_PlayerWeaponMode.m_nMode)
+    {
+    case eCamMode::MODE_HELICANNON_1STPERSON:
+    case eCamMode::MODE_CAMERA: return false;
+    default:
+    {
+    }
+    }
+
+    if (!player->IsPedInControl ())
+    {
+        return false;
+    }
+
+    CPlayerData *data = player->m_pPlayerData;
+    if (!data || !data->m_bCanBeDamaged)
+    {
+        return false;
+    }
+
+    CPad *pad = player->GetPadFromPlayer ();
+    if (!pad)
+    {
+        return false;
+    }
+
+    if (pad->bPlayerOnInteriorTransition || pad->bPlayerSafe
+        || pad->bPlayerSafeForCutscene)
+    {
+        return false;
+    }
+
+    if (CCutsceneMgr::ms_cutsceneProcessing || CCutsceneMgr::ms_running)
+    {
+        return false;
+    }
+
+    if (CEntryExitManager::WeAreInInteriorTransition ())
+    {
+        return false;
+    }
+
     return true;
 }

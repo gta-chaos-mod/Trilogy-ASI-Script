@@ -2,10 +2,13 @@
 
 #include <filesystem>
 
+#include "CCamera.h"
 #include "CCarCtrl.h"
 #include "CCheat.h"
 #include "CClock.h"
+#include "CCutsceneMgr.h"
 #include "CClothes.h"
+#include "CEntryExitManager.h"
 #include "CGame.h"
 #include "CGenericGameStorage.h"
 #include "CMenuManager.h"
@@ -55,5 +58,5 @@ public:
 
     static void ClearWeaponsExceptParachute (CPed *ped);
 
-    static bool CanCrowdControlEffectActivate ();
+    static bool IsPlayerSafe ();
 };

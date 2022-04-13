@@ -5,9 +5,7 @@
 #include "util/EffectBase.h"
 #include "util/Websocket.h"
 
-#ifdef GTASA
 #include "util/GameUtil.h"
-#endif
 
 bool
 EffectCrowdControlHandler::IsCrowdControlEnabled ()
@@ -28,13 +26,11 @@ EffectCrowdControlHandler::HandleOnQueue () const
     if (!*this)
         return true;
 
-    // TODO: GameUtil for GTA3/VC Maybe? :eyes:
-    if (GenericUtil::IsMenuActive ()
-#ifdef GTASA
-        || GameUtil::CanCrowdControlEffectActivate ()
-#endif
-    )
-        return SendRetry (), false;
+    if (GenericUtil::IsMenuActive () || !GameUtil::IsPlayerSafe ())
+    {
+        SendRetry ();
+        return false;
+    }
 
     return true;
 }
