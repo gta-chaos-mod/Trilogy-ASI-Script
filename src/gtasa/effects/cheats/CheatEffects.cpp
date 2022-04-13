@@ -61,52 +61,31 @@ DEFINE_EFFECT (PlayerClothesCheat    , "effect_kinky_theme"                 , GR
 DEFINE_EFFECT (PlayerClothesCheat    , "effect_ninja_theme"                 , GROUP_THEME                               , CCheat::NinjaCheat               , 0x96915C);
 
 // Time
-// TODO: Always Midnight - Store weather and keep setting it to prevent timecycle weirdness
 // TODO: Double Game Speed
 DEFINE_EFFECT (TimedAddressEffect    , "effect_faster_clock"                , GROUP_TIME                                , 0x96913B);
 // TODO: Half Game Speed
 // TODO: Quadruple Game Speed
 // TODO: Quarter Game Speed
-// TODO: Stop Game Clock - Store weather and keep setting it to prevent timecycle weirdness
 
 // Vehicle
 DEFINE_EFFECT (TimedAddressEffect    , "effect_all_cars_have_nitro"         , 0                                         , 0x969165);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_all_green_lights"            , 0                                         , 0x96914E);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_all_taxis_have_nitro"        , 0                                         , 0x96918B);
-// TODO: Black Cars - Custom implementation
-// TODO: Blow Up All Cars - Custom implementation
 DEFINE_EFFECT (TimedAddressEffect    , "effect_boats_fly"                   , 0                                         , 0x969153);
-// TODO: Cars Float Away When Hit - Custom implementation
 DEFINE_EFFECT (TimedAddressEffect    , "effect_cars_fly"                    , 0                                         , 0x969160);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_cars_on_water"               , 0                                         , 0x969152);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_cheap_cars"                  , GROUP_VEHICLE_RARITY                      , CCheat::AllCarsAreShitCheat      , 0x96915E);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_expensive_cars"              , GROUP_VEHICLE_RARITY                      , CCheat::AllCarsAreGreatCheat     , 0x96915F);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_insane_handling"             , 0                                         , 0x96914C);
-// TODO: Pink Cars - Custom implementation
-// TODO: Smash N Boom - Custom implementation
 // TODO: Wheels Only Please - Custom implementation
 
 // Wanted
-// TODO: Clear Wanted Level - Custom implementation
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_never_wanted"                , GROUP_WANTED                              , CCheat::NotWantedCheat           , 0x969171);
-// TODO: Wanted Plus Two - Custom implementation
-// TODO: Wanted Six Stars - Custom implementation
 
 // Weapon
 DEFINE_EFFECT (TimedAddressEffect    , "effect_infinite_ammo"               , 0                                         , 0x969178);
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_weapon_set_1"                , GROUP_WEAPONS                             , CCheat::WeaponCheat1);
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_weapon_set_2"                , GROUP_WEAPONS                             , CCheat::WeaponCheat2);
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_weapon_set_3"                , GROUP_WEAPONS                             , CCheat::WeaponCheat3);
-
-// DEFINE_EFFECT (TimedAddressEffect    , "effect_smash_n_boom"                , 0                                         , 0x969164);
-// DEFINE_EFFECT (TimedAddressEffect    , "effect_stop_game_clock"             , GROUP_TIME                                , 0x969168);
-// DEFINE_EFFECT (TimedAddressEffect    , "effect_always_midnight"             , GROUP_TIME                                , 0x969167);
-// DEFINE_EFFECT (TimedAddressEffect    , "effect_mega_punch"                  , 0                                         , 0x969173);
-// DEFINE_EFFECT (OneTimeFunctionEffect , "effect_fat_player"                  , 0                                         , CCheat::FatCheat);
-// DEFINE_EFFECT (OneTimeFunctionEffect , "effect_max_muscle"                  , 0                                         , CCheat::MuscleCheat);
-// DEFINE_EFFECT (OneTimeFunctionEffect , "effect_skinny_player"               , 0                                         , CCheat::SkinnyCheat);
-
-//DEFINE_EFFECT(OneTimeFunctionEffect, "effect_give_health_armor_money", "Test", 1000 ,Player::GivePlayerHealthArmorMoney, Vehicle::FixPlayerVehicle);
-//DEFINE_EFFECT(OneTimeFunctionEffect, "effect_suicide", "Test", 1000 ,Player::KillPlayer);
 
 // clang-format on

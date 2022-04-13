@@ -5,14 +5,13 @@
 
 class AlwaysMidnightEffect : public EffectBase
 {
-private:
     eWeatherType currentWeather = eWeatherType::WEATHER_EXTRASUNNY_LA;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        currentWeather = (eWeatherType) CWeather::NewWeatherType;
+        this->currentWeather = (eWeatherType) CWeather::NewWeatherType;
     }
 
     void
@@ -22,7 +21,7 @@ public:
         CClock::ms_nGameClockMinutes = 0;
         CClock::ms_nGameClockSeconds = 0;
 
-        CWeather::ForceWeatherNow (currentWeather);
+        CWeather::ForceWeatherNow (this->currentWeather);
     }
 };
 

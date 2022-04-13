@@ -14,7 +14,6 @@ static ThiscallEvent<AddressList<0x55332A, H_CALL>, PRIORITY_AFTER,
 
 class PinkTrafficEffect : public EffectBase
 {
-private:
     static inline std::list<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
         = {};
 

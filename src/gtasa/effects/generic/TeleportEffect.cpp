@@ -5,7 +5,6 @@
 class TeleportEffect : public EffectBase
 {
     CVector destination;
-    bool    hasTeleported;
 
 public:
     bool

@@ -5,7 +5,6 @@
 
 class StopGameClockEffect : public EffectBase
 {
-private:
     eWeatherType currentWeather = eWeatherType::WEATHER_EXTRASUNNY_LA;
     int          hours          = 0;
     int          minutes        = 0;
@@ -15,21 +14,21 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        currentWeather = (eWeatherType) CWeather::NewWeatherType;
+        this->currentWeather = (eWeatherType) CWeather::NewWeatherType;
 
-        hours   = CClock::ms_nGameClockHours;
-        minutes = CClock::ms_nGameClockMinutes;
-        seconds = CClock::ms_nGameClockSeconds;
+        this->hours   = CClock::ms_nGameClockHours;
+        this->minutes = CClock::ms_nGameClockMinutes;
+        this->seconds = CClock::ms_nGameClockSeconds;
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        CClock::ms_nGameClockHours   = hours;
-        CClock::ms_nGameClockMinutes = minutes;
-        CClock::ms_nGameClockSeconds = seconds;
+        CClock::ms_nGameClockHours   = this->hours;
+        CClock::ms_nGameClockMinutes = this->minutes;
+        CClock::ms_nGameClockSeconds = this->seconds;
 
-        CWeather::ForceWeatherNow (currentWeather);
+        CWeather::ForceWeatherNow (this->currentWeather);
     }
 };
 
