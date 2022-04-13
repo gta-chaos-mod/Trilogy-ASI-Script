@@ -41,27 +41,16 @@ DEFINE_EFFECT (TimedFunctionEffect   , "effect_riot_mode"                   , GR
 // Player
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_get_jetpack"                 , 0                                         , CCheat::JetpackCheat);
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_get_parachute"               , 0                                         , CCheat::ParachuteCheat);
-// TODO: Health Armor Money
 // TODO: Infinite Health
-// TODO: Suicide - Make sure we can kill the player for crowd control purposes (e.g. like Teleports, we need a CanKillPlayer check)
 
 // Stats
-// TODO: Beginner Level For All Weapons
-// TODO: Fat Player
-// TODO: Hitman Level For All Weapons
 DEFINE_EFFECT (TimedAddressEffect    , "effect_huge_bunny_hop"              , 0                                         , 0x969161);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_infinite_oxygen"             , 0                                         , 0x96916E);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_lock_respect_at_max"         , 0                                         , 0x96917F);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_lock_sex_appeal_at_max"      , 0                                         , 0x969180);
-// TODO: Max Driving Skills
-// TODO: Max Stamina
 DEFINE_EFFECT (TimedAddressEffect    , "effect_mega_jump"                   , 0                                         , 0x96916C);
 // TODO: Mega Punch (Custom Implementation to be able to punch cars away)
-// TODO: Max Muscle
 DEFINE_EFFECT (TimedAddressEffect    , "effect_never_get_hungry"            , 0                                         , 0x969174);
-// TODO: No Driving Skills
-// TODO: No Stamina
-// TODO: Skinny Player
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_weapon_aiming_while_driving" , 0                                         , CCheat::DrivebyCheat             , 0x969179);
 
 // Theme

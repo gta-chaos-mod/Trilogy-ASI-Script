@@ -1,4 +1,4 @@
-#include <effects/OneTimeEffect.h>
+#include <util/EffectBase.h>
 #include <util/GameUtil.h>
 
 #include "CCheat.h"
