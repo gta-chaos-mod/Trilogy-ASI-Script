@@ -168,7 +168,7 @@ EffectDrawHandler::UpdateTimers ()
     /* Flashing text during effect start */
     if (textFlashTimer >= 0)
     {
-        textFlashTimer -= GenericUtil::CalculateTick (1.0f);
+        textFlashTimer -= (int) GenericUtil::CalculateTick (1.0f);
         textFlashingThisFrame = (textFlashTimer / 400) % 2;
     }
     else

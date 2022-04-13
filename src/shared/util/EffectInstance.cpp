@@ -23,7 +23,7 @@ EffectInstance::End ()
 void
 EffectInstance::Tick ()
 {
-    int tick = GenericUtil::CalculateTick (1.0f);
+    int tick = (int) GenericUtil::CalculateTick (1.0f);
     this->remaining -= tick;
 
     if (GetEffectRemaining () < 0)
