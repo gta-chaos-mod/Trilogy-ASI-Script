@@ -36,6 +36,9 @@ public:
     ApplyCollision (CVehicle *thisVehicle, CVehicle *otherVehicle, int a3,
                     float *a4, int a5)
     {
+        /* TODO: Do collisions on a vehicle-vehicle basis, not
+         * playerVehicle-vehicle */
+
         CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
         if (!playerVehicle)
             return;
@@ -44,6 +47,7 @@ public:
         {
             otherVehicle->m_nPhysicalFlags.bApplyGravity = false;
         }
+
         if (playerVehicle == otherVehicle)
         {
             thisVehicle->m_nPhysicalFlags.bApplyGravity = false;

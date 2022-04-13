@@ -104,7 +104,7 @@ EffectHandler::HandleFunction (const nlohmann::json &effectData)
     {
 #ifndef _NDEBUG
         MessageBox (NULL, std::string (effectData.at ("effectID")).c_str (),
-                    "Effect naht found", MB_ICONHAND);
+                    "Effect not found", MB_ICONHAND);
 #endif
     }
 }
