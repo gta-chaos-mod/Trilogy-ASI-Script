@@ -4,6 +4,7 @@
 #include "util/EffectTwitchHandler.h"
 #include "util/EffectDrawHandler.h"
 #include "util/EffectSubHandlers.h"
+#include "util/RandomHelper.h"
 
 #include <string>
 #include <memory>
@@ -31,6 +32,8 @@ private:
 
     EffectDrawHandler drawHandler;
     Subhandlers_t     subhandlers;
+
+    RandomHelper randomHelper;
 
 public:
     EffectInstance (EffectBase *effect);
@@ -112,6 +115,9 @@ public:
     void
     SetCustomData (const nlohmann::json &data)
     {
+        if (data.contains ("seed"))
+            randomHelper.SetSeed (data["seed"]);
+
         this->customData = data;
     }
 
@@ -119,6 +125,13 @@ public:
     ResetTimer ()
     {
         remaining = duration;
+    }
+
+    template <typename T>
+    T
+    Random (T min, T max, T amplify = 1)
+    {
+        return randomHelper.Random (min, max, amplify);
     }
 
     std::string_view GetName () const;

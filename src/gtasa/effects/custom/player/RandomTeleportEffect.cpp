@@ -17,8 +17,8 @@ public:
         if (player && Teleportation::CanTeleport ())
         {
             CVector randomPosition
-                = CVector (RandomHelper::Random (-3000.0f, 3000.0f),
-                           RandomHelper::Random (-3000.0f, 3000.0f), 20.0f);
+                = CVector (inst->Random (-3000.0f, 3000.0f),
+                           inst->Random (-3000.0f, 3000.0f), 20.0f);
 
             Command<eScriptCommands::COMMAND_REQUEST_COLLISION> (
                 randomPosition.x, randomPosition.y);

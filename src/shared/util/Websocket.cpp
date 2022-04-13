@@ -70,12 +70,6 @@ Websocket::CallFunction (std::string text)
 
             DrawHelper::UpdateCooldown (remaining, cooldown, mode);
         }
-        else if (type == "seed")
-        {
-            int seed = json.at ("data");
-
-            RandomHelper::SetSeed (seed);
-        }
         else if (type == "votes")
         {
             auto data = json.at ("data");
