@@ -1,6 +1,9 @@
 #pragma once
 
+#include "util/EffectCrowdControlHandler.h"
+#include "util/EffectTwitchHandler.h"
 #include "util/EffectDrawHandler.h"
+#include "util/EffectSubHandlers.h"
 
 #include <string>
 #include <memory>
@@ -9,12 +12,14 @@ class EffectBase;
 
 class EffectInstance
 {
+public:
+    using Subhandlers_t
+        = EffectSubhandlers<EffectCrowdControlHandler, EffectTwitchHandler>;
+
+private:
     EffectBase *effect;
 
     std::string overrideName;
-    std::string twitchVoter;
-
-    int crowdControlID = -1;
 
     int remaining = 0;
     int duration  = 0;
@@ -25,6 +30,7 @@ class EffectInstance
     std::shared_ptr<void *> customData;
 
     EffectDrawHandler drawHandler;
+    Subhandlers_t subhandlers;
 
 public:
     EffectInstance (EffectBase *effect);
@@ -32,17 +38,14 @@ public:
     EffectInstance (const EffectInstance &other) = delete;
     EffectInstance (EffectInstance &&other)      = default;
 
+    /// Returns whether other effect can run together with this effect.
+    bool IsOtherEffectIncompatible (const EffectInstance &other);
+
     // Setters
     void
     SetDuration (int duration)
     {
         this->duration = remaining = duration;
-    };
-
-    void
-    SetTwitchVoter (std::string_view voter)
-    {
-        twitchVoter = voter;
     };
 
     void
@@ -57,23 +60,16 @@ public:
         this->timerVisible = timerVisible;
     }
 
-    // Getters
-    bool
-    HasTwitchVoter () const
-    {
-        return twitchVoter != "";
-    }
-
-    std::string_view
-    GetTwitchVoter () const
-    {
-        return twitchVoter;
-    }
-
     bool
     IsRunning () const
     {
         return isRunning;
+    };
+
+    bool
+    IsShownOnScreen () const
+    {
+        return GetEffectRemaining() > 0;
     };
 
     bool
@@ -92,6 +88,19 @@ public:
         return remaining;
     }
 
+    void
+    SetSubhandlers (const Subhandlers_t &other)
+    {
+        this->subhandlers = other;
+    }
+
+    template<typename T>
+    T&
+    GetSubhandler ()
+    {
+        return subhandlers.Get <T> ();
+    }
+    
     std::string_view GetName () const;
 
     // Handler functions
@@ -124,6 +133,4 @@ public:
     {
         this->drawHandler.Draw (this, idx, inset);
     }
-
-    
 };

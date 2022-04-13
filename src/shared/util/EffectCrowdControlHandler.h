@@ -1,0 +1,33 @@
+#pragma once
+
+#include "util/EffectSubHandlers.h"
+
+class EffectCrowdControlHandler : public EffectSubhandler
+{
+    int crowdControlId = -1;
+
+public:
+    static bool IsCrowdControlEnabled ();
+
+    void Initialise (const nlohmann::json &data);
+
+    int
+    GetCrowdControlId () const
+    {
+        return crowdControlId;
+    }
+
+    void SendRetry () const;
+    void SendSucceeded () const;
+
+    // These functions return whether to continue execution
+    bool HandleOnQueue () const;
+    bool HandleOnAddEffect (EffectBase *effect) const;
+    bool HandleOnEffectIncompatibility () const;
+    bool HandleOnEffectActivated () const;
+
+    explicit operator bool () const
+    {
+        return IsCrowdControlEnabled () && crowdControlId != -1;
+    }
+};

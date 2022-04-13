@@ -6,13 +6,42 @@
 #include "EffectDatabase.h"
 #include "EffectInstance.h"
 
+enum eEffectGroups : unsigned long long
+    {
+        GROUP_PED_SPAWNS         = (1ull << 0),
+        GROUP_GHOST_TOWN         = (1ull << 1),
+        GROUP_PEDS_ATTACK        = (1ull << 2),
+        GROUP_NPC_RECRUIT        = (1ull << 3),
+        GROUP_HEALTH             = (1ull << 4),
+        GROUP_THEME              = (1ull << 5),
+        GROUP_TIME               = (1ull << 6),
+        GROUP_GAME_SPEED         = (1ull << 7),
+        GROUP_AUDIO_PITCH        = (1ull << 8),
+        GROUP_VEHICLE_COLOR      = (1ull << 9),
+        GROUP_VEHICLE_RARITY     = (1ull << 10),
+        GROUP_INVISIBLE_VEHICLES = (1ull << 11),
+        GROUP_WANTED             = (1ull << 12),
+        GROUP_WEAPONS            = (1ull << 13),
+        GROUP_CONTROLS           = (1ull << 14),
+        GROUP_GRAVITY            = (1ull << 15),
+        GROUP_HUD                = (1ull << 16),
+        GROUP_CAMERA             = (1ull << 17),
+        GROUP_HANDLING           = (1ull << 18),
+        GROUP_FRAMERATE          = (1ull << 19),
+        GROUP_MIRRORED           = (1ull << 20),
+        GROUP_VISION             = (1ull << 63),
+
+        GROUP_MAX_GROUPS = 32
+    };
+
 class EffectBase
 {
     struct EffectMetadata
     {
-        std::string id;
-        std::string name;
-        int         duration;
+        std::string                   id;
+        std::string                   name;
+        float                         durationMultiplier;
+        std::bitset<GROUP_MAX_GROUPS> groups;
     } metadata;
 
     void SetMetadata (const EffectMetadata &metadata)
@@ -37,6 +66,14 @@ public:
     virtual void OnStart (EffectInstance *instance){};
     virtual void OnEnd (EffectInstance *instance){};
 
+    // Only used for Crowd Control. Return false if the effect cannot be
+    // triggered at the moment and Crowd Control needs to send effect later.
+    virtual bool
+    CanActivate ()
+    {
+        return true;
+    }
+
     virtual const EffectMetadata& GetMetadata() {
         return metadata;
     };
@@ -56,8 +93,7 @@ public:
 #define CONCAT(a, b) CONCAT_INNER(a, b)
 #define CONCAT_INNER(a, b) a ## b
 
-#define DEFINE_EFFECT(className, effectId, effectName, effectDuration, ...)    \
-    auto &CONCAT (className##_inst_, __LINE__)                                 \
-        = className::Register<className, __LINE__> (                           \
-            {effectId, effectName, effectDuration} __VA_OPT__ (, )             \
-                __VA_ARGS__);\
+#define DEFINE_EFFECT(className, effectId, effectTypes, ...)            \
+    auto &CONCAT (className##_inst_, __LINE__)                          \
+    = className::Register<className, __LINE__> (                        \
+                                                                        {effectId, effectId, 1, effectTypes} __VA_OPT__ (, ) __VA_ARGS__); \

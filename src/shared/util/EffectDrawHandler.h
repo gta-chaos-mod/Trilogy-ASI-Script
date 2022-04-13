@@ -18,8 +18,9 @@ class EffectDrawHandler
     int   textFlashTimer  = 2400;
     bool  textFlashingThisFrame = true;
 
-    CRGBA textColor  = CRGBA (255, 255, 255, 255);
-    CRGBA flashColor = CRGBA (255, 255, 0, 255);
+    CRGBA textColor     = CRGBA (255, 255, 255, 255);
+    CRGBA flashColor    = CRGBA (255, 255, 0, 255);
+    CRGBA disabledColor = CRGBA (175, 175, 175, 255);
 
 public:
     CRGBA

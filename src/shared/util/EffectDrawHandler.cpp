@@ -9,6 +9,7 @@
 #include <extensions/FontPrint.h>
 
 #include "Config.h"
+#include "util/EffectTwitchHandler.h"
 #include "util/GenericUtil.h"
 
 bool
@@ -66,12 +67,14 @@ EffectDrawHandler::PrintEffectName ()
 void
 EffectDrawHandler::PrintEffectVoter ()
 {
-    if (effect->HasTwitchVoter ())
+    if (effect->GetSubhandler<EffectTwitchHandler> ())
     {
-        gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                         std::string (effect->GetTwitchVoter ()), x, y - 30.0f,
-                         FONT_DEFAULT, 0.8f, 1.0f, GetTextColor (), 1,
-                         color::Black, true);
+        gamefont::Print (
+            gamefont::RightBottom, gamefont::AlignRight,
+            std::string (
+                effect->GetSubhandler<EffectTwitchHandler> ().GetVoter ()),
+            x, y - 30.0f, FONT_DEFAULT, 0.8f, 1.0f, GetTextColor (), 1,
+            color::Black, true);
     }
 }
 
@@ -80,7 +83,7 @@ EffectDrawHandler::PrintEffectTimer ()
 {
     if (Config::GetOrDefault ("Drawing.DrawCircles", true))
     {
-        if (effect->HasTwitchVoter ())
+        if (effect->GetSubhandler<EffectTwitchHandler> ())
         {
             y -= 10.0f;
         }
@@ -189,11 +192,14 @@ EffectDrawHandler::DrawRecentEffects (int num)
 CRGBA
 EffectDrawHandler::GetTextColor () const
 {
-    return textFlashingThisFrame ? flashColor : textColor;
+    if (textFlashingThisFrame)
+        return flashColor;
+
+    if (!effect->IsRunning () || !effect->DoesEffectDrawTimer ())
+        return disabledColor;
+
+    return textColor;
 };
 
 CRGBA
-EffectDrawHandler::GetEffectColor () const
-{
-    return CHAOS_FOREGROUND_COLOR;
-};
+EffectDrawHandler::GetEffectColor () const { return CHAOS_FOREGROUND_COLOR; };
