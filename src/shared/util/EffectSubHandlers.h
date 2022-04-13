@@ -31,29 +31,14 @@ public:
 };
 
 // Class to manage multiple subhandlers.
-template <class... SubHandler> class EffectSubHandlers
+template <class... SubHandlers> class EffectSubHandlers
 {
-    std::tuple<SubHandler...> handlers;
-
-    class SpecialBool
-    {
-        bool value = false;
-
-    public:
-        void
-        operator= (bool other)
-        {
-            if (!value)
-                value = other;
-        }
-
-        operator bool () { return value; }
-    };
+    std::tuple<SubHandlers...> handlers;
 
 public:
     EffectSubHandlers (const nlohmann::json &effectData)
     {
-        (..., (std::get<SubHandler> (handlers).Initialise (effectData)));
+        (..., (std::get<SubHandlers> (handlers).Initialise (effectData)));
     }
 
     EffectSubHandlers () = default;
@@ -61,41 +46,29 @@ public:
     bool
     HandleOnQueue () const
     {
-        SpecialBool ret;
-        (..., (ret = std::get<SubHandler> (handlers).HandleOnQueue ()));
-
-        return ret;
+        return (... & std::get<SubHandlers> (handlers).HandleOnQueue ());
     }
 
     bool
     HandleOnAddEffect (EffectBase *effect) const
     {
-        SpecialBool ret;
-        (...,
-         (ret = std::get<SubHandler> (handlers).HandleOnAddEffect (effect)));
-
-        return ret;
+        return (...
+                & std::get<SubHandlers> (handlers).HandleOnAddEffect (effect));
     }
 
     bool
     HandleOnEffectIncompatibility () const
     {
-        SpecialBool ret;
-        (...,
-         (ret
-          = std::get<SubHandler> (handlers).HandleOnEffectIncompatibility ()));
-
-        return ret;
+        return (...
+                & std::get<SubHandlers> (handlers)
+                      .HandleOnEffectIncompatibility ());
     }
 
     bool
     HandleOnEffectActivated () const
     {
-        SpecialBool ret;
-        (...,
-         (ret = std::get<SubHandler> (handlers).HandleOnEffectActivated ()));
-
-        return ret;
+        return (...
+                & std::get<SubHandlers> (handlers).HandleOnEffectActivated ());
     }
 
     template <typename T>
