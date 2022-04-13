@@ -46,10 +46,7 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
     EffectInstance::Subhandlers_t handlers (data);
 
     if (!handlers.HandleOnQueue ())
-    {
-        MessageBox (NULL, "HandleOnQueue", NULL, NULL);
         return;
-    }
 
     auto effectFunction = [=] ()
     {
@@ -75,12 +72,13 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
             return;
 
         inst.SetSubhandlers (handlers);
-        inst.Enable ();
         inst.SetDuration (data["duration"]);
+        inst.SetCustomData (data["effectData"]);
 
         if (data.contains ("displayName"))
             inst.OverrideName (data["displayName"]);
 
+        inst.Enable ();
         inst.Tick ();
         effects.push_front (std::move (inst));
     };

@@ -30,7 +30,7 @@ public:
     }
 };
 
-// Class to manage multiple subhandlers. 
+// Class to manage multiple subhandlers.
 template <class... Subhandlers> class EffectSubhandlers
 {
     std::tuple<Subhandlers...> handlers;
@@ -47,9 +47,7 @@ template <class... Subhandlers> class EffectSubhandlers
                 value = other;
         }
 
-        operator bool () {
-            return value;
-        }
+        operator bool () { return value; }
     };
 
 public:
@@ -60,7 +58,6 @@ public:
 
     EffectSubhandlers () = default;
 
-    
     bool
     HandleOnQueue () const
     {
@@ -101,8 +98,8 @@ public:
         return ret;
     }
 
-    template<typename T>
-    T&
+    template <typename T>
+    T &
     Get ()
     {
         return std::get<T> (handlers);

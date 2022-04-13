@@ -5,8 +5,8 @@ class EffectInstance;
 class EffectDrawHandler
 {
     /* Draw context variables */
-    inline static EffectInstance* effect;
-    
+    inline static EffectInstance *effect;
+
     inline static int  idx;
     inline static bool isInset;
 
@@ -14,8 +14,8 @@ class EffectDrawHandler
     inline static float y = 0;
 
     /* Effect specific variables */
-    float transitionTimer = 0;
-    int   textFlashTimer  = 2400;
+    float transitionTimer       = 0;
+    int   textFlashTimer        = 2400;
     bool  textFlashingThisFrame = true;
 
     CRGBA textColor     = CRGBA (255, 255, 255, 255);
@@ -30,7 +30,7 @@ public:
     GetEffectColor () const;
 
     void UpdateTimers ();
-    
+
     void CalculateDrawPosition ();
     void PrintEffectName ();
     void PrintEffectVoter ();

@@ -25,12 +25,12 @@ private:
     int duration  = 0;
 
     bool timerVisible = true;
-    bool isRunning = false;
+    bool isRunning    = false;
 
-    std::shared_ptr<void *> customData;
+    nlohmann::json customData = {{"seed", 0}};
 
     EffectDrawHandler drawHandler;
-    Subhandlers_t subhandlers;
+    Subhandlers_t     subhandlers;
 
 public:
     EffectInstance (EffectBase *effect);
@@ -69,7 +69,7 @@ public:
     bool
     IsShownOnScreen () const
     {
-        return GetEffectRemaining() > 0;
+        return GetEffectRemaining () > 0;
     };
 
     bool
@@ -78,14 +78,22 @@ public:
         return IsRunning () && timerVisible;
     }
 
-    int GetEffectDuration () const
+    int
+    GetEffectDuration () const
     {
         return duration;
     }
-    
-    int GetEffectRemaining () const
+
+    int
+    GetEffectRemaining () const
     {
         return remaining;
+    }
+
+    nlohmann::json &
+    GetCustomData ()
+    {
+        return this->customData;
     }
 
     void
@@ -94,13 +102,25 @@ public:
         this->subhandlers = other;
     }
 
-    template<typename T>
-    T&
+    template <typename T>
+    T &
     GetSubhandler ()
     {
-        return subhandlers.Get <T> ();
+        return subhandlers.Get<T> ();
     }
-    
+
+    void
+    SetCustomData (const nlohmann::json &data)
+    {
+        this->customData = data;
+    }
+
+    void
+    ResetTimer ()
+    {
+        remaining = duration;
+    }
+
     std::string_view GetName () const;
 
     // Handler functions
@@ -122,7 +142,8 @@ public:
     void
     Enable ()
     {
-        if (!isRunning) {
+        if (!isRunning)
+        {
             isRunning = true;
             Start ();
         }

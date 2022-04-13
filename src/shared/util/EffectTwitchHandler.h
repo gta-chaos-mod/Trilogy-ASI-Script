@@ -4,8 +4,8 @@
 
 class EffectTwitchHandler : public EffectSubhandler
 {
-    std::string voter;
-    
+    std::string voter = "";
+
 public:
     std::string
     GetVoter ()
@@ -18,10 +18,6 @@ public:
     {
         if (data.contains ("twitchData"))
             voter = data["twitchData"].value ("voter", "");
-
-        // TODO: Remove
-        if (voter == "N/A")
-            voter = "";
     }
 
     explicit operator bool () { return voter != ""; }

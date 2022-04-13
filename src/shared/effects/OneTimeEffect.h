@@ -8,6 +8,6 @@ public:
     virtual void
     OnTick (EffectInstance *instance) final
     {
-        instance->SetTimerVisible (false);
+        instance->Disable ();
     }
 };

@@ -6,8 +6,7 @@ class OneTimeFunctionEffect : public OneTimeEffect
 
 public:
     template <typename... Args>
-    OneTimeFunctionEffect (Args... functions)
-        : functions ({functions...})
+    OneTimeFunctionEffect (Args... functions) : functions ({functions...})
     {
     }
 
