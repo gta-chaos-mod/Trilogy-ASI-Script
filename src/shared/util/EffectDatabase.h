@@ -1,13 +1,12 @@
 #pragma once
 
 #include <string_view>
-#include <vector>
 
 class EffectBase;
 
 class EffectDatabase
 {
-    std::vector<EffectBase *> effectsList;
+    std::map<std::string, EffectBase *> effectsMap;
 
     EffectDatabase ()                            = default;
     EffectDatabase (const EffectDatabase &other) = delete;
@@ -20,11 +19,7 @@ public:
         return db;
     }
 
-    static void
-    RegisterEffect (EffectBase *base)
-    {
-        GetInstance ().effectsList.push_back (base);
-    }
+    static void RegisterEffect (EffectBase *base);
 
-    static EffectBase *FindEffectById (std::string_view id);
+    static EffectBase *FindEffectById (std::string id);
 };

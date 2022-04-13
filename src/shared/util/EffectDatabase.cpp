@@ -1,14 +1,24 @@
 #include "EffectDatabase.h"
 #include "EffectBase.h"
 
-EffectBase *
-EffectDatabase::FindEffectById (std::string_view id)
+void
+EffectDatabase::RegisterEffect (EffectBase *base)
 {
-    for (auto i : GetInstance ().effectsList)
+    auto &id         = base->GetMetadata ().id;
+    auto &effectsMap = GetInstance ().effectsMap;
+    if (effectsMap.contains (id))
     {
-        if (i->GetMetadata ().id == id)
-            return i;
+        // TODO: Log this to a file so we know that an effect tried to register
+        // with an already existing ID
+        assert (!"Trying to register duplicate effect.");
+        return;
     }
+    GetInstance ().effectsMap[id] = base;
+}
 
-    return nullptr;
+EffectBase *
+EffectDatabase::FindEffectById (std::string id)
+{
+    auto &effectsMap = GetInstance ().effectsMap;
+    return effectsMap.contains (id) ? effectsMap[id] : nullptr;
 }
