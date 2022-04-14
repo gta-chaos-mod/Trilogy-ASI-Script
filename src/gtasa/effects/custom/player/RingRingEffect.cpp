@@ -1,4 +1,7 @@
 #include <util/EffectBase.h>
+#include <util/GenericUtil.h>
+
+#include "CStreaming.h"
 
 #include "extensions/ScriptCommands.h"
 
@@ -31,7 +34,7 @@ public:
     {
         if (wait > 0)
         {
-            wait -= CalculateTick ();
+            wait -= (int) GenericUtil::CalculateTick ();
             return;
         }
 
