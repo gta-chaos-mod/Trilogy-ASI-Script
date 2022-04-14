@@ -10,11 +10,17 @@ using namespace plugin;
 class RandomTeleportEffect : public EffectBase
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return Teleportation::CanTeleport ();
+    }
+
     void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && Teleportation::CanTeleport ())
+        if (player && CanActivate ())
         {
             CVector randomPosition
                 = CVector (inst->Random (-3000.0f, 3000.0f),
