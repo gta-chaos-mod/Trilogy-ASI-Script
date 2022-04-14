@@ -52,6 +52,11 @@ ClearEffectsOnNewGame = true
 # Default: false
 QuickSave = false
 
+# Whether to lock the player in the vehicle again when "Lock Player Inside Vehicle"
+# is disabling itself but still "active" in the background
+# Default: true
+LockPlayerInVehicleAfterDisable = true
+
 #######################################################
 
 #######################################################
