@@ -4,10 +4,16 @@
 class BlowUpAllCarsEffect : public EffectBase
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return GameUtil::IsPlayerSafe ();
+    }
+
     void
     OnTick (EffectInstance *inst) override
     {
-        if (CanBlowUpCars ())
+        if (CanActivate ())
         {
             for (CVehicle *vehicle : CPools::ms_pVehiclePool)
             {
@@ -17,12 +23,6 @@ public:
 
             inst->Disable ();
         }
-    }
-
-    bool
-    CanBlowUpCars ()
-    {
-        return GameUtil::IsPlayerSafe ();
     }
 };
 
