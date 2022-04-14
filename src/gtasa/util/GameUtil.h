@@ -35,13 +35,13 @@ private:
     static inline std::string loadFilePath;
     static inline char       *gamePath = reinterpret_cast<char *> (0xC92368);
 
+public:
     static CPedAcquaintance *GetPedTypeAcquaintances (int pedType);
     static void              BackupAcquaintances ();
     static void              RestoreSavedAcquaintances ();
     static void SaveAcquaintances (CPedAcquaintance *acquaintances);
     static void LoadAcquaintances (CPedAcquaintance *acquaintances);
 
-public:
     static void        DeleteAutoSave ();
     static void        SaveToFile (std::string fileName);
     static bool        LoadFromFile (std::string fileName);

@@ -32,12 +32,6 @@ LoadAutosaveOnGameLoad = true
 # Default: true
 AutosaveAfterGangWar = true
 
-# Disable certain effects during missions
-# This currently includes "Peds Attack Each Other", "Have A Bounty On Your Head" and "Peds Attack You".
-# The reason for this is that they can crash the game. Turn off at your own risk.
-# Default: true
-DisableEffectsDuringMissions = true
-
 # Whether or not the game should delete the autosave when starting a new game
 # This is so when "Reload Autosave" is coming up it won't "wrong-wrap" you to that
 # Useful for speedruns, mainly, so they don't get disqualified.
