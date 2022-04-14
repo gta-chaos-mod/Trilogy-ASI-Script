@@ -46,12 +46,8 @@ Teleportation::Teleport (CVector destination, int interior)
         CGame::currArea     = interior;
         entity->m_nAreaCode = interior;
 
-        CEntryExitManager::ms_entryExitStackPosn = interior;
-        CPopulation::bInPoliceStation            = false;
+        CPopulation::bInPoliceStation = false;
         CStreaming::RemoveBuildingsNotInArea (interior);
-
-        CWorld::Remove (entity);
-        CWorld::Add (entity);
 
         CPlayerPed *player = FindPlayerPed ();
         if (player)
@@ -62,9 +58,6 @@ Teleportation::Teleport (CVector destination, int interior)
             {
                 player->m_pEnex = 0;
             }
-
-            CWorld::Remove (player);
-            CWorld::Add (player);
         }
 
         entity->m_vecMoveSpeed = moveSpeed;
