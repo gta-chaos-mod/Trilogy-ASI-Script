@@ -65,9 +65,9 @@ public:
         return effectInstance;
     }
 
-    virtual void OnTick (EffectInstance *instance){};
     virtual void OnStart (EffectInstance *instance){};
     virtual void OnEnd (EffectInstance *instance){};
+    virtual void OnTick (EffectInstance *instance){};
 
     // Only used for Crowd Control. Return false if the effect cannot be
     // triggered at the moment and Crowd Control needs to send effect later.
