@@ -1,3 +1,4 @@
+#include <effects/DisabledForMissionEffect.h>
 #include <effects/TimedFunctionEffect.h>
 #include <util/GameUtil.h>
 
@@ -28,5 +29,9 @@ public:
     }
 };
 
-DEFINE_EFFECT (PedsAttackEachOtherEffect, "effect_peds_attack_each_other",
+using RegisterPedsAttackEachOtherEffect
+    = DisabledForMissionEffect<PedsAttackEachOtherEffect>;
+
+DEFINE_EFFECT (RegisterPedsAttackEachOtherEffect,
+               "effect_peds_attack_each_other",
                GROUP_PED_SPAWNS | GROUP_PEDS_ATTACK);

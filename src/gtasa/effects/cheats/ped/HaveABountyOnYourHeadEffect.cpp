@@ -1,3 +1,4 @@
+#include <effects/DisabledForMissionEffect.h>
 #include <effects/TimedFunctionEffect.h>
 #include <util/GameUtil.h>
 
@@ -28,5 +29,9 @@ public:
     }
 };
 
-DEFINE_EFFECT (HaveABountyOnYourHeadEffect, "effect_have_a_bounty_on_your_head",
+using RegisterHaveABountyOnYourHeadEffect
+    = DisabledForMissionEffect<HaveABountyOnYourHeadEffect>;
+
+DEFINE_EFFECT (RegisterHaveABountyOnYourHeadEffect,
+               "effect_have_a_bounty_on_your_head",
                GROUP_PED_SPAWNS | GROUP_PEDS_ATTACK);
