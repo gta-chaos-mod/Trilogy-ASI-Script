@@ -21,6 +21,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        resetMaterialColors.clear ();
+
         setupRenderEvent += SetupRenderEvent;
         resetAfterRenderEvent += ResetAfterRenderEvent;
     }
