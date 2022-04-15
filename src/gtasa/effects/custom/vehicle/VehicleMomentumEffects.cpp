@@ -4,14 +4,14 @@
 
 enum eVehicleMomentumType
 {
-    DUPLICATE_MOMENTUM,
+    BOOST,
     INVERT_MOMENTUM,
     INVERT_MOMENTUM_AND_MATRIX
 };
 
 class VehicleMomentumEffect : public OneTimeEffect
 {
-    eVehicleMomentumType type = eVehicleMomentumType::DUPLICATE_MOMENTUM;
+    eVehicleMomentumType type = eVehicleMomentumType::BOOST;
 
 public:
     VehicleMomentumEffect (eVehicleMomentumType type) : OneTimeEffect ()
@@ -32,11 +32,11 @@ public:
                 InvertVehicle (matrix);
             }
 
-            if (this->type == eVehicleMomentumType::DUPLICATE_MOMENTUM)
+            if (this->type == eVehicleMomentumType::BOOST)
             {
-                vehicle->m_vecMoveSpeed.x = vehicle->m_vecMoveSpeed.x * 2;
-                vehicle->m_vecMoveSpeed.y = vehicle->m_vecMoveSpeed.y * 2;
-                vehicle->m_vecMoveSpeed.z = vehicle->m_vecMoveSpeed.z * 2;
+                vehicle->m_vecMoveSpeed.x = vehicle->m_vecMoveSpeed.x * 5.0f;
+                vehicle->m_vecMoveSpeed.y = vehicle->m_vecMoveSpeed.y * 5.0f;
+                vehicle->m_vecMoveSpeed.z = vehicle->m_vecMoveSpeed.z * 5.0f;
             }
             else
             {
@@ -61,7 +61,7 @@ public:
 };
 
 // clang-format off
-DEFINE_EFFECT (VehicleMomentumEffect, "effect_duplicate_vehicle_velocity",  0, eVehicleMomentumType::DUPLICATE_MOMENTUM);
-DEFINE_EFFECT (VehicleMomentumEffect, "effect_invert_vehicle_velocity",     0, eVehicleMomentumType::INVERT_MOMENTUM);
-DEFINE_EFFECT (VehicleMomentumEffect, "effect_turn_vehicles_around",        0, eVehicleMomentumType::INVERT_MOMENTUM_AND_MATRIX);
+DEFINE_EFFECT (VehicleMomentumEffect, "effect_vehicle_boost",           0, eVehicleMomentumType::BOOST);
+DEFINE_EFFECT (VehicleMomentumEffect, "effect_invert_vehicle_speed",    0, eVehicleMomentumType::INVERT_MOMENTUM);
+DEFINE_EFFECT (VehicleMomentumEffect, "effect_turn_vehicles_around",    0, eVehicleMomentumType::INVERT_MOMENTUM_AND_MATRIX);
 // clang-format on
