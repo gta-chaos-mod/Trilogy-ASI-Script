@@ -13,8 +13,11 @@ EffectHandler::Tick ()
         effect.Tick ();
     }
 
-    std::erase_if (effects, [] (EffectInstance &effect)
-                   { return !effect.IsShownOnScreen (); });
+    std::erase_if (effects,
+                   [] (EffectInstance &effect) {
+                       return !effect.IsShownOnScreen ()
+                              && !effect.IsRunning ();
+                   });
 }
 
 void
