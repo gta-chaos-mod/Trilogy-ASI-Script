@@ -1,23 +1,11 @@
 #include <util/EffectBase.h>
 #include <util/GameUtil.h>
 
+#include "CTimer.h"
+
 class ZeroGravityEffect : public EffectBase
 {
 public:
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        for (CPed *ped : CPools::ms_pPedPool)
-        {
-            ped->m_nPhysicalFlags.bApplyGravity = true;
-        }
-
-        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
-        {
-            vehicle->m_nPhysicalFlags.bApplyGravity = true;
-        }
-    }
-
     void
     OnTick (EffectInstance *inst) override
     {
@@ -25,13 +13,26 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPhysicalFlags.bApplyGravity = false;
+            NegateGravity (ped);
         }
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            vehicle->m_nPhysicalFlags.bApplyGravity = false;
+            NegateGravity (vehicle);
         }
+
+        for (CObject *object : CPools::ms_pObjectPool)
+        {
+            NegateGravity (object);
+        }
+    }
+
+    void
+    NegateGravity (CPhysical *physical)
+    {
+        float negativeGravity
+            = CTimer::ms_fTimeStep * physical->m_fMass * -0.008f;
+        physical->ApplyMoveForce ({0, 0, -negativeGravity});
     }
 };
 

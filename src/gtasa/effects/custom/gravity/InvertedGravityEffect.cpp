@@ -1,20 +1,31 @@
 #include <util/EffectBase.h>
 #include <util/GameUtil.h>
 
+#include "CTimer.h"
+
 class InvertedGravityEffect : public EffectBase
 {
 public:
     void
-    OnEnd (EffectInstance *inst) override
+    OnStart (EffectInstance *inst) override
     {
+        // Set everyone's Z position a bit higher so gravity triggers
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPhysicalFlags.bApplyGravity = true;
+            ped->GetPosition ().z += 0.1f;
+            ped->m_vecMoveSpeed.z = 0;
         }
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            vehicle->m_nPhysicalFlags.bApplyGravity = true;
+            vehicle->GetPosition ().z += 0.1f;
+            vehicle->m_vecMoveSpeed.z = 0;
+        }
+
+        for (CObject *object : CPools::ms_pObjectPool)
+        {
+            object->GetPosition ().z += 0.1f;
+            object->m_vecMoveSpeed.z = 0;
         }
     }
 
@@ -25,19 +36,36 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPhysicalFlags.bApplyGravity = false;
-
-            ped->m_vecMoveSpeed.z
-                = std::min (ped->m_vecMoveSpeed.z + 0.001f, 1.0f);
+            NegateGravity (ped);
+            ApplyGravity (ped, -0.002f);
         }
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            vehicle->m_nPhysicalFlags.bApplyGravity = false;
-
-            vehicle->m_vecMoveSpeed.z
-                = std::min (vehicle->m_vecMoveSpeed.z + 0.001f, 1.0f);
+            NegateGravity (vehicle);
+            ApplyGravity (vehicle, -0.002f);
         }
+
+        for (CObject *object : CPools::ms_pObjectPool)
+        {
+            NegateGravity (object);
+            ApplyGravity (object, -0.002f);
+        }
+    }
+
+    void
+    NegateGravity (CPhysical *physical)
+    {
+        float negativeGravity
+            = CTimer::ms_fTimeStep * physical->m_fMass * -0.008f;
+        physical->ApplyMoveForce ({0, 0, -negativeGravity});
+    }
+
+    void
+    ApplyGravity (CPhysical *physical, float gravity)
+    {
+        float newGravity = CTimer::ms_fTimeStep * physical->m_fMass * -gravity;
+        physical->ApplyMoveForce ({0, 0, newGravity});
     }
 };
 
