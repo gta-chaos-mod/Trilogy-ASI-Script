@@ -29,9 +29,9 @@ public:
         // Make sure we delete vehicles after they've exploded
         RemoveExplodedVehicles (step);
 
+        wait -= step;
         if (wait > 0)
         {
-            wait -= step;
             return;
         }
 

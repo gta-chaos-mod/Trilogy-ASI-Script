@@ -1,5 +1,4 @@
 #include <util/EffectBase.h>
-#include <util/RandomHelper.h>
 #include <util/Teleportation.h>
 
 #include <extensions/ScriptCommands.h>

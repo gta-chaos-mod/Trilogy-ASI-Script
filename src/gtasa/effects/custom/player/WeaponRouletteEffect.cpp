@@ -89,9 +89,9 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        wait -= (int) GenericUtil::CalculateTick ();
         if (wait > 0)
         {
-            wait -= (int) GenericUtil::CalculateTick ();
             return;
         }
 
