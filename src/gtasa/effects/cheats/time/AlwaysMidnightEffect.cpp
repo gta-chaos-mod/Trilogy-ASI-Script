@@ -11,7 +11,9 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        this->currentWeather = (eWeatherType) CWeather::NewWeatherType;
+        this->currentWeather = (eWeatherType)
+            std::min (CWeather::NewWeatherType,
+                      (short) eWeatherType::WEATHER_EXTRACOLOURS_2);
     }
 
     void
