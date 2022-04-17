@@ -26,9 +26,4 @@ public:
     }
 
     static std::string ToUpper (std::string string);
-
-    static void ScaleWithRoot (RwMatrix *matrix, RwMatrix *root, RwV3d scale);
-
-    static void RotateWithRoot (RwMatrix *matrix, RwMatrix *root, int axis,
-                                float angle);
 };
