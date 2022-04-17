@@ -1,5 +1,5 @@
+#include <util/BoneHelper.h>
 #include <util/EffectBase.h>
-#include <util/GenericUtil.h>
 
 #include "CTimer.h"
 
@@ -10,16 +10,12 @@ using namespace plugin;
 class BigHeadsEffect : public EffectBase
 {
     static inline std::map<CPed *, unsigned int> pedRenderFrameMap;
-    static inline bool                           blowingUp  = true;
-    static inline float                          multiplier = 1.0f;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
         pedRenderFrameMap.clear ();
-        blowingUp  = false;
-        multiplier = 0.0f;
 
         Events::pedCtorEvent += PedCreateEvent;
         Events::pedRenderEvent += RenderPedEvent;
@@ -30,20 +26,6 @@ public:
     {
         Events::pedCtorEvent -= PedCreateEvent;
         Events::pedRenderEvent -= RenderPedEvent;
-    }
-
-    void
-    OnTick (EffectInstance *inst) override
-    {
-        if (!blowingUp)
-            return;
-
-        multiplier += GenericUtil::CalculateTick (0.001f);
-        if (multiplier > 5.0f)
-        {
-            multiplier = 0.1f;
-            blowingUp  = false;
-        }
     }
 
     static void
@@ -62,52 +44,16 @@ public:
             auto animHier = GetAnimHierarchyFromSkinClump (ped->m_pRwClump);
             auto matrices = RpHAnimHierarchyGetMatrixArray (animHier);
 
-            // TODO: Use this for full scale body
-            bool fullScale = false;
+            auto rootMatrix = &matrices[BONE_NECK];
 
-            if (fullScale)
+            const float coefficient = 3.0f;
+            RwV3d       scale       = {coefficient, coefficient, coefficient};
+
+            for (int i = BONE_NECK; i <= BONE_HEAD; i++)
             {
-                auto rootMatrix = &matrices[0];
+                auto boneMatrix = &matrices[i];
 
-                RwV3d scale = {0.5f, 0.5f, 0.5f};
-
-                for (int i = 0; i < animHier->numNodes; i++)
-                {
-                    auto boneMatrix = &matrices[i];
-
-                    boneMatrix->pos.z
-                        += scale.z > 1.0f ? (scale.z / 2) : -scale.z;
-
-                    if (ped->m_pVehicle)
-                    {
-                        if (ped->m_pVehicle->IsPassenger (ped)
-                            || ped->m_pVehicle->IsDriver (ped))
-                        {
-                            // TODO: Adjust ped position in vehicles when
-                            // vehicles are scaled, too
-                            boneMatrix->pos.z
-                                -= scale.z > 1.0f ? (scale.z / 2) : -scale.z;
-                        }
-                    }
-
-                    GenericUtil::ScaleWithRoot (boneMatrix, rootMatrix, scale);
-                }
-            }
-            else
-            {
-                // auto rootMatrix = &matrices[0]; // E.T. Long Neck
-                auto rootMatrix = &matrices[BONE_NECK];
-
-                const float coefficient = 3.0f;
-                // const float coefficient = multiplier;
-                RwV3d scale = {coefficient, coefficient, coefficient};
-
-                for (int i = BONE_NECK; i <= BONE_HEAD; i++)
-                {
-                    auto boneMatrix = &matrices[i];
-
-                    GenericUtil::ScaleWithRoot (boneMatrix, rootMatrix, scale);
-                }
+                BoneHelper::ScaleWithRoot (boneMatrix, rootMatrix, scale);
             }
         }
     }
