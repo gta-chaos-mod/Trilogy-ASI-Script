@@ -18,22 +18,15 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        Events::pedRenderEvent += RenderPed;
         cutscenePedRenderEvent += RenderPed;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
+        Events::pedRenderEvent -= RenderPed;
         cutscenePedRenderEvent -= RenderPed;
-    }
-
-    void
-    OnTick (EffectInstance *inst) override
-    {
-        for (CPed *ped : CPools::ms_pPedPool)
-        {
-            RenderPed (ped);
-        }
     }
 
     static void

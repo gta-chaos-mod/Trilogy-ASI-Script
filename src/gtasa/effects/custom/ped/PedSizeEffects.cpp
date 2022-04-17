@@ -1,81 +1,53 @@
 #include <util/BoneHelper.h>
 #include <util/EffectBase.h>
 
-#include "CTimer.h"
+#include "ePedBones.h"
 
 using namespace plugin;
 
+static ThiscallEvent<AddressList<0x5B1F31, H_CALL>, PRIORITY_AFTER,
+                     ArgPickN<CPed *, 0>, void (CPed *)>
+    cutscenePedRenderEvent;
+
 template <RwV3d scale> class PedSizeEffect : public EffectBase
 {
-    static inline std::map<CPed *, unsigned int> pedRenderFrameMap;
-
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        pedRenderFrameMap.clear ();
-
-        Events::pedCtorEvent += PedCreateEvent;
-        Events::pedRenderEvent += RenderPedEvent;
+        Events::pedRenderEvent += RenderPed;
+        cutscenePedRenderEvent += RenderPed;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::pedCtorEvent -= PedCreateEvent;
-        Events::pedRenderEvent -= RenderPedEvent;
+        Events::pedRenderEvent -= RenderPed;
+        cutscenePedRenderEvent -= RenderPed;
     }
 
     static void
-    PedCreateEvent (CPed *ped)
+    RenderPed (CPed *ped)
     {
-        pedRenderFrameMap.erase (ped);
-    }
+        // Reset scales before applying our own
+        BoneHelper::UpdatePed (ped);
 
-    static void
-    RenderPedEvent (CPed *ped)
-    {
-        if (CTimer::m_FrameCounter > pedRenderFrameMap[ped])
+        for (int i = 0; i < ePedBones::BONE_RIGHTFOOT; i++)
         {
-            pedRenderFrameMap[ped] = CTimer::m_FrameCounter;
+            BoneHelper::SetBoneScale (ped, i, scale);
+        }
 
-            auto animHier = GetAnimHierarchyFromSkinClump (ped->m_pRwClump);
-            auto matrices = RpHAnimHierarchyGetMatrixArray (animHier);
-
-            auto rootMatrix = &matrices[0];
-
-            for (int i = 0; i < animHier->numNodes; i++)
-            {
-                auto boneMatrix = &matrices[i];
-
-                // boneMatrix->pos.z += scale.z > 1.0f ? (scale.z / 2) :
-                // -scale.z;
-
-                // TODO: Adjust ped position in vehicles when vehicles are
-                // scaled, too
-
-                // if (ped->m_pVehicle)
-                // {
-                //     if (ped->m_pVehicle->IsPassenger (ped)
-                //         || ped->m_pVehicle->IsDriver (ped))
-                //     {
-                //         // TODO: Adjust ped position in vehicles when
-                //         // vehicles are scaled, too
-                //         boneMatrix->pos.z
-                //             -= scale.z > 1.0f ? (scale.z / 2) : -scale.z;
-                //     }
-                // }
-
-                BoneHelper::ScaleWithRoot (boneMatrix, rootMatrix, scale);
-            }
+        for (int i = 5000; i < 5026; i++)
+        {
+            BoneHelper::SetBoneScale (ped, i, scale);
         }
     }
 };
 
 // clang-format off
 using PedSizeTinyEffect = PedSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}>;
-DEFINE_EFFECT (PedSizeTinyEffect, "effect_ped_size_tiny", 0);
+DEFINE_EFFECT (PedSizeTinyEffect, "effect_ped_size_tiny", GROUP_PED_BONES);
 
 using PedSizeLargeEffect = PedSizeEffect<RwV3d {2.0f, 2.0f, 2.0f}>;
-DEFINE_EFFECT (PedSizeLargeEffect, "effect_ped_size_large", 0);
+DEFINE_EFFECT (PedSizeLargeEffect, "effect_ped_size_large", GROUP_PED_BONES);
 // clang-format on

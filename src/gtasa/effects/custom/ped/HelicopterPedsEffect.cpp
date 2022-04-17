@@ -24,12 +24,14 @@ public:
         spinSpeed     = 0.0f;
         rotationAngle = 0.0f;
 
+        Events::pedRenderEvent += RenderPed;
         cutscenePedRenderEvent += RenderPed;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
+        Events::pedRenderEvent -= RenderPed;
         cutscenePedRenderEvent -= RenderPed;
     }
 
@@ -38,11 +40,6 @@ public:
     {
         spinSpeed     = std::min (spinSpeed + 2.0f, 40.0f);
         rotationAngle = fmod (rotationAngle + spinSpeed, 360.0f);
-
-        for (CPed *ped : CPools::ms_pPedPool)
-        {
-            RenderPed (ped);
-        }
     }
 
     static void

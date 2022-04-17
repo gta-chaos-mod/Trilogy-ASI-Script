@@ -18,32 +18,20 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        Events::pedRenderEvent += RenderPed;
         cutscenePedRenderEvent += RenderPed;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
+        Events::pedRenderEvent -= RenderPed;
         cutscenePedRenderEvent -= RenderPed;
-    }
-
-    void
-    OnTick (EffectInstance *inst) override
-    {
-        for (CPed *ped : CPools::ms_pPedPool)
-        {
-            RenderPed (ped);
-        }
     }
 
     static void
     RenderPed (CPed *ped)
     {
-        if (!ped)
-        {
-            return;
-        }
-
         RwV3d                  empty = {0, 0, 0};
         std::vector<ePedBones> staticBones
             = {ePedBones::BONE_NECK,          ePedBones::BONE_SPINE1,
