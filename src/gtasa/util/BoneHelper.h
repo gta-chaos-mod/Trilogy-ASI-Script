@@ -19,9 +19,9 @@ public:
     static void SetBonePosition (CPed *ped, unsigned int boneId,
                                  RwV3d position);
 
-    static void SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale);
-
-    static void ScaleWithRoot (RwMatrix *matrix, RwMatrix *root, RwV3d scale);
+    static void SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale,
+                              unsigned int rootBone      = 0,
+                              bool         scaleWithRoot = true);
 
     static AnimBlendFrameData *GetBoneById (CPed *ped, unsigned int boneId);
 
@@ -34,4 +34,6 @@ public:
     static void EulerToQuat (RwV3d *angles, RtQuat *quat);
 
     static void UpdatePed (CPed *ped);
+
+    static void ShoulderBoneRotation (CPed *ped);
 };

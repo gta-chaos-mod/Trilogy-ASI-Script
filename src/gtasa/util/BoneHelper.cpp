@@ -48,29 +48,33 @@ BoneHelper::SetBonePosition (CPed *ped, unsigned int boneId, RwV3d position)
     }
 }
 
+// Not working properly in cutscenes.
+// Are eyes and the mouth different bones that we can't control?
 void
-BoneHelper::SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale)
+BoneHelper::SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale,
+                          unsigned int rootBone, bool scaleWithRoot)
 {
     RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
     if (rwBoneMatrix)
     {
-        RwMatrixScale (rwBoneMatrix, &scale, rwCOMBINEPRECONCAT);
+        CMatrix boneMatrix (rwBoneMatrix, false);
+        // CMatrix::SetScale_XYZ - PR to plugin-sdk maybe?
+        CallMethod<0x5A2E60, CMatrix *> (&boneMatrix, scale.x, scale.y,
+                                         scale.z);
+        boneMatrix.UpdateRW ();
+
+        if (scaleWithRoot)
+        {
+            RwV3d bonePos = GetBonePosition (ped, boneId);
+            RwV3d rootPos = GetBonePosition (ped, rootBone);
+
+            RwV3d newPos = {(rootPos.x + ((bonePos.x - rootPos.x) * scale.x)),
+                            (rootPos.y + ((bonePos.y - rootPos.y) * scale.y)),
+                            (rootPos.z + ((bonePos.z - rootPos.z) * scale.z))};
+
+            SetBonePosition (ped, boneId, newPos);
+        }
     }
-}
-
-void
-BoneHelper::ScaleWithRoot (RwMatrix *matrix, RwMatrix *root, RwV3d scale)
-{
-    if (!matrix || !root)
-    {
-        return;
-    }
-
-    RwMatrixScale (matrix, &scale, rwCOMBINEPRECONCAT);
-
-    matrix->pos = {(root->pos.x + ((matrix->pos.x - root->pos.x) * scale.x)),
-                   (root->pos.y + ((matrix->pos.y - root->pos.y) * scale.y)),
-                   (root->pos.z + ((matrix->pos.z - root->pos.z) * scale.z))};
 }
 
 AnimBlendFrameData *
@@ -137,6 +141,8 @@ BoneHelper::EulerToQuat (RwV3d *angles, RtQuat *quat)
     Call<0x6171F0> (angles, quat);
 }
 
+// Use this whenever you do bone rotation.
+// Scale bones AFTER calling this, otherwise they reset.
 void
 BoneHelper::UpdatePed (CPed *ped)
 {
@@ -148,6 +154,15 @@ BoneHelper::UpdatePed (CPed *ped)
         // ped->UpdateRpHAnim ();
         CallMethod<0x532B20, CPed *> (ped);
 
+        ShoulderBoneRotation (ped);
+    }
+}
+
+void
+BoneHelper::ShoulderBoneRotation (CPed *ped)
+{
+    if (ped && ped->m_pRwClump)
+    {
         // We need to safe-guard ourselves for cutscenes. If one of these bones
         // can't be found don't continue to the "ShoulderBoneRotation" call,
         // otherwise we crash.
