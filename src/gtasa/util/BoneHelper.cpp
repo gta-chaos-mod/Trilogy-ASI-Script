@@ -1,5 +1,23 @@
 #include "BoneHelper.h"
 
+/*
+    TODO:
+    Instead of updating the peds in their corresponding classes, we could maybe
+   have this class listen to Events::pedRenderEvent and the custom cutscene ped
+   render event.
+   Whenever we update a bone position for a ped we will add the new position
+   into a static list (or update if it's already there), same for rotation and
+   scale.
+   In the render events we check if the ped is in one of the lists and if they
+   are, we will apply the changes and call the UpdateRpHAnim /
+   ShoulderBoneRotation methods ourselves accordingly.
+   After we are done with that we clear the list for that ped so that we don't
+   randomly apply the effects to a different ped (since the game reuses
+   pointers).
+   That way we can in theory support multiple ped render events at the same
+   time.
+*/
+
 RwMatrixTag *
 BoneHelper::GetBoneRwMatrix (CPed *ped, unsigned int boneId)
 {
@@ -58,7 +76,7 @@ BoneHelper::SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale,
     if (rwBoneMatrix)
     {
         CMatrix boneMatrix (rwBoneMatrix, false);
-        // CMatrix::SetScale_XYZ - PR to plugin-sdk maybe?
+        // CMatrix::ScaleXYZ - not implemented in plugin-sdk
         CallMethod<0x5A2E60, CMatrix *> (&boneMatrix, scale.x, scale.y,
                                          scale.z);
         boneMatrix.UpdateRW ();
