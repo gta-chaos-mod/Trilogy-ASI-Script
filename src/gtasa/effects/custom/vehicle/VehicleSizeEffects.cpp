@@ -38,8 +38,12 @@ public:
         auto frame = GetObjectParent (vehicle->m_pRwObject);
 
         RwFrameScale (frame, &scale, rwCOMBINEPRECONCAT);
+
         RwFrameRotate (frame, &rotation, GetRotationAngle (),
                        rwCOMBINEPRECONCAT);
+
+        // TODO: Translate vehicle so wheels touch ground
+        // RwFrameTranslate (frame, &translation, rwCOMBINEPRECONCAT);
     }
 };
 
