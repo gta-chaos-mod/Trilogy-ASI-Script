@@ -28,14 +28,25 @@ public:
                 // Experimental: Keeping the vehicle on the ground
                 // Doesn't seem to work well when the vehicle is in the air...
                 /*
-                if (vehicle->m_nVehicleClass == eVehicleType::VEHICLE_AUTOMOBILE
-                    || vehicle->m_nVehicleClass == eVehicleType::VEHICLE_QUAD)
+                bool    foundGround = false;
+                CVector pos         = vehicle->GetPosition ();
+                float   groundPos
+                    = CWorld::FindGroundZFor3DCoord (pos.x, pos.y, pos.z,
+                                                     &foundGround, 0);
+
+                pos.z = foundGround ? groundPos : pos.z;
+
+                if (vehicle->m_nVehicleClass ==
+                eVehicleType::VEHICLE_AUTOMOBILE
+                    || vehicle->m_nVehicleClass ==
+                    eVehicleType::VEHICLE_QUAD)
                 {
                     CAutomobile *automobile = (CAutomobile *) vehicle;
 
                     automobile->PlaceOnRoadProperly ();
                 }
-                else if (vehicle->m_nVehicleClass == eVehicleType::VEHICLE_BIKE)
+                else if (vehicle->m_nVehicleClass ==
+                eVehicleType::VEHICLE_BIKE)
                 {
                     CBike *bike = (CBike *) vehicle;
 
