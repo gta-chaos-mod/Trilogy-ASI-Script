@@ -19,7 +19,7 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        CTimer::EndUserPause ();
+        CTimer::m_CodePause = false;
     }
 
     void
@@ -40,12 +40,12 @@ public:
                 {
                     std::this_thread::sleep_for (
                         std::chrono::milliseconds (randomCrashTime));
-                    doneCrashing = true;
-                    CTimer::EndUserPause ();
+                    doneCrashing        = true;
+                    CTimer::m_CodePause = false;
                 });
             t.detach ();
 
-            CTimer::StartUserPause ();
+            CTimer::m_CodePause = true;
         }
     }
 };

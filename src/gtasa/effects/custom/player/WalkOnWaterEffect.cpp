@@ -48,6 +48,8 @@ public:
                 vehicle->m_nPhysicalFlags.bSubmergedInWater = false;
             }
 
+            // TODO: Invalidate pointer when game is loaded. Object isn't in
+            // object pool anymore or something...
             if (!roadObject)
             {
                 int model = 8418; // Flat concrete pad with parking
