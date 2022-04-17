@@ -16,7 +16,7 @@ public:
     OnStart (EffectInstance *instance)
     {
         SpawnForPlayer (instance->GetCustomData ().value ("vehicleID", 400),
-                        false);
+                        true);
     }
 
     void
@@ -36,9 +36,11 @@ public:
                     CStreaming::RequestModel (vehicleID, 1);
                     CStreaming::LoadAllRequestedModels (0);
 
-                    auto moveSpeed = vehicle->m_vecMoveSpeed;
-                    auto turnSpeed = vehicle->m_vecTurnSpeed;
-                    auto matrix    = vehicle->GetMatrix ();
+                    auto     oldPosition = vehicle->GetPosition ();
+                    auto     moveSpeed   = vehicle->m_vecMoveSpeed;
+                    auto     turnSpeed   = vehicle->m_vecTurnSpeed;
+                    RwMatrix oldMatrix;
+                    vehicle->GetMatrix ()->CopyToRwMatrix (&oldMatrix);
                     auto createdBy = vehicle->m_nCreatedBy;
 
                     Command<
@@ -58,44 +60,42 @@ public:
                         }
                     }
 
-                    memset ((void *) vehicle, 0, sizeof (CHeli));
-                    switch (reinterpret_cast<CVehicleModelInfo *> (
-                                CModelInfo::ms_modelInfoPtrs[vehicleID])
-                                ->m_nVehicleType)
-                    {
-                    case VEHICLE_MTRUCK:
-                        plugin::CallMethod<0x6C8D60> (vehicle, vehicleID, 1);
-                        break;
-                    case VEHICLE_QUAD:
-                        plugin::CallMethod<0x6CE370> (vehicle, vehicleID, 1);
-                        break;
-                    case VEHICLE_HELI:
-                        plugin::CallMethod<0x6C4190> (vehicle, vehicleID, 1);
-                        break;
-                    case VEHICLE_PLANE:
-                        plugin::CallMethod<0x6C8E20> (vehicle, vehicleID, 1);
-                        break;
-                    case VEHICLE_BIKE:
-                        plugin::CallMethod<0x6BF430> (vehicle, vehicleID, 1);
-                        break;
-                    case VEHICLE_BMX:
-                        plugin::CallMethod<0x6BF820> (vehicle, vehicleID, 1);
-                        reinterpret_cast<CBmx *> (vehicle)->m_nDamageFlags
-                            |= 0x10;
-                        break;
-                    case VEHICLE_TRAILER:
-                        plugin::CallMethod<0x6D03A0> (vehicle, vehicleID, 1);
-                        break;
-                    case VEHICLE_BOAT:
-                    case VEHICLE_TRAIN: // Thank you Rockstar, very cool
-                        plugin::CallMethod<0x6F2940> (vehicle, vehicleID, 1);
-                        break;
-                    default:
-                        plugin::CallMethod<0x6B0A90> (vehicle, vehicleID, 1, 1);
-                        break;
-                    }
+                    CVehicle *temporaryVehicle
+                        = GameUtil::CreateVehicle (vehicleID, oldPosition, 0.0f,
+                                                   false);
 
-                    vehicle->m_matrix       = matrix;
+                    int oldRef = CPools::ms_pVehiclePool->GetRef (vehicle);
+                    int newRef
+                        = CPools::ms_pVehiclePool->GetRef (temporaryVehicle);
+
+                    // Allocate space
+                    CHeli *heli = (CHeli *) malloc (sizeof (CHeli));
+                    // Move the current vehicle into empty space
+                    memcpy (heli, vehicle, sizeof (CHeli));
+                    // Move the new vehicle into the current vehicle memory
+                    memcpy (vehicle, temporaryVehicle, sizeof (CHeli));
+                    // Move the current vehicle from the empty space to the new
+                    // vehicle memory
+                    memcpy (temporaryVehicle, heli, sizeof (CHeli));
+                    // Free space
+                    free (heli);
+
+                    // TODO: Game crashes when we try to delete the vehicle.
+                    // Some refs not updated properly?
+                    // This opcode is at 0x467B1E
+
+                    // std::swap (CPools::ms_pVehiclePool[oldRef],
+                    //            CPools::ms_pVehiclePool[newRef]);
+                    // std::swap (CPools::ms_pVehiclePool->m_byteMap[oldIndex],
+                    //            CPools::ms_pVehiclePool->m_byteMap[newIndex]);
+
+                    // std::swap (temporaryVehicle, vehicle);
+                    // CWorld::Remove (temporaryVehicle);
+                    // Command<eScriptCommands::COMMAND_DELETE_CAR> (
+                    //     temporaryVehicle);
+
+                    CallMethod<0x59AD20, CMatrix *, RwMatrix *> (
+                        vehicle->GetMatrix (), &oldMatrix);
                     vehicle->m_vecMoveSpeed = moveSpeed;
                     vehicle->m_vecTurnSpeed = turnSpeed;
                     vehicle->m_nCreatedBy   = createdBy;
