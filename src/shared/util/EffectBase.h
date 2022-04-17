@@ -29,6 +29,7 @@ enum eEffectGroups : unsigned long long
     GROUP_HANDLING           = (1ull << 18),
     GROUP_FRAMERATE          = (1ull << 19),
     GROUP_MIRRORED           = (1ull << 20),
+    GROUP_PED_BONES          = (1ull << 21),
     GROUP_VISION             = (1ull << 63),
 
     GROUP_MAX_GROUPS = 32
