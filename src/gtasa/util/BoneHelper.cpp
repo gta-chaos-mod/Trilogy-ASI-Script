@@ -6,6 +6,18 @@ Multiple effects that modify scale (Big Heads, Don't Lose Your Head, Hold The F
 Up, Long Necks, Ped Size, ...) have issues with scaling of the bones when they
 are active at the same time.
 Are we not getting the proper bone positions when we try to update them?
+
+Example case to reproduce issues:
+- Start "Big Heads"
+- Start "Tiny Peds"
+- Faces are broken
+
+Example case where it works properly:
+- Start "Tiny Peds"
+- Start "Big Heads"
+- Faces are correct
+
+Something in the calculations of the bone positions appears to be wrong...
 */
 
 void
