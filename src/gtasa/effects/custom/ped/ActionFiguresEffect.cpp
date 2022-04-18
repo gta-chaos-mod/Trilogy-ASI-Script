@@ -20,13 +20,15 @@ public:
 
         boneRotations.clear ();
 
-        BoneHelper::AddRenderHook (RenderPed);
+        BoneHelper::RenderEvent += RenderPed;
+        Events::pedCtorEvent += PedConstructor;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        BoneHelper::RemoveRenderHook (RenderPed);
+        BoneHelper::RenderEvent -= RenderPed;
+        Events::pedCtorEvent -= PedConstructor;
     }
 
     void
@@ -41,6 +43,12 @@ public:
 
         storeBones = true;
         wait       = 200;
+    }
+
+    static void
+    PedConstructor (CPed *ped)
+    {
+        boneRotations.erase (ped);
     }
 
     static void
@@ -65,20 +73,23 @@ public:
             }
         }
 
-        // Set bones
-        for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
+        if (boneRotations.contains (ped))
         {
-            BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
-        }
+            // Set bones
+            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
+            {
+                BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
+            }
 
-        for (int i = 300; i < 304; i++)
-        {
-            BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
-        }
+            for (int i = 300; i < 304; i++)
+            {
+                BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
+            }
 
-        for (int i = 5000; i < 5026; i++)
-        {
-            BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
+            for (int i = 5000; i < 5026; i++)
+            {
+                BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
+            }
         }
     }
 };

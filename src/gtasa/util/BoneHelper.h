@@ -33,10 +33,29 @@ class BoneHelper
         boneScales;
 
 public:
-    static void Initialise ();
+    static inline struct RenderEventStruct
+    {
+        void
+        operator+= (PedRenderFunctionHook function)
+        {
+            auto hook = std::find (renderHooks.begin (), renderHooks.end (),
+                                   function);
+            if (hook == renderHooks.end ())
+            {
+                renderHooks.push_back (function);
+            }
+        }
 
-    static void AddRenderHook (PedRenderFunctionHook function);
-    static void RemoveRenderHook (PedRenderFunctionHook function);
+        void
+        operator-= (PedRenderFunctionHook function)
+        {
+            renderHooks.erase (std::remove (renderHooks.begin (),
+                                            renderHooks.end (), function),
+                               renderHooks.end ());
+        }
+    } RenderEvent;
+
+    static void Initialise ();
 
     static void RenderPed (CPed *ped);
 

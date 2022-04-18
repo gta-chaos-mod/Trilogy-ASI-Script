@@ -9,13 +9,13 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        BoneHelper::AddRenderHook (RenderPed);
+        BoneHelper::RenderEvent += RenderPed;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        BoneHelper::RemoveRenderHook (RenderPed);
+        BoneHelper::RenderEvent -= RenderPed;
     }
 
     static void

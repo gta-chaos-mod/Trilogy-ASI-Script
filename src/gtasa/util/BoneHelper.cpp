@@ -28,24 +28,6 @@ BoneHelper::Initialise ()
 }
 
 void
-BoneHelper::AddRenderHook (PedRenderFunctionHook function)
-{
-    auto hook = std::find (renderHooks.begin (), renderHooks.end (), function);
-    if (hook == renderHooks.end ())
-    {
-        renderHooks.push_back (function);
-    }
-}
-
-void
-BoneHelper::RemoveRenderHook (PedRenderFunctionHook function)
-{
-    renderHooks.erase (std::remove (renderHooks.begin (), renderHooks.end (),
-                                    function),
-                       renderHooks.end ());
-}
-
-void
 BoneHelper::RenderPed (CPed *ped)
 {
     for (auto &hookedFunction : renderHooks)
@@ -353,10 +335,6 @@ BoneHelper::_setBoneScales (CPed *ped)
                             (rootPos.z + ((bonePos.z - rootPos.z) * scale.z))};
 
                         SetBonePosition (ped, boneId, newPos);
-
-                        // Set bone positions so we can get the new bone
-                        // positions for the next loop
-                        // _setBonePositions (ped);
                     }
                 }
             }

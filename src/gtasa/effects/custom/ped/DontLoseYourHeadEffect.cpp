@@ -16,13 +16,13 @@ public:
         blowingUp  = true;
         multiplier = 1.0f;
 
-        BoneHelper::AddRenderHook (RenderPed);
+        BoneHelper::RenderEvent += RenderPed;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        BoneHelper::RemoveRenderHook (RenderPed);
+        BoneHelper::RenderEvent -= RenderPed;
     }
 
     void
