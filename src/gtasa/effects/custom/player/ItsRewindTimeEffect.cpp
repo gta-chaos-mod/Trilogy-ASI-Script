@@ -90,7 +90,7 @@ public:
         {
             player->m_fHealth   = rewindData.playerHealth;
             player->m_nAreaCode = rewindData.currArea;
-            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT; i++)
+            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
             {
                 BoneHelper::SetBonePosition (player, i,
                                              rewindData.bonePositions[i]);
@@ -139,7 +139,7 @@ public:
         if (player)
         {
             rewindData.playerHealth = player->m_fHealth;
-            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT; i++)
+            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
             {
                 rewindData.bonePositions[i]
                     = BoneHelper::GetBonePosition (player, i);

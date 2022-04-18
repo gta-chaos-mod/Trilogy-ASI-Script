@@ -72,14 +72,13 @@ public:
 
             GameUtil::ClearWeaponsExceptParachute (player);
 
-            for (std::pair<eWeaponType, int> pair : storedWeapons)
+            for (auto const &[type, ammo] : storedWeapons)
             {
-                int model
-                    = CWeaponInfo::GetWeaponInfo (pair.first, 1)->m_nModelId1;
+                int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
                 CStreaming::RequestModel (model, 2);
                 CStreaming::LoadAllRequestedModels (0);
 
-                player->GiveWeapon (pair.first, pair.second, true);
+                player->GiveWeapon (type, ammo, true);
 
                 CStreaming::SetModelIsDeletable (model);
             }

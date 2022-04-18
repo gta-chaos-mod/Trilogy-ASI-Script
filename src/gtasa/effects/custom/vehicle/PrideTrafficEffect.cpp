@@ -56,10 +56,9 @@ public:
     {
         // In case some material got added more than once, restore in reverse
         // order
-        for (auto it = resetMaterialColors.rbegin ();
-             it != resetMaterialColors.rend (); ++it)
+        for (auto const &[color, backupColor] : resetMaterialColors)
         {
-            *it->first = it->second;
+            *color = backupColor;
         }
 
         resetMaterialColors.clear ();

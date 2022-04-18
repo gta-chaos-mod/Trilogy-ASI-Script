@@ -14,7 +14,7 @@ static ThiscallEvent<AddressList<0x55332A, H_CALL>, PRIORITY_AFTER,
 
 class PinkTrafficEffect : public EffectBase
 {
-    static inline std::list<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
+    static inline std::vector<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
         = {};
 
 public:
@@ -45,10 +45,9 @@ public:
     {
         // In case some material got added more than once, restore in reverse
         // order
-        for (auto it = resetMaterialColors.rbegin ();
-             it != resetMaterialColors.rend (); ++it)
+        for (auto const &[color, backupColor] : resetMaterialColors)
         {
-            *it->first = it->second;
+            *color = backupColor;
         }
 
         resetMaterialColors.clear ();

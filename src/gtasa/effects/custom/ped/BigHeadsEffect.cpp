@@ -22,7 +22,7 @@ public:
     RenderPed (CPed *ped)
     {
         RwV3d scale = {2.0f, 2.0f, 2.0f};
-        for (int i = BONE_NECK; i <= BONE_HEAD; i++)
+        for (int i = BONE_NECK; i <= BONE_RIGHTUPPERTORSO - 1; i++)
         {
             BoneHelper::ScaleBone (ped, i, scale, BONE_NECK);
         }
