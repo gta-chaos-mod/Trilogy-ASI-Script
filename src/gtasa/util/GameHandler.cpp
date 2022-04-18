@@ -38,12 +38,12 @@ public:
 
         patch::RedirectCall (0x5D0D66, Hooked_OpenFile);
 
-        if (Config::GetOrDefault ("Chaos.AutosaveAfterGangWar", true))
-        {
-            // Trigger autosave when successfully finishing a gangwar (all 3
-            // waves, not 2 and starting a sub-mission!)
-            patch::RedirectCall (0x44690B, Hooked_OnGangWarHoodCaptured);
-        }
+        // if (Config::GetOrDefault ("Chaos.AutosaveAfterGangWar", true))
+        // {
+        //     // Trigger autosave when successfully finishing a gangwar (all 3
+        //     // waves, not 2 and starting a sub-mission!)
+        //     patch::RedirectCall (0x44690B, Hooked_OnGangWarHoodCaptured);
+        // }
 
         // Make sure to disable effects / delete autosave when starting a new
         // game

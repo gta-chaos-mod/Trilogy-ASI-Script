@@ -4,7 +4,7 @@ using namespace plugin;
 
 class VehicleRotationBasedOnSpeedEffect : public EffectBase
 {
-    inline static RwV3d                       rotation = {0.0f, 0.0f, 1.0f};
+    inline static RwV3d rotation = {0.0f, 0.0f, 1.0f};
     inline static std::map<CVehicle *, float> rotationAngleMap;
 
 public:
