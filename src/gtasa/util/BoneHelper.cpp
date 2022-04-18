@@ -1,22 +1,71 @@
 #include "BoneHelper.h"
 
 /*
-    TODO:
-    Instead of updating the peds in their corresponding classes, we could maybe
-   have this class listen to Events::pedRenderEvent and the custom cutscene ped
-   render event.
-   Whenever we update a bone position for a ped we will add the new position
-   into a static list (or update if it's already there), same for rotation and
-   scale.
-   In the render events we check if the ped is in one of the lists and if they
-   are, we will apply the changes and call the UpdateRpHAnim /
-   ShoulderBoneRotation methods ourselves accordingly.
-   After we are done with that we clear the list for that ped so that we don't
-   randomly apply the effects to a different ped (since the game reuses
-   pointers).
-   That way we can in theory support multiple ped render events at the same
-   time.
+TODO:
+Multiple effects that modify scale (Big Heads, Don't Lose Your Head, Hold The F
+Up, Long Necks, Ped Size, ...) have issues with scaling of the bones when they
+are active at the same time.
+Are we not getting the proper bone positions when we try to update them?
 */
+
+void
+BoneHelper::Initialise ()
+{
+    Events::pedRenderEvent += RenderPed;
+    cutscenePedRenderEvent += RenderPed;
+}
+
+void
+BoneHelper::AddRenderHook (PedRenderFunctionHook function)
+{
+    auto hook = std::find (renderHooks.begin (), renderHooks.end (), function);
+    if (hook == renderHooks.end ())
+    {
+        renderHooks.push_back (function);
+    }
+}
+
+void
+BoneHelper::RemoveRenderHook (PedRenderFunctionHook function)
+{
+    renderHooks.erase (std::remove (renderHooks.begin (), renderHooks.end (),
+                                    function),
+                       renderHooks.end ());
+}
+
+void
+BoneHelper::RenderPed (CPed *ped)
+{
+    for (auto &hookedFunction : renderHooks)
+    {
+        hookedFunction (ped);
+    }
+
+    if (ped)
+    {
+        /* Pre-Update Ped Section */
+        // Set bone positions
+        _setBonePositions (ped);
+
+        // Set bone rotations
+        _setBoneRotations (ped);
+        /* ---------------------- */
+
+        // DO render here
+        UpdatePed (ped);
+
+        /* Post-Update Ped Section */
+        // Set bone scales
+        _setBoneScales (ped);
+
+        // Set positions and rotations again if they changed
+        _setBonePositions (ped);
+        _setBoneRotations (ped);
+
+        _clearBoneMaps (ped);
+        /* ----------------------- */
+    }
+}
 
 RwMatrixTag *
 BoneHelper::GetBoneRwMatrix (CPed *ped, unsigned int boneId)
@@ -44,6 +93,15 @@ BoneHelper::GetBonePosition (CPed *ped, unsigned int boneId)
 {
     RwV3d position = {0, 0, 0};
 
+    if (bonePositions.contains (ped))
+    {
+        auto &boneMap = bonePositions[ped];
+        if (boneMap.contains (boneId))
+        {
+            return boneMap[boneId];
+        }
+    }
+
     RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
     if (rwBoneMatrix)
     {
@@ -57,42 +115,50 @@ BoneHelper::GetBonePosition (CPed *ped, unsigned int boneId)
 void
 BoneHelper::SetBonePosition (CPed *ped, unsigned int boneId, RwV3d position)
 {
-    RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
-    if (rwBoneMatrix)
-    {
-        CMatrix boneMatrix (rwBoneMatrix, false);
-        boneMatrix.SetTranslateOnly (position.x, position.y, position.z);
-        boneMatrix.UpdateRW ();
-    }
+    bonePositions[ped][boneId] = position;
 }
 
-// Not working properly in cutscenes.
-// Are eyes and the mouth different bones that we can't control?
+RwV3d
+BoneHelper::GetBoneScale (CPed *ped, unsigned int boneId)
+{
+    // Default scale
+    RwV3d scale = {1, 1, 1};
+
+    if (boneScales.contains (ped))
+    {
+        auto &boneMap = boneScales[ped];
+        if (boneMap.contains (boneId))
+        {
+            auto &scaleList = boneMap[boneId];
+            for (auto &scaleInfo : scaleList)
+            {
+                scale.x *= scaleInfo.scale.x;
+                scale.y *= scaleInfo.scale.y;
+                scale.z *= scaleInfo.scale.z;
+            }
+        }
+    }
+
+    return scale;
+}
+
 void
 BoneHelper::SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale,
                           unsigned int rootBone, bool scaleWithRoot)
 {
-    RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
-    if (rwBoneMatrix)
-    {
-        CMatrix boneMatrix (rwBoneMatrix, false);
-        // CMatrix::ScaleXYZ - not implemented in plugin-sdk
-        CallMethod<0x5A2E60, CMatrix *> (&boneMatrix, scale.x, scale.y,
-                                         scale.z);
-        boneMatrix.UpdateRW ();
+    boneScales[ped][boneId].clear ();
+    boneScales[ped][boneId].push_back (
+        BoneScaleInfo{scale = scale, rootBone = rootBone,
+                      scaleWithRoot = scaleWithRoot});
+}
 
-        if (scaleWithRoot)
-        {
-            RwV3d bonePos = GetBonePosition (ped, boneId);
-            RwV3d rootPos = GetBonePosition (ped, rootBone);
-
-            RwV3d newPos = {(rootPos.x + ((bonePos.x - rootPos.x) * scale.x)),
-                            (rootPos.y + ((bonePos.y - rootPos.y) * scale.y)),
-                            (rootPos.z + ((bonePos.z - rootPos.z) * scale.z))};
-
-            SetBonePosition (ped, boneId, newPos);
-        }
-    }
+void
+BoneHelper::ScaleBone (CPed *ped, unsigned int boneId, RwV3d scale,
+                       unsigned int rootBone, bool scaleWithRoot)
+{
+    boneScales[ped][boneId].push_back (
+        BoneScaleInfo{scale = scale, rootBone = rootBone,
+                      scaleWithRoot = scaleWithRoot});
 }
 
 AnimBlendFrameData *
@@ -111,6 +177,15 @@ RwV3d
 BoneHelper::GetBoneRotation (CPed *ped, unsigned int boneId)
 {
     RwV3d angles = {0, 0, 0};
+
+    if (boneRotations.contains (ped))
+    {
+        auto &boneMap = boneRotations[ped];
+        if (boneMap.contains (boneId))
+        {
+            return boneMap[boneId];
+        }
+    }
 
     auto frameData = GetBoneById (ped, boneId);
     if (frameData)
@@ -131,18 +206,7 @@ BoneHelper::GetBoneRotation (CPed *ped, unsigned int boneId)
 void
 BoneHelper::SetBoneRotation (CPed *ped, unsigned int boneId, RwV3d angles)
 {
-    auto frameData = GetBoneById (ped, boneId);
-    if (frameData)
-    {
-        RpHAnimBlendInterpFrame *iFrame
-            = (RpHAnimBlendInterpFrame *) frameData->m_pIFrame;
-
-        if (iFrame)
-        {
-            RtQuat *boneOrientation = &iFrame->orientation;
-            EulerToQuat (&angles, boneOrientation);
-        }
-    }
+    boneRotations[ped][boneId] = angles;
 }
 
 void
@@ -196,4 +260,102 @@ BoneHelper::ShoulderBoneRotation (CPed *ped)
         // CPed::ShoulderBoneRotation - PR a fix to plugin-sdk?
         Call<0x5DF560> (ped->m_pRwClump);
     }
+}
+
+void
+BoneHelper::_setBonePositions (CPed *ped)
+{
+    if (bonePositions.contains (ped))
+    {
+        auto &boneMap = bonePositions[ped];
+        for (auto const &[boneId, position] : boneMap)
+        {
+            RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
+            if (rwBoneMatrix)
+            {
+                CMatrix boneMatrix (rwBoneMatrix, false);
+                boneMatrix.SetTranslateOnly (position.x, position.y,
+                                             position.z);
+                boneMatrix.UpdateRW ();
+            }
+        }
+    }
+}
+
+void
+BoneHelper::_setBoneRotations (CPed *ped)
+{
+    if (boneRotations.contains (ped))
+    {
+        auto &boneMap = boneRotations[ped];
+        for (auto const &[boneId, rotation] : boneMap)
+        {
+            auto frameData = GetBoneById (ped, boneId);
+            if (frameData)
+            {
+                RpHAnimBlendInterpFrame *iFrame
+                    = (RpHAnimBlendInterpFrame *) frameData->m_pIFrame;
+
+                if (iFrame)
+                {
+                    RwV3d angles = rotation;
+
+                    RtQuat *boneOrientation = &iFrame->orientation;
+                    EulerToQuat (&angles, boneOrientation);
+                }
+            }
+        }
+    }
+}
+
+void
+BoneHelper::_setBoneScales (CPed *ped)
+{
+    if (boneScales.contains (ped))
+    {
+        auto &boneMap = boneScales[ped];
+        for (auto const &[boneId, scaleList] : boneMap)
+        {
+            RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
+            if (rwBoneMatrix)
+            {
+                for (auto &scaleInfo : scaleList)
+                {
+                    RwV3d scale = scaleInfo.scale;
+
+                    CMatrix boneMatrix (rwBoneMatrix, false);
+                    // CMatrix::ScaleXYZ - not implemented in plugin-sdk
+                    CallMethod<0x5A2E60, CMatrix *> (&boneMatrix, scale.x,
+                                                     scale.y, scale.z);
+                    boneMatrix.UpdateRW ();
+
+                    if (scaleInfo.scaleWithRoot)
+                    {
+                        RwV3d bonePos = GetBonePosition (ped, boneId);
+                        RwV3d rootPos
+                            = GetBonePosition (ped, scaleInfo.rootBone);
+
+                        RwV3d newPos = {
+                            (rootPos.x + ((bonePos.x - rootPos.x) * scale.x)),
+                            (rootPos.y + ((bonePos.y - rootPos.y) * scale.y)),
+                            (rootPos.z + ((bonePos.z - rootPos.z) * scale.z))};
+
+                        SetBonePosition (ped, boneId, newPos);
+
+                        // Set bone positions so we can get the new bone
+                        // positions for the next loop
+                        // _setBonePositions (ped);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void
+BoneHelper::_clearBoneMaps (CPed *ped)
+{
+    bonePositions[ped].clear ();
+    boneRotations[ped].clear ();
+    boneScales[ped].clear ();
 }

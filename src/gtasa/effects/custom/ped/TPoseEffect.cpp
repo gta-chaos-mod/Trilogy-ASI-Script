@@ -1,16 +1,7 @@
 #include <util/BoneHelper.h>
 #include <util/EffectBase.h>
-#include <util/GenericUtil.h>
-
-#include "CTimer.h"
 
 #include "ePedBones.h"
-
-using namespace plugin;
-
-static ThiscallEvent<AddressList<0x5B1F31, H_CALL>, PRIORITY_AFTER,
-                     ArgPickN<CPed *, 0>, void (CPed *)>
-    cutscenePedRenderEvent;
 
 class TPoseEffect : public EffectBase
 {
@@ -18,15 +9,13 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        Events::pedRenderEvent += RenderPed;
-        cutscenePedRenderEvent += RenderPed;
+        BoneHelper::AddRenderHook (RenderPed);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::pedRenderEvent -= RenderPed;
-        cutscenePedRenderEvent -= RenderPed;
+        BoneHelper::RemoveRenderHook (RenderPed);
     }
 
     static void
@@ -61,9 +50,7 @@ public:
                                      {0, -90.0f, 90.0f});
         BoneHelper::SetBoneRotation (ped, ePedBones::BONE_RIGHTUPPERTORSO,
                                      {0, 90.0f, 90.0f});
-
-        BoneHelper::UpdatePed (ped);
     }
 };
 
-DEFINE_EFFECT (TPoseEffect, "effect_t_pose_peds", GROUP_PED_BONES);
+DEFINE_EFFECT (TPoseEffect, "effect_t_pose_peds", 0);

@@ -3,51 +3,45 @@
 
 #include "ePedBones.h"
 
-using namespace plugin;
-
-static ThiscallEvent<AddressList<0x5B1F31, H_CALL>, PRIORITY_AFTER,
-                     ArgPickN<CPed *, 0>, void (CPed *)>
-    cutscenePedRenderEvent;
-
 template <RwV3d scale> class PedSizeEffect : public EffectBase
 {
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        Events::pedRenderEvent += RenderPed;
-        cutscenePedRenderEvent += RenderPed;
+        BoneHelper::AddRenderHook (RenderPed);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::pedRenderEvent -= RenderPed;
-        cutscenePedRenderEvent -= RenderPed;
+        BoneHelper::RemoveRenderHook (RenderPed);
     }
 
     static void
     RenderPed (CPed *ped)
     {
-        // Reset scales before applying our own
-        BoneHelper::UpdatePed (ped);
-
         for (int i = 0; i < ePedBones::BONE_RIGHTFOOT; i++)
         {
-            BoneHelper::SetBoneScale (ped, i, scale);
+            BoneHelper::ScaleBone (ped, i, scale);
+        }
+
+        for (int i = 300; i < 303; i++)
+        {
+            BoneHelper::ScaleBone (ped, i, scale);
         }
 
         for (int i = 5000; i < 5026; i++)
         {
-            BoneHelper::SetBoneScale (ped, i, scale);
+            BoneHelper::ScaleBone (ped, i, scale);
         }
     }
 };
 
 // clang-format off
 using PedSizeTinyEffect = PedSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}>;
-DEFINE_EFFECT (PedSizeTinyEffect, "effect_ped_size_tiny", GROUP_PED_BONES);
+DEFINE_EFFECT (PedSizeTinyEffect, "effect_ped_size_tiny", 0);
 
 using PedSizeLargeEffect = PedSizeEffect<RwV3d {2.0f, 2.0f, 2.0f}>;
-DEFINE_EFFECT (PedSizeLargeEffect, "effect_ped_size_large", GROUP_PED_BONES);
+DEFINE_EFFECT (PedSizeLargeEffect, "effect_ped_size_large", 0);
 // clang-format on

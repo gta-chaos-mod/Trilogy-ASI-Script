@@ -1,16 +1,7 @@
 #include <util/BoneHelper.h>
 #include <util/EffectBase.h>
-#include <util/GenericUtil.h>
-
-#include "CTimer.h"
 
 #include "ePedBones.h"
-
-using namespace plugin;
-
-static ThiscallEvent<AddressList<0x5B1F31, H_CALL>, PRIORITY_AFTER,
-                     ArgPickN<CPed *, 0>, void (CPed *)>
-    cutscenePedRenderEvent;
 
 class HelicopterPedsEffect : public EffectBase
 {
@@ -24,15 +15,13 @@ public:
         spinSpeed     = 0.0f;
         rotationAngle = 0.0f;
 
-        Events::pedRenderEvent += RenderPed;
-        cutscenePedRenderEvent += RenderPed;
+        BoneHelper::AddRenderHook (RenderPed);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::pedRenderEvent -= RenderPed;
-        cutscenePedRenderEvent -= RenderPed;
+        BoneHelper::RemoveRenderHook (RenderPed);
     }
 
     void
@@ -56,9 +45,7 @@ public:
                                      {0, 0, 0});
         BoneHelper::SetBoneRotation (ped, ePedBones::BONE_RIGHTSHOULDER,
                                      {0, 0, 0});
-
-        BoneHelper::UpdatePed (ped);
     }
 };
 
-DEFINE_EFFECT (HelicopterPedsEffect, "effect_helicopter_peds", GROUP_PED_BONES);
+DEFINE_EFFECT (HelicopterPedsEffect, "effect_helicopter_peds", 0);

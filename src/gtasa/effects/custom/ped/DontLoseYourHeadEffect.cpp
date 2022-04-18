@@ -4,12 +4,6 @@
 
 #include "ePedBones.h"
 
-using namespace plugin;
-
-static ThiscallEvent<AddressList<0x5B1F31, H_CALL>, PRIORITY_AFTER,
-                     ArgPickN<CPed *, 0>, void (CPed *)>
-    cutscenePedRenderEvent;
-
 class DontLoseYourHeadEffect : public EffectBase
 {
     static inline bool  blowingUp  = true;
@@ -22,15 +16,13 @@ public:
         blowingUp  = true;
         multiplier = 1.0f;
 
-        Events::pedRenderEvent += RenderPed;
-        cutscenePedRenderEvent += RenderPed;
+        BoneHelper::AddRenderHook (RenderPed);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::pedRenderEvent -= RenderPed;
-        cutscenePedRenderEvent -= RenderPed;
+        BoneHelper::RemoveRenderHook (RenderPed);
     }
 
     void
@@ -50,23 +42,19 @@ public:
     static void
     RenderPed (CPed *ped)
     {
-        // Reset scales before applying our own
-        BoneHelper::UpdatePed (ped);
-
         RwV3d scale = {multiplier, multiplier, multiplier};
         for (int i = BONE_NECK; i <= BONE_HEAD; i++)
         {
-            BoneHelper::SetBoneScale (ped, i, scale, BONE_NECK);
+            BoneHelper::ScaleBone (ped, i, scale, BONE_NECK);
         }
 
         for (int i = 5000; i < 5026; i++)
         {
-            BoneHelper::SetBoneScale (ped, i, scale, BONE_NECK);
+            BoneHelper::ScaleBone (ped, i, scale, BONE_NECK);
         }
         // Cutscene related?
-        BoneHelper::SetBoneScale (ped, 30, scale, BONE_NECK);
+        BoneHelper::ScaleBone (ped, 30, scale, BONE_NECK);
     }
 };
 
-DEFINE_EFFECT (DontLoseYourHeadEffect, "effect_dont_lose_your_head",
-               GROUP_PED_BONES);
+DEFINE_EFFECT (DontLoseYourHeadEffect, "effect_dont_lose_your_head", 0);

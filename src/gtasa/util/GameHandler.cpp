@@ -1,3 +1,4 @@
+#include <util/BoneHelper.h>
 #include <util/Config.h>
 #include <util/GameUtil.h>
 
@@ -19,6 +20,7 @@ public:
     Initialise ()
     {
         Config::Init ();
+        BoneHelper::Initialise ();
         // GameFixes::Initialise();
 
         // Check if the mod is already loaded / installed once
