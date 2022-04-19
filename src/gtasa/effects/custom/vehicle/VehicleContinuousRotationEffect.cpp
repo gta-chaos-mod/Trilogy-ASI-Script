@@ -1,4 +1,5 @@
 #include <util/EffectBase.h>
+#include <util/GenericUtil.h>
 
 using namespace plugin;
 
@@ -23,7 +24,8 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        rotationAngle = fmod (rotationAngle + 30.0f, 360.0f);
+        float tick    = GenericUtil::CalculateTick ();
+        rotationAngle = fmod (rotationAngle + (30.0f * tick), 360.0f);
     }
 
     static void

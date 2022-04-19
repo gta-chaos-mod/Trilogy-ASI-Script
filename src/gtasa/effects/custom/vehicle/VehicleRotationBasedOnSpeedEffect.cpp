@@ -1,10 +1,11 @@
 #include <util/EffectBase.h>
+#include <util/GenericUtil.h>
 
 using namespace plugin;
 
 class VehicleRotationBasedOnSpeedEffect : public EffectBase
 {
-    inline static RwV3d rotation = {0.0f, 0.0f, 1.0f};
+    inline static RwV3d                       rotation = {0.0f, 0.0f, 1.0f};
     inline static std::map<CVehicle *, float> rotationAngleMap;
 
 public:
@@ -23,11 +24,13 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        float tick = GenericUtil::CalculateTick ();
+
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
             float speed = vehicle->m_vecMoveSpeed.Magnitude ();
 
-            rotationAngleMap[vehicle] += speed * 30.0f;
+            rotationAngleMap[vehicle] += speed * (30.0f * tick);
         }
     }
 

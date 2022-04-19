@@ -1,5 +1,6 @@
 #include <util/BoneHelper.h>
 #include <util/EffectBase.h>
+#include <util/GenericUtil.h>
 
 #include "ePedBones.h"
 
@@ -27,8 +28,10 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        float tick = GenericUtil::CalculateTick ();
+
         spinSpeed     = std::min (spinSpeed + 2.0f, 40.0f);
-        rotationAngle = fmod (rotationAngle + spinSpeed, 360.0f);
+        rotationAngle = fmod (rotationAngle + (spinSpeed * tick), 360.0f);
     }
 
     static void
