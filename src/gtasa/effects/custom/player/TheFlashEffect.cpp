@@ -15,6 +15,11 @@ bool __fastcall UsainBoltEffect::Hooked_CEventDamage_AffectsPed (
 }
 */
 
+/*
+    TODO: Doesn't seem to work with "Walk On Water" - tries to set player to
+   water position
+*/
+
 class TheFlashEffect : public EffectBase
 {
     bool oldInfiniteRun = false;
@@ -23,8 +28,18 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        // TODO: Use custom hook manager / methods
+        injector::MakeCALL (0x5E2F57, Hooked_CEventDamage_AffectsPed, true);
+        injector::MakeCALL (0x5E3020, Hooked_CEventDamage_AffectsPed, true);
+
         this->oldInfiniteRun = injector::ReadMemory<bool> (0xB7CEE4);
         injector::WriteMemory (0xB7CEE4, true);
+    }
+
+    static bool __fastcall Hooked_CEventDamage_AffectsPed (
+        CEventDamage *thisEventDamage, void *edx, CPed *ped)
+    {
+        return false;
     }
 
     void
@@ -55,7 +70,8 @@ public:
                 {
                     pad->NewState.ButtonCross = 0;
 
-                    if (player->m_pIntelligence->GetTaskSwim () == nullptr)
+                    if (player->m_pIntelligence->GetTaskSwim () == nullptr
+                        && !player->m_nPhysicalFlags.bTouchingWater)
                     {
                         // Update Z Pos To Ground Pos
                         CVector pos    = player->GetMatrix ()->pos;
