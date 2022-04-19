@@ -13,7 +13,7 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        if (roadObject)
+        if (roadObject && DoesObjectExist (roadObject))
         {
             roadObject->Remove ();
         }
@@ -40,7 +40,7 @@ public:
 
             // TODO: Invalidate pointer when game is loaded. Object isn't in
             // object pool anymore or something...
-            if (!roadObject)
+            if (!roadObject || !DoesObjectExist (roadObject))
             {
                 // TODO: Find better object that is bigger so we don't have to
                 // teleport it as often?
@@ -60,6 +60,13 @@ public:
             }
         }
     }
+
+    bool
+    DoesObjectExist (CObject *object)
+    {
+        return Command<eScriptCommands::COMMAND_DOES_OBJECT_EXIST> (object);
+    }
 };
 
-DEFINE_EFFECT (WalkOnWaterEffect, "effect_walk_on_water", 0);
+// TODO: Fix game crashes with this effect, only then enable it in the mod
+// DEFINE_EFFECT (WalkOnWaterEffect, "effect_walk_on_water", 0);
