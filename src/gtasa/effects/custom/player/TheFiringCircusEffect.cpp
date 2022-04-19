@@ -1,15 +1,18 @@
 // Inspiration from Zolika's Chaos Mod - "Sacrificial Circle"
 
-#include <effects/OneTimeEffect.h>
+#include <util/EffectBase.h>
 #include <util/MathHelper.h>
 
 #include "extensions/ScriptCommands.h"
 #include "CStreaming.h"
+#include "CWorld.h"
 
 using namespace plugin;
 
-class TheFiringCircusEffect : public OneTimeEffect
+class TheFiringCircusEffect : public EffectBase
 {
+    std::vector<CPed *> createdPeds = {};
+
 public:
     bool
     CanActivate () override
@@ -21,9 +24,18 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        createdPeds.clear ();
+
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
+            // TODO: If player is in vehicle, set vehicle speed to 0
+            CVehicle *vehicle = FindPlayerVehicle (-1, false);
+            if (vehicle)
+            {
+                vehicle->m_vecMoveSpeed *= 0;
+            }
+
             for (int x = 0; x < 6; x++)
             {
                 float angle     = 360.0f / 6 * x;
@@ -59,6 +71,41 @@ public:
 
                 Command<eScriptCommands::COMMAND_TASK_KILL_CHAR_ON_FOOT> (
                     createdPed, player);
+
+                createdPeds.push_back (createdPed);
+            }
+        }
+    }
+
+    void
+    OnEnd (EffectInstance *inst)
+    {
+        for (CPed *ped : createdPeds)
+        {
+            Command<eScriptCommands::COMMAND_REMOVE_CHAR_ELEGANTLY> (ped);
+        }
+
+        CPlayerPed *player = FindPlayerPed ();
+        if (player)
+        {
+            CPad *pad = player->GetPadFromPlayer ();
+            if (pad)
+            {
+                pad->DisablePlayerControls = false;
+            }
+        }
+    }
+
+    void
+    OnTick (EffectInstance *inst)
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (player)
+        {
+            CPad *pad = player->GetPadFromPlayer ();
+            if (pad)
+            {
+                pad->DisablePlayerControls = true;
             }
         }
     }
