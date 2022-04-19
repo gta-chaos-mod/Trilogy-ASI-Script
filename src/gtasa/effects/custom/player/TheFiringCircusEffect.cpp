@@ -8,7 +8,7 @@
 
 using namespace plugin;
 
-class ClownFiestaEffect : public OneTimeEffect
+class TheFiringCircusEffect : public OneTimeEffect
 {
 public:
     bool
@@ -64,4 +64,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (ClownFiestaEffect, "effect_clown_fiesta", 0);
+DEFINE_EFFECT (TheFiringCircusEffect, "effect_the_firing_circus", 0);
