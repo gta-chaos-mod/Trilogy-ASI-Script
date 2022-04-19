@@ -5,6 +5,7 @@
 
 using namespace plugin;
 
+// TODO: Refactor effects that apply to NPCs to "GiveNPCsAnRPGEffect" and such
 class GivePedsAnRPGEffect : public OneTimeEffect
 {
 public:

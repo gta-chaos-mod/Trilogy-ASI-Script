@@ -6,20 +6,17 @@
 class SuicideEffect : public EffectBase
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return GameUtil::IsPlayerSafe ();
+    }
+
     void
     OnTick (EffectInstance *inst) override
     {
-        if (CanKillPlayer ())
-        {
-            CCheat::SuicideCheat ();
-            inst->Disable ();
-        }
-    }
-
-    bool
-    CanKillPlayer ()
-    {
-        return GameUtil::IsPlayerSafe ();
+        CCheat::SuicideCheat ();
+        inst->Disable ();
     }
 };
 

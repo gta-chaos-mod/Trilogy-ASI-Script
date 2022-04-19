@@ -57,7 +57,9 @@ public:
         if (storeBones)
         {
             // Store bones
-            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
+            boneRotations[ped][0] = BoneHelper::GetBoneRotation (ped, 0);
+
+            for (int i = 2; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
             {
                 boneRotations[ped][i] = BoneHelper::GetBoneRotation (ped, i);
             }
@@ -76,7 +78,9 @@ public:
         if (boneRotations.contains (ped))
         {
             // Set bones
-            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
+            BoneHelper::SetBoneRotation (ped, 0, boneRotations[ped][0]);
+
+            for (int i = 2; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
             {
                 BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
             }

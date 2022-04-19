@@ -25,15 +25,8 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
-            // TODO: Figure out a way so peds won't trigger swimming
-            // For a "no water physics" effect. Right now when the player is
-            // going into water he tries to swim. If we get deep enough it get's
-            // reset from what I noticed
-            player->m_nPhysicalFlags.bTouchingWater    = false;
-            player->m_nPhysicalFlags.bSubmergedInWater = false;
-
             CVector position = player->GetPosition ();
-            if (position.z < 0.0f)
+            if (position.z < 1.0f && position.z > -5.0f)
             {
                 player->SetPosn (position.x, position.y, 1.0f);
             }
@@ -43,9 +36,6 @@ public:
             if (vehicle)
             {
                 heading = vehicle->GetHeading ();
-
-                vehicle->m_nPhysicalFlags.bTouchingWater    = false;
-                vehicle->m_nPhysicalFlags.bSubmergedInWater = false;
             }
 
             // TODO: Invalidate pointer when game is loaded. Object isn't in
