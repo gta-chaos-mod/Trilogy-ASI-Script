@@ -1,4 +1,5 @@
 #include <util/EffectBase.h>
+#include <util/GenericUtil.h>
 
 #include "extensions/ScriptCommands.h"
 
@@ -16,13 +17,13 @@ class SwapVehiclesOnImpactEffect : public EffectBase
         void (CPhysical *, CPhysical *, int, float *, int)>
         applyCollisionEvent;
 
-    static inline bool collisionHappened = false;
+    static inline std::map<CVehicle *, int> vehicleCooldowns;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        collisionHappened = false;
+        vehicleCooldowns.clear ();
 
         applyCollisionEvent += ApplyCollision;
     }
@@ -36,9 +37,21 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        if (collisionHappened)
+        std::vector<CVehicle *> toErase;
+
+        int wait = (int) GenericUtil::CalculateTick ();
+        for (auto const &[vehicle, vehicleWait] : vehicleCooldowns)
         {
-            inst->Disable ();
+            vehicleCooldowns[vehicle] -= wait;
+            if (vehicleCooldowns[vehicle] < 0)
+            {
+                toErase.push_back (vehicle);
+            }
+        }
+
+        for (CVehicle *erase : toErase)
+        {
+            vehicleCooldowns.erase (erase);
         }
     }
 
@@ -52,53 +65,77 @@ public:
             return;
         }
 
-        CPlayerPed *player = FindPlayerPed ();
-        if (!player)
+        CVehicle *thisVehicle  = (CVehicle *) thisEntity;
+        CVehicle *otherVehicle = (CVehicle *) otherEntity;
+
+        if (vehicleCooldowns[thisVehicle] > 0
+            || vehicleCooldowns[otherVehicle] > 0)
         {
             return;
         }
 
-        CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
-        if (!playerVehicle)
-        {
-            return;
-        }
+        CPed *thisDriver  = thisVehicle->m_pDriver;
+        CPed *otherDriver = otherVehicle->m_pDriver;
 
-        if (playerVehicle != thisEntity && playerVehicle != otherEntity)
-        {
-            return;
-        }
-
-        CVehicle *npcCar = playerVehicle == thisEntity
-                               ? (CVehicle *) otherEntity
-                               : (CVehicle *) thisEntity;
-
-        CPed *npc = npcCar->m_pDriver;
-
-        Command<
-            eScriptCommands::COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-            player, playerVehicle);
-        if (npc)
+        // Get peds out of their vehicles
+        if (thisDriver)
         {
             Command<eScriptCommands::
                         COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-                npc, npcCar);
+                thisDriver, thisVehicle);
         }
-
-        Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (player, npcCar);
-        if (npc)
+        if (otherDriver)
         {
-            Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (
-                npc, playerVehicle);
-
-            Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
-                npc, playerVehicle, 20.0f,
-                eCarDrivingStyle::DRIVINGSTYLE_PLOUGH_THROUGH);
+            Command<eScriptCommands::
+                        COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
+                otherDriver, otherVehicle);
         }
 
-        Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
+        CPlayerPed *player = FindPlayerPed ();
+        bool        wasPlayerADriver
+            = player && (player == thisDriver || player == otherDriver);
 
-        collisionHappened = true;
+        if (thisDriver)
+        {
+            eCarDrivingStyle drivingStyle
+                = (wasPlayerADriver && player == otherDriver)
+                      ? eCarDrivingStyle::DRIVINGSTYLE_PLOUGH_THROUGH
+                      : eCarDrivingStyle::DRIVINGSTYLE_STOP_FOR_CARS;
+
+            WarpPedIntoCar (thisDriver, otherVehicle, drivingStyle);
+        }
+        if (otherDriver)
+        {
+            eCarDrivingStyle drivingStyle
+                = (wasPlayerADriver && player == thisDriver)
+                      ? eCarDrivingStyle::DRIVINGSTYLE_PLOUGH_THROUGH
+                      : eCarDrivingStyle::DRIVINGSTYLE_STOP_FOR_CARS;
+
+            WarpPedIntoCar (otherDriver, thisVehicle, drivingStyle);
+        }
+
+        if (wasPlayerADriver)
+        {
+            Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
+        }
+
+        // Set vehicle cooldowns
+        vehicleCooldowns[thisVehicle]  = 1000;
+        vehicleCooldowns[otherVehicle] = 1000;
+    }
+
+    static void
+    WarpPedIntoCar (CPed *ped, CVehicle *vehicle, eCarDrivingStyle drivingStyle)
+    {
+        CPlayerPed *player = FindPlayerPed ();
+
+        Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (ped, vehicle);
+
+        if (ped != player)
+        {
+            Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
+                ped, vehicle, 20.0f, drivingStyle);
+        }
     }
 };
 
