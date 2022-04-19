@@ -25,9 +25,9 @@ public:
 
         GameHandler::Initialise ();
 
-        Events::gameProcessEvent.after += EffectHandler::Tick;
-        Events::gameProcessEvent.after += GameHandler::ProcessGame;
+        Events::gameProcessEvent += EffectHandler::Tick;
+        Events::gameProcessEvent += GameHandler::ProcessGame;
 
-        drawAfterFadeEvent.after += DrawHelper::Draw;
+        drawAfterFadeEvent += DrawHelper::Draw;
     }
 } trilogyChaosMod;
