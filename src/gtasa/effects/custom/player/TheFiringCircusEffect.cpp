@@ -69,8 +69,19 @@ public:
                 Command<eScriptCommands::COMMAND_SET_CURRENT_CHAR_WEAPON> (
                     createdPed, eWeaponType::WEAPON_M4);
 
-                Command<eScriptCommands::COMMAND_TASK_KILL_CHAR_ON_FOOT> (
-                    createdPed, player);
+                Command<eScriptCommands::COMMAND_SET_CHAR_SHOOT_RATE> (
+                    createdPed, 100);
+
+                if (vehicle)
+                {
+                    Command<eScriptCommands::COMMAND_TASK_DESTROY_CAR> (
+                        createdPed, vehicle);
+                }
+                else
+                {
+                    Command<eScriptCommands::COMMAND_TASK_KILL_CHAR_ON_FOOT> (
+                        createdPed, player);
+                }
 
                 createdPeds.push_back (createdPed);
             }
