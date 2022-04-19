@@ -42,6 +42,8 @@ public:
             // object pool anymore or something...
             if (!roadObject)
             {
+                // TODO: Find better object that is bigger so we don't have to
+                // teleport it as often?
                 int model = 8418; // Flat concrete pad with parking
                 CStreaming::RequestModel (model, 2);
                 CStreaming::LoadAllRequestedModels (0);
@@ -52,6 +54,7 @@ public:
             }
             else
             {
+                // TODO: Fix CJ sliding on the constantly teleporting object?
                 roadObject->Teleport ({position.x, position.y, 0.5f}, false);
                 roadObject->SetOrientation (0.0f, 0.0f, heading);
             }
