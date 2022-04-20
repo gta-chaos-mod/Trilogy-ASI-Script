@@ -1,10 +1,24 @@
 #include <util/EffectBase.h>
 
+using namespace plugin;
+
 template <int bias> class SteerBiasEffect : public EffectBase
 {
 public:
     void
-    OnTick (EffectInstance *inst) override
+    OnStart (EffectInstance *inst) override
+    {
+        Events::processScriptsEvent += OnProcessScripts;
+    }
+
+    void
+    OnEnd (EffectInstance *inst) override
+    {
+        Events::processScriptsEvent -= OnProcessScripts;
+    }
+
+    static void
+    OnProcessScripts ()
     {
         CPlayerPed *player = FindPlayerPed ();
         if (player)
