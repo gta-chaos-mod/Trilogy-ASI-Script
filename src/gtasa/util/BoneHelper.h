@@ -21,6 +21,7 @@ class BoneHelper
 
     struct BoneScaleInfo
     {
+        unsigned int boneId = 0;
         RwV3d        scale;
         unsigned int rootBone      = 0;
         bool         scaleWithRoot = true;
@@ -28,9 +29,7 @@ class BoneHelper
 
     static inline std::map<CPed *, std::map<unsigned int, RwV3d>> bonePositions;
     static inline std::map<CPed *, std::map<unsigned int, RwV3d>> boneRotations;
-    static inline std::map<CPed *,
-                           std::map<unsigned int, std::vector<BoneScaleInfo>>>
-        boneScales;
+    static inline std::map<CPed *, std::vector<BoneScaleInfo>>    boneScales;
 
 public:
     static inline struct RenderEventStruct

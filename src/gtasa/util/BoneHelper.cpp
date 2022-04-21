@@ -1,25 +1,5 @@
 #include "BoneHelper.h"
 
-/*
-TODO:
-Multiple effects that modify scale (Big Heads, Don't Lose Your Head, Hold The F
-Up, Long Necks, Ped Size, ...) have issues with scaling of the bones when they
-are active at the same time.
-Are we not getting the proper bone positions when we try to update them?
-
-Example case to reproduce issues:
-- Start "Big Heads"
-- Start "Tiny Peds"
-- Faces are broken
-
-Example case where it works properly:
-- Start "Tiny Peds"
-- Start "Big Heads"
-- Faces are correct
-
-Something in the calculations of the bone positions appears to be wrong...
-*/
-
 void
 BoneHelper::Initialise ()
 {
@@ -120,11 +100,10 @@ BoneHelper::GetBoneScale (CPed *ped, unsigned int boneId)
 
     if (boneScales.contains (ped))
     {
-        auto &boneMap = boneScales[ped];
-        if (boneMap.contains (boneId))
+        auto &scaleList = boneScales[ped];
+        for (auto const &scaleInfo : scaleList)
         {
-            auto &scaleList = boneMap[boneId];
-            for (auto &scaleInfo : scaleList)
+            if (scaleInfo.boneId == boneId)
             {
                 scale.x *= scaleInfo.scale.x;
                 scale.y *= scaleInfo.scale.y;
@@ -140,19 +119,21 @@ void
 BoneHelper::SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale,
                           unsigned int rootBone, bool scaleWithRoot)
 {
-    boneScales[ped][boneId].clear ();
-    boneScales[ped][boneId].push_back (
-        BoneScaleInfo{scale = scale, rootBone = rootBone,
-                      scaleWithRoot = scaleWithRoot});
+    boneScales[ped].clear ();
+    boneScales[ped].push_back (BoneScaleInfo{.boneId        = boneId,
+                                             .scale         = scale,
+                                             .rootBone      = rootBone,
+                                             .scaleWithRoot = scaleWithRoot});
 }
 
 void
 BoneHelper::ScaleBone (CPed *ped, unsigned int boneId, RwV3d scale,
                        unsigned int rootBone, bool scaleWithRoot)
 {
-    boneScales[ped][boneId].push_back (
-        BoneScaleInfo{scale = scale, rootBone = rootBone,
-                      scaleWithRoot = scaleWithRoot});
+    boneScales[ped].push_back (BoneScaleInfo{.boneId        = boneId,
+                                             .scale         = scale,
+                                             .rootBone      = rootBone,
+                                             .scaleWithRoot = scaleWithRoot});
 }
 
 AnimBlendFrameData *
@@ -307,35 +288,31 @@ BoneHelper::_setBoneScales (CPed *ped)
 {
     if (boneScales.contains (ped))
     {
-        auto &boneMap = boneScales[ped];
-        for (auto const &[boneId, scaleList] : boneMap)
+        auto &boneList = boneScales[ped];
+        for (auto const &scaleInfo : boneList)
         {
-            RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
+            RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, scaleInfo.boneId);
             if (rwBoneMatrix)
             {
-                for (auto &scaleInfo : scaleList)
+                RwV3d scale = scaleInfo.scale;
+
+                CMatrix boneMatrix (rwBoneMatrix, false);
+                // CMatrix::ScaleXYZ - not implemented in plugin-sdk
+                CallMethod<0x5A2E60, CMatrix *> (&boneMatrix, scale.x, scale.y,
+                                                 scale.z);
+                boneMatrix.UpdateRW ();
+
+                if (scaleInfo.scaleWithRoot)
                 {
-                    RwV3d scale = scaleInfo.scale;
+                    RwV3d bonePos = GetBonePosition (ped, scaleInfo.boneId);
+                    RwV3d rootPos = GetBonePosition (ped, scaleInfo.rootBone);
 
-                    CMatrix boneMatrix (rwBoneMatrix, false);
-                    // CMatrix::ScaleXYZ - not implemented in plugin-sdk
-                    CallMethod<0x5A2E60, CMatrix *> (&boneMatrix, scale.x,
-                                                     scale.y, scale.z);
-                    boneMatrix.UpdateRW ();
+                    RwV3d newPos
+                        = {(rootPos.x + ((bonePos.x - rootPos.x) * scale.x)),
+                           (rootPos.y + ((bonePos.y - rootPos.y) * scale.y)),
+                           (rootPos.z + ((bonePos.z - rootPos.z) * scale.z))};
 
-                    if (scaleInfo.scaleWithRoot)
-                    {
-                        RwV3d bonePos = GetBonePosition (ped, boneId);
-                        RwV3d rootPos
-                            = GetBonePosition (ped, scaleInfo.rootBone);
-
-                        RwV3d newPos = {
-                            (rootPos.x + ((bonePos.x - rootPos.x) * scale.x)),
-                            (rootPos.y + ((bonePos.y - rootPos.y) * scale.y)),
-                            (rootPos.z + ((bonePos.z - rootPos.z) * scale.z))};
-
-                        SetBonePosition (ped, boneId, newPos);
-                    }
+                    SetBonePosition (ped, scaleInfo.boneId, newPos);
                 }
             }
         }
