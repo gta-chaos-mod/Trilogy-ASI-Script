@@ -24,7 +24,7 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        float tick = GenericUtil::CalculateTick ();
+        float tick = GenericUtil::CalculateTick (0.025f);
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {

@@ -24,7 +24,7 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        float tick    = GenericUtil::CalculateTick ();
+        float tick    = GenericUtil::CalculateTick (0.025f);
         rotationAngle = fmod (rotationAngle + (30.0f * tick), 360.0f);
     }
 

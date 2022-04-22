@@ -28,7 +28,7 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        float tick = GenericUtil::CalculateTick ();
+        float tick = GenericUtil::CalculateTick (0.025f);
 
         spinSpeed     = std::min (spinSpeed + 2.0f, 40.0f);
         rotationAngle = fmod (rotationAngle + (spinSpeed * tick), 360.0f);
