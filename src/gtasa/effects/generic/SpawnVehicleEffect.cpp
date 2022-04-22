@@ -1,7 +1,7 @@
 #include "effects/OneTimeEffect.h"
 
-#include <util/EffectInstance.h>
 #include <util/EffectBase.h>
+#include <util/EffectInstance.h>
 #include <util/GameUtil.h>
 
 #include <CStreaming.h>
@@ -16,7 +16,7 @@ public:
     OnStart (EffectInstance *instance)
     {
         SpawnForPlayer (instance->GetCustomData ().value ("vehicleID", 400),
-                        true);
+                        false);
     }
 
     void
