@@ -27,9 +27,11 @@ class BoneHelper
         bool         scaleWithRoot = true;
     };
 
-    static inline std::map<CPed *, std::map<unsigned int, RwV3d>> bonePositions;
-    static inline std::map<CPed *, std::map<unsigned int, RwV3d>> boneRotations;
-    static inline std::map<CPed *, std::vector<BoneScaleInfo>>    boneScales;
+    static inline std::map<CPed *, std::map<unsigned int, RwV3d>> bonePositions
+        = {};
+    static inline std::map<CPed *, std::map<unsigned int, RwV3d>> boneRotations
+        = {};
+    static inline std::map<CPed *, std::vector<BoneScaleInfo>> boneScales = {};
 
 public:
     static inline struct RenderEventStruct
@@ -90,6 +92,7 @@ public:
     static void ShoulderBoneRotation (CPed *ped);
 
 private:
+    static bool _hasAnyModifications (CPed *ped);
     static void _setBonePositions (CPed *ped);
     static void _setBoneRotations (CPed *ped);
     static void _setBoneScales (CPed *ped);

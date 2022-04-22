@@ -15,7 +15,7 @@ BoneHelper::RenderPed (CPed *ped)
         hookedFunction (ped);
     }
 
-    if (ped)
+    if (ped && _hasAnyModifications (ped))
     {
         /* Pre-Update Ped Section */
         // Set bone positions
@@ -235,6 +235,13 @@ BoneHelper::ShoulderBoneRotation (CPed *ped)
         // CPed::ShoulderBoneRotation - PR a fix to plugin-sdk?
         Call<0x5DF560> (ped->m_pRwClump);
     }
+}
+
+bool
+BoneHelper::_hasAnyModifications (CPed *ped)
+{
+    return bonePositions.contains (ped) || boneRotations.contains (ped)
+           || boneScales.contains (ped);
 }
 
 void
