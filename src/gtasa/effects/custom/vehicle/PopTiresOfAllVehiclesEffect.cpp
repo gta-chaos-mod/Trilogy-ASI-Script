@@ -14,7 +14,8 @@ public:
             vehicle->m_nPhysicalFlags.bBulletProof   = false;
             vehicle->m_nVehicleFlags.bTyresDontBurst = false;
 
-            if (vehicle->m_nVehicleClass == VEHICLE_AUTOMOBILE)
+            if (vehicle->m_nVehicleClass == VEHICLE_AUTOMOBILE
+                || vehicle->m_nVehicleClass == VEHICLE_QUAD)
             {
                 CAutomobile *car = (CAutomobile *) vehicle;
 

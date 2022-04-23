@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/EffectSubHandlers.h"
+#include <util/EffectSubHandlers.h>
 
 class EffectCrowdControlHandler : public EffectSubHandler
 {

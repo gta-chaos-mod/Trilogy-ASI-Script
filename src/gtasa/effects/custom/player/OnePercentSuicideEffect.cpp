@@ -1,7 +1,7 @@
 #include <util/EffectBase.h>
 #include <util/GameUtil.h>
 
-#include "CCheat.h"
+#include <CCheat.h>
 
 class OnePercentSuicideEffect : public EffectBase
 {
@@ -15,10 +15,8 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        if (inst->Random (1, 100) == 1)
-        {
-            CCheat::SuicideCheat ();
-        }
+        if (inst->Random (1, 100) == 1) CCheat::SuicideCheat ();
+
         inst->Disable ();
     }
 };

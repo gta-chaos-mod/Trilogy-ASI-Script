@@ -7,9 +7,10 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && player->GetPadFromPlayer ())
+        if (player)
         {
-            player->GetPadFromPlayer ()->DisablePlayerControls = false;
+            CPad *pad = player->GetPadFromPlayer ();
+            if (pad) pad->DisablePlayerControls = false;
         }
     }
 
@@ -17,9 +18,10 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && player->GetPadFromPlayer ())
+        if (player)
         {
-            player->GetPadFromPlayer ()->DisablePlayerControls = true;
+            CPad *pad = player->GetPadFromPlayer ();
+            if (pad) pad->DisablePlayerControls = true;
         }
     }
 };

@@ -2,7 +2,7 @@
 #include <util/EffectBase.h>
 #include <util/GenericUtil.h>
 
-#include "ePedBones.h"
+#include <ePedBones.h>
 
 class DontLoseYourHeadEffect : public EffectBase
 {
@@ -28,8 +28,7 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        if (!blowingUp)
-            return;
+        if (!blowingUp) return;
 
         multiplier += GenericUtil::CalculateTick (0.001f);
         if (multiplier > 5.0f)
@@ -44,14 +43,11 @@ public:
     {
         RwV3d scale = {multiplier, multiplier, multiplier};
         for (int i = BONE_NECK; i <= BONE_HEAD; i++)
-        {
             BoneHelper::ScaleBone (ped, i, scale, BONE_NECK);
-        }
 
         for (int i = 5000; i < 5026; i++)
-        {
             BoneHelper::ScaleBone (ped, i, scale, BONE_NECK);
-        }
+
         // Cutscene related?
         BoneHelper::ScaleBone (ped, 30, scale, BONE_NECK);
     }

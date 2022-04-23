@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "extensions/ScriptCommands.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -18,10 +18,7 @@ public:
         }
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            player->m_pPlayerData->m_bPlayerSprintDisabled = false;
-        }
+        if (player) player->m_pPlayerData->m_bPlayerSprintDisabled = false;
     }
 
     void
@@ -38,6 +35,7 @@ public:
         if (player)
         {
             // TODO: Force player to sneak / stealth / walk
+            // Use OnProcessScripts for it
             player->m_pPlayerData->m_bPlayerSprintDisabled = true;
         }
     }

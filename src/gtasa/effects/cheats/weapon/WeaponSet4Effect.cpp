@@ -1,18 +1,20 @@
 #include <effects/OneTimeEffect.h>
+#include <util/GameUtil.h>
 
-#include "CStreaming.h"
+#include <CStreaming.h>
 
 class WeaponSet4Effect : public OneTimeEffect
 {
 public:
+    bool CanActivate() override {
+        return GameUtil::IsPlayerSafe();
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (!player)
-        {
-            return;
-        }
+        if (!player) return;
 
         bool hasNightVision
             = player->DoWeHaveWeaponAvailable (WEAPON_NIGHTVISION);

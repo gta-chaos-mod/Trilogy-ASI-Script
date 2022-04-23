@@ -6,7 +6,7 @@ public:
     bool
     CanActivate () override
     {
-        return FindPlayerPed () != nullptr;
+        return FindPlayerPed ();
     }
 
     void
@@ -19,10 +19,7 @@ public:
 
             for (CPed *ped : CPools::ms_pPedPool)
             {
-                if (ped == player || ped->m_pVehicle)
-                {
-                    continue;
-                }
+                if (ped == player || ped->m_pVehicle) continue;
 
                 ped->SetPosn (position
                               + CVector (inst->Random (-1.0f, 1.0f),

@@ -27,22 +27,33 @@ public:
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
             CMatrixLink *matrix = vehicle->GetMatrix ();
-            if (this->type == eVehicleMomentumType::INVERT_MOMENTUM_AND_MATRIX)
+            switch (this->type)
             {
-                InvertVehicle (matrix);
-            }
-
-            if (this->type == eVehicleMomentumType::BOOST)
-            {
-                vehicle->m_vecMoveSpeed.x = vehicle->m_vecMoveSpeed.x * 5.0f;
-                vehicle->m_vecMoveSpeed.y = vehicle->m_vecMoveSpeed.y * 5.0f;
-                vehicle->m_vecMoveSpeed.z = vehicle->m_vecMoveSpeed.z * 5.0f;
-            }
-            else
-            {
-                vehicle->m_vecMoveSpeed.x = -vehicle->m_vecMoveSpeed.x;
-                vehicle->m_vecMoveSpeed.y = -vehicle->m_vecMoveSpeed.y;
-                vehicle->m_vecMoveSpeed.z = -vehicle->m_vecMoveSpeed.z;
+                case INVERT_MOMENTUM_AND_MATRIX:
+                {
+                    InvertVehicle (matrix);
+                    continue;
+                }
+                case BOOST:
+                {
+                    vehicle->m_vecMoveSpeed.x
+                        = vehicle->m_vecMoveSpeed.x * 5.0f;
+                    vehicle->m_vecMoveSpeed.y
+                        = vehicle->m_vecMoveSpeed.y * 5.0f;
+                    vehicle->m_vecMoveSpeed.z
+                        = vehicle->m_vecMoveSpeed.z * 5.0f;
+                    continue;
+                }
+                case INVERT_MOMENTUM:
+                {
+                    vehicle->m_vecMoveSpeed.x = -vehicle->m_vecMoveSpeed.x;
+                    vehicle->m_vecMoveSpeed.y = -vehicle->m_vecMoveSpeed.y;
+                    vehicle->m_vecMoveSpeed.z = -vehicle->m_vecMoveSpeed.z;
+                    continue;
+                }
+                default:
+                {
+                }
             }
         }
     }

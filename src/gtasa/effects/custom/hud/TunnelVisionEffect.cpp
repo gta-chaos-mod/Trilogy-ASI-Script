@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CMenuManager.h"
+#include <CMenuManager.h>
 
 using namespace plugin;
 
@@ -22,10 +22,7 @@ public:
     static void
     DrawTunnelVision ()
     {
-        if (FrontEndMenuManager.m_bMenuActive)
-        {
-            return;
-        }
+        if (FrontEndMenuManager.m_bMenuActive) return;
 
         CRect rect = CRect (0.0f, 0.0f, SCREEN_WIDTH,
                             SCREEN_COORD_CENTER_Y - SCREEN_COORD (200.0f));

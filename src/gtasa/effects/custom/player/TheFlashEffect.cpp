@@ -1,7 +1,7 @@
 #include <util/EffectBase.h>
 
-#include "CMenuSystem.h"
-#include "CWorld.h"
+#include <CMenuSystem.h>
+#include <CWorld.h>
 
 // TODO: Hook CEventDamage_AffectsPed for fall damage
 // HookCall (0x5E2F57, Hooked_CEventDamage_AffectsPed);

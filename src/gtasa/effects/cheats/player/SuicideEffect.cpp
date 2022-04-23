@@ -1,7 +1,7 @@
 #include <util/EffectBase.h>
 #include <util/GameUtil.h>
 
-#include "CCheat.h"
+#include <CCheat.h>
 
 class SuicideEffect : public EffectBase
 {

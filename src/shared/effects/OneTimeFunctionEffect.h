@@ -1,3 +1,5 @@
+#pragma once
+
 #include <effects/OneTimeEffect.h>
 
 class OneTimeFunctionEffect : public OneTimeEffect

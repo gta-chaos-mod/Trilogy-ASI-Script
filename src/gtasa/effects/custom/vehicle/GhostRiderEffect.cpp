@@ -10,6 +10,13 @@ class GhostRiderEffect : public EffectBase
 
 public:
     void
+    OnStart (EffectInstance *inst) override
+    {
+        vehicleList.clear ();
+        lastVehicle = nullptr;
+    }
+
+    void
     OnEnd (EffectInstance *inst) override
     {
         if (Config::GetOrDefault ("CrowdControl.Enabled", false))
@@ -90,48 +97,42 @@ public:
 
         CBaseModelInfo *model
             = CModelInfo::ms_modelInfoPtrs[vehicle->m_nModelIndex];
-        if (!model)
-        {
-            return;
-        }
+        if (!model) return;
 
         CVehicleModelInfo *vehicleModelInfo
             = reinterpret_cast<CVehicleModelInfo *> (model);
-        if (!vehicleModelInfo)
-        {
-            return;
-        }
+        if (!vehicleModelInfo) return;
 
         switch (vehicleModelInfo->m_nVehicleType)
         {
-        case VEHICLE_BIKE:
-        {
-            CBike *bike     = (CBike *) vehicle;
-            bike->m_fHealth = 249.0f;
-            // bike->field_7BC = (int)value; // This should also be a float,
-            // until then we use the float pointer
-            *(float *) ((char *) vehicle + 1980) = value;
-            break;
-        }
-        case VEHICLE_AUTOMOBILE:
-        case VEHICLE_MTRUCK:
-        case VEHICLE_QUAD:
-        case VEHICLE_TRAILER:
-        {
-            CAutomobile *automobile = (CAutomobile *) vehicle;
-            automobile->m_fHealth   = 249.0f;
-            // automobile->m_dwBurnTimer = (int)value; // This should be a
-            // float, until then we use the float pointer
-            *(float *) ((char *) vehicle + 2276) = value;
-            break;
-        }
-        case VEHICLE_BOAT:
-        {
-            CBoat *boat           = (CBoat *) vehicle;
-            boat->m_fHealth       = 249.0f;
-            boat->m_fBurningTimer = value;
-            break;
-        }
+            case VEHICLE_BIKE:
+            {
+                CBike *bike     = (CBike *) vehicle;
+                bike->m_fHealth = 249.0f;
+                // bike->field_7BC = (int)value; // This should also be a float,
+                // until then we use the float pointer
+                *(float *) ((char *) vehicle + 1980) = value;
+                break;
+            }
+            case VEHICLE_AUTOMOBILE:
+            case VEHICLE_MTRUCK:
+            case VEHICLE_QUAD:
+            case VEHICLE_TRAILER:
+            {
+                CAutomobile *automobile = (CAutomobile *) vehicle;
+                automobile->m_fHealth   = 249.0f;
+                // automobile->m_dwBurnTimer = (int)value; // This should be a
+                // float, until then we use the float pointer
+                *(float *) ((char *) vehicle + 2276) = value;
+                break;
+            }
+            case VEHICLE_BOAT:
+            {
+                CBoat *boat           = (CBoat *) vehicle;
+                boat->m_fHealth       = 249.0f;
+                boat->m_fBurningTimer = value;
+                break;
+            }
         }
     }
 };

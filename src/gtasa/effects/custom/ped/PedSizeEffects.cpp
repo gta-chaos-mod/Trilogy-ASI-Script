@@ -1,7 +1,7 @@
 #include <util/BoneHelper.h>
 #include <util/EffectBase.h>
 
-#include "ePedBones.h"
+#include <ePedBones.h>
 
 template <RwV3d scale> class PedSizeEffect : public EffectBase
 {
@@ -21,20 +21,14 @@ public:
     static void
     RenderPed (CPed *ped)
     {
-        for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
-        {
+        for (int i = 0; i < BONE_RIGHTFOOT + 1; i++)
             BoneHelper::ScaleBone (ped, i, scale);
-        }
 
         for (int i = 300; i < 304; i++)
-        {
             BoneHelper::ScaleBone (ped, i, scale);
-        }
 
         for (int i = 5000; i < 5026; i++)
-        {
             BoneHelper::ScaleBone (ped, i, scale);
-        }
     }
 };
 

@@ -3,9 +3,9 @@
 #include <util/EffectBase.h>
 #include <util/MathHelper.h>
 
-#include "extensions/ScriptCommands.h"
-#include "CStreaming.h"
-#include "CWorld.h"
+#include <CStreaming.h>
+#include <CWorld.h>
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -29,12 +29,8 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
-            // TODO: If player is in vehicle, set vehicle speed to 0
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
-            {
-                vehicle->m_vecMoveSpeed *= 0;
-            }
+            if (vehicle) vehicle->m_vecMoveSpeed *= 0;
 
             for (int x = 0; x < 6; x++)
             {
@@ -92,18 +88,13 @@ public:
     OnEnd (EffectInstance *inst)
     {
         for (CPed *ped : createdPeds)
-        {
             Command<eScriptCommands::COMMAND_REMOVE_CHAR_ELEGANTLY> (ped);
-        }
 
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                pad->DisablePlayerControls = false;
-            }
+            if (pad) pad->DisablePlayerControls = false;
         }
     }
 
@@ -114,10 +105,7 @@ public:
         if (player)
         {
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                pad->DisablePlayerControls = true;
-            }
+            if (pad) pad->DisablePlayerControls = true;
         }
     }
 };

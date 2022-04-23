@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/EffectBase.h"
+#include <util/EffectBase.h>
 
 class OneTimeEffect : public EffectBase
 {

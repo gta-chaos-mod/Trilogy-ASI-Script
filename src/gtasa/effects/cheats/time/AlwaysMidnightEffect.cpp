@@ -1,19 +1,19 @@
 #include <util/EffectBase.h>
 
-#include "CClock.h"
-#include "CWeather.h"
+#include <CClock.h>
+#include <CWeather.h>
 
 class AlwaysMidnightEffect : public EffectBase
 {
-    eWeatherType currentWeather = eWeatherType::WEATHER_EXTRASUNNY_LA;
+    eWeatherType currentWeather = WEATHER_EXTRASUNNY_LA;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        this->currentWeather = (eWeatherType)
-            std::min (CWeather::NewWeatherType,
-                      (short) eWeatherType::WEATHER_EXTRACOLOURS_2);
+        this->currentWeather
+            = (eWeatherType) std::min (CWeather::NewWeatherType,
+                                       (short) WEATHER_EXTRACOLOURS_2);
     }
 
     void

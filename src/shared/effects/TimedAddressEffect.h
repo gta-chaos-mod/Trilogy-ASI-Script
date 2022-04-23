@@ -1,6 +1,5 @@
 #pragma once
 
-#include "util/EffectInstance.h"
 #include <util/EffectBase.h>
 
 class TimedAddressEffect : public EffectBase
@@ -16,14 +15,12 @@ public:
     void
     OnEnd (EffectInstance *instance) override
     {
-        if (address)
-            *address = false;
+        if (address) *address = false;
     }
 
     void
     OnTick (EffectInstance *instance) override
     {
-        if (address)
-            *address = true;
+        if (address) *address = true;
     }
 };

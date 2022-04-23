@@ -1,9 +1,9 @@
 #pragma once
 
-#include "GenericUtil.h"
+#include <util/GenericUtil.h>
 
-#include "CFont.h"
-#include "extensions/FontPrint.h"
+#include <CFont.h>
+#include <extensions/FontPrint.h>
 
 using namespace plugin;
 

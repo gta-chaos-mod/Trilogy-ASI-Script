@@ -48,13 +48,18 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        if (hasTeleported)
+        if (hasTeleported) return;
+
+        if (!CanActivate ())
         {
+            if (inst->GetSubhandler<EffectCrowdControlHandler> ())
+                inst->ResetTimer ();
+
             return;
         }
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player && CanActivate ())
+        if (player)
         {
             previousLocation = player->GetPosition ();
 

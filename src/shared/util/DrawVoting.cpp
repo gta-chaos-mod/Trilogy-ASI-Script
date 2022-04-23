@@ -3,16 +3,11 @@
 void
 DrawVoting::DrawVotes ()
 {
-    if (GenericUtil::IsMenuActive ())
-    {
-        return;
-    }
+    if (GenericUtil::IsMenuActive ()) return;
 
     // Always try to draw votes
     for (int i = 0; i < 3; i++)
-    {
         DrawVote (i);
-    }
 
     if (drawRemaining > 0)
     {
@@ -50,10 +45,7 @@ DrawVoting::UpdateVotes (std::vector<std::string> effects,
     {
         votes[i] = VotingElement (effects[i], _votes[i], votes[i].offset);
 
-        if (votes[i].votes > 0)
-        {
-            totalVotes += votes[i].votes;
-        }
+        if (votes[i].votes > 0) { totalVotes += votes[i].votes; }
     }
 
     pickedVote = _pickedVote;
@@ -64,10 +56,7 @@ DrawVoting::UpdateVotes (std::vector<std::string> effects,
 void
 DrawVoting::DrawVote (int choice)
 {
-    if (votes[choice].description == "")
-    {
-        return;
-    }
+    if (votes[choice].description == "") { return; }
 
     float barX = 0.0f;
     float x    = 0.0f;
@@ -135,10 +124,7 @@ DrawVoting::DrawVote (int choice)
 float
 DrawVoting::CalculateYOffset (int choice, float adjustment)
 {
-    if (choice < 0 || choice > 2)
-    {
-        return 0.0f;
-    }
+    if (choice < 0 || choice > 2) return 0.0f;
 
     float t            = votes[choice].offset;
     float easePosition = 1 + (--t) * t * (2.70158f * t + 1.70158f);
@@ -148,10 +134,7 @@ DrawVoting::CalculateYOffset (int choice, float adjustment)
 float
 DrawVoting::CalculateBarWidth (int choice, float maxWidth)
 {
-    if (totalVotes == 0 || votes[choice].votes == -1)
-    {
-        return 0.0f;
-    }
+    if (totalVotes == 0 || votes[choice].votes == -1) return 0.0f;
 
     return maxWidth * ((float) votes[choice].votes / (float) totalVotes);
 }
@@ -177,9 +160,7 @@ DrawVoting::GetPercentage (int choice)
         ;
     }
     else
-    {
         percentage.append ("?%");
-    }
 
     return percentage;
 }

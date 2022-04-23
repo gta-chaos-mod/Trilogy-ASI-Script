@@ -4,16 +4,16 @@
 
 using namespace plugin;
 
-// Custom events for CVehicle::SetupRender and CVehicle::ResetAfterRender
-static ThiscallEvent<AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE,
-                     ArgPickN<CVehicle *, 0>, void (CVehicle *)>
-    setupRenderEvent;
-static ThiscallEvent<AddressList<0x55332A, H_CALL>, PRIORITY_AFTER,
-                     ArgPickN<CVehicle *, 0>, void (CVehicle *)>
-    resetAfterRenderEvent;
-
 class BlackTrafficEffect : public EffectBase
 {
+    // Custom events for CVehicle::SetupRender and CVehicle::ResetAfterRender
+    static inline ThiscallEvent<AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE,
+                                ArgPickN<CVehicle *, 0>, void (CVehicle *)>
+        setupRenderEvent;
+    static inline ThiscallEvent<AddressList<0x55332A, H_CALL>, PRIORITY_AFTER,
+                                ArgPickN<CVehicle *, 0>, void (CVehicle *)>
+        resetAfterRenderEvent;
+
     static inline std::vector<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
         = {};
 
@@ -46,9 +46,7 @@ public:
         // In case some material got added more than once, restore in reverse
         // order
         for (auto const &[color, backupColor] : resetMaterialColors)
-        {
             *color = backupColor;
-        }
 
         resetMaterialColors.clear ();
     }
@@ -76,10 +74,7 @@ public:
     static RpMaterial *
     MaterialCallback (RpMaterial *material, void *data)
     {
-        if (!data)
-        {
-            return material;
-        }
+        if (!data) return material;
 
         resetMaterialColors.push_back (
             std::make_pair (&material->color, material->color));

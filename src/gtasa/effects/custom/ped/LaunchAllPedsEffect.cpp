@@ -10,10 +10,7 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            if (ped == player)
-            {
-                continue;
-            }
+            if (ped == player) continue;
 
             ped->GetPosition ().z += 0.5f;
             ped->ApplyMoveForce ({0, 0, 200.0f});

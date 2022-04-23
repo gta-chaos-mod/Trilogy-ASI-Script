@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CCutsceneMgr.h"
+#include <CCutsceneMgr.h>
 
 class GetBustedEffect : public EffectBase
 {

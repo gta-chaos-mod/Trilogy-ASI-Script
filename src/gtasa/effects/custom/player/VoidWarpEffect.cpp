@@ -16,9 +16,8 @@ public:
         if (!CanActivate ())
         {
             if (inst->GetSubhandler<EffectCrowdControlHandler> ())
-            {
                 inst->ResetTimer ();
-            }
+
             return;
         }
 

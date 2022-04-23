@@ -35,9 +35,7 @@ public:
     OnTick (EffectInstance *inst) override
     {
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
-        {
             vehicle->m_nHornCounter = 1;
-        }
     }
 };
 

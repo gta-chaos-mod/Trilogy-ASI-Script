@@ -1,6 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "extensions/ScriptCommands.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -14,10 +14,7 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            if (ped == player)
-            {
-                continue;
-            }
+            if (ped == player) continue;
 
             auto pos = ped->GetPosition ();
             Command<eScriptCommands::COMMAND_ADD_EXPLOSION> (pos.x, pos.y,

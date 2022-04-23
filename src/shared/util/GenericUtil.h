@@ -2,8 +2,8 @@
 
 #include <util/MathHelper.h>
 
-#include "CMenuManager.h"
-#include "CTimer.h"
+#include <CMenuManager.h>
+#include <CTimer.h>
 
 class GenericUtil
 {

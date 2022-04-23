@@ -1,8 +1,7 @@
 #include <util/EffectBase.h>
 
-#include "CCamera.h"
-
-#include "extensions/ScriptCommands.h"
+#include <CCamera.h>
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 

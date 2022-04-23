@@ -1,6 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "CStats.h"
+#include <CStats.h>
 
 class NoDrivingSkillsEffect : public OneTimeEffect
 {
@@ -8,10 +8,10 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        CStats::SetStatValue (eStats::STAT_DRIVING_SKILL, 0.0f); // Driving
-        CStats::SetStatValue (eStats::STAT_FLYING_SKILL, 0.0f);  // Flying
-        CStats::SetStatValue (eStats::STAT_BIKE_SKILL, 0.0f);    // Bike
-        CStats::SetStatValue (eStats::STAT_CYCLING_SKILL, 0.0f); // Cycling
+        CStats::SetStatValue (STAT_DRIVING_SKILL, 0.0f); // Driving
+        CStats::SetStatValue (STAT_FLYING_SKILL, 0.0f);  // Flying
+        CStats::SetStatValue (STAT_BIKE_SKILL, 0.0f);    // Bike
+        CStats::SetStatValue (STAT_CYCLING_SKILL, 0.0f); // Cycling
     }
 };
 

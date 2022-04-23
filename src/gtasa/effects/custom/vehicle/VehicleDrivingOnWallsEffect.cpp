@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CTimer.h"
+#include <CTimer.h>
 
 // TODO: Override "Car Upside Down" Check
 

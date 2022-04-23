@@ -1,16 +1,16 @@
 #include "EffectDrawHandler.h"
-#include "EffectInstance.h"
-#include "EffectHandler.h"
 
-#include "DrawHelper.h"
+#include <util/Config.h>
+#include <util/DrawHelper.h>
+#include <util/EffectHandler.h>
+#include <util/EffectInstance.h>
+#include <util/EffectTwitchHandler.h>
+#include <util/GenericUtil.h>
+
+#include <algorithm>
 
 #include <CFont.h>
-#include <algorithm>
 #include <extensions/FontPrint.h>
-
-#include "Config.h"
-#include "util/EffectTwitchHandler.h"
-#include "util/GenericUtil.h"
 
 bool
 EffectDrawHandler::AreEffectsInset (int num)
@@ -18,11 +18,9 @@ EffectDrawHandler::AreEffectsInset (int num)
     int i = 0;
     for (const auto &effect : EffectHandler::GetActiveEffects ())
     {
-        if (++i > num)
-            return false;
+        if (++i > num) return false;
 
-        if (effect.DoesEffectDrawTimer ())
-            return true;
+        if (effect.DoesEffectDrawTimer ()) return true;
     }
 
     return false;
@@ -83,10 +81,7 @@ EffectDrawHandler::PrintEffectTimer ()
 {
     if (Config::GetOrDefault ("Drawing.DrawCircles", true))
     {
-        if (effect->GetSubhandler<EffectTwitchHandler> ())
-        {
-            y -= 10.0f;
-        }
+        if (effect->GetSubhandler<EffectTwitchHandler> ()) y -= 10.0f;
 
         CVector2D center
             = CVector2D (SCREEN_COORD_RIGHT (x) + SCREEN_COORD (50.0f),
@@ -143,8 +138,7 @@ EffectDrawHandler::Draw (EffectInstance *effect, int idx, bool inset)
     PrintEffectName ();
     PrintEffectVoter ();
 
-    if (effect->DoesEffectDrawTimer ())
-        PrintEffectTimer ();
+    if (effect->DoesEffectDrawTimer ()) PrintEffectTimer ();
 
 #ifdef GTASA
     CFont::SetProportional (true);
@@ -183,8 +177,7 @@ EffectDrawHandler::DrawRecentEffects (int num)
     int i = 0;
     for (auto &effect : EffectHandler::GetActiveEffects ())
     {
-        if (++i > num)
-            break;
+        if (++i > num) break;
 
         effect.Draw (i, inset);
     }
@@ -192,8 +185,7 @@ EffectDrawHandler::DrawRecentEffects (int num)
 CRGBA
 EffectDrawHandler::GetTextColor () const
 {
-    if (textFlashingThisFrame)
-        return flashColor;
+    if (textFlashingThisFrame) return flashColor;
 
     if (!effect->IsRunning () || !effect->DoesEffectDrawTimer ())
         return disabledColor;
@@ -202,4 +194,7 @@ EffectDrawHandler::GetTextColor () const
 };
 
 CRGBA
-EffectDrawHandler::GetEffectColor () const { return CHAOS_FOREGROUND_COLOR; };
+EffectDrawHandler::GetEffectColor () const
+{
+    return CHAOS_FOREGROUND_COLOR;
+};

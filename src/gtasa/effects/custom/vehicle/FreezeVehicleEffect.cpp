@@ -1,8 +1,6 @@
 #include <util/EffectBase.h>
 #include <util/GameUtil.h>
 
-#include "cHandlingDataMgr.h"
-
 class FreezeVehicleEffect : public EffectBase
 {
     CVehicle *vehicle;
@@ -14,7 +12,7 @@ public:
     bool
     CanActivate () override
     {
-        return FindPlayerVehicle (-1, false) != nullptr;
+        return FindPlayerVehicle (-1, false);
     }
 
     void

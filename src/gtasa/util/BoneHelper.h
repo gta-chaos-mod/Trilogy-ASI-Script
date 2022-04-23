@@ -3,14 +3,13 @@
 
 using namespace plugin;
 
-typedef void (*PedRenderFunctionHook) (CPed *);
-
 class BoneHelper
 {
     static inline ThiscallEvent<AddressList<0x5B1F31, H_CALL>, PRIORITY_AFTER,
                                 ArgPickN<CPed *, 0>, void (CPed *)>
         cutscenePedRenderEvent;
 
+    typedef void (*PedRenderFunctionHook) (CPed *);
     static inline std::vector<PedRenderFunctionHook> renderHooks = {};
 
     struct RpHAnimBlendInterpFrame

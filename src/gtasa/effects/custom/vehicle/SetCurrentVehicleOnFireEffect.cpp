@@ -7,7 +7,7 @@ public:
     bool
     CanActivate () override
     {
-        return FindPlayerVehicle (-1, false) != nullptr;
+        return FindPlayerVehicle (-1, false);
     }
 
     void

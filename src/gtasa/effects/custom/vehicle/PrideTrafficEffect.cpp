@@ -6,16 +6,16 @@
 
 using namespace plugin;
 
-// Custom events for CVehicle::SetupRender and CVehicle::ResetAfterRender
-static ThiscallEvent<AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE,
-                     ArgPickN<CVehicle *, 0>, void (CVehicle *)>
-    setupRenderEvent;
-static ThiscallEvent<AddressList<0x55332A, H_CALL>, PRIORITY_AFTER,
-                     ArgPickN<CVehicle *, 0>, void (CVehicle *)>
-    resetAfterRenderEvent;
-
 class PrideTrafficEffect : public EffectBase
 {
+    // Custom events for CVehicle::SetupRender and CVehicle::ResetAfterRender
+    static inline ThiscallEvent<AddressList<0x5532A9, H_CALL>, PRIORITY_BEFORE,
+                                ArgPickN<CVehicle *, 0>, void (CVehicle *)>
+        setupRenderEvent;
+    static inline ThiscallEvent<AddressList<0x55332A, H_CALL>, PRIORITY_AFTER,
+                                ArgPickN<CVehicle *, 0>, void (CVehicle *)>
+        resetAfterRenderEvent;
+
     static inline float                                  hueShift = 0.0f;
     static inline std::list<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
         = {};
@@ -24,6 +24,9 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        hueShift = 0.0f;
+        resetMaterialColors.clear ();
+
         setupRenderEvent += SetupRenderEvent;
         resetAfterRenderEvent += ResetAfterRenderEvent;
     }
@@ -39,10 +42,7 @@ public:
     OnTick (EffectInstance *inst) override
     {
         hueShift += GenericUtil::CalculateTick (0.075f);
-        if (hueShift > 360.0f)
-        {
-            hueShift -= 360.0f;
-        }
+        hueShift = fmod (hueShift, 360.0f);
     }
 
     static void
@@ -57,9 +57,7 @@ public:
         // In case some material got added more than once, restore in reverse
         // order
         for (auto const &[color, backupColor] : resetMaterialColors)
-        {
             *color = backupColor;
-        }
 
         resetMaterialColors.clear ();
     }
@@ -87,10 +85,7 @@ public:
     static RpMaterial *
     MaterialCallback (RpMaterial *material, void *data)
     {
-        if (!data)
-        {
-            return material;
-        }
+        if (!data) return material;
 
         CVehicle *vehicle = reinterpret_cast<CVehicle *> (data);
 

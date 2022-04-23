@@ -2,12 +2,13 @@
 #include <util/GameUtil.h>
 #include <util/GenericUtil.h>
 
-#include "CStreaming.h"
+#include <CStreaming.h>
 
 class WeaponRouletteEffect : public EffectBase
 {
-    int                      wait = 0;
-    std::vector<eWeaponType> weapons
+    int                                      wait          = 0;
+    std::vector<std::pair<eWeaponType, int>> storedWeapons = {};
+    std::vector<eWeaponType>                 weapons
         = {// Melee
            eWeaponType::WEAPON_GOLFCLUB, eWeaponType::WEAPON_NIGHTSTICK,
            eWeaponType::WEAPON_KNIFE, eWeaponType::WEAPON_BASEBALLBAT,
@@ -42,12 +43,14 @@ class WeaponRouletteEffect : public EffectBase
 
            // Special
            eWeaponType::WEAPON_SPRAYCAN, eWeaponType::WEAPON_EXTINGUISHER};
-    std::vector<std::pair<eWeaponType, int>> storedWeapons = {};
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        wait = 0;
+        storedWeapons.clear ();
+
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
@@ -89,10 +92,7 @@ public:
     OnTick (EffectInstance *inst) override
     {
         wait -= (int) GenericUtil::CalculateTick ();
-        if (wait > 0)
-        {
-            return;
-        }
+        if (wait > 0) return;
 
         CPlayerPed *player = FindPlayerPed ();
         if (player)

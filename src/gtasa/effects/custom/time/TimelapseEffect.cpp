@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CClock.h"
+#include <CClock.h>
 
 class TimelapseEffect : public EffectBase
 {

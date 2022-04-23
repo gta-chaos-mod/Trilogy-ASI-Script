@@ -1,8 +1,8 @@
 #include <util/EffectBase.h>
 #include <util/Teleportation.h>
 
-#include <extensions/ScriptCommands.h>
 #include <CStreaming.h>
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -49,19 +49,14 @@ public:
                                              &groundResult, 0)
               + 3.0f;
 
-        if (!groundResult)
-        {
-            return FindSuitableTeleportPosition (inst);
-        }
+        if (!groundResult) return FindSuitableTeleportPosition (inst);
 
         float waterLevel = 0.0f;
         Command<eScriptCommands::COMMAND_GET_WATER_HEIGHT_AT_COORDS> (
             randomPosition.x, randomPosition.y, true, &waterLevel);
 
         if (randomPosition.z <= waterLevel)
-        {
             return FindSuitableTeleportPosition (inst);
-        }
 
         return randomPosition;
     }

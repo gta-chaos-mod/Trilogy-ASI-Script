@@ -12,6 +12,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        rotationAngleMap.clear ();
+
         Events::vehicleRenderEvent += RenderVehicleEvent;
     }
 

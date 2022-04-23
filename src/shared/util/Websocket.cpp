@@ -1,5 +1,6 @@
 #include "Websocket.h"
-#include "util/EffectHandler.h"
+
+#include <util/EffectHandler.h>
 
 void
 Websocket::SendCrowdControlResponse (int effectID, int response)

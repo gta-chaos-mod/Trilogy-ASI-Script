@@ -17,10 +17,7 @@ public:
         Events::processScriptsEvent -= OnProcessScripts;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            player->m_pPlayerData->m_bPlayerSprintDisabled = false;
-        }
+        if (player) player->m_pPlayerData->m_bPlayerSprintDisabled = false;
     }
 
     static void

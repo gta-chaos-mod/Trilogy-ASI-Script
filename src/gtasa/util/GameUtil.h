@@ -2,30 +2,29 @@
 
 #include <filesystem>
 
-#include "CCamera.h"
-#include "CCarCtrl.h"
-#include "CCheat.h"
-#include "CClock.h"
-#include "CCutsceneMgr.h"
-#include "CClothes.h"
-#include "CEntryExitManager.h"
-#include "CGame.h"
-#include "CGenericGameStorage.h"
-#include "CMenuManager.h"
-#include "CModelInfo.h"
-#include "CStreaming.h"
-#include "CTheScripts.h"
-#include "CWorld.h"
-
-#include "CAutomobile.h"
-#include "CBike.h"
-#include "CBmx.h"
-#include "CBoat.h"
-#include "CHeli.h"
-#include "CMonsterTruck.h"
-#include "CPlane.h"
-#include "CQuadBike.h"
-#include "CTrailer.h"
+#include <CAutomobile.h>
+#include <CBike.h>
+#include <CBmx.h>
+#include <CBoat.h>
+#include <CCamera.h>
+#include <CCarCtrl.h>
+#include <CCheat.h>
+#include <CClock.h>
+#include <CClothes.h>
+#include <CCutsceneMgr.h>
+#include <CEntryExitManager.h>
+#include <CGame.h>
+#include <CGenericGameStorage.h>
+#include <CHeli.h>
+#include <CMenuManager.h>
+#include <CModelInfo.h>
+#include <CMonsterTruck.h>
+#include <CPlane.h>
+#include <CQuadBike.h>
+#include <CStreaming.h>
+#include <CTheScripts.h>
+#include <CTrailer.h>
+#include <CWorld.h>
 
 class GameUtil
 {

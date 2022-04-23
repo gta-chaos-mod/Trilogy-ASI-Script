@@ -1,7 +1,7 @@
 #include <util/BoneHelper.h>
 #include <util/EffectBase.h>
 
-#include "ePedBones.h"
+#include <ePedBones.h>
 
 class LongNecksEffect : public EffectBase
 {
@@ -23,14 +23,11 @@ public:
     {
         RwV3d scale = {1.5f, 1.5f, 1.5f};
         for (int i = BONE_NECK; i <= BONE_HEAD; i++)
-        {
             BoneHelper::ScaleBone (ped, i, scale);
-        }
 
         for (int i = 5000; i < 5026; i++)
-        {
             BoneHelper::ScaleBone (ped, i, scale);
-        }
+
         // Cutscene related?
         BoneHelper::ScaleBone (ped, 30, scale);
     }

@@ -1,8 +1,6 @@
 #include <util/BoneHelper.h>
 #include <util/EffectBase.h>
 
-#include "ePedBones.h"
-
 class UpsideDownPedsEffect : public EffectBase
 {
 public:

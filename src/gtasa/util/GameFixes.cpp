@@ -88,16 +88,11 @@ char *__fastcall GameFixes::Hooked_CText_Get (CText *thisText, void *edx,
     {
         if (Config::GetOrDefault ("Chaos.DeleteAutosaveOnNewGame", true)
             || KeyPressed (VK_CONTROL))
-        {
             return (char *) "New Game (Delete Autosave)";
-        }
     }
     else if (key_str == "FES_LOA")
     {
-        if (KeyPressed (VK_CONTROL))
-        {
-            return (char *) "Load Autosave";
-        }
+        if (KeyPressed (VK_CONTROL)) return (char *) "Load Autosave";
     }
     else if (key_str == "FEP_STG")
     {
@@ -107,10 +102,7 @@ char *__fastcall GameFixes::Hooked_CText_Get (CText *thisText, void *edx,
 
             if (Config::GetOrDefault ("Chaos.LoadAutosaveOnGameLoad", true))
             {
-                if (!KeyPressed (VK_CONTROL))
-                {
-                    TryLoadAutoSave ();
-                }
+                if (!KeyPressed (VK_CONTROL)) TryLoadAutoSave ();
             }
         }
     }
@@ -163,11 +155,8 @@ int __fastcall GameFixes::Hooked_CMenuManager_DoSettingsBeforeStartingAGame (
     if (Config::GetOrDefault ("Chaos.ClearEffectsOnNewGame", true)
         && !Config::GetOrDefault ("CrowdControl.Enabled", false))
     {
-        // TODO: Clear effects
-        // for (EffectBase *effect : EffectDatabase::GetActiveEffects ())
-        // {
-        //     effect->Clear ();
-        // }
+        for (auto &effect : EffectHandler::GetActiveEffects ())
+            effect.Disable ();
     }
     return thisManager->DoSettingsBeforeStartingAGame ();
 }

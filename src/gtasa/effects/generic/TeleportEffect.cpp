@@ -1,6 +1,6 @@
-#include "util/EffectBase.h"
-#include "util/EffectCrowdControlHandler.h"
-#include "util/Teleportation.h"
+#include <util/EffectBase.h>
+#include <util/EffectCrowdControlHandler.h>
+#include <util/Teleportation.h>
 
 class TeleportEffect : public EffectBase
 {
@@ -16,9 +16,9 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        this->destination = {inst->GetCustomData ().value ("posX", .0f),
-                             inst->GetCustomData ().value ("posY", .0f),
-                             inst->GetCustomData ().value ("posZ", .0f)};
+        this->destination = {inst->GetCustomData ().value ("posX", 0.0f),
+                             inst->GetCustomData ().value ("posY", 0.0f),
+                             inst->GetCustomData ().value ("posZ", 0.0f)};
     }
 
     void
@@ -27,9 +27,8 @@ public:
         if (!CanActivate ())
         {
             if (inst->GetSubhandler<EffectCrowdControlHandler> ())
-            {
                 inst->ResetTimer ();
-            }
+
             return;
         }
 

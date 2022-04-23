@@ -1,6 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "CPlayerInfo.h"
+#include <CPlayerInfo.h>
 
 using namespace plugin;
 

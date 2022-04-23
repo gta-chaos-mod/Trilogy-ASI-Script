@@ -9,6 +9,13 @@ class ToDriveOrNotToDriveEffect : public EffectBase
 
 public:
     void
+    OnStart (EffectInstance *inst) override
+    {
+        wait = 0;
+        doPop = true;
+    }
+
+    void
     OnEnd (EffectInstance *inst) override
     {
         FixTires ();
@@ -18,10 +25,7 @@ public:
     OnTick (EffectInstance *inst) override
     {
         wait -= (int) GenericUtil::CalculateTick ();
-        if (wait > 0)
-        {
-            return;
-        }
+        if (wait > 0) return;
 
         GameUtil::SetVehiclesToRealPhysics ();
 

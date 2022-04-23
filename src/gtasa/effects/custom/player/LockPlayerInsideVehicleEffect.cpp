@@ -1,5 +1,5 @@
-#include <util/EffectBase.h>
 #include <util/Config.h>
+#include <util/EffectBase.h>
 
 class LockPlayerInsideVehicleEffect : public EffectBase
 {
@@ -7,23 +7,17 @@ public:
     bool
     CanActivate () override
     {
-        return FindPlayerVehicle (-1, false) != nullptr;
+        return FindPlayerVehicle (-1, false);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            player->m_nPedFlags.CantBeKnockedOffBike = 0;
-        }
+        if (player) player->m_nPedFlags.CantBeKnockedOffBike = 0;
 
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (vehicle)
-        {
-            vehicle->m_nDoorLock = eCarLock::CARLOCK_UNLOCKED;
-        }
+        if (vehicle) vehicle->m_nDoorLock = eCarLock::CARLOCK_UNLOCKED;
     }
 
     void

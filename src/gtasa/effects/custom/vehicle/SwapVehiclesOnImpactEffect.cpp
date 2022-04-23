@@ -1,7 +1,7 @@
 #include <util/EffectBase.h>
 #include <util/GenericUtil.h>
 
-#include "extensions/ScriptCommands.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -43,16 +43,11 @@ public:
         for (auto const &[vehicle, vehicleWait] : vehicleCooldowns)
         {
             vehicleCooldowns[vehicle] -= wait;
-            if (vehicleCooldowns[vehicle] < 0)
-            {
-                toErase.push_back (vehicle);
-            }
+            if (vehicleCooldowns[vehicle] < 0) toErase.push_back (vehicle);
         }
 
         for (CVehicle *erase : toErase)
-        {
             vehicleCooldowns.erase (erase);
-        }
     }
 
     static void

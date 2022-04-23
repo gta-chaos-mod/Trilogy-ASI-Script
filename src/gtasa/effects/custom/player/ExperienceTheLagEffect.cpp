@@ -17,10 +17,7 @@ public:
     OnTick (EffectInstance *inst) override
     {
         wait -= (int) GenericUtil::CalculateTick ();
-        if (wait > 0)
-        {
-            return;
-        }
+        if (wait > 0) return;
 
         TeleportLag (inst);
 
@@ -36,10 +33,7 @@ public:
             if (entity)
             {
                 float range = 0.5f;
-                if (inst->Random (0, 4) == 0)
-                {
-                    range = 2.0f;
-                }
+                if (inst->Random (0, 4) == 0) range = 2.0f;
 
                 CVector position
                     = entity->GetPosition ()

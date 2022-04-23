@@ -2,7 +2,7 @@
 #include <util/EffectBase.h>
 #include <util/GenericUtil.h>
 
-#include "ePedBones.h"
+#include <ePedBones.h>
 
 class ActionFiguresEffect : public EffectBase
 {
@@ -60,19 +60,13 @@ public:
             boneRotations[ped][0] = BoneHelper::GetBoneRotation (ped, 0);
 
             for (int i = 2; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
-            {
                 boneRotations[ped][i] = BoneHelper::GetBoneRotation (ped, i);
-            }
 
             for (int i = 300; i < 304; i++)
-            {
                 boneRotations[ped][i] = BoneHelper::GetBoneRotation (ped, i);
-            }
 
             for (int i = 5000; i < 5026; i++)
-            {
                 boneRotations[ped][i] = BoneHelper::GetBoneRotation (ped, i);
-            }
         }
 
         if (boneRotations.contains (ped))
@@ -81,19 +75,13 @@ public:
             BoneHelper::SetBoneRotation (ped, 0, boneRotations[ped][0]);
 
             for (int i = 2; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
-            {
                 BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
-            }
 
             for (int i = 300; i < 304; i++)
-            {
                 BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
-            }
 
             for (int i = 5000; i < 5026; i++)
-            {
                 BoneHelper::SetBoneRotation (ped, i, boneRotations[ped][i]);
-            }
         }
     }
 };

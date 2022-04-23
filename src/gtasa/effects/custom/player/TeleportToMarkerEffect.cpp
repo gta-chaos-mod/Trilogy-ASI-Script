@@ -1,10 +1,9 @@
 #include <util/EffectBase.h>
 #include <util/Teleportation.h>
 
-#include <extensions/ScriptCommands.h>
+#include <CRadar.h>
 #include <CStreaming.h>
-
-#include "CRadar.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -26,10 +25,7 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        if (!IsMarkerPlaced ())
-        {
-            return;
-        }
+        if (!IsMarkerPlaced ()) return;
 
         CPlayerPed *player = FindPlayerPed ();
         if (player && CanActivate ())

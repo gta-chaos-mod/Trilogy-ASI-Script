@@ -8,9 +8,7 @@ public:
     OnStart (EffectInstance *inst) override
     {
         for (auto &effect : EffectHandler::GetActiveEffects ())
-        {
             effect.Disable ();
-        }
     }
 };
 

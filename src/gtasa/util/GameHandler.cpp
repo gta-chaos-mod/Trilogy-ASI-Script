@@ -2,9 +2,9 @@
 #include <util/Config.h>
 #include <util/GameUtil.h>
 
-#include "CFileMgr.h"
-#include "CTimer.h"
-#include "CTheScripts.h"
+#include <CFileMgr.h>
+#include <CTheScripts.h>
+#include <CTimer.h>
 
 using namespace plugin;
 

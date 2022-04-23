@@ -2,7 +2,7 @@
 #include <effects/TimedFunctionEffect.h>
 #include <util/GameUtil.h>
 
-#include "CCheat.h"
+#include <CCheat.h>
 
 class PedsAttackEachOtherEffect : public TimedFunctionEffect
 {

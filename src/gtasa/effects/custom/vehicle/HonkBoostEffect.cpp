@@ -8,6 +8,12 @@ class HonkBoostEffect : public EffectBase
 
 public:
     void
+    OnStart (EffectInstance *inst) override
+    {
+        wasHornOn.clear();
+    }
+
+    void
     OnTick (EffectInstance *inst) override
     {
         GameUtil::SetVehiclesToRealPhysics ();

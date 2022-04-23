@@ -1,20 +1,13 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
+#include <util/Config.h>
+#include <util/DrawVoting.h>
+#include <util/GenericUtil.h>
+#include <util/MathHelper.h>
 
-#include <math.h>
-
-#define deg2rad(angleDegrees) ((angleDegrees) *M_PI / 180.0)
-
-#include "Config.h"
-#include "DrawVoting.h"
-// #include "EffectBase.h"
-// #include "EffectDatabase.h"
-#include "GenericUtil.h"
-
-#include "CFont.h"
-#include "CTimer.h"
-#include "extensions/FontPrint.h"
+#include <CFont.h>
+#include <CTimer.h>
+#include <extensions/FontPrint.h>
 
 using namespace plugin;
 

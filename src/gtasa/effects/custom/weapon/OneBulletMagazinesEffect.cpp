@@ -10,11 +10,8 @@ public:
         {
             for (int i = 0; i < 13; i++)
             {
-                CWeapon &weapon = ped->m_aWeapons[i];
-                if (weapon.m_nAmmoInClip > 1)
-                {
-                    weapon.m_nAmmoInClip = 1;
-                }
+                CWeapon &weapon      = ped->m_aWeapons[i];
+                weapon.m_nAmmoInClip = std::min (weapon.m_nAmmoInClip, 1u);
             }
         }
     }

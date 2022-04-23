@@ -1,8 +1,10 @@
 #pragma once
 
-#include "util/EffectInstance.h"
-#include <CTheScripts.h>
+#include <util/EffectInstance.h>
+
 #include <utility>
+
+#include <CTheScripts.h>
 
 template <typename ChildEffect>
 class DisabledForMissionEffect : public ChildEffect
@@ -24,7 +26,6 @@ class DisabledForMissionEffect : public ChildEffect
                 ChildEffect::OnStart (inst);
         }
 
-        if (!onMission)
-            ChildEffect::OnTick (inst);
+        if (!onMission) ChildEffect::OnTick (inst);
     }
 };

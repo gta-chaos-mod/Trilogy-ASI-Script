@@ -67,8 +67,7 @@ public:
         }
 
         CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
-        if (!playerVehicle)
-            return;
+        if (!playerVehicle) return;
 
         if (playerVehicle == thisEntity)
         {

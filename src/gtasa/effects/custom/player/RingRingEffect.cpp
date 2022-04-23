@@ -1,9 +1,8 @@
 #include <util/EffectBase.h>
 #include <util/GenericUtil.h>
 
-#include "CStreaming.h"
-
-#include "extensions/ScriptCommands.h"
+#include <CStreaming.h>
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -24,8 +23,8 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
-            Command<eScriptCommands::COMMAND_TASK_USE_MOBILE_PHONE> (
-                FindPlayerPed (), false);
+            Command<eScriptCommands::COMMAND_TASK_USE_MOBILE_PHONE> (player,
+                                                                     false);
         }
     }
 
@@ -33,10 +32,7 @@ public:
     OnTick (EffectInstance *inst) override
     {
         wait -= (int) GenericUtil::CalculateTick ();
-        if (wait > 0)
-        {
-            return;
-        }
+        if (wait > 0) return;
 
         CPlayerPed *player = FindPlayerPed ();
         if (player)

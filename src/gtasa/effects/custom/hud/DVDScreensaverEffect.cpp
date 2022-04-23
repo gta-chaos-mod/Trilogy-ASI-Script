@@ -31,38 +31,30 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        float tick = GenericUtil::CalculateTick (0.2f);
+
         if (goingRight)
         {
-            x += GenericUtil::CalculateTick (0.2f);
+            x += tick;
             if (SCREEN_COORD (x) >= SCREEN_WIDTH - SCREEN_COORD (400.0f))
-            {
                 goingRight = false;
-            }
         }
         else
         {
-            x -= GenericUtil::CalculateTick (0.2f);
-            if (x < 0.0f)
-            {
-                goingRight = true;
-            }
+            x -= tick;
+            if (x < 0.0f) goingRight = true;
         }
 
         if (goingDown)
         {
-            y += GenericUtil::CalculateTick (0.2f);
+            y += tick;
             if (SCREEN_COORD (y) >= SCREEN_HEIGHT - SCREEN_COORD (400.0f))
-            {
                 goingDown = false;
-            }
         }
         else
         {
-            y -= GenericUtil::CalculateTick (0.2f);
-            if (y < 0.0f)
-            {
-                goingDown = true;
-            }
+            y -= tick;
+            if (y < 0.0f) goingDown = true;
         }
     }
 
@@ -71,22 +63,23 @@ public:
     {
         switch (boxNumber)
         {
-        case 0:
-        case 1:
-        default:
-        {
-            return std::make_pair (0.0f, 0.0f);
-        }
-        case 2:
-        {
-            return std::make_pair (SCREEN_COORD (x) + SCREEN_COORD (400.0f),
-                                   SCREEN_COORD (y));
-        }
-        case 3:
-        {
-            return std::make_pair (SCREEN_COORD (x),
-                                   SCREEN_COORD (y) + SCREEN_COORD (400.0f));
-        }
+            case 0:
+            case 1:
+            default:
+            {
+                return std::make_pair (0.0f, 0.0f);
+            }
+            case 2:
+            {
+                return std::make_pair (SCREEN_COORD (x) + SCREEN_COORD (400.0f),
+                                       SCREEN_COORD (y));
+            }
+            case 3:
+            {
+                return std::make_pair (SCREEN_COORD (x),
+                                       SCREEN_COORD (y)
+                                           + SCREEN_COORD (400.0f));
+            }
         }
     }
 
@@ -95,30 +88,27 @@ public:
     {
         switch (boxNumber)
         {
-        case 0:
-        default:
-        {
-            return std::make_pair (SCREEN_WIDTH, SCREEN_COORD (y));
-        }
-        case 1:
-        {
-            return std::make_pair (SCREEN_COORD (x), SCREEN_HEIGHT);
-        }
-        case 2:
-        case 3:
-        {
-            return std::make_pair (SCREEN_WIDTH, SCREEN_HEIGHT);
-        }
+            case 0:
+            default:
+            {
+                return std::make_pair (SCREEN_WIDTH, SCREEN_COORD (y));
+            }
+            case 1:
+            {
+                return std::make_pair (SCREEN_COORD (x), SCREEN_HEIGHT);
+            }
+            case 2:
+            case 3:
+            {
+                return std::make_pair (SCREEN_WIDTH, SCREEN_HEIGHT);
+            }
         }
     }
 
     static void
     DrawScreensaver ()
     {
-        if (FrontEndMenuManager.m_bMenuActive)
-        {
-            return;
-        }
+        if (FrontEndMenuManager.m_bMenuActive) return;
 
         for (int i = 0; i < 4; i++)
         {

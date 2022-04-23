@@ -14,14 +14,12 @@ public:
     virtual void
     OnEnd (EffectInstance *instance) override
     {
-        if (function && enabledState && *enabledState)
-            function ();
+        if (function && enabledState && *enabledState) function ();
     }
 
     virtual void
     OnTick (EffectInstance *instance) override
     {
-        if (enabledState && !*enabledState)
-            function ();
+        if (enabledState && !*enabledState) function ();
     }
 };

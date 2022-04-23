@@ -2,7 +2,7 @@
 #include <util/GameUtil.h>
 #include <util/GenericUtil.h>
 
-#include "extensions/ScriptCommands.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -57,10 +57,7 @@ public:
         if (player)
         {
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                pad->DisablePlayerControls = true;
-            }
+            if (pad) pad->DisablePlayerControls = true;
         }
     }
 };

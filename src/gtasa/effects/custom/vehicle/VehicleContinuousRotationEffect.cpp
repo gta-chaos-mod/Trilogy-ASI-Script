@@ -12,6 +12,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        rotationAngle = 0.0f;
+
         Events::vehicleRenderEvent += RenderVehicleEvent;
     }
 

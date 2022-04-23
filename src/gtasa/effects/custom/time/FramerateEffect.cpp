@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CMenuManager.h"
+#include <CMenuManager.h>
 
 class FramerateEffect : public EffectBase
 {

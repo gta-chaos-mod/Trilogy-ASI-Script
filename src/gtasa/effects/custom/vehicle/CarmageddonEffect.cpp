@@ -22,6 +22,13 @@ class CarmageddonEffect : public EffectBase
 
 public:
     void
+    OnStart (EffectInstance *inst) override
+    {
+        wait = 0;
+        vehicleList.clear ();
+    }
+
+    void
     OnTick (EffectInstance *inst) override
     {
         int step = (int) GenericUtil::CalculateTick ();
@@ -30,10 +37,7 @@ public:
         RemoveExplodedVehicles (step);
 
         wait -= step;
-        if (wait > 0)
-        {
-            return;
-        }
+        if (wait > 0) return;
 
         CPlayerPed *player = FindPlayerPed ();
         if (player)
@@ -76,7 +80,9 @@ public:
                 // vehicles until there's room.
                 if (CPools::ms_pVehiclePool->GetNoOfFreeSpaces () < 5
                     || carToSpawn == -1)
+                {
                     return;
+                }
 
                 CVehicle *vehicle
                     = GameUtil::CreateVehicle (carToSpawn, spawnPosition,
@@ -106,8 +112,7 @@ public:
             CVehicle *vehicle = it->first;
             int      &time    = it->second;
 
-            if (vehicle->m_fHealth <= 0.0f)
-                time += step;
+            if (vehicle->m_fHealth <= 0.0f) time += step;
 
             if (time > DESPAWN_TIME)
             {
@@ -126,8 +131,10 @@ public:
 
         CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
         if (playerVehicle)
+        {
             spawnDistance
                 += playerVehicle->m_vecMoveSpeed.Magnitude2D () * 4.2f;
+        }
 
         return spawnDistance;
     }

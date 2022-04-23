@@ -1,5 +1,4 @@
-#include "effects/OneTimeEffect.h"
-
+#include <effects/OneTimeEffect.h>
 #include <util/EffectBase.h>
 #include <util/EffectInstance.h>
 #include <util/GameUtil.h>

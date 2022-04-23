@@ -1,12 +1,11 @@
 #pragma once
 
-#include <thread>
+#include <util/Config.h>
+#include <util/DrawHelper.h>
+#include <util/DrawVoting.h>
+#include <util/RandomHelper.h>
 
-#include "Config.h"
-#include "DrawHelper.h"
-#include "DrawVoting.h"
-// #include "EffectDatabase.h"
-#include "RandomHelper.h"
+#include <thread>
 
 class Websocket
 {

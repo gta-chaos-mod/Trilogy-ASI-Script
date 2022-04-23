@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CFireManager.h"
+#include <CFireManager.h>
 
 using namespace plugin;
 
@@ -40,13 +40,9 @@ public:
                       || victim->m_nType == eEntityType::ENTITY_TYPE_VEHICLE);
 
             if (validVictim)
-            {
                 gFireManager.StartFire (victim, owner, 1.0f, 0, 2000, 0);
-            }
             else
-            {
                 gFireManager.StartFire (point, 1.0f, 0, owner, 2000, 0, 1);
-            }
         }
 
         CallMethod<0x73B550, CWeapon *> (weapon, owner, victim, startPoint,

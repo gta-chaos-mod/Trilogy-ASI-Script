@@ -1,6 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "CMenuManager.h"
+#include <CMenuManager.h>
 
 class PauseEffect : public OneTimeEffect
 {

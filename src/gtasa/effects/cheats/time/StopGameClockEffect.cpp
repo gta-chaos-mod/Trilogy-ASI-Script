@@ -1,7 +1,7 @@
 #include <util/EffectBase.h>
 
-#include "CClock.h"
-#include "CWeather.h"
+#include <CClock.h>
+#include <CWeather.h>
 
 class StopGameClockEffect : public EffectBase
 {
@@ -14,9 +14,9 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        this->currentWeather = (eWeatherType)
-            std::min (CWeather::NewWeatherType,
-                      (short) eWeatherType::WEATHER_EXTRACOLOURS_2);
+        this->currentWeather
+            = (eWeatherType) std::min (CWeather::NewWeatherType,
+                                       (short) WEATHER_EXTRACOLOURS_2);
 
         this->hours   = CClock::ms_nGameClockHours;
         this->minutes = CClock::ms_nGameClockMinutes;

@@ -1,6 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "CStats.h"
+#include <CStats.h>
 
 class NoStaminaEffect : public OneTimeEffect
 {
@@ -8,7 +8,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        CStats::SetStatValue (eStats::STAT_STAMINA, 0.0f); // Stamina
+        CStats::SetStatValue (STAT_STAMINA, 0.0f); // Stamina
     }
 };
 

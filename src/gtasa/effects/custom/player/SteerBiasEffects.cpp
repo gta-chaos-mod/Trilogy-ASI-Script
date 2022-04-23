@@ -29,10 +29,7 @@ public:
                 // TODO: This is only working when we are using
                 // Events::processScriptsEvent, not Events::gameProcessEvent
                 CPad *pad = player->GetPadFromPlayer ();
-                if (pad)
-                {
-                    pad->NewState.LeftStickX += bias;
-                }
+                if (pad) pad->NewState.LeftStickX += bias;
             }
         }
     }

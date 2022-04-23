@@ -1,8 +1,9 @@
 #include <util/Config.h>
+#include <util/EffectHandler.h>
 #include <util/GameUtil.h>
 #include <util/GenericUtil.h>
 
-#include "CText.h"
+#include <CText.h>
 
 using namespace plugin;
 

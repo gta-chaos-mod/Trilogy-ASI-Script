@@ -128,11 +128,11 @@ ForEachMacros: [
 'FOR_INIT_STMT',
 'FOR_SCOPE'
 ]
-IndentCaseLabels: false
+IndentCaseLabels: true
 NamespaceIndentation: None
 PenaltyBreakBeforeFirstCallParameter: 100
 PointerAlignment: Right
-SortIncludes: false
+SortIncludes: CaseSensitive
 SpaceAfterCStyleCast: true
 SpaceBeforeParens: Always
 SpacesBeforeTrailingComments: 1
@@ -140,4 +140,7 @@ UseTab: Never
 AlignConsecutiveDeclarations: true
 AlignConsecutiveAssignments: true
 AlignEscapedNewlines: Right
+AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortFunctionsOnASingleLine: Empty

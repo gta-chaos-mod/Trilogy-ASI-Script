@@ -2,8 +2,8 @@
 
 #include <thread>
 
-#include "CTimer.h"
-#include "CMenuManager.h"
+#include <CMenuManager.h>
+#include <CTimer.h>
 
 class FakeCrashEffect : public EffectBase
 {

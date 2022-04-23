@@ -1,6 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "extensions/ScriptCommands.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -10,8 +10,7 @@ public:
     bool
     CanActivate () override
     {
-        return FindPlayerPed () != nullptr
-               && FindPlayerVehicle (-1, false) != nullptr;
+        return FindPlayerPed () && FindPlayerVehicle (-1, false);
     }
 
     void

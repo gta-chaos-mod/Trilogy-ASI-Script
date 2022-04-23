@@ -38,15 +38,9 @@ public:
     OnTick (EffectInstance *inst) override
     {
         wait -= (int) GenericUtil::CalculateTick ();
-        if (wait > nextStore)
-        {
-            StoreLocationData ();
-        }
+        if (wait > nextStore) StoreLocationData ();
 
-        if (wait > 0)
-        {
-            return;
-        }
+        if (wait > 0) return;
 
         TeleportToPreviousLocation ();
 

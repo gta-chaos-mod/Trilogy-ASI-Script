@@ -2,7 +2,7 @@
 #include <util/EffectBase.h>
 #include <util/GenericUtil.h>
 
-#include "ePedBones.h"
+#include <ePedBones.h>
 
 class HelicopterPedsEffect : public EffectBase
 {
@@ -38,16 +38,13 @@ public:
     RenderPed (CPed *ped)
     {
         // Helicopter
-        RwV3d rotation
-            = BoneHelper::GetBoneRotation (ped, ePedBones::BONE_PELVIS1);
-        rotation.z = rotationAngle;
-        BoneHelper::SetBoneRotation (ped, ePedBones::BONE_PELVIS1, rotation);
+        RwV3d rotation = BoneHelper::GetBoneRotation (ped, BONE_PELVIS1);
+        rotation.z     = rotationAngle;
+        BoneHelper::SetBoneRotation (ped, BONE_PELVIS1, rotation);
 
         // Fix shoulders
-        BoneHelper::SetBoneRotation (ped, ePedBones::BONE_LEFTSHOULDER,
-                                     {0, 0, 0});
-        BoneHelper::SetBoneRotation (ped, ePedBones::BONE_RIGHTSHOULDER,
-                                     {0, 0, 0});
+        BoneHelper::SetBoneRotation (ped, BONE_LEFTSHOULDER, {0, 0, 0});
+        BoneHelper::SetBoneRotation (ped, BONE_RIGHTSHOULDER, {0, 0, 0});
     }
 };
 

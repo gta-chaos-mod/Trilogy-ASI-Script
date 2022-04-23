@@ -2,10 +2,10 @@
 
 #include <util/GameUtil.h>
 
-#include "CPopulation.h"
-#include "CTimeCycle.h"
+#include <CPopulation.h>
+#include <CTimeCycle.h>
 
-#include "extensions/ScriptCommands.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 

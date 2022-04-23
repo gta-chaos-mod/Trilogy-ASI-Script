@@ -1,7 +1,7 @@
 #include <util/EffectBase.h>
 #include <util/GameUtil.h>
 
-#include "CTimer.h"
+#include <CTimer.h>
 
 class SimpleGravityEffect : public EffectBase
 {

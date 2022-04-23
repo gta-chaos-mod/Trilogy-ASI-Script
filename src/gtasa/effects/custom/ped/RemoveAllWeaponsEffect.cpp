@@ -1,5 +1,4 @@
 #include <effects/OneTimeEffect.h>
-
 #include <util/GameUtil.h>
 
 class RemoveAllWeaponsEffect : public OneTimeEffect
@@ -9,9 +8,7 @@ public:
     OnStart (EffectInstance *inst) override
     {
         for (CPed *ped : CPools::ms_pPedPool)
-        {
             GameUtil::ClearWeaponsExceptParachute (ped);
-        }
     }
 };
 

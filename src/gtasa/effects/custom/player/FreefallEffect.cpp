@@ -1,7 +1,7 @@
 #include <util/EffectBase.h>
 #include <util/Teleportation.h>
 
-#include "CTaskSimpleCarSetPedOut.h"
+#include <CTaskSimpleCarSetPedOut.h>
 
 class FreefallEffect : public EffectBase
 {
@@ -16,10 +16,7 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (!player || !CanActivate ())
-        {
-            return;
-        }
+        if (!player || !CanActivate ()) return;
 
         CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
         if (playerVehicle)

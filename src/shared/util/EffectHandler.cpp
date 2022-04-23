@@ -1,7 +1,8 @@
 #include "EffectHandler.h"
-#include "util/EffectDatabase.h"
-#include "util/EffectInstance.h"
-#include "util/Config.h"
+
+#include <util/Config.h>
+#include <util/EffectDatabase.h>
+#include <util/EffectInstance.h>
 
 void
 EffectHandler::Tick ()
@@ -9,9 +10,7 @@ EffectHandler::Tick ()
     EmptyQueue ();
 
     for (auto &effect : effects)
-    {
         effect.Tick ();
-    }
 
     std::erase_if (effects,
                    [] (EffectInstance &effect) {
@@ -42,20 +41,15 @@ void
 EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
                             const nlohmann::json &data)
 {
-    if (!effect)
-    {
-        return;
-    }
+    if (!effect) return;
 
     EffectInstance::SubHandlers_t handlers (data);
 
-    if (!handlers.HandleOnQueue ())
-        return;
+    if (!handlers.HandleOnQueue ()) return;
 
     auto effectFunction = [=] ()
     {
-        if (!handlers.HandleOnAddEffect (effect))
-            return;
+        if (!handlers.HandleOnAddEffect (effect)) return;
 
         auto inst = effect->CreateInstance ();
 
@@ -64,16 +58,14 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
         {
             if (inst.IsOtherEffectIncompatible (i))
             {
-                if (!handlers.HandleOnEffectIncompatibility ())
-                    return;
+                if (!handlers.HandleOnEffectIncompatibility ()) return;
 
                 i.Disable ();
             }
         }
 
         /* Actually activate the effect */
-        if (!handlers.HandleOnEffectActivated ())
-            return;
+        if (!handlers.HandleOnEffectActivated ()) return;
 
         inst.SetSubHandlers (handlers);
         inst.SetDuration (data["duration"]);
@@ -109,14 +101,10 @@ EffectHandler::HandleFunction (const nlohmann::json &effectData)
     effect = EffectDatabase::FindEffectById (effectData.at ("effectID"));
 
     if (effect)
-    {
         QueueEffect (effect, false, effectData);
-    }
     else
-    {
 #ifndef _NDEBUG
         MessageBox (NULL, std::string (effectData.at ("effectID")).c_str (),
                     "Effect not found", MB_ICONHAND);
 #endif
-    }
 }

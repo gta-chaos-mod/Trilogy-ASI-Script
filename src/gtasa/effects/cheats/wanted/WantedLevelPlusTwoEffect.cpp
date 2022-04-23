@@ -1,10 +1,15 @@
 #include <effects/OneTimeEffect.h>
-
-#include "CWanted.h"
+#include <util/GameUtil.h>
 
 class WantedLevelPlusTwoEffect : public OneTimeEffect
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return GameUtil::IsPlayerSafe ();
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {

@@ -1,7 +1,7 @@
 #include <effects/OneTimeEffect.h>
 #include <util/GameUtil.h>
 
-#include "CStats.h"
+#include <CStats.h>
 
 class SkinnyPlayerEffect : public OneTimeEffect
 {
@@ -9,8 +9,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        CStats::SetStatValue (eStats::STAT_FAT, 0.0f);
-        CStats::SetStatValue (eStats::STAT_MUSCLE, 0.0f);
+        CStats::SetStatValue (STAT_FAT, 0.0f);
+        CStats::SetStatValue (STAT_MUSCLE, 0.0f);
 
         GameUtil::RebuildPlayer ();
     }

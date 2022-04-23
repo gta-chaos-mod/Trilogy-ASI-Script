@@ -1,11 +1,10 @@
 #include "EffectCrowdControlHandler.h"
-#include "util/GenericUtil.h"
-#include "util/Config.h"
 
-#include "util/EffectBase.h"
-#include "util/Websocket.h"
-
-#include "util/GameUtil.h"
+#include <util/Config.h>
+#include <util/EffectBase.h>
+#include <util/GameUtil.h>
+#include <util/GenericUtil.h>
+#include <util/Websocket.h>
 
 bool
 EffectCrowdControlHandler::IsCrowdControlEnabled ()
@@ -23,8 +22,7 @@ EffectCrowdControlHandler::Initialise (const nlohmann::json &data)
 bool
 EffectCrowdControlHandler::HandleOnQueue () const
 {
-    if (!*this)
-        return true;
+    if (!*this) return true;
 
     if (GenericUtil::IsMenuActive () || !GameUtil::IsPlayerSafe ())
     {
@@ -62,8 +60,7 @@ EffectCrowdControlHandler::HandleOnEffectIncompatibility () const
 bool
 EffectCrowdControlHandler::HandleOnEffectActivated () const
 {
-    if (*this)
-        SendSucceeded ();
+    if (*this) SendSucceeded ();
 
     return true;
 }

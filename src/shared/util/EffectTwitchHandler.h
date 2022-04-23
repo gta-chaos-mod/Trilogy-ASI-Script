@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EffectSubHandlers.h"
+#include <util/EffectSubHandlers.h>
 
 class EffectTwitchHandler : public EffectSubHandler
 {
@@ -20,5 +20,8 @@ public:
             voter = data["twitchData"].value ("voter", "");
     }
 
-    explicit operator bool () { return voter != ""; }
+    explicit operator bool ()
+    {
+        return voter != "";
+    }
 };

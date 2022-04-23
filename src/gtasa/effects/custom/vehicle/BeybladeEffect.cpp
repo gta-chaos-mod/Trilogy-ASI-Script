@@ -8,9 +8,7 @@ public:
     OnStart (EffectInstance *inst) override
     {
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
-        {
             vehicle->m_vecTurnSpeed.z = 1.5f;
-        }
     }
 
     void

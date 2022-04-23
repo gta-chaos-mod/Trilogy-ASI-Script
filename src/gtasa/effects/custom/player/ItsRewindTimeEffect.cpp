@@ -3,9 +3,9 @@
 #include <util/GenericUtil.h>
 #include <util/Teleportation.h>
 
-#include "ePedBones.h"
-
 #include <deque>
+
+#include <ePedBones.h>
 
 class ItsRewindTimeEffect : public EffectBase
 {
@@ -47,10 +47,8 @@ public:
         wait -= (int) GenericUtil::CalculateTick ();
         if (wait > 0)
         {
-            if (wait <= startStoring)
-            {
-                StoreLocationData ();
-            }
+            if (wait <= startStoring) StoreLocationData ();
+
             return;
         }
 
@@ -60,6 +58,12 @@ public:
         {
             wait         = inst->Random (2000, 15000);
             startStoring = inst->Random (1000, wait - 1000);
+
+            CPlayerPed *player = FindPlayerPed ();
+            if (player) player->m_nPhysicalFlags.bCollidable = true;
+
+            CVehicle *vehicle = FindPlayerVehicle (-1, false);
+            if (vehicle) vehicle->m_nPhysicalFlags.bCollidable = true;
         }
     }
 
@@ -83,6 +87,8 @@ public:
 
             CallMethod<0x59AD20, CMatrix *, RwMatrix *> (vehicle->GetMatrix (),
                                                          &rewindData.matrix);
+
+            vehicle->m_nPhysicalFlags.bCollidable = false;
         }
 
         CPlayerPed *player = FindPlayerPed ();
@@ -98,14 +104,14 @@ public:
                                              rewindData.boneRotations[i]);
             }
 
-            BoneHelper::UpdatePed (player);
-
             if (!vehicle)
             {
                 player->SetPosn (rewindData.location);
                 player->m_vecMoveSpeed = rewindData.moveSpeed;
                 player->m_vecTurnSpeed = rewindData.turnSpeed;
             }
+
+            player->m_nPhysicalFlags.bCollidable = false;
         }
 
         currentRewindID += 3;

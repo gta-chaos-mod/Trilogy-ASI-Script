@@ -35,10 +35,7 @@ public:
             if (player)
             {
                 CPad *pad = player->GetPadFromPlayer ();
-                if (pad)
-                {
-                    pad->NewMouseControllerState.Y += recoilValue;
-                }
+                if (pad) pad->NewMouseControllerState.Y += recoilValue;
             }
 
             recoilValue -= 1.0f;
@@ -53,9 +50,7 @@ public:
                                                 CVector *arg_14)
     {
         if (owner == FindPlayerPed () && !FindPlayerVehicle (-1, false))
-        {
             recoilValue = 4.0f;
-        }
 
         return CallMethodAndReturn<char, 0x742300, CWeapon *> (
             thisWeapon, owner, vecOrigin, _vecEffectPosn, targetEntity,

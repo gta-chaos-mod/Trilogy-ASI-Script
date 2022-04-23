@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CWeather.h"
+#include <CWeather.h>
 
 class WeatherEffect : public EffectBase
 {

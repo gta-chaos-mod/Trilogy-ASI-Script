@@ -1,13 +1,13 @@
 #pragma once
 
-#include "util/EffectCrowdControlHandler.h"
-#include "util/EffectTwitchHandler.h"
-#include "util/EffectDrawHandler.h"
-#include "util/EffectSubHandlers.h"
-#include "util/RandomHelper.h"
+#include <util/EffectCrowdControlHandler.h>
+#include <util/EffectDrawHandler.h>
+#include <util/EffectSubHandlers.h>
+#include <util/EffectTwitchHandler.h>
+#include <util/RandomHelper.h>
 
-#include <string>
 #include <memory>
+#include <string>
 
 class EffectBase;
 
@@ -115,8 +115,7 @@ public:
     void
     SetCustomData (const nlohmann::json &data)
     {
-        if (data.contains ("seed"))
-            randomHelper.SetSeed (data["seed"]);
+        if (data.contains ("seed")) randomHelper.SetSeed (data["seed"]);
 
         this->customData = data;
     }

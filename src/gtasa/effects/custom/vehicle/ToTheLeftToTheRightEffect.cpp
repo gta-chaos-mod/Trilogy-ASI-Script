@@ -9,6 +9,12 @@ class ToTheLeftToTheRightEffect : public EffectBase
 
 public:
     void
+    OnStart (EffectInstance *inst) override
+    {
+        wait = 0;
+    }
+
+    void
     OnEnd (EffectInstance *inst) override
     {
         if (!Config::GetOrDefault ("CrowdControl.Enabled", false))
@@ -31,20 +37,14 @@ public:
     OnTick (EffectInstance *inst) override
     {
         wait -= (int) GenericUtil::CalculateTick ();
-        if (wait > 0)
-        {
-            return;
-        }
+        if (wait > 0) return;
 
         GameUtil::SetVehiclesToRealPhysics ();
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
             float amplify = 2.0f;
-            if (inst->Random (0, 19) == 0)
-            {
-                amplify = 10.0f;
-            }
+            if (inst->Random (0, 19) == 0) { amplify = 10.0f; }
 
             vehicle->m_vecMoveSpeed.x += inst->Random (-0.25f, 0.25f, amplify);
             vehicle->m_vecMoveSpeed.y += inst->Random (-0.25f, 0.25f, amplify);

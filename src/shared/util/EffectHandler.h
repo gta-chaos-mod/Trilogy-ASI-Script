@@ -1,10 +1,10 @@
 #pragma once
 
-#include <queue>
-#include <list>
-#include <string_view>
+#include <util/EffectBase.h>
 
-#include "EffectBase.h"
+#include <list>
+#include <queue>
+#include <string_view>
 
 class EffectHandler
 {

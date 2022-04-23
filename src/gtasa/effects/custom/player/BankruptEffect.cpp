@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CPlayerInfo.h"
+#include <CPlayerInfo.h>
 
 class BankruptEffect : public EffectBase
 {

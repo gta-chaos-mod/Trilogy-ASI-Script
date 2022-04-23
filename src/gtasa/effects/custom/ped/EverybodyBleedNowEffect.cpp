@@ -38,10 +38,7 @@ public:
             ped->m_nPedFlags.bDoBloodyFootprints = true;
             ped->m_nPedFlags.bPedIsBleeding      = true;
 
-            if (isLosingHealth)
-            {
-                ped->m_fHealth -= inst->Random (0.0f, 3.0f);
-            }
+            if (isLosingHealth) ped->m_fHealth -= inst->Random (0.0f, 3.0f);
         }
     }
 };

@@ -1,7 +1,7 @@
 #include <effects/OneTimeEffect.h>
 #include <util/GameUtil.h>
 
-#include "CStats.h"
+#include <CStats.h>
 
 class FatPlayerEffect : public OneTimeEffect
 {
@@ -9,7 +9,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        CStats::SetStatValue (eStats::STAT_FAT, 1000.0f);
+        CStats::SetStatValue (STAT_FAT, 1000.0f);
 
         GameUtil::RebuildPlayer ();
     }

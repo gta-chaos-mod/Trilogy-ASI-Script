@@ -1,7 +1,8 @@
 #include "DrawHelper.h"
-#include "util/EffectDrawHandler.h"
-#include "util/EffectHandler.h"
-#include "util/EffectInstance.h"
+
+#include <util/EffectDrawHandler.h>
+#include <util/EffectHandler.h>
+#include <util/EffectInstance.h>
 
 std::string
 DrawHelper::GetCooldownString ()
@@ -107,8 +108,7 @@ DrawHelper::DrawTopBar ()
 void
 DrawHelper::DrawRecentEffects ()
 {
-    if (GenericUtil::IsMenuActive ())
-        return;
+    if (GenericUtil::IsMenuActive ()) return;
 
     EffectDrawHandler::DrawRecentEffects (5);
 }
@@ -132,7 +132,7 @@ DrawHelper::AppendPie (RwIm2DVertex *vertices, int numCount, float radius,
                        float baseRotation)
 {
     numCount--;
-    float step = ((float) deg2rad (pie)) / (numCount - 1);
+    float step = (MathHelper::ToRadians (pie)) / (numCount - 1);
     Append (vertices, 0, CVector2D (0, 0), color);
     for (int i = 0; i < numCount; i++)
     {

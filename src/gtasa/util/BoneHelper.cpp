@@ -45,19 +45,14 @@ RwMatrixTag *
 BoneHelper::GetBoneRwMatrix (CPed *ped, unsigned int boneId)
 {
     auto clump = ped->m_pRwClump;
-    if (!clump)
-    {
-        return nullptr;
-    }
+    if (!clump) return nullptr;
 
     RpHAnimHierarchy *hAnimHier = GetAnimHierarchyFromSkinClump (clump);
     if (hAnimHier && hAnimHier->pNodeInfo)
     {
         int boneAnimIdIndex = RpHAnimIDGetIndex (hAnimHier, boneId);
         if (boneAnimIdIndex != -1 && boneAnimIdIndex < hAnimHier->numNodes)
-        {
             return &RpHAnimHierarchyGetMatrixArray (hAnimHier)[boneAnimIdIndex];
-        }
     }
     return nullptr;
 }
@@ -70,10 +65,7 @@ BoneHelper::GetBonePosition (CPed *ped, unsigned int boneId)
     if (bonePositions.contains (ped))
     {
         auto &boneMap = bonePositions[ped];
-        if (boneMap.contains (boneId))
-        {
-            return boneMap[boneId];
-        }
+        if (boneMap.contains (boneId)) return boneMap[boneId];
     }
 
     RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
@@ -140,10 +132,7 @@ AnimBlendFrameData *
 BoneHelper::GetBoneById (CPed *ped, unsigned int boneId)
 {
     auto clump = ped->m_pRwClump;
-    if (!clump)
-    {
-        return nullptr;
-    }
+    if (!clump) return nullptr;
 
     return RpAnimBlendClumpFindBone (clump, boneId);
 }
@@ -156,10 +145,7 @@ BoneHelper::GetBoneRotation (CPed *ped, unsigned int boneId)
     if (boneRotations.contains (ped))
     {
         auto &boneMap = boneRotations[ped];
-        if (boneMap.contains (boneId))
-        {
-            return boneMap[boneId];
-        }
+        if (boneMap.contains (boneId)) return boneMap[boneId];
     }
 
     auto frameData = GetBoneById (ped, boneId);
@@ -226,10 +212,7 @@ BoneHelper::ShoulderBoneRotation (CPed *ped)
         std::vector<unsigned int> validBones = {21, 22, 301, 31, 32, 302};
         for (unsigned int i = 0; i < validBones.size (); i++)
         {
-            if (!GetBoneById (ped, i))
-            {
-                return;
-            }
+            if (!GetBoneById (ped, i)) return;
         }
 
         // CPed::ShoulderBoneRotation - PR a fix to plugin-sdk?

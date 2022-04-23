@@ -13,16 +13,19 @@ public:
     {
         return true;
     }
+
     bool
     HandleOnAddEffect (EffectBase *effect) const
     {
         return true;
     }
+
     bool
     HandleOnEffectIncompatibility () const
     {
         return true;
     }
+
     bool
     HandleOnEffectActivated () const
     {

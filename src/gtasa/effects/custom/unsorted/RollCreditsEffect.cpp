@@ -1,6 +1,6 @@
 #include <util/EffectBase.h>
 
-#include "CCredits.h"
+#include <CCredits.h>
 
 class RollCreditsEffect : public EffectBase
 {

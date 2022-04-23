@@ -1,6 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "CFireManager.h"
+#include <CFireManager.h>
 
 class SetEveryoneOnFireEffect : public OneTimeEffect
 {

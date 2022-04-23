@@ -1,7 +1,7 @@
 #include <util/EffectBase.h>
 
-#include "extensions/ScriptCommands.h"
-#include "CStreaming.h"
+#include <CStreaming.h>
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -14,9 +14,7 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         if (roadObject && IsObjectPointerValid (roadObject))
-        {
             roadObject->Remove ();
-        }
     }
 
     void
@@ -27,16 +25,11 @@ public:
         {
             CVector position = player->GetPosition ();
             if (position.z < 1.0f && position.z > -5.0f)
-            {
                 player->SetPosn (position.x, position.y, 1.0f);
-            }
 
             float     heading = player->m_fCurrentRotation;
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
-            {
-                heading = vehicle->GetHeading ();
-            }
+            if (vehicle) heading = vehicle->GetHeading ();
 
             if (!roadObject || !IsObjectPointerValid (roadObject))
             {

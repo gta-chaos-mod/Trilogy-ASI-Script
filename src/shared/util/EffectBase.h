@@ -1,10 +1,10 @@
 #pragma once
 
-#include <type_traits>
-#include <string>
+#include <util/EffectDatabase.h>
+#include <util/EffectInstance.h>
 
-#include "EffectDatabase.h"
-#include "EffectInstance.h"
+#include <string>
+#include <type_traits>
 
 enum eEffectGroups : unsigned long long
 {

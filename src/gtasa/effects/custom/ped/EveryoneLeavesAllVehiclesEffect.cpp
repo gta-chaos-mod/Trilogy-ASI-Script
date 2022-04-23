@@ -1,6 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "extensions/ScriptCommands.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -11,9 +11,7 @@ public:
     OnStart (EffectInstance *inst) override
     {
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
-        {
             Command<eScriptCommands::COMMAND_TASK_EVERYONE_LEAVE_CAR> (vehicle);
-        }
     }
 };
 

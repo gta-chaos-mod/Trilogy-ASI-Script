@@ -3,30 +3,19 @@
 bool
 Teleportation::CanTeleport ()
 {
-    if (!GameUtil::IsPlayerSafe ())
-    {
-        return false;
-    }
+    if (!GameUtil::IsPlayerSafe ()) return false;
 
     CPlayerPed *player = FindPlayerPed ();
-    if (!player)
-    {
-        return false;
-    }
+    if (!player) return false;
 
     CVehicle *vehicle = FindPlayerVehicle (-1, false);
     if (vehicle)
     {
-        if (!vehicle->IsDriver (player))
-        {
-            return false;
-        }
+        if (!vehicle->IsDriver (player)) return false;
 
         if (Command<eScriptCommands::COMMAND_IS_RECORDING_GOING_ON_FOR_CAR> (
                 vehicle))
-        {
             return false;
-        }
     }
 
     return true;

@@ -1,7 +1,5 @@
 #include <util/EffectBase.h>
 
-#include "CCamera.h"
-
 using namespace plugin;
 
 class ShakyHandsEffect : public EffectBase

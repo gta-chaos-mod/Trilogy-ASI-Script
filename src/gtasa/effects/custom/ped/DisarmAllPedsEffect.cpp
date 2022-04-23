@@ -1,7 +1,6 @@
 #include <effects/OneTimeEffect.h>
 
-#include "extensions/ScriptCommands.h"
-#include "CStreaming.h"
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -14,10 +13,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            if (ped == player)
-            {
-                continue;
-            }
+            if (ped == player) continue;
 
             Command<eScriptCommands::COMMAND_REMOVE_ALL_CHAR_WEAPONS> (ped);
         }

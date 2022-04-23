@@ -24,10 +24,7 @@ public:
         if (player)
         {
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                pad->NewState.ButtonCircle = false;
-            }
+            if (pad) pad->NewState.ButtonCircle = false;
         }
     }
 };
