@@ -1,6 +1,6 @@
 #include "EffectDatabase.h"
 
-#include <util/EffectBase.h>
+#include "util/EffectBase.h"
 
 void
 EffectDatabase::RegisterEffect (EffectBase *base)

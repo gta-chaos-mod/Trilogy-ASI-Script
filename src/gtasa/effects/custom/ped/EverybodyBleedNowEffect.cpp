@@ -1,5 +1,5 @@
-#include <util/EffectBase.h>
-#include <util/GenericUtil.h>
+#include "util/EffectBase.h"
+#include "util/GenericUtil.h"
 
 class EverybodyBleedNowEffect : public EffectBase
 {

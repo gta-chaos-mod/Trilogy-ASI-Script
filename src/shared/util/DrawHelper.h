@@ -1,9 +1,9 @@
 #pragma once
 
-#include <util/Config.h>
-#include <util/DrawVoting.h>
-#include <util/GenericUtil.h>
-#include <util/MathHelper.h>
+#include "util/Config.h"
+#include "util/DrawVoting.h"
+#include "util/GenericUtil.h"
+#include "util/MathHelper.h"
 
 #include <CFont.h>
 #include <CTimer.h>

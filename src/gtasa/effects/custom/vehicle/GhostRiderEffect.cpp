@@ -1,7 +1,7 @@
-#include <util/Config.h>
-#include <util/EffectBase.h>
-#include <util/GameUtil.h>
-#include <util/GenericUtil.h>
+#include "util/Config.h"
+#include "util/EffectBase.h"
+#include "util/GameUtil.h"
+#include "util/GenericUtil.h"
 
 class GhostRiderEffect : public EffectBase
 {

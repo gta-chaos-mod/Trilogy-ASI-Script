@@ -1,10 +1,9 @@
 #pragma once
 
-#include <util/GameUtil.h>
+#include "util/GameUtil.h"
 
 #include <CPopulation.h>
 #include <CTimeCycle.h>
-
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;

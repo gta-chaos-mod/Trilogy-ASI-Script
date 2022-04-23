@@ -1,5 +1,5 @@
-#include <effects/OneTimeEffect.h>
-#include <util/EffectHandler.h>
+#include "effects/OneTimeEffect.h"
+#include "util/EffectHandler.h"
 
 class ClearActiveEffectsEffect : public OneTimeEffect
 {

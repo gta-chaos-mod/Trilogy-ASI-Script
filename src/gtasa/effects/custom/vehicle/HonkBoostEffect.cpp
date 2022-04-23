@@ -1,6 +1,6 @@
-#include <util/EffectBase.h>
-#include <util/GameUtil.h>
-#include <util/MathHelper.h>
+#include "util/EffectBase.h"
+#include "util/GameUtil.h"
+#include "util/MathHelper.h"
 
 class HonkBoostEffect : public EffectBase
 {
@@ -10,7 +10,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wasHornOn.clear();
+        wasHornOn.clear ();
     }
 
     void

@@ -1,11 +1,11 @@
 #include "EffectDrawHandler.h"
 
-#include <util/Config.h>
-#include <util/DrawHelper.h>
-#include <util/EffectHandler.h>
-#include <util/EffectInstance.h>
-#include <util/EffectTwitchHandler.h>
-#include <util/GenericUtil.h>
+#include "util/Config.h"
+#include "util/DrawHelper.h"
+#include "util/EffectHandler.h"
+#include "util/EffectInstance.h"
+#include "util/EffectTwitchHandler.h"
+#include "util/GenericUtil.h"
 
 #include <algorithm>
 

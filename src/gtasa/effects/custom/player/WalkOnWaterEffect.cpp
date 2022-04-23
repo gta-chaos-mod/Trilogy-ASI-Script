@@ -1,4 +1,4 @@
-#include <util/EffectBase.h>
+#include "util/EffectBase.h"
 
 #include <CStreaming.h>
 #include <extensions/ScriptCommands.h>

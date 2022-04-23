@@ -1,8 +1,8 @@
 #include "EffectHandler.h"
 
-#include <util/Config.h>
-#include <util/EffectDatabase.h>
-#include <util/EffectInstance.h>
+#include "util/Config.h"
+#include "util/EffectDatabase.h"
+#include "util/EffectInstance.h"
 
 void
 EffectHandler::Tick ()

@@ -1,9 +1,7 @@
 #include "EffectInstance.h"
 
-#include <util/EffectBase.h>
-#include <util/GenericUtil.h>
-
-#include <CTheScripts.h>
+#include "util/EffectBase.h"
+#include "util/GenericUtil.h"
 
 EffectInstance::EffectInstance (EffectBase *effect) : effect (effect) {}
 

@@ -1,4 +1,6 @@
-#include <util/EffectBase.h>
+#pragma once
+
+#include "util/EffectBase.h"
 
 class TimedFunctionEffect : public EffectBase
 {

@@ -1,5 +1,5 @@
-#include <util/EffectBase.h>
-#include <util/GameUtil.h>
+#include "util/EffectBase.h"
+#include "util/GameUtil.h"
 
 class BeybladeEffect : public EffectBase
 {

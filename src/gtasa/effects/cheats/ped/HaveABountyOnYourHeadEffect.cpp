@@ -1,6 +1,6 @@
-#include <effects/DisabledForMissionEffect.h>
-#include <effects/TimedFunctionEffect.h>
-#include <util/GameUtil.h>
+#include "effects/DisabledForMissionEffect.h"
+#include "effects/TimedFunctionEffect.h"
+#include "util/GameUtil.h"
 
 #include <CCheat.h>
 

@@ -1,13 +1,15 @@
-#include <effects/OneTimeEffect.h>
-#include <util/GameUtil.h>
+#include "effects/OneTimeEffect.h"
+#include "util/GameUtil.h"
 
 #include <CStreaming.h>
 
 class WeaponSet4Effect : public OneTimeEffect
 {
 public:
-    bool CanActivate() override {
-        return GameUtil::IsPlayerSafe();
+    bool
+    CanActivate () override
+    {
+        return GameUtil::IsPlayerSafe ();
     }
 
     void

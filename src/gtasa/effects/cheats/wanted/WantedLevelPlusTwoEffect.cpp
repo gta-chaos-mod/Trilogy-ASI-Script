@@ -1,5 +1,5 @@
-#include <effects/OneTimeEffect.h>
-#include <util/GameUtil.h>
+#include "effects/OneTimeEffect.h"
+#include "util/GameUtil.h"
 
 class WantedLevelPlusTwoEffect : public OneTimeEffect
 {

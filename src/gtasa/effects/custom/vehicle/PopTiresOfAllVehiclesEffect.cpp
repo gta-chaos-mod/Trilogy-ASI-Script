@@ -1,5 +1,5 @@
-#include <util/EffectBase.h>
-#include <util/GameUtil.h>
+#include "util/EffectBase.h"
+#include "util/GameUtil.h"
 
 class PopTiresOfAllVehiclesEffect : public EffectBase
 {
@@ -19,11 +19,16 @@ public:
             {
                 CAutomobile *car = (CAutomobile *) vehicle;
 
+                bool some_other_parameter_that_splits_this_up = false;
                 if (!car->m_damageManager.GetWheelStatus (
                         eWheels::WHEEL_FRONT_LEFT))
-                {
-                    vehicle->BurstTyre (eWheels::WHEEL_FRONT_LEFT, false);
-                }
+                    vehicle->BurstTyre (
+                        eWheels::WHEEL_FRONT_LEFT,
+                        some_other_parameter_that_splits_this_up);
+                else
+                    vehicle->BurstTyre (
+                        eWheels::WHEEL_FRONT_LEFT,
+                        some_other_parameter_that_splits_this_up);
 
                 if (!car->m_damageManager.GetWheelStatus (
                         eWheels::WHEEL_REAR_LEFT))

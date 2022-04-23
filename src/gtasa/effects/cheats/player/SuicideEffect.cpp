@@ -1,7 +1,11 @@
-#include <util/EffectBase.h>
-#include <util/GameUtil.h>
+#include "util/EffectBase.h"
+#include "util/GameUtil.h"
+
+#include <algorithm>
+#include <experimental/forward_list>
 
 #include <CCheat.h>
+#include <extensions/ScriptCommands.h>
 
 class SuicideEffect : public EffectBase
 {

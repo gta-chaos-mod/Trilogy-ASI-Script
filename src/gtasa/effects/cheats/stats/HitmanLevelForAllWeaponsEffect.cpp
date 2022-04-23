@@ -1,4 +1,4 @@
-#include <effects/OneTimeEffect.h>
+#include "effects/OneTimeEffect.h"
 
 #include <CStats.h>
 
@@ -12,14 +12,14 @@ public:
         CStats::SetStatValue (STAT_SILENCED_PISTOL_SKILL,
                               1000.0f); // Silenced pistol
         CStats::SetStatValue (STAT_DESERT_EAGLE_SKILL,
-                              1000.0f); // Desert eagle
+                              1000.0f);                     // Desert eagle
         CStats::SetStatValue (STAT_SHOTGUN_SKILL, 1000.0f); // Shotgun
         CStats::SetStatValue (STAT_SAWN_OFF_SHOTGUN_SKILL,
                               1000.0f); // Sawn-off shotgun
         CStats::SetStatValue (STAT_COMBAT_SHOTGUN_SKILL,
                               1000.0f); // Combat shotgun
         CStats::SetStatValue (STAT_MACHINE_PISTOL_SKILL,
-                              1000.0f); // Machine pistol
+                              1000.0f);                   // Machine pistol
         CStats::SetStatValue (STAT_SMG_SKILL, 1000.0f);   // SMG
         CStats::SetStatValue (STAT_AK_47_SKILL, 1000.0f); // AK47
         CStats::SetStatValue (STAT_M4_SKILL, 1000.0f);    // M4

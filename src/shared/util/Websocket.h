@@ -1,9 +1,9 @@
 #pragma once
 
-#include <util/Config.h>
-#include <util/DrawHelper.h>
-#include <util/DrawVoting.h>
-#include <util/RandomHelper.h>
+#include "util/Config.h"
+#include "util/DrawHelper.h"
+#include "util/DrawVoting.h"
+#include "util/RandomHelper.h"
 
 #include <thread>
 

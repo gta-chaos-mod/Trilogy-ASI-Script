@@ -1,7 +1,7 @@
-#include <util/Config.h>
-#include <util/EffectHandler.h>
-#include <util/GameUtil.h>
-#include <util/GenericUtil.h>
+#include "util/Config.h"
+#include "util/EffectHandler.h"
+#include "util/GameUtil.h"
+#include "util/GenericUtil.h"
 
 #include <CText.h>
 

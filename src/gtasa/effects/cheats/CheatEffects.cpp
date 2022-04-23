@@ -1,7 +1,7 @@
-#include <effects/OneTimeFunctionEffect.h>
-#include <effects/TimedAddressEffect.h>
-#include <effects/TimedFunctionEffect.h>
-#include <util/EffectBase.h>
+#include "effects/OneTimeFunctionEffect.h"
+#include "effects/TimedAddressEffect.h"
+#include "effects/TimedFunctionEffect.h"
+#include "util/EffectBase.h"
 
 #include <CCheat.h>
 

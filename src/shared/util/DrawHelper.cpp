@@ -1,8 +1,8 @@
 #include "DrawHelper.h"
 
-#include <util/EffectDrawHandler.h>
-#include <util/EffectHandler.h>
-#include <util/EffectInstance.h>
+#include "util/EffectDrawHandler.h"
+#include "util/EffectHandler.h"
+#include "util/EffectInstance.h"
 
 std::string
 DrawHelper::GetCooldownString ()

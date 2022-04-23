@@ -1,6 +1,6 @@
-#include <util/EffectBase.h>
-#include <util/GameUtil.h>
-#include <util/GenericUtil.h>
+#include "util/EffectBase.h"
+#include "util/GameUtil.h"
+#include "util/GenericUtil.h"
 
 class ToDriveOrNotToDriveEffect : public EffectBase
 {
@@ -11,7 +11,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wait = 0;
+        wait  = 0;
         doPop = true;
     }
 

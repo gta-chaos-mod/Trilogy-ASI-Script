@@ -1,7 +1,7 @@
 // Inspiration from Zolika's Chaos Mod - "Sacrificial Circle"
 
-#include <util/EffectBase.h>
-#include <util/MathHelper.h>
+#include "util/EffectBase.h"
+#include "util/MathHelper.h"
 
 #include <CStreaming.h>
 #include <CWorld.h>
