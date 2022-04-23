@@ -134,6 +134,8 @@ GameUtil::SetVehiclesToRealPhysics ()
 {
     for (CVehicle *vehicle : CPools::ms_pVehiclePool)
     {
+        // bFakePhysics
+        if (!vehicle->field_B8) continue;
         if (!vehicle->m_pDriver) continue;
         if (!vehicle->CanBeDriven ()) continue;
         if (vehicle->m_pDriver->m_nPedState == ePedState::PEDSTATE_CARJACK)
@@ -258,24 +260,26 @@ GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
                     CModelInfo::ms_modelInfoPtrs[vehicleID])
                     ->m_nVehicleType)
         {
-        case VEHICLE_MTRUCK: vehicle = new CMonsterTruck (vehicleID, 1); break;
-        case VEHICLE_QUAD: vehicle = new CQuadBike (vehicleID, 1); break;
-        case VEHICLE_HELI: vehicle = new CHeli (vehicleID, 1); break;
-        case VEHICLE_PLANE: vehicle = new CPlane (vehicleID, 1); break;
-        case VEHICLE_BIKE:
-            vehicle = new CBike (vehicleID, 1);
-            reinterpret_cast<CBike *> (vehicle)->m_nDamageFlags |= 0x10;
-            break;
-        case VEHICLE_BMX:
-            vehicle = new CBmx (vehicleID, 1);
-            reinterpret_cast<CBmx *> (vehicle)->m_nDamageFlags |= 0x10;
-            break;
-        case VEHICLE_TRAILER: vehicle = new CTrailer (vehicleID, 1); break;
-        case VEHICLE_BOAT:
-        case VEHICLE_TRAIN: // Thank you Rockstar, very cool
-            vehicle = new CBoat (vehicleID, 1);
-            break;
-        default: vehicle = new CAutomobile (vehicleID, 1, true); break;
+            case VEHICLE_MTRUCK:
+                vehicle = new CMonsterTruck (vehicleID, 1);
+                break;
+            case VEHICLE_QUAD: vehicle = new CQuadBike (vehicleID, 1); break;
+            case VEHICLE_HELI: vehicle = new CHeli (vehicleID, 1); break;
+            case VEHICLE_PLANE: vehicle = new CPlane (vehicleID, 1); break;
+            case VEHICLE_BIKE:
+                vehicle = new CBike (vehicleID, 1);
+                reinterpret_cast<CBike *> (vehicle)->m_nDamageFlags |= 0x10;
+                break;
+            case VEHICLE_BMX:
+                vehicle = new CBmx (vehicleID, 1);
+                reinterpret_cast<CBmx *> (vehicle)->m_nDamageFlags |= 0x10;
+                break;
+            case VEHICLE_TRAILER: vehicle = new CTrailer (vehicleID, 1); break;
+            case VEHICLE_BOAT:
+            case VEHICLE_TRAIN: // Thank you Rockstar, very cool
+                vehicle = new CBoat (vehicleID, 1);
+                break;
+            default: vehicle = new CAutomobile (vehicleID, 1, true); break;
         }
         if (vehicle)
         {
@@ -334,23 +338,23 @@ GameUtil::IsPlayerSafe ()
 
     switch (player->m_nPedState)
     {
-    case ePedState::PEDSTATE_ARRESTED:
-    case ePedState::PEDSTATE_ARREST_PLAYER:
-    case ePedState::PEDSTATE_DEAD:
-    case ePedState::PEDSTATE_DIE:
-    case ePedState::PEDSTATE_DIE_BY_STEALTH: return false;
-    default:
-    {
-    }
+        case ePedState::PEDSTATE_ARRESTED:
+        case ePedState::PEDSTATE_ARREST_PLAYER:
+        case ePedState::PEDSTATE_DEAD:
+        case ePedState::PEDSTATE_DIE:
+        case ePedState::PEDSTATE_DIE_BY_STEALTH: return false;
+        default:
+        {
+        }
     }
 
     switch (TheCamera.m_PlayerWeaponMode.m_nMode)
     {
-    case eCamMode::MODE_HELICANNON_1STPERSON:
-    case eCamMode::MODE_CAMERA: return false;
-    default:
-    {
-    }
+        case eCamMode::MODE_HELICANNON_1STPERSON:
+        case eCamMode::MODE_CAMERA: return false;
+        default:
+        {
+        }
     }
 
     if (!player->IsPedInControl ()) { return false; }
