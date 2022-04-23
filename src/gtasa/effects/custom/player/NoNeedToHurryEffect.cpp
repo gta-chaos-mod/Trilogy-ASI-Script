@@ -30,13 +30,18 @@ public:
                         COMMAND_SET_VEHICLE_AIR_RESISTANCE_MULTIPLIER> (vehicle,
                                                                         10.0f);
         }
+    }
 
+    void
+    OnProcessScripts (EffectInstance *inst) override
+    {
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
-            // TODO: Force player to sneak / stealth / walk
-            // Use OnProcessScripts for it
             player->m_pPlayerData->m_bPlayerSprintDisabled = true;
+
+            CPad *pad = player->GetPadFromPlayer ();
+            if (pad) pad->NewState.m_bPedWalk = true;
         }
     }
 };

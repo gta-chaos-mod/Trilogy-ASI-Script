@@ -69,6 +69,7 @@ public:
     virtual void OnStart (EffectInstance *instance){};
     virtual void OnEnd (EffectInstance *instance){};
     virtual void OnTick (EffectInstance *instance){};
+    virtual void OnProcessScripts (EffectInstance *instance){};
 
     // Only used for Crowd Control. Return false if the effect cannot be
     // triggered at the moment and Crowd Control needs to send effect later.

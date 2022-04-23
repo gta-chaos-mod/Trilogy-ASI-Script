@@ -30,6 +30,12 @@ EffectInstance::Tick ()
     if (effect && isRunning) effect->OnTick (this);
 }
 
+void
+EffectInstance::ProcessScripts ()
+{
+    if (effect && isRunning) effect->OnProcessScripts (this);
+}
+
 std::string_view
 EffectInstance::GetName () const
 {

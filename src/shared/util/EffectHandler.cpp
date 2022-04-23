@@ -18,6 +18,12 @@ EffectHandler::Tick ()
                               && !effect.IsRunning ();
                    });
 }
+void
+EffectHandler::ProcessScripts ()
+{
+    for (auto &effect : effects)
+        effect.ProcessScripts ();
+}
 
 void
 EffectHandler::EmptyQueue ()

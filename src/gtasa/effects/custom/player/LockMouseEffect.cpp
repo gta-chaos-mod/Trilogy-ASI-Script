@@ -1,24 +1,10 @@
 #include <util/EffectBase.h>
 
-using namespace plugin;
-
 class LockMouseEffect : public EffectBase
 {
 public:
     void
-    OnStart (EffectInstance *inst) override
-    {
-        Events::processScriptsEvent += OnProcessScripts;
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        Events::processScriptsEvent -= OnProcessScripts;
-    }
-
-    static void
-    OnProcessScripts ()
+    OnProcessScripts (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
         if (player)

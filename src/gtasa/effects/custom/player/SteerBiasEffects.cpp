@@ -1,24 +1,10 @@
 #include <util/EffectBase.h>
 
-using namespace plugin;
-
 template <int bias> class SteerBiasEffect : public EffectBase
 {
 public:
     void
-    OnStart (EffectInstance *inst) override
-    {
-        Events::processScriptsEvent += OnProcessScripts;
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        Events::processScriptsEvent -= OnProcessScripts;
-    }
-
-    static void
-    OnProcessScripts ()
+    OnProcessScripts (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
         if (player)
@@ -26,8 +12,6 @@ public:
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
             if (vehicle)
             {
-                // TODO: This is only working when we are using
-                // Events::processScriptsEvent, not Events::gameProcessEvent
                 CPad *pad = player->GetPadFromPlayer ();
                 if (pad) pad->NewState.LeftStickX += bias;
             }

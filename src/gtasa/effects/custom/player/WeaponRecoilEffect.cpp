@@ -13,21 +13,17 @@ public:
     {
         recoilValue = 0.0f;
 
-        Events::processScriptsEvent += OnProcessScripts;
-
         injector::MakeCALL (0x61ECCD, Hooked_CWeapon_Fire);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::processScriptsEvent -= OnProcessScripts;
-
         injector::MakeCALL (0x61ECCD, 0x742300);
     }
 
-    static void
-    OnProcessScripts ()
+    void
+    OnProcessScripts (EffectInstance *inst) override
     {
         if (recoilValue > 0.0f)
         {

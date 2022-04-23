@@ -28,6 +28,7 @@ public:
         GameHandler::Initialise ();
 
         Events::gameProcessEvent += EffectHandler::Tick;
+        Events::processScriptsEvent += EffectHandler::ProcessScripts;
         Events::gameProcessEvent += GameHandler::ProcessGame;
 
         drawAfterFadeEvent += DrawHelper::Draw;

@@ -139,6 +139,7 @@ public:
     void Start ();
     void End ();
     void Tick ();
+    void ProcessScripts ();
 
     /* Enable/Disable functions */
     void

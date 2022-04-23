@@ -14,8 +14,6 @@ DEFINE_EFFECT (TimedAddressEffect    , "effect_everyone_armed"              , GR
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_gang_members_everywhere"     , GROUP_PED_SPAWNS                          , CCheat::GangsCheat               , 0x96915A);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_gangs_control_the_streets"   , GROUP_PED_SPAWNS                          , CCheat::GangLandCheat            , 0x96915B);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_ghost_town"                  , GROUP_PED_SPAWNS | GROUP_VEHICLE_RARITY   , 0x96917A);
-// TODO: Have A Bounty On Your Head
-// TODO: Peds Attack Each Other
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_peds_attack_you"             , GROUP_PEDS_ATTACK | GROUP_PED_SPAWNS      , CCheat::VillagePeopleCheat       , 0x969158);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_9mm"          , GROUP_PED_SPAWNS | GROUP_NPC_RECRUIT      , 0x96917C);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_ak47"         , GROUP_PED_SPAWNS | GROUP_NPC_RECRUIT      , 0x96917D);

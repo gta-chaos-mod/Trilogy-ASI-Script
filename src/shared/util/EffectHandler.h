@@ -13,6 +13,7 @@ class EffectHandler
 
 public:
     static void Tick ();
+    static void ProcessScripts ();
 
     static void EmptyQueue ();
 
