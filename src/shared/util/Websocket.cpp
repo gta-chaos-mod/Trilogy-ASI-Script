@@ -3,30 +3,6 @@
 #include "util/EffectHandler.h"
 
 void
-Websocket::SendCrowdControlResponse (int effectID, int response)
-{
-    nlohmann::json json;
-
-    json["type"]             = "CrowdControl";
-    json["data"]["id"]       = effectID;
-    json["data"]["response"] = response;
-
-    std::thread sendMessageThread (
-        [json] () {
-            globalApp->publish ("broadcast", json.dump (), uWS::OpCode::TEXT,
-                                true);
-        });
-    sendMessageThread.detach ();
-}
-
-void
-Websocket::Setup ()
-{
-    std::thread setupThread ([] () { SetupWebsocketThread (); });
-    setupThread.detach ();
-}
-
-void
 Websocket::SetupWebsocketThread ()
 {
     auto app = uWS::App ();
@@ -46,8 +22,16 @@ Websocket::SetupWebsocketThread ()
     app.listen (9001, [] (auto *listenSocket) {});
 
     globalApp = &app;
+    loop      = uWS::Loop::get ();
 
     app.run ();
+}
+
+void
+Websocket::Setup ()
+{
+    std::thread setupThread ([] () { SetupWebsocketThread (); });
+    setupThread.detach ();
 }
 
 void
@@ -92,4 +76,26 @@ Websocket::CallFunction (std::string text)
     {
         // Wrong JSON data received, do nothing
     }
+}
+
+void
+Websocket::SendWebsocketMessage (nlohmann::json json)
+{
+    loop->defer (
+        [json] () {
+            globalApp->publish ("broadcast", json.dump (), uWS::OpCode::TEXT,
+                                true);
+        });
+}
+
+void
+Websocket::SendCrowdControlResponse (int effectID, int response)
+{
+    nlohmann::json json;
+
+    json["type"]             = "CrowdControl";
+    json["data"]["id"]       = effectID;
+    json["data"]["response"] = response;
+
+    SendWebsocketMessage (json);
 }

@@ -10,7 +10,8 @@
 class Websocket
 {
 private:
-    static inline uWS::App *globalApp;
+    static inline uWS::App  *globalApp;
+    static inline uWS::Loop *loop;
 
     struct EmptySocketData
     {
@@ -21,7 +22,8 @@ private:
 public:
     static void Setup ();
 
-    static void SendCrowdControlResponse (int effectID, int response);
-
     static void CallFunction (std::string text);
+
+    static void SendWebsocketMessage (nlohmann::json data);
+    static void SendCrowdControlResponse (int effectID, int response);
 };

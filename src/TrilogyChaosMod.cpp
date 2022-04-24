@@ -1,6 +1,6 @@
 #include "util/DrawHelper.h"
 #include "util/EffectHandler.h"
-#include "util/GameHandler.cpp"
+#include "util/GameHandler.h"
 #include "util/Websocket.h"
 
 class TrilogyChaosMod

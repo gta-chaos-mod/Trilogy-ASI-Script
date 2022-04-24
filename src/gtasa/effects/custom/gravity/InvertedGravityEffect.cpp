@@ -9,22 +9,24 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        GameUtil::SetVehiclesToRealPhysics ();
+
         // Set everyone's Z position a bit higher so gravity triggers
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->GetPosition ().z += 0.1f;
+            ped->GetPosition ().z += 0.2f;
             ped->m_vecMoveSpeed.z = 0;
         }
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            vehicle->GetPosition ().z += 0.1f;
+            vehicle->GetPosition ().z += 0.2f;
             vehicle->m_vecMoveSpeed.z = 0;
         }
 
         for (CObject *object : CPools::ms_pObjectPool)
         {
-            object->GetPosition ().z += 0.1f;
+            object->GetPosition ().z += 0.2f;
             object->m_vecMoveSpeed.z = 0;
         }
     }

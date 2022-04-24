@@ -134,18 +134,10 @@ GameUtil::SetVehiclesToRealPhysics ()
 {
     for (CVehicle *vehicle : CPools::ms_pVehiclePool)
     {
-        // bFakePhysics
-        if (!vehicle->field_B8) continue;
         if (!vehicle->m_pDriver) continue;
         if (!vehicle->CanBeDriven ()) continue;
-        if (vehicle->m_pDriver->m_nPedState == ePedState::PEDSTATE_CARJACK)
-            continue;
-        if (vehicle->m_pDriver->m_nPedState
-            == ePedState::PEDSTATE_DRAGGED_FROM_CAR)
-            continue;
         if (vehicle->m_nStatus == eEntityStatus::STATUS_WRECKED) continue;
-        if (vehicle->m_nStatus == eEntityStatus::STATUS_PHYSICS) continue;
-        if (vehicle->m_nNumGettingIn > 0) continue;
+        if (vehicle->m_nStatus != eEntityStatus::STATUS_SIMPLE) continue;
         if (vehicle->IsDriver (FindPlayerPed ())) continue;
 
         CCarCtrl::SwitchVehicleToRealPhysics (vehicle);

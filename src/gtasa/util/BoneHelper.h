@@ -1,5 +1,6 @@
 // Ped bone related methods with the help of mtasa-blue
 // https://github.com/multitheftauto/mtasa-blue/blob/16769b8d1c94e2b9fe6323dcba46d1305f87a190/Client/game_sa/CEntitySA.cpp#L615
+#pragma once
 
 using namespace plugin;
 

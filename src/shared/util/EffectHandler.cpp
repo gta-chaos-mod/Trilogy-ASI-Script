@@ -4,6 +4,8 @@
 #include "util/EffectDatabase.h"
 #include "util/EffectInstance.h"
 
+#include <CAudioEngine.h>
+
 void
 EffectHandler::Tick ()
 {
@@ -83,8 +85,7 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
         if (Config::GetOrDefault ("Chaos.PlayEffectSound", true))
         {
 #ifdef GTASA
-            plugin::CallMethod<0x506EA0, void *, int, float, float> (
-                (void *) 0xB6BC90, 0x20, 0.0f, 1.0f); // Play Sound
+            AudioEngine.ReportFrontendAudioEvent (0x20, 0.0f, 1.0f);
 #endif
         }
 
