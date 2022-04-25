@@ -64,20 +64,6 @@ GameUtil::SaveToFile (std::string fileName)
     {
         CCheat::m_aCheatsActive[i] = false;
     }
-    CClock::ms_nMillisecondsPerGameMinute = 1000;
-
-    CPlayerPed *player    = FindPlayerPed ();
-    int         tempMoney = -1;
-    if (player)
-    {
-        // TODO: Long Live The Rich fix here
-        tempMoney = player->GetPlayerInfoForThisPlayerPed ()->m_nMoney;
-        // tempMoney = LongLiveTheRichEffect::isEnabled
-        //                 ? LongLiveTheRichEffect::storedMoney
-        //                 : player->GetPlayerInfoForThisPlayerPed ()->m_nMoney;
-    }
-
-    player->GetPlayerInfoForThisPlayerPed ()->m_nMoney = tempMoney;
 
     CPedAcquaintance temp_acquaintances[32];
     SaveAcquaintances (temp_acquaintances);
@@ -86,16 +72,6 @@ GameUtil::SaveToFile (std::string fileName)
     CGenericGameStorage::GenericSave (0);
 
     LoadAcquaintances (temp_acquaintances);
-
-    if (player)
-    {
-        // TODO: Long Live The Rich fix here
-        player->GetPlayerInfoForThisPlayerPed ()->m_nMoney = tempMoney;
-        // player->GetPlayerInfoForThisPlayerPed ()->m_nMoney
-        //     = LongLiveTheRichEffect::isEnabled
-        //           ? (int) LongLiveTheRichEffect::gainedMoney
-        //           : tempMoney;
-    }
 }
 
 bool

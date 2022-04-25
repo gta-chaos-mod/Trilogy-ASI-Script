@@ -9,7 +9,6 @@
 #include <CCamera.h>
 #include <CCarCtrl.h>
 #include <CCheat.h>
-#include <CClock.h>
 #include <CClothes.h>
 #include <CCutsceneMgr.h>
 #include <CEntryExitManager.h>
