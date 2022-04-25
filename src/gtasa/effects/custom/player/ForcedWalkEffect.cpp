@@ -12,7 +12,7 @@ public:
             CPad *pad = player->GetPadFromPlayer ();
             if (pad)
             {
-                pad->NewState.m_bPedWalk                       = true;
+                pad->NewState.m_bPedWalk                       = SHRT_MAX;
                 player->m_pPlayerData->m_bPlayerSprintDisabled = true;
             }
         }

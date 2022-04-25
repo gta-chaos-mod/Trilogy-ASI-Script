@@ -10,7 +10,7 @@ public:
         if (player)
         {
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->NewState.ButtonCircle = true;
+            if (pad) pad->NewState.ButtonCircle = SHRT_MAX;
         }
     }
 };
