@@ -8,13 +8,14 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        // TODO: Hook CHud::RenderHealthBar
-        // HookCall (0x58EE9A, HookedCHudRenderHealthBar);
+        injector::MakeCALL (0x58EE9A, Hooked_CHud_RenderHealthBar);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
+        // TODO: Unhook
+
         *this->neverHungryCheat = false;
     }
 
@@ -30,6 +31,11 @@ public:
             ped->m_fHealth = std::max (0.0f, std::min (ped->m_fHealth, 1.0f));
             ped->m_fArmour = 0.0f;
         }
+    }
+
+    static void
+    Hooked_CHud_RenderHealthBar (int playerId, signed int x, signed int y)
+    {
     }
 };
 
