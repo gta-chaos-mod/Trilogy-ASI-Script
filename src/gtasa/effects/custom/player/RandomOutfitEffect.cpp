@@ -41,7 +41,7 @@ public:
                     0, clothes.second, clothes.first, i);
             }
 
-            CClothes::RebuildPlayer (player, false);
+            GameUtil::RebuildPlayer ();
 
             inst->Disable ();
         }
