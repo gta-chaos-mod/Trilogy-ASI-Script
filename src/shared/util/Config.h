@@ -4,7 +4,6 @@
 
 class Config
 {
-private:
     inline static std::shared_ptr<cpptoml::table> config;
 #ifdef GTASA
     inline static std::string configContent
@@ -27,10 +26,6 @@ SaveToSlot8 = false
 # Load the autosave on game load (Can be skipped by holding Left CTRL)
 # Default: true
 LoadAutosaveOnGameLoad = true
-
-# Autosave after successfully finishing a gangwar
-# Default: true
-AutosaveAfterGangWar = true
 
 # Whether or not the game should delete the autosave when starting a new game
 # This is so when "Reload Autosave" is coming up it won't "wrong-wrap" you to that
@@ -56,6 +51,11 @@ QuickSave = false
 # is disabling itself but still "active" in the background
 # Default: true
 LockPlayerInVehicleAfterDisable = true
+
+# Switch all vehicles to real game physics every tick
+# This will prevent vehicles on highways or other places to go absurdly fast whilst they're on their AI path
+# Default: true
+SwitchAllVehiclesToRealPhysics = true
 
 #######################################################
 
@@ -133,10 +133,7 @@ public:
     static T
     GetOrDefault (std::string key, T defaultValue)
     {
-        if (!config)
-        {
-            return defaultValue;
-        }
+        if (!config) { return defaultValue; }
 
         return config->get_qualified_as<T> (key).value_or (defaultValue);
     }

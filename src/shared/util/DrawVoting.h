@@ -9,7 +9,6 @@ using namespace plugin;
 
 class DrawVoting
 {
-private:
     struct VotingElement
     {
         std::string description = "";

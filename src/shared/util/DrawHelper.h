@@ -13,7 +13,6 @@ using namespace plugin;
 
 class DrawHelper
 {
-private:
     static inline int         remaining = 0;
     static inline int         cooldown  = 0;
     static inline std::string mode      = "";
@@ -31,7 +30,6 @@ public:
     static void DrawTopBar ();
     static void DrawRecentEffects ();
 
-public:
     static void DrawCircle (CVector2D position, float radius, float angle,
                             CRGBA color);
     static void AppendPie (RwIm2DVertex *vertices, int numCount, float radius,

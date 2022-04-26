@@ -4,7 +4,6 @@
 
 class RandomHelper
 {
-private:
     std::mt19937 rng;
 
 public:

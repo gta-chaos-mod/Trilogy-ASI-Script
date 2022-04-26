@@ -12,7 +12,6 @@ using namespace plugin;
 
 class FakePassCurrentMissionEffect : public EffectBase
 {
-private:
     bool handledEverything = false;
     bool handledMission    = false;
     bool lastIsOnMission   = false;

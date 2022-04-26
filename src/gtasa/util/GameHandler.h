@@ -14,7 +14,6 @@ using namespace plugin;
 
 class GameHandler
 {
-private:
     static inline bool didTryLoadAutoSave = false;
 
     static inline int lastMissionsPassed = -1;

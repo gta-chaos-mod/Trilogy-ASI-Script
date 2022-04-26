@@ -27,7 +27,6 @@
 
 class GameUtil
 {
-private:
     static inline CPedAcquaintance backupAcquaintances[32];
 
     static inline std::string loadFilePath;

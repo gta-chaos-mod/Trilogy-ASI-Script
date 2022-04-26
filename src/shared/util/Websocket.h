@@ -9,7 +9,6 @@
 
 class Websocket
 {
-private:
     static inline uWS::App  *globalApp;
     static inline uWS::Loop *loop;
 
