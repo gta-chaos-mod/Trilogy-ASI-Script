@@ -5,19 +5,17 @@
 #include <CGangWars.h>
 #include <CTheScripts.h>
 
-class AutoSaveEffect : public EffectBase
+class QuickSaveEffect : public EffectBase
 {
-    bool didSave        = false;
-    int  missionsPassed = 0;
+    bool didSave = false;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        didSave        = false;
-        missionsPassed = inst->GetCustomData ().value ("missionsPassed", 0);
+        didSave = false;
 
-        inst->OverrideName ("Autosaving...");
+        inst->OverrideName ("Quicksaving...");
     }
 
     void
@@ -38,22 +36,11 @@ public:
             bool wasInVehicle              = player->m_nPedFlags.bInVehicle;
             player->m_nPedFlags.bInVehicle = false;
 
-            if (Config::GetOrDefault ("Chaos.SaveToSlot8", false))
-            {
-                GameUtil::SaveToFile ("GTASAsf8.b");
-            }
-
-            GameUtil::SaveToFile ("chaos_mod\\chaos_autosave.b");
-
-            std::string missionSave;
-            missionSave.append ("chaos_mod\\chaos_autosave.mission_")
-                .append (std::to_string (missionsPassed))
-                .append (".b");
-            GameUtil::SaveToFile (missionSave);
+            GameUtil::SaveToFile ("GTASAsf8.b");
 
             player->m_nPedFlags.bInVehicle = wasInVehicle;
 
-            inst->OverrideName ("Autosave Completed");
+            inst->OverrideName ("Quicksave Completed");
 
             didSave = true;
 
@@ -62,4 +49,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (AutoSaveEffect, "effect_autosave", 0);
+DEFINE_EFFECT (QuickSaveEffect, "effect_quicksave", 0);

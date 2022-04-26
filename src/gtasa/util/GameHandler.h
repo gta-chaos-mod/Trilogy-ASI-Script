@@ -110,7 +110,6 @@ private:
         }
     }
 
-    // TODO: Bring this into Chaos Mod Complementaries?
     static void
     HandleQuickSave ()
     {
@@ -120,7 +119,13 @@ private:
             if (KeyPressed (VK_F7) && lastQuickSave < currentTime)
             {
                 lastQuickSave = currentTime + 10000;
-                // EffectDatabase::QueueEffect (new QuickSaveEffect (), true);
+
+                nlohmann::json json;
+
+                json["effectID"] = "effect_quicksave";
+                json["duration"] = 1000 * 10;
+
+                EffectHandler::HandleFunction (json);
             }
         }
     }
@@ -128,7 +133,7 @@ private:
     static void
     HandleVehicleToRealPhysics ()
     {
-        if (Config::GetOrDefault ("Fixes.SwitchAllVehiclesToRealPhysics", true))
+        if (Config::GetOrDefault ("Chaos.SwitchAllVehiclesToRealPhysics", true))
         {
             GameUtil::SetVehiclesToRealPhysics ();
         }
