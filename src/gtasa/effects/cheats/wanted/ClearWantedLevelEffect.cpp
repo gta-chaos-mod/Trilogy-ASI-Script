@@ -1,14 +1,19 @@
-#include "CWanted.h"
 #include "effects/OneTimeEffect.h"
+#include "util/GameUtil.h"
 
 class ClearWantedLevelEffect : public OneTimeEffect
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return GameUtil::IsPlayerSafe ();
+    }
     void
     OnStart (EffectInstance *inst) override
     {
         CWanted *wanted = FindPlayerWanted (-1);
-        if (wanted) { wanted->CheatWantedLevel (0); }
+        if (wanted) wanted->CheatWantedLevel (0);
     }
 };
 

@@ -25,7 +25,7 @@ public:
     Hooked_CWaterLevel_GetWaterLevelNoWaves (float x, float y, float z, int a4,
                                              __int64 a5)
     {
-        return 0;
+        return false;
     }
 };
 
