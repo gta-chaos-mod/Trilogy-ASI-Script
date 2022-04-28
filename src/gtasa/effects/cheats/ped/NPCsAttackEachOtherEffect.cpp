@@ -4,10 +4,10 @@
 
 #include <CCheat.h>
 
-class PedsAttackEachOtherEffect : public TimedFunctionEffect
+class NPCsAttackEachOtherEffect : public TimedFunctionEffect
 {
 public:
-    PedsAttackEachOtherEffect ()
+    NPCsAttackEachOtherEffect ()
         : TimedFunctionEffect (CCheat::MayhemCheat, 0x96913E)
     {
     }
@@ -30,7 +30,7 @@ public:
 };
 
 using RegisterPedsAttackEachOtherEffect
-    = DisabledForMissionEffect<PedsAttackEachOtherEffect>;
+    = DisabledForMissionEffect<NPCsAttackEachOtherEffect>;
 
 DEFINE_EFFECT (RegisterPedsAttackEachOtherEffect,
                "effect_peds_attack_each_other",

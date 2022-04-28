@@ -7,14 +7,14 @@
 
 // clang-format off
 
-// Ped
+// NPCs
 DEFINE_EFFECT (TimedAddressEffect    , "effect_aggressive_drivers"          , GROUP_PED_SPAWNS                          , 0x96914F);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_elvis_is_everywhere"         , GROUP_PED_SPAWNS                          , CCheat::ElvisLivesCheat          , 0x969157);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_everyone_armed"              , GROUP_PED_SPAWNS                          , 0x969140);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_gang_members_everywhere"     , GROUP_PED_SPAWNS                          , CCheat::GangsCheat               , 0x96915A);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_gangs_control_the_streets"   , GROUP_PED_SPAWNS                          , CCheat::GangLandCheat            , 0x96915B);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_ghost_town"                  , GROUP_PED_SPAWNS | GROUP_VEHICLE_RARITY   , 0x96917A);
-DEFINE_EFFECT (TimedFunctionEffect   , "effect_peds_attack_you"             , GROUP_PEDS_ATTACK | GROUP_PED_SPAWNS      , CCheat::VillagePeopleCheat       , 0x969158);
+DEFINE_EFFECT (TimedFunctionEffect   , "effect_npcs_attack_you"             , GROUP_PEDS_ATTACK | GROUP_PED_SPAWNS      , CCheat::VillagePeopleCheat       , 0x969158);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_9mm"          , GROUP_PED_SPAWNS | GROUP_NPC_RECRUIT      , 0x96917C);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_ak47"         , GROUP_PED_SPAWNS | GROUP_NPC_RECRUIT      , 0x96917D);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_rockets"      , GROUP_PED_SPAWNS | GROUP_NPC_RECRUIT      , 0x96917E);
@@ -23,7 +23,6 @@ DEFINE_EFFECT (TimedFunctionEffect   , "effect_riot_mode"                   , GR
 // Player
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_get_jetpack"                 , 0                                         , CCheat::JetpackCheat);
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_get_parachute"               , 0                                         , CCheat::ParachuteCheat);
-// TODO: Infinite Health
 
 // Stats
 DEFINE_EFFECT (TimedAddressEffect    , "effect_huge_bunny_hop"              , 0                                         , 0x969161);
@@ -38,11 +37,7 @@ DEFINE_EFFECT (TimedFunctionEffect   , "effect_weapon_aiming_while_driving" , 0 
 // Theme - Defined in their own file "theme/ThemeEffects.cpp"
 
 // Time
-// TODO: Double Game Speed
 DEFINE_EFFECT (TimedAddressEffect    , "effect_faster_clock"                , GROUP_TIME                                , 0x96913B);
-// TODO: Half Game Speed
-// TODO: Quadruple Game Speed
-// TODO: Quarter Game Speed
 
 // Vehicle
 DEFINE_EFFECT (TimedAddressEffect    , "effect_all_cars_have_nitro"         , 0                                         , 0x969165);
@@ -54,7 +49,6 @@ DEFINE_EFFECT (TimedAddressEffect    , "effect_cars_on_water"               , 0 
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_cheap_cars"                  , GROUP_VEHICLE_RARITY                      , CCheat::AllCarsAreShitCheat      , 0x96915E);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_expensive_cars"              , GROUP_VEHICLE_RARITY                      , CCheat::AllCarsAreGreatCheat     , 0x96915F);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_insane_handling"             , 0                                         , 0x96914C);
-// TODO: Wheels Only Please - Custom implementation
 
 // Wanted
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_never_wanted"                , GROUP_WANTED                              , CCheat::NotWantedCheat           , 0x969171);

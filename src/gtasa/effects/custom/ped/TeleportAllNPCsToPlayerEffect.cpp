@@ -1,6 +1,6 @@
 #include "util/EffectBase.h"
 
-class TeleportAllPedsToPlayerEffect : public EffectBase
+class TeleportAllNPCsToPlayerEffect : public EffectBase
 {
 public:
     bool
@@ -31,5 +31,5 @@ public:
     }
 };
 
-DEFINE_EFFECT (TeleportAllPedsToPlayerEffect,
-               "effect_teleport_all_peds_to_player", 0);
+DEFINE_EFFECT (TeleportAllNPCsToPlayerEffect,
+               "effect_teleport_all_npcs_to_player", 0);

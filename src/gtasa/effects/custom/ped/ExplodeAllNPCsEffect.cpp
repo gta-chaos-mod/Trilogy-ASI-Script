@@ -4,7 +4,7 @@
 
 using namespace plugin;
 
-class ExplodeAllPedsEffect : public OneTimeEffect
+class ExplodeAllNPCsEffect : public OneTimeEffect
 {
 public:
     void
@@ -23,4 +23,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (ExplodeAllPedsEffect, "effect_explode_all_peds", 0);
+DEFINE_EFFECT (ExplodeAllNPCsEffect, "effect_explode_all_npcs", 0);

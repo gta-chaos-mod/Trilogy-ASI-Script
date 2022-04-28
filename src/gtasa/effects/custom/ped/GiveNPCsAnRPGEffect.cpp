@@ -5,8 +5,7 @@
 
 using namespace plugin;
 
-// TODO: Refactor effects that apply to NPCs to "GiveNPCsAnRPGEffect" and such
-class GivePedsAnRPGEffect : public OneTimeEffect
+class GiveNPCsAnRPGEffect : public OneTimeEffect
 {
 public:
     void
@@ -31,4 +30,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (GivePedsAnRPGEffect, "effect_give_peds_an_rpg", 0);
+DEFINE_EFFECT (GiveNPCsAnRPGEffect, "effect_give_npcs_an_rpg", 0);

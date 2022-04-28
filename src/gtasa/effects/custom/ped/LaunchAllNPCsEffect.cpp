@@ -1,6 +1,6 @@
 #include "effects/OneTimeEffect.h"
 
-class LaunchAllPedsEffect : public OneTimeEffect
+class LaunchAllNPCsEffect : public OneTimeEffect
 {
 public:
     void
@@ -18,4 +18,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (LaunchAllPedsEffect, "effect_launch_all_peds", 0);
+DEFINE_EFFECT (LaunchAllNPCsEffect, "effect_launch_all_npcs", 0);

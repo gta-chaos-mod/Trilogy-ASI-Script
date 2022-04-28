@@ -4,7 +4,7 @@
 
 using namespace plugin;
 
-class DisarmAllPedsEffect : public OneTimeEffect
+class DisarmAllNPCsEffect : public OneTimeEffect
 {
 public:
     void
@@ -20,4 +20,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (DisarmAllPedsEffect, "effect_disarm_all_peds", 0);
+DEFINE_EFFECT (DisarmAllNPCsEffect, "effect_disarm_all_npcs", 0);
