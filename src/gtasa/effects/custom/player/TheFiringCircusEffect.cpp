@@ -30,7 +30,6 @@ public:
         if (player)
         {
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle) vehicle->m_vecMoveSpeed *= 0;
 
             for (int x = 0; x < 6; x++)
             {
@@ -56,17 +55,19 @@ public:
                 Command<eScriptCommands::COMMAND_SET_CHAR_RELATIONSHIP> (
                     createdPed, 4, ePedType::PED_TYPE_PLAYER1);
 
-                CStreaming::RequestModel (MODEL_M4, 2);
+                CStreaming::RequestModel (MODEL_AK47, 2);
                 CStreaming::LoadAllRequestedModels (0);
-                CStreaming::SetModelIsDeletable (MODEL_M4);
+                CStreaming::SetModelIsDeletable (MODEL_AK47);
 
                 Command<eScriptCommands::COMMAND_GIVE_WEAPON_TO_CHAR> (
-                    createdPed, eWeaponType::WEAPON_M4, 9999);
+                    createdPed, eWeaponType::WEAPON_AK47, 9999);
                 Command<eScriptCommands::COMMAND_SET_CURRENT_CHAR_WEAPON> (
-                    createdPed, eWeaponType::WEAPON_M4);
+                    createdPed, eWeaponType::WEAPON_AK47);
 
                 Command<eScriptCommands::COMMAND_SET_CHAR_SHOOT_RATE> (
                     createdPed, 100);
+                Command<eScriptCommands::COMMAND_SET_CHAR_ACCURACY> (createdPed,
+                                                                     100);
 
                 if (vehicle)
                 {
@@ -89,24 +90,6 @@ public:
     {
         for (CPed *ped : createdPeds)
             Command<eScriptCommands::COMMAND_REMOVE_CHAR_ELEGANTLY> (ped);
-
-        CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->DisablePlayerControls = false;
-        }
-    }
-
-    void
-    OnTick (EffectInstance *inst)
-    {
-        CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->DisablePlayerControls = true;
-        }
     }
 };
 
