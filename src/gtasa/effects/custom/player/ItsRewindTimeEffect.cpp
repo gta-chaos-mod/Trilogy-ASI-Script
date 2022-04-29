@@ -98,10 +98,10 @@ public:
             player->m_nAreaCode = rewindData.currArea;
             for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
             {
-                BoneHelper::SetBonePosition (player, i,
-                                             rewindData.bonePositions[i]);
-                BoneHelper::SetBoneRotation (player, i,
-                                             rewindData.boneRotations[i]);
+                // BoneHelper::SetBonePosition (player, i,
+                //                              rewindData.bonePositions[i]);
+                // BoneHelper::SetBoneRotation (player, i,
+                //                              rewindData.boneRotations[i]);
             }
 
             if (!vehicle)
