@@ -18,7 +18,7 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        // TODO: Unhook
+        injector::MakeCALL (0x4B5B27, 0x4B3210);
     }
 
     static void __fastcall Hooked_CDamageCalculator_WillKillPed (
@@ -28,8 +28,14 @@ public:
         CallMethod<0x4B3210, CPedDamageResponseCalculator *> (thisCalc, ped, a3,
                                                               a4);
 
-        if (ped->m_fHealth <= 0.0f && (thisCalc->m_pDamager == FindPlayerPed () || thisCalc->m_pDamager == FindPlayerVehicle(-1, false)))
+        if (!ped || !thisCalc || !thisCalc->m_pDamager) return;
+
+        if (ped->m_fHealth <= 0.0f
+            && (thisCalc->m_pDamager == FindPlayerPed ()
+                || thisCalc->m_pDamager == FindPlayerVehicle (-1, false)))
+        {
             CCheat::SuicideCheat ();
+        }
     }
 };
 
