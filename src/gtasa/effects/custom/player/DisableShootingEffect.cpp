@@ -1,6 +1,6 @@
 #include "util/EffectBase.h"
 
-class ForcedShootEffect : public EffectBase
+class DisableShootingEffect : public EffectBase
 {
 public:
     void
@@ -10,9 +10,9 @@ public:
         if (player)
         {
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->NewState.ButtonCircle = SHRT_MAX;
+            if (pad) pad->NewState.ButtonCircle = 0;
         }
     }
 };
 
-DEFINE_EFFECT (ForcedShootEffect, "effect_forced_shoot", 0);
+DEFINE_EFFECT (DisableShootingEffect, "effect_disable_shooting", 0);
