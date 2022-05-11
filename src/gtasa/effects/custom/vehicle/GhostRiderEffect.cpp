@@ -5,8 +5,14 @@
 
 class GhostRiderEffect : public EffectBase
 {
-    std::map<CVehicle *, int> vehicleList = {};
-    CVehicle                 *lastVehicle = nullptr;
+    struct VehicleInfo
+    {
+        CVehicle *vehicle;
+        int       time = 5000;
+    };
+
+    std::vector<VehicleInfo> vehicleList = {};
+    CVehicle                *lastVehicle = nullptr;
 
 public:
     void
@@ -33,58 +39,73 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        int step = (int) GenericUtil::CalculateTick ();
-
-        if (this->vehicleList.size () > 0)
-        {
-            for (auto it = this->vehicleList.begin ();
-                 it != this->vehicleList.end (); ++it)
-            {
-                CVehicle *vehicle = it->first;
-
-                if (vehicle)
-                {
-                    this->vehicleList[vehicle] -= step;
-                    if (this->vehicleList[vehicle] < 0)
-                    {
-                        if (CPools::ms_pVehiclePool->IsObjectValid (vehicle))
-                        {
-                            vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                            vehicle->BlowUpCar (NULL, false);
-                        }
-                        it = this->vehicleList.erase (it);
-                    }
-                }
-                else
-                {
-                    it = this->vehicleList.erase (it);
-                }
-            }
-        }
+        CountDownAndExplodeVehicles ();
 
         CVehicle *currentVehicle = FindPlayerVehicle (-1, false);
 
         if (currentVehicle && currentVehicle->IsDriver (FindPlayerPed ()))
         {
-            if (this->vehicleList.contains (currentVehicle))
-            {
-                auto it = this->vehicleList.find (currentVehicle);
-                if (it != this->vehicleList.end ())
-                {
-                    it = this->vehicleList.erase (it);
-                }
-            }
+            RemoveVehicleIfExists (currentVehicle);
 
             SetBurnTimer (currentVehicle, 0.0f);
         }
         else if (!currentVehicle && this->lastVehicle
-                 && !this->vehicleList.contains (this->lastVehicle))
+                 && !ContainsVehicle (this->lastVehicle))
         {
-            this->vehicleList[this->lastVehicle] = 5000;
-            this->lastVehicle->m_fHealth         = 1000.0f;
+            vehicleList.push_back (VehicleInfo{.vehicle = this->lastVehicle});
+
+            this->lastVehicle->m_fHealth = 1000.0f;
         }
 
         this->lastVehicle = currentVehicle;
+    }
+
+    bool
+    ContainsVehicle (CVehicle *vehicle)
+    {
+        return std::find_if (vehicleList.begin (), vehicleList.end (),
+                             [vehicle] (VehicleInfo info)
+                             { return info.vehicle == vehicle; })
+               != vehicleList.end ();
+    }
+
+    void
+    RemoveVehicleIfExists (CVehicle *vehicle)
+    {
+        std::erase_if (vehicleList, [vehicle] (VehicleInfo &info)
+                       { return info.vehicle == vehicle; });
+    }
+
+    void
+    CountDownAndExplodeVehicles ()
+    {
+        int step = (int) GenericUtil::CalculateTick ();
+
+        if (this->vehicleList.size () > 0)
+        {
+            for (auto &info : vehicleList)
+            {
+                CVehicle *vehicle = info.vehicle;
+                if (vehicle)
+                {
+                    info.time -= step;
+                    if (info.time < 0)
+                    {
+                        if (IsVehiclePointerValid (vehicle))
+                        {
+                            vehicle->m_nPhysicalFlags.bExplosionProof = false;
+                            vehicle->BlowUpCar (NULL, false);
+                        }
+                    }
+                }
+            }
+
+            std::erase_if (vehicleList,
+                           [] (VehicleInfo &info) {
+                               return !IsVehiclePointerValid (info.vehicle)
+                                      || info.time < 0;
+                           });
+        }
     }
 
     void

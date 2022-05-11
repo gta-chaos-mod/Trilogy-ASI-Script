@@ -3,18 +3,6 @@
 #include <CMenuSystem.h>
 #include <CWorld.h>
 
-// TODO: Hook CEventDamage_AffectsPed for fall damage
-// HookCall (0x5E2F57, Hooked_CEventDamage_AffectsPed);
-// HookCall (0x5E3020, Hooked_CEventDamage_AffectsPed);
-
-/*
-bool __fastcall UsainBoltEffect::Hooked_CEventDamage_AffectsPed (
-    CEventDamage *thisEventDamage, void *edx, CPed *ped)
-{
-    return false;
-}
-*/
-
 /*
     TODO: Doesn't seem to work with "Walk On Water" - tries to set player to
    water position
@@ -28,7 +16,6 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        // TODO: Use custom hook manager / methods
         injector::MakeCALL (0x5E2F57, Hooked_CEventDamage_AffectsPed, true);
         injector::MakeCALL (0x5E3020, Hooked_CEventDamage_AffectsPed, true);
 
@@ -45,6 +32,8 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
+        // TODO: Unhook
+
         injector::WriteMemory (0x8D2458, 5.0f);
         injector::WriteMemory (0xB7CEE4, this->oldInfiniteRun);
     }

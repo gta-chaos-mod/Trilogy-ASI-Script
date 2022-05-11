@@ -8,15 +8,13 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        // TODO: Only hook relevant water level events so we can still hear
-        // weird audio
         injector::MakeCALL (0x6EB6B4, Hooked_CWaterLevel_GetWaterLevelNoWaves);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        // Revert
+        // TODO: Unhook
         injector::MakeCALL (0x6EB6B4,
                             0x6E8580); // CWaterLevel::GetWaterLevelNoWaves
     }

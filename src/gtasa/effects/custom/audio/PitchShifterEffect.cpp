@@ -22,6 +22,11 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         // TODO: Unhook
+        for (int address :
+             {0x4D6E34, 0x4D6E48, 0x4DBF9B, 0x4EA62D, 0x4F0871, 0x4F0A58})
+        {
+            injector::MakeCALL (address, 0x4D8960);
+        }
 
         injector::WriteMemory (0x8CBA6C, 1.0f, true);
     }

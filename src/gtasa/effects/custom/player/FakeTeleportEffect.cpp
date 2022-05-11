@@ -1,8 +1,10 @@
 #include "util/EffectBase.h"
+#include "util/GenericUtil.h"
 #include "util/Teleportation.h"
 
 class FakeTeleportEffect : public EffectBase
 {
+    int     wait          = 5000;
     bool    hasTeleported = false;
     CVector fakeLocation  = {1544.0f, -1353.0f, 332.0f};
     CVector previousLocation;
@@ -22,6 +24,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        wait          = 5000;
         hasTeleported = false;
         wasInVehicle  = false;
     }
@@ -43,12 +46,22 @@ public:
 
             Teleportation::Teleport (previousLocation);
         }
+
+        inst->OverrideName (
+            inst->GetCustomData ().value ("realEffectName", "Fake Teleport"));
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        if (hasTeleported) return;
+        if (hasTeleported)
+        {
+            wait -= (int) GenericUtil::CalculateTick ();
+            if (wait > 0) return;
+
+            inst->Disable ();
+            return;
+        }
 
         if (!CanActivate ())
         {
@@ -76,6 +89,7 @@ public:
             Teleportation::Teleport (fakeLocation);
 
             hasTeleported = true;
+            inst->SetTimerVisible (false);
         }
     }
 };

@@ -39,7 +39,7 @@ public:
             bool wasOnMission = CTheScripts::IsPlayerOnAMission ();
             if (wasOnMission)
             {
-                int randomMoney = inst->Random (1000, 25000);
+                int randomMoney = 1000 * inst->Random (5, 25);
 
                 Command<Commands::CLEAR_SMALL_PRINTS> ();
                 Command<eScriptCommands::COMMAND_PRINT_WITH_NUMBER_BIG> (
