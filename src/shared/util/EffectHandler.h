@@ -17,6 +17,8 @@ public:
 
     static void EmptyQueue ();
 
+    static void RemoveStaleEffects ();
+
     template <typename _Callable, typename... _Args>
     static void QueueFunction (_Callable &&__f, _Args &&...__args);
 

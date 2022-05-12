@@ -150,12 +150,8 @@ EffectDrawHandler::Draw (EffectInstance *effect, int idx, bool inset)
 void
 EffectDrawHandler::UpdateTimers ()
 {
-    /* Fade in/ Fade out of the effect text. Fade out starts when time left is 1
-     * second  */
-    if (this->effect->GetEffectRemaining () <= 1000)
-        this->transitionTimer -= GenericUtil::CalculateTick (0.0015f);
-    else
-        this->transitionTimer += GenericUtil::CalculateTick (0.0015f);
+    /* Fade-in of the effect text (and timer)  */
+    this->transitionTimer += GenericUtil::CalculateTick (0.0015f);
 
     this->transitionTimer = std::clamp (this->transitionTimer, 0.0f, 1.0f);
 
