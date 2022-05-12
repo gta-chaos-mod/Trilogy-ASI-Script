@@ -6,11 +6,37 @@
 
 template <typename Prototype, bool Method, auto... Addresses> class Event
 {
+    inline static bool enabled;
+    
 public:
     using FunctionCb = FunctionCb<Method, Prototype>;
     using HookManagerType
         = HookManagerMulti<AutomaticHook, FunctionCb, Addresses...>;
     using Callback = typename FunctionCb::EventCbType;
+
+    static void
+    Enable ()
+    {
+        if (!enabled)
+        {
+            HookManagerType::Add (Trampoline);
+            enabled = true;
+        }
+    }
+
+    static auto
+    Trampoline (FunctionCb &cb)
+    {
+        for (auto &func : before.callbacks)
+            std::apply (func, cb.params);
+
+        auto ret = cb ();
+
+        for (auto &func : after.callbacks)
+            std::apply (func, cb.params);
+
+        return ret;
+    }
 
     class FunctionList
     {
@@ -20,6 +46,7 @@ public:
         auto
         Add (Callback cb)
         {
+            Enable ();
             return callbacks.insert (std::end (callbacks), cb);
         }
 
@@ -38,9 +65,15 @@ public:
         }
 
         void
-        operator+= (std::pair<EffectInstance, Callback> cb)
+        operator+= (std::pair<EffectInstance*, Callback> cb)
         {
             Add (cb.first, cb.second);
         }
     } inline static before, after;
+
+    static void
+    Add (std::pair<EffectInstance*, Callback> cb)
+    {
+        before += cb;
+    }
 };

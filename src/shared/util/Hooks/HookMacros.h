@@ -44,13 +44,13 @@
 #define HOOK_PARAMS(name) HOOK_CLASS(name)::CbType &cb
 
 // Macros for defining hook types
-#define DECLARE_HOOK(name, addr, method, ...)                                  \
+#define DECLARE_HOOK(name, prototype, method, ...)                                  \
     using HOOK_CLASS (name)                                                    \
-        = HookManagerMulti<AutomaticHook, FunctionCb<method, __VA_ARGS__>,    \
-                            ADDRESS_LIST addr>
+        = HookManagerMulti<AutomaticHook, FunctionCb<method, prototype>,    \
+                            __VA_ARGS__>
 
-#define DEFINE_HOOK(name, addr, method, ...)                                   \
-    DECLARE_HOOK (name, addr, method, __VA_ARGS__);                            \
+#define DEFINE_HOOK(name, prototype, method, ...)                  \
+    DECLARE_HOOK (name, prototype, method, __VA_ARGS__);                            \
     static void name (HOOK_PARAMS(name))
 
 // Hooks for using hooks
@@ -63,3 +63,9 @@
             [it] { HOOK_CLASS (name)::Remove (it); });                         \
     }
 #define ENABLE_HOOK(inst, name) ADD_TO_HOOK (name, inst, name)
+
+#define HOOK(func, prototype, ...)                                             \
+    {                                                                          \
+        DECLARE_HOOK (hook, prototype, false, __VA_ARGS__);                    \
+        HOOK_CLASS (hook)::Add ([] (auto &&cb) { func (cb); });                \
+    }
