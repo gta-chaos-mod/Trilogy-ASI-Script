@@ -41,17 +41,17 @@
 // Utility Macros
 #define HOOK_CLASS(name) name##_h
 #define ADDRESS_LIST(...) __VA_ARGS__
-#define HOOK_PARAMS(name) HOOK_CLASS(name)::CbType &cb
+#define HOOK_PARAMS(name) HOOK_CLASS (name)::CbType &cb
 
 // Macros for defining hook types
-#define DECLARE_HOOK(name, prototype, method, ...)                                  \
+#define DECLARE_HOOK(name, prototype, method, ...)                             \
     using HOOK_CLASS (name)                                                    \
-        = HookManagerMulti<AutomaticHook, FunctionCb<method, prototype>,    \
-                            __VA_ARGS__>
+        = HookManagerMulti<AutomaticHook, FunctionCb<method, prototype>,       \
+                           __VA_ARGS__>
 
-#define DEFINE_HOOK(name, prototype, method, ...)                  \
-    DECLARE_HOOK (name, prototype, method, __VA_ARGS__);                            \
-    static void name (HOOK_PARAMS(name))
+#define DEFINE_HOOK(name, prototype, method, ...)                              \
+    DECLARE_HOOK (name, prototype, method, __VA_ARGS__);                       \
+    static void name (HOOK_PARAMS (name))
 
 // Hooks for using hooks
 #define ADD_TO_HOOK_(function, name) HOOK_CLASS (name)::Add (function);
@@ -64,8 +64,14 @@
     }
 #define ENABLE_HOOK(inst, name) ADD_TO_HOOK (name, inst, name)
 
-#define HOOK(func, prototype, ...)                                             \
+#define HOOK(inst, func, prototype, ...)                                       \
     {                                                                          \
         DECLARE_HOOK (hook, prototype, false, __VA_ARGS__);                    \
-        HOOK_CLASS (hook)::Add ([] (auto &&cb) { func (cb); });                \
+        ADD_TO_HOOK ([] (auto &&cb) { return func (cb); }, inst, hook);        \
+    }
+
+#define HOOK_METHOD(inst, func, prototype, ...)                                \
+    {                                                                          \
+        DECLARE_HOOK (hook, prototype, true, __VA_ARGS__);                     \
+        ADD_TO_HOOK ([] (auto &&cb) { return func (cb); }, inst, hook);        \
     }

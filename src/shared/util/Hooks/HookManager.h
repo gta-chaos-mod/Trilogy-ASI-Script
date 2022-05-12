@@ -1,14 +1,14 @@
 #pragma once
 
+#include "util/hooks/FunctionCb.h"
+#include "util/hooks/HookTypes.h"
+
 #include <cstdint>
 #include <functional>
 #include <map>
 #include <tuple>
 #include <type_traits>
 #include <vector>
-
-#include "util/Hooks/FunctionCb.h"
-#include "util/Hooks/HookTypes.h"
 
 /** Hook Manager to handle multiple hooks of the same function. Hooks are
     executed in order they were added.
@@ -52,7 +52,7 @@ public:
     Remove (typename Callback::TreeIterator it)
     {
         sm_CallTree.erase (it);
-        
+
 #ifdef HOOK_MANAGER_DISABLE_ON_EMPTY_CALL_TREE
         if (sm_CallTree.size () == 0) Disable ();
 #endif

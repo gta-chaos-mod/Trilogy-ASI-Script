@@ -22,7 +22,7 @@ public:
     template <typename _Callable, typename... _Args>
     static void QueueFunction (_Callable &&__f, _Args &&...__args);
 
-    static void QueueEffect (EffectBase *effect, bool executeNow,
+    static void QueueEffect (EffectBase           *effect,
                              const nlohmann::json &effectData);
 
     static void HandleFunction (const nlohmann::json &effectData);

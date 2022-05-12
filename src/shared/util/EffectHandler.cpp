@@ -59,8 +59,7 @@ EffectHandler::QueueFunction (_Callable &&__f, _Args &&...__args)
 }
 
 void
-EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
-                            const nlohmann::json &data)
+EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
 {
     if (!effect) return;
 
@@ -109,10 +108,7 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
         RemoveStaleEffects ();
     };
 
-    if (executeNow)
-        effectFunction ();
-    else
-        QueueFunction (effectFunction);
+    QueueFunction (effectFunction);
 }
 
 void
@@ -122,11 +118,11 @@ EffectHandler::HandleFunction (const nlohmann::json &effectData)
 
     effect = EffectDatabase::FindEffectById (effectData.at ("effectID"));
 
-    if (effect)
-        QueueEffect (effect, false, effectData);
-    else
-#ifndef _NDEBUG
-        MessageBox (NULL, std::string (effectData.at ("effectID")).c_str (),
-                    "Effect not found", MB_ICONHAND);
-#endif
+    if (effect) QueueEffect (effect, effectData);
+    //     else
+    // #ifndef _NDEBUG
+    //         MessageBox (NULL, std::string (effectData.at ("effectID")).c_str
+    //         (),
+    //                     "Effect not found", MB_ICONHAND);
+    // #endif
 }

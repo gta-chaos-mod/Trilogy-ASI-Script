@@ -17,7 +17,7 @@ struct FunctionCbTrampoline
     Call (uintptr_t addr, std::tuple<Args...> &params)
     {
         using FuncType = Ret (*) (Args...);
-        std::apply (reinterpret_cast<FuncType> (addr), params);
+        return std::apply (reinterpret_cast<FuncType> (addr), params);
     }
 };
 
@@ -36,7 +36,7 @@ struct FunctionCbTrampoline<true, Ret, Arg1, Args...>
     Call (uintptr_t addr, std::tuple<Arg1, Args...> &params)
     {
         using FuncType = Ret (__thiscall *) (Arg1, Args...);
-        std::apply (reinterpret_cast<FuncType> (addr), params);
+        return std::apply (reinterpret_cast<FuncType> (addr), params);
     }
 };
 /*******************************************************/

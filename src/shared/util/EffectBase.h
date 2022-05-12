@@ -2,6 +2,7 @@
 
 #include "util/EffectDatabase.h"
 #include "util/EffectInstance.h"
+#include "util/hooks/HookMacros.h"
 
 #include <string>
 #include <type_traits>

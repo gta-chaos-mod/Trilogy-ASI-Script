@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util/Hooks/HookManager.h"
+#include "util/hooks/HookManager.h"
 #include "util/EffectInstance.h"
 #include <list>
 
