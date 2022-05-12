@@ -297,13 +297,12 @@ public:
     }
 
     static char
-    Hooked_Debug_GetKeyDown (auto &&Debug_GetKeyDown, int keyCode, int a2,
-                             int a3)
+    Hooked_Debug_GetKeyDown (auto &&cb, int keyCode, int a2, int a3)
     {
         // 83 / S for mission skip
         if (isEnabled && keyCode == 83) return true;
 
-        return Debug_GetKeyDown ();
+        return cb ();
     }
 };
 

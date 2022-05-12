@@ -10,16 +10,14 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x5D14AE,
-                            Hooked_CSimpleVariablesSaveStructure_Construct);
+        HOOK_METHOD (inst, Hooked_CSimpleVariablesSaveStructure_Construct,
+                     int (void *), 0x5D14AE);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
         CClock::ms_nMillisecondsPerGameMinute = 1000;
-
-        injector::MakeCALL (0x5D14AE, 0x5D1B80);
     }
 
     void
@@ -28,11 +26,13 @@ public:
         CClock::ms_nMillisecondsPerGameMinute = 10;
     }
 
-    static int __fastcall Hooked_CSimpleVariablesSaveStructure_Construct (
-        void *thisStructure)
+    static int
+    Hooked_CSimpleVariablesSaveStructure_Construct (auto &&cb)
     {
         CClock::ms_nMillisecondsPerGameMinute = 1000;
-        int result = CallMethodAndReturn<int, 0x5D1B80, void *> (thisStructure);
+
+        int result = cb ();
+
         CClock::ms_nMillisecondsPerGameMinute = 10;
 
         return result;

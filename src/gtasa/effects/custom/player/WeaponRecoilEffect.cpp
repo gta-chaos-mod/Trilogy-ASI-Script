@@ -13,13 +13,10 @@ public:
     {
         recoilValue = 0.0f;
 
-        injector::MakeCALL (0x61ECCD, Hooked_CWeapon_Fire);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        injector::MakeCALL (0x61ECCD, 0x742300);
+        HOOK_METHOD_ARGS (inst, Hooked_CWeapon_Fire,
+                          char (CWeapon *, CPed *, CVector *, CVector *,
+                                CEntity *, CVector *, CVector *),
+                          0x61ECCD);
     }
 
     void
@@ -38,19 +35,15 @@ public:
         }
     }
 
-    static char __fastcall Hooked_CWeapon_Fire (CWeapon *thisWeapon, void *edx,
-                                                CPed *owner, CVector *vecOrigin,
-                                                CVector *_vecEffectPosn,
-                                                CEntity *targetEntity,
-                                                CVector *vecTarget,
-                                                CVector *arg_14)
+    static char __fastcall Hooked_CWeapon_Fire (
+        auto &&cb, CWeapon *thisWeapon, CPed *owner,
+        CVector *vecOrigin, CVector *_vecEffectPosn, CEntity *targetEntity,
+        CVector *vecTarget, CVector *arg_14)
     {
         if (owner == FindPlayerPed () && !FindPlayerVehicle (-1, false))
             recoilValue = 4.0f;
 
-        return CallMethodAndReturn<char, 0x742300, CWeapon *> (
-            thisWeapon, owner, vecOrigin, _vecEffectPosn, targetEntity,
-            vecTarget, arg_14);
+        return cb ();
     }
 };
 

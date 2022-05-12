@@ -36,17 +36,17 @@ public:
     }
 
     static void
-    Hooked_ComputeWillKillPed (auto                        &&ComputeWillKillPed,
+    Hooked_ComputeWillKillPed (auto                        &&cb,
                                CPedDamageResponseCalculator *thisCalc,
                                CPed *ped, uint8_t *cDamageResponseInfo, char a4)
     {
         if (ped == FindPlayerPed ()) return;
 
-        ComputeWillKillPed ();
+        cb ();
     }
 
     static void
-    Hooked_KillPedsInVehicle (auto &&KillPedsInVehicle, CVehicle *thisVehicle)
+    Hooked_KillPedsInVehicle (auto &&cb, CVehicle *thisVehicle)
     {
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle && vehicle == thisVehicle)
@@ -54,7 +54,7 @@ public:
             thisVehicle->m_nStatus = eEntityStatus::STATUS_SIMPLE;
         }
 
-        KillPedsInVehicle ();
+        cb ();
     }
 };
 

@@ -8,19 +8,11 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x6EB710, Hooked_CGame_CanSeeWaterFromCurrArea);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        // Revert
-        injector::MakeCALL (0x6EB710,
-                            0x53C4B0); // CGame::CanSeeWaterFromCurrArea
+        HOOK (inst, Hooked_CGame_CanSeeWaterFromCurrArea, bool (), 0x6EB710);
     }
 
     static bool
-    Hooked_CGame_CanSeeWaterFromCurrArea ()
+    Hooked_CGame_CanSeeWaterFromCurrArea (auto &&cb)
     {
         return false;
     }

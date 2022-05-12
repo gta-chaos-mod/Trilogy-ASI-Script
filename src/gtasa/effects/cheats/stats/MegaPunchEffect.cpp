@@ -19,9 +19,9 @@ public:
     }
 
     static void
-    Hooked_Fight_HitCar (auto &&Fight_HitCar, CTaskSimpleFight *thisTask,
-                         CPed *ped, CVehicle *vehicle, CVector *colCoord,
-                         CVector *colDir, int colComp, int a7)
+    Hooked_Fight_HitCar (auto &&cb, CTaskSimpleFight *thisTask, CPed *ped,
+                         CVehicle *vehicle, CVector *colCoord, CVector *colDir,
+                         int colComp, int a7)
     {
         float angle = ped->GetHeading ();
 
@@ -30,7 +30,7 @@ public:
         vehicle->m_vecMoveSpeed.y = 2.5f * cos (angle);
         vehicle->m_vecMoveSpeed.z = 0;
 
-        Fight_HitCar ();
+        cb ();
     }
 };
 

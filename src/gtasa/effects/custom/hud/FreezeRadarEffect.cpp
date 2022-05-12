@@ -34,12 +34,12 @@ public:
     }
 
     static void
-    Hooked_CRadar_DrawRadarMap (auto &&CRadar_DrawRadarMap)
+    Hooked_CRadar_DrawRadarMap (auto &&cb)
     {
         CRadar::vec2DRadarOrigin.x = position.x;
         CRadar::vec2DRadarOrigin.y = position.y;
 
-        CRadar_DrawRadarMap ();
+        cb ();
     }
 };
 

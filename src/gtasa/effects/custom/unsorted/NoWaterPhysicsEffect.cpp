@@ -8,20 +8,12 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x6EB6B4, Hooked_CWaterLevel_GetWaterLevelNoWaves);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        // TODO: Unhook
-        injector::MakeCALL (0x6EB6B4,
-                            0x6E8580); // CWaterLevel::GetWaterLevelNoWaves
+        HOOK (inst, Hooked_CWaterLevel_GetWaterLevelNoWaves,
+              bool (float, float, float, int, __int64), 0x6EB6B4);
     }
 
     static bool
-    Hooked_CWaterLevel_GetWaterLevelNoWaves (float x, float y, float z, int a4,
-                                             __int64 a5)
+    Hooked_CWaterLevel_GetWaterLevelNoWaves (auto &&cb)
     {
         return false;
     }

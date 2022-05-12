@@ -36,13 +36,13 @@ public:
     }
 
     static int
-    Hooked_SetFrequencyScalingFactor (auto &&SetFrequencyScalingFactor,
+    Hooked_SetFrequencyScalingFactor (auto            &&cb,
                                       CAEAudioHardware *thisAudioHardware,
                                       int slot, int offset, float &factor)
     {
         if (factor > 0.0f) factor = audioPitch;
 
-        return SetFrequencyScalingFactor ();
+        return cb ();
     }
 };
 
