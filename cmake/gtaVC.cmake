@@ -10,7 +10,7 @@ set_target_properties(${CHAOS_VC} PROPERTIES SUFFIX ".asi")
 
 target_include_directories(${CHAOS_VC} PUBLIC "src/shared/" "src/gtavc")
 
-target_link_libraries(${CHAOS_VC} PUBLIC plugin_vc nlohmann_json uWebSockets)
+target_link_libraries(${CHAOS_VC} PUBLIC plugin_vc nlohmann_json uWebSockets minhook)
 
 target_compile_definitions(${CHAOS_VC} PUBLIC NOMINMAX)
 

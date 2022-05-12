@@ -14,6 +14,7 @@ EffectInstance::Start ()
 void
 EffectInstance::End ()
 {
+    cleanupHandler.DoCleanup ();
     if (this->effect) this->effect->OnEnd (this);
 }
 

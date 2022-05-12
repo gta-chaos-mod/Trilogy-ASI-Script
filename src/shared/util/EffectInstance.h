@@ -2,6 +2,7 @@
 
 #include "util/EffectCrowdControlHandler.h"
 #include "util/EffectDrawHandler.h"
+#include "util/EffectCleanupHandler.h"
 #include "util/EffectSubHandlers.h"
 #include "util/EffectTwitchHandler.h"
 #include "util/RandomHelper.h"
@@ -33,7 +34,8 @@ private:
     EffectDrawHandler drawHandler;
     SubHandlers_t     subHandlers;
 
-    RandomHelper randomHelper;
+    RandomHelper         randomHelper;
+    EffectCleanupHandler cleanupHandler;
 
 public:
     EffectInstance (EffectBase *effect);
@@ -110,6 +112,12 @@ public:
     GetSubhandler ()
     {
         return subHandlers.Get<T> ();
+    }
+
+    auto &
+    GetCleanupHandler ()
+    {
+        return cleanupHandler;
     }
 
     void

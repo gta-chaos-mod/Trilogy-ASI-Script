@@ -10,7 +10,7 @@ set_target_properties(${CHAOS_SA} PROPERTIES SUFFIX ".asi")
 
 target_include_directories(${CHAOS_SA} PUBLIC "src/shared/" "src/gtasa")
 
-target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa nlohmann_json uWebSockets)
+target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa nlohmann_json uWebSockets minhook)
 
 target_compile_definitions(${CHAOS_SA} PUBLIC NOMINMAX)
 

@@ -19,3 +19,4 @@ include(cmake/gtaSA.cmake)
 
 include(cmake/nlohmannJSON.cmake)
 include(cmake/uWebSockets.cmake)
+include(cmake/minhook.cmake)
