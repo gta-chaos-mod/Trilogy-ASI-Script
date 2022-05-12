@@ -46,7 +46,8 @@ EffectHandler::RemoveStaleEffects ()
                                        [] (EffectInstance &effect) {
                                            return !effect.IsShownOnScreen ()
                                                   && !effect.IsRunning ();
-                                       }));
+                                       }),
+                       end);
     }
 }
 
