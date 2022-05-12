@@ -173,16 +173,8 @@ public:
         triedPassingMission = false;
         missionPassWait     = 100;
 
-        for (int address : {0x46DDED, 0x46DE32})
-        {
-            injector::MakeCALL (address, Hooked_Debug_GetKeyDown);
-        }
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        // TODO: Unhook
+        HOOK_ARGS (inst, Hooked_Debug_GetKeyDown, char (int, int, int),
+                   0x46DDED, 0x46DE32);
     }
 
     void
@@ -304,9 +296,14 @@ public:
         }
     }
 
-    static char __stdcall Hooked_Debug_GetKeyDown (int keyCode, int a2, int a3)
+    static char
+    Hooked_Debug_GetKeyDown (auto &&Debug_GetKeyDown, int keyCode, int a2,
+                             int a3)
     {
-        return isEnabled && keyCode == 83; // 83 / S for mission skip
+        // 83 / S for mission skip
+        if (isEnabled && keyCode == 83) return true;
+
+        return Debug_GetKeyDown ();
     }
 };
 

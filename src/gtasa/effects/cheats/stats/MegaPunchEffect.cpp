@@ -12,21 +12,16 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        for (int address : {0x624577, 0x66412C})
-        {
-            injector::MakeCALL (address, Hooked_Fight_HitCar);
-        }
+        HOOK_METHOD_ARGS (inst, Hooked_Fight_HitCar,
+                          void (CTaskSimpleFight *, CPed *, CVehicle *,
+                                CVector *, CVector *, int, int),
+                          0x624577, 0x66412C);
     }
 
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        // TODO: Unhook
-    }
-
-    static void __fastcall Hooked_Fight_HitCar (
-        CTaskSimpleFight *thisTask, void *edx, CPed *ped, CVehicle *vehicle,
-        CVector *colCoord, CVector *colDir, int colComp, int a7)
+    static void
+    Hooked_Fight_HitCar (auto &&Fight_HitCar, CTaskSimpleFight *thisTask,
+                         CPed *ped, CVehicle *vehicle, CVector *colCoord,
+                         CVector *colDir, int colComp, int a7)
     {
         float angle = ped->GetHeading ();
 
@@ -35,9 +30,7 @@ public:
         vehicle->m_vecMoveSpeed.y = 2.5f * cos (angle);
         vehicle->m_vecMoveSpeed.z = 0;
 
-        CallMethod<0x61D0B0, CTaskSimpleFight *> (thisTask, ped, vehicle,
-                                                  colCoord, colDir, colComp,
-                                                  a7);
+        Fight_HitCar ();
     }
 };
 

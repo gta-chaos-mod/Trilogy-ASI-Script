@@ -12,7 +12,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        HOOK_METHOD (inst, Hooked_SetFrequencyScalingFactor,
+        HOOK_METHOD_ARGS (inst, Hooked_SetFrequencyScalingFactor,
                      int (CAEAudioHardware *, int, int, float), 0x4D6E34,
                      0x4D6E48, 0x4DBF9B, 0x4EA62D, 0x4F0871, 0x4F0A58);
     }
@@ -29,15 +29,11 @@ public:
         injector::WriteMemory (0x8CBA6C, audioPitch, true);
     }
 
-    // CAEAudioHardware *thisAudioHardware
-    // int slot
-    // int offset
-    // float factor
     static int
-    Hooked_SetFrequencyScalingFactor (auto &&SetFrequencyScalingFactor)
+    Hooked_SetFrequencyScalingFactor (auto &&SetFrequencyScalingFactor,
+                                      CAEAudioHardware *thisAudioHardware,
+                                      int slot, int offset, float &factor)
     {
-        float &factor = std::get<3> (SetFrequencyScalingFactor.params);
-
         if (factor > 0.0f) factor = audioPitch;
 
         return SetFrequencyScalingFactor ();

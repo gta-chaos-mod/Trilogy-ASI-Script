@@ -16,13 +16,7 @@ public:
         position    = {0.0f, 0.0f, 0.0f};
         positionSet = false;
 
-        injector::MakeJMP (0x586D4E, Hooked_CRadar_DrawRadarMap);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        injector::MakeJMP (0x586D4E, 0x586880);
+        HOOK (inst, Hooked_CRadar_DrawRadarMap, void (), 0x586D4E);
     }
 
     void
@@ -40,12 +34,12 @@ public:
     }
 
     static void
-    Hooked_CRadar_DrawRadarMap ()
+    Hooked_CRadar_DrawRadarMap (auto &&CRadar_DrawRadarMap)
     {
         CRadar::vec2DRadarOrigin.x = position.x;
         CRadar::vec2DRadarOrigin.y = position.y;
 
-        Call<0x586880> ();
+        CRadar_DrawRadarMap ();
     }
 };
 

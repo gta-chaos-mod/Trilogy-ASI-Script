@@ -7,19 +7,14 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x4B5B27, Hooked_ComputeWillKillPed);
+        HOOK_METHOD_ARGS (inst, Hooked_ComputeWillKillPed,
+                          void (CPedDamageResponseCalculator *, CPed *,
+                                uint8_t *, char),
+                          0x4B5B27);
 
-        for (int address :
-             {0x6B3950, 0x6B3D6C, 0x6BEAA3, 0x6C6F44, 0x6CCF83, 0x6F225A})
-        {
-            injector::MakeCALL (address, Hooked_KillPedsInVehicle);
-        }
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        // TODO: Unhook
+        HOOK_METHOD_ARGS (inst, Hooked_KillPedsInVehicle, void (CVehicle *),
+                          0x6B3950, 0x6B3D6C, 0x6BEAA3, 0x6C6F44, 0x6CCF83,
+                          0x6F225A);
     }
 
     void
@@ -40,22 +35,26 @@ public:
         }
     }
 
-    static void __fastcall Hooked_ComputeWillKillPed (
-        CPedDamageResponseCalculator *thisCalc, void *edx, CPed *ped,
-        uint8_t *cDamageReponseInfo, char a4)
+    static void
+    Hooked_ComputeWillKillPed (auto                        &&ComputeWillKillPed,
+                               CPedDamageResponseCalculator *thisCalc,
+                               CPed *ped, uint8_t *cDamageResponseInfo, char a4)
     {
         if (ped == FindPlayerPed ()) return;
 
-        thisCalc->ComputeWillKillPed (ped, cDamageReponseInfo, a4);
+        ComputeWillKillPed ();
     }
 
-    static void __fastcall Hooked_KillPedsInVehicle (CVehicle *thisVehicle)
+    static void
+    Hooked_KillPedsInVehicle (auto &&KillPedsInVehicle, CVehicle *thisVehicle)
     {
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle && vehicle == thisVehicle)
         {
             thisVehicle->m_nStatus = eEntityStatus::STATUS_SIMPLE;
         }
+
+        KillPedsInVehicle ();
     }
 };
 
