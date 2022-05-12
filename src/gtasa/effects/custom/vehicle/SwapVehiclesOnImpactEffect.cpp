@@ -17,7 +17,13 @@ class SwapVehiclesOnImpactEffect : public EffectBase
         void (CPhysical *, CPhysical *, int, float *, int)>
         applyCollisionEvent;
 
-    static inline std::map<CVehicle *, int> vehicleCooldowns;
+    struct CooldownInfo
+    {
+        CVehicle *vehicle;
+        int       cooldown = 1000;
+    };
+
+    static inline std::vector<CooldownInfo> vehicleCooldowns;
 
 public:
     void
@@ -37,17 +43,23 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        std::vector<CVehicle *> toErase;
-
         int wait = (int) GenericUtil::CalculateTick ();
-        for (auto const &[vehicle, vehicleWait] : vehicleCooldowns)
+        for (auto &info : vehicleCooldowns)
         {
-            vehicleCooldowns[vehicle] -= wait;
-            if (vehicleCooldowns[vehicle] < 0) toErase.push_back (vehicle);
+            info.cooldown -= wait;
         }
 
-        for (CVehicle *erase : toErase)
-            vehicleCooldowns.erase (erase);
+        std::erase_if (vehicleCooldowns,
+                       [] (CooldownInfo &info) { return info.cooldown < 0; });
+    }
+
+    static bool
+    ContainsVehicle (CVehicle *vehicle)
+    {
+        return std::find_if (vehicleCooldowns.begin (), vehicleCooldowns.end (),
+                             [vehicle] (CooldownInfo &info)
+                             { return info.vehicle == vehicle; })
+               != vehicleCooldowns.end ();
     }
 
     static void
@@ -63,8 +75,7 @@ public:
         CVehicle *thisVehicle  = (CVehicle *) thisEntity;
         CVehicle *otherVehicle = (CVehicle *) otherEntity;
 
-        if (vehicleCooldowns[thisVehicle] > 0
-            || vehicleCooldowns[otherVehicle] > 0)
+        if (ContainsVehicle (thisVehicle) || ContainsVehicle (otherVehicle))
         {
             return;
         }
@@ -115,8 +126,8 @@ public:
         }
 
         // Set vehicle cooldowns
-        vehicleCooldowns[thisVehicle]  = 1000;
-        vehicleCooldowns[otherVehicle] = 1000;
+        vehicleCooldowns.push_back (CooldownInfo{.vehicle = thisVehicle});
+        vehicleCooldowns.push_back (CooldownInfo{.vehicle = otherVehicle});
     }
 
     static void

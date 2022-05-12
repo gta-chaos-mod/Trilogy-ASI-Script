@@ -4,7 +4,7 @@
 
 #include <ePedBones.h>
 
-class HelicopterPedsEffect : public EffectBase
+class RotatingPedsEffect : public EffectBase
 {
     static inline float spinSpeed     = 0.0f;
     static inline float rotationAngle = 0.0f;
@@ -48,4 +48,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (HelicopterPedsEffect, "effect_helicopter_peds", 0);
+DEFINE_EFFECT (RotatingPedsEffect, "effect_rotating_peds", 0);

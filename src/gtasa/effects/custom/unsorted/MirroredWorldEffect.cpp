@@ -7,6 +7,8 @@
 
 using namespace plugin;
 
+// TODO: Fix radar position when in widescreen mode
+
 class MirroredWorldEffect : public EffectBase
 {
     static inline CdeclEvent<AddressList<0x53EB12, H_CALL>, PRIORITY_BEFORE,

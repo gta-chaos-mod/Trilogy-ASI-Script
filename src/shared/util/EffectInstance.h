@@ -42,6 +42,7 @@ public:
 
     EffectInstance (const EffectInstance &other) = delete;
     EffectInstance (EffectInstance &&other)      = default;
+    EffectInstance &operator= (EffectInstance &&other) = default;
 
     /// Returns whether other effect can run together with this effect.
     bool IsOtherEffectIncompatible (const EffectInstance &other);

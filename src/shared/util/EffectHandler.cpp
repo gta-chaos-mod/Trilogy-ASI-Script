@@ -13,13 +13,8 @@ EffectHandler::Tick ()
 
     for (auto &effect : effects)
         effect.Tick ();
-
-    std::erase_if (effects,
-                   [] (EffectInstance &effect) {
-                       return !effect.IsShownOnScreen ()
-                              && !effect.IsRunning ();
-                   });
 }
+
 void
 EffectHandler::ProcessScripts ()
 {
@@ -34,6 +29,24 @@ EffectHandler::EmptyQueue ()
     {
         effectQueue.front () ();
         effectQueue.pop ();
+    }
+}
+
+void
+EffectHandler::RemoveStaleEffects ()
+{
+    if (effects.size () > 5)
+    {
+        auto begin = std::begin (effects);
+        auto end   = std::end (effects);
+
+        std::advance (begin, 5);
+
+        effects.erase (std::remove_if (begin, end,
+                                       [] (EffectInstance &effect) {
+                                           return !effect.IsShownOnScreen ()
+                                                  && !effect.IsRunning ();
+                                       }));
     }
 }
 
@@ -92,6 +105,8 @@ EffectHandler::QueueEffect (EffectBase *effect, bool executeNow,
         inst.Enable ();
         inst.Tick ();
         effects.push_front (std::move (inst));
+
+        RemoveStaleEffects ();
     };
 
     if (executeNow)

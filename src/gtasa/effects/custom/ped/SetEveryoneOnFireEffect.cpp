@@ -17,5 +17,4 @@ public:
     }
 };
 
-// TODO: Maybe consider GROUP_HEALTH for this?
-DEFINE_EFFECT (SetEveryoneOnFireEffect, "effect_set_everyone_on_fire", 0);
+DEFINE_EFFECT (SetEveryoneOnFireEffect, "effect_set_everyone_on_fire", GROUP_HEALTH);

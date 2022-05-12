@@ -5,9 +5,16 @@
 
 class CarmageddonEffect : public EffectBase
 {
-    int                       wait        = 0;
-    std::map<CVehicle *, int> vehicleList = {};
-    std::vector<int>          possibleVehicles
+    struct VehicleInfo
+    {
+        CVehicle *vehicle;
+        int       time = 0;
+    };
+
+    int wait = 0;
+    // TODO: Change to vector or something
+    std::vector<VehicleInfo> vehicleList = {};
+    std::vector<int>         possibleVehicles
         = {400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412,
            413, 414, 415, 416, 418, 419, 420, 421, 422, 423, 424, 426, 427,
            428, 429, 431, 433, 434, 436, 437, 438, 439, 440, 442, 443, 444,
@@ -94,7 +101,7 @@ public:
                     vehicle->m_vecMoveSpeed.z -= 5.0f;
                     vehicle->m_fHealth = 249.0f;
 
-                    vehicleList[vehicle] = 0;
+                    vehicleList.push_back (VehicleInfo{.vehicle = vehicle});
                 }
             }
         }
@@ -107,21 +114,19 @@ public:
     {
         const int DESPAWN_TIME = 5000;
 
-        for (auto it = vehicleList.begin (); it != vehicleList.end (); ++it)
+        for (auto &info : vehicleList)
         {
-            CVehicle *vehicle = it->first;
-            int      &time    = it->second;
+            if (info.vehicle->m_fHealth <= 0.0f) info.time += step;
 
-            if (vehicle->m_fHealth <= 0.0f) time += step;
-
-            if (time > DESPAWN_TIME)
+            if (info.time > DESPAWN_TIME)
             {
-                if (CPools::ms_pVehiclePool->IsObjectValid (vehicle))
-                    vehicle->m_nVehicleFlags.bFadeOut = true;
-
-                it = vehicleList.erase (it);
+                if (IsVehiclePointerValid (info.vehicle))
+                    info.vehicle->m_nVehicleFlags.bFadeOut = true;
             }
         }
+
+        std::erase_if (vehicleList, [] (VehicleInfo &info)
+                       { return info.time > DESPAWN_TIME; });
     }
 
     float
