@@ -1,8 +1,8 @@
 #pragma once
 
+#include "util/EffectCleanupHandler.h"
 #include "util/EffectCrowdControlHandler.h"
 #include "util/EffectDrawHandler.h"
-#include "util/EffectCleanupHandler.h"
 #include "util/EffectSubHandlers.h"
 #include "util/EffectTwitchHandler.h"
 #include "util/RandomHelper.h"
@@ -175,5 +175,16 @@ public:
     Draw (int idx, bool inset)
     {
         this->drawHandler.Draw (this, idx, inset);
+    }
+
+    template <typename T>
+    void
+    WriteMemory (uintptr_t addr, const T &value)
+    {
+        T original = injector::ReadMemory<T> (addr);
+        injector::WriteMemory (addr, value);
+
+        cleanupHandler.AddFunction (
+            [addr, original] { injector::WriteMemory (addr, original); });
     }
 };

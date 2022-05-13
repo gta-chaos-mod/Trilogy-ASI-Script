@@ -13,7 +13,7 @@ public:
     OnStart (EffectInstance *inst) override
     {
         // Patch "IsVisible" check in CPickups::Update
-        injector::WriteMemory<uint8_t> (0x458E4C, 0xeb);
+        inst->WriteMemory<uint8_t> (0x458E4C, 0xeb);
 
         HOOK (inst, Hooked_CRadar_DrawBlips, void (), 0x58AA2d, 0x575B44);
 
@@ -23,13 +23,6 @@ public:
                      0x7250B1);
 
         HOOK (inst, Hooked_CCheckpoint_Render, void (), 0x72606F);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        // Restore "IsVisible" check in CPickups::Update
-        injector::WriteMemory<uint8_t> (0x458E4C, 0x74);
     }
 
     static void
