@@ -1,5 +1,6 @@
 #include "util/CPedDamageResponseCalculator.h"
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 class InfiniteHealthPlayerEffect : public EffectBase
 {

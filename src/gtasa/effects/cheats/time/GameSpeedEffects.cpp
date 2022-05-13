@@ -1,5 +1,6 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CAEAudioHardware.h>
 #include <CTimer.h>

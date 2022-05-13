@@ -1,5 +1,6 @@
 #include "util/DrawHelper.h"
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CCamera.h>
 #include <CDraw.h>

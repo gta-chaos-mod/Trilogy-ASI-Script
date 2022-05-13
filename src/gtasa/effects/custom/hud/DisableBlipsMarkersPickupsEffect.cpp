@@ -1,4 +1,8 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
+
+#include <C3dMarker.h>
+#include <CPickup.h>
 
 using namespace plugin;
 
@@ -8,54 +12,43 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeJMP (0x58AA2D, Hooked_CRadar_DrawBlips);
-        injector::MakeCALL (0x575B44, Hooked_CRadar_DrawBlips);
+        // Patch "IsVisible" check in CPickups::Update
+        injector::WriteMemory<uint8_t> (0x458E4C, 0xeb);
 
-        injector::MakeCALL (0x53E18E, Hooked_CCoronas_Render);
+        HOOK (inst, Hooked_CRadar_DrawBlips, void (), 0x58AA2d, 0x575B44);
 
-        injector::MakeJMP (0x59F1ED, Hooked_CEntity_Render);
+        HOOK (inst, Hooked_CCoronas_Render, void (), 0x53E18E);
 
-        injector::MakeCALL (0x7250B1, Hooked_C3dMarker_Render);
-        injector::MakeCALL (0x72606F, Hooked_CCheckpoint_Render);
+        HOOK_METHOD (inst, Hooked_C3dMarker_Render, void (C3dMarker *),
+                     0x7250B1);
+
+        HOOK (inst, Hooked_CCheckpoint_Render, void (), 0x72606F);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        // TODO: Unhook
+        // Restore "IsVisible" check in CPickups::Update
+        injector::WriteMemory<uint8_t> (0x458E4C, 0x74);
     }
 
     static void
-    Hooked_CRadar_DrawBlips ()
+    Hooked_CRadar_DrawBlips (auto &&cb)
     {
     }
 
     static void
-    Hooked_CCoronas_Render ()
+    Hooked_CCoronas_Render (auto &&cb)
     {
     }
 
     static void
-    Hooked_CEntity_Render (CEntity *thisEntity)
-    {
-        if (!thisEntity
-            || thisEntity->m_nType == eEntityType::ENTITY_TYPE_OBJECT
-                   && static_cast<CObject *> (thisEntity)->m_nObjectType == 5)
-        {
-            // Rendern't
-            return;
-        }
-
-        CallMethod<0x534310, CEntity *> (thisEntity);
-    }
-
-    static void
-    Hooked_C3dMarker_Render ()
+    Hooked_C3dMarker_Render (auto &&cb)
     {
     }
 
     static void
-    Hooked_CCheckpoint_Render ()
+    Hooked_CCheckpoint_Render (auto &&cb)
     {
     }
 };

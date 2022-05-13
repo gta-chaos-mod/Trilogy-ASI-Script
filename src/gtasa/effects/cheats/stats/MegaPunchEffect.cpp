@@ -1,4 +1,5 @@
 #include "effects/TimedAddressEffect.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CCarCtrl.h>
 

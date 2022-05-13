@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 using namespace plugin;
 
@@ -35,10 +36,12 @@ public:
         }
     }
 
-    static char __fastcall Hooked_CWeapon_Fire (
-        auto &&cb, CWeapon *thisWeapon, CPed *owner,
-        CVector *vecOrigin, CVector *_vecEffectPosn, CEntity *targetEntity,
-        CVector *vecTarget, CVector *arg_14)
+    static char __fastcall Hooked_CWeapon_Fire (auto &&cb, CWeapon *thisWeapon,
+                                                CPed *owner, CVector *vecOrigin,
+                                                CVector *_vecEffectPosn,
+                                                CEntity *targetEntity,
+                                                CVector *vecTarget,
+                                                CVector *arg_14)
     {
         if (owner == FindPlayerPed () && !FindPlayerVehicle (-1, false))
             recoilValue = 4.0f;

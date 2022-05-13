@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CBike.h>
 #include <CBoat.h>
@@ -19,58 +20,64 @@ public:
     {
         oldForceVehicleLightsOff = CVehicle::ms_forceVehicleLightsOff;
 
-        injector::MakeCALL (0x6A2C24, Hooked_RenderAutomobile); // Automobile
-        injector::MakeCALL (0x6BDE5E, Hooked_RenderBike);       // Bike + Bmx
-        injector::MakeJMP (0x6CAB80, Hooked_RenderPlane);       // Plane
-        injector::MakeCALL (0x6C4523, Hooked_RenderHeli);       // Heli
-        injector::MakeJMP (0x6F55C0, Hooked_RenderTrain);       // Train
+        // injector::MakeCALL (0x6A2C24, Hooked_RenderAutomobile); // Automobile
+        HOOK_METHOD_ARGS (inst, Hooked_RenderAutomobile, void (CAutomobile *),
+                          0x6A2C24);
+        // injector::MakeCALL (0x6BDE5E, Hooked_RenderBike);       // Bike + Bmx
+        // injector::MakeJMP (0x6CAB80, Hooked_RenderPlane);       // Plane
+        // injector::MakeCALL (0x6C4523, Hooked_RenderHeli);       // Heli
+        // injector::MakeJMP (0x6F55C0, Hooked_RenderTrain);       // Train
 
-        injector::MakeCALL (0x6F022F, Hooked_RenderBoat); // Boat
-        for (int address : {0x6F07C7, 0x6F08E1})
-        {
-            injector::MakeCALL (address, Hooked_RwIm3DTransform); // Boat
-        }
+        // injector::MakeCALL (0x6F022F, Hooked_RenderBoat); // Boat
+        // for (int address : {0x6F07C7, 0x6F08E1})
+        // {
+        //     injector::MakeCALL (address, Hooked_RwIm3DTransform); // Boat
+        // }
 
-        injector::MakeCALL (0x5343B2, Hooked_RenderEffects);
+        // injector::MakeCALL (0x5343B2, Hooked_RenderEffects);
 
-        // Vehicle Shadows (Car, Bike, BMX, Heli, Plane)
-        // TODO: Doesn't seem to work properly with graphics on "Very High".
-        // Other function that needs to be hooked?
-        injector::MakeCALL (0x70C3F8, Hooked_CShadows_StoreShadowToBeRendered);
-        injector::MakeCALL (0x70798A, Hooked_CShadows_StoreShadowToBeRendered);
-        injector::MakeCALL (0x70C33F, Hooked_CShadows_StoreStaticShadow);
-        injector::MakeCALL (0x70A937, Hooked_CShadows_CastShadowEntityXYZ);
-        injector::MakeCALL (0x70A7C2, Hooked_CShadows_CastShadowEntityXY);
-        injector::MakeCALL (0x706B68, Hooked_CShadows_StoreRealTimeShadow);
+        // // Vehicle Shadows (Car, Bike, BMX, Heli, Plane)
+        // // TODO: Doesn't seem to work properly with graphics on "Very High".
+        // // Other function that needs to be hooked?
+        // injector::MakeCALL (0x70C3F8,
+        // Hooked_CShadows_StoreShadowToBeRendered); injector::MakeCALL
+        // (0x70798A, Hooked_CShadows_StoreShadowToBeRendered);
+        // injector::MakeCALL (0x70C33F, Hooked_CShadows_StoreStaticShadow);
+        // injector::MakeCALL (0x70A937, Hooked_CShadows_CastShadowEntityXYZ);
+        // injector::MakeCALL (0x70A7C2, Hooked_CShadows_CastShadowEntityXY);
+        // injector::MakeCALL (0x706B68, Hooked_CShadows_StoreRealTimeShadow);
 
-        // Vehicle Headlights (Car, Bike)
-        for (int address : {0x6A2EDA, 0x6A2EF2, 0x6BDE80})
-        {
-            injector::MakeCALL (address, Hooked_CVehicle_DoHeadLightBeam);
-        }
+        // // Vehicle Headlights (Car, Bike)
+        // for (int address : {0x6A2EDA, 0x6A2EF2, 0x6BDE80})
+        // {
+        //     injector::MakeCALL (address, Hooked_CVehicle_DoHeadLightBeam);
+        // }
 
-        // Vehicle Exhaust Particles (Car, Bike)
-        for (int address : {0x6AB344, 0x6BD3FF})
-        {
-            injector::MakeCALL (address, Hooked_CVehicle_AddExhaustParticles);
-        }
+        // // Vehicle Exhaust Particles (Car, Bike)
+        // for (int address : {0x6AB344, 0x6BD3FF})
+        // {
+        //     injector::MakeCALL (address,
+        //     Hooked_CVehicle_AddExhaustParticles);
+        // }
 
-        // Vehicle Water Splash Particles (Car)
-        injector::MakeCALL (0x6AB2FF, Hooked_CVehicle_AddWaterSplashParticles);
+        // // Vehicle Water Splash Particles (Car)
+        // injector::MakeCALL (0x6AB2FF,
+        // Hooked_CVehicle_AddWaterSplashParticles);
 
-        // Vehicle Wheel Particles (Car, Bike)
-        for (int address : {0x6AB136, 0x6AB1FD, 0x6AB2B7, 0x6BD38C, 0x6C0AFD})
-        {
-            injector::MakeCALL (address,
-                                Hooked_CVehicle_AddSingleWheelParticles);
-        }
+        // // Vehicle Wheel Particles (Car, Bike)
+        // for (int address : {0x6AB136, 0x6AB1FD, 0x6AB2B7, 0x6BD38C,
+        // 0x6C0AFD})
+        // {
+        //     injector::MakeCALL (address,
+        //                         Hooked_CVehicle_AddSingleWheelParticles);
+        // }
 
-        // Vehicle Damage Particles (Car, Bike)
-        for (int address : {0x6AB34B, 0x6BD40A})
-        {
-            injector::MakeCALL (address,
-                                Hooked_CVehicle_AddDamagedVehicleParticles);
-        }
+        // // Vehicle Damage Particles (Car, Bike)
+        // for (int address : {0x6AB34B, 0x6BD40A})
+        // {
+        //     injector::MakeCALL (address,
+        //                         Hooked_CVehicle_AddDamagedVehicleParticles);
+        // }
     }
 
     void
@@ -98,7 +105,10 @@ public:
         }
     }
 
-    static void __fastcall Hooked_RenderAutomobile (CAutomobile *thisAutomobile)
+    // static void __fastcall Hooked_RenderAutomobile (CAutomobile
+    // *thisAutomobile)
+    static void
+    Hooked_RenderAutomobile (auto &&cb, CAutomobile *thisAutomobile)
     {
         if (!thisAutomobile) return;
 

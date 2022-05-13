@@ -3,6 +3,7 @@
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 #include "util/Teleportation.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CGangWars.h>
 #include <CTheScripts.h>

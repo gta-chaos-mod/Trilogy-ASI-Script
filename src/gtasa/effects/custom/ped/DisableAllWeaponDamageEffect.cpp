@@ -1,5 +1,8 @@
 #include "util/CPedDamageResponseCalculator.h"
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
+
+#include <eWeaponType.h>
 
 class DisableAllWeaponDamageEffect : public EffectBase
 {
@@ -7,35 +10,34 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x4B5B19, Hooked_AccountForPedArmour);
-        injector::MakeCALL (0x4B5B27, Hooked_ComputeWillKillPed);
+        HOOK_METHOD (inst, Hooked_AccountForPedArmour,
+                     void (CPedDamageResponseCalculator *, CPed *, uint8_t *),
+                     0x4B5B19);
 
-        for (int address : {0x73647F, 0x73B0BF, 0x73BEDD})
-        {
-            injector::MakeCALL (address, Hooked_VehicleInflictDamage);
-        }
+        HOOK_METHOD_ARGS (inst, Hooked_ComputeWillKillPed,
+                          void (CPedDamageResponseCalculator *, CPed *,
+                                uint8_t *, char),
+                          0x4B5B27);
+
+        HOOK_METHOD (inst, Hooked_CVehicle_InflictDamage,
+                     void (CVehicle *, CPed *, eWeaponType, float, CVector),
+                     0x73647F, 0x73B0BF, 0x73BEDD);
     }
 
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        // TODO: Unhook
-    }
-
-    static void __fastcall Hooked_AccountForPedArmour (
-        CPedDamageResponseCalculator *thisCalc, void *edx, CPed *ped,
-        uint8_t *cDamageResponseInfo)
+    static void
+    Hooked_AccountForPedArmour (auto &&cb)
     {
     }
 
-    static void __fastcall Hooked_ComputeWillKillPed (
-        CPedDamageResponseCalculator *thisCalc, void *edx, CPed *ped,
-        uint8_t *cDamageReponseInfo, char a4)
+    static void
+    Hooked_ComputeWillKillPed (auto                        &&cb,
+                               CPedDamageResponseCalculator *thisCalc,
+                               CPed *ped, uint8_t *cDamageReponseInfo, char a4)
     {
         if (thisCalc->m_weaponType <= eWeaponType::WEAPON_BRASSKNUCKLE
             || thisCalc->m_weaponType == eWeaponType::WEAPON_PARACHUTE)
         {
-            thisCalc->ComputeWillKillPed (ped, cDamageReponseInfo, a4);
+            cb ();
             return;
         }
 
@@ -45,12 +47,11 @@ public:
             return;
         }
 
-        thisCalc->ComputeWillKillPed (ped, cDamageReponseInfo, a4);
+        cb ();
     }
 
     static void
-    Hooked_VehicleInflictDamage (CVehicle *thisVehicle, void *edx, CPed *who,
-                                 eWeaponType type, float damage, CVector coords)
+    Hooked_CVehicle_InflictDamage (auto &&cb)
     {
     }
 };
