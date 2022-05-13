@@ -9,8 +9,6 @@
 
 using namespace plugin;
 
-// TODO: Fix radar position when in widescreen mode
-
 class MirroredWorldEffect : public EffectBase
 {
     static inline CdeclEvent<AddressList<0x53EB12, H_CALL>, PRIORITY_BEFORE,
@@ -29,20 +27,18 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        // TODO: This crashes with widescreen fix installed...
         isWidescreenFixInstalled
-            = injector::ReadMemory<uint32_t> (
-                  injector::ReadRelativeOffset (0x5834BA + 2))
-              == 0x3ACCCCCD;
+            = injector::ReadMemory<uint32_t> (0x5834BA + 2) != 0x859520;
 
         ResetRaster ();
 
         render2dStuffEvent += Render2dStuffEvent;
         createCameraSubRasterEvent += ResetRaster;
 
-        injector::MakeCALL (0x58FBBF, Hooked_CHud_DrawCrossHairs);
-        injector::MakeCALL (0x58FC53, Hooked_CHud_DrawRadar);
-        injector::MakeCALL (0x5860F7, Hooked_CSprite2d_Draw);
+        HOOK (inst, Hooked_CHud_DrawCrossHairs, void (), 0x58FBBF);
+        HOOK (inst, Hooked_CHud_DrawRadar, void (), 0x58FC53);
+        HOOK_METHOD_ARGS (inst, Hooked_CSprite2d_Draw,
+                          void (CSprite2d *, CRect *, CRGBA *), 0x5860F7);
     }
 
     void
@@ -50,10 +46,6 @@ public:
     {
         render2dStuffEvent -= Render2dStuffEvent;
         createCameraSubRasterEvent -= ResetRaster;
-
-        injector::MakeCALL (0x58FBBF, 0x58E020);
-        injector::MakeCALL (0x58FC53, 0x58A330);
-        injector::MakeCALL (0x5860F7, 0x728350);
     }
 
     void
@@ -105,21 +97,22 @@ public:
     }
 
     static void
-    Hooked_CHud_DrawCrossHairs ()
+    Hooked_CHud_DrawCrossHairs (auto &&cb)
     {
     }
 
     static void
-    Hooked_CHud_DrawRadar ()
+    Hooked_CHud_DrawRadar (auto &&cb)
     {
     }
 
-    static void __fastcall Hooked_CSprite2d_Draw (CSprite2d *thisSprite,
-                                                  void *edx, CRect *rect,
-                                                  CRGBA *color)
+    static void
+    Hooked_CSprite2d_Draw (auto &&cb, CSprite2d *thisSprite, CRect *rect,
+                           CRGBA *color)
     {
         std::swap (rect->left, rect->right);
-        thisSprite->Draw (*rect, *color);
+
+        cb ();
     }
 
     static void
