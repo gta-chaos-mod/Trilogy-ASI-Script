@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CMenuSystem.h>
 #include <CWorld.h>
@@ -16,24 +17,16 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x5E2F57, Hooked_CEventDamage_AffectsPed, true);
-        injector::MakeCALL (0x5E3020, Hooked_CEventDamage_AffectsPed, true);
+        HOOK_METHOD_ARGS (inst, Hooked_CEventDamage_AffectsPed,
+                          bool (CEventDamage *, CPed *), 0x5E2F57, 0x5E3020);
 
         this->oldInfiniteRun = injector::ReadMemory<bool> (0xB7CEE4);
         injector::WriteMemory (0xB7CEE4, true);
     }
 
-    static bool __fastcall Hooked_CEventDamage_AffectsPed (
-        CEventDamage *thisEventDamage, void *edx, CPed *ped)
-    {
-        return false;
-    }
-
     void
     OnEnd (EffectInstance *inst) override
     {
-        // TODO: Unhook
-
         injector::WriteMemory (0x8D2458, 5.0f);
         injector::WriteMemory (0xB7CEE4, this->oldInfiniteRun);
     }
@@ -80,6 +73,13 @@ public:
                 injector::WriteMemory (0x8D2458, canFastSprint ? 0.25f : 5.0f);
             }
         }
+    }
+
+    static bool
+    Hooked_CEventDamage_AffectsPed (auto &&cb, CEventDamage *thisEventDamage,
+                                    CPed *ped)
+    {
+        return false;
     }
 };
 

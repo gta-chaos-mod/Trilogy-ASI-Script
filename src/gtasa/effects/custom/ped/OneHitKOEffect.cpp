@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 class OneHitKOEffect : public EffectBase
 {
@@ -8,14 +9,13 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x58EE9A, Hooked_CHud_RenderHealthBar);
+        // CHud::RenderHealthBar
+        HOOK (inst, Hooked_Empty, void (int, signed int, signed int), 0x58EE9A);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        // TODO: Unhook
-
         *this->neverHungryCheat = false;
     }
 
@@ -34,7 +34,7 @@ public:
     }
 
     static void
-    Hooked_CHud_RenderHealthBar (int playerId, signed int x, signed int y)
+    Hooked_Empty (auto &&cb)
     {
     }
 };

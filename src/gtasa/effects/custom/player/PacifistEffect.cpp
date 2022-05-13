@@ -1,32 +1,29 @@
 #include "util/CPedDamageResponseCalculator.h"
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CCheat.h>
 
 using namespace plugin;
 
-// TODO: Add support for snipers
 class PacifistEffect : public EffectBase
 {
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x4B5B27, Hooked_CDamageCalculator_WillKillPed);
+        HOOK_METHOD_ARGS (inst, Hooked_CPedDamageResponseCalculator_WillKillPed,
+                          void (CPedDamageResponseCalculator *, CPed *, void *,
+                                char),
+                          0x4B5B27);
     }
 
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        injector::MakeCALL (0x4B5B27, 0x4B3210);
-    }
-
-    static void __fastcall Hooked_CDamageCalculator_WillKillPed (
-        CPedDamageResponseCalculator *thisCalc, void *edx, CPed *ped, void *a3,
+    static void
+    Hooked_CPedDamageResponseCalculator_WillKillPed (
+        auto &&cb, CPedDamageResponseCalculator *thisCalc, CPed *ped, void *a3,
         char a4)
     {
-        CallMethod<0x4B3210, CPedDamageResponseCalculator *> (thisCalc, ped, a3,
-                                                              a4);
+        cb ();
 
         if (!ped || !thisCalc || !thisCalc->m_pDamager) return;
 

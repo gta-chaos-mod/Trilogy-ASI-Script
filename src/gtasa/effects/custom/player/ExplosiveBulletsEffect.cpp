@@ -1,45 +1,102 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
-// TODO: Add support for snipers
+// TODO: Snipers don't create fire when not hitting a ped, car or object
 class ExplosiveBulletsEffect : public EffectBase
 {
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        for (int address : {0x73CD92, 0x741199, 0x7411DF, 0x7412DF, 0x741E30})
-        {
-            injector::MakeCALL (address, Hooked_CWeapon_DoBulletImpact);
-        }
+        HOOK_METHOD_ARGS (inst, Hooked_CWeapon_DoBulletImpact,
+                          void (CWeapon *, CEntity *, CEntity *, CVector *,
+                                CVector *, CColPoint *, int),
+                          0x73CD92, 0x741199, 0x7411DF, 0x7412DF, 0x741E30);
+
+        // Sniper Section //
+        HOOK_ARGS (inst, Hooked_CWeapon_GenerateDamageEvent,
+                   void (CPed *, CPed *, eWeaponType, int, int, char),
+                   0x736306);
+
+        HOOK_METHOD_ARGS (inst, Hooked_CVehicle_InflictDamage,
+                          void (CVehicle *, CPed *, eWeaponType, float,
+                                CVector),
+                          0x73647F);
+
+        HOOK_METHOD_ARGS (inst, Hooked_CObject_ObjectDamage,
+                          void (CObject *, float, RwV3d *, RwV3d *, CEntity *,
+                                eWeaponType),
+                          0x736692, 0x7365E3);
     }
 
-    void
-    OnEnd (EffectInstance *inst) override
+    static void
+    ExplodeAt (CVector point)
     {
-        for (int address : {0x73CD92, 0x741199, 0x7411DF, 0x7412DF, 0x741E30})
-        {
-            injector::MakeCALL (address, 0x73B550);
-        }
+        Command<eScriptCommands::COMMAND_ADD_EXPLOSION> (point.x, point.y,
+                                                         point.z, 0);
     }
 
-    static void __fastcall Hooked_CWeapon_DoBulletImpact (
-        CWeapon *weapon, void *edx, CEntity *owner, CEntity *victim,
-        CVector *startPoint, CVector *endPoint, CColPoint *colPoint, int a7)
+    static void
+    Hooked_CWeapon_DoBulletImpact (auto &&cb, CWeapon *weapon, CEntity *owner,
+                                   CEntity *victim, CVector *startPoint,
+                                   CVector *endPoint, CColPoint *colPoint,
+                                   int a7)
     {
         if (owner == FindPlayerPed ())
         {
             CVector point = colPoint->m_vecPoint;
 
-            Command<eScriptCommands::COMMAND_ADD_EXPLOSION> (point.x, point.y,
-                                                             point.z, 0);
+            ExplodeAt (point);
         }
 
-        CallMethod<0x73B550, CWeapon *> (weapon, owner, victim, startPoint,
-                                         endPoint, colPoint, a7);
+        cb ();
+    }
+
+    static void
+    Hooked_CWeapon_GenerateDamageEvent (auto &&cb, CPed *victim, CPed *creator,
+                                        eWeaponType weaponType,
+                                        int damageFactor, int pedPiece,
+                                        char direction)
+    {
+        if (creator == FindPlayerPed ()
+            && weaponType == eWeaponType::WEAPON_SNIPERRIFLE)
+        {
+            ExplodeAt (victim->GetPosition ());
+        }
+
+        cb ();
+    }
+
+    static void
+    Hooked_CVehicle_InflictDamage (auto &&cb, CVehicle *thisVehicle,
+                                   CPed *creator, eWeaponType weaponType,
+                                   float damage, CVector coords)
+    {
+        if (creator == FindPlayerPed ()
+            && weaponType == eWeaponType::WEAPON_SNIPERRIFLE)
+        {
+            ExplodeAt (coords);
+        }
+
+        cb ();
+    }
+
+    static void
+    Hooked_CObject_ObjectDamage (auto &&cb, CObject *thisObject, float damage,
+                                 RwV3d *fxOrigin, RwV3d *fxDirection,
+                                 CEntity *creator, eWeaponType weaponType)
+    {
+        if (creator == FindPlayerPed ()
+            && weaponType == eWeaponType::WEAPON_SNIPERRIFLE)
+        {
+            ExplodeAt (thisObject->GetPosition ());
+        }
+
+        cb ();
     }
 };
 

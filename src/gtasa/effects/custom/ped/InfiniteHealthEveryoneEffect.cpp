@@ -8,14 +8,15 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        HOOK_METHOD (inst, Hooked_ComputeWillKillPed,
-                     void (CPedDamageResponseCalculator *, CPed *, uint8_t *,
-                           char),
-                     0x4B5B27);
-
         HOOK_METHOD_ARGS (inst, Hooked_KillPedsInVehicle, void (CVehicle *),
                           0x6B3950, 0x6B3D6C, 0x6BEAA3, 0x6C6F44, 0x6CCF83,
                           0x6F225A);
+
+        // CPedDamageResponseCalculator::ComputeWillKillPed
+        HOOK_METHOD (inst, Hooked_Empty,
+                     void (CPedDamageResponseCalculator *, CPed *, uint8_t *,
+                           char),
+                     0x4B5B27);
     }
 
     void
@@ -36,14 +37,14 @@ public:
     }
 
     static void
-    Hooked_ComputeWillKillPed (auto &&cb)
-    {
-    }
-
-    static void
     Hooked_KillPedsInVehicle (auto &&cb, CVehicle *thisVehicle)
     {
         thisVehicle->m_nStatus = eEntityStatus::STATUS_SIMPLE;
+    }
+
+    static void
+    Hooked_Empty (auto &&cb)
+    {
     }
 };
 

@@ -1,5 +1,6 @@
 #include "util/CPedDamageResponseCalculator.h"
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CPickup.h>
 #include <CPlayerInfo.h>
@@ -31,14 +32,20 @@ public:
             player->m_fHealth = player->m_fMaxHealth;
         }
 
-        injector::MakeCALL (0x58EE9A, Hooked_CHud_RenderHealthBar);
-        injector::MakeCALL (0x4B5B27, Hooked_ComputeWillKillPed);
-        for (int address : {0x45902E, 0x459095})
-        {
-            injector::MakeCALL (address, Hooked_CPickup_Update);
-        }
+        HOOK_METHOD_ARGS (inst, Hooked_ComputeWillKillPed,
+                          void (CPedDamageResponseCalculator *, CPed *,
+                                uint8_t *, char),
+                          0x4B5B27);
 
-        injector::MakeCALL (0x5D1552, Hooked_CPlayerInfo_Save);
+        HOOK_METHOD_ARGS (inst, Hooked_CPickup_Update,
+                          bool (CPickup *, CPlayerPed *, CVehicle *, int),
+                          0x45902E, 0x459095);
+
+        HOOK_METHOD_ARGS (inst, Hooked_CPlayerInfo_Save, char (CPlayerInfo *),
+                          0x5D1552);
+
+        // Chud::RenderHealthBar int playerId, signed int x, signed int y
+        HOOK (inst, Hooked_Empty, void (int, signed int, signed int), 0x58EE9A);
     }
 
     void
@@ -57,9 +64,6 @@ public:
             playerInfo->m_nMoney += storedMoney;
             playerInfo->m_nDisplayMoney = playerInfo->m_nMoney;
         }
-
-        injector::MakeCALL (0x5D1552, 0x5D3AC0);
-        // TODO: Unhook
     }
 
     void
@@ -78,13 +82,9 @@ public:
     }
 
     static void
-    Hooked_CHud_RenderHealthBar (int playerId, signed int x, signed int y)
-    {
-    }
-
-    static void __fastcall Hooked_ComputeWillKillPed (
-        CPedDamageResponseCalculator *thisCalc, void *edx, CPed *ped,
-        uint8_t *cDamageResponseInfo, char a4)
+    Hooked_ComputeWillKillPed (auto                        &&cb,
+                               CPedDamageResponseCalculator *thisCalc,
+                               CPed *ped, uint8_t *cDamageResponseInfo, char a4)
     {
         float maxDamage = std::min (ped->m_fHealth, thisCalc->m_fDamageFactor);
         maxDamage = thisCalc->m_pedPieceType == 9 ? ped->m_fHealth : maxDamage;
@@ -100,23 +100,16 @@ public:
             gainedMoney -= thisCalc->m_fDamageFactor;
             gainedMoney = std::max (0.0f, gainedMoney);
 
-            if (gainedMoney == 0.0f)
-            {
-                player->m_fHealth = 0.0f;
-                thisCalc->ComputeWillKillPed (ped, cDamageResponseInfo, a4);
-            }
-
-            return;
+            if (gainedMoney == 0.0f) player->m_fHealth = 0.0f;
         }
 
-        thisCalc->ComputeWillKillPed (ped, cDamageResponseInfo, a4);
+        cb ();
     }
 
-    static bool __fastcall Hooked_CPickup_Update (CPickup    *thisPickup,
-                                                  void       *edx,
-                                                  CPlayerPed *playerPed,
-                                                  CVehicle   *vehicle,
-                                                  int         playerId)
+    static bool
+    Hooked_CPickup_Update (auto &&cb, CPickup *thisPickup,
+                           CPlayerPed *playerPed, CVehicle *vehicle,
+                           int playerId)
     {
         bool isMoneyPickup
             = thisPickup->m_nPickupType == ePickupType::PICKUP_MONEY
@@ -126,19 +119,22 @@ public:
 
         if (isMoneyPickup && thisPickup->m_nAmmo > 0) return false;
 
-        return plugin::CallMethodAndReturn<bool, 0x457410, CPickup *,
-                                           CPlayerPed *, CVehicle *, int> (
-            thisPickup, playerPed, vehicle, playerId);
+        return cb ();
     }
 
-    static char __fastcall Hooked_CPlayerInfo_Save (CPlayerInfo *thisInfo)
+    static char
+    Hooked_CPlayerInfo_Save (auto &&cb, CPlayerInfo *thisInfo)
     {
         thisInfo->m_nMoney = storedMoney;
-        char result
-            = CallMethodAndReturn<char, 0x5D3AC0, CPlayerInfo *> (thisInfo);
+        char result        = cb ();
         thisInfo->m_nMoney = (int) gainedMoney;
 
         return result;
+    }
+
+    static void
+    Hooked_Empty (auto &&cb)
+    {
     }
 };
 

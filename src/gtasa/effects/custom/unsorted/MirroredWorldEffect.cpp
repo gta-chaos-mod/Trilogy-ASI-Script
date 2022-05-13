@@ -36,10 +36,14 @@ public:
         render2dStuffEvent += Render2dStuffEvent;
         createCameraSubRasterEvent += ResetRaster;
 
-        HOOK (inst, Hooked_CHud_DrawCrossHairs, void (), 0x58FBBF);
-        HOOK (inst, Hooked_CHud_DrawRadar, void (), 0x58FC53);
         HOOK_METHOD_ARGS (inst, Hooked_CSprite2d_Draw,
                           void (CSprite2d *, CRect *, CRGBA *), 0x5860F7);
+
+        // CHud::DrawCrossHairs
+        HOOK (inst, Hooked_Empty, void (), 0x58FBBF);
+
+        // CHud::DrawRadar
+        HOOK (inst, Hooked_Empty, void (), 0x58FC53);
     }
 
     void
@@ -95,25 +99,6 @@ public:
         DrawHelper::Append (vertices, 2,
                             CVector2D (0, (float) cameraRaster->height),
                             plugin::color::White, 1, 1);
-    }
-
-    static void
-    Hooked_CHud_DrawCrossHairs (auto &&cb)
-    {
-    }
-
-    static void
-    Hooked_CHud_DrawRadar (auto &&cb)
-    {
-    }
-
-    static void
-    Hooked_CSprite2d_Draw (auto &&cb, CSprite2d *thisSprite, CRect *rect,
-                           CRGBA *color)
-    {
-        std::swap (rect->left, rect->right);
-
-        cb ();
     }
 
     static void
@@ -189,6 +174,20 @@ public:
         RwIm2DRenderPrimitive (rwPRIMTYPETRISTRIP, vertices, 4);
 
         Call<0x700E00> (); // CPostEffects::ImmediateModeRenderStatesReStore
+    }
+
+    static void
+    Hooked_CSprite2d_Draw (auto &&cb, CSprite2d *thisSprite, CRect *rect,
+                           CRGBA *color)
+    {
+        std::swap (rect->left, rect->right);
+
+        cb ();
+    }
+
+    static void
+    Hooked_Empty (auto &&cb)
+    {
     }
 };
 

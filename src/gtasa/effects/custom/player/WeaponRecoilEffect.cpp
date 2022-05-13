@@ -1,9 +1,9 @@
 #include "util/EffectBase.h"
+#include "util/GenericUtil.h"
 #include "util/hooks/HookMacros.h"
 
 using namespace plugin;
 
-// TODO: Add support for snipers
 class WeaponRecoilEffect : public EffectBase
 {
     static inline float recoilValue = 0.0f;
@@ -32,7 +32,7 @@ public:
                 if (pad) pad->NewMouseControllerState.Y += recoilValue;
             }
 
-            recoilValue -= 1.0f;
+            recoilValue -= GenericUtil::CalculateTick (0.5f);
         }
     }
 
@@ -44,7 +44,14 @@ public:
                                                 CVector *arg_14)
     {
         if (owner == FindPlayerPed () && !FindPlayerVehicle (-1, false))
-            recoilValue = 4.0f;
+        {
+            recoilValue = 8.0f;
+
+            if (thisWeapon->m_nType == eWeaponType::WEAPON_SNIPERRIFLE)
+            {
+                recoilValue *= 5.0f;
+            }
+        }
 
         return cb ();
     }

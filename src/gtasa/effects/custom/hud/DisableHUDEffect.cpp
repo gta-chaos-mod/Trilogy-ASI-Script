@@ -13,17 +13,20 @@ public:
     OnStart (EffectInstance *inst) override
     {
         HOOK (inst, Hooked_CHud_Draw, void (), 0x53E4FF);
-        HOOK (inst, Hooked_CRadar_DrawBlips, void (), 0x58AA2D);
 
         HOOK (inst, Hooked_CMenuSystem_DisplayGridMenu,
               tMenuPanel * (unsigned __int8, unsigned __int8), 0x58261E,
               0x582679, 0x5826CF, 0x58274D);
 
-        HOOK (inst, Hooked_CMenuSystem_DisplayStandardMenu,
-              void (unsigned __int8, bool), 0x582627, 0x582687, 0x5826D9,
-              0x582757);
+        // CRadar::DrawBlips
+        HOOK (inst, Hooked_Empty, void (), 0x58AA2D);
 
-        HOOK (inst, Hooked_CHud_DrawAreaName, void (), 0x58D542);
+        // CMenuSystem::DisplayStandardMenu
+        HOOK (inst, Hooked_Empty, void (unsigned __int8, bool), 0x582627,
+              0x582687, 0x5826D9, 0x582757);
+
+        // CHud::DrawAreaName
+        HOOK (inst, Hooked_Empty, void (), 0x58D542);
     }
 
     void
@@ -40,11 +43,6 @@ public:
         if (CMenuSystem::num_menus_in_use) CMenuSystem::Process (-99);
     }
 
-    static void
-    Hooked_CRadar_DrawBlips (auto &&cb)
-    {
-    }
-
     static tMenuPanel *
     Hooked_CMenuSystem_DisplayGridMenu (auto &&cb)
     {
@@ -52,12 +50,7 @@ public:
     }
 
     static void
-    Hooked_CMenuSystem_DisplayStandardMenu (auto &&cb)
-    {
-    }
-
-    static void
-    Hooked_CHud_DrawAreaName (auto &&cb)
+    Hooked_Empty (auto &&cb)
     {
     }
 };

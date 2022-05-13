@@ -1,25 +1,18 @@
 #include "util/EffectBase.h"
-
-// TODO: Hook PlayHornOrSiren
-// HookCall (0x500366, HookedPlayHornOrSiren);
-
-/*
-
-char __fastcall HookedPlayHornOrSiren (
-    CAEVehicleAudioEntity *thisAudioEntity, void *edx, char counter,
-    char sirenOrAlarm, char playHorn, cVehicleParams *data)
-{
-    bool siren    = thisAudioEntity->m_bModelWithSiren;
-    int  _counter = siren ? 0 : 1;
-    return CallMethodAndReturn<char, 0x4F99D0, CAEVehicleAudioEntity *> (
-        thisAudioEntity, _counter, siren, false, data);
-}
-
-*/
+#include "util/hooks/HookMacros.h"
 
 class HonkVehicleEffect : public EffectBase
 {
 public:
+    void
+    OnStart (EffectInstance *inst) override
+    {
+        HOOK_METHOD_ARGS (inst, Hooked_CAEVehicleAudioEntity_PlayHornOrSiren,
+                          char (CAEVehicleAudioEntity *, char, char, char,
+                                cVehicleParams *),
+                          0x500366);
+    }
+
     void
     OnEnd (EffectInstance *inst) override
     {
@@ -36,6 +29,17 @@ public:
     {
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
             vehicle->m_nHornCounter = 1;
+    }
+
+    static char
+    Hooked_CAEVehicleAudioEntity_PlayHornOrSiren (
+        auto &&cb, CAEVehicleAudioEntity *thisAudioEntity, char &counter,
+        char &sirenOrAlarm, char mrWhoopie, cVehicleParams *dat)
+    {
+        sirenOrAlarm = thisAudioEntity->m_bModelWithSiren;
+        counter      = sirenOrAlarm ? 0 : 1;
+
+        return cb ();
     }
 };
 

@@ -1,53 +1,47 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CCheat.h>
 
 using namespace plugin;
 
-// TODO: Add support for snipers
 class NoShootingAllowedEffect : public EffectBase
 {
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x61ECCD, Hooked_CWeapon_Fire);
-        injector::MakeCALL (0x742280, Hooked_CWeapon_FireFromCar);
+        HOOK_METHOD_ARGS (inst, Hooked_CWeapon_Fire,
+                          char (CWeapon *, CPed *, CVector *, CVector *,
+                                CEntity *, CVector *, CVector *),
+                          0x61ECCD);
+
+        HOOK_METHOD_ARGS (inst, Hooked_CWeapon_FireFromCar,
+                          char (CWeapon *,
+
+                                CVehicle *, char, char),
+                          0x742280);
     }
 
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        injector::MakeCALL (0x61ECCD, 0x742300);
-        injector::MakeCALL (0x742280, 0x73FA20);
-    }
-
-    static char __fastcall Hooked_CWeapon_Fire (CWeapon *thisWeapon, void *edx,
-                                                CPed *owner, CVector *vecOrigin,
-                                                CVector *_vecEffectPosn,
-                                                CEntity *targetEntity,
-                                                CVector *vecTarget,
-                                                CVector *arg_14)
+    static char
+    Hooked_CWeapon_Fire (auto &&cb, CWeapon *thisWeapon, CPed *owner,
+                         CVector *vecOrigin, CVector *_vecEffectPosn,
+                         CEntity *targetEntity, CVector *vecTarget,
+                         CVector *arg_14)
     {
         if (owner == FindPlayerPed ()) CCheat::SuicideCheat ();
 
-        return CallMethodAndReturn<char, 0x742300, CWeapon *> (
-            thisWeapon, owner, vecOrigin, _vecEffectPosn, targetEntity,
-            vecTarget, arg_14);
+        return cb ();
     }
 
-    static char __fastcall Hooked_CWeapon_FireFromCar (CWeapon  *thisWeapon,
-                                                       void     *edx,
-                                                       CVehicle *vehicle,
-                                                       char      leftSide,
-                                                       char      rightSide)
+    static char
+    Hooked_CWeapon_FireFromCar (auto &&cb, CWeapon *thisWeapon,
+                                CVehicle *vehicle, char leftSide,
+                                char rightSide)
     {
-        if (vehicle == FindPlayerVehicle(-1, false)) CCheat::SuicideCheat ();
+        if (vehicle == FindPlayerVehicle (-1, false)) CCheat::SuicideCheat ();
 
-        return CallMethodAndReturn<char, 0x73FA20, CWeapon *> (thisWeapon,
-                                                               vehicle,
-                                                               leftSide,
-                                                               rightSide);
+        return cb ();
     }
 };
 

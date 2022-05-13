@@ -10,23 +10,21 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        HOOK_METHOD (inst, Hooked_AccountForPedArmour,
-                     void (CPedDamageResponseCalculator *, CPed *, uint8_t *),
-                     0x4B5B19);
-
+        // CPedDamageResponseCalculator::ComputeWillKillPed
         HOOK_METHOD_ARGS (inst, Hooked_ComputeWillKillPed,
                           void (CPedDamageResponseCalculator *, CPed *,
                                 uint8_t *, char),
                           0x4B5B27);
 
-        HOOK_METHOD (inst, Hooked_CVehicle_InflictDamage,
+        // CPedDamageResponseCalculator::AccountForPedArmour
+        HOOK_METHOD (inst, Hooked_Empty,
+                     void (CPedDamageResponseCalculator *, CPed *, uint8_t *),
+                     0x4B5B19);
+
+        // CVehicle::InflictDamage
+        HOOK_METHOD (inst, Hooked_Empty,
                      void (CVehicle *, CPed *, eWeaponType, float, CVector),
                      0x73647F, 0x73B0BF, 0x73BEDD);
-    }
-
-    static void
-    Hooked_AccountForPedArmour (auto &&cb)
-    {
     }
 
     static void
@@ -51,7 +49,7 @@ public:
     }
 
     static void
-    Hooked_CVehicle_InflictDamage (auto &&cb)
+    Hooked_Empty (auto &&cb)
     {
     }
 };

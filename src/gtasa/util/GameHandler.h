@@ -224,7 +224,6 @@ private:
     static signed int __fastcall Hooked_CMenuManager_DoSettingsBeforeStartingAGame (
         CMenuManager *thisManager)
     {
-        // TODO: This also applies to when a game is loaded.
         if (CTimer::m_snTimeInMilliseconds < 1000 * 60)
         {
             nlohmann::json json;

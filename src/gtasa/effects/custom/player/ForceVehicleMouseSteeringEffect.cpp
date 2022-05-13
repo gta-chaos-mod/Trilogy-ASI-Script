@@ -19,24 +19,11 @@ public:
         {
             injector::WriteMemory<bool *> (address, &overrideMouseSteering);
         }
-
-        for (int address : {0x6CE1BC, 0x6CE118, 0x6C4A5A, 0x6CB095, 0x6CAF56})
-        {
-            injector::MakeCALL (address, Hooked_CPad_GetPadSteeringUpDown);
-        }
-
-        for (int address : {0x6AD907, 0x6AD846, 0x6BE5D9, 0x6BE488, 0x6F0C3C,
-                            0x6C4A78, 0x6CB04F, 0x6CAF0F})
-        {
-            injector::MakeCALL (address, Hooked_CPad_GetPadSteeringLeftRight);
-        }
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        // TODO: Unhook
-
         for (int address :
              {0x52565D + 2, // Mouse Steering
               0x6AD7AC + 1, 0x6BE39C + 1, 0x6CE03D + 1, 0x6F0AFA + 1})
@@ -53,15 +40,23 @@ public:
         }
     }
 
-    static __int16 __fastcall Hooked_CPad_GetPadSteeringUpDown (CPad *thisPad)
+    void
+    OnProcessScripts (EffectInstance *inst) override
     {
-        return 0;
-    }
-
-    static __int16 __fastcall Hooked_CPad_GetPadSteeringLeftRight (
-        CPad *thisPad)
-    {
-        return 0;
+        CPlayerPed *player = FindPlayerPed ();
+        if (player)
+        {
+            CVehicle *vehicle = FindPlayerVehicle (-1, false);
+            if (vehicle)
+            {
+                CPad *pad = player->GetPadFromPlayer ();
+                if (pad)
+                {
+                    pad->NewState.LeftStickX = 0;
+                    pad->NewState.LeftStickY = 0;
+                }
+            }
+        }
     }
 };
 
