@@ -3,7 +3,6 @@
 #include <CTimer.h>
 
 // TODO: Override "Car Upside Down" Check
-
 class VehicleDrivingOnWallsEffect : public EffectBase
 {
 public:

@@ -11,8 +11,7 @@ class CarmageddonEffect : public EffectBase
         int       time = 0;
     };
 
-    int wait = 0;
-    // TODO: Change to vector or something
+    int                      wait        = 0;
     std::vector<VehicleInfo> vehicleList = {};
     std::vector<int>         possibleVehicles
         = {400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412,
