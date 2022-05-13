@@ -2,7 +2,9 @@
 #include "util/EffectBase.h"
 
 #include <CCamera.h>
+#include <CDraw.h>
 #include <CHud.h>
+#include <CRadar.h>
 #include <CScene.h>
 
 using namespace plugin;
@@ -21,10 +23,18 @@ class MirroredWorldEffect : public EffectBase
     static inline RwRaster    *raster      = nullptr;
     static inline RwIm2DVertex vertices[4] = {};
 
+    static inline bool isWidescreenFixInstalled = false;
+
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        // TODO: This crashes with widescreen fix installed...
+        isWidescreenFixInstalled
+            = injector::ReadMemory<uint32_t> (
+                  injector::ReadRelativeOffset (0x5834BA + 2))
+              == 0x3ACCCCCD;
+
         ResetRaster ();
 
         render2dStuffEvent += Render2dStuffEvent;
@@ -152,9 +162,17 @@ public:
                 if ((!pad || !pad->GetDisplayVitalStats (player))
                     || FindPlayerVehicle (-1, false))
                 {
+                    // Calculate radar offset
                     float radarWidth = injector::ReadMemory<float> (0x866B78);
                     float oldX       = injector::ReadMemory<float> (0x858A10);
-                    injector::WriteMemory<float> (0x858A10, 600 - radarWidth);
+
+                    float calculation = isWidescreenFixInstalled
+                                            ? (546.0f * CDraw::ms_fAspectRatio)
+                                            : 640.0f;
+
+                    float offset = calculation - radarWidth - 40;
+
+                    injector::WriteMemory<float> (0x858A10, offset);
                     CHud::DrawRadar ();
                     injector::WriteMemory<float> (0x858A10, oldX);
                 }
