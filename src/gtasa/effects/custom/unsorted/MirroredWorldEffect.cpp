@@ -1,5 +1,6 @@
 #include "util/DrawHelper.h"
 #include "util/EffectBase.h"
+#include "util/Globals.h"
 #include "util/hooks/HookMacros.h"
 
 #include <CCamera.h>
@@ -129,8 +130,7 @@ public:
         SetRenderState (rwRENDERSTATEALPHATESTFUNCTION, 5u);
         SetRenderState (rwRENDERSTATEALPHATESTFUNCTIONREF, 0);
 
-        // if (!DisableHUDEffect::isEnabled)
-        if (!false)
+        if (!Globals::isDisableHUDEffectEnabled)
         {
             if (!TheCamera.m_bWideScreenOn) CHud::DrawCrossHairs ();
 
