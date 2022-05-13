@@ -11,23 +11,32 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        injector::MakeCALL (0x53E4FF, Hooked_HUD_Draw);
-        injector::MakeJMP (0x58AA2D, Hooked_Blips_Draw);
+        HOOK (inst, Hooked_CHud_Draw, void (), 0x53E4FF);
+        // injector::MakeCALL (0x53E4FF, Hooked_CHud_Draw);
+        HOOK (inst, Hooked_CRadar_DrawBlips, void (), 0x58AA2D);
+        // injector::MakeJMP (0x58AA2D, Hooked_CRadar_DrawBlips);
 
-        injector::MakeJMP (0x58261E, Hooked_CMenuSystem_DisplayGridMenu);
-        for (int address : {0x582679, 0x5826CF, 0x58274D})
-        {
-            injector::MakeCALL (address, Hooked_CMenuSystem_DisplayGridMenu);
-        }
+        HOOK (inst, Hooked_CMenuSystem_DisplayGridMenu,
+              tMenuPanel * (unsigned __int8, unsigned __int8), 0x58261E,
+              0x582679, 0x5826CF, 0x58274D);
+        // injector::MakeJMP (0x58261E, Hooked_CMenuSystem_DisplayGridMenu);
+        // for (int address : {0x582679, 0x5826CF, 0x58274D})
+        // {
+        //     injector::MakeCALL (address, Hooked_CMenuSystem_DisplayGridMenu);
+        // }
 
-        injector::MakeJMP (0x582627, Hooked_CMenuSystem_DisplayStandardMenu);
-        for (int address : {0x582687, 0x5826D9, 0x582757})
-        {
-            injector::MakeCALL (address,
-                                Hooked_CMenuSystem_DisplayStandardMenu);
-        }
+        HOOK (inst, Hooked_CMenuSystem_DisplayStandardMenu,
+              void (unsigned __int8, bool), 0x582627, 0x582687, 0x5826D9,
+              0x582757);
+        // injector::MakeJMP (0x582627, Hooked_CMenuSystem_DisplayStandardMenu);
+        // for (int address : {0x582687, 0x5826D9, 0x582757})
+        // {
+        //     injector::MakeCALL (address,
+        //                         Hooked_CMenuSystem_DisplayStandardMenu);
+        // }
 
-        injector::MakeCALL (0x58D542, Hooked_CHud_DrawAreaName);
+        HOOK (inst, Hooked_CHud_DrawAreaName, void (), 0x58D542);
+        // injector::MakeCALL (0x58D542, Hooked_CHud_DrawAreaName);
     }
 
     void
@@ -37,7 +46,7 @@ public:
     }
 
     static void
-    Hooked_HUD_Draw ()
+    Hooked_CHud_Draw (auto &&cb)
     {
         CRadar::Draw3dMarkers ();
 
@@ -45,24 +54,23 @@ public:
     }
 
     static void
-    Hooked_Blips_Draw ()
+    Hooked_CRadar_DrawBlips (auto &&cb)
     {
     }
 
     static tMenuPanel *
-    Hooked_CMenuSystem_DisplayGridMenu (unsigned __int8 a1, unsigned __int8 a2)
+    Hooked_CMenuSystem_DisplayGridMenu (auto &&cb)
     {
         return nullptr;
     }
 
     static void
-    Hooked_CMenuSystem_DisplayStandardMenu (unsigned __int8 panelId,
-                                            bool            bBrightFont)
+    Hooked_CMenuSystem_DisplayStandardMenu (auto &&cb)
     {
     }
 
     static void
-    Hooked_CHud_DrawAreaName ()
+    Hooked_CHud_DrawAreaName (auto &&cb)
     {
     }
 };
