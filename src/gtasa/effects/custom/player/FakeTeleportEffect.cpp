@@ -8,6 +8,7 @@ class FakeTeleportEffect : public EffectBase
     bool    hasTeleported = false;
     CVector fakeLocation  = {1544.0f, -1353.0f, 332.0f};
     CVector previousLocation;
+    int     previousInterior = 0;
 
     bool     wasInVehicle = false;
     CVector  previousMoveSpeed;
@@ -44,7 +45,7 @@ public:
                     vehicle->GetMatrix (), &previousMatrix);
             }
 
-            Teleportation::Teleport (previousLocation);
+            Teleportation::Teleport (previousLocation, previousInterior);
         }
 
         inst->OverrideName (
@@ -65,9 +66,7 @@ public:
 
         if (!CanActivate ())
         {
-            if (inst->GetSubhandler<EffectCrowdControlHandler> ())
-                inst->ResetTimer ();
-
+            inst->ResetTimer ();
             return;
         }
 
@@ -75,6 +74,7 @@ public:
         if (player)
         {
             previousLocation = player->GetPosition ();
+            previousInterior = player->m_nAreaCode;
 
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
             if (vehicle)
