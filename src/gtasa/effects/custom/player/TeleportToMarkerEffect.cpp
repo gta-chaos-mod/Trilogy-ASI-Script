@@ -27,6 +27,12 @@ public:
     {
         if (!IsMarkerPlaced ()) return;
 
+        if (!CanActivate ())
+        {
+            inst->ResetTimer ();
+            return;
+        }
+
         CPlayerPed *player = FindPlayerPed ();
         if (player && CanActivate ())
         {

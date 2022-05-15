@@ -1,5 +1,4 @@
 #include "util/EffectBase.h"
-#include "util/EffectCrowdControlHandler.h"
 #include "util/Teleportation.h"
 
 class TeleportEffect : public EffectBase
@@ -26,9 +25,7 @@ public:
     {
         if (!CanActivate ())
         {
-            if (inst->GetSubhandler<EffectCrowdControlHandler> ())
-                inst->ResetTimer ();
-
+            inst->ResetTimer ();
             return;
         }
 
