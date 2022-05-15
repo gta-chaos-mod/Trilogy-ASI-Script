@@ -166,6 +166,32 @@ EffectDrawHandler::UpdateTimers ()
 }
 
 void
+EffectDrawHandler::DrawAndXMore ()
+{
+    auto &effects = EffectHandler::GetActiveEffects ();
+
+    int size = effects.size ();
+    if (size <= 5) return;
+
+    int more = 0;
+    for (int i = 5; i < size; i++)
+    {
+        auto &effect = effects[i];
+        if (effect.IsRunning ()) more++;
+    }
+
+    if (more == 0) return;
+
+    std::string text = "And " + std::to_string (more) + " more...";
+
+    y = (7 * 65.0f) + 240.0f - 20.0f;
+
+    gamefont::Print (gamefont::RightBottom, gamefont::AlignRight, text, x, y,
+                     FONT_DEFAULT, 0.8f, 1.0f, color::DarkGray, 1, color::Black,
+                     true);
+}
+
+void
 EffectDrawHandler::DrawRecentEffects (int num)
 {
     bool inset = AreEffectsInset (num);
@@ -177,6 +203,8 @@ EffectDrawHandler::DrawRecentEffects (int num)
 
         effect.Draw (i, inset);
     }
+
+    DrawAndXMore ();
 }
 CRGBA
 EffectDrawHandler::GetTextColor () const

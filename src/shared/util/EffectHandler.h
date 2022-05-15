@@ -9,7 +9,7 @@
 class EffectHandler
 {
     inline static std::queue<std::function<void ()>> effectQueue;
-    inline static std::list<EffectInstance>          effects;
+    inline static std::deque<EffectInstance>         effects;
 
 public:
     static void Tick ();
@@ -27,7 +27,7 @@ public:
 
     static void HandleFunction (const nlohmann::json &effectData);
 
-    static std::list<EffectInstance> &
+    static std::deque<EffectInstance> &
     GetActiveEffects ()
     {
         return effects;

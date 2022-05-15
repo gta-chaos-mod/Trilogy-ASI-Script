@@ -18,9 +18,9 @@ class EffectDrawHandler
     int   textFlashTimer        = 2400;
     bool  textFlashingThisFrame = true;
 
-    CRGBA textColor     = CRGBA (255, 255, 255, 255);
-    CRGBA flashColor    = CRGBA (255, 255, 0, 255);
-    CRGBA disabledColor = CRGBA (175, 175, 175, 255);
+    CRGBA textColor     = plugin::color::White;
+    CRGBA flashColor    = plugin::color::Yellow;
+    CRGBA disabledColor = plugin::color::DarkGray;
 
 public:
     CRGBA
@@ -39,5 +39,6 @@ public:
     void Draw (EffectInstance *instance, int idx, bool inset);
 
     static bool AreEffectsInset (int num);
+    static void DrawAndXMore ();
     static void DrawRecentEffects (int num);
 };

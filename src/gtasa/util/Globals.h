@@ -1,7 +1,6 @@
 #pragma once
 
-class Globals
+namespace Globals
 {
-public:
-    static inline bool isDisableHUDEffectEnabled = false;
-};
+inline bool isDisableHUDEffectEnabled = false;
+}
