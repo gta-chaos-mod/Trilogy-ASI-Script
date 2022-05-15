@@ -25,13 +25,15 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        if (Config::GetOrDefault ("CrowdControl.Enabled", false))
+        if (vehicleList.size () > 0)
         {
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
+            for (auto &info : vehicleList)
             {
-                vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                vehicle->BlowUpCar (NULL, false);
+                if (IsVehiclePointerValid (info.vehicle))
+                {
+                    info.vehicle->m_nPhysicalFlags.bExplosionProof = false;
+                    info.vehicle->BlowUpCar (NULL, false);
+                }
             }
         }
     }
@@ -49,15 +51,15 @@ public:
 
             SetBurnTimer (currentVehicle, 0.0f);
         }
-        else if (!currentVehicle && this->lastVehicle
-                 && !ContainsVehicle (this->lastVehicle))
+        else if (!currentVehicle && lastVehicle
+                 && !ContainsVehicle (lastVehicle))
         {
-            vehicleList.push_back (VehicleInfo{.vehicle = this->lastVehicle});
+            vehicleList.push_back (VehicleInfo{.vehicle = lastVehicle});
 
-            this->lastVehicle->m_fHealth = 1000.0f;
+            lastVehicle->m_fHealth = 1000.0f;
         }
 
-        this->lastVehicle = currentVehicle;
+        lastVehicle = currentVehicle;
     }
 
     bool
@@ -81,7 +83,7 @@ public:
     {
         int step = (int) GenericUtil::CalculateTick ();
 
-        if (this->vehicleList.size () > 0)
+        if (vehicleList.size () > 0)
         {
             for (auto &info : vehicleList)
             {
@@ -130,8 +132,8 @@ public:
             {
                 CBike *bike     = (CBike *) vehicle;
                 bike->m_fHealth = 249.0f;
-                // bike->field_7BC = (int)value; // This should also be a float,
-                // until then we use the float pointer
+                // bike->field_7BC = (int)value; // This should also be a
+                // float, until then we use the float pointer
                 *(float *) ((char *) vehicle + 1980) = value;
                 break;
             }
@@ -142,8 +144,8 @@ public:
             {
                 CAutomobile *automobile = (CAutomobile *) vehicle;
                 automobile->m_fHealth   = 249.0f;
-                // automobile->m_dwBurnTimer = (int)value; // This should be a
-                // float, until then we use the float pointer
+                // automobile->m_dwBurnTimer = (int)value; // This should be
+                // a float, until then we use the float pointer
                 *(float *) ((char *) vehicle + 2276) = value;
                 break;
             }
