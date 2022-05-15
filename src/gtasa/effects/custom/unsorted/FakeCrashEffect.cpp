@@ -1,52 +1,20 @@
-#include "util/EffectBase.h"
+#include "effects/OneTimeEffect.h"
 
 #include <thread>
 
-#include <CMenuManager.h>
-#include <CTimer.h>
-
-class FakeCrashEffect : public EffectBase
+class FakeCrashEffect : public OneTimeEffect
 {
-    bool doneCrashing = false;
-
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        doneCrashing = false;
-    }
+        int randomCrashTime = inst->Random (5000, 10000);
 
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        CTimer::m_CodePause = false;
-    }
+        std::this_thread::sleep_for (
+            std::chrono::milliseconds (randomCrashTime));
 
-    void
-    OnTick (EffectInstance *inst) override
-    {
-        if (doneCrashing)
-        {
-            inst->Disable ();
-            return;
-        }
-
-        if (!FrontEndMenuManager.m_bMenuActive)
-        {
-            int randomCrashTime = inst->Random (5000, 10000);
-
-            std::thread t (
-                [=] ()
-                {
-                    std::this_thread::sleep_for (
-                        std::chrono::milliseconds (randomCrashTime));
-                    doneCrashing        = true;
-                    CTimer::m_CodePause = false;
-                });
-            t.detach ();
-
-            CTimer::m_CodePause = true;
-        }
+        inst->OverrideName (
+            inst->GetCustomData ().value ("realEffectName", "Fake Crash"));
     }
 };
 
