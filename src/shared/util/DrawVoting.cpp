@@ -112,7 +112,7 @@ DrawVoting::DrawVote (int choice)
     // Draw Percentage
     float percentage_x = barStart + 150.0f;
 
-    gamefont::PrintUnscaled (GetPercentage (choice), x, y - SCREEN_COORD (5.0f),
+    gamefont::PrintUnscaled (GetPercentage (choice), x, y - SCREEN_COORD (3.0f),
                              FONT_DEFAULT, SCREEN_MULTIPLIER (0.4f),
                              SCREEN_MULTIPLIER (0.6f),
                              (pickedVote == -1 || pickedVote == choice)
