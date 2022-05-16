@@ -1,9 +1,16 @@
 #pragma once
 
+enum Types
+{
+    TYPE_NORMAL,
+    TYPE_METHOD,
+    TYPE_STD
+};
+
 /*******************************************************/
 /** SFINAE wrapper to generate proper trampoline for x86 thiscall  hooks
  **/
-template <bool Method, typename Ret, typename... Args>
+template <Types HookType, typename Ret, typename... Args>
 struct FunctionCbTrampoline
 {
     template <auto &info>
@@ -22,7 +29,7 @@ struct FunctionCbTrampoline
 };
 
 template <typename Ret, typename Arg1, typename... Args>
-struct FunctionCbTrampoline<true, Ret, Arg1, Args...>
+struct FunctionCbTrampoline<TYPE_METHOD, Ret, Arg1, Args...>
 {
     std::tuple<Args...> params;
 
@@ -39,9 +46,25 @@ struct FunctionCbTrampoline<true, Ret, Arg1, Args...>
         return std::apply (reinterpret_cast<FuncType> (addr), params);
     }
 };
+
+template <typename Ret, typename... Args>
+struct FunctionCbTrampoline<TYPE_STD, Ret, Args...>
+{
+    template <auto &info> static Ret __stdcall Trampoline (Args... args)
+    {
+        return info.WalkTree (args...);
+    }
+
+    static Ret
+    Call (uintptr_t addr, std::tuple<Args...> &params)
+    {
+        using FuncType = Ret (__stdcall *) (Args...);
+        return std::apply (reinterpret_cast<FuncType> (addr), params);
+    }
+};
 /*******************************************************/
 
-template <bool Method, typename Prototype> struct FunctionCb;
+template <Types Method, typename Prototype> struct FunctionCb;
 
 /** Function Callback class for use with HookManager. The class handles calling
  * all the functions in the call tree and the original function in the end.
@@ -55,9 +78,9 @@ template <bool Method, typename Prototype> struct FunctionCb;
    not.
  **/
 
-template <bool Method, typename Ret, typename... Args>
-struct FunctionCb<Method, Ret (Args...)>
-    : public FunctionCbTrampoline<Method, Ret, Args...>
+template <Types HookType, typename Ret, typename... Args>
+struct FunctionCb<HookType, Ret (Args...)>
+    : public FunctionCbTrampoline<HookType, Ret, Args...>
 {
     using EventCbType  = std::function<void (Args...)>;
     using CbType       = std::function<Ret (FunctionCb &)>;

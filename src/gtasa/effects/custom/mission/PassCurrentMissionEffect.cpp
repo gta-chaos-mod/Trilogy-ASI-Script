@@ -174,8 +174,14 @@ public:
         triedPassingMission = false;
         missionPassWait     = 100;
 
-        HOOK_ARGS (inst, Hooked_Debug_GetKeyDown, char (int, int, int),
-                   0x46DDED, 0x46DE32);
+        if (!CTheScripts::IsPlayerOnAMission ())
+        {
+            inst->Disable ();
+            return;
+        }
+
+        HOOK_STD_ARGS (inst, Hooked_Debug_GetKeyDown, char (int, int, int),
+                       0x46DDED, 0x46DE32);
     }
 
     void
@@ -203,12 +209,12 @@ public:
                     = GenericUtil::ToUpper (std::string (i->m_szName));
                 if (offsetMap.contains (missionName))
                 {
-                    if (ContainsDebugCode (missionName)) isEnabled = true;
-
                     if (offsetMap[missionName] != -1)
                     {
                         i->m_pCurrentIP = i->m_pBaseIP + offsetMap[missionName];
                     }
+
+                    if (ContainsDebugCode (missionName)) isEnabled = true;
 
                     ClearPlayerStatus ();
 

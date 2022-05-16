@@ -36,12 +36,11 @@ public:
         }
     }
 
-    static char __fastcall Hooked_CWeapon_Fire (auto &&cb, CWeapon *thisWeapon,
-                                                CPed *owner, CVector *vecOrigin,
-                                                CVector *_vecEffectPosn,
-                                                CEntity *targetEntity,
-                                                CVector *vecTarget,
-                                                CVector *arg_14)
+    static char
+    Hooked_CWeapon_Fire (auto &&cb, CWeapon *thisWeapon, CPed *owner,
+                         CVector *vecOrigin, CVector *_vecEffectPosn,
+                         CEntity *targetEntity, CVector *vecTarget,
+                         CVector *arg_14)
     {
         if (owner == FindPlayerPed () && !FindPlayerVehicle (-1, false))
         {

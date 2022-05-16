@@ -3,8 +3,7 @@
 #include <MinHook.h>
 #include <injector/hooking.hpp>
 
-template<auto Address, typename T>
-struct InjectorHook
+template <auto Address, typename T> struct InjectorHook
 {
     inline static T scopedObj;
 
@@ -40,7 +39,7 @@ template <auto Address> struct MinHookHook
     static void
     Enable (uintptr_t src, DstT dst, uintptr_t &out)
     {
-        MH_CreateHook (LPVOID (src), LPVOID (dst), (LPVOID*) (&out));
+        MH_CreateHook (LPVOID (src), LPVOID (dst), (LPVOID *) (&out));
         MH_EnableHook (LPVOID (src));
     }
 };
@@ -104,9 +103,7 @@ template <auto Address> struct AutomaticHook
                 CallHook<Address>::Enable (src, dst, out);
                 break;
 
-            case HookType::JMP:
-                JmpHook<Address>::Enable (src, dst, out);
-                break;
+            case HookType::JMP: JmpHook<Address>::Enable (src, dst, out); break;
 
             case HookType::MINHOOK:
                 MinHookHook<Address>::Enable (src, dst, out);

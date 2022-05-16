@@ -27,12 +27,19 @@ public:
         lastIsOnMission   = false;
 
         wait = 500;
+
+        if (!CTheScripts::IsPlayerOnAMission ()) handledEverything = true;
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        if (handledEverything) return;
+        if (handledEverything)
+        {
+            inst->OverrideName (std::string (inst->GetName ()) + "?");
+            inst->Disable ();
+            return;
+        }
 
         if (!handledMission)
         {
@@ -94,11 +101,7 @@ public:
 
             if (isOnMission && !lastIsOnMission && handledMission)
             {
-                inst->OverrideName (std::string (inst->GetName ()) + "?");
-                handledMission    = false;
                 handledEverything = true;
-
-                inst->Disable ();
             }
 
             lastIsOnMission = isOnMission;

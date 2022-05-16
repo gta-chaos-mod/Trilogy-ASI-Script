@@ -65,22 +65,25 @@
 #define ENABLE_HOOK(inst, name) ADD_TO_HOOK (name, inst, name)
 
 // Hook with single argument
-#define HOOK_(inst, func, isMethod, prototype, ...)                            \
+#define HOOK_(inst, func, type, prototype, ...)                                \
     {                                                                          \
-        DECLARE_HOOK (hook, prototype, isMethod, __VA_ARGS__);                 \
+        DECLARE_HOOK (hook, prototype, type, __VA_ARGS__);                     \
         ADD_TO_HOOK ([] (auto &&cb) { return func (cb); }, inst, hook);        \
     }
 
 #define HOOK(inst, func, prototype, ...)                                       \
-    HOOK_ (inst, func, false, prototype, __VA_ARGS__)
+    HOOK_ (inst, func, TYPE_NORMAL, prototype, __VA_ARGS__)
 
 #define HOOK_METHOD(inst, func, prototype, ...)                                \
-    HOOK_ (inst, func, true, prototype, __VA_ARGS__)
+    HOOK_ (inst, func, TYPE_METHOD, prototype, __VA_ARGS__)
+
+#define HOOK_STD(inst, func, prototype, ...)                                \
+    HOOK_ (inst, func, TYPE_STD, prototype, __VA_ARGS__)
 
 // Hook with arguments support
-#define HOOK_ARGS_(inst, func, isMethod, prototype, ...)                       \
+#define HOOK_ARGS_(inst, func, type, prototype, ...)                           \
     {                                                                          \
-        DECLARE_HOOK (hook, prototype, isMethod, __VA_ARGS__);                 \
+        DECLARE_HOOK (hook, prototype, type, __VA_ARGS__);                     \
         ADD_TO_HOOK (                                                          \
             [] (auto &&cb)                                                     \
             {                                                                  \
@@ -92,7 +95,10 @@
     }
 
 #define HOOK_ARGS(inst, func, prototype, ...)                                  \
-    HOOK_ARGS_ (inst, func, false, prototype, __VA_ARGS__)
+    HOOK_ARGS_ (inst, func, TYPE_NORMAL, prototype, __VA_ARGS__)
 
 #define HOOK_METHOD_ARGS(inst, func, prototype, ...)                           \
-    HOOK_ARGS_ (inst, func, true, prototype, __VA_ARGS__)
+    HOOK_ARGS_ (inst, func, TYPE_METHOD, prototype, __VA_ARGS__)
+
+#define HOOK_STD_ARGS(inst, func, prototype, ...)                              \
+    HOOK_ARGS_ (inst, func, TYPE_STD, prototype, __VA_ARGS__)
