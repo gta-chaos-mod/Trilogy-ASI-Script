@@ -33,5 +33,5 @@ using RegisterPedsAttackEachOtherEffect
     = DisabledForMissionEffect<NPCsAttackEachOtherEffect>;
 
 DEFINE_EFFECT (RegisterPedsAttackEachOtherEffect,
-               "effect_peds_attack_each_other",
+               "effect_npcs_attack_each_other",
                GROUP_PED_SPAWNS | GROUP_PEDS_ATTACK);
