@@ -64,15 +64,9 @@ public:
             if (pad)
             {
                 pad->NewState.LeftStickX *= -1;
-                // pad->NewState.LeftStickY *= -1;
                 pad->NewState.RightStickX *= -1;
-                // pad->NewState.RightStickY *= -1;
 
                 pad->NewMouseControllerState.X *= -1;
-                // pad->NewMouseControllerState.Y *= -1;
-
-                // std::swap (pad->NewState.DPadUp, pad->NewState.DPadDown);
-                // std::swap (pad->NewState.DPadLeft, pad->NewState.DPadRight);
             }
         }
     }

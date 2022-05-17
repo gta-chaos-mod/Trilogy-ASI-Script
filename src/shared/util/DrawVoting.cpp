@@ -56,7 +56,7 @@ DrawVoting::UpdateVotes (std::vector<std::string> effects,
 void
 DrawVoting::DrawVote (int choice)
 {
-    if (votes[choice].description == "") { return; }
+    if (votes[choice].description == "") return;
 
     float barX = 0.0f;
     float x    = 0.0f;

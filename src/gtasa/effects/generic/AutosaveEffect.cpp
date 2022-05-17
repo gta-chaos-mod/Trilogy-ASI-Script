@@ -30,7 +30,7 @@ public:
             CRunningScript *script = CTheScripts::pActiveScripts->m_pNext;
             while (script != nullptr)
             {
-                if (script->m_bIsMission && script->m_bIsActive) { return; }
+                if (script->m_bIsMission && script->m_bIsActive) return;
 
                 script = script->m_pNext;
             }

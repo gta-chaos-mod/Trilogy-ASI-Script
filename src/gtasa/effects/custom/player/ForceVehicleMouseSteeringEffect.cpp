@@ -43,18 +43,16 @@ public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        if (!FindPlayerVehicle (-1, false)) return;
+
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
+            CPad *pad = player->GetPadFromPlayer ();
+            if (pad)
             {
-                CPad *pad = player->GetPadFromPlayer ();
-                if (pad)
-                {
-                    pad->NewState.LeftStickX = 0;
-                    pad->NewState.LeftStickY = 0;
-                }
+                pad->NewState.LeftStickX = 0;
+                pad->NewState.LeftStickY = 0;
             }
         }
     }

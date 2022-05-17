@@ -6,18 +6,14 @@ public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        // Don't activate if in a vehicle
+        if (FindPlayerVehicle (-1, false)) return;
+
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                // Don't activate if in a vehicle
-                if (!FindPlayerVehicle (-1, false))
-                {
-                    pad->NewState.RightShoulder1 = CHAR_MAX;
-                }
-            }
+            if (pad) pad->NewState.RightShoulder1 = CHAR_MAX;
         }
     }
 };

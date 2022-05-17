@@ -325,13 +325,13 @@ GameUtil::IsPlayerSafe ()
         }
     }
 
-    if (!player->IsPedInControl ()) { return false; }
+    if (!player->IsPedInControl ()) return false;
 
     CPlayerData *data = player->m_pPlayerData;
-    if (!data || !data->m_bCanBeDamaged) { return false; }
+    if (!data || !data->m_bCanBeDamaged) return false;
 
     CPad *pad = player->GetPadFromPlayer ();
-    if (!pad) { return false; }
+    if (!pad) return false;
 
     if (pad->bPlayerOnInteriorTransition || pad->bPlayerSafe
         || pad->bPlayerSafeForCutscene)
@@ -344,7 +344,7 @@ GameUtil::IsPlayerSafe ()
         return false;
     }
 
-    if (CEntryExitManager::WeAreInInteriorTransition ()) { return false; }
+    if (CEntryExitManager::WeAreInInteriorTransition ()) return false;
 
     return true;
 }

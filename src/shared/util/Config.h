@@ -133,7 +133,7 @@ public:
     static T
     GetOrDefault (std::string key, T defaultValue)
     {
-        if (!config) { return defaultValue; }
+        if (!config) return defaultValue;
 
         return config->get_qualified_as<T> (key).value_or (defaultValue);
     }

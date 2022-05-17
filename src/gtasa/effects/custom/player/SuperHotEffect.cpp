@@ -32,6 +32,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
+            // 0x53EFF0 -> CControllerState::CheckForInput
             CPad *pad = player->GetPadFromPlayer ();
             if (pad
                 && plugin::CallMethodAndReturn<bool, 0x53EFF0, CPad *> (pad))
