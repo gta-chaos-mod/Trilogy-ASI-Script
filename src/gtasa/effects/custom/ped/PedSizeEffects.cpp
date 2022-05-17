@@ -21,13 +21,8 @@ public:
     static void
     RenderPed (CPed *ped)
     {
-        for (int i = 0; i < BONE_RIGHTFOOT + 1; i++)
-            BoneHelper::ScaleBone (ped, i, scale);
-
-        for (int i = 300; i < 304; i++)
-            BoneHelper::ScaleBone (ped, i, scale);
-
-        for (int i = 5000; i < 5026; i++)
+        // Scale every possible bone
+        for (int i = 0; i < 10000; i++)
             BoneHelper::ScaleBone (ped, i, scale);
     }
 };
