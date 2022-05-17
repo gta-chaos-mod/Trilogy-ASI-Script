@@ -5,10 +5,15 @@
 #include <CAEAudioHardware.h>
 #include <CTimer.h>
 
+// TODO: Make it so that initial aiming is being set for the cooldown, too, but
+// not when holding it for longer.
+// This is so CJ can do his proper aim animation and we can see the crosshair
 class SuperHotEffect : public EffectBase
 {
     static inline float gameSpeed         = 1.0f;
     float               gameSpeedProgress = 0.0f;
+
+    int pressCooldown = 250;
 
 public:
     void
@@ -29,30 +34,53 @@ public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        bool isSuperHotMode = true;
+
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
-            // 0x53EFF0 -> CControllerState::CheckForInput
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad
-                && plugin::CallMethodAndReturn<bool, 0x53EFF0, CPad *> (pad))
+            if (pad)
             {
-                ModifyGameSpeed (true);
+                if (IsAnyKeyDown (pad)) pressCooldown = 250;
 
-                return;
+                pressCooldown -= (int) GenericUtil::CalculateTick ();
+                pressCooldown = std::clamp (pressCooldown, 0, 250);
+
+                if (pressCooldown > 0) isSuperHotMode = false;
             }
         }
 
-        ModifyGameSpeed (false);
+        ModifyGameSpeed (isSuperHotMode);
+    }
+
+    bool
+    IsAnyKeyDown (CPad *pad, bool excludeAim = false)
+    {
+        bool result
+            = pad->NewState.RightStickX || pad->NewState.RightStickY
+              || pad->NewState.LeftStickX || pad->NewState.LeftStickY
+              || pad->NewState.DPadUp || pad->NewState.DPadDown
+              || pad->NewState.DPadLeft || pad->NewState.DPadRight
+              || pad->NewState.ButtonTriangle || pad->NewState.ButtonCross
+              || pad->NewState.ButtonCircle || pad->NewState.ButtonSquare
+              || pad->NewState.Start || pad->NewState.Select
+              || pad->NewState.LeftShoulder1 || pad->NewState.LeftShoulder2
+              || pad->NewState.RightShoulder2 || pad->NewState.ShockButtonL
+              || pad->NewState.ShockButtonR;
+
+        if (!excludeAim) result = result || pad->NewState.RightShoulder1;
+
+        return result;
     }
 
     void
-    ModifyGameSpeed (bool input)
+    ModifyGameSpeed (bool isSuperHotMode)
     {
-        if (input)
-            gameSpeedProgress += GenericUtil::CalculateTick (0.001f);
-        else
+        if (isSuperHotMode)
             gameSpeedProgress -= GenericUtil::CalculateTick (0.005f);
+        else
+            gameSpeedProgress += GenericUtil::CalculateTick (0.001f);
 
         gameSpeedProgress = std::clamp (gameSpeedProgress, 0.0f, 1.0f);
 
@@ -69,7 +97,7 @@ public:
                                       CAEAudioHardware *thisAudioHardware,
                                       int slot, int offset, float &factor)
     {
-        if (factor > 0.0f) factor = gameSpeed;
+        if (factor > 0.0f) factor = std::clamp (gameSpeed, 0.4f, 1.0f);
 
         return cb ();
     }
