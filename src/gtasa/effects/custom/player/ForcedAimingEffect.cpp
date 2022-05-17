@@ -15,7 +15,7 @@ public:
                 // Don't activate if in a vehicle
                 if (!FindPlayerVehicle (-1, false))
                 {
-                    pad->NewState.RightShoulder1 = SHRT_MAX;
+                    pad->NewState.RightShoulder1 = CHAR_MAX;
                 }
             }
         }

@@ -14,8 +14,9 @@ public:
             CPad *pad = player->GetPadFromPlayer ();
             if (pad)
             {
-                pad->NewState.ButtonCross  = SHRT_MAX;
-                pad->NewState.ButtonSquare = 0;
+                pad->NewState.RightShoulder1 = 0;
+                pad->NewState.ButtonSquare   = 0;
+                pad->NewState.ButtonCross    = CHAR_MAX;
             }
         }
     }
