@@ -198,6 +198,7 @@ public:
         if (triedPassingMission || CCutsceneMgr::ms_running
             || TheCamera.m_bWideScreenOn)
         {
+            inst->ResetTimer ();
             return;
         }
 

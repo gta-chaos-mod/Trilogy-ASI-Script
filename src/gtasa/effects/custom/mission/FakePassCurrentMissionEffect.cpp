@@ -43,6 +43,12 @@ public:
 
         if (!handledMission)
         {
+            if (CCutsceneMgr::ms_running)
+            {
+                inst->ResetTimer ();
+                return;
+            }
+
             bool wasOnMission = CTheScripts::IsPlayerOnAMission ();
             if (wasOnMission)
             {

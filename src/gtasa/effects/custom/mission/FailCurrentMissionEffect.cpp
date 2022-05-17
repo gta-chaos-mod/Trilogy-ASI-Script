@@ -1,20 +1,27 @@
-#include "effects/OneTimeEffect.h"
+#include "util/EffectBase.h"
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 #include "util/Teleportation.h"
 
+#include <CCutsceneMgr.h>
 #include <CGangWars.h>
 #include <CTheScripts.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
-class FailCurrentMissionEffect : public OneTimeEffect
+class FailCurrentMissionEffect : public EffectBase
 {
 public:
     void
-    OnStart (EffectInstance *inst) override
+    OnTick (EffectInstance *inst) override
     {
+        if (CCutsceneMgr::ms_running)
+        {
+            inst->ResetTimer ();
+            return;
+        }
+
         if (CTheScripts::IsPlayerOnAMission ())
         {
             Command<Commands::CLEAR_SMALL_PRINTS> ();
@@ -34,6 +41,8 @@ public:
         CGangWars::EndGangWar (false);
 
         ClearPlayerStatus ();
+
+        inst->Disable ();
     }
 
     void
