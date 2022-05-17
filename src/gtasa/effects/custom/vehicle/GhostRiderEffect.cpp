@@ -3,6 +3,8 @@
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 
+// Car on "Wear Flowers In Your Hair" and the Tankers in trucking missions blow
+// up immediately
 class GhostRiderEffect : public EffectBase
 {
     struct VehicleInfo
@@ -130,11 +132,9 @@ public:
         {
             case VEHICLE_BIKE:
             {
-                CBike *bike     = (CBike *) vehicle;
-                bike->m_fHealth = 249.0f;
-                // bike->field_7BC = (int)value; // This should also be a
-                // float, until then we use the float pointer
-                *(float *) ((char *) vehicle + 1980) = value;
+                CBike *bike           = (CBike *) vehicle;
+                bike->m_fHealth       = 249.0f;
+                bike->m_fBurningTimer = value;
                 break;
             }
             case VEHICLE_AUTOMOBILE:
@@ -142,11 +142,9 @@ public:
             case VEHICLE_QUAD:
             case VEHICLE_TRAILER:
             {
-                CAutomobile *automobile = (CAutomobile *) vehicle;
-                automobile->m_fHealth   = 249.0f;
-                // automobile->m_dwBurnTimer = (int)value; // This should be
-                // a float, until then we use the float pointer
-                *(float *) ((char *) vehicle + 2276) = value;
+                CAutomobile *automobile     = (CAutomobile *) vehicle;
+                automobile->m_fHealth       = 249.0f;
+                automobile->m_fBurningTimer = value;
                 break;
             }
             case VEHICLE_BOAT:
