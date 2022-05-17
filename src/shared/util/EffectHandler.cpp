@@ -90,7 +90,9 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
 
         inst.SetSubHandlers (handlers);
         inst.SetDuration (data["duration"]);
-        inst.SetCustomData (data["effectData"]);
+
+        if (data.contains ("effectData"))
+            inst.SetCustomData (data["effectData"]);
 
         if (data.contains ("displayName"))
             inst.OverrideName (data["displayName"]);
