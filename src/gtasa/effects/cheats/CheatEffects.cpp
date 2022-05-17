@@ -40,6 +40,10 @@ DEFINE_EFFECT (TimedAddressEffect    , "effect_faster_clock"                , GR
 // Vehicle
 DEFINE_EFFECT (TimedAddressEffect    , "effect_all_cars_have_nitro"         , 0                                         , 0x969165);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_all_green_lights"            , 0                                         , 0x96914E);
+
+// TODO: Hook the place it's being checked in 0x6B1993 and set it to a custom variable
+// Similar to how we did it for Force Vehicle Mouse Steering
+// This is so we can still allow the player to gain the 50 fares reward
 DEFINE_EFFECT (TimedAddressEffect    , "effect_all_taxis_have_nitro"        , 0                                         , 0x96918B);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_boats_fly"                   , 0                                         , 0x969153);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_cars_fly"                    , 0                                         , 0x969160);
