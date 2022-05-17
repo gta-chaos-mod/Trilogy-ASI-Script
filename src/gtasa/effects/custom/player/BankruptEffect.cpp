@@ -14,7 +14,9 @@ public:
             CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
             if (playerInfo)
             {
-                playerInfo->m_nMoney = 0;
+                // -= 1 million
+                playerInfo->m_nMoney -= 1000000;
+                playerInfo->m_nMoney = std::max (playerInfo->m_nMoney, 0);
                 inst->Disable ();
             }
         }
