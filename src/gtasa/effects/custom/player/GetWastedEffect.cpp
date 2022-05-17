@@ -1,6 +1,5 @@
 #include "util/EffectBase.h"
-
-#include <CCutsceneMgr.h>
+#include "util/GameUtil.h"
 
 class GetWastedEffect : public EffectBase
 {
@@ -9,14 +8,15 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && player->CanSetPedState ())
+        if (!player || !GameUtil::IsPlayerSafe ())
         {
-            player->SetPedState (ePedState::PEDSTATE_DEAD);
-
-            CCutsceneMgr::SkipCutscene ();
-
-            inst->Disable ();
+            inst->ResetTimer ();
+            return;
         }
+
+        player->SetPedState (ePedState::PEDSTATE_DEAD);
+
+        inst->Disable ();
     }
 };
 

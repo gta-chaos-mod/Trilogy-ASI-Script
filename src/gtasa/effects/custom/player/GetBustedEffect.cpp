@@ -1,6 +1,5 @@
 #include "util/EffectBase.h"
-
-#include <CCutsceneMgr.h>
+#include "util/GameUtil.h"
 
 class GetBustedEffect : public EffectBase
 {
@@ -9,14 +8,15 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && player->CanSetPedState ())
+        if (!player || !GameUtil::IsPlayerSafe ())
         {
-            player->SetPedState (ePedState::PEDSTATE_ARRESTED);
-
-            CCutsceneMgr::SkipCutscene ();
-
-            inst->Disable ();
+            inst->ResetTimer ();
+            return;
         }
+
+        player->SetPedState (ePedState::PEDSTATE_ARRESTED);
+
+        inst->Disable ();
     }
 };
 
