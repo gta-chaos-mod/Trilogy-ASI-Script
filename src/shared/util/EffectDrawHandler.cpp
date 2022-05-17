@@ -106,7 +106,7 @@ EffectDrawHandler::PrintEffectTimer ()
         DrawHelper::DrawCircle (center, SCREEN_MULTIPLIER (20.0f), angle,
                                 GetEffectColor ());
 
-        if (effect->GetEffectRemaining () <= 60000)
+        if (effect->GetEffectRemaining () < 60000)
         {
             gamefont::Print (
                 gamefont::RightBottom, gamefont::AlignRight,
