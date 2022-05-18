@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/GameUtil.h"
 
 #include <CCamera.h>
 #include <extensions/ScriptCommands.h>
@@ -9,31 +10,53 @@ class WarpPlayerIntoRandomVehicleEffect : public EffectBase
 {
 public:
     void
-    OnStart (EffectInstance *inst) override
+    OnTick (EffectInstance *inst) override
     {
-        CPlayerPed *player = FindPlayerPed ();
-        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        if (!GameUtil::IsPlayerSafe ())
         {
-            if (vehicle->m_pDriver && vehicle->m_pDriver != player)
+            inst->ResetTimer ();
+            return;
+        }
+
+        CPlayerPed *player  = FindPlayerPed ();
+        CVehicle   *vehicle = GetRandomVehicle (inst);
+        if (!vehicle || !vehicle->CanBeDriven ()
+            || vehicle->m_nStatus == STATUS_WRECKED)
+            return;
+
+        if (!vehicle->m_pDriver
+            || vehicle->m_pDriver && vehicle->m_pDriver != player)
+        {
+            for (int i = 0; i < vehicle->m_nMaxPassengers; i++)
             {
-                for (int i = 0; i < vehicle->m_nMaxPassengers; i++)
+                if (Command<
+                        eScriptCommands::COMMAND_IS_CAR_PASSENGER_SEAT_FREE> (
+                        vehicle, i))
                 {
-                    if (Command<eScriptCommands::
-                                    COMMAND_IS_CAR_PASSENGER_SEAT_FREE> (
-                            vehicle, i))
-                    {
-                        Command<eScriptCommands::
-                                    COMMAND_WARP_CHAR_INTO_CAR_AS_PASSENGER> (
-                            player, vehicle, i);
+                    Command<eScriptCommands::
+                                COMMAND_WARP_CHAR_INTO_CAR_AS_PASSENGER> (
+                        player, vehicle, i);
 
-                        Command<
-                            eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
+                    Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
 
-                        return;
-                    }
+                    inst->Disable ();
                 }
             }
         }
+    }
+
+    CVehicle *
+    GetRandomVehicle (EffectInstance *inst, int attempts = 0)
+    {
+        int randomNumber  = inst->Random (0, CPools::ms_pVehiclePool->m_nSize);
+        CVehicle *vehicle = CPools::ms_pVehiclePool->GetAt (randomNumber);
+
+        if (IsVehiclePointerValid (vehicle)) return vehicle;
+
+        attempts += 1;
+        if (attempts > 10) return NULL;
+
+        return GetRandomVehicle (inst, attempts);
     }
 };
 
