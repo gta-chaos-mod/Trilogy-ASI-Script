@@ -42,16 +42,26 @@ public:
             CPad *pad = player->GetPadFromPlayer ();
             if (pad)
             {
-                if (IsAnyKeyDown (pad)) pressCooldown = 250;
+                if (IsAnyKeyDown (pad, true))
+                    pressCooldown = std::max (250, pressCooldown);
+
+                if (WasAimJustPressed (pad)) pressCooldown = 600;
 
                 pressCooldown -= (int) GenericUtil::CalculateTick ();
-                pressCooldown = std::clamp (pressCooldown, 0, 250);
+                pressCooldown = std::clamp (pressCooldown, 0, 600);
 
                 if (pressCooldown > 0) isSuperHotMode = false;
             }
         }
 
         ModifyGameSpeed (isSuperHotMode);
+    }
+
+    bool
+    WasAimJustPressed (CPad *pad)
+    {
+        return pad->NewMouseControllerState.rmb
+               && !pad->OldMouseControllerState.rmb;
     }
 
     bool
