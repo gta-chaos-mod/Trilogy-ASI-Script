@@ -52,7 +52,7 @@ public:
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle && vehicle == thisVehicle)
         {
-            thisVehicle->m_nStatus = eEntityStatus::STATUS_SIMPLE;
+            thisVehicle->m_nStatus = STATUS_SIMPLE;
         }
 
         cb ();

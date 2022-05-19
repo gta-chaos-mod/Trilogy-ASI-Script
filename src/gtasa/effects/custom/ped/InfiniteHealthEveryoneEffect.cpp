@@ -39,7 +39,7 @@ public:
     static void
     Hooked_KillPedsInVehicle (auto &&cb, CVehicle *thisVehicle)
     {
-        thisVehicle->m_nStatus = eEntityStatus::STATUS_SIMPLE;
+        thisVehicle->m_nStatus = STATUS_SIMPLE;
     }
 
     static void

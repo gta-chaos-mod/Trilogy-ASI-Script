@@ -112,8 +112,8 @@ GameUtil::SetVehiclesToRealPhysics ()
     {
         if (!vehicle->m_pDriver) continue;
         if (!vehicle->CanBeDriven ()) continue;
-        if (vehicle->m_nStatus == eEntityStatus::STATUS_WRECKED) continue;
-        if (vehicle->m_nStatus != eEntityStatus::STATUS_SIMPLE) continue;
+        if (vehicle->m_nStatus == STATUS_WRECKED) continue;
+        if (vehicle->m_nStatus != STATUS_SIMPLE) continue;
         if (vehicle->IsDriver (FindPlayerPed ())) continue;
 
         CCarCtrl::SwitchVehicleToRealPhysics (vehicle);
@@ -253,7 +253,7 @@ GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
         {
             vehicle->SetPosn (position);
             vehicle->SetOrientation (0.0f, 0.0f, orientation);
-            vehicle->m_nStatus   = eEntityStatus::STATUS_ABANDONED;
+            vehicle->m_nStatus   = STATUS_ABANDONED;
             vehicle->m_nDoorLock = CARLOCK_UNLOCKED;
             if (clearSpace)
             {
