@@ -67,6 +67,12 @@ public:
                 pad->NewState.RightStickX *= -1;
 
                 pad->NewMouseControllerState.X *= -1;
+
+                if (FindPlayerVehicle (-1, false))
+                {
+                    std::swap (pad->NewState.LeftShoulder2,
+                               pad->NewState.RightShoulder2);
+                }
             }
         }
     }
