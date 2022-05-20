@@ -2,7 +2,7 @@
 
 using namespace plugin;
 
-template <RwV3d scale, RwV3d rotation, float angle>
+template <RwV3d scale, RwV3d rotation, float angle, float zAdjustment = 0.0f>
 class VehicleSizeEffect : public EffectBase
 {
     inline static float rotationAngle = angle;
@@ -42,17 +42,18 @@ public:
         RwFrameRotate (frame, &rotation, GetRotationAngle (),
                        rwCOMBINEPRECONCAT);
 
-        // TODO: Translate vehicle so wheels touch ground
-        // RwFrameTranslate (frame, &translation, rwCOMBINEPRECONCAT);
+        RwV3d translation = {0.0f, 0.0f, zAdjustment};
+
+        RwFrameTranslate (frame, &translation, rwCOMBINEPRECONCAT);
     }
 };
 
 // clang-format off
 // Sizes / Scales
-using VehicleSizeTinyCarsEffect = VehicleSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f>;
+using VehicleSizeTinyCarsEffect = VehicleSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f, 0.9f>;
 DEFINE_EFFECT (VehicleSizeTinyCarsEffect, "effect_vehicle_size_tiny", 0);
 
-using VehicleSizeLargeCarsEffect = VehicleSizeEffect<RwV3d {2.0f, 2.0f, 2.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f>;
+using VehicleSizeLargeCarsEffect = VehicleSizeEffect<RwV3d {2.0f, 2.0f, 2.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f, 0.3f>;
 DEFINE_EFFECT (VehicleSizeLargeCarsEffect, "effect_vehicle_size_large", 0);
 
 using VehicleSizeWideEffect = VehicleSizeEffect<RwV3d {2.0f, 1.0f, 1.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f>;
@@ -74,6 +75,6 @@ DEFINE_EFFECT (VehicleSizePaperThinEffect, "effect_vehicle_size_paper_thin", 0);
 using VehicleSizeBackwardsEffect = VehicleSizeEffect<RwV3d {1.0f, 1.0f, 1.0f}, RwV3d {0.0f, 0.0f, 1.0f}, 180.0f>;
 DEFINE_EFFECT (VehicleSizeBackwardsEffect, "effect_vehicle_size_backwards", 0);
 
-using VehicleSizeFlippedEffect = VehicleSizeEffect<RwV3d {1.0f, 1.0f, 1.0f}, RwV3d {0.0f, 1.0f, 0.0f}, 180.0f>;
+using VehicleSizeFlippedEffect = VehicleSizeEffect<RwV3d {1.0f, 1.0f, 1.0f}, RwV3d {0.0f, 1.0f, 0.0f}, 180.0f, 1.0f>;
 DEFINE_EFFECT (VehicleSizeFlippedEffect, "effect_vehicle_size_flipped", 0);
 // clang-format on
