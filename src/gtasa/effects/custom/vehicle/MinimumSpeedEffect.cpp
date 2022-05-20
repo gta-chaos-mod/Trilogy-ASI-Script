@@ -2,18 +2,20 @@
 #include "util/GenericUtil.h"
 
 #include <CAudioEngine.h>
+#include <eAudioEvents.h>
 
 using namespace plugin;
 
 class MinimumSpeedEffect : public EffectBase
 {
-    static inline const float SPEED_THRESHOLD = 75.0f;
+    static inline const float SPEED_THRESHOLD = 80.0f;
 
-    static inline CVehicle *currentVehicle;
+    static inline CVehicle *lastVehicle;
     static inline int       timeLeft     = 1000 * 10;
     static inline float     currentSpeed = 0.0f;
 
-    int beepCooldown = 0;
+    int blowUpDelay  = 500;
+    int beepCooldown = 1000;
 
 public:
     bool
@@ -25,14 +27,15 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        currentVehicle = FindPlayerVehicle (-1, false);
-        if (currentVehicle)
+        lastVehicle = FindPlayerVehicle (-1, false);
+        if (lastVehicle)
         {
-            currentSpeed = currentVehicle->m_vecMoveSpeed.Magnitude ();
+            currentSpeed = lastVehicle->m_vecMoveSpeed.Magnitude ();
         }
 
         timeLeft     = 1000 * 10;
-        beepCooldown = 0;
+        blowUpDelay  = 500;
+        beepCooldown = 1000;
 
         Events::drawAfterFadeEvent += OnDraw;
     }
@@ -48,12 +51,9 @@ public:
     {
         if (!EnsureVehicle ()) return;
 
-        currentSpeed = currentVehicle->m_vecMoveSpeed.Magnitude () * 175.0f;
+        currentSpeed = GetVehicleSpeed ();
 
         int tick = (int) GenericUtil::CalculateTick ();
-
-        beepCooldown -= tick;
-        beepCooldown = std::clamp (beepCooldown, 0, 500);
 
         if (currentSpeed >= SPEED_THRESHOLD)
             timeLeft += tick;
@@ -67,31 +67,51 @@ public:
 
         if (timeLeft == 0)
         {
-            BlowUpVehicle (currentVehicle);
+            BlowUpVehicle (lastVehicle);
 
             timeLeft = 1000 * 10;
         }
     }
 
+    float
+    GetVehicleSpeed (float inKMH = true)
+    {
+        if (!IsVehiclePointerValid (lastVehicle)) return 0.0f;
+
+        float speed = lastVehicle->m_vecMoveSpeed.Magnitude ();
+
+        return inKMH ? speed * 175.0f : speed;
+    }
+
     bool
     EnsureVehicle ()
     {
-        currentVehicle = nullptr;
-
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (IsVehiclePointerValid (currentVehicle) && vehicle != currentVehicle)
+        if (IsVehiclePointerValid (lastVehicle) && vehicle != lastVehicle)
         {
-            BlowUpVehicle (currentVehicle);
+            blowUpDelay -= (int) GenericUtil::CalculateTick ();
+            if (blowUpDelay < 0)
+            {
+                BlowUpVehicle (lastVehicle);
+                lastVehicle = nullptr;
+            }
             return false;
         }
+
+        lastVehicle = nullptr;
 
         if (IsVehiclePointerValid (vehicle) && vehicle->CanBeDriven ()
             && vehicle->m_nStatus != STATUS_WRECKED)
         {
-            currentVehicle = vehicle;
+            lastVehicle = vehicle;
+            blowUpDelay = 500;
+        }
+        else
+        {
+            timeLeft = 1000 * 10;
         }
 
-        return currentVehicle != nullptr;
+        return lastVehicle != nullptr;
     }
 
     void
@@ -108,14 +128,20 @@ public:
     void
     DoBeepIfNecessary ()
     {
-        // TODO: Find beep sound
-        // AudioEngine.ReportFrontendAudioEvent (0x1455, 0.0f, 1.0f);
+        beepCooldown -= (int) GenericUtil::CalculateTick ();
+        if (beepCooldown > 0) return;
+
+        AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_PICKUP_INFO, 0.0f,
+                                              1.5f);
+
+        beepCooldown = std::round (timeLeft / 10);
+        beepCooldown = std::clamp (beepCooldown, 100, 1000);
     }
 
     static void
     OnDraw ()
     {
-        if (GenericUtil::IsMenuActive () || !currentVehicle) return;
+        if (GenericUtil::IsMenuActive () || !lastVehicle) return;
 
         // Calculate between 0.0f and 1.0f
         float timeLeftWidth = (float) timeLeft / (1000 * 10.0f);
@@ -123,6 +149,7 @@ public:
         CRGBA rectColor = color::ForestGreen;
         if (timeLeft < 7000) rectColor = color::Orange;
         if (timeLeft < 4000) rectColor = color::Red;
+        if (timeLeft < 1000) rectColor = color::DarkRed;
 
         float x      = 70.0f;
         float y      = 300.0f;
