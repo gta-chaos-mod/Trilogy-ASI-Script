@@ -33,11 +33,13 @@ GenericUtil::FormatTime (int duration, bool onlySeconds)
     std::string time;
     if (!onlySeconds)
     {
-        if (minutes < 10) { time.append ("0"); }
+        if (minutes < 10) time.append ("0");
+
         time.append (std::to_string (minutes));
         time.append (":");
     }
-    if (seconds < 10) { time.append ("0"); }
+    if (seconds < 10) time.append ("0");
+
     time.append (std::to_string (seconds));
     return time;
 }
