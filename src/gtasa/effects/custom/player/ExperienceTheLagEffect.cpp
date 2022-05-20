@@ -32,8 +32,8 @@ public:
             CEntity *entity = FindPlayerEntity (-1);
             if (entity)
             {
-                float range = 0.5f;
-                if (inst->Random (0, 4) == 0) range = 2.0f;
+                float range = 2.0f;
+                if (inst->Random (0, 4) == 0) range = 7.5f;
 
                 CVector position
                     = entity->GetPosition ()
