@@ -24,8 +24,8 @@ public:
             {
                 wasHornOn[vehicle] = true;
 
-                CMatrixLink *matrix   = vehicle->GetMatrix ();
-                float        velocity = 1.5f;
+                CMatrix *matrix   = vehicle->GetMatrix ();
+                float    velocity = 1.5f;
 
                 vehicle->m_vecMoveSpeed.x = velocity * matrix->up.x;
                 vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
