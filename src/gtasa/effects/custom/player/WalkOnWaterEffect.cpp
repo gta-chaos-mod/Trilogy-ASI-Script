@@ -1,6 +1,8 @@
 #include "util/EffectBase.h"
+#include "util/Globals.h"
 
 #include <CStreaming.h>
+#include <CWeather.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
@@ -11,10 +13,18 @@ class WalkOnWaterEffect : public EffectBase
 
 public:
     void
+    OnStart (EffectInstance *inst) override
+    {
+        Globals::isWalkOnWaterEffectEnabled = true;
+    }
+
+    void
     OnEnd (EffectInstance *inst) override
     {
         if (roadObject && IsObjectPointerValid (roadObject))
             roadObject->Remove ();
+
+        Globals::isWalkOnWaterEffectEnabled = false;
     }
 
     void
@@ -31,24 +41,30 @@ public:
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
             if (vehicle) heading = vehicle->GetHeading ();
 
+            float waterLevel = 0.5f;
+
+            // TODO: Properly get the water level
+            // Call<0x6E8580> (position.x, position.y, position.z, &waterLevel,
+            // 0);
+
             if (!roadObject || !IsObjectPointerValid (roadObject))
             {
-                // TODO: Find better object that is bigger so we don't have to
-                // teleport it as often?
                 int model = 8418; // Flat concrete pad with parking
                 CStreaming::RequestModel (model, 2);
                 CStreaming::LoadAllRequestedModels (0);
                 Command<eScriptCommands::COMMAND_CREATE_OBJECT> (
-                    model, position.x, position.y, 0.0f, &roadObject);
+                    model, position.x, position.y, waterLevel, &roadObject);
                 CStreaming::SetModelIsDeletable (model);
                 roadObject->m_nObjectFlags.bDoNotRender = true;
             }
             else
             {
-                // TODO: Fix CJ sliding on the constantly teleporting object?
-                roadObject->Teleport ({position.x, position.y, 0.5f}, false);
+                roadObject->Teleport ({position.x, position.y, waterLevel},
+                                      false);
                 roadObject->SetOrientation (0.0f, 0.0f, heading);
             }
+
+            CWeather::Wavyness = 0.0f;
         }
     }
 };

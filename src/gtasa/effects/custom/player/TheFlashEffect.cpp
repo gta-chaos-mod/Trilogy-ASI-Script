@@ -1,13 +1,9 @@
 #include "util/EffectBase.h"
+#include "util/Globals.h"
 #include "util/hooks/HookMacros.h"
 
 #include <CMenuSystem.h>
 #include <CWorld.h>
-
-/*
-    TODO: Doesn't seem to work with "Walk On Water" - tries to set player to
-   water position
-*/
 
 class TheFlashEffect : public EffectBase
 {
@@ -64,8 +60,10 @@ public:
                                                              nullptr);
                         if (worked)
                         {
-                            player->GetMatrix ()->pos.z
-                                = std::max (0.0f, newZ + 0.5f);
+                            if (Globals::isWalkOnWaterEffectEnabled)
+                                newZ = std::max (0.0f, newZ);
+
+                            player->GetMatrix ()->pos.z = newZ + 0.5f;
                         }
                     }
                 }
