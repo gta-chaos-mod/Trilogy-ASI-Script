@@ -69,7 +69,8 @@ public:
         {
             BlowUpVehicle (lastVehicle);
 
-            timeLeft = 1000 * 10;
+            timeLeft     = 1000 * 10;
+            beepCooldown = 1000;
         }
     }
 
@@ -86,6 +87,13 @@ public:
     bool
     EnsureVehicle ()
     {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player || !player->IsAlive ())
+        {
+            lastVehicle = nullptr;
+            return false;
+        }
+
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (IsVehiclePointerValid (lastVehicle) && vehicle != lastVehicle)
         {
@@ -108,7 +116,8 @@ public:
         }
         else
         {
-            timeLeft = 1000 * 10;
+            timeLeft     = 1000 * 10;
+            beepCooldown = 1000;
         }
 
         return lastVehicle != nullptr;
