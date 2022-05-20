@@ -39,8 +39,9 @@ public:
             if (vehicle)
             {
                 // TODO: Offset based on vehicle model info or something?
+                // Maybe bounding box of the vehicle?
                 Command<eScriptCommands::COMMAND_ATTACH_CAMERA_TO_VEHICLE> (
-                    vehicle, 0.0f, -6.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2);
+                    vehicle, 0.0f, -7.0f, 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 2);
 
                 wasInVehicle = true;
             }
