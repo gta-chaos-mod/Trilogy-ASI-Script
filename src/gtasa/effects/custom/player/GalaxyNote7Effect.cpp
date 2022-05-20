@@ -2,6 +2,7 @@
 #include "util/GenericUtil.h"
 
 #include <CCheat.h>
+#include <eTaskType.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
@@ -27,7 +28,8 @@ public:
 
         CPlayerPed *player = FindPlayerPed ();
         if (player
-            && player->m_pIntelligence->m_TaskMgr.FindTaskByType (3, 1600))
+            && player->m_pIntelligence->m_TaskMgr.FindTaskByType (
+                3, TASK_COMPLEX_USE_MOBILE_PHONE))
         {
             wasOnPhone = true;
         }
@@ -40,7 +42,8 @@ public:
         if (player)
         {
             CTask *phoneTask
-                = player->m_pIntelligence->m_TaskMgr.FindTaskByType (3, 1600);
+                = player->m_pIntelligence->m_TaskMgr.FindTaskByType (
+                    3, TASK_COMPLEX_USE_MOBILE_PHONE);
 
             if (wasOnPhone && !phoneTask)
             {

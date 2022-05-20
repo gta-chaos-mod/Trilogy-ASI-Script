@@ -2,6 +2,7 @@
 #include "util/GenericUtil.h"
 
 #include <CStreaming.h>
+#include <eTaskType.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
@@ -38,7 +39,8 @@ public:
         if (player)
         {
             CTask *phoneTask
-                = player->m_pIntelligence->m_TaskMgr.FindTaskByType (3, 1600);
+                = player->m_pIntelligence->m_TaskMgr.FindTaskByType (
+                    3, TASK_COMPLEX_USE_MOBILE_PHONE);
             if (!phoneTask)
             {
                 CStreaming::RequestModel (330, 2);
