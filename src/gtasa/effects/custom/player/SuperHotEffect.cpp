@@ -5,9 +5,6 @@
 #include <CAEAudioHardware.h>
 #include <CTimer.h>
 
-// TODO: Make it so that initial aiming is being set for the cooldown, too, but
-// not when holding it for longer.
-// This is so CJ can do his proper aim animation and we can see the crosshair
 class SuperHotEffect : public EffectBase
 {
     static inline float gameSpeed         = 1.0f;

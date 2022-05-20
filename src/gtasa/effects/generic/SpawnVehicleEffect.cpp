@@ -24,9 +24,10 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player && !player->m_nAreaCode)
         {
+            // Experimental code to swap vehicle pointers and their data.
+            // Doesn't work as intended and is not of high priority.
             if (setPlayerAsDriver)
             {
-                // TODO: Fix this somehow
                 std::vector<CPed *> passengers = {};
 
                 CVehicle *vehicle = FindPlayerVehicle (-1, false);
@@ -78,10 +79,6 @@ public:
                     memcpy (temporaryVehicle, heli, sizeof (CHeli));
                     // Free space
                     free (heli);
-
-                    // TODO: Game crashes when we try to delete the vehicle.
-                    // Some refs not updated properly?
-                    // This opcode is at 0x467B1E
 
                     // std::swap (CPools::ms_pVehiclePool[oldRef],
                     //            CPools::ms_pVehiclePool[newRef]);

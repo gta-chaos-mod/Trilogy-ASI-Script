@@ -4,8 +4,6 @@
 
 #include <CCheat.h>
 
-// TODO: test if this disables in missions
-
 class NPCsAttackYouEffect : public TimedFunctionEffect
 {
 public:
