@@ -38,10 +38,15 @@ public:
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
             if (vehicle)
             {
-                // TODO: Offset based on vehicle model info or something?
-                // Maybe bounding box of the vehicle?
+                CColModel *colModel = vehicle->GetColModel ();
+
+                float diffBack = colModel->m_boundBox.m_vecMax.x
+                                 - colModel->m_boundBox.m_vecMin.x;
+                float diffUp = colModel->m_boundBox.m_vecMax.z
+                               - colModel->m_boundBox.m_vecMin.z;
                 Command<eScriptCommands::COMMAND_ATTACH_CAMERA_TO_VEHICLE> (
-                    vehicle, 0.0f, -7.0f, 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 2);
+                    vehicle, 0.0f, -diffBack - 4.0f, diffUp, 0.0f, 0.0f, 1.0f,
+                    0.0f, 2);
 
                 wasInVehicle = true;
             }
