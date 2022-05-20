@@ -2,6 +2,7 @@
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 
+#include <eTaskType.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
@@ -56,6 +57,13 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
+            auto task
+                = player->m_pIntelligence->FindTaskByType (TASK_COMPLEX_WANDER);
+            if (!task)
+            {
+                Command<eScriptCommands::COMMAND_TASK_WANDER_STANDARD> (player);
+            }
+
             CPad *pad = player->GetPadFromPlayer ();
             if (pad) pad->DisablePlayerControls = true;
         }
