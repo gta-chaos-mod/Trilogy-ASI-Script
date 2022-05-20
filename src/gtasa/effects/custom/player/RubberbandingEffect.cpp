@@ -59,7 +59,8 @@ public:
             if (vehicle && rewindData.wasInVehicle)
             {
                 vehicle->m_nAreaCode = rewindData.currArea;
-                vehicle->SetPosn (rewindData.location);
+                vehicle->SetPosn (rewindData.location
+                                  + CVector (0.0f, 0.0f, 0.5f));
                 vehicle->m_vecMoveSpeed = rewindData.moveSpeed;
                 vehicle->m_vecTurnSpeed = rewindData.turnSpeed;
                 CallMethod<0x59AD20, CMatrix *, RwMatrix *> (
