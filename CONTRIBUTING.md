@@ -59,19 +59,23 @@ public:
         // You want to always reset any variables you have in here
     }
 
+    // Optional
     void
     OnEnd (EffectInstance *inst) override
     {
         // Code that runs when the effect ends
     }
 
+    // Optional
     void
     OnTick (EffectInstance *inst) override
     {
         // Code that runs every game tick
     }
 
-    void OnProcessScripts(EffectInstance *inst) override
+    // Optional
+    void
+    OnProcessScripts(EffectInstance *inst) override
     {
         // Code that runs every time the scripts are processed
         // This is necessary for things like modifying the player controls / CPad
@@ -103,3 +107,62 @@ DEFINE_EFFECT (RegisterMyVeryCoolEffect,
                "effect_very_cool",
                0);
 ```
+
+## Helpful functions and methods
+These are some helpful methods you might want to use in your effects.
+```cpp
+void
+OnStart (EffectInstance *inst) override
+{
+    // Sets the duration of this effect instance.
+    // This will also reset the remaining time.
+    inst->SetDuration(1000 * 10);
+
+    // Overrides effect name that is shown in the history
+    // on the right side of the screen
+    inst->OverrideName("Lorem ipsum");
+
+    // If this is a timed effect, shows or hides the timer.
+    // This can be useful if you want to have an effect that can
+    // re-engage at a later point.
+    inst->SetTimerVisible(false);
+
+    // Get's custom data that was sent from the Chaos Mod UI
+    // or another provider.
+    //
+    // Currently there is no easy way of adding custom data
+    // to effects in the Chaos Mod UI.
+    // However, it is also generally not necessary.
+    int vehicleID = inst->GetCustomData().value("vehicleID", 411);
+
+    // Useful in getting random values with the help of the
+    // seeded random instance.
+    //
+    // This is deterministic based on the seed that is being sent from
+    // the Chaos Mod UI or another provider.
+    int randomID = inst->Random(5, 20);
+
+    // Resets the remaining time to the duration.
+    // This can be useful when an effect has to wait for a condition
+    // to be met before it can activate.
+    //
+    // Example: Waiting for the player to be safe before teleporting them.
+    inst->ResetTimer();
+
+    // Disables the effect.
+    // Should be used in combination with "ResetTimer" to disable an
+    // effect that has to wait for a condition to be met.
+    inst->Disable();
+
+    // Writes data to memory and will add it to the internal
+    // cleanup handler so it will get reset once the effect ends.
+    inst->WriteMemory<byte>(0x420ABC, 69);
+}
+```
+
+## Hooks
+WIP
+
+IDA and a database for GTA:SA is recommended.
+
+For now, please refer to effects that already utilize hooks.
