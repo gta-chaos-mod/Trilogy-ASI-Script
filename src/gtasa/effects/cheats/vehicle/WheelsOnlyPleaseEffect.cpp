@@ -94,14 +94,10 @@ public:
         TryRenderAtomic (thisAutomobile->m_aCarNodes, CAR_NUM_NODES,
                          CAR_WHEEL_RF);
         TryRenderAtomic (thisAutomobile->m_aCarNodes, CAR_NUM_NODES,
-                         CAR_WHEEL_RM);
-        TryRenderAtomic (thisAutomobile->m_aCarNodes, CAR_NUM_NODES,
                          CAR_WHEEL_RB);
 
         TryRenderAtomic (thisAutomobile->m_aCarNodes, CAR_NUM_NODES,
                          CAR_WHEEL_LF);
-        TryRenderAtomic (thisAutomobile->m_aCarNodes, CAR_NUM_NODES,
-                         CAR_WHEEL_LM);
         TryRenderAtomic (thisAutomobile->m_aCarNodes, CAR_NUM_NODES,
                          CAR_WHEEL_LB);
     }
