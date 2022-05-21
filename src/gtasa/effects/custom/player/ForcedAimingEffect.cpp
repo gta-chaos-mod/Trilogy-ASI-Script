@@ -13,7 +13,7 @@ public:
         if (player)
         {
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->NewState.RightShoulder1 = CHAR_MAX;
+            if (pad) pad->NewState.RightShoulder1 = UCHAR_MAX;
         }
     }
 };

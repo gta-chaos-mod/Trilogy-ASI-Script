@@ -16,7 +16,7 @@ public:
             {
                 pad->NewState.RightShoulder1 = 0;
                 pad->NewState.ButtonSquare   = 0;
-                pad->NewState.ButtonCross    = CHAR_MAX;
+                pad->NewState.ButtonCross    = UCHAR_MAX;
             }
         }
     }

@@ -41,7 +41,7 @@ public:
             player->m_pPlayerData->m_bPlayerSprintDisabled = true;
 
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->NewState.m_bPedWalk = CHAR_MAX;
+            if (pad) pad->NewState.m_bPedWalk = UCHAR_MAX;
         }
     }
 };

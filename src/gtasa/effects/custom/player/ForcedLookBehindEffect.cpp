@@ -15,12 +15,12 @@ public:
                 // If player is in vehicle
                 if (FindPlayerVehicle (-1, false))
                 {
-                    pad->NewState.LeftShoulder2  = CHAR_MAX;
-                    pad->NewState.RightShoulder2 = CHAR_MAX;
+                    pad->NewState.LeftShoulder2  = UCHAR_MAX;
+                    pad->NewState.RightShoulder2 = UCHAR_MAX;
                 }
                 else
                 {
-                    pad->NewState.ShockButtonR = CHAR_MAX;
+                    pad->NewState.ShockButtonR = UCHAR_MAX;
                 }
             }
         }
