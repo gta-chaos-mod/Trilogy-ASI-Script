@@ -3,8 +3,6 @@
 
 #include <CFireManager.h>
 
-using namespace plugin;
-
 // TODO: Snipers don't create fire when not hitting a ped, car or object
 class FireBulletsEffect : public EffectBase
 {
@@ -55,10 +53,9 @@ public:
         {
             CVector point = colPoint->m_vecPoint;
 
-            bool validVictim
-                = victim
-                  && (victim->m_nType == eEntityType::ENTITY_TYPE_PED
-                      || victim->m_nType == eEntityType::ENTITY_TYPE_VEHICLE);
+            bool validVictim = victim
+                               && (victim->m_nType == ENTITY_TYPE_PED
+                                   || victim->m_nType == ENTITY_TYPE_VEHICLE);
 
             if (validVictim)
                 StartFireAt (owner, victim);
@@ -75,8 +72,7 @@ public:
                                         int damageFactor, int pedPiece,
                                         char direction)
     {
-        if (creator == FindPlayerPed ()
-            && weaponType == eWeaponType::WEAPON_SNIPERRIFLE)
+        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE)
         {
             StartFireAt (creator, victim);
         }
@@ -89,8 +85,7 @@ public:
                                    CPed *creator, eWeaponType weaponType,
                                    float damage, CVector coords)
     {
-        if (creator == FindPlayerPed ()
-            && weaponType == eWeaponType::WEAPON_SNIPERRIFLE)
+        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE)
         {
             StartFireAt (creator, thisVehicle);
         }
@@ -103,8 +98,7 @@ public:
                                  RwV3d *fxOrigin, RwV3d *fxDirection,
                                  CEntity *creator, eWeaponType weaponType)
     {
-        if (creator == FindPlayerPed ()
-            && weaponType == eWeaponType::WEAPON_SNIPERRIFLE)
+        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE)
         {
             StartFireAt (creator, thisObject->GetPosition ());
         }

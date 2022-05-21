@@ -283,14 +283,10 @@ GameUtil::ClearWeaponsExceptParachute (CPed *ped)
 {
     if (ped)
     {
-        for (int i = eWeaponType::WEAPON_BRASSKNUCKLE;
-             i < eWeaponType::WEAPON_FLARE; i++)
+        for (int i = WEAPON_BRASSKNUCKLE; i < WEAPON_FLARE; i++)
         {
             eWeaponType type = static_cast<eWeaponType> (i);
-            if (type != eWeaponType::WEAPON_PARACHUTE)
-            {
-                ped->ClearWeapon (type);
-            }
+            if (type != WEAPON_PARACHUTE) ped->ClearWeapon (type);
         }
     }
 }
@@ -306,11 +302,11 @@ GameUtil::IsPlayerSafe ()
 
     switch (player->m_nPedState)
     {
-        case ePedState::PEDSTATE_ARRESTED:
-        case ePedState::PEDSTATE_ARREST_PLAYER:
-        case ePedState::PEDSTATE_DEAD:
-        case ePedState::PEDSTATE_DIE:
-        case ePedState::PEDSTATE_DIE_BY_STEALTH: return false;
+        case PEDSTATE_ARRESTED:
+        case PEDSTATE_ARREST_PLAYER:
+        case PEDSTATE_DEAD:
+        case PEDSTATE_DIE:
+        case PEDSTATE_DIE_BY_STEALTH: return false;
         default:
         {
         }
@@ -318,8 +314,8 @@ GameUtil::IsPlayerSafe ()
 
     switch (TheCamera.m_PlayerWeaponMode.m_nMode)
     {
-        case eCamMode::MODE_HELICANNON_1STPERSON:
-        case eCamMode::MODE_CAMERA: return false;
+        case MODE_HELICANNON_1STPERSON:
+        case MODE_CAMERA: return false;
         default:
         {
         }

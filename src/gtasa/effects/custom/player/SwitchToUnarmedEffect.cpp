@@ -16,7 +16,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player && CanActivate ())
         {
-            player->SetCurrentWeapon (eWeaponType::WEAPON_UNARMED);
+            player->SetCurrentWeapon (WEAPON_UNARMED);
             inst->Disable ();
         }
     }

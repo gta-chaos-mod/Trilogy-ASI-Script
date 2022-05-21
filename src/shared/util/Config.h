@@ -60,6 +60,18 @@ SwitchAllVehiclesToRealPhysics = true
 #######################################################
 
 #######################################################
+# Effect-Specific Settings
+[Effects]
+
+# Vehicle One Hit K.O. - Explode Vehicles
+# When set to true vehicles will explode the moment they take damage.
+# When set to false they will just start burning.
+# Default: true
+VehicleOneHitKO_ExplodeVehicles = true
+
+#######################################################
+
+#######################################################
 # Drawing Settings
 [Drawing]
 

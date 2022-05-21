@@ -32,15 +32,15 @@ public:
                                CPedDamageResponseCalculator *thisCalc,
                                CPed *ped, uint8_t *cDamageReponseInfo, char a4)
     {
-        if (thisCalc->m_weaponType <= eWeaponType::WEAPON_BRASSKNUCKLE
-            || thisCalc->m_weaponType == eWeaponType::WEAPON_PARACHUTE)
+        if (thisCalc->m_weaponType <= WEAPON_BRASSKNUCKLE
+            || thisCalc->m_weaponType == WEAPON_PARACHUTE)
         {
             cb ();
             return;
         }
 
         if (thisCalc->m_pDamager
-            && thisCalc->m_pDamager->m_nType == eEntityType::ENTITY_TYPE_PED)
+            && thisCalc->m_pDamager->m_nType == ENTITY_TYPE_PED)
         {
             return;
         }

@@ -21,9 +21,9 @@ public:
             if (ped == player) continue;
 
             Command<eScriptCommands::COMMAND_GIVE_WEAPON_TO_CHAR> (
-                ped, eWeaponType::WEAPON_RLAUNCHER, 9999);
+                ped, WEAPON_RLAUNCHER, 9999);
             Command<eScriptCommands::COMMAND_SET_CURRENT_CHAR_WEAPON> (
-                ped, eWeaponType::WEAPON_RLAUNCHER);
+                ped, WEAPON_RLAUNCHER);
         }
 
         CStreaming::SetModelIsDeletable (MODEL_ROCKETLA);
