@@ -78,4 +78,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (MirroredScreenEffect, "effect_mirrored_screen", GROUP_MIRRORED);
+DEFINE_EFFECT (MirroredScreenEffect, "effect_mirrored_screen", GROUP_SCREEN);

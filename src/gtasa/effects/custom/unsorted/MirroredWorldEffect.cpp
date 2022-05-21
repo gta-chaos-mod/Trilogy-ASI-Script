@@ -192,4 +192,4 @@ public:
 };
 
 DEFINE_EFFECT (MirroredWorldEffect, "effect_mirrored_world",
-               GROUP_MIRRORED | GROUP_CONTROLS);
+               GROUP_SCREEN | GROUP_CONTROLS);

@@ -79,4 +79,4 @@ public:
 };
 
 DEFINE_EFFECT (UpsideDownScreenEffect, "effect_upside_down_screen",
-               GROUP_MIRRORED);
+               GROUP_SCREEN);

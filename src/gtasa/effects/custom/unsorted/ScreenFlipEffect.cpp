@@ -221,4 +221,4 @@ public:
 };
 
 DEFINE_EFFECT (ScreenFlipEffect, "effect_screen_flip",
-               GROUP_MIRRORED | GROUP_CONTROLS);
+               GROUP_SCREEN | GROUP_CONTROLS);
