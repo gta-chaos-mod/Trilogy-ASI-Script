@@ -29,6 +29,10 @@ public:
 
         // CAutomobile::Render
         HOOK_METHOD (inst, Hooked_Empty, void (CAutomobile *), 0x6A2C24);
+        // Rhino fix
+        HOOK_ARGS (inst, Hooked_RhinoFix,
+                   RwMatrix * (RwMatrix *, RwV3d *, RwOpCombineType), 0x6A2E02,
+                   0x6A2D79, 0x6A2E6C);
 
         // CBike::Render
         HOOK_METHOD (inst, Hooked_Empty, void (CBike *), 0x6BDE5E);
@@ -104,6 +108,15 @@ public:
     static void
     Hooked_Empty (auto &&cb)
     {
+    }
+
+    static RwMatrix *
+    Hooked_RhinoFix (auto &&cb, RwMatrix *matrix, RwV3d *translation,
+                     RwOpCombineType combineOp)
+    {
+        RwV3d scale = {0.0f, 0.0f, 0.0f};
+        RwMatrixScale (matrix, &scale, combineOp);
+        return cb ();
     }
 };
 
