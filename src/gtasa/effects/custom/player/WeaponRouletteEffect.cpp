@@ -40,6 +40,12 @@ class WeaponRouletteEffect : public EffectBase
            WEAPON_SPRAYCAN, WEAPON_EXTINGUISHER};
 
 public:
+    bool
+    CanActivate () override
+    {
+        return GameUtil::IsPlayerSafe ();
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
@@ -47,15 +53,14 @@ public:
         storedWeapons.clear ();
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        for (CWeapon weapon : player->m_aWeapons)
         {
-            for (CWeapon weapon : player->m_aWeapons)
+            if (weapon.m_nTotalAmmo > 0)
             {
-                if (weapon.m_nTotalAmmo > 0)
-                {
-                    storedWeapons.push_back (
-                        std::make_pair (weapon.m_nType, weapon.m_nTotalAmmo));
-                }
+                storedWeapons.push_back (
+                    std::make_pair (weapon.m_nType, weapon.m_nTotalAmmo));
             }
         }
     }
@@ -64,22 +69,21 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        player->GetPadFromPlayer ()->bDisablePlayerCycleWeapon = false;
+
+        GameUtil::ClearWeaponsExceptParachute (player);
+
+        for (auto const &[type, ammo] : storedWeapons)
         {
-            player->GetPadFromPlayer ()->bDisablePlayerCycleWeapon = false;
+            int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
+            CStreaming::RequestModel (model, 2);
+            CStreaming::LoadAllRequestedModels (0);
 
-            GameUtil::ClearWeaponsExceptParachute (player);
+            player->GiveWeapon (type, ammo, true);
 
-            for (auto const &[type, ammo] : storedWeapons)
-            {
-                int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
-                CStreaming::RequestModel (model, 2);
-                CStreaming::LoadAllRequestedModels (0);
-
-                player->GiveWeapon (type, ammo, true);
-
-                CStreaming::SetModelIsDeletable (model);
-            }
+            CStreaming::SetModelIsDeletable (model);
         }
     }
 
@@ -90,26 +94,24 @@ public:
         if (wait > 0) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            player->GetPadFromPlayer ()->bDisablePlayerCycleWeapon = true;
+        if (!player) return;
 
-            GameUtil::ClearWeaponsExceptParachute (player);
+        player->GetPadFromPlayer ()->bDisablePlayerCycleWeapon = true;
 
-            eWeaponType randomWeapon
-                = weapons[inst->Random (0, (int) weapons.size () - 1)];
+        GameUtil::ClearWeaponsExceptParachute (player);
 
-            int model
-                = CWeaponInfo::GetWeaponInfo (randomWeapon, 1)->m_nModelId1;
+        eWeaponType randomWeapon
+            = weapons[inst->Random (0, (int) weapons.size () - 1)];
 
-            CStreaming::RequestModel (model, 2);
-            CStreaming::LoadAllRequestedModels (0);
+        int model = CWeaponInfo::GetWeaponInfo (randomWeapon, 1)->m_nModelId1;
 
-            player->GiveWeapon (randomWeapon, 500, 1);
-            player->SetCurrentWeapon (randomWeapon);
+        CStreaming::RequestModel (model, 2);
+        CStreaming::LoadAllRequestedModels (0);
 
-            CStreaming::SetModelIsDeletable (model);
-        }
+        player->GiveWeapon (randomWeapon, 500, 1);
+        player->SetCurrentWeapon (randomWeapon);
+
+        CStreaming::SetModelIsDeletable (model);
 
         wait = inst->Random (1000, 5000);
     }
