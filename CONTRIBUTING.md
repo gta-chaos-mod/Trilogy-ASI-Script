@@ -39,7 +39,6 @@ public:
 };
 
 // Register your effect
-// The syntax is:
 // DEFINE_EFFECT (CLASS_NAME, "effect_<name_here>", TYPES | WHICH | CAN | BE | COMBINED);
 DEFINE_EFFECT (MyVeryCoolEffect, "effect_very_cool", 0);
 ```
