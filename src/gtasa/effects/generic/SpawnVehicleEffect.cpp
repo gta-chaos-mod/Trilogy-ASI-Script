@@ -130,7 +130,7 @@ public:
                     = GameUtil::CreateVehicle (vehicleID, position,
                                                player->m_fCurrentRotation
                                                    + 1.5707964f,
-                                               false);
+                                               true);
             }
         }
     }
