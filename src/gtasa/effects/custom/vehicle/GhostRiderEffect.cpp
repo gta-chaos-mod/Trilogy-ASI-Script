@@ -2,6 +2,7 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"
+#include "util/hooks/HookMacros.h"
 
 // Car on "Wear Flowers In Your Hair" and the Tankers in trucking missions blow
 // up immediately
@@ -16,12 +17,24 @@ class GhostRiderEffect : public EffectBase
     std::vector<VehicleInfo> vehicleList = {};
     CVehicle                *lastVehicle = nullptr;
 
+    static inline bool areYouGoingToSanFierroFix = false;
+
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        areYouGoingToSanFierroFix = false;
+
         vehicleList.clear ();
         lastVehicle = nullptr;
+
+        HOOK_METHOD_ARGS (inst, Hooked_0x495_IsCarOnFire_CollectParameters,
+                          __int16 (CRunningScript *, unsigned __int16),
+                          0x48AF37);
+
+        HOOK_METHOD_ARGS (inst, Hooked_0x495_IsCarOnFire_UpdateCompareFlag,
+                          unsigned __int16 (CRunningScript *, char), 0x48B351,
+                          0x48AFA7);
     }
 
     void
@@ -155,6 +168,39 @@ public:
                 break;
             }
         }
+
+        if (vehicle->m_pTrailer && IsVehiclePointerValid (vehicle->m_pTrailer))
+        {
+            SetBurnTimer (vehicle->m_pTrailer, value);
+        }
+    }
+
+    static __int16
+    Hooked_0x495_IsCarOnFire_CollectParameters (auto           &&cb,
+                                                CRunningScript  *thisScript,
+                                                unsigned __int16 a2)
+    {
+        __int16 result = cb ();
+
+        std::string missionName
+            = GenericUtil::ToUpper (std::string (thisScript->m_szName));
+        if (missionName == "GARAG1") areYouGoingToSanFierroFix = true;
+
+        return result;
+    }
+
+    static unsigned __int16
+    Hooked_0x495_IsCarOnFire_UpdateCompareFlag (auto          &&cb,
+                                                CRunningScript *thisScript,
+                                                char           &flag)
+    {
+        if (areYouGoingToSanFierroFix)
+        {
+            areYouGoingToSanFierroFix = false;
+            flag                      = false;
+        }
+
+        return cb ();
     }
 };
 
