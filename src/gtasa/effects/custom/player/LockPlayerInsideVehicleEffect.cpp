@@ -23,33 +23,18 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        bool lock = false;
-
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (vehicle)
-        {
-            lock
-                = Config::GetOrDefault ("Chaos.LockPlayerInVehicleAfterDisable",
-                                        true);
-        }
-        else
-        {
-            lock = false;
-        }
 
-        if (vehicle)
+        if (vehicle && vehicle->CanBeDriven ()
+            && vehicle->m_nStatus != STATUS_WRECKED)
         {
-            vehicle->m_nDoorLock = lock ? eCarLock::CARLOCK_LOCKED_PLAYER_INSIDE
-                                        : eCarLock::CARLOCK_UNLOCKED;
+            vehicle->m_nDoorLock = eCarLock::CARLOCK_LOCKED_PLAYER_INSIDE;
 
             CPlayerPed *player = FindPlayerPed ();
-            if (player)
-            {
-                player->m_nPedFlags.CantBeKnockedOffBike = lock ? 1 : 0;
-            }
+            if (player) player->m_nPedFlags.CantBeKnockedOffBike = 1;
         }
 
-        inst->SetTimerVisible (lock);
+        inst->SetTimerVisible (vehicle != nullptr);
     }
 };
 

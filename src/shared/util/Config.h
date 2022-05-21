@@ -47,11 +47,6 @@ ClearEffectsOnNewGame = true
 # Default: false
 QuickSave = false
 
-# Whether to lock the player in the vehicle again when "Lock Player Inside Vehicle"
-# is disabling itself but still "active" in the background
-# Default: true
-LockPlayerInVehicleAfterDisable = true
-
 # Switch all vehicles to real game physics every tick
 # This will prevent vehicles on highways or other places to go absurdly fast whilst they're on their AI path
 # Default: true
