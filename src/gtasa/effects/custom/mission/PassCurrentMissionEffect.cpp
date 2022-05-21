@@ -170,18 +170,16 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        HOOK_STD_ARGS (inst, Hooked_Debug_GetKeyDown, char (int, int, int),
+                       0x46DDED, 0x46DE32);
+
         isEnabled           = false;
         triedPassingMission = false;
         missionPassWait     = 100;
 
-        if (!CTheScripts::IsPlayerOnAMission ())
-        {
-            inst->Disable ();
-            return;
-        }
+        inst->SetTimerVisible (false);
 
-        HOOK_STD_ARGS (inst, Hooked_Debug_GetKeyDown, char (int, int, int),
-                       0x46DDED, 0x46DE32);
+        if (!CTheScripts::IsPlayerOnAMission ()) inst->Disable ();
     }
 
     void

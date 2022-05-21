@@ -14,6 +14,12 @@ class FailCurrentMissionEffect : public EffectBase
 {
 public:
     void
+    OnStart (EffectInstance *inst) override
+    {
+        inst->SetTimerVisible (false);
+    }
+
+    void
     OnTick (EffectInstance *inst) override
     {
         if (CCutsceneMgr::ms_running)

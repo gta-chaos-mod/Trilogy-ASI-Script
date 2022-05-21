@@ -28,6 +28,8 @@ public:
 
         wait = 500;
 
+        inst->SetTimerVisible (false);
+
         if (!CTheScripts::IsPlayerOnAMission ()) handledEverything = true;
     }
 
@@ -94,8 +96,6 @@ public:
                     = GameUtil::GetRealMissionsPassed ();
 
                 EffectHandler::HandleFunction (json);
-
-                inst->SetTimerVisible (false);
             }
         }
         else
