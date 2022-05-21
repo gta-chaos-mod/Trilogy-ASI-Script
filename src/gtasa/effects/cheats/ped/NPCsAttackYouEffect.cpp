@@ -33,4 +33,4 @@ using RegisterNPCsAttackYouEffect
     = DisabledForMissionEffect<NPCsAttackYouEffect>;
 
 DEFINE_EFFECT (RegisterNPCsAttackYouEffect, "effect_npcs_attack_you",
-               GROUP_PED_SPAWNS | GROUP_PEDS_ATTACK);
+               GROUP_NPC_SPAWNS | GROUP_NPCS_ATTACK);

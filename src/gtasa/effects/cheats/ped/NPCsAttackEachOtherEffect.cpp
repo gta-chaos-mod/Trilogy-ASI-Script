@@ -29,9 +29,9 @@ public:
     }
 };
 
-using RegisterPedsAttackEachOtherEffect
+using RegisterNPCsAttackEachOtherEffect
     = DisabledForMissionEffect<NPCsAttackEachOtherEffect>;
 
-DEFINE_EFFECT (RegisterPedsAttackEachOtherEffect,
+DEFINE_EFFECT (RegisterNPCsAttackEachOtherEffect,
                "effect_npcs_attack_each_other",
-               GROUP_PED_SPAWNS | GROUP_PEDS_ATTACK);
+               GROUP_NPC_SPAWNS | GROUP_NPCS_ATTACK);

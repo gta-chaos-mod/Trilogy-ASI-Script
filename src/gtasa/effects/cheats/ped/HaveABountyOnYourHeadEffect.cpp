@@ -34,4 +34,4 @@ using RegisterHaveABountyOnYourHeadEffect
 
 DEFINE_EFFECT (RegisterHaveABountyOnYourHeadEffect,
                "effect_have_a_bounty_on_your_head",
-               GROUP_PED_SPAWNS | GROUP_PEDS_ATTACK);
+               GROUP_NPC_SPAWNS | GROUP_NPCS_ATTACK);

@@ -9,9 +9,9 @@
 enum eEffectGroups : unsigned long long
 {
     GROUP_WEATHER            = (1ull << 0),
-    GROUP_PED_SPAWNS         = (1ull << 1),
-    GROUP_PEDS_ATTACK        = (1ull << 2),
-    GROUP_NPC_RECRUIT        = (1ull << 3),
+    GROUP_NPC_SPAWNS         = (1ull << 1),
+    GROUP_NPCS_ATTACK        = (1ull << 2),
+    GROUP_NPCS_RECRUIT       = (1ull << 3),
     GROUP_HEALTH             = (1ull << 4),
     GROUP_THEME              = (1ull << 5),
     GROUP_TIME               = (1ull << 6),
