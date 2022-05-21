@@ -62,6 +62,7 @@ EffectDrawHandler::PrintEffectName ()
                      1.2f, GetTextColor (), 1, color::Black, true);
 }
 
+// TODO: Refactor to "subtext" for universal support
 void
 EffectDrawHandler::PrintEffectVoter ()
 {
