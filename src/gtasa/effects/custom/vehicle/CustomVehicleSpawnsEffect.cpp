@@ -9,6 +9,8 @@ using namespace plugin;
 
 // TODO: Cop bikes and helicopters still spawn
 // The game can also crash in regards to cops sometimes
+
+// TODO: Parked cars
 template <int vehicleID> class CustomVehicleSpawnsEffect : public EffectBase
 {
 public:
