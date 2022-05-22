@@ -49,6 +49,9 @@ public:
     static void
     ResetRaster ()
     {
+        for (FrameData data : bufferedFrameData)
+            RwRasterDestroy (data.raster);
+
         bufferedFrameData.clear ();
 
         auto cameraRaster = Scene.m_pRwCamera->frameBuffer;
@@ -85,6 +88,9 @@ public:
         bufferedFrameData.push_back (data);
         if (bufferedFrameData.size () > FRAME_DELAY)
         {
+            FrameData data = bufferedFrameData.front ();
+            RwRasterDestroy (data.raster);
+
             bufferedFrameData.pop_front ();
         }
     }
