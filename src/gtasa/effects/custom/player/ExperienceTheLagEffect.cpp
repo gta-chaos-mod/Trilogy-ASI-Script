@@ -10,7 +10,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wait = inst->Random (250, 500);
+        wait = inst->Random (1000, 5000);
     }
 
     void
@@ -21,7 +21,7 @@ public:
 
         TeleportLag (inst);
 
-        wait = inst->Random (250, 500);
+        wait = inst->Random (1000, 5000);
     }
 
     void
