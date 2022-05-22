@@ -25,7 +25,7 @@ class DelayedScreenEffect : public EffectBase
     };
 
     static inline std::deque<FrameData> bufferedFrameData = {};
-    const static inline int             FRAME_DELAY       = 10;
+    static const inline int             FRAME_DELAY       = 10;
 
 public:
     void
