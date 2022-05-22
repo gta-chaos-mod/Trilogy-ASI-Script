@@ -19,6 +19,12 @@ public:
     }
 
     void
+    OnEnd (EffectInstance *inst) override
+    {
+        if (!didSave) inst->OverrideName ("Quicksave Failed");
+    }
+
+    void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
