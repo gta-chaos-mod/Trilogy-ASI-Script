@@ -30,7 +30,8 @@ enum eEffectGroups : unsigned long long
     GROUP_FRAMERATE          = (1ull << 19),
     GROUP_SCREEN             = (1ull << 20), // TODO: GROUP_PIXEL_SHADER
     GROUP_PED_BONES          = (1ull << 21),
-    GROUP_VISION             = (1ull << 63),
+    GROUP_VISION             = (1ull << 22),
+    GROUP_TIMER_SPEED        = (1ull << 23),
 
     GROUP_MAX_GROUPS = 32
 };

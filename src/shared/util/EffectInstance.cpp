@@ -2,6 +2,7 @@
 
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
+#include "util/Globals.h"
 
 EffectInstance::EffectInstance (EffectBase *effect) : effect (effect) {}
 
@@ -21,7 +22,7 @@ EffectInstance::End ()
 void
 EffectInstance::Tick ()
 {
-    int tick = (int) GenericUtil::CalculateTick (1.0f);
+    int tick = (int) GenericUtil::CalculateTick (Globals::effectTimerSpeed);
     this->remaining -= tick;
 
     if (GetEffectRemaining () < 0) Disable ();

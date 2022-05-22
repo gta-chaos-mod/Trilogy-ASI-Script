@@ -3,6 +3,7 @@
 #include "util/EffectDrawHandler.h"
 #include "util/EffectHandler.h"
 #include "util/EffectInstance.h"
+#include "util/Globals.h"
 
 std::string
 DrawHelper::GetCooldownString ()
@@ -36,7 +37,8 @@ DrawHelper::Draw ()
 {
     DrawVersion ();
 
-    if (Config::GetOrDefault ("Drawing.Enabled", true))
+    if (Config::GetOrDefault ("Drawing.Enabled", true)
+        && !Globals::isHideChaosUIEffectEnabled)
     {
         if (Config::GetOrDefault ("Drawing.DrawRemainingTimeBar", true))
         {

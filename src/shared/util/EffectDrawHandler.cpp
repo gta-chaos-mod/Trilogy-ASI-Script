@@ -6,6 +6,7 @@
 #include "util/EffectInstance.h"
 #include "util/EffectTwitchHandler.h"
 #include "util/GenericUtil.h"
+#include "util/Globals.h"
 
 #include <algorithm>
 
@@ -107,13 +108,15 @@ EffectDrawHandler::PrintEffectTimer ()
         DrawHelper::DrawCircle (center, SCREEN_MULTIPLIER (20.0f), angle,
                                 GetEffectColor ());
 
-        if (effect->GetEffectRemaining () < 60000)
+        int actualRemaining
+            = effect->GetEffectRemaining () / Globals::effectTimerSpeed;
+        if (actualRemaining < 60000)
         {
-            gamefont::Print (
-                gamefont::RightBottom, gamefont::AlignRight,
-                GenericUtil::FormatTime (effect->GetEffectRemaining (), true),
-                x - 57.0f, y - 2.0f, FONT_DEFAULT, 0.6f, 1.0f, color::White, 1,
-                color::Black, true, 9999.0f, false);
+            gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
+                             GenericUtil::FormatTime (actualRemaining, true),
+                             x - 57.0f, y - 2.0f, FONT_DEFAULT, 0.6f, 1.0f,
+                             color::White, 1, color::Black, true, 9999.0f,
+                             false);
         }
     }
     else

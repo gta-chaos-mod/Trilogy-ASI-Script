@@ -9,5 +9,6 @@ public:
     OnTick (EffectInstance *instance) final
     {
         instance->Disable ();
+        instance->SetDuration (0);
     }
 };
