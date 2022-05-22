@@ -21,7 +21,7 @@ public:
 
         int model = 1634; // Ramp
         CStreaming::RequestModel (model, 2);
-        CStreaming::LoadAllRequestedModels (0);
+        CStreaming::LoadAllRequestedModels (false);
         Command<eScriptCommands::COMMAND_CREATE_OBJECT> (model, position.x,
                                                          position.y, position.z,
                                                          &rampObject);

@@ -79,7 +79,7 @@ public:
         {
             int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
             CStreaming::RequestModel (model, 2);
-            CStreaming::LoadAllRequestedModels (0);
+            CStreaming::LoadAllRequestedModels (false);
 
             player->GiveWeapon (type, ammo, true);
 
@@ -106,7 +106,7 @@ public:
         int model = CWeaponInfo::GetWeaponInfo (randomWeapon, 1)->m_nModelId1;
 
         CStreaming::RequestModel (model, 2);
-        CStreaming::LoadAllRequestedModels (0);
+        CStreaming::LoadAllRequestedModels (false);
 
         player->GiveWeapon (randomWeapon, 500, 1);
         player->SetCurrentWeapon (randomWeapon);

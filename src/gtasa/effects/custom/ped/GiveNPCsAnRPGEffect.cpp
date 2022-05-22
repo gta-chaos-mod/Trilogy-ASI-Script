@@ -14,7 +14,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
 
         CStreaming::RequestModel (MODEL_ROCKETLA, 2); // Rocket Launcher
-        CStreaming::LoadAllRequestedModels (0);
+        CStreaming::LoadAllRequestedModels (false);
 
         for (CPed *ped : CPools::ms_pPedPool)
         {

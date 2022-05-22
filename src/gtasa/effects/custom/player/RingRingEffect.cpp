@@ -44,7 +44,7 @@ public:
             if (!phoneTask)
             {
                 CStreaming::RequestModel (330, 2);
-                CStreaming::LoadAllRequestedModels (0);
+                CStreaming::LoadAllRequestedModels (false);
 
                 CStreaming::SetModelIsDeletable (330);
 

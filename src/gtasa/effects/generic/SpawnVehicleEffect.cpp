@@ -34,7 +34,7 @@ public:
                 if (vehicle)
                 {
                     CStreaming::RequestModel (vehicleID, 1);
-                    CStreaming::LoadAllRequestedModels (0);
+                    CStreaming::LoadAllRequestedModels (false);
 
                     auto     oldPosition = vehicle->GetPosition ();
                     auto     moveSpeed   = vehicle->m_vecMoveSpeed;

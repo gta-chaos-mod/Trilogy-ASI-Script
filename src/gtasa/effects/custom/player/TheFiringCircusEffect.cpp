@@ -44,7 +44,7 @@ public:
                 int modelId = 264;
 
                 CStreaming::RequestModel (modelId, 2);
-                CStreaming::LoadAllRequestedModels (0);
+                CStreaming::LoadAllRequestedModels (false);
                 CStreaming::SetModelIsDeletable (modelId);
 
                 CPed *createdPed;
@@ -56,7 +56,7 @@ public:
                     createdPed, 4, ePedType::PED_TYPE_PLAYER1);
 
                 CStreaming::RequestModel (MODEL_AK47, 2);
-                CStreaming::LoadAllRequestedModels (0);
+                CStreaming::LoadAllRequestedModels (false);
                 CStreaming::SetModelIsDeletable (MODEL_AK47);
 
                 Command<eScriptCommands::COMMAND_GIVE_WEAPON_TO_CHAR> (

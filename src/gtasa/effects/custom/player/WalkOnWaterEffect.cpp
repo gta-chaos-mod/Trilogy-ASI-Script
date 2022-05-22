@@ -51,7 +51,7 @@ public:
             {
                 int model = 8418; // Flat concrete pad with parking
                 CStreaming::RequestModel (model, 2);
-                CStreaming::LoadAllRequestedModels (0);
+                CStreaming::LoadAllRequestedModels (false);
                 Command<eScriptCommands::COMMAND_CREATE_OBJECT> (
                     model, position.x, position.y, waterLevel, &roadObject);
                 CStreaming::SetModelIsDeletable (model);

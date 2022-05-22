@@ -26,7 +26,7 @@ public:
         CStreaming::RequestModel (hasNightVision ? MODEL_IRGOGGLES
                                                  : MODEL_NVGOGGLES,
                                   2); // Thermal Vision / Night Vision
-        CStreaming::LoadAllRequestedModels (0);
+        CStreaming::LoadAllRequestedModels (false);
 
         player->GiveWeapon (WEAPON_MINIGUN, 500, 1);
         player->GiveWeapon (WEAPON_DILDO2, 1, 1);

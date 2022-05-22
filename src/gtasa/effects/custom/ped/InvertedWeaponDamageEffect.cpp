@@ -2,8 +2,6 @@
 #include "util/EffectBase.h"
 #include "util/hooks/HookMacros.h"
 
-#include <eWeaponType.h>
-
 class InvertedWeaponDamageEffect : public EffectBase
 {
     static const inline float DAMAGE_MULTIPLIER = 0.25f;

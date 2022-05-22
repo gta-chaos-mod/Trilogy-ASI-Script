@@ -46,7 +46,7 @@ public:
         {
             int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
             CStreaming::RequestModel (model, 2);
-            CStreaming::LoadAllRequestedModels (0);
+            CStreaming::LoadAllRequestedModels (false);
 
             player->GiveWeapon (type, ammo, true);
 
@@ -77,7 +77,7 @@ public:
         if (ped->DoWeHaveWeaponAvailable (WEAPON_FLOWERS)) return;
 
         CStreaming::RequestModel (MODEL_FLOWERA, 2); // Flowers
-        CStreaming::LoadAllRequestedModels (0);
+        CStreaming::LoadAllRequestedModels (false);
 
         ped->GiveWeapon (WEAPON_FLOWERS, 500, 1);
 
