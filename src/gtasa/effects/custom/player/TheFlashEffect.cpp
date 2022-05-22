@@ -1,5 +1,5 @@
 #include "util/EffectBase.h"
-#include "util/Globals.h"
+#include "util/Variables.h"
 #include "util/hooks/HookMacros.h"
 
 #include <CMenuSystem.h>
@@ -60,7 +60,7 @@ public:
                                                              nullptr);
                         if (worked)
                         {
-                            if (Globals::isWalkOnWaterEffectEnabled)
+                            if (Variables::isWalkOnWaterEffectEnabled)
                                 newZ = std::max (0.0f, newZ);
 
                             player->GetMatrix ()->pos.z = newZ + 0.5f;

@@ -1,5 +1,5 @@
 #include "util/EffectBase.h"
-#include "util/Globals.h"
+#include "util/Variables.h"
 #include "util/hooks/HookMacros.h"
 
 #include <CMenuSystem.h>
@@ -13,7 +13,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        Globals::isDisableHUDEffectEnabled = true;
+        Variables::isDisableHUDEffectEnabled = true;
 
         HOOK (inst, Hooked_CHud_Draw, void (), 0x53E4FF);
 
@@ -35,7 +35,7 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        Globals::isDisableHUDEffectEnabled = false;
+        Variables::isDisableHUDEffectEnabled = false;
     }
 
     static void

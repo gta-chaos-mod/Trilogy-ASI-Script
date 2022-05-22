@@ -1,5 +1,5 @@
 #include "util/EffectBase.h"
-#include "util/Globals.h"
+#include "util/Variables.h"
 
 #include <CStreaming.h>
 #include <CWeather.h>
@@ -15,7 +15,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        Globals::isWalkOnWaterEffectEnabled = true;
+        Variables::isWalkOnWaterEffectEnabled = true;
     }
 
     void
@@ -24,7 +24,7 @@ public:
         if (roadObject && IsObjectPointerValid (roadObject))
             roadObject->Remove ();
 
-        Globals::isWalkOnWaterEffectEnabled = false;
+        Variables::isWalkOnWaterEffectEnabled = false;
     }
 
     void
