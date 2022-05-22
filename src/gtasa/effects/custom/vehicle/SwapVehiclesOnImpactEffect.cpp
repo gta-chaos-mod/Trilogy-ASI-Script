@@ -66,8 +66,8 @@ public:
     ApplyCollision (CPhysical *thisEntity, CPhysical *otherEntity, int a3,
                     float *a4, int a5)
     {
-        if (thisEntity->m_nType != ENTITY_TYPE_VEHICLE
-            || otherEntity->m_nType != ENTITY_TYPE_VEHICLE)
+        if (!thisEntity || thisEntity->m_nType != ENTITY_TYPE_VEHICLE
+            || !otherEntity || otherEntity->m_nType != ENTITY_TYPE_VEHICLE)
         {
             return;
         }
