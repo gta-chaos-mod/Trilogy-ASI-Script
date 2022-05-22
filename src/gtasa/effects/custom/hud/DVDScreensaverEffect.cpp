@@ -15,7 +15,7 @@ public:
     OnStart (EffectInstance *inst) override
     {
         x          = inst->Random (0.0f, SCREEN_WIDTH - SCREEN_COORD (400.0f));
-        y          = inst->Random (0.0f, SCREEN_WIDTH - SCREEN_COORD (400.0f));
+        y          = inst->Random (0.0f, SCREEN_HEIGHT - SCREEN_COORD (400.0f));
         goingRight = false;
         goingDown  = false;
 
