@@ -3,20 +3,21 @@
 
 #include <CCarAI.h>
 #include <CCarCtrl.h>
+#include <CCarGenerator.h>
+#include <CLoadedCarGroup.h>
 #include <CStreaming.h>
 
 using namespace plugin;
 
 // TODO: Cop bikes and helicopters still spawn
 // The game can also crash in regards to cops sometimes
-
-// TODO: Parked cars
 template <int vehicleID> class CustomVehicleSpawnsEffect : public EffectBase
 {
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        // Traffic
         HOOK_ARGS (inst, Hooked_RandomizeTrafficCars, int (int *), 0x43022A);
         HOOK (inst, Hooked_RandomizeCarToLoad, int (int *), 0x421900);
 
@@ -26,6 +27,15 @@ public:
         HOOK_ARGS (inst, FixEmptyPoliceCars, void (uint8_t *, char), 0x42BC26,
                    0x42C620, 0x431EE5, 0x499CBB, 0x499D6A, 0x49A5EB, 0x49A85E,
                    0x49A9AF);
+
+        HOOK (inst, RandomizeCarToLoad, int (int), 0x40B4CB, 0x40B596, 0x40B62F,
+              0x40ED07);
+
+        // Parked Cars
+        HOOK_METHOD_ARGS (inst, RandomizeFixedSpawn, void (CCarGenerator *),
+                          0x6F3EC1);
+        HOOK_METHOD (inst, RandomizeRandomSpawn,
+                     int (CLoadedCarGroup *, char, char), 0x6F3583);
     }
 
     static bool
@@ -98,6 +108,30 @@ public:
         CCarAI::AddPoliceCarOccupants ((CVehicle *) vehicle, a3);
 
         *modelIndex = original_index; // restore original model
+    }
+
+    static int
+    RandomizeCarToLoad (auto &&cb)
+    {
+        LoadCarModel ();
+
+        return vehicleID;
+    }
+
+    static void
+    RandomizeFixedSpawn (auto &&cb, CCarGenerator *carGen)
+    {
+        short oldModel = carGen->m_nModelId;
+
+        carGen->m_nModelId = vehicleID;
+        cb ();
+        carGen->m_nModelId = oldModel;
+    }
+
+    static int
+    RandomizeRandomSpawn (auto &&cb)
+    {
+        return vehicleID;
     }
 };
 
