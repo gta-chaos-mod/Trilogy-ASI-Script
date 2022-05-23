@@ -16,7 +16,6 @@ class DelayedScreenEffect : public EffectBase
                              ArgPickNone, void ()>
         createCameraSubRasterEvent;
 
-    static inline RwRaster    *raster = nullptr;
     static inline RwIm2DVertex vertices[4];
 
     struct FrameData
@@ -24,8 +23,8 @@ class DelayedScreenEffect : public EffectBase
         RwRaster *raster;
     };
 
-    static inline std::deque<FrameData> bufferedFrameData = {};
-    static const inline int             FRAME_DELAY       = 10;
+    static inline std::deque<FrameData> bufferedFrameData      = {};
+    static const inline float           FRAME_DELAY_MULTIPLIER = 0.5f;
 
 public:
     void
@@ -71,22 +70,30 @@ public:
                             plugin::color::White, 0, 1);
     }
 
+    static int
+    GetFrameDelay ()
+    {
+        // TODO: Get frame delay based on current framerate, not the frame limit
+        return std::min (10,
+                         (int) (RsGlobal.frameLimit * FRAME_DELAY_MULTIPLIER));
+    }
+
     static void
     AddToBuffer (RwCamera *camera)
     {
-        FrameData data;
-
         auto cameraRaster = camera->frameBuffer;
-        data.raster
-            = RwRasterCreate (cameraRaster->width, cameraRaster->height,
-                              cameraRaster->depth, rwRASTERTYPECAMERATEXTURE);
+
+        FrameData data ({.raster = RwRasterCreate (cameraRaster->width,
+                                                   cameraRaster->height,
+                                                   cameraRaster->depth,
+                                                   rwRASTERTYPECAMERATEXTURE)});
 
         RwRasterPushContext (data.raster);
         RwRasterRenderFast (camera->frameBuffer, 0, 0);
         RwRasterPopContext ();
 
         bufferedFrameData.push_back (data);
-        if (bufferedFrameData.size () > FRAME_DELAY)
+        if (bufferedFrameData.size () > GetFrameDelay ())
         {
             FrameData data = bufferedFrameData.front ();
             RwRasterDestroy (data.raster);
