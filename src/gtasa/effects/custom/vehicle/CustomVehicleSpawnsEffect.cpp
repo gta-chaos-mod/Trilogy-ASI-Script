@@ -19,7 +19,8 @@ public:
     {
         // Traffic
         HOOK_ARGS (inst, Hooked_RandomizeTrafficCars, int (int *), 0x43022A);
-        HOOK (inst, Hooked_RandomizeCarToLoad, int (int *), 0x421900);
+        HOOK (inst, Hooked_RandomizeCarToLoad, int (int *), 0x40B4CB, 0x40B596,
+              0x40B62F, 0x40ED07);
 
         HOOK (inst, Hooked_GetEmergencyVehicleModelID, int (), 0x42FAE0,
               0x42FB83);
@@ -67,6 +68,7 @@ public:
         {
             CStreaming::RequestModel (vehicleID, 2);
             CStreaming::LoadAllRequestedModels (false);
+            CStreaming::SetModelIsDeletable (vehicleID);
         }
     }
 

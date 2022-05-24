@@ -43,10 +43,6 @@ Teleportation::Teleport (CVector destination, int interior)
         {
             player->GetPadFromPlayer ()->bDisablePlayerEnterCar = false;
             player->m_nAreaCode                                 = interior;
-            if (interior == 0)
-            {
-                player->m_pEnex = 0;
-            }
         }
 
         entity->m_vecMoveSpeed = moveSpeed;

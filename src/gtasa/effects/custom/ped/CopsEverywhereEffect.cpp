@@ -42,6 +42,7 @@ public:
 
         CStreaming::RequestModel (modelIndex, 2);
         CStreaming::LoadAllRequestedModels (false);
+        CStreaming::SetModelIsDeletable (modelIndex);
 
         return cb ();
     }

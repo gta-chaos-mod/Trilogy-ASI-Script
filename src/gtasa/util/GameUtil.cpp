@@ -215,6 +215,7 @@ GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
     unsigned char oldFlags = CStreaming::ms_aInfoForModel[vehicleID].m_nFlags;
     CStreaming::RequestModel (vehicleID, GAME_REQUIRED);
     CStreaming::LoadAllRequestedModels (false);
+    CStreaming::SetModelIsDeletable (vehicleID);
     if (CStreaming::ms_aInfoForModel[vehicleID].m_nLoadState
         == LOADSTATE_LOADED)
     {

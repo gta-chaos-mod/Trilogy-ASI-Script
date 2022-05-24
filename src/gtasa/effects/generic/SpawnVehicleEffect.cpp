@@ -35,6 +35,7 @@ public:
                 {
                     CStreaming::RequestModel (vehicleID, 1);
                     CStreaming::LoadAllRequestedModels (false);
+                    CStreaming::SetModelIsDeletable (vehicleID);
 
                     auto     oldPosition = vehicle->GetPosition ();
                     auto     moveSpeed   = vehicle->m_vecMoveSpeed;

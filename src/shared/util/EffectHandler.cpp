@@ -126,11 +126,10 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         }
 
         inst.Enable ();
-
-        effects.push_front (std::move (inst));
-        RemoveStaleEffects ();
-
         inst.Tick ();
+
+        RemoveStaleEffects ();
+        effects.push_front (std::move (inst));
     };
 
     QueueFunction (effectFunction);
