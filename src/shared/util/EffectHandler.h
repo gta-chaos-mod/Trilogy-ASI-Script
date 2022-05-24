@@ -32,4 +32,10 @@ public:
     {
         return effects;
     };
+
+    static void
+    Clear ()
+    {
+        std::deque<EffectInstance> ().swap (effects);
+    };
 };

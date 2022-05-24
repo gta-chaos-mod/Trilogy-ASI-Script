@@ -245,7 +245,7 @@ private:
             for (auto &effect : EffectHandler::GetActiveEffects ())
                 effect.Disable ();
 
-            EffectHandler::GetActiveEffects ().clear ();
+            EffectHandler::Clear ();
         }
 
         return thisManager->DoSettingsBeforeStartingAGame ();

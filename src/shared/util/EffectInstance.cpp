@@ -1,6 +1,7 @@
 #include "EffectInstance.h"
 
 #include "util/EffectBase.h"
+#include "util/EffectHandler.h"
 #include "util/GenericUtil.h"
 #include "util/Globals.h"
 
