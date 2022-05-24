@@ -9,7 +9,7 @@ using namespace plugin;
 
 class WalkOffEffect : public EffectBase
 {
-    int wait = 0;
+    int wait = 500;
 
 public:
     bool
@@ -21,52 +21,40 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wait = 0;
-
-        CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                Command<eScriptCommands::COMMAND_TASK_WANDER_STANDARD> (player);
-                pad->DisablePlayerControls = true;
-            }
-        }
+        wait = 500;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                Command<eScriptCommands::COMMAND_CLEAR_CHAR_TASKS_IMMEDIATELY> (
-                    player);
-                pad->DisablePlayerControls = false;
-            }
-        }
+        if (!player) return;
+
+        Command<eScriptCommands::COMMAND_CLEAR_CHAR_TASKS_IMMEDIATELY> (player);
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (pad) pad->DisablePlayerControls = false;
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            auto task
-                = player->m_pIntelligence->FindTaskByType (TASK_COMPLEX_WANDER);
-            if (!task)
-            {
-                Command<eScriptCommands::COMMAND_TASK_WANDER_STANDARD> (player);
-            }
+        wait -= (int) GenericUtil::CalculateTick ();
+        if (wait > 0) return;
 
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->DisablePlayerControls = true;
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        auto task
+            = player->m_pIntelligence->FindTaskByType (TASK_COMPLEX_WANDER);
+        if (!task && GameUtil::IsPlayerSafe ())
+        {
+            Command<eScriptCommands::COMMAND_TASK_WANDER_STANDARD> (player);
+            wait = 500;
         }
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (pad) pad->DisablePlayerControls = true;
     }
 };
 
