@@ -11,9 +11,6 @@ public:
         {
             // Reset Effect Timers
             if (effect.IsRunning ()) effect.ResetTimer ();
-
-            // Reinvoke one-time effects
-            if (effect.GetEffectDuration () == 0) effect.Start ();
         }
     }
 };
