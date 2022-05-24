@@ -40,6 +40,8 @@ public:
 
             Teleportation::Teleport (markerPosition);
 
+            ClearMarker ();
+
             inst->Disable ();
         }
     }
