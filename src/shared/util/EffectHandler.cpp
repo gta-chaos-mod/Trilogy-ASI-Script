@@ -35,19 +35,40 @@ EffectHandler::EmptyQueue ()
 void
 EffectHandler::RemoveStaleEffects ()
 {
-    if (effects.size () > 5)
+    if (effects.size () > NUM_RECENT_EFFECTS)
     {
         auto begin = std::begin (effects);
         auto end   = std::end (effects);
 
-        std::advance (begin, 5);
+        // Remove effects past X effects
+        std::advance (begin, NUM_RECENT_EFFECTS);
 
         effects.erase (std::remove_if (begin, end,
-                                       [] (EffectInstance &effect) {
-                                           return !effect.IsShownOnScreen ()
-                                                  && !effect.IsRunning ();
-                                       }),
+                                       [] (EffectInstance &effect)
+                                       { return !effect.IsRunning (); }),
                        end);
+
+        if (effects.size () <= NUM_RECENT_EFFECTS) return;
+
+        // If we still have more than X effects running
+        int toRemove = effects.size () - NUM_RECENT_EFFECTS;
+
+        typedef std::deque<EffectInstance>::reverse_iterator rev_itr;
+        rev_itr it = effects.rbegin ();
+        while (it != effects.rend ())
+        {
+            if (!it->IsRunning ())
+            {
+                ++it;
+                it = rev_itr (effects.erase (it.base ()));
+
+                if (--toRemove <= 0) break;
+            }
+            else
+            {
+                ++it;
+            }
+        }
     }
 }
 
@@ -105,10 +126,11 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         }
 
         inst.Enable ();
-        inst.Tick ();
-        effects.push_front (std::move (inst));
 
+        effects.push_front (std::move (inst));
         RemoveStaleEffects ();
+
+        inst.Tick ();
     };
 
     QueueFunction (effectFunction);

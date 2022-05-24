@@ -175,10 +175,10 @@ EffectDrawHandler::DrawAndXMore ()
     auto &effects = EffectHandler::GetActiveEffects ();
 
     int size = effects.size ();
-    if (size <= 5) return;
+    if (size <= NUM_RECENT_EFFECTS) return;
 
     int more = 0;
-    for (int i = 5; i < size; i++)
+    for (int i = NUM_RECENT_EFFECTS; i < size; i++)
     {
         auto &effect = effects[i];
         if (effect.IsRunning ()) more++;
@@ -188,7 +188,7 @@ EffectDrawHandler::DrawAndXMore ()
 
     std::string text = "And " + std::to_string (more) + " more...";
 
-    y = (7 * 65.0f) + 240.0f - 20.0f;
+    y = ((NUM_RECENT_EFFECTS + 2) * 65.0f) + 240.0f - 20.0f;
 
     gamefont::Print (gamefont::RightBottom, gamefont::AlignRight, text, x, y,
                      FONT_DEFAULT, 0.8f, 1.0f, color::DarkGray, 1, color::Black,
