@@ -34,6 +34,11 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
+        for (auto const &[color, backupColor] : resetMaterialColors)
+            *color = backupColor;
+
+        resetMaterialColors.clear ();
+
         resetAfterRenderEvent -= ResetAfterRenderEvent;
         setupRenderEvent -= SetupRenderEvent;
     }
