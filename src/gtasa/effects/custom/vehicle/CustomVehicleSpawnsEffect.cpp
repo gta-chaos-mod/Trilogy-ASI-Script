@@ -22,9 +22,6 @@ public:
         HOOK (inst, Hooked_RandomizeCarToLoad, int (int *), 0x40B4CB, 0x40B596,
               0x40B62F, 0x40ED07);
 
-        HOOK (inst, Hooked_GetEmergencyVehicleModelID, int (), 0x42FAE0,
-              0x42FB83);
-
         HOOK_ARGS (inst, FixEmptyPoliceCars, void (uint8_t *, char), 0x42BC26,
                    0x42C620, 0x431EE5, 0x499CBB, 0x499D6A, 0x49A5EB, 0x49A85E,
                    0x49A9AF);
@@ -91,12 +88,6 @@ public:
     {
         LoadCarModel ();
 
-        return vehicleID;
-    }
-
-    static int
-    Hooked_GetEmergencyVehicleModelID (auto &&cb)
-    {
         return vehicleID;
     }
 
