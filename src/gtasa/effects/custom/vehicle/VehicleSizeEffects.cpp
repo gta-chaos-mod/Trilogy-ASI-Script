@@ -50,7 +50,7 @@ public:
 
 // clang-format off
 // Sizes / Scales
-using VehicleSizeTinyCarsEffect = VehicleSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f, 0.9f>;
+using VehicleSizeTinyCarsEffect = VehicleSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f, -0.3f>;
 DEFINE_EFFECT (VehicleSizeTinyCarsEffect, "effect_vehicle_size_tiny", 0);
 
 using VehicleSizeLargeCarsEffect = VehicleSizeEffect<RwV3d {2.0f, 2.0f, 2.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f, 0.3f>;
@@ -62,7 +62,7 @@ DEFINE_EFFECT (VehicleSizeWideEffect, "effect_vehicle_size_wide", 0);
 using VehicleSizeSuperWideEffect = VehicleSizeEffect<RwV3d {3.0f, 1.0f, 1.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f>;
 DEFINE_EFFECT (VehicleSizeSuperWideEffect, "effect_vehicle_size_super_wide", 0);
 
-using VehicleSizeTallEffect = VehicleSizeEffect<RwV3d {1.0f, 1.0f, 2.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f>;
+using VehicleSizeTallEffect = VehicleSizeEffect<RwV3d {1.0f, 1.0f, 2.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f, 0.3f>;
 DEFINE_EFFECT (VehicleSizeTallEffect, "effect_vehicle_size_tall", 0);
 
 using VehicleSizeLongEffect = VehicleSizeEffect<RwV3d {1.0f, 2.0f, 1.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f>;
