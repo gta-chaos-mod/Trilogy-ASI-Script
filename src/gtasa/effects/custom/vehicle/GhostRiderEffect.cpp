@@ -17,13 +17,13 @@ class GhostRiderEffect : public EffectBase
     std::vector<VehicleInfo> vehicleList = {};
     CVehicle                *lastVehicle = nullptr;
 
-    static inline bool areYouGoingToSanFierroFix = false;
+    static inline bool specialMissionsFix = false;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        areYouGoingToSanFierroFix = false;
+        specialMissionsFix = false;
 
         vehicleList.clear ();
         lastVehicle = nullptr;
@@ -184,7 +184,8 @@ public:
 
         std::string missionName
             = GenericUtil::ToUpper (std::string (thisScript->m_szName));
-        if (missionName == "GARAG1") areYouGoingToSanFierroFix = true;
+        if (missionName == "SWEET3" || missionName == "GARAG1")
+            specialMissionsFix = true;
 
         return result;
     }
@@ -194,10 +195,10 @@ public:
                                                 CRunningScript *thisScript,
                                                 char           &flag)
     {
-        if (areYouGoingToSanFierroFix)
+        if (specialMissionsFix)
         {
-            areYouGoingToSanFierroFix = false;
-            flag                      = false;
+            specialMissionsFix = false;
+            flag               = false;
         }
 
         return cb ();
