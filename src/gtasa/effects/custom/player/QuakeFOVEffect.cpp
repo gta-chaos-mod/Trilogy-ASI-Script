@@ -8,7 +8,7 @@
 
 class QuakeFOVEffect : public EffectBase
 {
-    float maxFieldOfView = 90.0f;
+    float maxFieldOfView = 120.0f;
 
     float fieldOfView     = 70.0f;
     float fieldOfViewZoom = 0.0f;
