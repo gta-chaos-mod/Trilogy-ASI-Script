@@ -15,6 +15,13 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player || !GameUtil::IsPlayerSafe ())
+        {
+            inst->ResetTimer ();
+            return;
+        }
+
         if (inst->Random (1, 100) == 1) CCheat::SuicideCheat ();
 
         inst->Disable ();

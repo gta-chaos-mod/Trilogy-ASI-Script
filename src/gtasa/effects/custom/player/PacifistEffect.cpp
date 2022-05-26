@@ -4,8 +4,6 @@
 
 #include <CCheat.h>
 
-using namespace plugin;
-
 class PacifistEffect : public EffectBase
 {
 public:
@@ -27,8 +25,11 @@ public:
 
         if (!ped || !thisCalc || !thisCalc->m_pDamager) return;
 
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
         if (ped->m_fHealth <= 0.0f
-            && (thisCalc->m_pDamager == FindPlayerPed ()
+            && (thisCalc->m_pDamager == player
                 || thisCalc->m_pDamager == FindPlayerVehicle (-1, false)))
         {
             CCheat::SuicideCheat ();

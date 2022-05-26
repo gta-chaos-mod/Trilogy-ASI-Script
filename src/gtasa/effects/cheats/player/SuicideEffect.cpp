@@ -1,11 +1,7 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 
-#include <algorithm>
-#include <experimental/forward_list>
-
 #include <CCheat.h>
-#include <extensions/ScriptCommands.h>
 
 class SuicideEffect : public EffectBase
 {
@@ -19,9 +15,17 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player || !GameUtil::IsPlayerSafe ())
+        {
+            inst->ResetTimer ();
+            return;
+        }
+
         CCheat::SuicideCheat ();
         inst->Disable ();
     }
 };
 
+// TODO: Maybe remove and instead just have Get Wasted? Same deal anyway.
 DEFINE_EFFECT (SuicideEffect, "effect_suicide", GROUP_HEALTH);
