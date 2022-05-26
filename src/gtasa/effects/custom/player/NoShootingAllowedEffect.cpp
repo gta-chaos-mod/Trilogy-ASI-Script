@@ -3,8 +3,6 @@
 
 #include <CCheat.h>
 
-using namespace plugin;
-
 class NoShootingAllowedEffect : public EffectBase
 {
 public:
@@ -17,10 +15,7 @@ public:
                           0x61ECCD);
 
         HOOK_METHOD_ARGS (inst, Hooked_CWeapon_FireFromCar,
-                          char (CWeapon *,
-
-                                CVehicle *, char, char),
-                          0x742280);
+                          char (CWeapon *, CVehicle *, char, char), 0x742280);
     }
 
     static char
@@ -29,7 +24,8 @@ public:
                          CEntity *targetEntity, CVector *vecTarget,
                          CVector *arg_14)
     {
-        if (owner == FindPlayerPed ()) CCheat::SuicideCheat ();
+        CPlayerPed *player = FindPlayerPed ();
+        if (owner == player) CCheat::SuicideCheat ();
 
         return cb ();
     }
@@ -39,7 +35,13 @@ public:
                                 CVehicle *vehicle, char leftSide,
                                 char rightSide)
     {
-        if (vehicle == FindPlayerVehicle (-1, false)) CCheat::SuicideCheat ();
+        // TODO: Fix this for Just Business
+        // Player is passenger so we have to hook a different method
+        CPlayerPed *player = FindPlayerPed ();
+        if (player && vehicle == FindPlayerVehicle (-1, false))
+        {
+            CCheat::SuicideCheat ();
+        }
 
         return cb ();
     }
