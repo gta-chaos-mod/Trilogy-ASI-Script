@@ -14,7 +14,7 @@ public:
             return;
         }
 
-        player->SetPedState (ePedState::PEDSTATE_ARRESTED);
+        player->SetPedState (PEDSTATE_ARRESTED);
 
         inst->Disable ();
     }

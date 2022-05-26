@@ -39,8 +39,7 @@ public:
     static bool
     IsPointValid (CVector v)
     {
-        return !(v.x < 5.0f && v.x > -5.0f && v.y < 5.0f && v.y > 5.0f
-                 && v.z < 5.0f && v.z > 5.0f);
+        return DistanceBetweenPoints (v, CVector (0.0f, 0.0f, 0.0f)) > 25.0f;
     }
 
     static void

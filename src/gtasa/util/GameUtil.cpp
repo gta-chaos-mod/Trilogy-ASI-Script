@@ -181,7 +181,7 @@ GameUtil::RebuildPlayer ()
     if (player)
     {
         ePedState oldState  = player->m_nPedState;
-        player->m_nPedState = ePedState::PEDSTATE_IDLE;
+        player->m_nPedState = PEDSTATE_IDLE;
         CClothes::RebuildPlayer (player, false);
         player->m_nPedState = oldState;
     }
