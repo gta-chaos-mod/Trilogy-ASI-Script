@@ -79,10 +79,11 @@ public:
         resetMaterialColors.push_front (
             std::make_pair (&material->color, material->color));
 
-        int r = material->color.red;
-        int g = material->color.green;
-        int b = material->color.blue;
-        ColorHelper::HueShift (r, g, b, hueShift + ped->m_nModelIndex, 0.9f);
+        int pedModifier = ((int) ped) % 90;
+        int r           = material->color.red;
+        int g           = material->color.green;
+        int b           = material->color.blue;
+        ColorHelper::HueShift (r, g, b, hueShift + pedModifier, 0.9f);
 
         material->color.red   = r;
         material->color.green = g;
