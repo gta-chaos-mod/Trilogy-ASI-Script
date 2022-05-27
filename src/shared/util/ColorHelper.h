@@ -25,10 +25,7 @@ public:
                 fH = 60.0f * (((fR - fG) / fDelta) + 4.0f);
             }
 
-            if (fCMax > 0.0f)
-            {
-                fS = fDelta / fCMax;
-            }
+            if (fCMax > 0.0f) { fS = fDelta / fCMax; }
             else
             {
                 fS = 0.0f;
@@ -44,13 +41,9 @@ public:
         }
 
         if (fH < 0.0f)
-        {
             fH += 360.0f;
-        }
         else if (fH >= 360.0f)
-        {
             fH -= 360.0f;
-        }
     }
     static void
     HSVtoRGB (float &fR, float &fG, float &fB, float fH, float fS, float fV)
@@ -118,10 +111,7 @@ public:
         RGBtoHSV (fR, fG, fB, h, s, v);
 
         h += shift;
-        if (h > 360.0f)
-        {
-            h -= 360.0f;
-        }
+        if (h > 360.0f) h -= 360.0f;
 
         float retR, retG, retB;
         HSVtoRGB (retR, retG, retB, h, value, value);
