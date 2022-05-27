@@ -2,7 +2,7 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
 
-#include <utility>
+#include <deque>
 
 using namespace plugin;
 
@@ -16,8 +16,8 @@ class PrideTrafficEffect : public EffectBase
                                 ArgPickN<CVehicle *, 0>, void (CVehicle *)>
         resetAfterRenderEvent;
 
-    static inline float                                  hueShift = 0.0f;
-    static inline std::list<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
+    static inline float                                   hueShift = 0.0f;
+    static inline std::deque<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
         = {};
 
 public:
@@ -94,7 +94,7 @@ public:
 
         CVehicle *vehicle = reinterpret_cast<CVehicle *> (data);
 
-        resetMaterialColors.push_back (
+        resetMaterialColors.push_front (
             std::make_pair (&material->color, material->color));
 
         CRGBA color

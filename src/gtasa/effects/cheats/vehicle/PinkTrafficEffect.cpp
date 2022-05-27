@@ -1,6 +1,6 @@
 #include "util/EffectBase.h"
 
-#include <utility>
+#include <deque>
 
 using namespace plugin;
 
@@ -14,7 +14,7 @@ class PinkTrafficEffect : public EffectBase
                                 ArgPickN<CVehicle *, 0>, void (CVehicle *)>
         resetAfterRenderEvent;
 
-    static inline std::vector<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
+    static inline std::deque<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
         = {};
 
 public:
@@ -81,7 +81,7 @@ public:
     {
         if (!data) return material;
 
-        resetMaterialColors.push_back (
+        resetMaterialColors.push_front (
             std::make_pair (&material->color, material->color));
 
         material->color.red   = 236;
