@@ -2,12 +2,14 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
 
+#include <deque>
+
 using namespace plugin;
 
 class RainbowPedsEffect : public EffectBase
 {
-    static inline float                                  hueShift = 0.0f;
-    static inline std::list<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
+    static inline float                                   hueShift = 0.0f;
+    static inline std::deque<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
         = {};
 
 public:
@@ -40,7 +42,7 @@ public:
     {
         if (ped->m_pRwClump && ped->m_pRwClump->object.type == rpCLUMP)
         {
-            RpClumpForAllAtomics (ped->m_pRwClump, AtomicCallback, 0);
+            RpClumpForAllAtomics (ped->m_pRwClump, AtomicCallback, ped);
             DeActivateDirectional ();
             SetFullAmbient ();
         }
@@ -49,8 +51,8 @@ public:
     static void
     ResetPedRender (CPed *ped)
     {
-        for (auto &p : resetMaterialColors)
-            *p.first = p.second;
+        for (auto const &[color, backupColor] : resetMaterialColors)
+            *color = backupColor;
 
         resetMaterialColors.clear ();
     }
@@ -61,7 +63,8 @@ public:
         if (atomic->geometry)
         {
             atomic->geometry->flags |= rpGEOMETRYMODULATEMATERIALCOLOR;
-            RpGeometryForAllMaterials (atomic->geometry, MaterialCallback, 0);
+            RpGeometryForAllMaterials (atomic->geometry, MaterialCallback,
+                                       data);
         }
         return atomic;
     }
@@ -69,13 +72,17 @@ public:
     static RpMaterial *
     MaterialCallback (RpMaterial *material, void *data)
     {
-        resetMaterialColors.push_back (
+        if (!data) return material;
+
+        CPed *ped = reinterpret_cast<CPed *> (data);
+
+        resetMaterialColors.push_front (
             std::make_pair (&material->color, material->color));
 
         int r = material->color.red;
         int g = material->color.green;
         int b = material->color.blue;
-        ColorHelper::HueShift (r, g, b, hueShift, 0.9f);
+        ColorHelper::HueShift (r, g, b, hueShift + ped->m_nModelIndex, 0.9f);
 
         material->color.red   = r;
         material->color.green = g;

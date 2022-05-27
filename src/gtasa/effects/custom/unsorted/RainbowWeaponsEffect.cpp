@@ -2,14 +2,16 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
 
+#include <deque>
+
 using namespace plugin;
 
 // TODO: The hooks are not working correctly?
 // Also check if the object is a weapon model and not just *any* object
 class RainbowWeaponsEffect : public EffectBase
 {
-    static inline float                                  hueShift = 0.0f;
-    static inline std::list<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
+    static inline float                                   hueShift = 0.0f;
+    static inline std::deque<std::pair<RwRGBA *, RwRGBA>> resetMaterialColors
         = {};
 
 public:
@@ -56,8 +58,8 @@ public:
     static void
     ResetObjectRender (CObject *object)
     {
-        for (auto &p : resetMaterialColors)
-            *p.first = p.second;
+        for (auto const &[color, backupColor] : resetMaterialColors)
+            *color = backupColor;
 
         resetMaterialColors.clear ();
     }
@@ -76,7 +78,7 @@ public:
     static RpMaterial *
     MaterialCallback (RpMaterial *material, void *data)
     {
-        resetMaterialColors.push_back (
+        resetMaterialColors.push_front (
             std::make_pair (&material->color, material->color));
 
         int r = material->color.red;
