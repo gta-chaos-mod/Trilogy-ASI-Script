@@ -16,7 +16,7 @@ public:
     {
         shouldExplode
             = Config::GetOrDefault ("Effects.VehicleOneHitKO_ExplodeVehicles",
-                                    true);
+                                    false);
 
         vehicleHealthMap.clear ();
 
