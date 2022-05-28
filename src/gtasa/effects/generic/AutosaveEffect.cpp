@@ -21,6 +21,12 @@ public:
     }
 
     void
+    OnEnd (EffectInstance *inst) override
+    {
+        if (!didSave) inst->OverrideName ("Autosave Failed");
+    }
+
+    void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
