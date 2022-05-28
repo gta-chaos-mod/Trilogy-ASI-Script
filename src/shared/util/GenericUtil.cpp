@@ -60,7 +60,16 @@ float
 GenericUtil::EaseOutBack (float t)
 {
     t -= 1;
-    return 1 + (t) *t * (2.70158f * t + 1.70158f);
+    return 1 + t * t * (2.70158f * t + 1.70158f);
+}
+
+float
+GenericUtil::EaseInOutQubic (float t)
+{
+    if (t < 0.5)
+        return 4 * t * t * t;
+    else
+        return 1 - powf (-2 * t + 2, 3) / 2;
 }
 
 std::string

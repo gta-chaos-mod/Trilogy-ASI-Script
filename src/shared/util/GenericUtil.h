@@ -25,5 +25,13 @@ public:
         return EaseOutBack (t) * (max - min) + min;
     }
 
+    static float EaseInOutQubic (float t);
+
+    static float
+    EaseInOutQubic (float t, float min, float max)
+    {
+        return EaseInOutQubic (t) * (max - min) + min;
+    }
+
     static std::string ToUpper (std::string string);
 };
