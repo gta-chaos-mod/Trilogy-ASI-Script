@@ -11,15 +11,15 @@ class ZoomingFOVEffect : public EffectBase
     const float minFieldOfView = 50.0f;
     const float maxFieldOfView = 90.0f;
 
-    float fieldOfView = 70.0f;
-    bool  goingUp     = false;
+    float fieldOfViewZoom = 0.5f;
+    bool  goingUp         = true;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        fieldOfView = 70.0f;
-        goingUp     = false;
+        fieldOfViewZoom = 0.5f;
+        goingUp         = true;
 
         // Fix sky multitude
         static float fSkyMultitudeFix = 10.0f;
@@ -30,18 +30,23 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        float adjustment = GenericUtil::CalculateTick (0.05f);
+        float adjustment = GenericUtil::CalculateTick (0.0005f);
 
         if (goingUp)
         {
-            fieldOfView += adjustment;
-            if (fieldOfView > maxFieldOfView) goingUp = false;
+            fieldOfViewZoom += adjustment;
+            if (fieldOfViewZoom >= 1.0f) goingUp = false;
         }
         else
         {
-            fieldOfView -= adjustment;
-            if (fieldOfView < minFieldOfView) goingUp = true;
+            fieldOfViewZoom -= adjustment;
+            if (fieldOfViewZoom <= 0.0f) goingUp = true;
         }
+
+        fieldOfViewZoom = std::clamp (fieldOfViewZoom, 0.0f, 1.0f);
+        float fieldOfView
+            = GenericUtil::EaseInOutQubic (fieldOfViewZoom, minFieldOfView,
+                                           maxFieldOfView);
 
         TheCamera.m_aCams[TheCamera.m_nActiveCam].m_fFOV = fieldOfView;
         CDraw::SetFOV (fieldOfView);
