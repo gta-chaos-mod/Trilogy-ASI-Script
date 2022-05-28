@@ -17,7 +17,7 @@ public:
         if (!player) return;
 
         CVector position
-            = player->TransformFromObjectSpace (CVector (0.0f, 10.0f, -1.2f));
+            = player->TransformFromObjectSpace (CVector (0.0f, 10.0f, -0.1f));
 
         int model = 1634; // Ramp
         CStreaming::RequestModel (model, 2);
@@ -26,6 +26,17 @@ public:
                                                          position.y, position.z,
                                                          &rampObject);
         CStreaming::SetModelIsDeletable (model);
+
+        CMatrix *matrix;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (vehicle)
+            matrix = vehicle->GetMatrix ();
+        else
+            matrix = player->GetMatrix ();
+
+        rampObject->SetMatrix (*matrix);
+        rampObject->SetPosn (position);
     }
 
     void
