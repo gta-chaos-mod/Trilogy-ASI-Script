@@ -118,6 +118,8 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         if (data.contains ("displayName"))
             inst.OverrideName (data["displayName"]);
 
+        if (data.contains ("subtext")) inst.SetSubtext (data["subtext"]);
+
         if (Config::GetOrDefault ("Chaos.PlayEffectSound", true))
         {
 #ifdef GTASA

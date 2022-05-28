@@ -33,7 +33,7 @@ public:
 
     void CalculateDrawPosition ();
     void PrintEffectName ();
-    void PrintEffectVoter ();
+    void PrintSubtext ();
     void PrintEffectTimer ();
 
     void Draw (EffectInstance *instance, int idx, bool inset);

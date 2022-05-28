@@ -22,6 +22,7 @@ private:
     EffectBase *effect;
 
     std::string overrideName;
+    std::string subtext;
 
     int remaining = 0;
     int duration  = 0;
@@ -52,13 +53,31 @@ public:
     SetDuration (int duration)
     {
         this->duration = remaining = duration;
-    };
+    }
 
     void
     OverrideName (std::string_view name)
     {
         overrideName = name;
-    };
+    }
+
+    void
+    SetSubtext (std::string_view subtext)
+    {
+        this->subtext = subtext;
+    }
+
+    bool
+    HasSubtext ()
+    {
+        return subtext.length () != 0;
+    }
+
+    std::string_view
+    GetSubtext ()
+    {
+        return subtext;
+    }
 
     void
     SetTimerVisible (bool timerVisible)
@@ -70,13 +89,13 @@ public:
     IsRunning () const
     {
         return isRunning;
-    };
+    }
 
     bool
     IsShownOnScreen () const
     {
         return GetEffectRemaining () > 0;
-    };
+    }
 
     bool
     DoesEffectDrawTimer () const

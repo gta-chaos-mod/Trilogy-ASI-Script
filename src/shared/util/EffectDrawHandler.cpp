@@ -63,18 +63,15 @@ EffectDrawHandler::PrintEffectName ()
                      1.2f, GetTextColor (), 1, color::Black, true);
 }
 
-// TODO: Refactor to "subtext" for universal support
 void
-EffectDrawHandler::PrintEffectVoter ()
+EffectDrawHandler::PrintSubtext ()
 {
-    if (effect->GetSubhandler<EffectTwitchHandler> ())
+    if (effect->HasSubtext ())
     {
-        gamefont::Print (
-            gamefont::RightBottom, gamefont::AlignRight,
-            std::string (
-                effect->GetSubhandler<EffectTwitchHandler> ().GetVoter ()),
-            x, y - 30.0f, FONT_DEFAULT, 0.8f, 1.0f, GetTextColor (), 1,
-            color::Black, true);
+        gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
+                         std::string (effect->GetSubtext ()), x, y - 30.0f,
+                         FONT_DEFAULT, 0.8f, 1.0f, GetTextColor (), 1,
+                         color::Black, true);
     }
 }
 
@@ -83,7 +80,7 @@ EffectDrawHandler::PrintEffectTimer ()
 {
     if (Config::GetOrDefault ("Drawing.DrawCircles", true))
     {
-        if (effect->GetSubhandler<EffectTwitchHandler> ()) y -= 10.0f;
+        if (effect->HasSubtext ()) y -= 10.0f;
 
         CVector2D center
             = CVector2D (SCREEN_COORD_RIGHT (x) + SCREEN_COORD (50.0f),
@@ -140,7 +137,7 @@ EffectDrawHandler::Draw (EffectInstance *effect, int idx, bool inset)
 
     CalculateDrawPosition ();
     PrintEffectName ();
-    PrintEffectVoter ();
+    PrintSubtext ();
 
     if (effect->DoesEffectDrawTimer ()) PrintEffectTimer ();
 
