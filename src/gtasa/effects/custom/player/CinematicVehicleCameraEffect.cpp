@@ -8,15 +8,15 @@ class CinematicVehicleCameraEffect : public EffectBase
 {
 public:
     void
-    OnStart (EffectInstance *inst) override
+    OnEnd (EffectInstance *inst) override
     {
-        Command<eScriptCommands::COMMAND_SET_PLAYER_IN_CAR_CAMERA_MODE> (2);
+        Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA> (false);
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        Command<eScriptCommands::COMMAND_SET_PLAYER_IN_CAR_CAMERA_MODE> (5);
+        Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA> (true);
     }
 };
 
