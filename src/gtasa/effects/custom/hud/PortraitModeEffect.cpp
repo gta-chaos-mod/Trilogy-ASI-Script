@@ -43,8 +43,8 @@ public:
     {
         if (FrontEndMenuManager.m_bMenuActive) return;
 
-        CRect leftRect  = CRect (0.0f, 0.0f, currentBoxWidth, SCREEN_HEIGHT);
-        CRect rightRect = CRect (SCREEN_WIDTH - currentBoxWidth, 0.0f,
+        CRect leftRect  = CRect (-1.0f, -1.0f, currentBoxWidth, SCREEN_HEIGHT);
+        CRect rightRect = CRect (SCREEN_WIDTH - currentBoxWidth, -1.0f,
                                  SCREEN_WIDTH, SCREEN_HEIGHT);
 
         CSprite2d::DrawRect (leftRect, color::Black);

@@ -67,7 +67,7 @@ public:
             case 1:
             default:
             {
-                return std::make_pair (0.0f, 0.0f);
+                return std::make_pair (-1.0f, -1.0f);
             }
             case 2:
             {

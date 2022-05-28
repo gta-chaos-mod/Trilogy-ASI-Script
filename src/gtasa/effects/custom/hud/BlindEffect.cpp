@@ -24,7 +24,7 @@ public:
     {
         if (FrontEndMenuManager.m_bMenuActive) return;
 
-        CRect rect = CRect (0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT);
+        CRect rect = CRect (-1.0f, -1.0f, SCREEN_WIDTH, SCREEN_HEIGHT);
         CSprite2d::DrawRect (rect, color::Black);
     }
 };
