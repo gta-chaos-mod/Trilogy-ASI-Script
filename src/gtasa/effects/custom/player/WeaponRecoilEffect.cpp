@@ -44,14 +44,12 @@ public:
     {
         if (owner == FindPlayerPed () && !FindPlayerVehicle (-1, false))
         {
-            recoilValue = 8.0f;
+            recoilValue = 16.0f;
 
             if (thisWeapon->m_nType == WEAPON_SNIPERRIFLE)
             {
-                recoilValue *= 5.0f;
+                recoilValue *= 4.0f;
             }
-
-            // TODO: Play fall / knock down animation
         }
 
         return cb ();
