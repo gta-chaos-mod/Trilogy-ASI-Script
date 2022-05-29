@@ -5,6 +5,16 @@ BoneHelper::Initialise ()
 {
     Events::pedRenderEvent += RenderPed;
     cutscenePedRenderEvent += RenderPed;
+
+    // Hook so we don't mess up shoulders in cutscenes
+    injector::MakeCALL (
+        0x5B1F94, BoneHelper::Hooked_CCutsceneObject_ShoulderBoneRotation);
+}
+
+CMatrix *__fastcall BoneHelper::Hooked_CCutsceneObject_ShoulderBoneRotation (
+    RpClump *clump)
+{
+    return nullptr;
 }
 
 void
@@ -41,6 +51,12 @@ BoneHelper::RenderPed (CPed *ped)
     }
 }
 
+bool
+BoneHelper::IsValidBone (CPed *ped, unsigned int boneId)
+{
+    return GetBoneById (ped, boneId) != nullptr;
+}
+
 RwMatrixTag *
 BoneHelper::GetBoneRwMatrix (CPed *ped, unsigned int boneId)
 {
@@ -60,7 +76,9 @@ BoneHelper::GetBoneRwMatrix (CPed *ped, unsigned int boneId)
 RwV3d
 BoneHelper::GetBonePosition (CPed *ped, unsigned int boneId)
 {
+    // Default position
     RwV3d position = {0, 0, 0};
+    if (!IsValidBone (ped, boneId)) return position;
 
     if (bonePositions.contains (ped))
     {
@@ -81,6 +99,8 @@ BoneHelper::GetBonePosition (CPed *ped, unsigned int boneId)
 void
 BoneHelper::SetBonePosition (CPed *ped, unsigned int boneId, RwV3d position)
 {
+    if (!IsValidBone (ped, boneId)) return;
+
     bonePositions[ped][boneId] = position;
 }
 
@@ -89,6 +109,7 @@ BoneHelper::GetBoneScale (CPed *ped, unsigned int boneId)
 {
     // Default scale
     RwV3d scale = {1, 1, 1};
+    if (!IsValidBone (ped, boneId)) return scale;
 
     if (boneScales.contains (ped))
     {
@@ -111,6 +132,8 @@ void
 BoneHelper::SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale,
                           unsigned int rootBone, bool scaleWithRoot)
 {
+    if (!IsValidBone (ped, boneId)) return;
+
     boneScales[ped].clear ();
     boneScales[ped].push_back (BoneScaleInfo{.boneId        = boneId,
                                              .scale         = scale,
@@ -122,6 +145,8 @@ void
 BoneHelper::ScaleBone (CPed *ped, unsigned int boneId, RwV3d scale,
                        unsigned int rootBone, bool scaleWithRoot)
 {
+    if (!IsValidBone (ped, boneId)) return;
+
     boneScales[ped].push_back (BoneScaleInfo{.boneId        = boneId,
                                              .scale         = scale,
                                              .rootBone      = rootBone,
@@ -141,6 +166,7 @@ RwV3d
 BoneHelper::GetBoneRotation (CPed *ped, unsigned int boneId)
 {
     RwV3d angles = {0, 0, 0};
+    if (!IsValidBone (ped, boneId)) return angles;
 
     if (boneRotations.contains (ped))
     {
@@ -167,6 +193,8 @@ BoneHelper::GetBoneRotation (CPed *ped, unsigned int boneId)
 void
 BoneHelper::SetBoneRotation (CPed *ped, unsigned int boneId, RwV3d angles)
 {
+    if (!IsValidBone (ped, boneId)) return;
+
     boneRotations[ped][boneId] = angles;
 }
 
@@ -187,11 +215,11 @@ BoneHelper::EulerToQuat (RwV3d *angles, RtQuat *quat)
 // Use this whenever you do bone rotation.
 // Scale bones AFTER calling this, otherwise they reset.
 void
-BoneHelper::UpdatePed (CPed *ped)
+BoneHelper::UpdatePed (CPed *ped, bool updateHierarchy)
 {
     if (ped && ped->m_pRwClump)
     {
-        ped->m_bDontUpdateHierarchy = false;
+        ped->m_bDontUpdateHierarchy = updateHierarchy;
 
         // This is the wrong address - PR a fix to plugin-sdk?
         // ped->UpdateRpHAnim ();
@@ -212,7 +240,7 @@ BoneHelper::ShoulderBoneRotation (CPed *ped)
         std::vector<unsigned int> validBones = {21, 22, 301, 31, 32, 302};
         for (unsigned int i = 0; i < validBones.size (); i++)
         {
-            if (!GetBoneById (ped, i)) return;
+            if (!IsValidBone (ped, i)) return;
         }
 
         // CPed::ShoulderBoneRotation - PR a fix to plugin-sdk?

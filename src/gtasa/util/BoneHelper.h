@@ -60,6 +60,8 @@ public:
 
     static void RenderPed (CPed *ped);
 
+    static bool IsValidBone (CPed *ped, unsigned int boneId);
+
     static RwMatrixTag *GetBoneRwMatrix (CPed *ped, unsigned int boneId);
 
     static RwV3d GetBonePosition (CPed *ped, unsigned int boneId);
@@ -87,11 +89,14 @@ public:
 
     static void EulerToQuat (RwV3d *angles, RtQuat *quat);
 
-    static void UpdatePed (CPed *ped);
+    static void UpdatePed (CPed *ped, bool updateHierarchy = false);
 
     static void ShoulderBoneRotation (CPed *ped);
 
 private:
+    static CMatrix *__fastcall Hooked_CCutsceneObject_ShoulderBoneRotation (
+        RpClump *clump);
+
     static bool _hasAnyModifications (CPed *ped);
     static void _setBonePositions (CPed *ped);
     static void _setBoneRotations (CPed *ped);
