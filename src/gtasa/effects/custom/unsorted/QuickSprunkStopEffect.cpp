@@ -46,6 +46,7 @@ public:
 
         sprunkObject->SetMatrix (*matrix);
         sprunkObject->SetPosn (position);
+        sprunkObject->m_nObjectType = OBJECT_TEMPORARY;
 
         Command<eScriptCommands::COMMAND_SET_FORCE_RANDOM_CAR_MODEL> (411);
     }
