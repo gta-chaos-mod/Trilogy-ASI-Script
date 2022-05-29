@@ -23,7 +23,10 @@ public:
     RenderPed (CPed *ped)
     {
         // Scale every possible bone
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 500; i++)
+            BoneHelper::ScaleBone (ped, i, scale);
+
+        for (int i = 5000; i < 5026; i++)
             BoneHelper::ScaleBone (ped, i, scale);
 
         if (!ped->m_nPedFlags.bInVehicle)

@@ -1,4 +1,3 @@
-#include "util/BoneHelper.h"
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
 #include "util/Teleportation.h"
@@ -11,11 +10,9 @@ class ItsRewindTimeEffect : public EffectBase
 {
     struct RewindData
     {
-        CVector                       location;
-        float                         playerHealth;
-        int                           currArea;
-        std::map<unsigned int, RwV3d> bonePositions;
-        std::map<unsigned int, RwV3d> boneRotations;
+        CVector location;
+        float   playerHealth;
+        int     currArea;
 
         bool     wasInVehicle;
         float    vehicleHealth;
@@ -96,13 +93,6 @@ public:
         {
             player->m_fHealth   = rewindData.playerHealth;
             player->m_nAreaCode = rewindData.currArea;
-            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
-            {
-                // BoneHelper::SetBonePosition (player, i,
-                //                              rewindData.bonePositions[i]);
-                // BoneHelper::SetBoneRotation (player, i,
-                //                              rewindData.boneRotations[i]);
-            }
 
             if (!vehicle)
             {
@@ -145,13 +135,6 @@ public:
         if (player)
         {
             rewindData.playerHealth = player->m_fHealth;
-            for (int i = 0; i < ePedBones::BONE_RIGHTFOOT + 1; i++)
-            {
-                rewindData.bonePositions[i]
-                    = BoneHelper::GetBonePosition (player, i);
-                rewindData.boneRotations[i]
-                    = BoneHelper::GetBoneRotation (player, i);
-            }
 
             if (!vehicle)
             {

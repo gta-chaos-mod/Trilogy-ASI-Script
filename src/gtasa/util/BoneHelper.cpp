@@ -7,11 +7,13 @@ BoneHelper::Initialise ()
     cutscenePedRenderEvent += RenderPed;
 
     // Hook so we don't mess up shoulders in cutscenes
-    injector::MakeCALL (
-        0x5B1F94, BoneHelper::Hooked_CCutsceneObject_ShoulderBoneRotation);
+    // CCutsceneObject::PreRender
+    injector::MakeCALL (0x5B1F94, BoneHelper::Hooked_CPed_ShoulderBoneRotation);
+    // CPed::PreRenderAfterTest
+    injector::MakeCALL (0x5B1F94, BoneHelper::Hooked_CPed_ShoulderBoneRotation);
 }
 
-CMatrix *__fastcall BoneHelper::Hooked_CCutsceneObject_ShoulderBoneRotation (
+CMatrix *__fastcall BoneHelper::Hooked_CPed_ShoulderBoneRotation (
     RpClump *clump)
 {
     return nullptr;
@@ -340,7 +342,7 @@ BoneHelper::_setBoneScales (CPed *ped)
 void
 BoneHelper::_clearBoneMaps (CPed *ped)
 {
-    bonePositions[ped].clear ();
-    boneRotations[ped].clear ();
-    boneScales[ped].clear ();
+    bonePositions.clear ();
+    boneRotations.clear ();
+    boneScales.clear ();
 }
