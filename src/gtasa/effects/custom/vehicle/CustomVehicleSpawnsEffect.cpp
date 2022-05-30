@@ -11,6 +11,8 @@ using namespace plugin;
 
 // TODO: Cop bikes and helicopters still spawn
 // The game can also crash in regards to cops sometimes
+
+// Cop cars will spawn normally for now
 template <int vehicleID> class CustomVehicleSpawnsEffect : public EffectBase
 {
 public:
@@ -21,12 +23,16 @@ public:
         HOOK_ARGS (inst, Hooked_RandomizeTrafficCars, int (int *), 0x43022A);
         HOOK (inst, Hooked_RandomizeCarToLoad, int (int *), 0x40B4CB, 0x40B596,
               0x40B62F, 0x40ED07);
-        HOOK (inst, Hooked_ChoosePoliceCarModel, int (int), 0x424E20, 0x42C320,
-              0x43020E, 0x430283);
+        // HOOK (inst, Hooked_ChoosePoliceCarModel, int (int), 0x424E20,
+        // 0x42C320,
+        //       0x43020E, 0x430283);
 
-        HOOK_ARGS (inst, Hooked_FixEmptyPoliceCars, void (uint8_t *, char),
-                   0x42BC26, 0x42C620, 0x431EE5, 0x499CBB, 0x499D6A, 0x49A5EB,
-                   0x49A85E, 0x49A9AF);
+        // HOOK_ARGS (inst, Hooked_FixEmptyPoliceCars, void (uint8_t *, char),
+        //            0x42BC26, 0x42C620, 0x431EE5, 0x499CBB, 0x499D6A,
+        //            0x49A5EB, 0x49A85E, 0x49A9AF);
+
+        // HOOK_ARGS (inst, Hooked_FixCopCrash, CCopPed * (CCopPed *, eCopType),
+        //            0x61282F);
 
         // Parked Cars
         HOOK_METHOD_ARGS (inst, Hooked_RandomizeFixedSpawn,
@@ -36,8 +42,10 @@ public:
     }
 
     static bool
-    IsPoliceModel ()
+    IsPoliceModel (int model = -1)
     {
+        if (model == -1) model = vehicleID;
+
         switch (vehicleID)
         {
             case 427: // MODEL_ENFORCER
@@ -104,10 +112,45 @@ public:
         uint16_t *modelIndex     = (uint16_t *) (vehicle + 0x22);
         uint16_t  original_index = *modelIndex;
 
-        *modelIndex = 596;
+        *modelIndex = ChoosePoliceVehicleBasedOnModel (original_index);
         CCarAI::AddPoliceCarOccupants ((CVehicle *) vehicle, a3);
 
         *modelIndex = original_index; // restore original model
+    }
+
+    static int
+    ChoosePoliceVehicleBasedOnModel (int model)
+    {
+        if (vehicleID != 528 && vehicleID != 601 && IsPoliceModel (vehicleID))
+            return vehicleID;
+
+        // CModelInfo::GetMaximumNumberOfPassengersFromNumberOfDoors
+        int seats = CallAndReturn<int, 0x4C89B0> (vehicleID);
+        switch (seats)
+        {
+            case 1: return 523;
+            case 2: return 599;
+            default: return 490;
+        }
+    }
+
+    static CCopPed *
+    Hooked_FixCopCrash (auto &&cb, CCopPed *ped, eCopType &type)
+    {
+        type = COP_TYPE_CITYCOP;
+
+        for (auto i : {std::make_pair (287, COP_TYPE_FBI),
+                       std::make_pair (286, COP_TYPE_FBI),
+                       std::make_pair (285, COP_TYPE_SWAT2)})
+        {
+            if (CStreamingInfo::ms_pArrayBase[i.first].m_nLoadState == 1)
+            {
+                type = i.second;
+                break;
+            }
+        }
+
+        return new CCopPed (type);
     }
 
     static int
