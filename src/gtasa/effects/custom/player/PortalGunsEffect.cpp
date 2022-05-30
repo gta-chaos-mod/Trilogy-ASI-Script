@@ -39,6 +39,8 @@ public:
     static bool
     IsPointValid (CVector v)
     {
+        // Maybe increase to 50.0f since we are checking distance instead of
+        // individual x,y,z?
         return DistanceBetweenPoints (v, CVector (0.0f, 0.0f, 0.0f)) > 25.0f;
     }
 
@@ -50,6 +52,7 @@ public:
     {
         cb ();
 
+        // Can still sometimes teleport to the 0,0,0 point
         CVector point = colPoint->m_vecPoint;
         if (owner == FindPlayerPed () && IsPointValid (point))
         {
