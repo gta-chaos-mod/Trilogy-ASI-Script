@@ -1,5 +1,7 @@
 #include "BoneHelper.h"
 
+#include <CCutsceneMgr.h>
+
 void
 BoneHelper::Initialise ()
 {
@@ -10,7 +12,7 @@ BoneHelper::Initialise ()
     // CCutsceneObject::PreRender
     injector::MakeCALL (0x5B1F94, BoneHelper::Hooked_CPed_ShoulderBoneRotation);
     // CPed::PreRenderAfterTest
-    injector::MakeCALL (0x5B1F94, BoneHelper::Hooked_CPed_ShoulderBoneRotation);
+    injector::MakeCALL (0x5E6913, BoneHelper::Hooked_CPed_ShoulderBoneRotation);
 }
 
 CMatrix *__fastcall BoneHelper::Hooked_CPed_ShoulderBoneRotation (
@@ -22,12 +24,14 @@ CMatrix *__fastcall BoneHelper::Hooked_CPed_ShoulderBoneRotation (
 void
 BoneHelper::RenderPed (CPed *ped)
 {
+    if (!ped) return;
+
     for (auto &hookedFunction : renderHooks)
     {
         hookedFunction (ped);
     }
 
-    if (ped && _hasAnyModifications (ped))
+    if (_hasAnyModifications (ped))
     {
         /* Pre-Update Ped Section */
         // Set bone positions
@@ -50,6 +54,11 @@ BoneHelper::RenderPed (CPed *ped)
 
         _clearBoneMaps (ped);
         /* ----------------------- */
+    }
+    else if (!ped->m_nModelIndex
+             || ped->m_nModelIndex == 1 && CCutsceneMgr::ms_cutsceneTimer)
+    {
+        ShoulderBoneRotation (ped);
     }
 }
 
@@ -227,7 +236,11 @@ BoneHelper::UpdatePed (CPed *ped, bool updateHierarchy)
         // ped->UpdateRpHAnim ();
         CallMethod<0x532B20, CPed *> (ped);
 
-        ShoulderBoneRotation (ped);
+        if (!ped->m_nModelIndex
+            || ped->m_nModelIndex == 1 && CCutsceneMgr::ms_cutsceneTimer)
+        {
+            ShoulderBoneRotation (ped);
+        }
     }
 }
 
@@ -239,14 +252,16 @@ BoneHelper::ShoulderBoneRotation (CPed *ped)
         // We need to safe-guard ourselves for cutscenes. If one of these bones
         // can't be found don't continue to the "ShoulderBoneRotation" call,
         // otherwise we crash.
-        std::vector<unsigned int> validBones = {21, 22, 301, 31, 32, 302};
-        for (unsigned int i = 0; i < validBones.size (); i++)
-        {
-            if (!IsValidBone (ped, i)) return;
-        }
+        // std::vector<unsigned int> validBones = {21, 22, 301, 31, 32, 302};
+        // for (unsigned int i = 0; i < validBones.size (); i++)
+        // {
+        //     if (!IsValidBone (ped, i)) return;
+        // }
 
         // CPed::ShoulderBoneRotation - PR a fix to plugin-sdk?
         Call<0x5DF560> (ped->m_pRwClump);
+
+        ped->m_bDontUpdateHierarchy = true;
     }
 }
 
@@ -342,7 +357,7 @@ BoneHelper::_setBoneScales (CPed *ped)
 void
 BoneHelper::_clearBoneMaps (CPed *ped)
 {
-    bonePositions.clear ();
-    boneRotations.clear ();
-    boneScales.clear ();
+    bonePositions[ped].clear ();
+    boneRotations[ped].clear ();
+    boneScales[ped].clear ();
 }
