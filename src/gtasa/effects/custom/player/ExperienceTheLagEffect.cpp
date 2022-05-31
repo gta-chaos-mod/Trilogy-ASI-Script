@@ -40,6 +40,13 @@ public:
                       + CVector (inst->Random (-range, range),
                                  inst->Random (-range, range), 0.0f);
 
+                bool  worked = false;
+                float newZ
+                    = CWorld::FindGroundZFor3DCoord (position.x, position.y,
+                                                     position.z + 10.0f,
+                                                     &worked, nullptr);
+                if (worked && newZ > position.z) position.z = newZ + 2.0f;
+
                 entity->SetPosn (position);
             }
         }
