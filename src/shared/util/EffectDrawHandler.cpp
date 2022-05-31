@@ -136,8 +136,10 @@ EffectDrawHandler::Draw (EffectInstance *effect, int idx, bool inset)
     UpdateTimers ();
 
     CalculateDrawPosition ();
-    PrintEffectName ();
+
+    // Print subtext before effect name so it's behind the effect name
     PrintSubtext ();
+    PrintEffectName ();
 
     if (effect->DoesEffectDrawTimer ()) PrintEffectTimer ();
 
