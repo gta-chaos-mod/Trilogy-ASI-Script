@@ -56,7 +56,6 @@ public:
                     model, position.x, position.y, waterLevel, &roadObject);
                 CStreaming::SetModelIsDeletable (model);
                 roadObject->m_nObjectFlags.bDoNotRender = true;
-                roadObject->m_nObjectType               = OBJECT_TEMPORARY;
             }
             else
             {

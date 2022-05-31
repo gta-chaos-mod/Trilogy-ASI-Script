@@ -37,7 +37,6 @@ public:
 
         rampObject->SetMatrix (*matrix);
         rampObject->SetPosn (position);
-        rampObject->m_nObjectType = OBJECT_TEMPORARY;
     }
 
     void
