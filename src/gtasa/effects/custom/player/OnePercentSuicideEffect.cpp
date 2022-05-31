@@ -22,7 +22,7 @@ public:
             return;
         }
 
-        if (inst->Random (1, 100) == 1) CCheat::SuicideCheat ();
+        if (inst->Random (1, 100) == 50) CCheat::SuicideCheat ();
 
         inst->Disable ();
     }
