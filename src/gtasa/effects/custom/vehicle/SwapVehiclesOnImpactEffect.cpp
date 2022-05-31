@@ -86,12 +86,17 @@ public:
         // Get peds out of their vehicles
         if (thisDriver)
         {
+            if (thisDriver->m_nCreatedBy == 2) return;
+
             Command<eScriptCommands::
                         COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
                 thisDriver, thisVehicle);
         }
+
         if (otherDriver)
         {
+            if (otherDriver->m_nCreatedBy == 2) return;
+
             Command<eScriptCommands::
                         COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
                 otherDriver, otherVehicle);
