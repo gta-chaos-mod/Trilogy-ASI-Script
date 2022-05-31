@@ -17,7 +17,7 @@ public:
         HOOK_METHOD_ARGS (inst, Hooked_CWeapon_Fire,
                           char (CWeapon *, CPed *, CVector *, CVector *,
                                 CEntity *, CVector *, CVector *),
-                          0x61ECCD);
+                          0x61ECCD, 0x686787);
     }
 
     void
