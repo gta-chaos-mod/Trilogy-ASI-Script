@@ -14,8 +14,6 @@ public:
         FrontEndMenuManager.m_bActivateMenuNextFrame = true;
 
         wait = inst->Random (1000 * 10, 1000 * 30);
-
-        inst->SetTimerVisible (false);
     }
 
     void
