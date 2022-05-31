@@ -14,11 +14,12 @@ public:
         {
             CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
 
-            float healthDamage = playerInfo->m_nMaxHealth * 0.25f;
-            float armorDamage  = playerInfo->m_nMaxArmour * 0.25f;
+            if (player->m_fHealth <= 25.0f)
+                player->m_fHealth = 0.0f;
+            else
+                player->m_fHealth = 25.0f;
 
-            player->m_fHealth -= healthDamage;
-            player->m_fArmour -= armorDamage;
+            player->m_fArmour    = std::min (player->m_fArmour, 25.0f);
             playerInfo->m_nMoney = std::max (0, playerInfo->m_nMoney - 250000);
 
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
