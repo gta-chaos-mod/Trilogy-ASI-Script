@@ -1,11 +1,15 @@
 #include "util/EffectBase.h"
 
+#include <CMenuSystem.h>
+
 class PedalToTheMetalEffect : public EffectBase
 {
 public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        if (CMenuSystem::num_menus_in_use) return;
+
         if (!FindPlayerVehicle (-1, false)) return;
 
         CPlayerPed *player = FindPlayerPed ();

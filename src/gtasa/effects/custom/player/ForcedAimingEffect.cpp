@@ -1,12 +1,15 @@
 #include "util/EffectBase.h"
 
+#include <CMenuSystem.h>
+
 class ForcedAimingEffect : public EffectBase
 {
 public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
-        // Don't activate if in a vehicle
+        if (CMenuSystem::num_menus_in_use) return;
+
         if (FindPlayerVehicle (-1, false)) return;
 
         CPlayerPed *player = FindPlayerPed ();

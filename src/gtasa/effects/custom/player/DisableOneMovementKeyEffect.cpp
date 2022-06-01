@@ -1,5 +1,7 @@
 #include "util/EffectBase.h"
 
+#include <CMenuSystem.h>
+
 class DisableOneMovementKeyEffect : public EffectBase
 {
     enum eMovementKeyType
@@ -22,6 +24,8 @@ public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        if (CMenuSystem::num_menus_in_use) return;
+
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {

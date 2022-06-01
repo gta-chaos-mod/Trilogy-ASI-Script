@@ -1,5 +1,7 @@
 #include "util/EffectBase.h"
 
+#include <CMenuSystem.h>
+
 class ShakyHandsEffect : public EffectBase
 {
     static inline RwV2d offset = {0, 0};
@@ -8,12 +10,14 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        offset = {inst->Random (-1.0f, 1.0f), inst->Random (-1.0f, 1.0f)};
+        offset = {inst->Random (-2.5f, 2.5f), inst->Random (-2.5f, 2.5f)};
     }
 
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        if (CMenuSystem::num_menus_in_use) return;
+
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {

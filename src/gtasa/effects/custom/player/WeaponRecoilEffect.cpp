@@ -2,6 +2,8 @@
 #include "util/GenericUtil.h"
 #include "util/hooks/HookMacros.h"
 
+#include <CMenuSystem.h>
+
 using namespace plugin;
 
 class WeaponRecoilEffect : public EffectBase
@@ -23,6 +25,8 @@ public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        if (CMenuSystem::num_menus_in_use) return;
+
         if (recoilValue > 0.0f)
         {
             CPlayerPed *player = FindPlayerPed ();

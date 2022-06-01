@@ -1,5 +1,6 @@
 #include "util/EffectBase.h"
 
+#include <CMenuSystem.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
@@ -35,6 +36,8 @@ public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        if (CMenuSystem::num_menus_in_use) return;
+
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {

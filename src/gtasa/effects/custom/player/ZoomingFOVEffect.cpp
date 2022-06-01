@@ -23,8 +23,8 @@ public:
 
         // Fix sky multitude
         static float fSkyMultitudeFix = 10.0f;
-        injector::WriteMemory<float *> (0x714841 + 2, &fSkyMultitudeFix, true);
-        injector::WriteMemory<float *> (0x71485E + 2, &fSkyMultitudeFix, true);
+        inst->WriteMemory<float *> (0x714841 + 2, &fSkyMultitudeFix);
+        inst->WriteMemory<float *> (0x71485E + 2, &fSkyMultitudeFix);
     }
 
     void

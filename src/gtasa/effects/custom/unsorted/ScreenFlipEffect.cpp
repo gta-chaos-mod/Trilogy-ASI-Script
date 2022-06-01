@@ -6,6 +6,7 @@
 #include <CCamera.h>
 #include <CDraw.h>
 #include <CHud.h>
+#include <CMenuSystem.h>
 #include <CRadar.h>
 #include <CScene.h>
 
@@ -72,6 +73,8 @@ public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
+        if (CMenuSystem::num_menus_in_use) return;
+
         if (!enabled) return;
 
         CPlayerPed *player = FindPlayerPed ();

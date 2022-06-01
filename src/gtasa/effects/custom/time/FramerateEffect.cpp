@@ -7,8 +7,7 @@ class FramerateEffect : public EffectBase
     int oldFramerate = 25;
     int framerate    = 25;
 
-    byte oldFrameTimeWait = 14;
-    bool oldFrameLimiter  = false;
+    bool oldFrameLimiter = false;
 
 public:
     FramerateEffect (int framerate) : EffectBase ()
@@ -19,8 +18,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        this->oldFrameTimeWait = injector::ReadMemory<byte> (0x53E94C, true);
-        injector::WriteMemory<byte> (0x53E94C, 0, true);
+        inst->WriteMemory<byte> (0x53E94C, 0);
 
         this->oldFramerate    = RsGlobal.frameLimit;
         this->oldFrameLimiter = FrontEndMenuManager.m_bFrameLimiterOn;
@@ -29,7 +27,6 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        injector::WriteMemory<byte> (0x53E94C, this->oldFrameTimeWait, true);
         RsGlobal.frameLimit                   = this->oldFramerate;
         FrontEndMenuManager.m_bFrameLimiterOn = this->oldFrameLimiter;
     }
