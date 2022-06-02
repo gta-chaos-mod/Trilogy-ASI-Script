@@ -7,6 +7,9 @@
 
 using namespace plugin;
 
+// TODO: Refactor to `Delayed Controls`
+// Keep copies of the NewState and set it to an empty one or the first one in
+// the buffer
 class DelayedScreenEffect : public EffectBase
 {
     static inline CdeclEvent<AddressList<0x53EBF5, H_CALL>, PRIORITY_BEFORE,
