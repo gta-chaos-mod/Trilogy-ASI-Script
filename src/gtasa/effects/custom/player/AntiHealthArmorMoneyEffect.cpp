@@ -19,7 +19,7 @@ public:
             else
                 player->m_fHealth = 25.0f;
 
-            player->m_fArmour    = std::min (player->m_fArmour, 25.0f);
+            player->m_fArmour    = 0.0f;
             playerInfo->m_nMoney = std::max (0, playerInfo->m_nMoney - 250000);
 
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
