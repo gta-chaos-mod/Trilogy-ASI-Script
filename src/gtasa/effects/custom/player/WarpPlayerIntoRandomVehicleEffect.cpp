@@ -43,6 +43,11 @@ public:
                 }
             }
         }
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        pad->bDisablePlayerEnterCar = false;
     }
 
     CVehicle *
@@ -54,7 +59,7 @@ public:
         if (IsVehiclePointerValid (vehicle)) return vehicle;
 
         attempts += 1;
-        if (attempts > 10) return NULL;
+        if (attempts > 10) return nullptr;
 
         return GetRandomVehicle (inst, attempts);
     }
