@@ -12,7 +12,7 @@ public:
         {
             ped->m_nPhysicalFlags.bFireProof = false;
 
-            gFireManager.StartFire (ped, NULL, 1.0f, 1, 7000, 100);
+            gFireManager.StartFire (ped, nullptr, 1.0f, 1, 7000, 100);
         }
     }
 };

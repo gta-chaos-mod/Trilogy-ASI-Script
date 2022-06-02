@@ -47,7 +47,7 @@ public:
                 if (IsVehiclePointerValid (info.vehicle))
                 {
                     info.vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                    info.vehicle->BlowUpCar (NULL, false);
+                    info.vehicle->BlowUpCar (nullptr, false);
                 }
             }
         }
@@ -111,7 +111,7 @@ public:
                         if (IsVehiclePointerValid (vehicle))
                         {
                             vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                            vehicle->BlowUpCar (NULL, false);
+                            vehicle->BlowUpCar (nullptr, false);
                         }
                     }
                 }

@@ -130,7 +130,7 @@ public:
             && vehicle->m_nStatus != STATUS_WRECKED)
         {
             vehicle->m_nPhysicalFlags.bExplosionProof = false;
-            vehicle->BlowUpCar (NULL, false);
+            vehicle->BlowUpCar (nullptr, false);
         }
     }
 

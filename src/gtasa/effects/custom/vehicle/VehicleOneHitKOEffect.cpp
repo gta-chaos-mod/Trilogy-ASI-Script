@@ -39,7 +39,7 @@ public:
                 if (shouldExplode)
                 {
                     vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                    vehicle->BlowUpCar (NULL, false);
+                    vehicle->BlowUpCar (nullptr, false);
                 }
                 else
                 {

@@ -72,13 +72,13 @@ public:
         if (playerVehicle == thisEntity)
         {
             otherEntity->m_nPhysicalFlags.bExplosionProof = false;
-            ((CVehicle *) otherEntity)->BlowUpCar (NULL, false);
+            ((CVehicle *) otherEntity)->BlowUpCar (nullptr, false);
         }
 
         if (playerVehicle == otherEntity)
         {
             thisEntity->m_nPhysicalFlags.bExplosionProof = false;
-            ((CVehicle *) thisEntity)->BlowUpCar (NULL, false);
+            ((CVehicle *) thisEntity)->BlowUpCar (nullptr, false);
         }
     }
 };

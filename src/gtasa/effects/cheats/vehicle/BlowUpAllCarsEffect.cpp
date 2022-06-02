@@ -18,7 +18,7 @@ public:
             for (CVehicle *vehicle : CPools::ms_pVehiclePool)
             {
                 vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                vehicle->BlowUpCar (NULL, false);
+                vehicle->BlowUpCar (nullptr, false);
             }
 
             inst->Disable ();
