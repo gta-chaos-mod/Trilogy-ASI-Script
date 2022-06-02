@@ -30,7 +30,7 @@ Teleportation::Teleport (CVector destination, int interior)
         CVector moveSpeed = entity->m_vecMoveSpeed;
         CVector turnSpeed = entity->m_vecTurnSpeed;
 
-        entity->Teleport (destination, false);
+        entity->SetPosn (destination);
 
         CGame::currArea     = interior;
         entity->m_nAreaCode = interior;
