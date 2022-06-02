@@ -37,6 +37,7 @@ public:
 
         rampObject->SetMatrix (*matrix);
         rampObject->SetPosn (position);
+        rampObject->m_nObjectType = OBJECT_MISSION2;
     }
 
     void

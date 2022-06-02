@@ -46,6 +46,7 @@ public:
 
         sprunkObject->SetMatrix (*matrix);
         sprunkObject->SetPosn (position);
+        sprunkObject->m_nObjectType = OBJECT_MISSION2;
     }
 
     void
