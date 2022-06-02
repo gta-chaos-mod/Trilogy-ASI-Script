@@ -7,70 +7,63 @@
 
 class TheFlashEffect : public EffectBase
 {
-    bool oldInfiniteRun = false;
-
 public:
     void
     OnStart (EffectInstance *inst) override
     {
         HOOK_METHOD_ARGS (inst, Hooked_CEventDamage_AffectsPed,
                           bool (CEventDamage *, CPed *), 0x5E2F57, 0x5E3020);
-
-        this->oldInfiniteRun = injector::ReadMemory<bool> (0xB7CEE4);
-        injector::WriteMemory (0xB7CEE4, true);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
         injector::WriteMemory (0x8D2458, 5.0f);
-        injector::WriteMemory (0xB7CEE4, this->oldInfiniteRun);
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            // Infinite Lung Capacity
-            player->ResetPlayerBreath ();
+        if (!player) return;
 
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                // Auto Super Sprint
-                bool canFastSprint
-                    = pad->GetSprint ()
-                      && !CMenuSystem::MenuInUse[CMenuSystem::CurrentMenuInUse];
+        // Reset sprint energy
+        player->ResetSprintEnergy ();
 
-                if (canFastSprint)
-                {
-                    pad->NewState.ButtonCross = 0;
+        // Infinite Lung Capacity
+        player->ResetPlayerBreath ();
 
-                    if (player->m_pIntelligence->GetTaskSwim () == nullptr
-                        && !player->m_nPhysicalFlags.bTouchingWater)
-                    {
-                        // Update Z Pos To Ground Pos
-                        CVector pos    = player->GetMatrix ()->pos;
-                        bool    worked = false;
-                        float   newZ
-                            = CWorld::FindGroundZFor3DCoord (pos.x, pos.y,
-                                                             pos.z, &worked,
-                                                             nullptr);
-                        if (worked)
-                        {
-                            if (Variables::isWalkOnWaterEffectEnabled)
-                                newZ = std::max (0.0f, newZ);
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
 
-                            player->GetMatrix ()->pos.z = newZ + 0.5f;
-                        }
-                    }
-                }
+        // Auto Super Sprint
+        bool canFastSprint
+            = pad->GetSprint ()
+              && !CMenuSystem::MenuInUse[CMenuSystem::CurrentMenuInUse];
 
-                injector::WriteMemory (0x8D2458, canFastSprint ? 0.25f : 5.0f);
-            }
-        }
+        injector::WriteMemory (0x8D2458, canFastSprint ? 0.25f : 5.0f);
+
+        if (!canFastSprint) return;
+
+        pad->NewState.ButtonCross = 0;
+
+        if (player->m_pIntelligence->GetTaskJetPack ()) return;
+
+        if (player->m_pIntelligence->GetTaskSwim ()
+            || player->m_nPhysicalFlags.bTouchingWater)
+            return;
+
+        // Update Z Pos To Ground Pos
+        CVector pos    = player->GetMatrix ()->pos;
+        bool    worked = false;
+        float   newZ   = CWorld::FindGroundZFor3DCoord (pos.x, pos.y, pos.z,
+                                                        &worked, nullptr);
+
+        if (!worked) return;
+
+        if (Variables::isWalkOnWaterEffectEnabled) newZ = std::max (0.0f, newZ);
+
+        player->GetMatrix ()->pos.z = newZ + 0.5f;
     }
 
     static bool
