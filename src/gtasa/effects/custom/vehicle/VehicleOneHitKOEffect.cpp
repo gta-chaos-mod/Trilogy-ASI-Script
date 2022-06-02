@@ -2,8 +2,6 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
 
-using namespace plugin;
-
 class VehicleOneHitKOEffect : public EffectBase
 {
     static inline std::map<CVehicle *, float> vehicleHealthMap = {};
@@ -19,13 +17,6 @@ public:
                                     false);
 
         vehicleHealthMap.clear ();
-
-        for (auto vehicle : CPools::ms_pVehiclePool)
-        {
-            vehicleHealthMap[vehicle] = vehicle->m_fHealth;
-        }
-
-        Events::vehicleCtorEvent += OnVehicleCreated;
     }
 
     void
@@ -33,6 +24,13 @@ public:
     {
         for (auto vehicle : CPools::ms_pVehiclePool)
         {
+            if (!vehicleHealthMap.contains (vehicle)
+                && vehicle->m_nStatus != STATUS_WRECKED
+                && vehicle->CanBeDriven () && vehicle->m_fHealth > 0.0f)
+            {
+                vehicleHealthMap[vehicle] = vehicle->m_fHealth;
+            }
+
             if (vehicleHealthMap.contains (vehicle)
                 && vehicle->m_fHealth < vehicleHealthMap[vehicle])
             {
@@ -45,15 +43,10 @@ public:
                 {
                     vehicle->m_fHealth = 0.0f;
                 }
+
                 vehicleHealthMap.erase (vehicle);
             }
         }
-    }
-
-    static void
-    OnVehicleCreated (CVehicle *vehicle)
-    {
-        vehicleHealthMap[vehicle] = vehicle->m_fHealth;
     }
 };
 
