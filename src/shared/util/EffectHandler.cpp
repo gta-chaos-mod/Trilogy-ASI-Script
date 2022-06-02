@@ -132,6 +132,12 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
 
         RemoveStaleEffects ();
         effects.push_front (std::move (inst));
+
+        // If more than 5 effects and first effect is not a OneTime Effect
+        if (effects.size () > 5 && effects[0].GetEffectDuration () != 0)
+        {
+            RemoveStaleEffects ();
+        }
     };
 
     QueueFunction (effectFunction);
