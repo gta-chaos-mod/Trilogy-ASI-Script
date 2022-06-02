@@ -78,6 +78,9 @@ EffectDrawHandler::PrintSubtext ()
 void
 EffectDrawHandler::PrintEffectTimer ()
 {
+    int actualRemaining
+        = effect->GetEffectRemaining () / Globals::effectTimerSpeed;
+
     if (Config::GetOrDefault ("Drawing.DrawCircles", true))
     {
         if (effect->HasSubtext ()) y -= 10.0f;
@@ -105,8 +108,6 @@ EffectDrawHandler::PrintEffectTimer ()
         DrawHelper::DrawCircle (center, SCREEN_MULTIPLIER (20.0f), angle,
                                 GetEffectColor ());
 
-        int actualRemaining
-            = effect->GetEffectRemaining () / Globals::effectTimerSpeed;
         if (actualRemaining < 60000)
         {
             gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
@@ -119,11 +120,9 @@ EffectDrawHandler::PrintEffectTimer ()
     else
     {
         gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                         GenericUtil::FormatTime (
-                             effect->GetEffectRemaining ()),
-                         x - 60.0f, y - 10.0f, FONT_DEFAULT, 0.6f, 0.8f,
-                         GetTextColor (), 1, color::White, true, 9999.0f,
-                         false);
+                         GenericUtil::FormatTime (actualRemaining), x - 60.0f,
+                         y - 8.0f, FONT_DEFAULT, 0.6f, 0.8f, GetTextColor (), 1,
+                         color::Black, true, 9999.0f, true);
     }
 }
 void
