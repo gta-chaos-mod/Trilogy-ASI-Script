@@ -17,16 +17,14 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
-            {
-                Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
-                    player, vehicle, 20.0f,
-                    eCarDrivingStyle::DRIVINGSTYLE_STOP_FOR_CARS);
-            }
-        }
+        if (!player) return;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (!vehicle) return;
+
+        Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
+            player, vehicle, 20.0f,
+            eCarDrivingStyle::DRIVINGSTYLE_STOP_FOR_CARS);
     }
 };
 

@@ -14,11 +14,10 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && CanActivate ())
-        {
-            player->SetCurrentWeapon (WEAPON_UNARMED);
-            inst->Disable ();
-        }
+        if (!player || !CanActivate ()) return;
+
+        player->SetCurrentWeapon (WEAPON_UNARMED);
+        inst->Disable ();
     }
 };
 

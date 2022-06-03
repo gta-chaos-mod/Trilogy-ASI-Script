@@ -27,14 +27,12 @@ public:
     OnTick (EffectInstance *inst) override
     {
         wait -= (int) GenericUtil::CalculateTick ();
-        if (wait > 0) return;
+        if (wait > 0 || !CanActivate ()) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            Command<eScriptCommands::COMMAND_CLEAR_CHAR_TASKS_IMMEDIATELY> (
-                player);
-        }
+        if (!player) return;
+
+        Command<eScriptCommands::COMMAND_CLEAR_CHAR_TASKS_IMMEDIATELY> (player);
 
         wait = 100;
     }

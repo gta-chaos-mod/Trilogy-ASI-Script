@@ -34,16 +34,15 @@ public:
         }
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player && CanActivate ())
-        {
-            CVector markerPosition = GetAdjustedMarkerPosition ();
+        if (!player) return;
 
-            Teleportation::Teleport (markerPosition);
+        CVector markerPosition = GetAdjustedMarkerPosition ();
 
-            ClearMarker ();
+        Teleportation::Teleport (markerPosition);
 
-            inst->Disable ();
-        }
+        ClearMarker ();
+
+        inst->Disable ();
     }
 
     void

@@ -17,20 +17,18 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && !player->m_nAreaCode)
-        {
-            for (int x = 0; x < 12; x++)
-            {
-                float angle     = 360.0f / 12 * x;
-                float angle_rad = MathHelper::ToRadians (angle);
+        if (!player || player->m_nAreaCode) return;
 
-                CVector position = player->TransformFromObjectSpace (
-                    CVector (25.0f * sin (angle_rad), 25.0f * cos (angle_rad),
-                             5.0f));
-                CVehicle *vehicle = GameUtil::CreateVehicle (
-                    432, position, MathHelper::ToRadians (180.0f - angle),
-                    true);
-            }
+        for (int x = 0; x < 12; x++)
+        {
+            float angle     = 360.0f / 12 * x;
+            float angle_rad = MathHelper::ToRadians (angle);
+
+            CVector position = player->TransformFromObjectSpace (
+                CVector (25.0f * sin (angle_rad), 25.0f * cos (angle_rad),
+                         5.0f));
+            CVehicle *vehicle = GameUtil::CreateVehicle (
+                432, position, MathHelper::ToRadians (180.0f - angle), true);
         }
     }
 };

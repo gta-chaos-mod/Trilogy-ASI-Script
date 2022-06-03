@@ -17,12 +17,11 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (vehicle)
-        {
-            RemovePassengers (vehicle);
+        if (!vehicle) return;
 
-            Command<eScriptCommands::COMMAND_DELETE_CAR> (vehicle);
-        }
+        RemovePassengers (vehicle);
+
+        Command<eScriptCommands::COMMAND_DELETE_CAR> (vehicle);
     }
 
     void

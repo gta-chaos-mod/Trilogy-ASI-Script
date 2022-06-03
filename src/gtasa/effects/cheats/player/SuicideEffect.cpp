@@ -16,7 +16,7 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (!player || !GameUtil::IsPlayerSafe ())
+        if (!player || !CanActivate ())
         {
             inst->ResetTimer ();
             return;

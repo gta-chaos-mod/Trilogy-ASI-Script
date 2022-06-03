@@ -20,16 +20,15 @@ public:
         }
 
         CEntity *entity = FindPlayerEntity (-1);
-        if (entity)
-        {
-            CVector position = entity->GetPosition ();
+        if (!entity) return;
 
-            position.z = -20.0f;
+        CVector position = entity->GetPosition ();
 
-            Teleportation::Teleport (position);
+        position.z = -20.0f;
 
-            inst->Disable ();
-        }
+        Teleportation::Teleport (position);
+
+        inst->Disable ();
     }
 };
 

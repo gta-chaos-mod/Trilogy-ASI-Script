@@ -22,11 +22,9 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            Command<eScriptCommands::COMMAND_TASK_USE_MOBILE_PHONE> (player,
-                                                                     false);
-        }
+        if (!player) return;
+
+        Command<eScriptCommands::COMMAND_TASK_USE_MOBILE_PHONE> (player, false);
     }
 
     void
@@ -36,23 +34,20 @@ public:
         if (wait > 0) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CTask *phoneTask
-                = player->m_pIntelligence->m_TaskMgr.FindTaskByType (
-                    3, TASK_COMPLEX_USE_MOBILE_PHONE);
-            if (!phoneTask)
-            {
-                CStreaming::RequestModel (330, 2);
-                CStreaming::LoadAllRequestedModels (false);
+        if (!player) return;
 
-                CStreaming::SetModelIsDeletable (330);
+        CTask *phoneTask = player->m_pIntelligence->m_TaskMgr.FindTaskByType (
+            3, TASK_COMPLEX_USE_MOBILE_PHONE);
+        if (phoneTask) return;
 
-                Command<eScriptCommands::COMMAND_TASK_USE_MOBILE_PHONE> (
-                    FindPlayerPed (), true);
-                wait = 1000;
-            }
-        }
+        CStreaming::RequestModel (330, 2);
+        CStreaming::LoadAllRequestedModels (false);
+
+        CStreaming::SetModelIsDeletable (330);
+
+        Command<eScriptCommands::COMMAND_TASK_USE_MOBILE_PHONE> (
+            FindPlayerPed (), true);
+        wait = 1000;
     }
 };
 

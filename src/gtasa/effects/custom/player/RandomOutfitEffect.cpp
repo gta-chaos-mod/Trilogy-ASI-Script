@@ -30,21 +30,19 @@ public:
         if (!CanActivate ()) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        for (int i = CLOTHES_TEXTURE_TORSO; i < CLOTHES_TEXTURE_SPECIAL; i++)
         {
-            for (int i = CLOTHES_TEXTURE_TORSO; i < CLOTHES_TEXTURE_SPECIAL;
-                 i++)
-            {
-                auto clothes = GetRandomCRCForComponent (inst, i);
+            auto clothes = GetRandomCRCForComponent (inst, i);
 
-                Command<eScriptCommands::COMMAND_GIVE_PLAYER_CLOTHES> (
-                    0, clothes.second, clothes.first, i);
-            }
-
-            GameUtil::RebuildPlayer ();
-
-            inst->Disable ();
+            Command<eScriptCommands::COMMAND_GIVE_PLAYER_CLOTHES> (
+                0, clothes.second, clothes.first, i);
         }
+
+        GameUtil::RebuildPlayer ();
+
+        inst->Disable ();
     }
 
     void

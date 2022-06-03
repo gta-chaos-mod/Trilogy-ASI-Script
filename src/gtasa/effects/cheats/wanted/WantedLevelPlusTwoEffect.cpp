@@ -14,11 +14,10 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CWanted *wanted = FindPlayerWanted (-1);
-        if (wanted)
-        {
-            int targetWanted = std::min (wanted->m_nWantedLevel + 2u, 6u);
-            wanted->CheatWantedLevel (targetWanted);
-        }
+        if (!wanted) return;
+
+        int targetWanted = std::min (wanted->m_nWantedLevel + 2u, 6u);
+        wanted->CheatWantedLevel (targetWanted);
     }
 };
 

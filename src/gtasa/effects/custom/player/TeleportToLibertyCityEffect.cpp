@@ -34,19 +34,18 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle && wasInVehicle)
-            {
-                vehicle->m_vecMoveSpeed = previousMoveSpeed;
-                vehicle->m_vecTurnSpeed = previousTurnSpeed;
-                CallMethod<0x59AD20, CMatrix *, RwMatrix *> (
-                    vehicle->GetMatrix (), &previousMatrix);
-            }
+        if (!player) return;
 
-            Teleportation::Teleport (previousLocation, previousInterior);
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (vehicle && wasInVehicle)
+        {
+            vehicle->m_vecMoveSpeed = previousMoveSpeed;
+            vehicle->m_vecTurnSpeed = previousTurnSpeed;
+            CallMethod<0x59AD20, CMatrix *, RwMatrix *> (vehicle->GetMatrix (),
+                                                         &previousMatrix);
         }
+
+        Teleportation::Teleport (previousLocation, previousInterior);
     }
 
     void

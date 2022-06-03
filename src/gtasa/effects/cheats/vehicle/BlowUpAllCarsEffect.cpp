@@ -13,16 +13,15 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        if (CanActivate ())
-        {
-            for (CVehicle *vehicle : CPools::ms_pVehiclePool)
-            {
-                vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                vehicle->BlowUpCar (nullptr, false);
-            }
+        if (!CanActivate ()) return;
 
-            inst->Disable ();
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        {
+            vehicle->m_nPhysicalFlags.bExplosionProof = false;
+            vehicle->BlowUpCar (nullptr, false);
         }
+
+        inst->Disable ();
     }
 };
 

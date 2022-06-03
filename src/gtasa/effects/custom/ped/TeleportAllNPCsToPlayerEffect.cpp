@@ -12,22 +12,23 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        if (!CanActivate ()) return;
+
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        CVector position = player->GetPosition ();
+
+        for (CPed *ped : CPools::ms_pPedPool)
         {
-            CVector position = player->GetPosition ();
+            if (ped == player || ped->m_pVehicle) continue;
 
-            for (CPed *ped : CPools::ms_pPedPool)
-            {
-                if (ped == player || ped->m_pVehicle) continue;
-
-                ped->SetPosn (position
-                              + CVector (inst->Random (-1.0f, 1.0f),
-                                         inst->Random (-1.0f, 1.0f), 3.0f));
-            }
-
-            inst->Disable ();
+            ped->SetPosn (position
+                          + CVector (inst->Random (-1.0f, 1.0f),
+                                     inst->Random (-1.0f, 1.0f), 3.0f));
         }
+
+        inst->Disable ();
     }
 };
 

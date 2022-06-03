@@ -13,12 +13,11 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
-        if (playerVehicle)
-        {
-            playerVehicle->m_nPhysicalFlags.bFireProof = false;
-            playerVehicle->m_fHealth                   = 249.9f;
-        }
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (!vehicle) return;
+
+        vehicle->m_nPhysicalFlags.bFireProof = false;
+        vehicle->m_fHealth                   = 249.9f;
     }
 };
 

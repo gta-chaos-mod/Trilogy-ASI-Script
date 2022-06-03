@@ -18,18 +18,16 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (!vehicle) return;
+
+        Command<eScriptCommands::COMMAND_TASK_LEAVE_CAR_IMMEDIATELY> (player,
+                                                                      vehicle);
+        if (!CTheScripts::IsPlayerOnAMission ())
         {
-            CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
-            if (playerVehicle)
-            {
-                Command<eScriptCommands::COMMAND_TASK_LEAVE_CAR_IMMEDIATELY> (
-                    player, playerVehicle);
-                if (!CTheScripts::IsPlayerOnAMission ())
-                {
-                    playerVehicle->m_nVehicleFlags.bConsideredByPlayer = false;
-                }
-            }
+            vehicle->m_nVehicleFlags.bConsideredByPlayer = false;
         }
     }
 };

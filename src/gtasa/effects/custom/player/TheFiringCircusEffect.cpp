@@ -27,61 +27,61 @@ public:
         createdPeds.clear ();
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+
+        for (int x = 0; x < 6; x++)
         {
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
+            float angle     = 360.0f / 6 * x;
+            float angle_rad = MathHelper::ToRadians (angle);
 
-            for (int x = 0; x < 6; x++)
+            CVector position      = player->GetPosition ();
+            CVector spawnPosition = player->TransformFromObjectSpace (
+                CVector (5.0f * sin (angle_rad), 5.0f * cos (angle_rad),
+                         0.25f));
+
+            int modelId = 264;
+
+            CStreaming::RequestModel (modelId, 2);
+            CStreaming::LoadAllRequestedModels (false);
+            CStreaming::SetModelIsDeletable (modelId);
+
+            CPed *createdPed;
+            Command<eScriptCommands::COMMAND_CREATE_CHAR> (
+                ePedType::PED_TYPE_CIVMALE, modelId, spawnPosition.x,
+                spawnPosition.y, spawnPosition.z, &createdPed);
+
+            Command<eScriptCommands::COMMAND_SET_CHAR_RELATIONSHIP> (
+                createdPed, 4, ePedType::PED_TYPE_PLAYER1);
+
+            CStreaming::RequestModel (MODEL_AK47, 2);
+            CStreaming::LoadAllRequestedModels (false);
+            CStreaming::SetModelIsDeletable (MODEL_AK47);
+
+            Command<eScriptCommands::COMMAND_GIVE_WEAPON_TO_CHAR> (createdPed,
+                                                                   WEAPON_AK47,
+                                                                   9999);
+            Command<eScriptCommands::COMMAND_SET_CURRENT_CHAR_WEAPON> (
+                createdPed, WEAPON_AK47);
+
+            Command<eScriptCommands::COMMAND_SET_CHAR_SHOOT_RATE> (createdPed,
+                                                                   100);
+            Command<eScriptCommands::COMMAND_SET_CHAR_ACCURACY> (createdPed,
+                                                                 100);
+
+            if (vehicle)
             {
-                float angle     = 360.0f / 6 * x;
-                float angle_rad = MathHelper::ToRadians (angle);
-
-                CVector position      = player->GetPosition ();
-                CVector spawnPosition = player->TransformFromObjectSpace (
-                    CVector (5.0f * sin (angle_rad), 5.0f * cos (angle_rad),
-                             0.25f));
-
-                int modelId = 264;
-
-                CStreaming::RequestModel (modelId, 2);
-                CStreaming::LoadAllRequestedModels (false);
-                CStreaming::SetModelIsDeletable (modelId);
-
-                CPed *createdPed;
-                Command<eScriptCommands::COMMAND_CREATE_CHAR> (
-                    ePedType::PED_TYPE_CIVMALE, modelId, spawnPosition.x,
-                    spawnPosition.y, spawnPosition.z, &createdPed);
-
-                Command<eScriptCommands::COMMAND_SET_CHAR_RELATIONSHIP> (
-                    createdPed, 4, ePedType::PED_TYPE_PLAYER1);
-
-                CStreaming::RequestModel (MODEL_AK47, 2);
-                CStreaming::LoadAllRequestedModels (false);
-                CStreaming::SetModelIsDeletable (MODEL_AK47);
-
-                Command<eScriptCommands::COMMAND_GIVE_WEAPON_TO_CHAR> (
-                    createdPed, WEAPON_AK47, 9999);
-                Command<eScriptCommands::COMMAND_SET_CURRENT_CHAR_WEAPON> (
-                    createdPed, WEAPON_AK47);
-
-                Command<eScriptCommands::COMMAND_SET_CHAR_SHOOT_RATE> (
-                    createdPed, 100);
-                Command<eScriptCommands::COMMAND_SET_CHAR_ACCURACY> (createdPed,
-                                                                     100);
-
-                if (vehicle)
-                {
-                    Command<eScriptCommands::COMMAND_TASK_DESTROY_CAR> (
-                        createdPed, vehicle);
-                }
-                else
-                {
-                    Command<eScriptCommands::COMMAND_TASK_KILL_CHAR_ON_FOOT> (
-                        createdPed, player);
-                }
-
-                createdPeds.push_back (createdPed);
+                Command<eScriptCommands::COMMAND_TASK_DESTROY_CAR> (createdPed,
+                                                                    vehicle);
             }
+            else
+            {
+                Command<eScriptCommands::COMMAND_TASK_KILL_CHAR_ON_FOOT> (
+                    createdPed, player);
+            }
+
+            createdPeds.push_back (createdPed);
         }
     }
 

@@ -19,14 +19,13 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && CanActivate ())
-        {
-            CVector randomPosition = FindSuitableTeleportPosition (inst);
+        if (!player || !CanActivate ()) return;
 
-            Teleportation::Teleport (randomPosition);
+        CVector randomPosition = FindSuitableTeleportPosition (inst);
 
-            inst->Disable ();
-        }
+        Teleportation::Teleport (randomPosition);
+
+        inst->Disable ();
     }
 
     CVector

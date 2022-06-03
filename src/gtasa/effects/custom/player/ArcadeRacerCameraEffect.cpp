@@ -33,31 +33,30 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (vehicle)
         {
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
+            CColModel *colModel = vehicle->GetColModel ();
+
+            float diffBack = colModel->m_boundBox.m_vecMax.x
+                             - colModel->m_boundBox.m_vecMin.x;
+            float diffUp = colModel->m_boundBox.m_vecMax.z
+                           - colModel->m_boundBox.m_vecMin.z;
+            Command<eScriptCommands::COMMAND_ATTACH_CAMERA_TO_VEHICLE> (
+                vehicle, 0.0f, -diffBack - 4.0f, diffUp, 0.0f, 0.0f, 1.0f, 0.0f,
+                2);
+
+            wasInVehicle = true;
+        }
+        else
+        {
+            if (wasInVehicle)
             {
-                CColModel *colModel = vehicle->GetColModel ();
+                Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
 
-                float diffBack = colModel->m_boundBox.m_vecMax.x
-                                 - colModel->m_boundBox.m_vecMin.x;
-                float diffUp = colModel->m_boundBox.m_vecMax.z
-                               - colModel->m_boundBox.m_vecMin.z;
-                Command<eScriptCommands::COMMAND_ATTACH_CAMERA_TO_VEHICLE> (
-                    vehicle, 0.0f, -diffBack - 4.0f, diffUp, 0.0f, 0.0f, 1.0f,
-                    0.0f, 2);
-
-                wasInVehicle = true;
-            }
-            else
-            {
-                if (wasInVehicle)
-                {
-                    Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
-
-                    wasInVehicle = false;
-                }
+                wasInVehicle = false;
             }
         }
     }
