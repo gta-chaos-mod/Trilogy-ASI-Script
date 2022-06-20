@@ -31,34 +31,8 @@ public:
                 vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
                 vehicle->m_vecMoveSpeed.z = velocity * matrix->up.z;
 
-                // Experimental: Keeping the vehicle on the ground
-                // Doesn't seem to work well when the vehicle is in the air...
-                /*
-                bool    foundGround = false;
-                CVector pos         = vehicle->GetPosition ();
-                float   groundPos
-                    = CWorld::FindGroundZFor3DCoord (pos.x, pos.y, pos.z,
-                                                     &foundGround, 0);
-
-                pos.z = foundGround ? groundPos : pos.z;
-
-                if (vehicle->m_nVehicleClass ==
-                eVehicleType::VEHICLE_AUTOMOBILE
-                    || vehicle->m_nVehicleClass ==
-                    eVehicleType::VEHICLE_QUAD)
-                {
-                    CAutomobile *automobile = (CAutomobile *) vehicle;
-
-                    automobile->PlaceOnRoadProperly ();
-                }
-                else if (vehicle->m_nVehicleClass ==
-                eVehicleType::VEHICLE_BIKE)
-                {
-                    CBike *bike = (CBike *) vehicle;
-
-                    bike->PlaceOnRoadProperly ();
-                }
-                */
+                if (vehicle->m_pDriver)
+                    vehicle->m_pDriver->m_nPedFlags.CantBeKnockedOffBike = true;
             }
             else if (wasHornOn[vehicle])
             {
@@ -70,6 +44,10 @@ public:
                 vehicle->m_vecMoveSpeed.x = velocity * matrix->up.x;
                 vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
                 vehicle->m_vecMoveSpeed.z = velocity * matrix->up.z;
+
+                if (vehicle->m_pDriver)
+                    vehicle->m_pDriver->m_nPedFlags.CantBeKnockedOffBike
+                        = false;
             }
         }
     }
