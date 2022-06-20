@@ -27,6 +27,8 @@ public:
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
+            if (!vehicle || !vehicle->m_pDriver) continue;
+
             vehicle->m_nPhysicalFlags.bInvulnerable   = true;
             vehicle->m_nPhysicalFlags.bBulletProof    = true;
             vehicle->m_nPhysicalFlags.bCollisionProof = true;
