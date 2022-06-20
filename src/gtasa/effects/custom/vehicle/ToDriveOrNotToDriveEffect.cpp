@@ -38,7 +38,7 @@ public:
         else
         {
             FixTires ();
-            wait = inst->Random (2000, 5000);
+            wait = inst->Random (1000 * 2, 1000 * 5);
         }
     }
 

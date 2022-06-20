@@ -113,7 +113,7 @@ public:
 
         CStreaming::SetModelIsDeletable (model);
 
-        wait = inst->Random (1000, 5000);
+        wait = inst->Random (1000, 1000 * 5);
     }
 };
 

@@ -44,14 +44,17 @@ public:
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
             float amplify = 2.0f;
-            if (inst->Random (0, 19) == 0) { amplify = 10.0f; }
+            if (inst->Random (0, 19) == 0)
+            {
+                amplify = 10.0f;
+            }
 
             vehicle->m_vecMoveSpeed.x += inst->Random (-0.25f, 0.25f, amplify);
             vehicle->m_vecMoveSpeed.y += inst->Random (-0.25f, 0.25f, amplify);
             vehicle->m_vecMoveSpeed.z += inst->Random (-0.05f, 0.05f, amplify);
         }
 
-        wait = inst->Random (5000, 10000);
+        wait = inst->Random (1000 * 5, 1000 * 10);
     }
 };
 

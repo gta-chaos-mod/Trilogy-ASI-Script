@@ -105,7 +105,7 @@ public:
             }
         }
 
-        wait = inst->Random (500, 3000);
+        wait = inst->Random (500, 1000 * 3);
     }
 
     void
