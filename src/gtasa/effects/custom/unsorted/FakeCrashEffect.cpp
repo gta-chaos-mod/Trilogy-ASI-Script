@@ -8,7 +8,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        int randomCrashTime = inst->Random (5000, 10000);
+        int randomCrashTime = inst->Random (1000 * 5, 1000 * 10);
 
         std::this_thread::sleep_for (
             std::chrono::milliseconds (randomCrashTime));
