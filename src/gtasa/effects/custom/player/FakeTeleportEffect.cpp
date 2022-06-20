@@ -6,7 +6,7 @@ class FakeTeleportEffect : public EffectBase
 {
     int     wait          = 5000;
     bool    hasTeleported = false;
-    CVector fakeLocation  = {1544.0f, -1353.0f, 332.0f};
+    CVector fakeLocation;
     CVector previousLocation;
     int     previousInterior = 0;
 
@@ -25,9 +25,13 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wait          = 5000;
+        wait          = inst->Random (1000 * 10, 1000 * 30);
         hasTeleported = false;
         wasInVehicle  = false;
+
+        fakeLocation = {inst->GetCustomData ().value ("posX", 1544.0f),
+                        inst->GetCustomData ().value ("posY", -1353.0f),
+                        inst->GetCustomData ().value ("posZ", 332.0f)};
     }
 
     void
