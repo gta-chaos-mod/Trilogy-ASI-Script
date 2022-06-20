@@ -31,8 +31,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wait              = inst->Random (5000, 15000);
-        startStoring      = inst->Random (4000, wait - 1000);
+        wait              = inst->Random (1000 * 5, 1000 * 15);
+        startStoring      = inst->Random (1000 * 4, wait - 1000);
         isTeleportingBack = false;
         currentRewindID   = 0;
         rewindDataList.clear ();
@@ -53,14 +53,22 @@ public:
 
         if (!isTeleportingBack)
         {
-            wait         = inst->Random (5000, 15000);
-            startStoring = inst->Random (4000, wait - 1000);
+            wait         = inst->Random (1000 * 5, 1000 * 15);
+            startStoring = inst->Random (1000 * 4, wait - 1000);
 
             CPlayerPed *player = FindPlayerPed ();
-            if (player) player->m_nPhysicalFlags.bCollidable = true;
+            if (player)
+            {
+                player->m_nPhysicalFlags.bCollidable        = true;
+                player->m_nPhysicalFlags.bCanBeCollidedWith = false;
+            }
 
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle) vehicle->m_nPhysicalFlags.bCollidable = true;
+            if (vehicle)
+            {
+                vehicle->m_nPhysicalFlags.bCollidable        = true;
+                vehicle->m_nPhysicalFlags.bCanBeCollidedWith = false;
+            }
         }
     }
 
@@ -85,7 +93,8 @@ public:
             CallMethod<0x59AD20, CMatrix *, RwMatrix *> (vehicle->GetMatrix (),
                                                          &rewindData.matrix);
 
-            vehicle->m_nPhysicalFlags.bCollidable = false;
+            vehicle->m_nPhysicalFlags.bCollidable        = false;
+            vehicle->m_nPhysicalFlags.bCanBeCollidedWith = false;
         }
 
         CPlayerPed *player = FindPlayerPed ();
@@ -101,7 +110,8 @@ public:
                 player->m_vecTurnSpeed = rewindData.turnSpeed;
             }
 
-            player->m_nPhysicalFlags.bCollidable = false;
+            player->m_nPhysicalFlags.bCollidable        = false;
+            player->m_nPhysicalFlags.bCanBeCollidedWith = false;
         }
 
         currentRewindID += 3;
