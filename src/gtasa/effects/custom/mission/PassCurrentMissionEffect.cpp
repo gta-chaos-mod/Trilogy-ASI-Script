@@ -220,7 +220,8 @@ public:
                     Teleportation::TeleportOutOfMission (missionName);
 
                     if (missionName == "FINALEC")
-                    { // End Of The Line (Part 3)
+                    {
+                        // End Of The Line (Part 3)
                         Command<eScriptCommands::COMMAND_SET_LA_RIOTS> (0);
                         Command<eScriptCommands::
                                     COMMAND_SET_CAR_DENSITY_MULTIPLIER> (1.0f);
@@ -230,39 +231,108 @@ public:
 
                     break;
                 }
+                else if (missionName == "CESAR1")
+                {
+                    // High Stakes, Low-Rider before getting into the race
+                    ClearPlayerStatus ();
+
+                    Command<eScriptCommands::COMMAND_FAIL_CURRENT_MISSION> ();
+                    Command<eScriptCommands::COMMAND_REMOVE_BLIP> (
+                        GameUtil::GetGlobalVariable<int> (440));
+                    int &lowriderPassed
+                        = GameUtil::GetGlobalVariable<int> (457);
+                    lowriderPassed += 1;
+
+                    Command<Commands::CLEAR_SMALL_PRINTS> ();
+                    Command<eScriptCommands::COMMAND_PRINT_WITH_NUMBER_BIG> (
+                        "M_PASSS", 1000, 5000, 1);
+                    Command<Commands::PLAY_MISSION_PASSED_TUNE> (1);
+
+                    CPlayerPed *player = FindPlayerPed ();
+                    if (player)
+                    {
+                        player->GetPlayerInfoForThisPlayerPed ()->m_nMoney
+                            += 1000;
+                        player->SetWantedLevel (0);
+                    }
+                }
                 else if (missionName == "CPRACE")
-                { // High Stakes, Low-Rider / Wu Zi Mu / Farewell, My Love...
-                    /*
-                    // TODO: Races are handled differently.
-                    // We need to increase global variables, which during
-                    initial testing didn't work as planned.
+                {
+                    int raceIndex = GameUtil::GetGlobalVariable<int> (352);
 
-                    int raceIndex = 0;
-                    Command<eScriptCommands::COMMAND_SET_LVAR_INT_TO_VAR_INT>(&raceIndex,
-                    CallMethodAndReturn<short, 0x464700, CRunningScript*>(i,
-                    352)); if (raceIndex == 0) { // High Stakes, Low-rider
-                            i->m_pCurrentIP = i->m_pBaseIP + 19649;
-                    }
-                    else if (raceIndex == 7) { // Wu Zi Mu
-                            int cesarPassed = 5, wuzimuStarted = 0;
-                            Command<eScriptCommands::COMMAND_SET_VAR_INT_TO_LVAR_INT>(CallMethodAndReturn<short,
-                    0x464700, CRunningScript*>(i, 492), &cesarPassed);
-                            Command<eScriptCommands::COMMAND_SET_VAR_INT_TO_LVAR_INT>(CallMethodAndReturn<short,
-                    0x464700, CRunningScript*>(i, 2196), &wuzimuStarted);
+                    if (raceIndex == 0)
+                    {
+                        // High Stakes, Low-rider
+                        i->m_pCurrentIP = i->m_pBaseIP + 19649;
 
-                            Command<eScriptCommands::COMMAND_FAIL_CURRENT_MISSION>();
-                    }
-                    else if (raceIndex == 8) { // Farewell, My Love...
-                            int cesarPassed = 10, wuzimuStarted = 0;
-                            Command<eScriptCommands::COMMAND_SET_VAR_INT_TO_LVAR_INT>(CallMethodAndReturn<short,
-                    0x464700, CRunningScript*>(i, 492), &cesarPassed);
-                            Command<eScriptCommands::COMMAND_SET_VAR_INT_TO_LVAR_INT>(CallMethodAndReturn<short,
-                    0x464700, CRunningScript*>(i, 2196), &wuzimuStarted);
+                        Command<
+                            eScriptCommands::COMMAND_FAIL_CURRENT_MISSION> ();
+                        Command<eScriptCommands::COMMAND_REMOVE_BLIP> (
+                            GameUtil::GetGlobalVariable<int> (440));
+                        int &lowriderPassed
+                            = GameUtil::GetGlobalVariable<int> (457);
+                        lowriderPassed += 1;
 
-                            Command<eScriptCommands::COMMAND_FAIL_CURRENT_MISSION>();
+                        Command<Commands::CLEAR_SMALL_PRINTS> ();
+                        Command<
+                            eScriptCommands::COMMAND_PRINT_WITH_NUMBER_BIG> (
+                            "M_PASSS", 1000, 5000, 1);
+                        Command<Commands::PLAY_MISSION_PASSED_TUNE> (1);
+
+                        CPlayerPed *player = FindPlayerPed ();
+                        if (player)
+                        {
+                            player->GetPlayerInfoForThisPlayerPed ()->m_nMoney
+                                += 1000;
+                            player->SetWantedLevel (0);
+                        }
                     }
-                    return;
-                    */
+                    else if (raceIndex == 7)
+                    {
+                        // Wu Zi Mu
+                        int &bcesarMissionsPassed
+                            = GameUtil::GetGlobalVariable<int> (492);
+
+                        bcesarMissionsPassed = 5;
+
+                        Command<
+                            eScriptCommands::COMMAND_FAIL_CURRENT_MISSION> ();
+                        Command<eScriptCommands::COMMAND_REMOVE_BLIP> (
+                            GameUtil::GetGlobalVariable<int> (485));
+
+                        Command<Commands::CLEAR_SMALL_PRINTS> ();
+                        Command<
+                            eScriptCommands::COMMAND_PRINT_WITH_NUMBER_BIG> (
+                            "M_PASSD", 3, 5000, 1);
+                        Command<Commands::PLAY_MISSION_PASSED_TUNE> (1);
+
+                        int &wuzimuStartedFlag
+                            = GameUtil::GetGlobalVariable<int> (2196);
+                        wuzimuStartedFlag = 0;
+                    }
+                    else if (raceIndex == 8)
+                    {
+                        // Farewell, My Love...
+                        int &bcesarMissionsPassed
+                            = GameUtil::GetGlobalVariable<int> (492);
+
+                        bcesarMissionsPassed = 10;
+
+                        Command<
+                            eScriptCommands::COMMAND_FAIL_CURRENT_MISSION> ();
+                        Command<eScriptCommands::COMMAND_REMOVE_BLIP> (
+                            GameUtil::GetGlobalVariable<int> (485));
+
+                        Command<Commands::CLEAR_SMALL_PRINTS> ();
+                        Command<
+                            eScriptCommands::COMMAND_PRINT_WITH_NUMBER_BIG> (
+                            "M_PASSD", 3, 5000, 1);
+                        Command<Commands::PLAY_MISSION_PASSED_TUNE> (1);
+
+                        int &wuzimuStartedFlag
+                            = GameUtil::GetGlobalVariable<int> (2196);
+                        wuzimuStartedFlag = 0;
+                    }
                 }
                 else if (ContainsDebugCode (missionName))
                 {
