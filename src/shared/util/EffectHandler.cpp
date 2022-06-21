@@ -3,8 +3,34 @@
 #include "util/Config.h"
 #include "util/EffectDatabase.h"
 #include "util/EffectInstance.h"
+#include "util/Globals.h"
+
+#include <thread>
 
 #include <CAudioEngine.h>
+#include <CMenuManager.h>
+
+void
+EffectHandler::SetupCountdownThread ()
+{
+    std::thread countdownThread (
+        []
+        {
+            while (true)
+            {
+                if (FrontEndMenuManager.m_bMenuActive) continue;
+
+                // This isn't 100% accurate but this way all effects tick down
+                // at the exact same time
+                std::this_thread::sleep_for (std::chrono::milliseconds (1000));
+
+                for (auto &effect : effects)
+                    effect.TickDownRemaining (1000 * Globals::effectTimerSpeed);
+            }
+        });
+
+    countdownThread.detach ();
+}
 
 void
 EffectHandler::Tick ()

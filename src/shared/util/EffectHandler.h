@@ -12,6 +12,7 @@ class EffectHandler
     inline static std::deque<EffectInstance>         effects;
 
 public:
+    static void SetupCountdownThread ();
     static void Tick ();
     static void ProcessScripts ();
 

@@ -27,6 +27,8 @@ public:
 
         GameHandler::Initialise ();
 
+        EffectHandler::SetupCountdownThread ();
+
         Events::gameProcessEvent += EffectHandler::Tick;
         Events::processScriptsEvent += EffectHandler::ProcessScripts;
         Events::gameProcessEvent += GameHandler::ProcessGame;
