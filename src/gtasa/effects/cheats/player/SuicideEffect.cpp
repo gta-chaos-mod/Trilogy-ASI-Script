@@ -27,5 +27,4 @@ public:
     }
 };
 
-// TODO: Maybe remove and instead just have Get Wasted? Same deal anyway.
 DEFINE_EFFECT (SuicideEffect, "effect_suicide", GROUP_HEALTH);
