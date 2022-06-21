@@ -56,4 +56,11 @@ public:
     static void ClearWeaponsExceptParachute (CPed *ped);
 
     static bool IsPlayerSafe ();
+
+    template <typename T>
+    static T &
+    GetGlobalVariable (uint32_t index)
+    {
+        return *reinterpret_cast<T *> (CTheScripts::ScriptSpace + 4 * index);
+    }
 };
