@@ -1,17 +1,15 @@
 #include "util/EffectBase.h"
+#include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 
 #include <CCheat.h>
-#include <eTaskType.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
 class GalaxyNote7Effect : public EffectBase
 {
-    int  wait         = 2500;
-    bool pickedUpCall = false;
-    bool wasOnPhone   = false;
+    int wait = 1000;
 
 public:
     bool
@@ -23,16 +21,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wait         = 2500;
-        pickedUpCall = false;
-
-        CPlayerPed *player = FindPlayerPed ();
-        if (player
-            && player->m_pIntelligence->m_TaskMgr.FindTaskByType (
-                3, TASK_COMPLEX_USE_MOBILE_PHONE))
-        {
-            wasOnPhone = true;
-        }
+        wait = 1000;
     }
 
     void
@@ -41,18 +30,9 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        CTask *phoneTask = player->m_pIntelligence->m_TaskMgr.FindTaskByType (
-            3, TASK_COMPLEX_USE_MOBILE_PHONE);
+        bool phoneRinging = GameUtil::GetGlobalVariable<bool> (15);
 
-        if (wasOnPhone && !phoneTask)
-        {
-            wasOnPhone = false;
-            return;
-        }
-
-        if (phoneTask && !pickedUpCall) pickedUpCall = true;
-
-        if (pickedUpCall)
+        if (phoneRinging)
         {
             wait -= (int) GenericUtil::CalculateTick (CTimer::ms_fTimeScale);
             if (wait > 0) return;
