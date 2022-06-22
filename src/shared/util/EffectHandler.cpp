@@ -9,6 +9,7 @@
 
 #include <CAudioEngine.h>
 #include <CMenuManager.h>
+#include <CTimer.h>
 
 void
 EffectHandler::SetupCountdownThread ()
@@ -22,7 +23,14 @@ EffectHandler::SetupCountdownThread ()
 
                 // This isn't 100% accurate but this way all effects tick down
                 // at the exact same time
+                int timeInMilliseconds
+                    = CTimer::m_snTimeInMillisecondsNonClipped;
+
                 std::this_thread::sleep_for (std::chrono::milliseconds (1000));
+
+                if (CTimer::m_snTimeInMillisecondsNonClipped
+                    == timeInMilliseconds)
+                    continue;
 
                 for (auto &effect : effects)
                     effect.TickDownRemaining (1000 * Globals::effectTimerSpeed);
