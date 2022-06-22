@@ -2,6 +2,7 @@
 #include "util/hooks/HookMacros.h"
 
 #include <CCheat.h>
+#include <CTaskSimpleGangDriveBy.h>
 
 class NoShootingAllowedEffect : public EffectBase
 {
@@ -16,6 +17,11 @@ public:
 
         HOOK_METHOD_ARGS (inst, Hooked_CWeapon_FireFromCar,
                           char (CWeapon *, CVehicle *, char, char), 0x742280);
+
+        // TODO: Doesn't work for Just Business
+        HOOK_METHOD_ARGS (inst, Hooked_CTaskSimpleGangDriveBy_FireGun,
+                          char (CTaskSimpleGangDriveBy *, CPed * ped), 0x51A3FD,
+                          0x62D60D);
     }
 
     static char
@@ -35,13 +41,22 @@ public:
                                 CVehicle *vehicle, char leftSide,
                                 char rightSide)
     {
-        // TODO: Fix this for Just Business
-        // Player is passenger so we have to hook a different method
         CPlayerPed *player = FindPlayerPed ();
         if (player && vehicle == FindPlayerVehicle (-1, false))
         {
             CCheat::SuicideCheat ();
         }
+
+        return cb ();
+    }
+
+    static char
+    Hooked_CTaskSimpleGangDriveBy_FireGun (auto                  &&cb,
+                                           CTaskSimpleGangDriveBy *thisTask,
+                                           CPed                   *owner)
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (owner == player) CCheat::SuicideCheat ();
 
         return cb ();
     }
