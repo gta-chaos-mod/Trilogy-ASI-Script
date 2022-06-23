@@ -7,7 +7,10 @@
 
 #include <thread>
 
+#ifdef GTASA
 #include <CAudioEngine.h>
+#endif
+
 #include <CMenuManager.h>
 #include <CTimer.h>
 
@@ -19,7 +22,11 @@ EffectHandler::SetupCountdownThread ()
         {
             while (true)
             {
+#ifdef GTAVC
+                if (FrontendMenuManager.m_bMenuVisible) continue;
+#else
                 if (FrontEndMenuManager.m_bMenuActive) continue;
+#endif
 
                 // This isn't 100% accurate but this way all effects tick down
                 // at the exact same time
