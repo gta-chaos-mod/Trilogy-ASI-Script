@@ -15,7 +15,7 @@ jobs:
         arch: x86
 
     - name: Environment Variable
-      run: VERSION_SUFFIX=$(git rev-parse --short "$GITHUB_SHA")
+      run: echo "VERSION_SUFFIX=$(git rev-parse --short "$GITHUB_SHA")" >> $env:GITHUB_ENV
 
     - name: Compile
       run: |
