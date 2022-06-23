@@ -8,7 +8,7 @@ public:
     OnStart (EffectInstance *inst) override
     {
         for (CPed *ped : CPools::ms_pPedPool)
-            GameUtil::ClearWeaponsExceptParachute (ped);
+            GameUtil::ClearWeapons (ped);
     }
 };
 

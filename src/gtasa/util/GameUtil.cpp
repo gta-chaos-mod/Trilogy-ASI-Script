@@ -273,22 +273,20 @@ GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
     return nullptr;
 }
 
-/*
-    TODO: Fix stuck parachuting animation when invincible.
-    Maybe loop every tick and when the parachuting animation plays we start a
-   timer and check every second if the position changed by a specific amount on
-   the Z axis
-*/
 void
-GameUtil::ClearWeaponsExceptParachute (CPed *ped)
+GameUtil::ClearWeapons (CPed *ped, bool keepParachute)
 {
-    if (ped)
+    if (!ped) return;
+
+    // Clear tasks if the ped is currently parachuting so they don't get stuck
+    // in a "falling" animation without the parachute
+    if (ped->m_pIntelligence->GetUsingParachute ())
+        ped->m_pIntelligence->ClearTasks (true, false);
+
+    for (int i = WEAPON_BRASSKNUCKLE; i < WEAPON_FLARE; i++)
     {
-        for (int i = WEAPON_BRASSKNUCKLE; i < WEAPON_FLARE; i++)
-        {
-            eWeaponType type = static_cast<eWeaponType> (i);
-            if (type != WEAPON_PARACHUTE) ped->ClearWeapon (type);
-        }
+        eWeaponType type = static_cast<eWeaponType> (i);
+        if (type != WEAPON_PARACHUTE || !keepParachute) ped->ClearWeapon (type);
     }
 }
 

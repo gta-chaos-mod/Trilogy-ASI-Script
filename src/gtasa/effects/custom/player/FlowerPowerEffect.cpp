@@ -31,7 +31,7 @@ public:
             }
         }
 
-        GameUtil::ClearWeaponsExceptParachute (player);
+        GameUtil::ClearWeapons (player);
     }
 
     void
@@ -40,7 +40,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        GameUtil::ClearWeaponsExceptParachute (player);
+        GameUtil::ClearWeapons (player);
 
         for (auto const &[type, ammo] : storedWeapons)
         {

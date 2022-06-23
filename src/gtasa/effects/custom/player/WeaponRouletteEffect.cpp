@@ -73,7 +73,7 @@ public:
 
         player->GetPadFromPlayer ()->bDisablePlayerCycleWeapon = false;
 
-        GameUtil::ClearWeaponsExceptParachute (player);
+        GameUtil::ClearWeapons (player);
 
         for (auto const &[type, ammo] : storedWeapons)
         {
@@ -98,7 +98,7 @@ public:
 
         player->GetPadFromPlayer ()->bDisablePlayerCycleWeapon = true;
 
-        GameUtil::ClearWeaponsExceptParachute (player);
+        GameUtil::ClearWeapons (player);
 
         eWeaponType randomWeapon
             = weapons[inst->Random (0, (int) weapons.size () - 1)];

@@ -53,7 +53,7 @@ public:
     static CVehicle *CreateVehicle (int vehicleID, CVector position,
                                     float orientation, bool clearSpace);
 
-    static void ClearWeaponsExceptParachute (CPed *ped);
+    static void ClearWeapons (CPed *ped, bool keepParachute = false);
 
     static bool IsPlayerSafe ();
 
