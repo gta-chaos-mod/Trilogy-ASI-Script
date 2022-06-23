@@ -1,5 +1,6 @@
 #include "EffectDrawHandler.h"
 
+#include "util/ColorHelper.h"
 #include "util/Config.h"
 #include "util/DrawHelper.h"
 #include "util/EffectHandler.h"
@@ -103,7 +104,7 @@ EffectDrawHandler::PrintEffectTimer ()
                                 color::White);
 
         DrawHelper::DrawCircle (center, SCREEN_MULTIPLIER (20.0f), 360.0f,
-                                CHAOS_BACKGROUND_COLOR);
+                                ColorHelper::GetBackgroundColor ());
 
         DrawHelper::DrawCircle (center, SCREEN_MULTIPLIER (20.0f), angle,
                                 GetEffectColor ());
@@ -222,5 +223,5 @@ EffectDrawHandler::GetTextColor () const
 CRGBA
 EffectDrawHandler::GetEffectColor () const
 {
-    return CHAOS_FOREGROUND_COLOR;
+    return ColorHelper::GetForegroundColor ();
 };

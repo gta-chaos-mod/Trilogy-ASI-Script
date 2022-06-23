@@ -1,5 +1,7 @@
 #include "DrawVoting.h"
 
+#include "util/ColorHelper.h"
+
 void
 DrawVoting::DrawVotes ()
 {
@@ -45,7 +47,7 @@ DrawVoting::UpdateVotes (std::vector<std::string> effects,
     {
         votes[i] = VotingElement (effects[i], _votes[i], votes[i].offset);
 
-        if (votes[i].votes > 0) { totalVotes += votes[i].votes; }
+        if (votes[i].votes > 0) totalVotes += votes[i].votes;
     }
 
     pickedVote = _pickedVote;
@@ -100,14 +102,14 @@ DrawVoting::DrawVote (int choice)
     // Background Bar
     rect = CRect (barStart, y, barStart + SCREEN_COORD (barWidth),
                   y + SCREEN_COORD (16.0f));
-    CSprite2d::DrawRect (rect, CHAOS_BACKGROUND_COLOR);
+    CSprite2d::DrawRect (rect, ColorHelper::GetBackgroundColor ());
 
     // Filled Bar
     rect
         = CRect (barStart, y,
                  barStart + SCREEN_COORD (CalculateBarWidth (choice, barWidth)),
                  y + SCREEN_COORD (16.0f));
-    CSprite2d::DrawRect (rect, CHAOS_FOREGROUND_COLOR);
+    CSprite2d::DrawRect (rect, ColorHelper::GetForegroundColor ());
 
     // Draw Percentage
     float percentage_x = barStart + 150.0f;

@@ -91,6 +91,10 @@ DrawCircles = true
 # Default: true
 DrawVoting = true
 
+# Will display the bar and effect circles in rainbow colors
+# Default: false
+RainbowColors = false
+
 #######################################################
 
 #######################################################

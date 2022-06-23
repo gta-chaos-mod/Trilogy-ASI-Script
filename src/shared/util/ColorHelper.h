@@ -1,8 +1,52 @@
 #pragma once
 
+#include "util/Config.h"
+#include "util/GenericUtil.h"
+
 class ColorHelper
 {
 public:
+    static inline float rainbowHueShift = 0.0f;
+
+    static void
+    UpdateRainbowColor ()
+    {
+        rainbowHueShift += GenericUtil::CalculateTick (0.025f);
+        rainbowHueShift = fmod (rainbowHueShift, 360.0f);
+    }
+
+    static CRGBA
+    GetAdjustedColor (CRGBA color, float value)
+    {
+        if (!Config::GetOrDefault ("Drawing.RainbowColors", true)) return color;
+
+        CRGBA tempColor = CRGBA (color);
+
+        int r = tempColor.r;
+        int g = tempColor.g;
+        int b = tempColor.b;
+
+        ColorHelper::HueShift (r, g, b, rainbowHueShift, value);
+
+        tempColor.r = r;
+        tempColor.g = g;
+        tempColor.b = b;
+
+        return tempColor;
+    }
+
+    static CRGBA
+    GetForegroundColor ()
+    {
+        return GetAdjustedColor (CHAOS_FOREGROUND_COLOR, 0.8f);
+    }
+
+    static CRGBA
+    GetBackgroundColor ()
+    {
+        return GetAdjustedColor (CHAOS_BACKGROUND_COLOR, 0.4f);
+    }
+
     static void
     RGBtoHSV (float fR, float fG, float fB, float &fH, float &fS, float &fV)
     {
@@ -25,7 +69,10 @@ public:
                 fH = 60.0f * (((fR - fG) / fDelta) + 4.0f);
             }
 
-            if (fCMax > 0.0f) { fS = fDelta / fCMax; }
+            if (fCMax > 0.0f)
+            {
+                fS = fDelta / fCMax;
+            }
             else
             {
                 fS = 0.0f;

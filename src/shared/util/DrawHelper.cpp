@@ -1,5 +1,6 @@
 #include "DrawHelper.h"
 
+#include "util/ColorHelper.h"
 #include "util/EffectDrawHandler.h"
 #include "util/EffectHandler.h"
 #include "util/EffectInstance.h"
@@ -35,6 +36,8 @@ DrawHelper::UpdateCooldown (int _remaining, int _cooldown, std::string _mode)
 void
 DrawHelper::Draw ()
 {
+    ColorHelper::UpdateRainbowColor ();
+
     DrawVersion ();
 
     if (Config::GetOrDefault ("Drawing.Enabled", true)
@@ -82,15 +85,15 @@ DrawHelper::DrawTopBar ()
     CRect rect = CRect (-1.0f, -1.0f, SCREEN_WIDTH, SCREEN_COORD_TOP (30.0f));
     CSprite2d::DrawRect (rect, color::Black);
 
-    // Draw inner, blue bar
+    // Draw inner, dark bar
     rect = CRect (SCREEN_COORD_LEFT (4.0f), SCREEN_COORD_TOP (4.0f),
                   SCREEN_WIDTH - SCREEN_COORD (4.0f), SCREEN_COORD_TOP (26.0f));
-    CSprite2d::DrawRect (rect, CHAOS_BACKGROUND_COLOR);
+    CSprite2d::DrawRect (rect, ColorHelper::GetBackgroundColor ());
 
     // Draw filled bar
     rect = CRect (SCREEN_COORD_LEFT (4.0f), SCREEN_COORD_TOP (4.0f),
                   barWidth + SCREEN_COORD (4.0f), SCREEN_COORD_TOP (26.0f));
-    CSprite2d::DrawRect (rect, CHAOS_FOREGROUND_COLOR);
+    CSprite2d::DrawRect (rect, ColorHelper::GetForegroundColor ());
 
     // Draw time centered
     float x = SCREEN_COORD_CENTER_X;
