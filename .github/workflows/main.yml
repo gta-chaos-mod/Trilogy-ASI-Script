@@ -1,0 +1,50 @@
+name: CMake
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup
+      uses: ilammy/msvc-dev-cmd@v1.5.0
+      with:
+        arch: x86
+
+    - name: Environment Variable
+      run: VERSION_SUFFIX=$(git rev-parse --short "$GITHUB_SHA")
+
+    - name: Compile
+      run: |
+        mkdir bin
+        cd bin
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
+        ninja
+        mkdir output_III
+        mkdir output_VC
+        mkdir output_SA
+        cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
+        cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
+        cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
+
+    - name: Upload III
+      uses: actions/upload-artifact@v1
+      with:
+        name: "TrilogyChaosMod.III"
+        path: bin/output_III
+
+    - name: Upload VC
+      uses: actions/upload-artifact@v1
+      with:
+        name: "TrilogyChaosMod.VC"
+        path: bin/output_VC
+        
+    - name: Upload SA
+      uses: actions/upload-artifact@v1
+      with:
+        name: "TrilogyChaosMod.SA"
+        path: bin/output_SA
+  
