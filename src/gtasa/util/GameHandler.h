@@ -7,6 +7,7 @@
 #include "util/Websocket.h"
 
 #include <CFileMgr.h>
+#include <CReferences.h>
 #include <CTheScripts.h>
 #include <CTimer.h>
 
@@ -63,6 +64,10 @@ public:
             patch::RedirectCall (
                 address, Hooked_CMenuManager_DoSettingsBeforeStartingAGame);
         }
+
+        // Broken parachute fix where it plays the animation but CJ can't be
+        // controlled mid-air
+        patch::RedirectCall (0x443082, Hooked_BrokenParachuteFix);
     }
 
     static void
@@ -249,5 +254,17 @@ private:
         }
 
         return thisManager->DoSettingsBeforeStartingAGame ();
+    }
+
+    static void
+    Hooked_BrokenParachuteFix ()
+    {
+        CReferences::RemoveReferencesToPlayer ();
+
+        int &parachuteCreationStage = GameUtil::GetGlobalVariable<int> (1497);
+        int &freefallStage          = GameUtil::GetGlobalVariable<int> (1513);
+
+        parachuteCreationStage = 0;
+        freefallStage          = 0;
     }
 };
