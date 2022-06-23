@@ -167,6 +167,12 @@ public:
         return randomHelper.Random (min, max, amplify);
     }
 
+    std::mt19937
+    GetRNG ()
+    {
+        return randomHelper.GetRNG ();
+    }
+
     std::string_view GetName () const;
 
     // Handler functions
