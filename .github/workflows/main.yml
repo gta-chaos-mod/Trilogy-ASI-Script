@@ -16,7 +16,7 @@ jobs:
 
     - name: Compile
       run: |
-        $env:VERSION_SUFFIX = $env:GITHUB_SHA.Substring(0, 6)
+        $env:VERSION_SUFFIX = $env:GITHUB_SHA.Substring(0, 7)
         mkdir bin
         cd bin
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
