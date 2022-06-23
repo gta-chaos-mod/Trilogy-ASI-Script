@@ -14,12 +14,9 @@ jobs:
       with:
         arch: x86
 
-    - name: Environment Variable
-      run: |
-        git rev-parse --short "$GITHUB_SHA"
-
     - name: Compile
       run: |
+        $env:VERSION_SUFFIX = $env:GITHUB_SHA.Substring(0, 6)
         mkdir bin
         cd bin
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
