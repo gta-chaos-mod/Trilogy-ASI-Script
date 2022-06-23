@@ -3,7 +3,13 @@
 std::string
 GenericUtil::GetModVersion ()
 {
-    return "Chaos Mod v3.0";
+    std::string version = "Chaos Mod v3.0";
+
+    const char *versionSuffix = std::getenv ("VERSION_SUFFIX");
+    if (versionSuffix)
+        version = version + std::string (".") + std::string (versionSuffix);
+
+    return version;
 }
 
 float

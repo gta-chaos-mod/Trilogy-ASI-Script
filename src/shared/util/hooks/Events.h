@@ -1,13 +1,14 @@
 #pragma once
 
-#include "util/hooks/HookManager.h"
 #include "util/EffectInstance.h"
+#include "util/hooks/HookManager.h"
+
 #include <list>
 
 template <typename Prototype, bool Method, auto... Addresses> class Event
 {
     inline static bool enabled;
-    
+
 public:
     using FunctionCb = FunctionCb<Method, Prototype>;
     using HookManagerType
@@ -65,14 +66,14 @@ public:
         }
 
         void
-        operator+= (std::pair<EffectInstance*, Callback> cb)
+        operator+= (std::pair<EffectInstance *, Callback> cb)
         {
             Add (cb.first, cb.second);
         }
     } inline static before, after;
 
     static void
-    Add (std::pair<EffectInstance*, Callback> cb)
+    Add (std::pair<EffectInstance *, Callback> cb)
     {
         before += cb;
     }
