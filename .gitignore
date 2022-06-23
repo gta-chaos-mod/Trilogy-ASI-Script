@@ -71,3 +71,6 @@ build
 # Support for Project snippet scope
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,cmake,c++
+
+# Exclude the compiled Version.h file
+src/shared/util/Version.h

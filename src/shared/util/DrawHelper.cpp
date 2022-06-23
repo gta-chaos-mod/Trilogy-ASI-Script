@@ -65,7 +65,7 @@ DrawHelper::DrawVersion ()
     {
         gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
                          GenericUtil::GetModVersion (), 20.0f, 60.0f,
-                         FONT_DEFAULT, 1.0f, 1.8f, color::White, 2,
+                         FONT_DEFAULT, 1.0f, 1.4f, color::White, 2,
                          color::Black, true);
     }
 }

@@ -1,13 +1,15 @@
 #include "GenericUtil.h"
 
+#include "util/Version.h"
+
 std::string
 GenericUtil::GetModVersion ()
 {
     std::string version = "Chaos Mod v3.0";
 
-    const char *versionSuffix = std::getenv ("VERSION_SUFFIX");
-    if (versionSuffix)
-        version = version + std::string (".") + std::string (versionSuffix);
+#ifdef VERSION_SUFFIX
+    version = version + std::string ("-git.") + std::string (VERSION_SUFFIX);
+#endif
 
     return version;
 }
