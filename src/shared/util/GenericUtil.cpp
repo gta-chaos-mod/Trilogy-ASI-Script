@@ -7,8 +7,10 @@ GenericUtil::GetModVersion ()
 {
     std::string version = "Chaos Mod v3.0";
 
-#ifdef VERSION_SUFFIX
-    version = version + std::string ("-git.") + std::string (VERSION_SUFFIX);
+#ifndef _NDEBUG
+    version.append ("-debug");
+#elif VERSION_SUFFIX
+    version.append ("-git.").append (VERSION_SUFFIX);
 #endif
 
     return version;
