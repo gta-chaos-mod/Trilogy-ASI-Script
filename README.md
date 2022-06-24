@@ -119,7 +119,7 @@ who has been helping me with a lot of function hooks and other things in the mod
 - [Naro](https://twitch.tv/naro)
 - [Tezur0](https://twitch.tv/tezur0)
 
-## Everyone in the v3.0 release race that was held on the [DATE HERE]
+## Everyone in the v3.0 release race that was held on the 9th of July, 2022
 - You?
 
 ## Everyone in the v1.0 release race that was held on the 30th of August, 2019
