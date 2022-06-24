@@ -71,6 +71,9 @@ DEFINE_EFFECT (VehicleSizeLongEffect, "effect_vehicle_size_long", 0);
 using VehicleSizePaperThinEffect = VehicleSizeEffect<RwV3d {0.01f, 1.0f, 1.0f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f>;
 DEFINE_EFFECT (VehicleSizePaperThinEffect, "effect_vehicle_size_paper_thin", 0);
 
+using VehicleSizeFlatEffect = VehicleSizeEffect<RwV3d {1.00f, 1.0f, 0.01f}, RwV3d {0.0f, 0.0f, 0.0f}, 0.0f>;
+DEFINE_EFFECT (VehicleSizeFlatEffect, "effect_vehicle_size_flat", 0);
+
 // Rotations
 using VehicleSizeBackwardsEffect = VehicleSizeEffect<RwV3d {1.0f, 1.0f, 1.0f}, RwV3d {0.0f, 0.0f, 1.0f}, 180.0f>;
 DEFINE_EFFECT (VehicleSizeBackwardsEffect, "effect_vehicle_size_backwards", 0);
