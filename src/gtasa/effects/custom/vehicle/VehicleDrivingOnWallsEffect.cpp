@@ -1,11 +1,38 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CTimer.h>
 
-// TODO: Override "Car Upside Down" Check
 class VehicleDrivingOnWallsEffect : public EffectBase
 {
 public:
+    void
+    OnStart (EffectInstance *inst) override
+    {
+        // TODO: Despite these hooks, cars still catch on fire when upside-down
+        HOOK_METHOD (inst, Hooked_IsCarUpsideDown, char (int, int), 0x4655C9,
+                     0x4655D6, 0x46564D, 0x46577C, 0x64450F, 0x6451F8, 0x647348,
+                     0x651127);
+
+        HOOK_METHOD (inst, Hooked_CVehicle_IsUpsideDown, bool (CVehicle *),
+                     0x41DE9F, 0x41E20A, 0x41F2D7, 0x428B55, 0x5182EE, 0x6511D8,
+                     0x651A26, 0x661C2D, 0x68D78D, 0x6900C3, 0x69084F,
+                     0x6B1A5D);
+
+        HOOK_METHOD (inst, Hooked_CVehicle_IsOnItsSide, bool (CVehicle *),
+                     0x5E0901, 0x6511E3, 0x661C40, 0x68D79F, 0x6900D3,
+                     0x690861);
+    }
+
+    void
+    OnEnd (EffectInstance *inst) override
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        player->m_nPedFlags.CantBeKnockedOffBike = false;
+    }
+
     void
     OnTick (EffectInstance *inst) override
     {
@@ -14,6 +41,11 @@ public:
             NegateGravity (vehicle);
             ApplyRelativeGravity (vehicle);
         }
+
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        player->m_nPedFlags.CantBeKnockedOffBike = true;
     }
 
     void
@@ -32,6 +64,24 @@ public:
         physical->ApplyMoveForce ({matrix->at.x * gravity,
                                    matrix->at.y * gravity,
                                    matrix->at.z * gravity});
+    }
+
+    static char
+    Hooked_IsCarUpsideDown (auto &&cb)
+    {
+        return false;
+    }
+
+    static bool
+    Hooked_CVehicle_IsUpsideDown (auto &&cb)
+    {
+        return false;
+    }
+
+    static bool
+    Hooked_CVehicle_IsOnItsSide (auto &&cb)
+    {
+        return false;
     }
 };
 
