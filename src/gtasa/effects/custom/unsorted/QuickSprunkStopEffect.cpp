@@ -1,15 +1,14 @@
-#include "util/EffectBase.h"
+#include "effects/OneTimeEffect.h"
 
 #include <CStreaming.h>
+#include <CTimer.h>
 #include <CWorld.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
-class QuickSprunkStopEffect : public EffectBase
+class QuickSprunkStopEffect : public OneTimeEffect
 {
-    CObject *sprunkObject;
-
 public:
     void
     OnStart (EffectInstance *inst) override
@@ -24,11 +23,13 @@ public:
         float groundPos = CWorld::FindGroundZFor3DCoord (position.x, position.y,
                                                          position.z + 5.0f,
                                                          &groundResult, 0)
-                          + 2.0f;
+                          + 0.5f;
 
         if (groundResult) position.z = groundPos;
 
-        int model = 1775; // Sprunk Machine
+        CObject *sprunkObject;
+
+        int model = 955; // Sprunk Machine
         CStreaming::RequestModel (model, 2);
         CStreaming::LoadAllRequestedModels (false);
         Command<eScriptCommands::COMMAND_CREATE_OBJECT> (model, position.x,
@@ -46,14 +47,9 @@ public:
 
         sprunkObject->SetMatrix (*matrix);
         sprunkObject->SetPosn (position);
-        sprunkObject->m_nObjectType = OBJECT_MISSION2;
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        if (sprunkObject && IsObjectPointerValid (sprunkObject))
-            sprunkObject->Remove ();
+        sprunkObject->m_nObjectType = OBJECT_TEMPORARY;
+        sprunkObject->m_dwRemovalTime
+            = CTimer::m_snTimeInMilliseconds + 1000 * 5;
     }
 };
 

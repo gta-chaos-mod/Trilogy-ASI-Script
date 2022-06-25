@@ -2,6 +2,7 @@
 #include "util/Variables.h"
 
 #include <CStreaming.h>
+#include <CTimer.h>
 #include <CWeather.h>
 #include <extensions/ScriptCommands.h>
 
@@ -22,7 +23,7 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         if (roadObject && IsObjectPointerValid (roadObject))
-            roadObject->Remove ();
+            roadObject->m_dwRemovalTime = CTimer::m_snTimeInMilliseconds;
 
         Variables::isWalkOnWaterEffectEnabled = false;
     }
@@ -41,11 +42,14 @@ public:
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle) heading = vehicle->GetHeading ();
 
-        float waterLevel = 0.5f;
+        float waterLevel = 0.0f;
 
-        // TODO: Properly get the water level
-        // Call<0x6E8580> (position.x, position.y, position.z, &waterLevel,
-        // 0);
+        // TODO: This sometimes returns wrong values
+        if (!CallAndReturn<bool, 0x6E8580> (position.x, position.y, position.z,
+                                            &waterLevel, 0))
+            waterLevel = 0.0f;
+
+        waterLevel += 0.5f;
 
         if (!roadObject || !IsObjectPointerValid (roadObject))
         {
@@ -58,13 +62,15 @@ public:
                                                              &roadObject);
             CStreaming::SetModelIsDeletable (model);
             roadObject->m_nObjectFlags.bDoNotRender = true;
-            roadObject->m_nObjectType               = OBJECT_MISSION2;
+            roadObject->m_nObjectType               = OBJECT_TEMPORARY;
         }
         else
         {
             roadObject->Teleport ({position.x, position.y, waterLevel}, false);
             roadObject->SetOrientation (0.0f, 0.0f, heading);
         }
+
+        roadObject->m_dwRemovalTime = CTimer::m_snTimeInMilliseconds + 1000;
 
         CWeather::Wavyness = 0.0f;
     }

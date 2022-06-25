@@ -1,14 +1,13 @@
-#include "util/EffectBase.h"
+#include "effects/OneTimeEffect.h"
 
 #include <CStreaming.h>
+#include <CTimer.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
-class SpawnRampEffect : public EffectBase
+class SpawnRampEffect : public OneTimeEffect
 {
-    CObject *rampObject;
-
 public:
     void
     OnStart (EffectInstance *inst) override
@@ -18,6 +17,8 @@ public:
 
         CVector position
             = player->TransformFromObjectSpace (CVector (0.0f, 10.0f, -0.1f));
+
+        CObject *rampObject;
 
         int model = 1634; // Ramp
         CStreaming::RequestModel (model, 2);
@@ -37,14 +38,8 @@ public:
 
         rampObject->SetMatrix (*matrix);
         rampObject->SetPosn (position);
-        rampObject->m_nObjectType = OBJECT_MISSION2;
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        if (rampObject && IsObjectPointerValid (rampObject))
-            rampObject->Remove ();
+        rampObject->m_nObjectType   = OBJECT_TEMPORARY;
+        rampObject->m_dwRemovalTime = CTimer::m_snTimeInMilliseconds + 1000 * 5;
     }
 };
 
