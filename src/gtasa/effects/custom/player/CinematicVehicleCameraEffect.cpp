@@ -16,7 +16,8 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA> (true);
+        Command<eScriptCommands::COMMAND_SET_CINEMA_CAMERA> (
+            FindPlayerVehicle (-1, false) != nullptr);
     }
 };
 
