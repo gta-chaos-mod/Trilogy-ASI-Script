@@ -6,8 +6,8 @@
 #include <CCamera.h>
 #include <CDraw.h>
 #include <CHud.h>
+#include <CMenuManager.h>
 #include <CMenuSystem.h>
-#include <CRadar.h>
 #include <CScene.h>
 
 using namespace plugin;

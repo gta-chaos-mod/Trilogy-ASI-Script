@@ -1,4 +1,3 @@
-#include "util/Config.h"
 #include "util/EffectBase.h"
 
 class LockPlayerInsideVehicleEffect : public EffectBase

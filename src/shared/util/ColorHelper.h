@@ -1,170 +1,23 @@
 #pragma once
 
-#include "util/Config.h"
-#include "util/GenericUtil.h"
-
 class ColorHelper
 {
-public:
     static inline float rainbowHueShift = 0.0f;
 
-    static void
-    UpdateRainbowColor ()
-    {
-        rainbowHueShift += GenericUtil::CalculateTick (0.025f);
-        rainbowHueShift = fmod (rainbowHueShift, 360.0f);
-    }
+public:
+    static void UpdateRainbowColor ();
 
-    static CRGBA
-    GetAdjustedColor (CRGBA color, float value)
-    {
-        if (!Config::GetOrDefault ("Drawing.RainbowColors", true)) return color;
+    static CRGBA GetAdjustedColor (CRGBA color, float value);
 
-        CRGBA tempColor = CRGBA (color);
+    static CRGBA GetForegroundColor ();
 
-        int r = tempColor.r;
-        int g = tempColor.g;
-        int b = tempColor.b;
+    static CRGBA GetBackgroundColor ();
 
-        ColorHelper::HueShift (r, g, b, rainbowHueShift, value);
+    static void RGBtoHSV (float fR, float fG, float fB, float &fH, float &fS,
+                          float &fV);
 
-        tempColor.r = r;
-        tempColor.g = g;
-        tempColor.b = b;
+    static void HSVtoRGB (float &fR, float &fG, float &fB, float fH, float fS,
+                          float fV);
 
-        return tempColor;
-    }
-
-    static CRGBA
-    GetForegroundColor ()
-    {
-        return GetAdjustedColor (CHAOS_FOREGROUND_COLOR, 0.8f);
-    }
-
-    static CRGBA
-    GetBackgroundColor ()
-    {
-        return GetAdjustedColor (CHAOS_BACKGROUND_COLOR, 0.4f);
-    }
-
-    static void
-    RGBtoHSV (float fR, float fG, float fB, float &fH, float &fS, float &fV)
-    {
-        float fCMax  = std::max (std::max (fR, fG), fB);
-        float fCMin  = std::min (std::min (fR, fG), fB);
-        float fDelta = fCMax - fCMin;
-
-        if (fDelta > 0.0f)
-        {
-            if (fCMax == fR)
-            {
-                fH = 60.0f * (fmod (((fG - fB) / fDelta), 6.0f));
-            }
-            else if (fCMax == fG)
-            {
-                fH = 60.0f * (((fB - fR) / fDelta) + 2.0f);
-            }
-            else if (fCMax == fB)
-            {
-                fH = 60.0f * (((fR - fG) / fDelta) + 4.0f);
-            }
-
-            if (fCMax > 0.0f)
-            {
-                fS = fDelta / fCMax;
-            }
-            else
-            {
-                fS = 0.0f;
-            }
-
-            fV = fCMax;
-        }
-        else
-        {
-            fH = 0.0f;
-            fS = 0.0f;
-            fV = fCMax;
-        }
-
-        if (fH < 0.0f)
-            fH += 360.0f;
-        else if (fH >= 360.0f)
-            fH -= 360.0f;
-    }
-    static void
-    HSVtoRGB (float &fR, float &fG, float &fB, float fH, float fS, float fV)
-    {
-        float fC      = fV * fS; // Chroma
-        float fHPrime = fmod (fH / 60.0f, 6.0f);
-        float fX      = fC * (1 - fabs (fmod (fHPrime, 2.0f) - 1.0f));
-        float fM      = fV - fC;
-
-        if (0.0f <= fHPrime && fHPrime < 1.0f)
-        {
-            fR = fC;
-            fG = fX;
-            fB = 0.0f;
-        }
-        else if (1.0 <= fHPrime && fHPrime < 2.0f)
-        {
-            fR = fX;
-            fG = fC;
-            fB = 0.0f;
-        }
-        else if (2.0f <= fHPrime && fHPrime < 3.0f)
-        {
-            fR = 0.0f;
-            fG = fC;
-            fB = fX;
-        }
-        else if (3.0f <= fHPrime && fHPrime < 4.0f)
-        {
-            fR = 0.0f;
-            fG = fX;
-            fB = fC;
-        }
-        else if (4.0f <= fHPrime && fHPrime < 5.0f)
-        {
-            fR = fX;
-            fG = 0.0f;
-            fB = fC;
-        }
-        else if (5.0f <= fHPrime && fHPrime <= 6.0f)
-        {
-            fR = fC;
-            fG = 0.0f;
-            fB = fX;
-        }
-        else
-        {
-            fR = 0.0f;
-            fG = 0.0f;
-            fB = 0.0f;
-        }
-
-        fR += fM;
-        fG += fM;
-        fB += fM;
-    }
-    static void
-    HueShift (int &r, int &g, int &b, float shift, float value)
-    {
-        float fR = (float) r / 255;
-        float fG = (float) g / 255;
-        float fB = (float) b / 255;
-
-        float h, s, v;
-        RGBtoHSV (fR, fG, fB, h, s, v);
-
-        h += shift;
-        if (h > 360.0f) h -= 360.0f;
-
-        float retR, retG, retB;
-        HSVtoRGB (retR, retG, retB, h, value, value);
-
-        r = (int) (retR * 255);
-        g = (int) (retG * 255);
-        b = (int) (retB * 255);
-    }
+    static void HueShift (int &r, int &g, int &b, float shift, float value);
 };

@@ -1,10 +1,18 @@
 #include "DrawHelper.h"
 
 #include "util/ColorHelper.h"
+#include "util/Config.h"
+#include "util/DrawVoting.h"
 #include "util/EffectDrawHandler.h"
 #include "util/EffectHandler.h"
 #include "util/EffectInstance.h"
+#include "util/GenericUtil.h"
 #include "util/Globals.h"
+#include "util/MathHelper.h"
+
+#include <CFont.h>
+#include <CTimer.h>
+#include <extensions/FontPrint.h>
 
 std::string
 DrawHelper::GetCooldownString ()

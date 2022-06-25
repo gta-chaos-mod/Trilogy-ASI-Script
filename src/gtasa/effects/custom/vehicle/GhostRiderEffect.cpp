@@ -1,4 +1,3 @@
-#include "util/Config.h"
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"

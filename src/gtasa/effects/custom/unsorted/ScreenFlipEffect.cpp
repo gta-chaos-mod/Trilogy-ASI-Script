@@ -1,13 +1,14 @@
 #include "util/DrawHelper.h"
 #include "util/EffectBase.h"
+#include "util/GenericUtil.h"
 #include "util/Variables.h"
 #include "util/hooks/HookMacros.h"
 
 #include <CCamera.h>
 #include <CDraw.h>
 #include <CHud.h>
+#include <CMenuManager.h>
 #include <CMenuSystem.h>
-#include <CRadar.h>
 #include <CScene.h>
 
 using namespace plugin;

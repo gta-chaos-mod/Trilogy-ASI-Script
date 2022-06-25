@@ -1,6 +1,7 @@
 #include "util/DrawHelper.h"
 #include "util/EffectBase.h"
 
+#include <CMenuManager.h>
 #include <CScene.h>
 
 using namespace plugin;
