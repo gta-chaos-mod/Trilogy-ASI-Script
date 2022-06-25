@@ -1,6 +1,5 @@
 #include "util/BoneHelper.h"
 #include "util/EffectBase.h"
-#include "util/MathHelper.h"
 
 #include <ePedBones.h>
 
@@ -23,7 +22,7 @@ public:
     RenderPed (CPed *ped)
     {
         // Big Butts
-        RwV3d scale = {2.0f, 2.0f, 1.0f};
+        RwV3d scale = {1.25f, 2.0f, 1.0f};
 
         BoneHelper::ScaleBone (ped, BONE_PELVIS1, scale, BONE_PELVIS1);
 
