@@ -19,8 +19,8 @@ GenericUtil::GetModVersion ()
 double
 GenericUtil::CalculateTick (double multiplier)
 {
-    unsigned int diff = CTimer::m_snTimeInMillisecondsNonClipped
-                        - CTimer::m_snPreviousTimeInMillisecondsNonClipped;
+    unsigned diff = CTimer::m_snTimeInMilliseconds
+                    - CTimer::m_snPreviousTimeInMilliseconds;
 
     return diff / CTimer::ms_fTimeScale * multiplier;
 }
