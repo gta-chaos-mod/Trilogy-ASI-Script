@@ -10,7 +10,7 @@ The **"Reborn"** project aims to fix this by pretty much **rewriting the majorit
 
 It will also be easier for interested developers to contribute to the project be it with their own effects or with help on the general codebase.
 
-# How can I help?
+# How can I help / add new effects?
 Check out the [CONTRIBUTING](CONTRIBUTING.md) file for more information.
 
 # What does this mod do?
@@ -65,9 +65,8 @@ The `.exe` can be anywhere you want, as long as it has write permissions since i
 Simple:
 1. Start the game
 2. Launch the corresponding `Trilogy Chaos Mod.exe`
-3. Now you have 2 options:
-	1. Either press `Auto-Start` in the GUI, which will make it wait for you starting a new game and skipping the first cutscene (just like the autosplitter when doing a speedrun)
-	2. Or you just press `Start` right away
+3. Simply press `Start`
+	1. If you want to have the timer start automatically when you **start a new game**, make sure to tick the `Auto-Start` checkbox in the top right.
 4. Suffer
 
 # Is there a list of all effects?
@@ -102,15 +101,31 @@ Great! Create an issue with the `.log` and `.dmp` files from the `CrashDumps` fo
 # I have a suggestion for an effect!
 Also great! Feel free to create an issue with that as well, best to explain what it should do in detail.
 
-It could be that it is pretty much impossible to implement, or that I just won't consider working on it because there are already effects that are similar to it though, so keep that in mind.
+If you're lucky someone might be able to implement it and contribute it to the mod!
+
+Or better yet: **Create the effect yourself and do a pull request!**
+
+That way you are helping with making the mod even better (or worse, depending on how you look at it).
 
 # Credits
 ## [DK22Pac](https://github.com/DK22Pac) and everyone involved in the [plugin-sdk](https://github.com/DK22Pac/plugin-sdk)
 
 ## [Parik](https://github.com/Parik27)
-who has been helping me with a lot of function hooks and other things in the mod 💖
+who has been helping me with a **LOT** of things in both the original mod and this rewrite 💖
 
-## Early beta testers
+## Early v3.0 beta testers
+- [hugo_one](https://twitch.tv/hugo_one)
+- [Joshimuz](https://twitch.tv/Joshimuz)
+
+## Everyone in the v3.0 release race that was held on the 9th of July, 2022
+- You?
+
+___
+
+<details>
+<summary>v1.0 Credits</summary>
+
+## Early v1.0 beta testers
 - [English\_Ben](https://twitch.tv/english_ben)
 - [GTA_Madman](https://twitch.tv/gta_madman)
 - [Heinki](https://twitch.tv/heinki)
@@ -118,9 +133,6 @@ who has been helping me with a lot of function hooks and other things in the mod
 - [Jugachi](https://twitch.tv/jugachi)
 - [Naro](https://twitch.tv/naro)
 - [Tezur0](https://twitch.tv/tezur0)
-
-## Everyone in the v3.0 release race that was held on the 9th of July, 2022
-- You?
 
 ## Everyone in the v1.0 release race that was held on the 30th of August, 2019
 - [123robot](https://twitch.tv/123robot)
@@ -135,3 +147,4 @@ who has been helping me with a lot of function hooks and other things in the mod
 - [Terrtail](https://twitch.tv/terrtail)
 - [zoton2](https://twitch.tv/zoton2)
 - [wariscoach](https://twitch.tv/wariscoach)
+</details>
