@@ -25,6 +25,10 @@ EffectInstance::End ()
 void
 EffectInstance::Tick ()
 {
+    int tick
+        = (int) round (GenericUtil::CalculateTick (Globals::effectTimerSpeed));
+    this->remaining -= tick;
+
     if (GetEffectRemaining () < 0) Disable ();
 
     if (effect && isRunning) effect->OnTick (this);

@@ -115,12 +115,6 @@ public:
         return remaining;
     }
 
-    void
-    TickDownRemaining (int amount)
-    {
-        this->remaining -= amount;
-    }
-
     nlohmann::json &
     GetCustomData ()
     {

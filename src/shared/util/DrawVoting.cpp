@@ -20,7 +20,8 @@ DrawVoting::DrawVotes ()
             {
                 votes[i].offset
                     = std::min (votes[i].offset
-                                    + GenericUtil::CalculateTick (0.0015f),
+                                    + (float) GenericUtil::CalculateTick (
+                                        0.0015f),
                                 1.0f);
             }
         }
@@ -34,7 +35,8 @@ DrawVoting::DrawVotes ()
     {
         votes[i].offset
             = std::max (0.0f,
-                        votes[i].offset - GenericUtil::CalculateTick (0.0015f));
+                        votes[i].offset
+                            - (float) GenericUtil::CalculateTick (0.0015f));
     }
 }
 

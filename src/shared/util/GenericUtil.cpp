@@ -16,12 +16,13 @@ GenericUtil::GetModVersion ()
     return version;
 }
 
-float
-GenericUtil::CalculateTick (float multiplier)
+double
+GenericUtil::CalculateTick (double multiplier)
 {
-    return (CTimer::ms_fTimeStepNonClipped
-            / std::max (0.000001f, CTimer::ms_fTimeScale))
-           * 0.02005f * 1000.0f * multiplier;
+    unsigned int diff = CTimer::m_snTimeInMillisecondsNonClipped
+                        - CTimer::m_snPreviousTimeInMillisecondsNonClipped;
+
+    return diff / CTimer::ms_fTimeScale * multiplier;
 }
 
 std::string
