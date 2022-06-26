@@ -26,10 +26,10 @@ public:
 
         BoneHelper::ScaleBone (ped, BONE_PELVIS1, scale, BONE_PELVIS1);
 
-        auto pos    = BoneHelper::GetBonePosition (ped, BONE_PELVIS1);
         auto matrix = BoneHelper::GetBoneRwMatrix (ped, BONE_PELVIS1);
         if (!matrix) return;
 
+        auto  pos = BoneHelper::GetBonePosition (ped, BONE_PELVIS1);
         RwV3d newPos
             = {pos.x - matrix->up.x * 0.15f, pos.y - matrix->up.y * 0.15f,
                pos.z - matrix->up.z * 0.15f};
