@@ -30,8 +30,8 @@ public:
     {
         if (!blowingUp) return;
 
-        multiplier += GenericUtil::CalculateTick (0.001f);
-        if (multiplier > 5.0f)
+        multiplier += GenericUtil::CalculateTick (0.01f);
+        if (multiplier > 10.0f)
         {
             multiplier = 0.0f;
             blowingUp  = false;
