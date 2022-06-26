@@ -2,7 +2,7 @@
 
 #include <CPlayerInfo.h>
 
-class BankruptEffect : public EffectBase
+class AntiMillionaireEffect : public EffectBase
 {
 public:
     void
@@ -21,4 +21,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (BankruptEffect, "effect_bankrupt", 0);
+DEFINE_EFFECT (AntiMillionaireEffect, "effect_anti_millionaire", 0);
