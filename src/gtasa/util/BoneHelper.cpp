@@ -5,6 +5,8 @@
 void
 BoneHelper::Initialise ()
 {
+    // TODO: Somehow cutscene peds are have their effects applied twice.
+    // It's not that both of these events run, it's something else...
     Events::pedRenderEvent += RenderPed;
     cutscenePedRenderEvent += RenderPed;
 
