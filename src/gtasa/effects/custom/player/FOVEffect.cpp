@@ -6,10 +6,8 @@
 #include <CCamera.h>
 #include <CDraw.h>
 
-class QuakeFOVEffect : public EffectBase
+template <float maxFieldOfView> class FOVEffect : public EffectBase
 {
-    float maxFieldOfView = 120.0f;
-
     float fieldOfView     = 70.0f;
     float fieldOfViewZoom = 0.0f;
 
@@ -40,4 +38,13 @@ public:
     }
 };
 
+// clang-format off
+using SuperLowFOVEffect = FOVEffect<10.0f>;
+DEFINE_EFFECT (SuperLowFOVEffect, "effect_super_low_fov", GROUP_CAMERA);
+
+using LowFOVEffect = FOVEffect<35.0f>;
+DEFINE_EFFECT (LowFOVEffect, "effect_low_fov", GROUP_CAMERA);
+
+using QuakeFOVEffect = FOVEffect<120.0f>;
 DEFINE_EFFECT (QuakeFOVEffect, "effect_quake_fov", GROUP_CAMERA);
+// clang-format on
