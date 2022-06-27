@@ -1,6 +1,7 @@
 #include "util/EffectBase.h"
 
 #include <CCredits.h>
+#include <CTimer.h>
 
 class RollCreditsEffect : public EffectBase
 {
@@ -8,21 +9,21 @@ class RollCreditsEffect : public EffectBase
 
 public:
     void
-    OnStart (EffectInstance *inst) override
-    {
-        if (!CCredits::bCreditsGoing)
-        {
-            CCredits::Start ();
-            this->creditsStartTime = CCredits::CreditsStartTime;
-        }
-    }
-
-    void
     OnEnd (EffectInstance *inst) override
     {
         if (CCredits::CreditsStartTime == this->creditsStartTime)
         {
             CCredits::Stop ();
+        }
+    }
+
+    void
+    OnTick (EffectInstance *inst) override
+    {
+        if (!CCredits::bCreditsGoing)
+        {
+            CCredits::Start ();
+            this->creditsStartTime = CCredits::CreditsStartTime;
         }
     }
 };
