@@ -28,37 +28,27 @@ BoneHelper::RenderPed (CPed *ped)
 {
     if (!ped) return;
 
-    for (auto &hookedFunction : renderHooks)
+    if (renderHooks.size () > 0)
     {
-        hookedFunction (ped);
-    }
-
-    if (_hasAnyModifications (ped))
-    {
-        /* Pre-Update Ped Section */
-        // Set bone positions
-        _setBonePositions (ped);
-
-        // Set bone rotations
-        _setBoneRotations (ped);
-        /* ---------------------- */
-
-        // DO render here
         UpdatePed (ped);
 
-        /* Post-Update Ped Section */
-        // Set bone scales
-        _setBoneScales (ped);
+        for (auto &hookedFunction : renderHooks)
+        {
+            hookedFunction (ped);
 
-        // Set positions and rotations again if they changed
-        _setBonePositions (ped);
-        _setBoneRotations (ped);
+            _setBonePositions (ped);
+            _setBoneRotations (ped);
 
-        _clearBoneMaps (ped);
-        /* ----------------------- */
+            _setBoneScales (ped);
+            _setBonePositions (ped);
+            _setBoneRotations (ped);
+
+            _clearBoneMaps (ped);
+        }
     }
     else if (!ped->m_nModelIndex
-             || ped->m_nModelIndex == 1 && CCutsceneMgr::ms_cutsceneTimer)
+             || ped->m_nModelIndex == MODEL_CSPLAY
+                    && CCutsceneMgr::ms_cutsceneTimer)
     {
         ShoulderBoneRotation (ped);
     }
@@ -239,7 +229,8 @@ BoneHelper::UpdatePed (CPed *ped, bool updateHierarchy)
         CallMethod<0x532B20, CPed *> (ped);
 
         if (!ped->m_nModelIndex
-            || ped->m_nModelIndex == 1 && CCutsceneMgr::ms_cutsceneTimer)
+            || ped->m_nModelIndex == MODEL_CSPLAY
+                   && CCutsceneMgr::ms_cutsceneTimer)
         {
             ShoulderBoneRotation (ped);
         }
