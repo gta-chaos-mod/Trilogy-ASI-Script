@@ -52,6 +52,8 @@ EffectInstance::GetName () const
 bool
 EffectInstance::IsOtherEffectIncompatible (const EffectInstance &other)
 {
+    if (!this->effect) return false;
+
     auto &thisMetadata  = this->effect->GetMetadata ();
     auto &otherMetadata = other.effect->GetMetadata ();
 
