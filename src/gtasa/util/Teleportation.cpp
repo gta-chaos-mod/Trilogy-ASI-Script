@@ -30,7 +30,25 @@ Teleportation::Teleport (CVector destination, int interior)
         CVector moveSpeed = entity->m_vecMoveSpeed;
         CVector turnSpeed = entity->m_vecTurnSpeed;
 
-        entity->SetPosn (destination);
+        CPlayerPed *player = FindPlayerPed ();
+        if (player == entity && player->m_pIntelligence->GetTaskJetPack ())
+        {
+            entity->SetPosn (destination);
+        }
+        else
+        {
+            CVehicle *vehicle = FindPlayerVehicle (-1, false);
+            if (vehicle == entity && vehicle->m_pTrailer)
+            {
+                CVector offset = vehicle->m_pTrailer->GetPosition ()
+                                 - vehicle->GetPosition ();
+
+                vehicle->m_pTrailer->Teleport (destination + offset, false);
+                vehicle->UpdateTrailerLink (true, false);
+            }
+
+            entity->Teleport (destination, false);
+        }
 
         CGame::currArea     = interior;
         entity->m_nAreaCode = interior;
@@ -38,7 +56,6 @@ Teleportation::Teleport (CVector destination, int interior)
         CPopulation::bInPoliceStation = false;
         CStreaming::RemoveBuildingsNotInArea (interior);
 
-        CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
             player->GetPadFromPlayer ()->bDisablePlayerEnterCar = false;
