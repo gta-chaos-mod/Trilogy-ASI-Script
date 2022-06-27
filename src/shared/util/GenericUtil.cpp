@@ -22,7 +22,9 @@ GenericUtil::CalculateTick (double multiplier)
     unsigned diff = CTimer::m_snTimeInMilliseconds
                     - CTimer::m_snPreviousTimeInMilliseconds;
 
-    return diff / CTimer::ms_fTimeScale * multiplier;
+    float timeScale = std::max (0.000001f, CTimer::ms_fTimeScale);
+
+    return diff / timeScale * multiplier;
 }
 
 std::string
