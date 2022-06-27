@@ -3,6 +3,8 @@ This contributing document is still WIP.
 
 If you have any questions please feel free to open a new post in the Discussions tab.
 
+**Ninja is highly recommended as a build.**
+
 # Basic Style-Guide
 - Effects are headerless, meaning all you need is a `.cpp` file in the correct subfolder
 - Includes are grouped and sorted according to their categories, which means these rules need to be followed:
