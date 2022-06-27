@@ -26,7 +26,7 @@ include(cmake/minhook.cmake)
 if(DEFINED ENV{GITHUB_SHA})
   string(SUBSTRING "$ENV{GITHUB_SHA}" 0 7 VERSION_SUFFIX)
   message(STATUS "Short SHA: ${VERSION_SUFFIX}")
-
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/shared/util/Version.h.in"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/shared/util/Version.h")
 endif()
+
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/shared/util/Version.h.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/shared/util/Version.h")
