@@ -28,23 +28,23 @@ BoneHelper::RenderPed (CPed *ped)
 {
     if (!ped) return;
 
+    for (auto &hookedFunction : renderHooks)
+    {
+        hookedFunction (ped);
+    }
+
     if (renderHooks.size () > 0)
     {
+        _setBonePositions (ped);
+        _setBoneRotations (ped);
+
         UpdatePed (ped);
 
-        for (auto &hookedFunction : renderHooks)
-        {
-            hookedFunction (ped);
+        _setBoneScales (ped);
+        _setBonePositions (ped);
+        _setBoneRotations (ped);
 
-            _setBonePositions (ped);
-            _setBoneRotations (ped);
-
-            _setBoneScales (ped);
-            _setBonePositions (ped);
-            _setBoneRotations (ped);
-
-            _clearBoneMaps (ped);
-        }
+        _clearBoneMaps (ped);
     }
     else if (!ped->m_nModelIndex
              || ped->m_nModelIndex == MODEL_CSPLAY
