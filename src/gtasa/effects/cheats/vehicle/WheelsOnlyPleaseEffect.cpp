@@ -12,13 +12,14 @@ using namespace plugin;
 
 class WheelsOnlyPleaseEffect : public EffectBase
 {
-    bool oldForceVehicleLightsOff = false;
+    static inline bool overrideForceVehicleLightsOff = true;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        oldForceVehicleLightsOff = CVehicle::ms_forceVehicleLightsOff;
+        inst->WriteMemory<bool *> (0x6E1A60 + 1,
+                                   &overrideForceVehicleLightsOff);
 
         HOOK (inst, Hooked_RwIm3DTransform,
               uint8_t * (uint8_t *, signed int, RwMatrix *, unsigned int),
@@ -66,13 +67,31 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        CVehicle::ms_forceVehicleLightsOff = oldForceVehicleLightsOff;
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        {
+            // b03 = bHasShadowInfo
+            vehicle->GetColModel ()->m_pColData->m_nFlags.b03 = true;
+        }
+
+        for (CPed *ped : CPools::ms_pPedPool)
+        {
+            ped->m_nPedFlags.bRenderPedInCar = true;
+        }
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        CVehicle::ms_forceVehicleLightsOff = true;
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        {
+            // b03 = bHasShadowInfo
+            vehicle->GetColModel ()->m_pColData->m_nFlags.b03 = false;
+        }
+
+        for (CPed *ped : CPools::ms_pPedPool)
+        {
+            if (ped->m_pVehicle) ped->m_nPedFlags.bRenderPedInCar = false;
+        }
     }
 
     // --------------- Hooks ---------------
