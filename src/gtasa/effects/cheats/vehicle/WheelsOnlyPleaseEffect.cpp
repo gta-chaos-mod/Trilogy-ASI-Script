@@ -18,8 +18,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        inst->WriteMemory<bool *> (0x6E1A60 + 1,
-                                   &overrideForceVehicleLightsOff);
+        inst->WriteMemory<bool *> (0xC1CC18, &overrideForceVehicleLightsOff);
 
         HOOK (inst, Hooked_RwIm3DTransform,
               uint8_t * (uint8_t *, signed int, RwMatrix *, unsigned int),
