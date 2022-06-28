@@ -32,6 +32,7 @@ enum eEffectGroups : unsigned long long
     GROUP_PED_BONES          = (1ull << 21),
     GROUP_VISION             = (1ull << 22),
     GROUP_TIMER_SPEED        = (1ull << 23),
+    GROUP_CUSTOM_TEXTURES    = (1ull << 24),
 
     GROUP_MAX_GROUPS = 32
 };
