@@ -2,19 +2,21 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
 
+#include <CAudioEngine.h>
+#include <eAudioEvents.h>
 #include <ePedBones.h>
 
 class DontLoseYourHeadEffect : public EffectBase
 {
-    static inline bool  blowingUp  = true;
     static inline float multiplier = 1.0f;
+    int                 wait       = 0;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        blowingUp  = true;
         multiplier = 1.0f;
+        wait       = 0;
 
         BoneHelper::RenderEvent += RenderPed;
     }
@@ -28,13 +30,19 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        if (!blowingUp) return;
+        if (wait > 0)
+        {
+            wait -= (int) GenericUtil::CalculateTick ();
+            return;
+        }
 
-        multiplier += GenericUtil::CalculateTick (0.01f);
-        if (multiplier > 10.0f)
+        multiplier += GenericUtil::CalculateTick (0.0025f);
+        if (multiplier > 5.0f)
         {
             multiplier = 0.0f;
-            blowingUp  = false;
+            wait       = 2500;
+
+            // AudioEngine.ReportFrontendAudioEvent (AE_TYRE_BURST, 1.0f, 1.0f);
         }
     }
 
