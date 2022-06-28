@@ -17,6 +17,7 @@ public:
     {
         hasRunOverPed = false;
 
+        // TODO: Double check if these functions are hooked properly
         HOOK_METHOD_ARGS (inst, Hooked_CPed_KillPedWithCar,
                           void (CPed *, CVehicle *, float, bool), 0x54C5CC,
                           0x54C642, 0x60461F, 0x60491B, 0x604A0D);
@@ -27,7 +28,7 @@ public:
                    0x7374DA);
 
         HOOK_METHOD (inst, Hooked_CEventDamage_AffectsPed,
-                     void (CEventDamage *, CPed *), 0x568271);
+                     bool (CEventDamage *, CPed *), 0x568271);
     }
 
     static void
@@ -58,7 +59,7 @@ public:
     static bool
     Hooked_CEventDamage_AffectsPed (auto &&cb)
     {
-        return !hasRunOverPed;
+        return !hasRunOverPed || cb ();
     }
 };
 
