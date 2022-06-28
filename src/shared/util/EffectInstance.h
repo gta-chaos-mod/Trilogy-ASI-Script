@@ -48,6 +48,12 @@ public:
     /// Returns whether other effect can run together with this effect.
     bool IsOtherEffectIncompatible (const EffectInstance &other);
 
+    EffectBase *
+    GetEffect ()
+    {
+        return this->effect;
+    }
+
     // Setters
     void
     SetDuration (int duration)

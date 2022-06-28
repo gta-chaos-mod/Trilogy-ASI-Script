@@ -49,7 +49,7 @@ EffectDrawHandler::CalculateDrawPosition ()
 #elif GTAVC
     CFont::SetScale (TEXT_SCALE_X, TEXT_SCALE_Y);
     float renderWidth = CFont::GetStringWidth (
-                   (wchar_t *) std::wstring (name.begin (), name.end ()).c_str (), true);
+        (wchar_t *) std::wstring (name.begin (), name.end ()).c_str (), true);
 #elif GTA3
     CFont::SetScale (TEXT_SCALE_X, TEXT_SCALE_Y);
     float renderWidth = CFont::GetStringWidth (name.data (), true);
@@ -219,7 +219,9 @@ EffectDrawHandler::DrawRecentEffects (int num)
     {
         if (++i > num) break;
 
-        effect.Draw (i, inset);
+        if (!Globals::isHideChaosUIEffectEnabled
+            || effect.GetEffect ()->GetID () == "effect_hide_chaos_ui")
+            effect.Draw (i, inset);
     }
 
     DrawAndXMore ();

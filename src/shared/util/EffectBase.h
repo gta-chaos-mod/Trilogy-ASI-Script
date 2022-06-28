@@ -80,6 +80,12 @@ public:
         return true;
     }
 
+    virtual std::string_view
+    GetID ()
+    {
+        return metadata.id;
+    }
+
     virtual const EffectMetadata &
     GetMetadata ()
     {

@@ -51,20 +51,31 @@ DrawHelper::Draw ()
 
     DrawVersion ();
 
-    if (Config::GetOrDefault ("Drawing.Enabled", true)
-        && !Globals::isHideChaosUIEffectEnabled)
+    if (Config::GetOrDefault ("Drawing.Enabled", true))
+    {
+        bool drawActiveEffects
+            = Config::GetOrDefault ("Drawing.DrawActiveEffects", true);
+
+        if (!Globals::isHideChaosUIEffectEnabled)
         {
             if (Config::GetOrDefault ("Drawing.DrawRemainingTimeBar", true))
             {
                 DrawTopBar ();
             }
-        if (Config::GetOrDefault ("Drawing.DrawActiveEffects", true))
+
+            if (drawActiveEffects)
             {
                 DrawRecentEffects ();
             }
+
             if (Config::GetOrDefault ("Drawing.DrawVoting", true))
             {
                 DrawVoting::DrawVotes ();
+            }
+        }
+        else if (drawActiveEffects)
+        {
+            DrawRecentEffects ();
         }
     }
 }
