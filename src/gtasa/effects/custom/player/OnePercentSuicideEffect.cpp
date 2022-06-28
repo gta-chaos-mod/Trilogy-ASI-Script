@@ -13,18 +13,26 @@ public:
     }
 
     void
+    OnStart (EffectInstance *inst) override
+    {
+        inst->SetDuration (1000 * 5);
+    }
+
+    void
+    OnEnd (EffectInstance *inst) override
+    {
+        if (inst->Random (1, 100) == 50) CCheat::SuicideCheat ();
+    }
+
+    void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (!player || !GameUtil::IsPlayerSafe ())
+        if (!player || !CanActivate ())
         {
             inst->ResetTimer ();
             return;
         }
-
-        if (inst->Random (1, 100) == 50) CCheat::SuicideCheat ();
-
-        inst->Disable ();
     }
 };
 
