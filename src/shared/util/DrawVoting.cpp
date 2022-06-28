@@ -1,6 +1,7 @@
 #include "DrawVoting.h"
 
 #include "util/ColorHelper.h"
+#include "util/Globals.h"
 
 void
 DrawVoting::DrawVotes ()
@@ -82,7 +83,12 @@ DrawVoting::DrawVote (int choice)
 #else
     float y = SCREEN_COORD_BOTTOM (CalculateYOffset (choice, 75.0f));
 #endif
-    gamefont::PrintUnscaled (votes[choice].description, x, y, FONT_DEFAULT,
+    std::string_view description = votes[choice].description;
+
+    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled && pickedVote != -1)
+        description = "Shoutouts to SimpleFlips.";
+
+    gamefont::PrintUnscaled (std::string (description), x, y, FONT_DEFAULT,
                              SCREEN_MULTIPLIER (0.8f), SCREEN_MULTIPLIER (1.0f),
                              (pickedVote == -1 || pickedVote == choice)
                                  ? color::White
@@ -146,6 +152,9 @@ DrawVoting::CalculateBarWidth (int choice, float maxWidth)
 std::string
 DrawVoting::GetPercentage (int choice)
 {
+    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
+        return "Shoutouts to SimpleFlips.";
+
     std::string percentage;
 
     if (votes[choice].votes > -1)

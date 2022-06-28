@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/Globals.h"
 #include "util/hooks/HookMacros.h"
 
 #include <CText.h>
@@ -9,8 +10,16 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        Globals::isShoutoutsToSimpleFlipsEffectEnabled = true;
+
         HOOK_METHOD_ARGS (inst, Hooked_CText_Get, char *(CText *, char *),
                           0x6A0050);
+    }
+
+    void
+    OnEnd (EffectInstance *inst) override
+    {
+        Globals::isShoutoutsToSimpleFlipsEffectEnabled = false;
     }
 
     static char *

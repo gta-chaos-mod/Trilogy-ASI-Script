@@ -36,20 +36,23 @@ EffectDrawHandler::CalculateDrawPosition ()
 
     float position = isInset ? 90.0f : 25.0f;
 
+    std::string_view name = effect->GetName ();
+
+    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
+        name = "Shoutouts to SimpleFlips.";
+
 #ifdef GTASA
     CFont::SetScaleForCurrentlanguage (TEXT_SCALE_X, TEXT_SCALE_Y);
-    float renderWidth = CFont::GetStringWidth (const_cast<char *> (
-                                                   effect->GetName ().data ()),
-                                               true, false);
+    float renderWidth
+        = CFont::GetStringWidth (const_cast<char *> (name.data ()), true,
+                                 false);
 #elif GTAVC
     CFont::SetScale (TEXT_SCALE_X, TEXT_SCALE_Y);
-    std::string_view name        = effect->GetName ();
-    float            renderWidth = CFont::GetStringWidth (
+    float renderWidth = CFont::GetStringWidth (
                    (wchar_t *) std::wstring (name.begin (), name.end ()).c_str (), true);
 #elif GTA3
     CFont::SetScale (TEXT_SCALE_X, TEXT_SCALE_Y);
-    float renderWidth
-        = CFont::GetStringWidth (effect->GetName ().data (), true);
+    float renderWidth = CFont::GetStringWidth (name.data (), true);
 #endif
 
     x = GenericUtil::EaseOutBack (transitionTimer, -renderWidth, position);
@@ -59,9 +62,14 @@ EffectDrawHandler::CalculateDrawPosition ()
 void
 EffectDrawHandler::PrintEffectName ()
 {
+    std::string_view name = effect->GetName ();
+
+    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
+        name = "Shoutouts to SimpleFlips.";
+
     gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                     std::string (effect->GetName ()), x, y, FONT_DEFAULT, 1.0f,
-                     1.2f, GetTextColor (), 1, color::Black, true);
+                     std::string (name), x, y, FONT_DEFAULT, 1.0f, 1.2f,
+                     GetTextColor (), 1, color::Black, true);
 }
 
 void
@@ -69,10 +77,14 @@ EffectDrawHandler::PrintSubtext ()
 {
     if (effect->HasSubtext ())
     {
+        std::string_view subtext = effect->GetSubtext ();
+
+        if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
+            subtext = "Shoutouts to SimpleFlips.";
+
         gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                         std::string (effect->GetSubtext ()), x, y - 30.0f,
-                         FONT_DEFAULT, 0.8f, 1.0f, GetTextColor (), 1,
-                         color::Black, true);
+                         std::string (subtext), x, y - 30.0f, FONT_DEFAULT,
+                         0.8f, 1.0f, GetTextColor (), 1, color::Black, true);
     }
 }
 
@@ -186,6 +198,9 @@ EffectDrawHandler::DrawAndXMore ()
     if (more == 0) return;
 
     std::string text = "And " + std::to_string (more) + " more...";
+
+    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
+        text = "Shoutouts to SimpleFlips.";
 
     y = ((NUM_RECENT_EFFECTS + 2) * 65.0f) + 240.0f - 20.0f;
 

@@ -17,6 +17,9 @@
 std::string
 DrawHelper::GetCooldownString ()
 {
+    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
+        return "Shoutouts to SimpleFlips.";
+
     std::string cooldown;
     if (mode != "")
     {
@@ -50,18 +53,18 @@ DrawHelper::Draw ()
 
     if (Config::GetOrDefault ("Drawing.Enabled", true)
         && !Globals::isHideChaosUIEffectEnabled)
-    {
-        if (Config::GetOrDefault ("Drawing.DrawRemainingTimeBar", true))
         {
-            DrawTopBar ();
-        }
+            if (Config::GetOrDefault ("Drawing.DrawRemainingTimeBar", true))
+            {
+                DrawTopBar ();
+            }
         if (Config::GetOrDefault ("Drawing.DrawActiveEffects", true))
-        {
-            DrawRecentEffects ();
-        }
-        if (Config::GetOrDefault ("Drawing.DrawVoting", true))
-        {
-            DrawVoting::DrawVotes ();
+            {
+                DrawRecentEffects ();
+            }
+            if (Config::GetOrDefault ("Drawing.DrawVoting", true))
+            {
+                DrawVoting::DrawVotes ();
         }
     }
 }

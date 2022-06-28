@@ -1,10 +1,14 @@
 #include "GenericUtil.h"
 
+#include "util/Globals.h"
 #include "util/Version.h"
 
 std::string
 GenericUtil::GetModVersion ()
 {
+    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
+        return "Shoutouts to SimpleFlips.";
+
     std::string version = "Chaos Mod v3.0";
 
 #ifndef _NDEBUG
