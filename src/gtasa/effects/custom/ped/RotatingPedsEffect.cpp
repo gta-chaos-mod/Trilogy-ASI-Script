@@ -9,12 +9,18 @@ class RotatingPedsEffect : public EffectBase
     static inline float spinSpeed     = 0.0f;
     static inline float rotationAngle = 0.0f;
 
+    static inline EffectInstance         *staticInst = nullptr;
+    static inline std::map<CPed *, RwV3d> storedRotations;
+
 public:
     void
     OnStart (EffectInstance *inst) override
     {
         spinSpeed     = 0.0f;
         rotationAngle = 0.0f;
+
+        staticInst = inst;
+        storedRotations.clear ();
 
         BoneHelper::RenderEvent += RenderPed;
     }
@@ -37,14 +43,25 @@ public:
     static void
     RenderPed (CPed *ped)
     {
-        // Helicopter
-        RwV3d rotation = BoneHelper::GetBoneRotation (ped, BONE_PELVIS1);
-        rotation.z     = rotationAngle;
-        BoneHelper::SetBoneRotation (ped, BONE_PELVIS1, rotation);
+        float speed = ped->m_vecMoveSpeed.Magnitude ();
 
-        // Fix shoulders
-        BoneHelper::SetBoneRotation (ped, BONE_LEFTSHOULDER, {0, 0, 0});
-        BoneHelper::SetBoneRotation (ped, BONE_RIGHTSHOULDER, {0, 0, 0});
+        RwV3d rotationOffset = {staticInst->Random (0.0f, 45.0f) * speed,
+                                staticInst->Random (0.0f, 45.0f) * speed,
+                                staticInst->Random (0.0f, 45.0f) * speed};
+
+        if (!storedRotations.contains (ped))
+        {
+            storedRotations[ped]
+                = BoneHelper::GetBoneRotation (ped, BONE_PELVIS1);
+        }
+
+        RwV3d &rotation = storedRotations[ped];
+
+        rotation.x += rotationOffset.x;
+        rotation.y += rotationOffset.y;
+        rotation.z += rotationOffset.z;
+
+        BoneHelper::SetBoneRotation (ped, BONE_PELVIS1, rotation);
     }
 };
 
