@@ -25,7 +25,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wait          = inst->Random (1000 * 10, 1000 * 30);
+        wait          = inst->Random (1000 * 5, 1000 * 15);
         hasTeleported = false;
         wasInVehicle  = false;
 
