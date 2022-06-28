@@ -32,8 +32,6 @@ public:
             CPlayerPed *player = FindPlayerPed ();
             if (player) player->m_nPedFlags.CantBeKnockedOffBike = 1;
         }
-
-        inst->SetTimerVisible (vehicle != nullptr);
     }
 };
 
