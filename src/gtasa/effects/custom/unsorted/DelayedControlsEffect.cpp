@@ -46,10 +46,6 @@ public:
         bufferedInputData.push_back (frameData);
         if (bufferedInputData.size () > GetFrameDelay ())
         {
-            pad->OldState                = pad->NewState;
-            pad->OldMouseControllerState = pad->NewMouseControllerState;
-            pad->OldKeyState             = pad->NewKeyState;
-
             InputData data               = bufferedInputData.front ();
             pad->NewState                = data.state;
             pad->NewMouseControllerState = data.mouseState;
@@ -62,10 +58,6 @@ public:
             pad->NewState                = CControllerState ();
             pad->NewMouseControllerState = CMouseControllerState ();
             pad->NewKeyState             = CKeyboardState ();
-
-            pad->OldState                = CControllerState ();
-            pad->OldMouseControllerState = CMouseControllerState ();
-            pad->OldKeyState             = CKeyboardState ();
         }
     }
 
