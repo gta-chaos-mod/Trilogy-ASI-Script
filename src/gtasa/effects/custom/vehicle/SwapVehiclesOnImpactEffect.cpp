@@ -5,6 +5,8 @@
 
 using namespace plugin;
 
+// TODO: When cops bust the other car, you get busted, too
+
 class SwapVehiclesOnImpactEffect : public EffectBase
 {
     static inline ThiscallEvent<
@@ -83,27 +85,44 @@ public:
         CPed *thisDriver  = thisVehicle->m_pDriver;
         CPed *otherDriver = otherVehicle->m_pDriver;
 
+        CTask *this_m_aPrimaryTasks[5];
+        CTask *this_m_aSecondaryTasks[6];
+
+        CTask *other_m_aPrimaryTasks[5];
+        CTask *other_m_aSecondaryTasks[6];
+
+        CPlayerPed *player = FindPlayerPed ();
+
         // Get peds out of their vehicles
         if (thisDriver)
         {
-            if (thisDriver->m_nCreatedBy == 2) return;
+            if (thisDriver->m_nCreatedBy == 2 && thisDriver != player) return;
 
-            Command<eScriptCommands::
-                        COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-                thisDriver, thisVehicle);
+            for (int i = 0; i < 5; i++)
+                this_m_aPrimaryTasks[i]
+                    = thisDriver->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i];
+
+            for (int i = 0; i < 6; i++)
+                this_m_aSecondaryTasks[i]
+                    = thisDriver->m_pIntelligence->m_TaskMgr
+                          .m_aSecondaryTasks[i];
         }
 
         if (otherDriver)
         {
-            if (otherDriver->m_nCreatedBy == 2) return;
+            if (otherDriver->m_nCreatedBy == 2 && thisDriver != player) return;
 
-            Command<eScriptCommands::
-                        COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-                otherDriver, otherVehicle);
+            for (int i = 0; i < 5; i++)
+                other_m_aPrimaryTasks[i] = otherDriver->m_pIntelligence
+                                               ->m_TaskMgr.m_aPrimaryTasks[i];
+
+            for (int i = 0; i < 6; i++)
+                other_m_aSecondaryTasks[i]
+                    = otherDriver->m_pIntelligence->m_TaskMgr
+                          .m_aSecondaryTasks[i];
         }
 
-        CPlayerPed *player = FindPlayerPed ();
-        bool        wasPlayerADriver
+        bool wasPlayerADriver
             = player && (player == thisDriver || player == otherDriver);
 
         if (thisDriver)
@@ -113,7 +132,12 @@ public:
                       ? eCarDrivingStyle::DRIVINGSTYLE_PLOUGH_THROUGH
                       : eCarDrivingStyle::DRIVINGSTYLE_STOP_FOR_CARS;
 
-            WarpPedIntoCar (thisDriver, otherVehicle, drivingStyle);
+            Command<eScriptCommands::
+                        COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
+                thisDriver, thisVehicle);
+
+            WarpPedIntoCar (thisDriver, otherVehicle, drivingStyle,
+                            this_m_aPrimaryTasks, this_m_aSecondaryTasks);
         }
         if (otherDriver)
         {
@@ -122,7 +146,12 @@ public:
                       ? eCarDrivingStyle::DRIVINGSTYLE_PLOUGH_THROUGH
                       : eCarDrivingStyle::DRIVINGSTYLE_STOP_FOR_CARS;
 
-            WarpPedIntoCar (otherDriver, thisVehicle, drivingStyle);
+            Command<eScriptCommands::
+                        COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
+                otherDriver, otherVehicle);
+
+            WarpPedIntoCar (otherDriver, thisVehicle, drivingStyle,
+                            other_m_aPrimaryTasks, other_m_aSecondaryTasks);
         }
 
         if (wasPlayerADriver)
@@ -136,16 +165,26 @@ public:
     }
 
     static void
-    WarpPedIntoCar (CPed *ped, CVehicle *vehicle, eCarDrivingStyle drivingStyle)
+    WarpPedIntoCar (CPed *ped, CVehicle *vehicle, eCarDrivingStyle drivingStyle,
+                    CTask *primaryTasks[5], CTask *secondaryTasks[6])
     {
-        CPlayerPed *player = FindPlayerPed ();
+        vehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
 
+        // TODO: Set ped tasks again after teleportation
         Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (ped, vehicle);
 
-        if (ped != player)
+        if (ped != FindPlayerPed () && ped->m_nCreatedBy != 2)
         {
             Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
                 ped, vehicle, 20.0f, drivingStyle);
+
+            // for (int i = 0; i < 5; i++)
+            //     ped->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i]
+            //         = primaryTasks[i];
+
+            // for (int i = 0; i < 6; i++)
+            //     ped->m_pIntelligence->m_TaskMgr.m_aSecondaryTasks[i]
+            //         = secondaryTasks[i];
         }
     }
 };
