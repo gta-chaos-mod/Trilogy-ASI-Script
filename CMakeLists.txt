@@ -13,6 +13,7 @@ if(MSVC_VERSION GREATER_EQUAL "1900")
 endif()
 
 # Include CMakes
+include(cmake/DirectXSDK.cmake)
 include(cmake/pluginSDK.cmake)
 
 include(cmake/gta3.cmake)
