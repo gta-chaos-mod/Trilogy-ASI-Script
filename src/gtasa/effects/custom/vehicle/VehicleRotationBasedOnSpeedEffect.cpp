@@ -5,8 +5,7 @@ using namespace plugin;
 
 class VehicleRotationBasedOnSpeedEffect : public EffectBase
 {
-    inline static RwV3d                       rotation = {0.0f, 0.0f, 1.0f};
-    inline static std::map<CVehicle *, float> rotationAngleMap;
+    static inline std::map<CVehicle *, RwV3d> rotationAngleMap;
 
 public:
     void
@@ -32,7 +31,16 @@ public:
         {
             float speed = vehicle->m_vecMoveSpeed.Magnitude ();
 
-            rotationAngleMap[vehicle] += speed * (30.0f * tick);
+            rotationAngleMap[vehicle].x += speed * inst->Random (1, 5, 5);
+            rotationAngleMap[vehicle].y += speed * inst->Random (1, 5, 5);
+            rotationAngleMap[vehicle].z += speed * inst->Random (1, 5, 5);
+
+            rotationAngleMap[vehicle].x
+                = fmod (rotationAngleMap[vehicle].x, 360.0f);
+            rotationAngleMap[vehicle].y
+                = fmod (rotationAngleMap[vehicle].y, 360.0f);
+            rotationAngleMap[vehicle].z
+                = fmod (rotationAngleMap[vehicle].z, 360.0f);
         }
     }
 
@@ -41,8 +49,16 @@ public:
     {
         auto frame = GetObjectParent (vehicle->m_pRwObject);
 
-        RwFrameRotate (frame, &rotation, rotationAngleMap[vehicle],
-                       rwCOMBINEPRECONCAT);
+        RwV3d vec = rotationAngleMap[vehicle];
+
+        RwV3d rotationX = {1.0f, 0.0f, 0.0f};
+        RwFrameRotate (frame, &rotationX, vec.x, rwCOMBINEPRECONCAT);
+
+        RwV3d rotationY = {0.0f, 1.0f, 0.0f};
+        RwFrameRotate (frame, &rotationY, vec.y, rwCOMBINEPRECONCAT);
+
+        RwV3d rotationZ = {0.0f, 0.0f, 1.0f};
+        RwFrameRotate (frame, &rotationZ, vec.z, rwCOMBINEPRECONCAT);
     }
 };
 
