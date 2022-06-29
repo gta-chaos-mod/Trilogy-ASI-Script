@@ -24,7 +24,10 @@ public:
         CVehicle   *vehicle = GetRandomVehicle (inst);
         if (!vehicle || !vehicle->CanBeDriven ()
             || vehicle->m_nStatus == STATUS_WRECKED)
+        {
+            inst->ResetTimer ();
             return;
+        }
 
         if (!vehicle->m_pDriver
             || vehicle->m_pDriver && vehicle->m_pDriver != player)
