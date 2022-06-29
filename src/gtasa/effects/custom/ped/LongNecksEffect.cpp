@@ -1,14 +1,19 @@
 #include "util/BoneHelper.h"
 #include "util/EffectBase.h"
+#include "util/GenericUtil.h"
 
 #include <ePedBones.h>
 
 class LongNecksEffect : public EffectBase
 {
+    static inline float scale = 1.0f;
+
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        scale = 1.0f;
+
         BoneHelper::RenderEvent += RenderPed;
     }
 
@@ -18,18 +23,25 @@ public:
         BoneHelper::RenderEvent -= RenderPed;
     }
 
+    void
+    OnTick (EffectInstance *inst) override
+    {
+        scale += GenericUtil::CalculateTick (0.0025f);
+        scale = std::clamp (scale, 1.0f, 1.5f);
+    }
+
     static void
     RenderPed (CPed *ped)
     {
-        RwV3d scale = {1.5f, 1.5f, 1.5f};
+        RwV3d rwScale = {scale, scale, scale};
         for (int i = BONE_NECK; i <= BONE_HEAD; i++)
-            BoneHelper::ScaleBone (ped, i, scale);
+            BoneHelper::ScaleBone (ped, i, rwScale);
 
         for (int i = 5000; i < 5026; i++)
-            BoneHelper::ScaleBone (ped, i, scale);
+            BoneHelper::ScaleBone (ped, i, rwScale);
 
         // Cutscene related?
-        BoneHelper::ScaleBone (ped, 30, scale);
+        BoneHelper::ScaleBone (ped, 30, rwScale);
     }
 };
 
