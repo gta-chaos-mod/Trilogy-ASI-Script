@@ -31,8 +31,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        wait              = inst->Random (1000 * 5, 1000 * 15);
-        startStoring      = inst->Random (1000 * 4, wait - 1000);
+        wait              = inst->Random (1000 * 15, 1000 * 30);
+        startStoring      = inst->Random (wait - 1000 * 8, wait - 1000);
         isTeleportingBack = false;
         currentRewindID   = 0;
         rewindDataList.clear ();
@@ -53,8 +53,8 @@ public:
 
         if (!isTeleportingBack)
         {
-            wait         = inst->Random (1000 * 5, 1000 * 15);
-            startStoring = inst->Random (1000 * 4, wait - 1000);
+            wait         = inst->Random (1000 * 15, 1000 * 30);
+            startStoring = inst->Random (wait - 1000 * 8, wait - 1000);
 
             CPlayerPed *player = FindPlayerPed ();
             if (player)
