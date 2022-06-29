@@ -10,6 +10,7 @@
 
 using namespace plugin;
 
+// TODO: Player vehicle shadow still present
 class InvisibleVehiclesEffect : public EffectBase
 {
     static inline bool overrideForceVehicleLightsOff = true;
