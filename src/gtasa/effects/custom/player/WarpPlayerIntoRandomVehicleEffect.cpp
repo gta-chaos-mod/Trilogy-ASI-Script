@@ -23,31 +23,27 @@ public:
         CPlayerPed *player  = FindPlayerPed ();
         CVehicle   *vehicle = GetRandomVehicle (inst);
         if (!vehicle || !vehicle->CanBeDriven ()
-            || vehicle->m_nStatus == STATUS_WRECKED)
+            || vehicle->m_nStatus == STATUS_WRECKED
+            || vehicle->m_pDriver == player)
         {
             inst->ResetTimer ();
             return;
         }
 
-        if (!vehicle->m_pDriver
-            || vehicle->m_pDriver && vehicle->m_pDriver != player)
+        for (int i = 0; i < vehicle->m_nMaxPassengers; i++)
         {
-            for (int i = 0; i < vehicle->m_nMaxPassengers; i++)
+            if (Command<eScriptCommands::COMMAND_IS_CAR_PASSENGER_SEAT_FREE> (
+                    vehicle, i))
             {
-                if (Command<
-                        eScriptCommands::COMMAND_IS_CAR_PASSENGER_SEAT_FREE> (
-                        vehicle, i))
-                {
-                    vehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
+                vehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
 
-                    Command<eScriptCommands::
-                                COMMAND_WARP_CHAR_INTO_CAR_AS_PASSENGER> (
-                        player, vehicle, i);
+                Command<
+                    eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR_AS_PASSENGER> (
+                    player, vehicle, i);
 
-                    Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
+                Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
 
-                    inst->Disable ();
-                }
+                inst->Disable ();
             }
         }
 
@@ -63,7 +59,8 @@ public:
         int randomNumber  = inst->Random (0, CPools::ms_pVehiclePool->m_nSize);
         CVehicle *vehicle = CPools::ms_pVehiclePool->GetAt (randomNumber);
 
-        if (IsVehiclePointerValid (vehicle)) return vehicle;
+        if (IsVehiclePointerValid (vehicle) && vehicle->m_pDriver)
+            return vehicle;
 
         attempts += 1;
         if (attempts > 10) return nullptr;
