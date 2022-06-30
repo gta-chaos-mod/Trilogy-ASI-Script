@@ -40,12 +40,12 @@ public:
 };
 
 // clang-format off
-using PedSizeTinyEffect = PedSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}, 1.0f>;
+using PedSizeTinyEffect = PedSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}, 0.98f>;
 DEFINE_EFFECT (PedSizeTinyEffect, "effect_ped_size_tiny", 0);
 
 using PedSizeLargeEffect = PedSizeEffect<RwV3d {2.0f, 2.0f, 2.0f}, 1.0f>;
 DEFINE_EFFECT (PedSizeLargeEffect, "effect_ped_size_large", 0);
 
-using PedSizeSuperTinyEffect = PedSizeEffect<RwV3d {0.1f, 0.1f, 0.1f}, 1.0f>;
+using PedSizeSuperTinyEffect = PedSizeEffect<RwV3d {0.1f, 0.1f, 0.1f}, 0.98f>;
 DEFINE_EFFECT (PedSizeSuperTinyEffect, "effect_ped_size_super_tiny", 0);
 // clang-format on
