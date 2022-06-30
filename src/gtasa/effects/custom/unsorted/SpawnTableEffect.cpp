@@ -27,7 +27,7 @@ public:
 
         if (groundResult) position.z = groundPos;
 
-        position.z -= 0.5f;
+        position.z -= 0.3f;
 
         CObject *tableObject;
 
