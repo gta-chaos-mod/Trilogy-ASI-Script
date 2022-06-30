@@ -1,6 +1,12 @@
 #include "BoneHelper.h"
 
 #include <CCutsceneMgr.h>
+#include <CTimer.h>
+
+// TODO: Maybe do bone modifications with lambda functions instead of modifying
+// them in-place for better support...
+// No idea how to get consecutive bone positions that way though...
+// Experiment!
 
 void
 BoneHelper::Initialise ()
@@ -9,6 +15,8 @@ BoneHelper::Initialise ()
     // It's not that both of these events run, it's something else...
     Events::pedRenderEvent += RenderPed;
     cutscenePedRenderEvent += RenderPed;
+
+    Events::pedCtorEvent += PedConstructor;
 
     // Hook so we don't mess up shoulders in cutscenes
     // CCutsceneObject::PreRender
@@ -24,17 +32,26 @@ CMatrix *__fastcall BoneHelper::Hooked_CPed_ShoulderBoneRotation (
 }
 
 void
+BoneHelper::PedConstructor (CPed *ped)
+{
+    _clearBoneMaps (ped);
+    pedLastRendered[ped] = 0;
+}
+
+void
 BoneHelper::RenderPed (CPed *ped)
 {
-    if (!ped) return;
+    if (!ped || pedLastRendered[ped] >= CTimer::m_FrameCounter) return;
 
-    for (auto &hookedFunction : renderHooks)
-    {
-        hookedFunction (ped);
-    }
+    pedLastRendered[ped] = CTimer::m_FrameCounter;
 
     if (renderHooks.size () > 0)
     {
+        for (auto &hookedFunction : renderHooks)
+        {
+            hookedFunction (ped);
+        }
+
         _setBonePositions (ped);
         _setBoneRotations (ped);
 
@@ -42,7 +59,6 @@ BoneHelper::RenderPed (CPed *ped)
 
         _setBoneScales (ped);
         _setBonePositions (ped);
-        _setBoneRotations (ped);
 
         _clearBoneMaps (ped);
     }
@@ -54,25 +70,39 @@ BoneHelper::RenderPed (CPed *ped)
     }
 }
 
+AnimBlendFrameData *
+BoneHelper::GetBoneById (CPed *ped, unsigned int boneId)
+{
+    auto clump = ped->m_pRwClump;
+    if (!clump) return nullptr;
+
+    return RpAnimBlendClumpFindBone (clump, boneId);
+}
+
 bool
 BoneHelper::IsValidBone (CPed *ped, unsigned int boneId)
 {
     return GetBoneById (ped, boneId) != nullptr;
 }
 
-RwMatrixTag *
+RwMatrix *
 BoneHelper::GetBoneRwMatrix (CPed *ped, unsigned int boneId)
 {
     auto clump = ped->m_pRwClump;
     if (!clump) return nullptr;
+
+    RwMatrix *matrix = nullptr;
 
     RpHAnimHierarchy *hAnimHier = GetAnimHierarchyFromSkinClump (clump);
     if (hAnimHier && hAnimHier->pNodeInfo)
     {
         int boneAnimIdIndex = RpHAnimIDGetIndex (hAnimHier, boneId);
         if (boneAnimIdIndex != -1 && boneAnimIdIndex < hAnimHier->numNodes)
+        {
             return &RpHAnimHierarchyGetMatrixArray (hAnimHier)[boneAnimIdIndex];
+        }
     }
+
     return nullptr;
 }
 
@@ -89,7 +119,7 @@ BoneHelper::GetBonePosition (CPed *ped, unsigned int boneId)
         if (boneMap.contains (boneId)) return boneMap[boneId];
     }
 
-    RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
+    RwMatrix *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
     if (rwBoneMatrix)
     {
         const RwV3d &pos = rwBoneMatrix->pos;
@@ -154,15 +184,6 @@ BoneHelper::ScaleBone (CPed *ped, unsigned int boneId, RwV3d scale,
                                              .scale         = scale,
                                              .rootBone      = rootBone,
                                              .scaleWithRoot = scaleWithRoot});
-}
-
-AnimBlendFrameData *
-BoneHelper::GetBoneById (CPed *ped, unsigned int boneId)
-{
-    auto clump = ped->m_pRwClump;
-    if (!clump) return nullptr;
-
-    return RpAnimBlendClumpFindBone (clump, boneId);
 }
 
 RwV3d
@@ -273,7 +294,7 @@ BoneHelper::_setBonePositions (CPed *ped)
         auto &boneMap = bonePositions[ped];
         for (auto const &[boneId, position] : boneMap)
         {
-            RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
+            RwMatrix *rwBoneMatrix = GetBoneRwMatrix (ped, boneId);
             if (rwBoneMatrix)
             {
                 CMatrix boneMatrix (rwBoneMatrix, false);
@@ -319,7 +340,7 @@ BoneHelper::_setBoneScales (CPed *ped)
         auto &boneList = boneScales[ped];
         for (auto const &scaleInfo : boneList)
         {
-            RwMatrixTag *rwBoneMatrix = GetBoneRwMatrix (ped, scaleInfo.boneId);
+            RwMatrix *rwBoneMatrix = GetBoneRwMatrix (ped, scaleInfo.boneId);
             if (rwBoneMatrix)
             {
                 RwV3d scale = scaleInfo.scale;

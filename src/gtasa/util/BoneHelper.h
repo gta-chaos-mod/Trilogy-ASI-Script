@@ -33,6 +33,8 @@ class BoneHelper
         = {};
     static inline std::map<CPed *, std::vector<BoneScaleInfo>> boneScales = {};
 
+    static inline std::map<CPed *, unsigned int> pedLastRendered = {};
+
 public:
     static inline struct RenderEventStruct
     {
@@ -58,11 +60,15 @@ public:
 
     static void Initialise ();
 
+    static void PedConstructor (CPed *ped);
+
     static void RenderPed (CPed *ped);
 
     static bool IsValidBone (CPed *ped, unsigned int boneId);
 
-    static RwMatrixTag *GetBoneRwMatrix (CPed *ped, unsigned int boneId);
+    static AnimBlendFrameData *GetBoneById (CPed *ped, unsigned int boneId);
+
+    static RwMatrix *GetBoneRwMatrix (CPed *ped, unsigned int boneId);
 
     static RwV3d GetBonePosition (CPed *ped, unsigned int boneId);
 
@@ -78,8 +84,6 @@ public:
     static void ScaleBone (CPed *ped, unsigned int boneId, RwV3d scale,
                            unsigned int rootBone      = 0,
                            bool         scaleWithRoot = true);
-
-    static AnimBlendFrameData *GetBoneById (CPed *ped, unsigned int boneId);
 
     static RwV3d GetBoneRotation (CPed *ped, unsigned int boneId);
 
