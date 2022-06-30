@@ -1,5 +1,6 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
+#include "util/hooks/HookMacros.h"
 
 using namespace plugin;
 
@@ -14,13 +15,14 @@ public:
     {
         rotationAngle = angle;
 
-        Events::vehicleRenderEvent += RenderVehicleEvent;
+        HOOK (inst, Hooked_FrameSyncDirty, signed int (), 0x7EF37C);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::vehicleRenderEvent -= RenderVehicleEvent;
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+            RotateEntity (vehicle, true);
     }
 
     void
@@ -33,25 +35,44 @@ public:
     }
 
     static void
-    RenderVehicleEvent (CVehicle *vehicle)
+    RotateEntity (CEntity *entity, bool reset = false)
     {
-        CPlayerPed *player = FindPlayerPed ();
-        if (!player) return;
-
-        // Potential fix for boats flickering
-        if (DistanceBetweenPoints (player->GetPosition (),
-                                   vehicle->GetPosition ())
-            > 200.0f)
+        if (!IsEntityPointerValid (entity) || !entity->m_matrix
+            || !entity->m_pRwObject)
             return;
 
-        auto frame = GetObjectParent (vehicle->m_pRwObject);
+        auto frame = GetObjectParent (entity->m_pRwObject);
+        if (!frame) return;
+
+        auto matrix = &frame->modelling;
+        if (!matrix) return;
+
+        if (reset)
+        {
+            entity->m_matrix->UpdateRW (&frame->modelling);
+
+            entity->UpdateRwFrame ();
+            return;
+        }
+
+        entity->m_matrix->CopyToRwMatrix (matrix);
 
         RwFrameRotate (frame, &rotation, rotationAngle, rwCOMBINEPRECONCAT);
+
+        entity->UpdateRwFrame ();
+    }
+
+    static signed int
+    Hooked_FrameSyncDirty (auto &&cb)
+    {
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+            RotateEntity (vehicle);
+
+        return cb ();
     }
 };
 
 // clang-format off
-// Rotations
 using VehicleRotationBackwardsEffect = VehicleRotationEffect<RwV3d {0.0f, 0.0f, 1.0f}, 180.0f>;
 DEFINE_EFFECT (VehicleRotationBackwardsEffect, "effect_vehicle_rotation_backwards", 0);
 

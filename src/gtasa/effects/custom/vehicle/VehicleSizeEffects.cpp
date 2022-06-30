@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 using namespace plugin;
 
@@ -9,42 +10,55 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        Events::vehicleRenderEvent += RenderVehicleEvent;
+        HOOK (inst, Hooked_FrameSyncDirty, signed int (), 0x7EF37C);
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::vehicleRenderEvent -= RenderVehicleEvent;
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+            ScaleEntity (vehicle, false);
     }
 
     static void
-    RenderVehicleEvent (CVehicle *vehicle)
+    ScaleEntity (CEntity *entity, bool reset = false)
     {
-        CPlayerPed *player = FindPlayerPed ();
-        if (!player) return;
-
-        // Potential fix for boats flickering
-        if (DistanceBetweenPoints (player->GetPosition (),
-                                   vehicle->GetPosition ())
-            > 200.0f)
+        if (!IsEntityPointerValid (entity) || !entity->m_matrix
+            || !entity->m_pRwObject)
             return;
 
-        auto frame = GetObjectParent (vehicle->m_pRwObject);
+        auto frame = GetObjectParent (entity->m_pRwObject);
+        if (!frame) return;
+
+        auto matrix = &frame->modelling;
+        if (!matrix) return;
+
+        if (reset)
+        {
+            entity->m_matrix->UpdateRW (&frame->modelling);
+
+            entity->UpdateRwFrame ();
+            return;
+        }
+
+        entity->m_matrix->CopyToRwMatrix (matrix);
 
         RwFrameScale (frame, &scale, rwCOMBINEPRECONCAT);
 
-        RwV3d translation = {0.0f, 0.0f, zAdjustment};
+        entity->UpdateRwFrame ();
+    }
 
-        RwFrameTranslate (frame, &translation, rwCOMBINEPRECONCAT);
+    static signed int
+    Hooked_FrameSyncDirty (auto &&cb)
+    {
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+            ScaleEntity (vehicle);
+
+        return cb ();
     }
 };
 
-// TODO: Fix boats flickering when low LOD - maybe a distance check to the
-// player?
-
 // clang-format off
-// Sizes / Scales
 using VehicleSizeTinyCarsEffect = VehicleSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}, -0.3f>;
 DEFINE_EFFECT (VehicleSizeTinyCarsEffect, "effect_vehicle_size_tiny", 0);
 
