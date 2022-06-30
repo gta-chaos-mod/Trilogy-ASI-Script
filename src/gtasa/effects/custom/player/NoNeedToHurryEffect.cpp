@@ -39,12 +39,16 @@ public:
         if (CMenuSystem::num_menus_in_use) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (player && !FindPlayerVehicle (-1, false))
         {
             player->m_pPlayerData->m_bPlayerSprintDisabled = true;
 
             CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->NewState.m_bPedWalk = UCHAR_MAX;
+            if (!pad) return;
+
+            pad->NewState.m_bPedWalk   = UCHAR_MAX;
+            pad->NewState.ShockButtonL = 0;
+            pad->NewState.ButtonSquare = 0;
         }
     }
 };
