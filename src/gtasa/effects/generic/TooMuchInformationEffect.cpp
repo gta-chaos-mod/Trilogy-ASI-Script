@@ -78,8 +78,20 @@ public:
                                                  && player->IsAlive ());
                         });
 
-        // Player Health
-        AddInformation (inst, "Player Health",
+        // Skin ID
+        AddInformation (inst, "Skin ID",
+                        []
+                        {
+                            int skinId = 0;
+
+                            CPlayerPed *player = FindPlayerPed ();
+                            if (player) skinId = player->m_nModelIndex;
+
+                            return std::to_string (skinId);
+                        });
+
+        // Health
+        AddInformation (inst, "Health",
                         []
                         {
                             float health = 0.0f;
@@ -90,8 +102,8 @@ public:
                             return std::format ("{:.2f}", health);
                         });
 
-        // Player Armor
-        AddInformation (inst, "Player Armor",
+        // Armor
+        AddInformation (inst, "Armor",
                         []
                         {
                             float armor = 0.0f;
@@ -102,8 +114,8 @@ public:
                             return std::format ("{:.2f}", armor);
                         });
 
-        // Player Position
-        AddInformation (inst, "Player Position",
+        // Position
+        AddInformation (inst, "Position",
                         []
                         {
                             CVector position (0, 0, 0);
@@ -128,6 +140,33 @@ public:
                             return std::to_string (state);
                         });
 
+        // Wanted Level
+        AddInformation (inst, "Wanted Level",
+                        []
+                        {
+                            int wanted = 0;
+
+                            CPlayerPed *player = FindPlayerPed ();
+                            if (player) wanted = player->GetWantedLevel ();
+
+                            return std::to_string (wanted);
+                        });
+
+        // In Water
+        AddInformation (
+            inst, "In Water",
+            []
+            {
+                bool water = false;
+
+                CPlayerPed *player = FindPlayerPed ();
+                if (player)
+                    water = player->m_nPhysicalFlags.bTouchingWater
+                            || player->m_nPhysicalFlags.bSubmergedInWater;
+
+                return BoolToString (water);
+            });
+
         // Player Vehicle Exists
         AddInformation (inst, "Player Vehicle Exists",
                         []
@@ -137,8 +176,22 @@ public:
                             return BoolToString (playerVehicle != nullptr);
                         });
 
-        // Player Vehicle Health
-        AddInformation (inst, "Player Vehicle Health",
+        // Player Vehicle Model ID
+        AddInformation (inst, "Player Vehicle Model ID",
+                        []
+                        {
+                            int modelId = 0;
+
+                            CVehicle *playerVehicle
+                                = FindPlayerVehicle (-1, false);
+                            if (playerVehicle)
+                                modelId = playerVehicle->m_nModelIndex;
+
+                            return std::to_string (modelId);
+                        });
+
+        // Vehicle Health
+        AddInformation (inst, "Vehicle Health",
                         []
                         {
                             float health = 0.0f;
@@ -151,8 +204,8 @@ public:
                             return std::format ("{:.2f}", health);
                         });
 
-        // Player Vehicle Position
-        AddInformation (inst, "Player Vehicle Position",
+        // Vehicle Position
+        AddInformation (inst, "Vehicle Position",
                         []
                         {
                             CVector position (0, 0, 0);
@@ -167,8 +220,8 @@ public:
                                                 position.z);
                         });
 
-        // Player Vehicle State
-        AddInformation (inst, "Player Vehicle State",
+        // Vehicle State
+        AddInformation (inst, "Vehicle State",
                         []
                         {
                             eEntityStatus status = STATUS_SIMPLE;
