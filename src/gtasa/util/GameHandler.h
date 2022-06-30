@@ -68,6 +68,12 @@ public:
         // Broken parachute fix where it plays the animation but CJ can't be
         // controlled mid-air
         patch::RedirectCall (0x443082, Hooked_BrokenParachuteFix);
+
+        // Can Ped Jump Out Of Car
+        // TODO: Convert to a global hook instead
+        // HOOK_METHOD (globalHooksInstance.Get (), Hooked_CanPedJumpOutCar,
+        //              bool (CAutomobile *, char), 0x6D2030);
+        injector::WriteMemory<uint64> (0x6D2030, 0x9090900004C201B0);
     }
 
     static void
@@ -266,5 +272,11 @@ private:
 
         parachuteCreationStage = 0;
         freefallStage          = 0;
+    }
+
+    static bool
+    Hooked_CanPedJumpOutCar (auto &&cb)
+    {
+        return true;
     }
 };
