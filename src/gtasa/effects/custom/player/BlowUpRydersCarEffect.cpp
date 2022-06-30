@@ -41,6 +41,9 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
+        CPad *pad = player->GetPadFromPlayer ();
+        if (pad) pad->bDisablePlayerCycleWeapon = false;
+
         if (!rydersCar || !IsVehiclePointerValid (rydersCar)
             || rydersCar->m_nStatus != STATUS_WRECKED)
         {
@@ -82,6 +85,9 @@ public:
 
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (pad) pad->bDisablePlayerCycleWeapon = true;
 
         if (player->m_pVehicle)
         {
