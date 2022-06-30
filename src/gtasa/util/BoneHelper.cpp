@@ -3,16 +3,9 @@
 #include <CCutsceneMgr.h>
 #include <CTimer.h>
 
-// TODO: Maybe do bone modifications with lambda functions instead of modifying
-// them in-place for better support...
-// No idea how to get consecutive bone positions that way though...
-// Experiment!
-
 void
 BoneHelper::Initialise ()
 {
-    // TODO: Somehow cutscene peds are have their effects applied twice.
-    // It's not that both of these events run, it's something else...
     Events::pedRenderEvent += RenderPed;
     cutscenePedRenderEvent += RenderPed;
 
@@ -35,7 +28,7 @@ void
 BoneHelper::PedConstructor (CPed *ped)
 {
     _clearBoneMaps (ped);
-    pedLastRendered[ped] = 0;
+    if (pedLastRendered.contains (ped)) pedLastRendered.erase (ped);
 }
 
 void
@@ -371,7 +364,7 @@ BoneHelper::_setBoneScales (CPed *ped)
 void
 BoneHelper::_clearBoneMaps (CPed *ped)
 {
-    bonePositions[ped].clear ();
-    boneRotations[ped].clear ();
-    boneScales[ped].clear ();
+    if (bonePositions.contains (ped)) bonePositions.erase (ped);
+    if (boneRotations.contains (ped)) boneRotations.erase (ped);
+    if (boneScales.contains (ped)) boneScales.erase (ped);
 }
