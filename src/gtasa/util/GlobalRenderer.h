@@ -15,9 +15,14 @@ class GlobalRenderer
 
     static void Hooked_FrameSyncDirty ();
 
-    static void RenderBuilding (CBuilding *building);
-    static void RenderObject (CObject *object);
-    static void RenderVehicle (CVehicle *vehicle);
+    static void RenderBuilding (CBuilding *building, bool reset = false);
+    static void ResetBuildings ();
+
+    static void RenderObject (CObject *object, bool reset = false);
+    static void ResetObjects ();
+
+    static void RenderVehicle (CVehicle *vehicle, bool reset = false);
+    static void ResetVehicles ();
 
 public:
     static inline struct RenderBuildingEventStruct
@@ -40,6 +45,11 @@ public:
                 std::remove (renderBuildingHooks.begin (),
                              renderBuildingHooks.end (), function),
                 renderBuildingHooks.end ());
+
+            if (renderBuildingHooks.size () == 0)
+            {
+                ResetBuildings ();
+            }
         }
     } RenderBuildingEvent;
 
@@ -63,6 +73,11 @@ public:
                                                   renderObjectHooks.end (),
                                                   function),
                                      renderObjectHooks.end ());
+
+            if (renderObjectHooks.size () == 0)
+            {
+                ResetObjects ();
+            }
         }
     } RenderObjectEvent;
 
@@ -86,6 +101,11 @@ public:
                                                    renderVehicleHooks.end (),
                                                    function),
                                       renderVehicleHooks.end ());
+
+            if (renderVehicleHooks.size () == 0)
+            {
+                ResetVehicles ();
+            }
         }
     } RenderVehicleEvent;
 

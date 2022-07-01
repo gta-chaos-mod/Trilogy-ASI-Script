@@ -33,7 +33,7 @@ GlobalRenderer::Hooked_FrameSyncDirty ()
 }
 
 void
-GlobalRenderer::RenderBuilding (CBuilding *building)
+GlobalRenderer::RenderBuilding (CBuilding *building, bool reset)
 {
     if (!IsEntityPointerValid (building) || !building->m_matrix
         || !building->m_pRwObject)
@@ -47,16 +47,28 @@ GlobalRenderer::RenderBuilding (CBuilding *building)
 
     building->m_matrix->CopyToRwMatrix (matrix);
 
-    for (auto &hookedFunction : renderBuildingHooks)
+    if (!reset)
     {
-        hookedFunction (building, frame);
+        for (auto &hookedFunction : renderBuildingHooks)
+        {
+            hookedFunction (building, frame);
+        }
     }
 
     building->UpdateRwFrame ();
 }
 
 void
-GlobalRenderer::RenderObject (CObject *object)
+GlobalRenderer::ResetBuildings ()
+{
+    for (CBuilding *building : CPools::ms_pBuildingPool)
+    {
+        RenderBuilding (building, true);
+    }
+}
+
+void
+GlobalRenderer::RenderObject (CObject *object, bool reset)
 {
     if (!IsObjectPointerValid (object) || !object->m_matrix
         || !object->m_pRwObject)
@@ -70,16 +82,28 @@ GlobalRenderer::RenderObject (CObject *object)
 
     object->m_matrix->CopyToRwMatrix (matrix);
 
-    for (auto &hookedFunction : renderObjectHooks)
+    if (!reset)
     {
-        hookedFunction (object, frame);
+        for (auto &hookedFunction : renderObjectHooks)
+        {
+            hookedFunction (object, frame);
+        }
     }
 
     object->UpdateRwFrame ();
 }
 
 void
-GlobalRenderer::RenderVehicle (CVehicle *vehicle)
+GlobalRenderer::ResetObjects ()
+{
+    for (CObject *object : CPools::ms_pObjectPool)
+    {
+        RenderObject (object, true);
+    }
+}
+
+void
+GlobalRenderer::RenderVehicle (CVehicle *vehicle, bool reset)
 {
     if (!IsVehiclePointerValid (vehicle) || !vehicle->m_matrix
         || !vehicle->m_pRwObject)
@@ -93,10 +117,22 @@ GlobalRenderer::RenderVehicle (CVehicle *vehicle)
 
     vehicle->m_matrix->CopyToRwMatrix (matrix);
 
-    for (auto &hookedFunction : renderVehicleHooks)
+    if (!reset)
     {
-        hookedFunction (vehicle, frame);
+        for (auto &hookedFunction : renderVehicleHooks)
+        {
+            hookedFunction (vehicle, frame);
+        }
     }
 
     vehicle->UpdateRwFrame ();
+}
+
+void
+GlobalRenderer::ResetVehicles ()
+{
+    for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+    {
+        RenderVehicle (vehicle, true);
+    }
 }
