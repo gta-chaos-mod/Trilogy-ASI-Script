@@ -37,13 +37,13 @@ public:
         blowUpDelay  = 500;
         beepCooldown = 1000;
 
-        Events::drawAfterFadeEvent += OnDraw;
+        Events::drawHudEvent.before += OnDraw;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::drawAfterFadeEvent -= OnDraw;
+        Events::drawHudEvent.before -= OnDraw;
     }
 
     void
