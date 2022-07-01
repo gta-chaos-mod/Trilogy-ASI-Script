@@ -1,7 +1,5 @@
 #include "util/EffectBase.h"
-#include "util/hooks/HookMacros.h"
-
-using namespace plugin;
+#include "util/GlobalRenderer.h"
 
 template <RwV3d scale> class ObjectSizeEffect : public EffectBase
 {
@@ -9,57 +7,27 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        HOOK (inst, Hooked_FrameSyncDirty, signed int (), 0x7EF37C);
+        GlobalRenderer::RenderBuildingEvent += RenderBuilding;
+        GlobalRenderer::RenderObjectEvent += RenderObject;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        for (CObject *object : CPools::ms_pObjectPool)
-            ScaleEntity (object, true);
-
-        for (CBuilding *building : CPools::ms_pBuildingPool)
-            ScaleEntity (building, true);
+        GlobalRenderer::RenderBuildingEvent -= RenderBuilding;
+        GlobalRenderer::RenderObjectEvent -= RenderObject;
     }
 
     static void
-    ScaleEntity (CEntity *entity, bool reset = false)
+    RenderBuilding (CBuilding *building, RwFrame *frame)
     {
-        if (!IsEntityPointerValid (entity) || !entity->m_matrix
-            || !entity->m_pRwObject)
-            return;
-
-        auto frame = GetObjectParent (entity->m_pRwObject);
-        if (!frame) return;
-
-        auto matrix = &frame->modelling;
-        if (!matrix) return;
-
-        if (reset)
-        {
-            entity->m_matrix->UpdateRW (&frame->modelling);
-
-            entity->UpdateRwFrame ();
-            return;
-        }
-
-        entity->m_matrix->CopyToRwMatrix (matrix);
-
         RwFrameScale (frame, &scale, rwCOMBINEPRECONCAT);
-
-        entity->UpdateRwFrame ();
     }
 
-    static signed int
-    Hooked_FrameSyncDirty (auto &&cb)
+    static void
+    RenderObject (CObject *object, RwFrame *frame)
     {
-        for (CObject *object : CPools::ms_pObjectPool)
-            ScaleEntity (object);
-
-        for (CBuilding *building : CPools::ms_pBuildingPool)
-            ScaleEntity (building);
-
-        return cb ();
+        RwFrameScale (frame, &scale, rwCOMBINEPRECONCAT);
     }
 };
 

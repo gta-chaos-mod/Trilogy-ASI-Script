@@ -1,8 +1,6 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
-#include "util/hooks/HookMacros.h"
-
-using namespace plugin;
+#include "util/GlobalRenderer.h"
 
 template <RwV3d rotation, float angle, float perTick = 0.0f>
 class ObjectRotationEffect : public EffectBase
@@ -15,17 +13,15 @@ public:
     {
         rotationAngle = angle;
 
-        HOOK (inst, Hooked_FrameSyncDirty, signed int (), 0x7EF37C);
+        GlobalRenderer::RenderBuildingEvent += RenderBuilding;
+        GlobalRenderer::RenderObjectEvent += RenderObject;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        for (CObject *object : CPools::ms_pObjectPool)
-            RotateEntity (object, true);
-
-        for (CBuilding *building : CPools::ms_pBuildingPool)
-            RotateEntity (building, true);
+        GlobalRenderer::RenderBuildingEvent -= RenderBuilding;
+        GlobalRenderer::RenderObjectEvent -= RenderObject;
     }
 
     void
@@ -38,43 +34,15 @@ public:
     }
 
     static void
-    RotateEntity (CEntity *entity, bool reset = false)
+    RenderBuilding (CBuilding *building, RwFrame *frame)
     {
-        if (!IsEntityPointerValid (entity) || !entity->m_matrix
-            || !entity->m_pRwObject)
-            return;
-
-        auto frame = GetObjectParent (entity->m_pRwObject);
-        if (!frame) return;
-
-        auto matrix = &frame->modelling;
-        if (!matrix) return;
-
-        if (reset)
-        {
-            entity->m_matrix->UpdateRW (&frame->modelling);
-
-            entity->UpdateRwFrame ();
-            return;
-        }
-
-        entity->m_matrix->CopyToRwMatrix (matrix);
-
         RwFrameRotate (frame, &rotation, rotationAngle, rwCOMBINEPRECONCAT);
-
-        entity->UpdateRwFrame ();
     }
 
-    static signed int
-    Hooked_FrameSyncDirty (auto &&cb)
+    static void
+    RenderObject (CObject *object, RwFrame *frame)
     {
-        for (CObject *object : CPools::ms_pObjectPool)
-            RotateEntity (object);
-
-        for (CBuilding *building : CPools::ms_pBuildingPool)
-            RotateEntity (building);
-
-        return cb ();
+        RwFrameRotate (frame, &rotation, rotationAngle, rwCOMBINEPRECONCAT);
     }
 };
 
@@ -85,12 +53,12 @@ DEFINE_EFFECT (ObjectRotationBackwardsEffect, "effect_object_rotation_backwards"
 using ObjectRotationFlippedEffect = ObjectRotationEffect<RwV3d {0.0f, 1.0f, 0.0f}, 180.0f>;
 DEFINE_EFFECT (ObjectRotationFlippedEffect, "effect_object_rotation_flipped", 0);
 
-using ObjectRotationContinuousXEffect = ObjectRotationEffect<RwV3d {1.0f, 0.0f, 0.0f}, 0.0f, 5.0f>;
+using ObjectRotationContinuousXEffect = ObjectRotationEffect<RwV3d {1.0f, 0.0f, 0.0f}, 0.0f, 3.0f>;
 DEFINE_EFFECT (ObjectRotationContinuousXEffect, "effect_object_rotation_continuous_x", 0);
 
-using ObjectRotationContinuousYEffect = ObjectRotationEffect<RwV3d {0.0f, 1.0f, 0.0f}, 0.0f, 5.0f>;
+using ObjectRotationContinuousYEffect = ObjectRotationEffect<RwV3d {0.0f, 1.0f, 0.0f}, 0.0f, 3.0f>;
 DEFINE_EFFECT (ObjectRotationContinuousYEffect, "effect_object_rotation_continuous_y", 0);
 
-using ObjectRotationContinuousZEffect = ObjectRotationEffect<RwV3d {0.0f, 0.0f, 1.0f}, 0.0f, 5.0f>;
+using ObjectRotationContinuousZEffect = ObjectRotationEffect<RwV3d {0.0f, 0.0f, 1.0f}, 0.0f, 3.0f>;
 DEFINE_EFFECT (ObjectRotationContinuousZEffect, "effect_object_rotation_continuous_z", 0);
 // clang-format on

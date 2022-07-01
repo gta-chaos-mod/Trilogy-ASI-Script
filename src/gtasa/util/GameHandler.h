@@ -4,6 +4,7 @@
 #include "util/Config.h"
 #include "util/GameFixes.h"
 #include "util/GameUtil.h"
+#include "util/GlobalRenderer.h"
 #include "util/Websocket.h"
 
 #include <CFileMgr.h>
@@ -27,6 +28,7 @@ public:
     {
         Config::Init ();
         BoneHelper::Initialise ();
+        GlobalRenderer::Initialise ();
         GameFixes::Initialise ();
 
         // Check if the mod is already loaded / installed once

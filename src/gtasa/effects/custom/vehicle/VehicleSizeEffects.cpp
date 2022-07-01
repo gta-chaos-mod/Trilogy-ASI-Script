@@ -1,7 +1,5 @@
 #include "util/EffectBase.h"
-#include "util/hooks/HookMacros.h"
-
-using namespace plugin;
+#include "util/GlobalRenderer.h"
 
 template <RwV3d scale, float zAdjustment = 0.0f>
 class VehicleSizeEffect : public EffectBase
@@ -10,57 +8,31 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        HOOK (inst, Hooked_FrameSyncDirty, signed int (), 0x7EF37C);
+        GlobalRenderer::RenderVehicleEvent += RenderVehicle;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
-            ScaleEntity (vehicle, false);
+        GlobalRenderer::RenderVehicleEvent -= RenderVehicle;
     }
 
     static void
-    ScaleEntity (CEntity *entity, bool reset = false)
+    RenderVehicle (CVehicle *vehicle, RwFrame *frame)
     {
-        if (!IsEntityPointerValid (entity) || !entity->m_matrix
-            || !entity->m_pRwObject)
-            return;
-
-        auto frame = GetObjectParent (entity->m_pRwObject);
-        if (!frame) return;
-
-        auto matrix = &frame->modelling;
-        if (!matrix) return;
-
-        if (reset)
-        {
-            entity->m_matrix->UpdateRW (&frame->modelling);
-
-            entity->UpdateRwFrame ();
-            return;
-        }
-
-        entity->m_matrix->CopyToRwMatrix (matrix);
+        RwV3d translation = {0.0f, 0.0f, zAdjustment};
+        RwFrameTranslate (frame, &translation, rwCOMBINEPRECONCAT);
 
         RwFrameScale (frame, &scale, rwCOMBINEPRECONCAT);
-
-        entity->UpdateRwFrame ();
-    }
-
-    static signed int
-    Hooked_FrameSyncDirty (auto &&cb)
-    {
-        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
-            ScaleEntity (vehicle);
-
-        return cb ();
     }
 };
 
 // clang-format off
 using VehicleSizeTinyCarsEffect = VehicleSizeEffect<RwV3d {0.5f, 0.5f, 0.5f}, -0.3f>;
 DEFINE_EFFECT (VehicleSizeTinyCarsEffect, "effect_vehicle_size_tiny", 0);
+
+using VehicleSizeSuperTinyCarsEffect = VehicleSizeEffect<RwV3d {0.1f, 0.1f, 0.1f}, -0.65f>;
+DEFINE_EFFECT (VehicleSizeSuperTinyCarsEffect, "effect_vehicle_size_super_tiny", 0);
 
 using VehicleSizeLargeCarsEffect = VehicleSizeEffect<RwV3d {2.0f, 2.0f, 2.0f}, 0.3f>;
 DEFINE_EFFECT (VehicleSizeLargeCarsEffect, "effect_vehicle_size_large", 0);
