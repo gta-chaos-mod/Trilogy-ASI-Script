@@ -1,6 +1,6 @@
 #include "GlobalRenderer.h"
 
-#include "util/GlobalHooksInstance.h"
+// #include "util/GlobalHooksInstance.h"
 #include "util/hooks/HookMacros.h"
 
 using namespace plugin;
