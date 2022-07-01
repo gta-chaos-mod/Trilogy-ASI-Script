@@ -1,6 +1,7 @@
 #include "effects/OneTimeEffect.h"
 
 #include <CStreaming.h>
+#include <CWorld.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
@@ -26,6 +27,12 @@ public:
                                                          position.y, position.z,
                                                          &treeObject);
         CStreaming::SetModelIsDeletable (model);
+
+        bool  worked = false;
+        float newZ   = CWorld::FindGroundZFor3DCoord (position.x, position.y,
+                                                      position.z + 10.0f, &worked,
+                                                      nullptr);
+        if (worked && newZ > position.z) position.z = newZ;
 
         CMatrix *matrix;
 
