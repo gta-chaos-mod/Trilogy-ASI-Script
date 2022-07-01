@@ -7,6 +7,7 @@
 #include "util/GlobalRenderer.h"
 #include "util/Websocket.h"
 
+#include <CAnimManager.h>
 #include <CFileMgr.h>
 #include <CReferences.h>
 #include <CTheScripts.h>
@@ -85,6 +86,7 @@ public:
         HandleQuickSave ();
 
         HandleVehicleToRealPhysics ();
+        HandleParachutingWithoutParachuteFix ();
     }
 
 private:
@@ -150,6 +152,27 @@ private:
         {
             GameUtil::SetVehiclesToRealPhysics ();
         }
+    }
+
+    static void
+    HandleParachutingWithoutParachuteFix ()
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        bool hasParachute
+            = player->m_aWeapons[player->m_nActiveWeaponSlot].m_nType
+              == WEAPON_PARACHUTE;
+
+        if (hasParachute) return;
+
+        CAnimBlendAssociation *FirstAssociation
+            = RpAnimBlendClumpGetFirstAssociation (player->m_pRwClump, 0x10u);
+        if (!FirstAssociation) return;
+
+        CAnimBlock *block = CAnimManager::GetAnimationBlock ("parachute");
+        if (block && block->bLoaded)
+            player->m_pIntelligence->ClearTasks (true, false);
     }
 
     static void
