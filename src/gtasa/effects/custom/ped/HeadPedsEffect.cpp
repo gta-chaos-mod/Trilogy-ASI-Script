@@ -39,13 +39,13 @@ public:
         // Cutscene related?
         BoneHelper::ScaleBone (ped, 30, scale, BONE_NECK);
 
+        scale = {0.1f, 0.1f, 0.1f};
+        for (int i = BONE_RIGHTUPPERTORSO; i < BONE_RIGHTFOOT; i++)
+            BoneHelper::ScaleBone (ped, i, scale, 0, false);
+
         RwV3d pos = BoneHelper::GetBonePosition (ped, BONE_UPPERTORSO);
         pos.z -= 1.75f;
         BoneHelper::SetBonePosition (ped, BONE_UPPERTORSO, pos);
-
-        pos = BoneHelper::GetBonePosition (ped, 0);
-        if (!ped->m_nPedFlags.bInVehicle) pos.z -= 0.75f;
-        BoneHelper::SetBonePosition (ped, 0, pos);
     }
 };
 
