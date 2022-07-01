@@ -36,13 +36,19 @@ public:
     static void
     RenderBuilding (CBuilding *building, RwFrame *frame)
     {
-        RwFrameRotate (frame, &rotation, rotationAngle, rwCOMBINEPRECONCAT);
+        int offset = (int) building % 360;
+
+        RwFrameRotate (frame, &rotation, rotationAngle + offset,
+                       rwCOMBINEPRECONCAT);
     }
 
     static void
     RenderObject (CObject *object, RwFrame *frame)
     {
-        RwFrameRotate (frame, &rotation, rotationAngle, rwCOMBINEPRECONCAT);
+        int offset = (int) object % 360;
+
+        RwFrameRotate (frame, &rotation, rotationAngle + offset,
+                       rwCOMBINEPRECONCAT);
     }
 };
 

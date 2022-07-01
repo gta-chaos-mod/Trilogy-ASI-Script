@@ -34,7 +34,10 @@ public:
     static void
     RenderVehicle (CVehicle *vehicle, RwFrame *frame)
     {
-        RwFrameRotate (frame, &rotation, rotationAngle, rwCOMBINEPRECONCAT);
+        int offset = (int) vehicle % 360;
+
+        RwFrameRotate (frame, &rotation, rotationAngle + offset,
+                       rwCOMBINEPRECONCAT);
     }
 };
 

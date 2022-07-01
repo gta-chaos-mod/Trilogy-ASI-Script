@@ -36,11 +36,17 @@ public:
     static void
     RenderPed (CPed *ped)
     {
+        int offset = (int) ped % 360;
+
         RwV3d angles = BoneHelper::GetBoneRotation (ped, 0);
 
         angles.x += rotation.x * rotationAngle;
         angles.y += rotation.y * rotationAngle;
         angles.z += rotation.z * rotationAngle;
+
+        if (rotation.x == 1.0f && perTick != 0.0f) angles.x += offset;
+        if (rotation.y == 1.0f && perTick != 0.0f) angles.y += offset;
+        if (rotation.z == 1.0f && perTick != 0.0f) angles.z += offset;
 
         BoneHelper::SetBoneRotation (ped, 0, angles);
     }
