@@ -166,8 +166,7 @@ private:
 
         if (hasParachute) return;
 
-        CAnimBlock *block = CAnimManager::GetAnimationBlock ("parachute");
-        if (block && block->bLoaded)
+        if (RpAnimBlendClumpGetAssociation (player->m_pRwClump, "FALL_SKYDIVE"))
             player->m_pIntelligence->ClearTasks (true, false);
     }
 
