@@ -12,5 +12,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (RemoveAllWeaponsEffect, "effect_remove_all_weapons",
-               GROUP_HEALTH);
+DEFINE_EFFECT (RemoveAllWeaponsEffect, "effect_remove_all_weapons", 0);
