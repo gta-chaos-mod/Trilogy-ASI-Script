@@ -34,7 +34,7 @@ public:
     static void
     RenderVehicle (CVehicle *vehicle, RwFrame *frame)
     {
-        int offset = (int) vehicle % 360;
+        int offset = perTick != 0.0f ? (int) vehicle % 360 : 0;
 
         RwFrameRotate (frame, &rotation, rotationAngle + offset,
                        rwCOMBINEPRECONCAT);
@@ -48,10 +48,10 @@ DEFINE_EFFECT (VehicleRotationBackwardsEffect, "effect_vehicle_rotation_backward
 using VehicleRotationFlippedEffect = VehicleRotationEffect<RwV3d {0.0f, 1.0f, 0.0f}, 180.0f>;
 DEFINE_EFFECT (VehicleRotationFlippedEffect, "effect_vehicle_rotation_flipped", 0);
 
-using VehicleRotationContinuousXEffect = VehicleRotationEffect<RwV3d {1.0f, 0.0f, 0.0f}, 0.0f, 5.0f>;
+using VehicleRotationContinuousXEffect = VehicleRotationEffect<RwV3d {1.0f, 0.0f, 0.0f}, 0.0f, -5.0f>;
 DEFINE_EFFECT (VehicleRotationContinuousXEffect, "effect_vehicle_rotation_continuous_x", 0);
 
-using VehicleRotationContinuousYEffect = VehicleRotationEffect<RwV3d {0.0f, 1.0f, 0.0f}, 0.0f, -5.0f>;
+using VehicleRotationContinuousYEffect = VehicleRotationEffect<RwV3d {0.0f, 1.0f, 0.0f}, 0.0f, 5.0f>;
 DEFINE_EFFECT (VehicleRotationContinuousYEffect, "effect_vehicle_rotation_continuous_y", 0);
 
 using VehicleRotationContinuousZEffect = VehicleRotationEffect<RwV3d {0.0f, 0.0f, 1.0f}, 0.0f, 5.0f>;

@@ -45,7 +45,7 @@ public:
     static void
     RenderObject (CObject *object, RwFrame *frame)
     {
-        int offset = (int) object % 360;
+        int offset = perTick != 0.0f ? (int) object % 360 : 0.0f;
 
         RwFrameRotate (frame, &rotation, rotationAngle + offset,
                        rwCOMBINEPRECONCAT);
