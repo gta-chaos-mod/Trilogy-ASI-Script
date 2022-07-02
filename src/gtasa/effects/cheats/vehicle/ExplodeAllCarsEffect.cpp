@@ -1,7 +1,7 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 
-class BlowUpAllCarsEffect : public EffectBase
+class ExplodeAllCarsEffect : public EffectBase
 {
 public:
     bool
@@ -25,4 +25,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (BlowUpAllCarsEffect, "effect_blow_up_all_cars", 0);
+DEFINE_EFFECT (ExplodeAllCarsEffect, "effect_explode_all_cars", 0);
