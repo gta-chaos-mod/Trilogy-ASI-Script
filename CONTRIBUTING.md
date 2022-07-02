@@ -3,7 +3,7 @@ This contributing document is still WIP.
 
 If you have any questions please feel free to open a new post in the Discussions tab.
 
-**Ninja is highly recommended as a build.**
+**Ninja ![ninja](https://i.imgur.com/z8Yty1X.png =20x20) is highly recommended as a build system.**
 
 # Basic Style-Guide
 - Effects are headerless, meaning all you need is a `.cpp` file in the correct subfolder
