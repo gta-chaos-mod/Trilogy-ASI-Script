@@ -100,7 +100,13 @@ public:
             gainedMoney -= thisCalc->m_fDamageFactor;
             gainedMoney = std::max (0.0f, gainedMoney);
 
-            if (gainedMoney == 0.0f) player->m_fHealth = 0.0f;
+            if (gainedMoney == 0.0f)
+            {
+                player->m_fHealth = 0.0f;
+                cb ();
+            }
+
+            return;
         }
 
         cb ();
