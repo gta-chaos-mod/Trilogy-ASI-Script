@@ -166,8 +166,20 @@ private:
 
         if (hasParachute) return;
 
-        if (RpAnimBlendClumpGetAssociation (player->m_pRwClump, "FALL_SKYDIVE"))
+        std::vector<std::string> anims = {
+            "FALL_SKYDIVE",       "FALL_SKYDIVE_L", "FALL_SKYDIVE_R",
+            "FALL_SKYDIVE_ACCEL", "PARA_OPEN",      "PARA_FLOAT",
+            "PARA_DECEL",         "PARA_STEERL",    "PARA_STEERR",
+        };
+
+        for (std::string anim : anims)
+        {
+            if (RpAnimBlendClumpGetAssociation (player->m_pRwClump, anim.c_str()))
+            {
             player->m_pIntelligence->ClearTasks (true, false);
+                break;
+            }
+        }
     }
 
     static void
