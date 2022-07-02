@@ -166,10 +166,6 @@ private:
 
         if (hasParachute) return;
 
-        CAnimBlendAssociation *FirstAssociation
-            = RpAnimBlendClumpGetFirstAssociation (player->m_pRwClump, 0x10u);
-        if (!FirstAssociation) return;
-
         CAnimBlock *block = CAnimManager::GetAnimationBlock ("parachute");
         if (block && block->bLoaded)
             player->m_pIntelligence->ClearTasks (true, false);
