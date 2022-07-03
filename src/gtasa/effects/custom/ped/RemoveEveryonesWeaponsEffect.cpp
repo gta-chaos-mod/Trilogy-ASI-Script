@@ -1,7 +1,7 @@
 #include "effects/OneTimeEffect.h"
 #include "util/GameUtil.h"
 
-class RemoveAllWeaponsEffect : public OneTimeEffect
+class RemoveEveryonesWeaponsEffect : public OneTimeEffect
 {
 public:
     void
@@ -12,4 +12,5 @@ public:
     }
 };
 
-DEFINE_EFFECT (RemoveAllWeaponsEffect, "effect_remove_all_weapons", 0);
+DEFINE_EFFECT (RemoveEveryonesWeaponsEffect, "effect_remove_everyones_weapons",
+               0);
