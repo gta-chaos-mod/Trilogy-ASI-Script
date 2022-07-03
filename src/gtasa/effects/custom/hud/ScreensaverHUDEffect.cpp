@@ -90,7 +90,7 @@ public:
             if (element.goingRight)
             {
                 pos.x += adjustedTick;
-                if (SCREEN_COORD (pos.x) >= SCREEN_WIDTH)
+                if (pos.x >= SCREEN_COORD_RIGHT (20.0f))
                     element.goingRight = false;
             }
             else
@@ -102,7 +102,7 @@ public:
             if (element.goingDown)
             {
                 pos.y += adjustedTick;
-                if (SCREEN_COORD (pos.y) >= SCREEN_HEIGHT)
+                if (pos.y >= SCREEN_COORD_BOTTOM (20.0f))
                     element.goingDown = false;
             }
             else
@@ -224,7 +224,7 @@ public:
                       + RsGlobal.maximumWidth * 0.0015625 * 200.0
                       - RsGlobal.maximumWidth * 0.0015625 * 4.0;
 
-        CFont::SetWrapx (width);
+        CFont::SetWrapx (std::min (x + width, SCREEN_WIDTH));
 
         return cb ();
     }
@@ -314,15 +314,13 @@ public:
         float x = oldX;
         float y = oldHeight;
 
-        // mod
-
         if (!positions.contains ("radar"))
         {
             positions["radar"] = CreateHUDElement (x, y);
         }
 
-        x = positions["radar"].pos.x / 2.2f;
-        y = positions["radar"].pos.y * 1.45f;
+        x = positions["radar"].pos.x / 2.9f;
+        y = positions["radar"].pos.y / 0.9f;
 
         injector::WriteMemory<float> (0x858A10, x);
         RsGlobal.maximumHeight = y;
