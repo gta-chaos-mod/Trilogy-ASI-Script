@@ -11,7 +11,7 @@ GenericUtil::GetModVersion ()
 
     std::string version = "Chaos Mod v3.0";
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     version.append ("-debug");
 #endif
 
