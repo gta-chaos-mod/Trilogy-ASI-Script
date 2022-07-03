@@ -16,10 +16,10 @@ EffectInstance::Start ()
 void
 EffectInstance::End ()
 {
-    EffectHandler::RemoveStaleEffects ();
-
     cleanupHandler.DoCleanup ();
     if (this->effect) this->effect->OnEnd (this);
+
+    EffectHandler::RemoveStaleEffect (this);
 }
 
 void
