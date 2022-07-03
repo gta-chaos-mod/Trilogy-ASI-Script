@@ -158,7 +158,7 @@ EffectHandler::HandleFunction (const nlohmann::json &effectData)
 
     if (effect) QueueEffect (effect, effectData);
     //     else
-    // #ifndef _NDEBUG
+    // #ifdef _DEBUG
     //         MessageBox (NULL, std::string (effectData.at ("effectID")).c_str
     //         (),
     //                     "Effect not found", MB_ICONHAND);

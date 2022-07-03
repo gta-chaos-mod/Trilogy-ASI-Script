@@ -11,7 +11,7 @@ EffectDatabase::RegisterEffect (EffectBase *base)
     {
 // TODO: Log this to a file so we know that an effect tried to register
 // with an already existing ID
-#ifndef _NDEBUG
+#ifdef _DEBUG
         MessageBox (NULL, id.c_str (), "Trying to register duplicate effect",
                     MB_ICONHAND);
 #endif
