@@ -13,7 +13,9 @@ GenericUtil::GetModVersion ()
 
 #ifdef _DEBUG
     version.append ("-debug");
-#elif VERSION_SUFFIX
+#endif
+
+#ifdef VERSION_SUFFIX
     version.append ("-git.").append (VERSION_SUFFIX);
 #endif
 
