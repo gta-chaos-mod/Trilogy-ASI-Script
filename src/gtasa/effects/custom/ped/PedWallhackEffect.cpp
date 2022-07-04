@@ -82,7 +82,7 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            if (!ped || ped == player) continue;
+            if (!ped || ped == player || !ped->IsAlive ()) continue;
 
             Wallhack (ped);
         }
