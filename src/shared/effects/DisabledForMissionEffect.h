@@ -9,7 +9,7 @@
 template <typename ChildEffect>
 class DisabledForMissionEffect : public ChildEffect
 {
-    inline static bool prevOnMission = false;
+    static inline bool prevOnMission = false;
 
     virtual void
     OnTick (EffectInstance *inst) override

@@ -79,7 +79,7 @@ public:
         resetMaterialColors.push_front (
             std::make_pair (&material->color, material->color));
 
-        int pedModifier = ((int) ped) % 90;
+        int pedModifier = (int) ped % 90;
         int r           = material->color.red;
         int g           = material->color.green;
         int b           = material->color.blue;

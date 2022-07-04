@@ -8,8 +8,8 @@
 
 class EffectHandler
 {
-    inline static std::queue<std::function<void ()>> effectQueue;
-    inline static std::deque<EffectInstance>         effects;
+    static inline std::queue<std::function<void ()>> effectQueue;
+    static inline std::deque<EffectInstance>         effects;
 
 public:
     static void SetupCountdownThread ();
@@ -18,8 +18,8 @@ public:
 
     static void EmptyQueue ();
 
-    static void RemoveStaleEffect (EffectInstance* instance);
-    static void RemoveStaleEffects (EffectInstance* except = nullptr);
+    static void RemoveStaleEffect (EffectInstance *instance);
+    static void RemoveStaleEffects (EffectInstance *except = nullptr);
 
     template <typename _Callable, typename... _Args>
     static void QueueFunction (_Callable &&__f, _Args &&...__args);

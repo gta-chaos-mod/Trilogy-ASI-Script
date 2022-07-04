@@ -5,13 +5,13 @@ class EffectInstance;
 class EffectDrawHandler
 {
     /* Draw context variables */
-    inline static EffectInstance *effect;
+    static inline EffectInstance *effect;
 
-    inline static int  idx;
-    inline static bool isInset;
+    static inline int  idx;
+    static inline bool isInset;
 
-    inline static float x = 0;
-    inline static float y = 0;
+    static inline float x = 0;
+    static inline float y = 0;
 
     /* Effect specific variables */
     float transitionTimer       = 0;

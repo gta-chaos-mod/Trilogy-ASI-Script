@@ -7,7 +7,7 @@
 
 template <typename Prototype, bool Method, auto... Addresses> class Event
 {
-    inline static bool enabled;
+    static inline bool enabled;
 
 public:
     using FunctionCb = FunctionCb<Method, Prototype>;
@@ -70,7 +70,7 @@ public:
         {
             Add (cb.first, cb.second);
         }
-    } inline static before, after;
+    } static inline before, after;
 
     static void
     Add (std::pair<EffectInstance *, Callback> cb)

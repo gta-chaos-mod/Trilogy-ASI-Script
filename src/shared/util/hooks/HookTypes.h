@@ -5,7 +5,7 @@
 
 template <auto Address, typename T> struct InjectorHook
 {
-    inline static T scopedObj;
+    static inline T scopedObj;
 
     static void
     Disable (uintptr_t addr)
@@ -65,7 +65,7 @@ template <auto Address> struct AutomaticHook
         MINHOOK
     };
 
-    inline static HookType type;
+    static inline HookType type;
 
     static void
     Disable (uintptr_t addr)

@@ -4,9 +4,9 @@
 
 class Config
 {
-    inline static std::shared_ptr<cpptoml::table> config;
+    static inline std::shared_ptr<cpptoml::table> config;
 #ifdef GTASA
-    inline static std::string configContent
+    static inline std::string configContent
         = R"(########################################################
 # Chaos Mod
 #######################################################
@@ -108,7 +108,7 @@ Enabled = false
 
 #######################################################)";
 #else
-    inline static std::string configContent = "";
+    static inline std::string configContent = "";
 #endif
 
 public:

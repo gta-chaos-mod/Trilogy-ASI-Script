@@ -37,7 +37,7 @@ struct HookManagerMain
         }
     }
 
-    inline static typename Callback::TreeType sm_CallTree;
+    static inline typename Callback::TreeType sm_CallTree;
 
 public:
     using CbType = Callback;
@@ -90,7 +90,7 @@ struct HookManagerMulti
 {
     using CbType = Callback;
 
-    inline static std::list<std::vector<typename Callback::TreeIterator>>
+    static inline std::list<std::vector<typename Callback::TreeIterator>>
         s_Iterators;
 
     static auto
