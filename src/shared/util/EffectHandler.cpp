@@ -43,8 +43,7 @@ EffectHandler::RemoveStaleEffect (EffectInstance *instance)
 {
     if (effects.size () <= NUM_RECENT_EFFECTS) return;
 
-    // Don't remove if we're the very first effect
-    if (&effects[0] == instance && instance->GetEffectDuration () > 0)
+    if (&effects[0] == instance)
     {
         RemoveStaleEffects (instance);
         return;
@@ -56,13 +55,13 @@ EffectHandler::RemoveStaleEffect (EffectInstance *instance)
 void
 EffectHandler::RemoveStaleEffects (EffectInstance *except)
 {
-    if (effects.size () < NUM_RECENT_EFFECTS) return;
+    if (effects.size () <= NUM_RECENT_EFFECTS) return;
 
-    int amountToRemove = effects.size () - NUM_RECENT_EFFECTS + 1;
+    int amountToRemove = effects.size () - NUM_RECENT_EFFECTS;
 
     std::set<EffectInstance *> effectsToRemove = {};
 
-    for (int i = effects.size () - 1; i >= 1; i--)
+    for (int i = effects.size () - 1; i > 1; i--)
     {
         auto &effect = effects[i];
 
@@ -135,14 +134,9 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         inst.Enable ();
         inst.Tick ();
 
-        // RemoveStaleEffects ();
         effects.push_front (std::move (inst));
 
-        // // If more than 5 effects and first effect is not a OneTime Effect
-        // if (effects.size () > 5 && effects[0].GetEffectDuration () != 0)
-        // {
-        //     RemoveStaleEffects ();
-        // }
+        RemoveStaleEffects (&effects[0]);
     };
 
     QueueFunction (effectFunction);
