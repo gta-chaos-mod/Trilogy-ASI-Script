@@ -35,10 +35,6 @@ public:
         HOOK_ARGS (inst, Hooked_DrawMoney, char (float, float, char *),
                    0x58F607);
 
-        // TODO: Crashes?
-        // HOOK_ARGS (inst, Hooked_DrawWanted, char (float, float, char *),
-        //            0x58DE42, 0x58DF11, 0x58DFD3);
-
         HOOK_ARGS (inst, Hooked_DrawVehicleName, char (float, float, char *),
                    0x58B156);
 
@@ -148,20 +144,6 @@ public:
 
         x = positions["money"].pos.x;
         y = positions["money"].pos.y;
-
-        return cb ();
-    }
-
-    static char
-    Hooked_DrawWanted (auto &&cb, float &x, float &y, char *text)
-    {
-        if (!positions.contains ("wanted"))
-        {
-            positions["wanted"] = CreateHUDElement (x, y);
-        }
-
-        x = positions["wanted"].pos.x;
-        y = positions["wanted"].pos.y;
 
         return cb ();
     }
