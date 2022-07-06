@@ -33,15 +33,31 @@ public:
     TeleportToPosition (CPed *owner, CVector position)
     {
         owner->SetPosn (position);
+
         owner->PositionAnyPedOutOfCollision ();
     }
 
     static bool
-    IsPointValid (CVector v)
+    IsPointValid (CVector v, CVector playerPosition)
     {
+        // Extra checks thanks to Zolika
+        if (abs (v.x) > 1000000) return false;
+        if (abs (v.y) > 1000000) return false;
+        if (abs (v.z) > 1000000) return false;
+        if (v.x == NAN) return false;
+        if (v.y == NAN) return false;
+        if (v.z == NAN) return false;
+        if (v.x == INFINITY) return false;
+        if (v.y == INFINITY) return false;
+        if (v.z == INFINITY) return false;
+        if (v.x == 0) return false;
+        if (v.y == 0) return false;
+        if (v.z == 0) return false;
+
         // Maybe increase to 50.0f since we are checking distance instead of
         // individual x,y,z?
-        return DistanceBetweenPoints (v, CVector (0.0f, 0.0f, 0.0f)) > 25.0f;
+        float distance = DistanceBetweenPoints (v, playerPosition);
+        return distance < 100.0f && distance > 0.01f;
     }
 
     static void
@@ -54,7 +70,10 @@ public:
 
         // Can still sometimes teleport to the 0,0,0 point
         CVector point = colPoint->m_vecPoint;
-        if (owner == FindPlayerPed () && IsPointValid (point))
+        point.z += 1.0f;
+
+        if (owner == FindPlayerPed ()
+            && IsPointValid (point, owner->GetPosition ()))
         {
             TeleportToPosition ((CPed *) owner, point);
         }
