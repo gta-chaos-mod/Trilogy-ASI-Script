@@ -25,7 +25,7 @@ public:
     {
         Websocket::Setup ();
 
-        GameHandler::Initialise ();
+        Events::initRwEvent += GameHandler::Initialise;
 
         Events::gameProcessEvent += EffectHandler::Tick;
         Events::processScriptsEvent += EffectHandler::ProcessScripts;

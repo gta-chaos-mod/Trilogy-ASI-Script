@@ -18,6 +18,8 @@ using namespace plugin;
 
 class GameHandler
 {
+    static inline bool initialised = false;
+
     static inline bool didTryLoadAutoSave = false;
 
     static inline int lastMissionsPassed = -1;
@@ -28,6 +30,8 @@ public:
     static void
     Initialise ()
     {
+        if (initialised) return;
+
         Config::Init ();
         BoneHelper::Initialise ();
         GlobalRenderer::Initialise ();
@@ -48,35 +52,44 @@ public:
         // installed
         injector::WriteMemory<bool> (0xBED000, true, true);
 
-        patch::RedirectCall (0x5D0D66, Hooked_OpenFile);
+        // Custom save-file hook for "Slot 9"
+        HOOK_ARGS (globalHooksInstance.Get (), Hooked_OpenFile,
+                   FILE * (const char *, const char *), 0x5D0D66);
 
         // Make sure to disable effects / delete autosave when starting a new
         // game
-        patch::RedirectCall (0x5D18F0, Hooked_CTheScripts_Load);
+        HOOK (globalHooksInstance.Get (), Hooked_CTheScripts_Load,
+              unsigned int (), 0x5D18F0);
 
         // Load Game Override
-        patch::RedirectCall (0x577244, Hooked_ProcessMenuOptions);
+        HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_ProcessMenuOptions,
+                          void (CMenuManager *, eMenuPage), 0x577244);
 
         // Overwrite CText::Get call to show custom text on "Load Game" option
         // in the menu
-        patch::RedirectCall (0x579D73, Hooked_CText_Get);
+        HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_CText_Get,
+                          char *(CText *, char *), 0x579D73);
 
         // Send websocket message for auto-starting
         // Also hook Start New Game menu
-        for (int address : {0x573827, 0x57733B})
-        {
-            patch::RedirectCall (
-                address, Hooked_CMenuManager_DoSettingsBeforeStartingAGame);
-        }
+        HOOK_METHOD_ARGS (globalHooksInstance.Get (),
+                          Hooked_CMenuManager_DoSettingsBeforeStartingAGame,
+                          static int (CMenuManager *), 0x573827, 0x57733B);
 
         // Broken parachute fix where it plays the animation but CJ can't be
         // controlled mid-air
-        patch::RedirectCall (0x443082, Hooked_BrokenParachuteFix);
+        HOOK (globalHooksInstance.Get (), Hooked_BrokenParachuteFix, CPed * (),
+              0x443082);
 
         // Can Ped Jump Out Of Car
-        // TODO: Convert to a global hook instead
-        HOOK_METHOD (globalHooksInstance.Get (), Hooked_CanPedStepOutCar,
-                     bool (CVehicle *, char), 0x6D1F30);
+        HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_CanPedStepOutCar,
+                          bool (CVehicle *, CPed *), 0x6D1F30);
+
+        // Fix map crash when trying to load the legend
+        HOOK_ARGS (globalHooksInstance.Get (), Hooked_FixMapLegendCrash,
+                   void (float, float, char *), 0x582DEE);
+
+        initialised = true;
     }
 
     static void
@@ -177,7 +190,7 @@ private:
             if (RpAnimBlendClumpGetAssociation (player->m_pRwClump,
                                                 anim.c_str ()))
             {
-            player->m_pIntelligence->ClearTasks (true, false);
+                player->m_pIntelligence->ClearTasks (true, false);
                 break;
             }
         }
@@ -189,8 +202,35 @@ private:
         GameUtil::LoadFromFile ("chaos_mod\\chaos_autosave.b");
     }
 
-    static void __fastcall Hooked_ProcessMenuOptions (CMenuManager *thisManager,
-                                                      void *edx, eMenuPage page)
+    static FILE *
+    Hooked_OpenFile (auto &&cb, const char *&path, const char *mode)
+    {
+        std::string s_path (path), save_path = "GTASAsf9.b";
+
+        size_t start_pos = s_path.find (save_path);
+        if (start_pos != std::string::npos)
+        {
+            s_path.replace (start_pos, save_path.length (),
+                            GameUtil::GetLoadFileName ().c_str ());
+        }
+
+        path = s_path.c_str ();
+
+        return cb ();
+    }
+
+    static unsigned int
+    Hooked_CTheScripts_Load (auto &&cb)
+    {
+        lastMissionsPassed = -1;
+        lastSaved          = 0;
+
+        return cb ();
+    }
+
+    static void
+    Hooked_ProcessMenuOptions (auto &&cb, CMenuManager *thisManager,
+                               eMenuPage page)
     {
         if (page == eMenuPage::MENUPAGE_LOAD_GAME)
         {
@@ -209,11 +249,11 @@ private:
             }
         }
 
-        thisManager->SwitchToNewScreen (page);
+        cb ();
     }
 
-    static char *__fastcall Hooked_CText_Get (CText *thisText, void *edx,
-                                              char *key)
+    static char *
+    Hooked_CText_Get (auto &&cb, CText *thisText, char *&key)
     {
         std::string key_str (key);
         if (key_str == "FES_NGA")
@@ -239,34 +279,12 @@ private:
             }
         }
 
-        return thisText->Get (key);
+        return cb ();
     }
 
-    static int
-    Hooked_OpenFile (const char *path, const char *mode)
-    {
-        std::string s_path (path), save_path = "GTASAsf9.b";
-
-        size_t start_pos = s_path.find (save_path);
-        if (start_pos != std::string::npos)
-        {
-            s_path.replace (start_pos, save_path.length (),
-                            GameUtil::GetLoadFileName ().c_str ());
-        }
-
-        return CFileMgr::OpenFile (s_path.c_str (), mode);
-    }
-
-    static void __fastcall Hooked_CTheScripts_Load ()
-    {
-        CTheScripts::Load ();
-
-        lastMissionsPassed = -1;
-        lastSaved          = 0;
-    }
-
-    static signed int __fastcall Hooked_CMenuManager_DoSettingsBeforeStartingAGame (
-        CMenuManager *thisManager)
+    static signed int
+    Hooked_CMenuManager_DoSettingsBeforeStartingAGame (
+        auto &&cb, CMenuManager *thisManager)
     {
         if (CTimer::m_snTimeInMilliseconds < 1000 * 60)
         {
@@ -292,24 +310,34 @@ private:
             EffectHandler::Clear ();
         }
 
-        return thisManager->DoSettingsBeforeStartingAGame ();
+        return cb ();
     }
 
-    static void
-    Hooked_BrokenParachuteFix ()
+    static CPed *
+    Hooked_BrokenParachuteFix (auto &&cb)
     {
-        CReferences::RemoveReferencesToPlayer ();
-
         int &parachuteCreationStage = GameUtil::GetGlobalVariable<int> (1497);
         int &freefallStage          = GameUtil::GetGlobalVariable<int> (1513);
 
         parachuteCreationStage = 0;
         freefallStage          = 0;
+
+        return cb ();
     }
 
     static bool
-    Hooked_CanPedStepOutCar (auto &&cb)
+    Hooked_CanPedStepOutCar (auto &&cb, CVehicle *vehicle, CPed *ped)
     {
-        return true;
+        return !vehicle->CanPedJumpOutCar (ped);
+    }
+
+    // Thanks to Parik's Rainbomizer code for this
+    // https://github.com/Parik27/SA.Rainbomizer/blob/master/src/blips.cc#L39
+    static void
+    Hooked_FixMapLegendCrash (auto &&cb, float x, float y, char *&text)
+    {
+        if (int (text) < 0x2000) text = (char *) "Absolute Legend.";
+
+        cb ();
     }
 };

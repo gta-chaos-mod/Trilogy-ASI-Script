@@ -6,8 +6,6 @@
 
 using namespace plugin;
 
-// TODO: CJ can't exit a vehicle as a passenger if it's not stopped.
-// Maybe some check we can hook?
 class WarpPlayerIntoRandomVehicleEffect : public EffectBase
 {
 public:
