@@ -36,7 +36,7 @@ public:
     static void
     RenderBuilding (CBuilding *building, RwFrame *frame)
     {
-        int offset = (int) building % 360;
+        int offset = perTick != 0.0f ? (int) building % 360 : 0;
 
         RwFrameRotate (frame, &rotation, rotationAngle + offset,
                        rwCOMBINEPRECONCAT);
@@ -45,7 +45,7 @@ public:
     static void
     RenderObject (CObject *object, RwFrame *frame)
     {
-        int offset = perTick != 0.0f ? (int) object % 360 : 0.0f;
+        int offset = perTick != 0.0f ? (int) object % 360 : 0;
 
         RwFrameRotate (frame, &rotation, rotationAngle + offset,
                        rwCOMBINEPRECONCAT);
