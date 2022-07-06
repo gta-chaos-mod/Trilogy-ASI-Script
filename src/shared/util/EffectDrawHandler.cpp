@@ -56,7 +56,7 @@ EffectDrawHandler::CalculateDrawPosition ()
 #endif
 
     x = GenericUtil::EaseOutBack (transitionTimer, -renderWidth, position);
-    y = ((idx + 1) * 65.0f) + 80.0f;
+    y = ((idx + 1) * 65.0f) + 100.0f;
 }
 
 void
@@ -202,7 +202,7 @@ EffectDrawHandler::DrawAndXMore ()
     if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
         text = "Shoutouts to SimpleFlips.";
 
-    y = ((NUM_RECENT_EFFECTS + 2) * 65.0f) + 80.0f - 20.0f;
+    y = ((NUM_RECENT_EFFECTS + 2) * 65.0f) + 100.0f - 20.0f;
 
     gamefont::Print (gamefont::RightBottom, gamefont::AlignRight, text, x, y,
                      FONT_DEFAULT, 0.8f, 1.0f, color::DarkGray, 1, color::Black,
