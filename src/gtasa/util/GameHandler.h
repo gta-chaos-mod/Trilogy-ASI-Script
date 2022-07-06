@@ -4,6 +4,7 @@
 #include "util/Config.h"
 #include "util/GameFixes.h"
 #include "util/GameUtil.h"
+#include "util/GlobalHooksInstance.h"
 #include "util/GlobalRenderer.h"
 #include "util/Websocket.h"
 
@@ -74,9 +75,8 @@ public:
 
         // Can Ped Jump Out Of Car
         // TODO: Convert to a global hook instead
-        // HOOK_METHOD (globalHooksInstance.Get (), Hooked_CanPedJumpOutCar,
-        //              bool (CAutomobile *, char), 0x6D2030);
-        injector::WriteMemory<uint64> (0x6D2030, 0x9090900004C201B0);
+        HOOK_METHOD (globalHooksInstance.Get (), Hooked_CanPedStepOutCar,
+                     bool (CVehicle *, char), 0x6D1F30);
     }
 
     static void
@@ -174,7 +174,8 @@ private:
 
         for (std::string anim : anims)
         {
-            if (RpAnimBlendClumpGetAssociation (player->m_pRwClump, anim.c_str()))
+            if (RpAnimBlendClumpGetAssociation (player->m_pRwClump,
+                                                anim.c_str ()))
             {
             player->m_pIntelligence->ClearTasks (true, false);
                 break;
@@ -307,7 +308,7 @@ private:
     }
 
     static bool
-    Hooked_CanPedJumpOutCar (auto &&cb)
+    Hooked_CanPedStepOutCar (auto &&cb)
     {
         return true;
     }
