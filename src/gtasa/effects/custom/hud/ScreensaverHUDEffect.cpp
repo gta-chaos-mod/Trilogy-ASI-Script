@@ -5,6 +5,7 @@
 
 #include <CFont.h>
 #include <CHud.h>
+#include <CHudColours.h>
 
 using namespace plugin;
 
@@ -18,7 +19,7 @@ class ScreensaverHUDEffect : public EffectBase
         bool      goingDown     = false;
     };
 
-    static inline std::map<const char *, HUDElement> positions = {};
+    static inline std::map<std::string, HUDElement> positions = {};
 
     static inline EffectInstance *instance;
 
@@ -29,23 +30,26 @@ public:
         instance = inst;
         positions.clear ();
 
-        HOOK_ARGS (inst, Hooked_DrawClock, char (float, float, char *),
+        HOOK_ARGS (inst, Hooked_DrawClock, void (float, float, char *),
                    0x58EC21);
 
-        HOOK_ARGS (inst, Hooked_DrawMoney, char (float, float, char *),
+        HOOK_ARGS (inst, Hooked_DrawMoney, void (float, float, char *),
                    0x58F607);
 
-        HOOK_ARGS (inst, Hooked_DrawVehicleName, char (float, float, char *),
+        HOOK_ARGS (inst, Hooked_DrawVehicleName, void (float, float, char *),
                    0x58B156);
 
-        HOOK_ARGS (inst, Hooked_DrawScriptText, char (float, float, char *),
+        HOOK_ARGS (inst, Hooked_DrawScriptText, void (float, float, char *),
                    0x58C229);
 
-        HOOK_ARGS (inst, Hooked_DrawSubtitles, char (float, float, char *),
+        HOOK_ARGS (inst, Hooked_DrawSubtitles, void (float, float, char *),
                    0x58C68A);
 
-        HOOK_ARGS (inst, Hooked_DrawHelpMessage, char (float, float, char *),
+        HOOK_ARGS (inst, Hooked_DrawHelpMessage, void (float, float, char *),
                    0x58C00F);
+
+        HOOK_ARGS (inst, Hooked_DrawWanted, void (float, float, char *),
+                   0x58DFD3);
 
         HOOK_ARGS (inst, Hooked_RenderHealthBar,
                    void (int, signed int, signed int), 0x58EE9A);
@@ -110,7 +114,7 @@ public:
     }
 
     static HUDElement
-    CreateHUDElement (float x, float y)
+    CreateHUDElement ()
     {
         return HUDElement{.pos
                           = CVector2D (instance->Random (0.0f, SCREEN_WIDTH),
@@ -120,83 +124,83 @@ public:
                           .goingDown     = instance->Random (0, 1) == 0};
     }
 
-    static char
+    static void
     Hooked_DrawClock (auto &&cb, float &x, float &y, char *text)
     {
         if (!positions.contains ("clock"))
         {
-            positions["clock"] = CreateHUDElement (x, y);
+            positions["clock"] = CreateHUDElement ();
         }
 
         x = positions["clock"].pos.x;
         y = positions["clock"].pos.y;
 
-        return cb ();
+        cb ();
     }
 
-    static char
+    static void
     Hooked_DrawMoney (auto &&cb, float &x, float &y, char *text)
     {
         if (!positions.contains ("money"))
         {
-            positions["money"] = CreateHUDElement (x, y);
+            positions["money"] = CreateHUDElement ();
         }
 
         x = positions["money"].pos.x;
         y = positions["money"].pos.y;
 
-        return cb ();
+        cb ();
     }
 
-    static char
+    static void
     Hooked_DrawVehicleName (auto &&cb, float &x, float &y, char *text)
     {
         if (!positions.contains ("vehicleName"))
         {
-            positions["vehicleName"] = CreateHUDElement (x, y);
+            positions["vehicleName"] = CreateHUDElement ();
         }
 
         x = positions["vehicleName"].pos.x;
         y = positions["vehicleName"].pos.y;
 
-        return cb ();
+        cb ();
     }
 
-    static char
+    static void
     Hooked_DrawScriptText (auto &&cb, float &x, float &y, char *text)
     {
         if (!positions.contains ("scriptText"))
         {
-            positions["scriptText"] = CreateHUDElement (x, y);
+            positions["scriptText"] = CreateHUDElement ();
         }
 
         x = positions["scriptText"].pos.x;
         y = positions["scriptText"].pos.y;
 
-        return cb ();
+        cb ();
     }
 
-    static char
+    static void
     Hooked_DrawSubtitles (auto &&cb, float &x, float &y, char *text)
     {
         if (!positions.contains ("subtitles"))
         {
-            positions["subtitles"] = CreateHUDElement (x, y);
+            positions["subtitles"] = CreateHUDElement ();
         }
 
         x = positions["subtitles"].pos.x;
         y = positions["subtitles"].pos.y;
 
-        return cb ();
+        cb ();
     }
 
     // TODO: Calculate width for string properly
-    static char
+    static void
     Hooked_DrawHelpMessage (auto &&cb, float &x, float &y, char *text)
     {
         if (!positions.contains ("helpMessage"))
         {
-            positions["helpMessage"] = CreateHUDElement (x, y);
+            positions["helpMessage"] = CreateHUDElement ();
         }
 
         x = positions["helpMessage"].pos.x;
@@ -208,7 +212,23 @@ public:
 
         CFont::SetWrapx (std::min (x + width, SCREEN_WIDTH));
 
-        return cb ();
+        cb ();
+    }
+
+    static void
+    Hooked_DrawWanted (auto &&cb, float &x, float &y, char *text)
+    {
+        std::string wanted = "wanted" + std::to_string ((int) x);
+
+        if (!positions.contains (wanted))
+        {
+            positions[wanted] = CreateHUDElement ();
+        }
+
+        x = positions[wanted].pos.x;
+        y = positions[wanted].pos.y;
+
+        cb ();
     }
 
     static void
@@ -217,7 +237,7 @@ public:
     {
         if (!positions.contains ("healthBar"))
         {
-            positions["healthBar"] = CreateHUDElement (x, y);
+            positions["healthBar"] = CreateHUDElement ();
         }
 
         x = positions["healthBar"].pos.x;
@@ -232,7 +252,7 @@ public:
     {
         if (!positions.contains ("armorBar"))
         {
-            positions["armorBar"] = CreateHUDElement (x, y);
+            positions["armorBar"] = CreateHUDElement ();
         }
 
         x = positions["armorBar"].pos.x;
@@ -247,7 +267,7 @@ public:
     {
         if (!positions.contains ("breathBar"))
         {
-            positions["breathBar"] = CreateHUDElement (x, y);
+            positions["breathBar"] = CreateHUDElement ();
         }
 
         x = positions["breathBar"].pos.x;
@@ -262,7 +282,7 @@ public:
     {
         if (!positions.contains ("weaponIcon"))
         {
-            positions["weaponIcon"] = CreateHUDElement (x, y);
+            positions["weaponIcon"] = CreateHUDElement ();
         }
 
         x = positions["weaponIcon"].pos.x;
@@ -277,7 +297,7 @@ public:
     {
         if (!positions.contains ("weaponAmmo"))
         {
-            positions["weaponAmmo"] = CreateHUDElement (x, y);
+            positions["weaponAmmo"] = CreateHUDElement ();
         }
 
         x = positions["weaponAmmo"].pos.x;
@@ -298,7 +318,7 @@ public:
 
         if (!positions.contains ("radar"))
         {
-            positions["radar"] = CreateHUDElement (x, y);
+            positions["radar"] = CreateHUDElement ();
         }
 
         x = positions["radar"].pos.x / 2.9f;
