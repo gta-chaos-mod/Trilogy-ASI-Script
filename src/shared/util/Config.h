@@ -117,8 +117,7 @@ public:
     {
         const std::string pluginFilename = std::string (PLUGIN_FILENAME);
         const std::string configFilename
-            = "/" + pluginFilename.substr (0, pluginFilename.size () - 4)
-              + ".toml";
+            = pluginFilename.substr (0, pluginFilename.size () - 4) + ".toml";
         const std::filesystem::path configPath
             = PLUGIN_PATH ((char *) configFilename.c_str ());
 
