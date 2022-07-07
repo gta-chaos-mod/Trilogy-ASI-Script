@@ -5,8 +5,6 @@
 
 using namespace plugin;
 
-// TODO: When cops bust the other car, you get busted, too
-
 class SwapVehiclesOnImpactEffect : public EffectBase
 {
     static inline ThiscallEvent<
@@ -98,28 +96,46 @@ public:
         {
             if (thisDriver->m_nCreatedBy == 2 && thisDriver != player) return;
 
-            for (int i = 0; i < 5; i++)
-                this_m_aPrimaryTasks[i]
-                    = thisDriver->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i];
+            // for (int i = 0; i < 5; i++)
+            // {
+            //     this_m_aPrimaryTasks[i] = (CTask *) malloc (sizeof (CTask));
+            //     memcpy (
+            //         this_m_aPrimaryTasks[i],
+            //         thisDriver->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i],
+            //         sizeof (CTask));
+            // }
 
-            for (int i = 0; i < 6; i++)
-                this_m_aSecondaryTasks[i]
-                    = thisDriver->m_pIntelligence->m_TaskMgr
-                          .m_aSecondaryTasks[i];
+            // for (int i = 0; i < 6; i++)
+            // {
+            //     this_m_aSecondaryTasks[i] = (CTask *) malloc (sizeof
+            //     (CTask)); memcpy (
+            //         this_m_aSecondaryTasks[i],
+            //         thisDriver->m_pIntelligence->m_TaskMgr.m_aSecondaryTasks[i],
+            //         sizeof (CTask));
+            // }
         }
 
         if (otherDriver)
         {
             if (otherDriver->m_nCreatedBy == 2 && thisDriver != player) return;
 
-            for (int i = 0; i < 5; i++)
-                other_m_aPrimaryTasks[i] = otherDriver->m_pIntelligence
-                                               ->m_TaskMgr.m_aPrimaryTasks[i];
+            // for (int i = 0; i < 5; i++)
+            // {
+            //     other_m_aPrimaryTasks[i] = (CTask *) malloc (sizeof (CTask));
+            //     memcpy (
+            //         other_m_aPrimaryTasks[i],
+            //         otherDriver->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i],
+            //         sizeof (CTask));
+            // }
 
-            for (int i = 0; i < 6; i++)
-                other_m_aSecondaryTasks[i]
-                    = otherDriver->m_pIntelligence->m_TaskMgr
-                          .m_aSecondaryTasks[i];
+            // for (int i = 0; i < 6; i++)
+            // {
+            //     other_m_aSecondaryTasks[i] = (CTask *) malloc (sizeof
+            //     (CTask)); memcpy (other_m_aSecondaryTasks[i],
+            //             otherDriver->m_pIntelligence->m_TaskMgr
+            //                 .m_aSecondaryTasks[i],
+            //             sizeof (CTask));
+            // }
         }
 
         bool wasPlayerADriver
@@ -173,18 +189,18 @@ public:
         // TODO: Set ped tasks again after teleportation
         Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (ped, vehicle);
 
-        if (ped != FindPlayerPed () && ped->m_nCreatedBy != 2)
+        if (ped != FindPlayerPed ())
         {
-            Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
-                ped, vehicle, 20.0f, drivingStyle);
+            // Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
+            //     ped, vehicle, 20.0f, drivingStyle);
 
             // for (int i = 0; i < 5; i++)
-            //     ped->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i]
-            //         = primaryTasks[i];
+            //     memcpy (ped->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i],
+            //             primaryTasks[i], sizeof (CTask));
 
             // for (int i = 0; i < 6; i++)
-            //     ped->m_pIntelligence->m_TaskMgr.m_aSecondaryTasks[i]
-            //         = secondaryTasks[i];
+            //     memcpy (ped->m_pIntelligence->m_TaskMgr.m_aSecondaryTasks[i],
+            //             secondaryTasks[i], sizeof (CTask));
         }
     }
 };
