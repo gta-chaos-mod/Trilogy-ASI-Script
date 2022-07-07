@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/EffectDrawHandler.h"
 #include "util/GenericUtil.h"
 #include "util/Globals.h"
 #include "util/hooks/HookMacros.h"
@@ -75,6 +76,8 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         Globals::isScreensaverHUDEffectEnabled = false;
+
+        EffectDrawHandler::ClearScreensaverHUDMap ();
     }
 
     void
@@ -116,12 +119,14 @@ public:
     static HUDElement
     CreateHUDElement ()
     {
-        return HUDElement{.pos
-                          = CVector2D (instance->Random (0.0f, SCREEN_WIDTH),
-                                       instance->Random (0.0f, SCREEN_HEIGHT)),
-                          .speedModifier = instance->Random (0.75f, 1.25f),
-                          .goingRight    = instance->Random (0, 1) == 0,
-                          .goingDown     = instance->Random (0, 1) == 0};
+        return HUDElement{
+            .pos = CVector2D (instance->Random (SCREEN_COORD_LEFT (10.0f),
+                                                SCREEN_COORD_RIGHT (10.0f)),
+                              instance->Random (SCREEN_COORD_TOP (10.0f),
+                                                SCREEN_COORD_BOTTOM (10.0f))),
+            .speedModifier = instance->Random (0.5f, 2.0f),
+            .goingRight    = instance->Random (0, 1) == 0,
+            .goingDown     = instance->Random (0, 1) == 0};
     }
 
     static void

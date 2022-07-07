@@ -57,6 +57,15 @@ EffectDrawHandler::CalculateDrawPosition ()
 
     x = GenericUtil::EaseOutBack (transitionTimer, -renderWidth, position);
     y = ((idx + 1) * 65.0f) + 100.0f;
+
+    if (Globals::isScreensaverHUDEffectEnabled)
+    {
+        std::string effectName (effect->GetName ());
+        auto        element = positions[effectName];
+
+        x = element.pos.x;
+        y = element.pos.y;
+    }
 }
 
 void
@@ -226,6 +235,71 @@ EffectDrawHandler::DrawRecentEffects (int num)
 
     DrawAndXMore ();
 }
+
+EffectDrawHandler::ScreensaverHUDElement
+EffectDrawHandler::CreateHUDElement (EffectInstance *effect)
+{
+    return ScreensaverHUDElement{
+        .pos           = CVector2D (effect->Random (SCREEN_COORD_LEFT (10.0f),
+                                                    SCREEN_COORD_RIGHT (10.0f)),
+                                    effect->Random (SCREEN_COORD_TOP (10.0f),
+                                                    SCREEN_COORD_BOTTOM (10.0f))),
+        .speedModifier = effect->Random (0.5f, 2.0f),
+        .goingRight    = effect->Random (0, 1) == 0,
+        .goingDown     = effect->Random (0, 1) == 0};
+}
+
+void
+EffectDrawHandler::Tick ()
+{
+    if (!Globals::isScreensaverHUDEffectEnabled) return;
+
+    for (auto &effect : EffectHandler::GetActiveEffects ())
+    {
+        std::string name (effect.GetName ());
+        if (!positions.contains (name))
+        {
+            positions[name] = CreateHUDElement (&effect);
+        }
+    }
+
+    float tick = GenericUtil::CalculateTick (0.2f);
+
+    for (auto &[name, element] : positions)
+    {
+        CVector2D &pos          = element.pos;
+        float      adjustedTick = tick * element.speedModifier;
+
+        if (element.goingRight)
+        {
+            pos.x += adjustedTick;
+            if (pos.x >= SCREEN_COORD_RIGHT (20.0f)) element.goingRight = false;
+        }
+        else
+        {
+            pos.x -= adjustedTick;
+            if (pos.x < 0.0f) element.goingRight = true;
+        }
+
+        if (element.goingDown)
+        {
+            pos.y += adjustedTick;
+            if (pos.y >= SCREEN_COORD_BOTTOM (20.0f)) element.goingDown = false;
+        }
+        else
+        {
+            pos.y -= adjustedTick;
+            if (pos.y < 0.0f) element.goingDown = true;
+        }
+    }
+}
+
+void
+EffectDrawHandler::ClearScreensaverHUDMap ()
+{
+    positions.clear ();
+}
+
 CRGBA
 EffectDrawHandler::GetTextColor () const
 {

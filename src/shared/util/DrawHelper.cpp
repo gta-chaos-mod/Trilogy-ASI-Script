@@ -45,6 +45,12 @@ DrawHelper::UpdateCooldown (int _remaining, int _cooldown, std::string _mode)
 }
 
 void
+DrawHelper::Tick ()
+{
+    EffectDrawHandler::Tick ();
+}
+
+void
 DrawHelper::Draw ()
 {
     ColorHelper::UpdateRainbowColor ();

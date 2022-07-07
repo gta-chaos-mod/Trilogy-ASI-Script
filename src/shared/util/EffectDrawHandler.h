@@ -22,6 +22,16 @@ class EffectDrawHandler
     CRGBA flashColor    = plugin::color::Yellow;
     CRGBA disabledColor = plugin::color::DarkGray;
 
+    struct ScreensaverHUDElement
+    {
+        CVector2D pos;
+        float     speedModifier = 1.0f;
+        bool      goingRight    = false;
+        bool      goingDown     = false;
+    };
+
+    static inline std::map<std::string, ScreensaverHUDElement> positions = {};
+
 public:
     CRGBA
     GetTextColor () const;
@@ -41,4 +51,9 @@ public:
     static bool AreEffectsInset (int num);
     static void DrawAndXMore ();
     static void DrawRecentEffects (int num);
+
+    static ScreensaverHUDElement CreateHUDElement (EffectInstance *effect);
+    static void                  Tick ();
+
+    static void ClearScreensaverHUDMap ();
 };

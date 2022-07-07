@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/GenericUtil.h"
 #include "util/Globals.h"
 
 #include <CFont.h>
@@ -14,6 +15,9 @@ class TooMuchInformationEffect : public EffectBase
     {
         std::string_view              name;
         CVector2D                     position;
+        float                         speedModifier = 1.0f;
+        bool                          goingRight    = false;
+        bool                          goingDown     = false;
         std::function<std::string ()> function;
     };
 
@@ -53,7 +57,48 @@ public:
                                             SCREEN_COORD_RIGHT (20.0f)),
                               inst->Random (SCREEN_COORD_TOP (20.0f),
                                             SCREEN_COORD_BOTTOM (20.0f))),
-                 .function = function});
+                 .speedModifier = inst->Random (0.5f, 2.0f),
+                 .goingRight    = inst->Random (0, 1) == 0,
+                 .goingDown     = inst->Random (0, 1) == 0,
+                 .function      = function});
+    }
+
+    void
+    OnTick (EffectInstance *inst) override
+    {
+        if (!Globals::isScreensaverHUDEffectEnabled) return;
+
+        float tick = GenericUtil::CalculateTick (0.2f);
+
+        for (auto &element : information)
+        {
+            CVector2D &pos          = element.position;
+            float      adjustedTick = tick * element.speedModifier;
+
+            if (element.goingRight)
+            {
+                pos.x += adjustedTick;
+                if (pos.x >= SCREEN_COORD_RIGHT (20.0f))
+                    element.goingRight = false;
+            }
+            else
+            {
+                pos.x -= adjustedTick;
+                if (pos.x < 0.0f) element.goingRight = true;
+            }
+
+            if (element.goingDown)
+            {
+                pos.y += adjustedTick;
+                if (pos.y >= SCREEN_COORD_BOTTOM (20.0f))
+                    element.goingDown = false;
+            }
+            else
+            {
+                pos.y -= adjustedTick;
+                if (pos.y < 0.0f) element.goingDown = true;
+            }
+        }
     }
 
     void

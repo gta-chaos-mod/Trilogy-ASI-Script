@@ -32,5 +32,6 @@ public:
         Events::gameProcessEvent += GameHandler::ProcessGame;
 
         drawAfterFadeEvent += DrawHelper::Draw;
+        Events::gameProcessEvent += DrawHelper::Tick;
     }
 } trilogyChaosMod;

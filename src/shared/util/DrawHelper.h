@@ -15,6 +15,8 @@ public:
     static void UpdateCooldown (int _remaining, int _cooldown,
                                 std::string _mode);
 
+    static void Tick ();
+
     static void Draw ();
 
     static void DrawVersion ();
