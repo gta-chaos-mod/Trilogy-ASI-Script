@@ -11,8 +11,8 @@ CPedDamageResponseCalculator::AccountForPedArmour (CPed    *ped,
 void
 CPedDamageResponseCalculator::ComputeWillKillPed (CPed    *ped,
                                                   uint8_t *cDamageResponseInfo,
-                                                  char     a4)
+                                                  bool     bSpeak)
 {
     plugin::CallMethod<0x4B3210, CPedDamageResponseCalculator *> (
-        this, ped, cDamageResponseInfo, a4);
+        this, ped, cDamageResponseInfo, bSpeak);
 }

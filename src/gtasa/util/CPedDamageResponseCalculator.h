@@ -18,9 +18,9 @@ public:
     float          m_fDamageFactor;
     ePedPieceTypes m_pedPieceType;
     eWeaponType    m_weaponType;
-    byte           m_bUnk;
-    char           _padding[3];
+    byte           m_bSpeak;
 
     void AccountForPedArmour (CPed *ped, uint8_t *cDamageResponseInfo);
-    void ComputeWillKillPed (CPed *ped, uint8_t *cDamageResponseInfo, char a4);
+    void ComputeWillKillPed (CPed *ped, uint8_t *cDamageResponseInfo,
+                             bool bSpeak);
 };
