@@ -32,11 +32,6 @@ public:
     {
         if (initialised) return;
 
-        Config::Init ();
-        BoneHelper::Initialise ();
-        GlobalRenderer::Initialise ();
-        GameFixes::Initialise ();
-
         // Check if the mod is already loaded / installed once
         if (injector::ReadMemory<bool> (0xBED000, true))
         {
@@ -51,6 +46,11 @@ public:
         // Write to unused memory space so other mods know that the Chaos mod is
         // installed
         injector::WriteMemory<bool> (0xBED000, true, true);
+
+        Config::Init ();
+        BoneHelper::Initialise ();
+        GlobalRenderer::Initialise ();
+        GameFixes::Initialise ();
 
         // Custom save-file hook for "Slot 9"
         HOOK_ARGS (globalHooksInstance.Get (), Hooked_OpenFile,
@@ -82,8 +82,11 @@ public:
               0x443082);
 
         // Can Ped Jump Out Of Car
-        HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_CanPedStepOutCar,
-                          bool (CVehicle *, CPed *), 0x6D1F30);
+        // TODO: Hook CanPedStepOutCar instead and use math to determine if we
+        // should jump out (Probably some value that is a bit above the
+        // CanPedJumpOutCar threshold for an overlap)
+        HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_CanPedJumpOutCar,
+                          bool (CVehicle *, CPed *), 0x6D2030);
 
         // Fix map crash when trying to load the legend
         HOOK_ARGS (globalHooksInstance.Get (), Hooked_FixMapLegendCrash,
@@ -106,55 +109,54 @@ private:
     static void
     HandleAutoSave ()
     {
-        if (Config::GetOrDefault ("Chaos.AutosaveAfterMissionPassed", true))
+        if (!Config::GetOrDefault ("Chaos.AutosaveAfterMissionPassed", true))
+            return;
+
+        int missionsPassed = GameUtil::GetRealMissionsPassed ();
+        int currentTime    = CTimer::m_snTimeInMilliseconds;
+
+        if (lastMissionsPassed == -1)
         {
-            int missionsPassed = GameUtil::GetRealMissionsPassed ();
-            int currentTime    = CTimer::m_snTimeInMilliseconds;
+            lastMissionsPassed = missionsPassed;
+        }
+        else if (lastMissionsPassed > missionsPassed)
+        {
+            lastMissionsPassed = missionsPassed;
+        }
 
-            if (lastMissionsPassed == -1)
-            {
-                lastMissionsPassed = missionsPassed;
-            }
-            else if (lastMissionsPassed > missionsPassed)
-            {
-                lastMissionsPassed = missionsPassed;
-            }
+        if (missionsPassed > lastMissionsPassed && lastSaved < currentTime
+            && !CTheScripts::IsPlayerOnAMission ())
+        {
+            lastMissionsPassed = missionsPassed;
 
-            if (missionsPassed > lastMissionsPassed && lastSaved < currentTime
-                && !CTheScripts::IsPlayerOnAMission ())
-            {
-                lastMissionsPassed = missionsPassed;
+            nlohmann::json json;
 
-                nlohmann::json json;
+            json["effectID"]                     = "effect_autosave";
+            json["duration"]                     = 1000 * 10;
+            json["effectData"]["missionsPassed"] = missionsPassed;
 
-                json["effectID"]                     = "effect_autosave";
-                json["duration"]                     = 1000 * 10;
-                json["effectData"]["missionsPassed"] = missionsPassed;
+            EffectHandler::HandleFunction (json);
 
-                EffectHandler::HandleFunction (json);
-
-                lastSaved = currentTime + 1000;
-            }
+            lastSaved = currentTime + 1000;
         }
     }
 
     static void
     HandleQuickSave ()
     {
-        if (Config::GetOrDefault ("Chaos.QuickSave", false))
+        if (!Config::GetOrDefault ("Chaos.QuickSave", false)) return;
+
+        int currentTime = CTimer::m_snTimeInMilliseconds;
+        if (KeyPressed (VK_F7) && lastQuickSave < currentTime)
         {
-            int currentTime = CTimer::m_snTimeInMilliseconds;
-            if (KeyPressed (VK_F7) && lastQuickSave < currentTime)
-            {
-                lastQuickSave = currentTime + 10000;
+            lastQuickSave = currentTime + 10000;
 
-                nlohmann::json json;
+            nlohmann::json json;
 
-                json["effectID"] = "effect_quicksave";
-                json["duration"] = 1000 * 10;
+            json["effectID"] = "effect_quicksave";
+            json["duration"] = 1000 * 10;
 
-                EffectHandler::HandleFunction (json);
-            }
+            EffectHandler::HandleFunction (json);
         }
     }
 
@@ -326,9 +328,9 @@ private:
     }
 
     static bool
-    Hooked_CanPedStepOutCar (auto &&cb, CVehicle *vehicle, CPed *ped)
+    Hooked_CanPedJumpOutCar (auto &&cb, CVehicle *vehicle, CPed *ped)
     {
-        return !vehicle->CanPedJumpOutCar (ped);
+        return true;
     }
 
     // Thanks to Parik's Rainbomizer code for this
