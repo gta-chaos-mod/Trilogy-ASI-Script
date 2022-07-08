@@ -3,7 +3,7 @@
 
 #include <CCheat.h>
 
-class SuicideEffect : public EffectBase
+class DeathEffect : public EffectBase
 {
 public:
     bool
@@ -27,4 +27,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (SuicideEffect, "effect_suicide", GROUP_HEALTH);
+DEFINE_EFFECT (DeathEffect, "effect_death", GROUP_HEALTH);
