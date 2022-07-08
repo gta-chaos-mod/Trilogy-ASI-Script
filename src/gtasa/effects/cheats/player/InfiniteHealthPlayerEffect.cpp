@@ -50,7 +50,8 @@ public:
     Hooked_KillPedsInVehicle (auto &&cb, CVehicle *thisVehicle)
     {
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (vehicle && vehicle == thisVehicle)
+        if (vehicle && vehicle == thisVehicle
+            && thisVehicle->m_nStatus != STATUS_SIMPLE)
         {
             thisVehicle->m_nStatus = STATUS_SIMPLE;
         }
