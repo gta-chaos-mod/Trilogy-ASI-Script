@@ -3,19 +3,21 @@
 
 #include <CRadar.h>
 
-using namespace plugin;
-
 class FreezeRadarEffect : public EffectBase
 {
-    static inline CVector position    = {0.0f, 0.0f, 0.0f};
-    bool                  positionSet = false;
+    static inline CVector   position     = {0.0f, 0.0f, 0.0f};
+    static inline float     orientation  = 0.0f;
+    static inline CVector2D cachedSinCos = {0.0f, 0.0f};
+    bool                    positionSet  = false;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        position    = {0.0f, 0.0f, 0.0f};
-        positionSet = false;
+        position     = {0.0f, 0.0f, 0.0f};
+        orientation  = 0.0f;
+        cachedSinCos = {0.0f, 0.0f};
+        positionSet  = false;
 
         HOOK (inst, Hooked_CRadar_DrawRadarMap, void (), 0x586D4E);
     }
@@ -28,7 +30,11 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player)
         {
-            position = player->GetPosition ();
+            position    = player->GetPosition ();
+            orientation = player->GetHeading ();
+
+            CRadar::CalculateCachedSinCos ();
+            cachedSinCos = {CRadar::cachedSin, CRadar::cachedCos};
 
             positionSet = true;
         }
@@ -39,6 +45,11 @@ public:
     {
         CRadar::vec2DRadarOrigin.x = position.x;
         CRadar::vec2DRadarOrigin.y = position.y;
+
+        CRadar::m_fRadarOrientation = orientation;
+
+        CRadar::cachedSin = cachedSinCos.x;
+        CRadar::cachedCos = cachedSinCos.y;
 
         cb ();
     }
