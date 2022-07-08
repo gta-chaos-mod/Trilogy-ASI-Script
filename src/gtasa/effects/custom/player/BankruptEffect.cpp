@@ -2,7 +2,7 @@
 
 #include <CPlayerInfo.h>
 
-class AntiMillionaireEffect : public EffectBase
+class BankruptEffect : public EffectBase
 {
 public:
     void
@@ -14,11 +14,9 @@ public:
         CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
         if (!playerInfo) return;
 
-        // -= 1 million
-        playerInfo->m_nMoney -= 1000000;
-        playerInfo->m_nMoney = std::max (playerInfo->m_nMoney, 0);
+        playerInfo->m_nMoney = 0;
         inst->Disable ();
     }
 };
 
-DEFINE_EFFECT (AntiMillionaireEffect, "effect_anti_millionaire", 0);
+DEFINE_EFFECT (BankruptEffect, "effect_bankrupt", 0);
