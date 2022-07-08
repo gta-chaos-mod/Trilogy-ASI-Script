@@ -18,8 +18,6 @@ EffectInstance::End ()
 {
     cleanupHandler.DoCleanup ();
     if (this->effect) this->effect->OnEnd (this);
-
-    EffectHandler::RemoveStaleEffect (this);
 }
 
 void

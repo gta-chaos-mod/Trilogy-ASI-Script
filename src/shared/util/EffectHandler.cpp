@@ -72,8 +72,11 @@ EffectHandler::RemoveStaleEffects (EffectInstance *except)
         if (effectsToRemove.size () >= amountToRemove) break;
     }
 
-    std::erase_if (effects, [effectsToRemove] (EffectInstance &effect)
-                   { return effectsToRemove.contains (&effect); });
+    std::erase_if (effects,
+                   [effectsToRemove] (EffectInstance &effect) {
+                       return !effect.IsRunning ()
+                              && effectsToRemove.contains (&effect);
+                   });
 }
 
 template <typename _Callable, typename... _Args>
