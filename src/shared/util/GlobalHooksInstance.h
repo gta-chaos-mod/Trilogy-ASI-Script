@@ -8,10 +8,11 @@ class GlobalHooksInstance
     EffectCleanupHandler cleanupHandler;
 
 public:
-    auto
+    static auto
     Get ()
     {
-        return this;
+        static GlobalHooksInstance instance;
+        return &instance;
     }
 
     auto &
@@ -19,4 +20,4 @@ public:
     {
         return cleanupHandler;
     }
-} globalHooksInstance;
+};

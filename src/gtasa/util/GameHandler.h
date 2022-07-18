@@ -53,40 +53,41 @@ public:
         GameFixes::Initialise ();
 
         // Custom save-file hook for "Slot 9"
-        HOOK_ARGS (globalHooksInstance.Get (), Hooked_OpenFile,
+        HOOK_ARGS (GlobalHooksInstance::Get (), Hooked_OpenFile,
                    FILE * (const char *, const char *), 0x5D0D66);
 
         // Make sure to disable effects / delete autosave when starting a new
         // game
-        HOOK (globalHooksInstance.Get (), Hooked_CTheScripts_Load,
+        HOOK (GlobalHooksInstance::Get (), Hooked_CTheScripts_Load,
               unsigned int (), 0x5D18F0);
 
         // Load Game Override
-        HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_ProcessMenuOptions,
+        HOOK_METHOD_ARGS (GlobalHooksInstance::Get (),
+                          Hooked_ProcessMenuOptions,
                           void (CMenuManager *, eMenuPage), 0x577244);
 
         // Overwrite CText::Get call to show custom text on "Load Game" option
         // in the menu
-        HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_CText_Get,
+        HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_CText_Get,
                           char *(CText *, char *), 0x579D73);
 
         // Send websocket message for auto-starting
         // Also hook Start New Game menu
-        HOOK_METHOD_ARGS (globalHooksInstance.Get (),
+        HOOK_METHOD_ARGS (GlobalHooksInstance::Get (),
                           Hooked_CMenuManager_DoSettingsBeforeStartingAGame,
                           signed int (CMenuManager *), 0x573827, 0x57733B);
 
         // Broken parachute fix where it plays the animation but CJ can't be
         // controlled mid-air
-        HOOK (globalHooksInstance.Get (), Hooked_BrokenParachuteFix, CPed * (),
+        HOOK (GlobalHooksInstance::Get (), Hooked_BrokenParachuteFix, CPed * (),
               0x443082);
 
         // Can Ped Jump Out Of Car
-        HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_CanPedJumpOutCar,
+        HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_CanPedJumpOutCar,
                           bool (CVehicle *, CPed *), 0x6D2030);
 
         // Fix map crash when trying to load the legend
-        HOOK_ARGS (globalHooksInstance.Get (), Hooked_FixMapLegendCrash,
+        HOOK_ARGS (GlobalHooksInstance::Get (), Hooked_FixMapLegendCrash,
                    void (float, float, char *), 0x582DEE);
 
         initialised = true;
