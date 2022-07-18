@@ -15,6 +15,11 @@ class Config
 # Chaos Settings
 [Chaos]
 
+# Always count down effects, no matter if it's in a cutscene or the player is currently
+# in a specific state (e.g. getting arrested, getting wasted, etc.)
+# Default: false
+AlwaysCountDownEffects = false
+
 # Autosave after completing a mission
 # Default: true
 AutosaveAfterMissionPassed = true

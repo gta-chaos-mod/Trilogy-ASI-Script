@@ -1,7 +1,9 @@
 #include "EffectInstance.h"
 
+#include "util/Config.h"
 #include "util/EffectBase.h"
 #include "util/EffectHandler.h"
+#include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 #include "util/Globals.h"
 
@@ -23,9 +25,13 @@ EffectInstance::End ()
 void
 EffectInstance::Tick ()
 {
-    int tick
-        = (int) round (GenericUtil::CalculateTick (Globals::effectTimerSpeed));
-    this->remaining -= tick;
+    if (Config::GetOrDefault ("Chaos.AlwaysCountDownEffects", true)
+        || GameUtil::IsPlayerSafe ())
+    {
+        int tick = (int) round (
+            GenericUtil::CalculateTick (Globals::effectTimerSpeed));
+        this->remaining -= tick;
+    }
 
     if (GetEffectRemaining () < 0) Disable ();
 
