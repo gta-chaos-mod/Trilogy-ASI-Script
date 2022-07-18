@@ -41,13 +41,15 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        CPlayerPed *player = FindPlayerPed ();
+        CPlayerPed *player        = FindPlayerPed ();
+        CVehicle   *playerVehicle = FindPlayerVehicle (-1, false);
+
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
             if (vehicle)
             {
-                bool proof = (player && player->m_pVehicle == vehicle
-                              && player->m_pVehicle->IsDriver (player));
+                bool proof = (player && playerVehicle == vehicle
+                              && playerVehicle->IsDriver (player));
                 vehicle->m_nPhysicalFlags.bInvulnerable   = proof;
                 vehicle->m_nPhysicalFlags.bExplosionProof = proof;
                 vehicle->m_nPhysicalFlags.bFireProof      = proof;
