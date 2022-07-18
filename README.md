@@ -29,7 +29,7 @@ So far only San Andreas is officially supported.
 Vice City and III have some sort of basic support in already, but the GUI Tool doesn't support them yet.
 
 # How do I downgrade my game to the required version?
-There's a handy thread over on the GTA Forums that has downgraders vor GTA III, Vice City and even San Andreas.  
+There's a handy thread over on the GTA Forums that has downgraders for GTA III, Vice City and even San Andreas.  
 https://gtaforums.com/topic/936600-iii-iv-various-gta-downgraders/
 
 # What ASI Loader is recommended to play the mod with?
@@ -118,7 +118,9 @@ who has been helping me with a **LOT** of things in both the original mod and th
 - [Joshimuz](https://twitch.tv/Joshimuz)
 
 ## Everyone in the v3.0 release race that was held on the 9th of July, 2022
-- You?
+Riekelt, Kato0909, TonyKaatib, DoubleDubbel, WaterArko, Kuba4ful, 2D_SVD, Saymite, NotCreativeBush, Floh284, SimonDiamond, Tepiloxtl, Jugachi, Kristof, LuckyLucketts, DennisOnTheInternet,
+KinzyKenzie, Simbe, Mytherious, Kamikaza404, MoRTaL, Scemmer_Joke, BladeXRG, Husker, GamingMaster, Fearful_was_taken, Nardiko, Abbygail, gian_97, Stickheadz32, Crucial,
+NateHotshot, Gukol, zoton2, glomerius, mossfis, Jersukai, English\_Ben, LotsOfS, Rose, prosto_big, YPOC, 
 
 ___
 
