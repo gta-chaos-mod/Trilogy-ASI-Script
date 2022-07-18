@@ -21,7 +21,7 @@ public:
 
         if (possibleWeapons.size () == 0) return;
 
-        int random = inst->Random (0, (int) possibleWeapons.size ());
+        int random = inst->Random (0, (int) possibleWeapons.size () - 1);
 
         player->ClearWeapon (possibleWeapons[random].m_nType);
     }
