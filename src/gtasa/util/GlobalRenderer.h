@@ -13,7 +13,9 @@ class GlobalRenderer
     static inline std::vector<VehicleRenderFunctionHook> renderVehicleHooks
         = {};
 
-    static void Hooked_FrameSyncDirty ();
+    static void Hooked_FrameSyncDirty (auto &&cb);
+    static void Hooked_RenderEntity (auto &&cb, CEntity *entity);
+    static void Hooked_RenderObject (auto &&cb, CObject *object);
 
     static void RenderBuilding (CBuilding *building, bool reset = false);
     static void ResetBuildings ();

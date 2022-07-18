@@ -1,6 +1,6 @@
 #include "GlobalRenderer.h"
 
-// #include "util/GlobalHooksInstance.h"
+#include "util/GlobalHooksInstance.h"
 #include "util/hooks/HookMacros.h"
 
 using namespace plugin;
@@ -8,28 +8,49 @@ using namespace plugin;
 void
 GlobalRenderer::Initialise ()
 {
-    patch::RedirectCall (0x7EF37C, Hooked_FrameSyncDirty);
-    // HOOK (globalHooksInstance.Get (), Hooked_FrameSyncDirty, void (),
-    // 0x7EF37C);
+    HOOK (GlobalHooksInstance::Get (), Hooked_FrameSyncDirty, void (),
+          0x7EF37C);
+
+    HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_RenderEntity,
+                      void (CEntity *), 0x534310);
+
+    HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_RenderObject,
+                      void (CObject *), 0x59F180);
 }
 
 void
-GlobalRenderer::Hooked_FrameSyncDirty ()
+GlobalRenderer::Hooked_FrameSyncDirty (auto &&cb)
 {
-    if (renderBuildingHooks.size () > 0)
-        for (CBuilding *building : CPools::ms_pBuildingPool)
-            RenderBuilding (building);
-
-    if (renderObjectHooks.size () > 0)
-        for (CObject *object : CPools::ms_pObjectPool)
-            RenderObject (object);
+    // _rwFrameSyncDirty
+    cb ();
 
     if (renderVehicleHooks.size () > 0)
-        for (CVehicle *object : CPools::ms_pVehiclePool)
-            RenderVehicle (object);
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+            RenderVehicle (vehicle);
+}
 
-    // _rwFrameSyncDirty
-    Call<0x809550> ();
+void
+GlobalRenderer::Hooked_RenderEntity (auto &&cb, CEntity *entity)
+{
+    bool isBuilding = entity && entity->m_nType == ENTITY_TYPE_BUILDING
+                      && renderBuildingHooks.size () > 0;
+
+    if (isBuilding) RenderBuilding ((CBuilding *) entity);
+
+    cb ();
+
+    if (isBuilding) RenderBuilding ((CBuilding *) entity, true);
+}
+
+void
+GlobalRenderer::Hooked_RenderObject (auto &&cb, CObject *object)
+{
+    bool hasObjectHooks = renderObjectHooks.size () > 0;
+    if (hasObjectHooks) RenderObject (object);
+
+    cb ();
+
+    if (hasObjectHooks) RenderObject (object, true);
 }
 
 void
