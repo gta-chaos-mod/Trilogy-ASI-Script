@@ -74,7 +74,7 @@ public:
         // Also hook Start New Game menu
         HOOK_METHOD_ARGS (globalHooksInstance.Get (),
                           Hooked_CMenuManager_DoSettingsBeforeStartingAGame,
-                          static int (CMenuManager *), 0x573827, 0x57733B);
+                          signed int (CMenuManager *), 0x573827, 0x57733B);
 
         // Broken parachute fix where it plays the animation but CJ can't be
         // controlled mid-air
@@ -82,9 +82,6 @@ public:
               0x443082);
 
         // Can Ped Jump Out Of Car
-        // TODO: Hook CanPedStepOutCar instead and use math to determine if we
-        // should jump out (Probably some value that is a bit above the
-        // CanPedJumpOutCar threshold for an overlap)
         HOOK_METHOD_ARGS (globalHooksInstance.Get (), Hooked_CanPedJumpOutCar,
                           bool (CVehicle *, CPed *), 0x6D2030);
 
@@ -330,7 +327,10 @@ private:
     static bool
     Hooked_CanPedJumpOutCar (auto &&cb, CVehicle *vehicle, CPed *ped)
     {
-        return true;
+        // Get vehicle speed in km/h
+        float speed = vehicle->m_vecMoveSpeed.Magnitude () * 175.0f;
+
+        return speed > 30.0f;
     }
 
     // Thanks to Parik's Rainbomizer code for this
