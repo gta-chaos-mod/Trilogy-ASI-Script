@@ -324,8 +324,6 @@ GameUtil::IsPlayerSafe ()
         }
     }
 
-    if (!player->IsPedInControl ()) return false;
-
     CPlayerData *data = player->m_pPlayerData;
     if (!data || !data->m_bCanBeDamaged) return false;
 
