@@ -27,6 +27,10 @@ public:
     {
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
+            if (vehicle->m_nVehicleClass == VEHICLE_PLANE
+                || vehicle->m_nVehicleClass == VEHICLE_FPLANE)
+                continue;
+
             Command<eScriptCommands::
                         COMMAND_SET_VEHICLE_AIR_RESISTANCE_MULTIPLIER> (vehicle,
                                                                         10.0f);
@@ -48,7 +52,6 @@ public:
 
             pad->NewState.m_bPedWalk   = UCHAR_MAX;
             pad->NewState.ShockButtonL = 0;
-            pad->NewState.ButtonSquare = 0;
         }
     }
 };
