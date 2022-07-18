@@ -7,6 +7,8 @@
 
 class ShoutoutsToSimpleFlipsEffect : public EffectBase
 {
+    static inline std::string replacementText = "Shoutouts to SimpleFlips.";
+
 public:
     void
     OnStart (EffectInstance *inst) override
@@ -32,13 +34,13 @@ public:
     static char *
     Hooked_CText_Get (auto &&cb, CText *text, char *key)
     {
-        return (char *) "Shoutouts to SimpleFlips.";
+        return (char *) replacementText.c_str ();
     }
 
     static char
     Hooked_PrintClockAndAmmo (auto &&cb, float x, float y, char *&text)
     {
-        text = (char *) "Shoutouts to SimpleFlips.";
+        text = (char *) replacementText.c_str ();
 
         CFont::SetProportional (true);
         char result = cb ();
@@ -50,7 +52,10 @@ public:
     static char
     Hooked_PrintMoney (auto &&cb, float x, float y, char *&text)
     {
-        text = (char *) "$Shoutouts to SimpleFlips.";
+        std::string textWithDollar ("$");
+        textWithDollar.append (replacementText);
+
+        text = (char *) textWithDollar.c_str ();
 
         CFont::SetProportional (true);
         char result = cb ();
