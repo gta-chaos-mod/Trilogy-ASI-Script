@@ -20,15 +20,19 @@ public:
     }
 
     int
-    Random (int min, int max, int amplify = 1)
+    Random (int min = 0, int max = 1, int amplify = 1)
     {
+        if (max < min) max = min;
+
         std::uniform_int_distribution unif (min, max);
         return unif (rng) * amplify;
     }
 
     float
-    Random (float min, float max, float amplify = 1)
+    Random (float min = 0.0f, float max = 1.0f, float amplify = 1)
     {
+        if (max < min) max = min;
+
         std::uniform_real_distribution<float> unif (min, max);
         return unif (rng) * amplify;
     }
