@@ -69,6 +69,10 @@ GameUtil::SaveToFile (std::string fileName)
     SaveAcquaintances (temp_acquaintances);
     RestoreSavedAcquaintances ();
 
+    // Ensure player has at least 1.0f health
+    CPlayerPed *player = FindPlayerPed ();
+    if (player) player->m_fHealth = std::max (1.0f, player->m_fHealth);
+
     CGenericGameStorage::GenericSave (0);
 
     LoadAcquaintances (temp_acquaintances);
