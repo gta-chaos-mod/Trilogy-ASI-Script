@@ -109,6 +109,7 @@ public:
         lastVehicle = nullptr;
 
         if (IsVehiclePointerValid (vehicle) && vehicle->CanBeDriven ()
+            && vehicle->IsDriver (FindPlayerPed ())
             && vehicle->m_nStatus != STATUS_WRECKED)
         {
             lastVehicle = vehicle;
