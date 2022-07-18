@@ -32,7 +32,7 @@ public:
         teleported = false;
         pistolAmmo = 0;
 
-        inst->SetDuration (1000 * 5);
+        inst->SetDuration (1000 * 15);
     }
 
     void
@@ -89,11 +89,12 @@ public:
         CPad *pad = player->GetPadFromPlayer ();
         if (pad) pad->bDisablePlayerCycleWeapon = true;
 
-        if (player->m_pVehicle)
+        CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
+        if (playerVehicle)
         {
             Command<eScriptCommands::
                         COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-                player, player->m_pVehicle);
+                player, playerVehicle);
         }
 
         Teleportation::Teleport (CVector (2476.56f, -1698.14f, 13.52f));
