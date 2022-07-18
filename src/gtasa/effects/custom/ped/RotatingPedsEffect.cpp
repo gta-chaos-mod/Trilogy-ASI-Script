@@ -9,8 +9,9 @@ class RotatingPedsEffect : public EffectBase
     static inline float spinSpeed     = 0.0f;
     static inline float rotationAngle = 0.0f;
 
-    static inline EffectInstance         *staticInst = nullptr;
     static inline std::map<CPed *, RwV3d> storedRotations;
+
+    static inline EffectInstance *instance = nullptr;
 
 public:
     void
@@ -19,7 +20,6 @@ public:
         spinSpeed     = 0.0f;
         rotationAngle = 0.0f;
 
-        staticInst = inst;
         storedRotations.clear ();
 
         BoneHelper::RenderEvent += RenderPed;
@@ -34,6 +34,8 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        instance = inst;
+
         float tick = GenericUtil::CalculateTick (0.025f);
 
         spinSpeed     = std::min (spinSpeed + 2.0f, 40.0f);
@@ -45,9 +47,9 @@ public:
     {
         float speed = ped->m_vecMoveSpeed.Magnitude ();
 
-        RwV3d rotationOffset = {staticInst->Random (0.0f, 45.0f) * speed,
-                                staticInst->Random (0.0f, 45.0f) * speed,
-                                staticInst->Random (0.0f, 45.0f) * speed};
+        RwV3d rotationOffset = {instance->Random (0.0f, 45.0f) * speed,
+                                instance->Random (0.0f, 45.0f) * speed,
+                                instance->Random (0.0f, 45.0f) * speed};
 
         if (!storedRotations.contains (ped))
         {

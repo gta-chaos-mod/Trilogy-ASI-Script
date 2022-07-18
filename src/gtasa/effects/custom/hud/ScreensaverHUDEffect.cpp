@@ -14,7 +14,7 @@ class ScreensaverHUDEffect : public EffectBase
 {
     struct HUDElement
     {
-        CVector2D pos;
+        CVector2D pos           = {0.0f, 0.0f};
         float     speedModifier = 1.0f;
         bool      goingRight    = false;
         bool      goingDown     = false;
@@ -22,13 +22,12 @@ class ScreensaverHUDEffect : public EffectBase
 
     static inline std::map<std::string, HUDElement> positions = {};
 
-    static inline EffectInstance *instance;
+    static inline EffectInstance *instance = nullptr;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        instance = inst;
         positions.clear ();
 
         HOOK_ARGS (inst, Hooked_DrawClock, void (float, float, char *),
@@ -83,6 +82,8 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        instance = inst;
+
         float tick = GenericUtil::CalculateTick (0.2f);
 
         for (auto &[name, element] : positions)
@@ -120,13 +121,21 @@ public:
     CreateHUDElement ()
     {
         return HUDElement{
-            .pos = CVector2D (instance->Random (SCREEN_COORD_LEFT (10.0f),
-                                                SCREEN_COORD_RIGHT (10.0f)),
-                              instance->Random (SCREEN_COORD_TOP (10.0f),
-                                                SCREEN_COORD_BOTTOM (10.0f))),
+            .pos = CVector2D (instance->Random (SCREEN_COORD_LEFT (20.0f),
+                                                SCREEN_COORD_RIGHT (20.0f)),
+                              instance->Random (SCREEN_COORD_TOP (20.0f),
+                                                SCREEN_COORD_BOTTOM (20.0f))),
             .speedModifier = instance->Random (0.5f, 2.0f),
             .goingRight    = instance->Random (0, 1) == 0,
             .goingDown     = instance->Random (0, 1) == 0};
+    }
+
+    static void
+    QueueHUDElement (std::string name)
+    {
+        if (!instance) return;
+
+        positions[name] = CreateHUDElement ();
     }
 
     static void
@@ -134,7 +143,9 @@ public:
     {
         if (!positions.contains ("clock"))
         {
-            positions["clock"] = CreateHUDElement ();
+            QueueHUDElement ("clock");
+            cb ();
+            return;
         }
 
         x = positions["clock"].pos.x;
@@ -148,7 +159,9 @@ public:
     {
         if (!positions.contains ("money"))
         {
-            positions["money"] = CreateHUDElement ();
+            QueueHUDElement ("money");
+            cb ();
+            return;
         }
 
         x = positions["money"].pos.x;
@@ -162,7 +175,9 @@ public:
     {
         if (!positions.contains ("vehicleName"))
         {
-            positions["vehicleName"] = CreateHUDElement ();
+            QueueHUDElement ("vehicleName");
+            cb ();
+            return;
         }
 
         x = positions["vehicleName"].pos.x;
@@ -176,7 +191,9 @@ public:
     {
         if (!positions.contains ("scriptText"))
         {
-            positions["scriptText"] = CreateHUDElement ();
+            QueueHUDElement ("scriptText");
+            cb ();
+            return;
         }
 
         x = positions["scriptText"].pos.x;
@@ -190,7 +207,9 @@ public:
     {
         if (!positions.contains ("subtitles"))
         {
-            positions["subtitles"] = CreateHUDElement ();
+            QueueHUDElement ("subtitles");
+            cb ();
+            return;
         }
 
         x = positions["subtitles"].pos.x;
@@ -205,7 +224,9 @@ public:
     {
         if (!positions.contains ("helpMessage"))
         {
-            positions["helpMessage"] = CreateHUDElement ();
+            QueueHUDElement ("helpMessage");
+            cb ();
+            return;
         }
 
         x = positions["helpMessage"].pos.x;
@@ -227,7 +248,9 @@ public:
 
         if (!positions.contains (wanted))
         {
-            positions[wanted] = CreateHUDElement ();
+            QueueHUDElement (wanted);
+            cb ();
+            return;
         }
 
         x = positions[wanted].pos.x;
@@ -242,7 +265,9 @@ public:
     {
         if (!positions.contains ("healthBar"))
         {
-            positions["healthBar"] = CreateHUDElement ();
+            QueueHUDElement ("healthBar");
+            cb ();
+            return;
         }
 
         x = positions["healthBar"].pos.x;
@@ -257,7 +282,9 @@ public:
     {
         if (!positions.contains ("armorBar"))
         {
-            positions["armorBar"] = CreateHUDElement ();
+            QueueHUDElement ("armorBar");
+            cb ();
+            return;
         }
 
         x = positions["armorBar"].pos.x;
@@ -272,7 +299,9 @@ public:
     {
         if (!positions.contains ("breathBar"))
         {
-            positions["breathBar"] = CreateHUDElement ();
+            QueueHUDElement ("breathBar");
+            cb ();
+            return;
         }
 
         x = positions["breathBar"].pos.x;
@@ -287,7 +316,9 @@ public:
     {
         if (!positions.contains ("weaponIcon"))
         {
-            positions["weaponIcon"] = CreateHUDElement ();
+            QueueHUDElement ("weaponIcon");
+            cb ();
+            return;
         }
 
         x = positions["weaponIcon"].pos.x;
@@ -302,7 +333,9 @@ public:
     {
         if (!positions.contains ("weaponAmmo"))
         {
-            positions["weaponAmmo"] = CreateHUDElement ();
+            QueueHUDElement ("weaponAmmo");
+            cb ();
+            return;
         }
 
         x = positions["weaponAmmo"].pos.x;
@@ -323,7 +356,9 @@ public:
 
         if (!positions.contains ("radar"))
         {
-            positions["radar"] = CreateHUDElement ();
+            QueueHUDElement ("radar");
+            cb ();
+            return;
         }
 
         x = positions["radar"].pos.x / 2.9f;
@@ -340,4 +375,6 @@ public:
     }
 };
 
+// TODO: Crashes when in fade after loading a save and enabling it.
+// Got addresses, but no debug symbols, since release build
 DEFINE_EFFECT (ScreensaverHUDEffect, "effect_screensaver_hud", GROUP_HUD);
