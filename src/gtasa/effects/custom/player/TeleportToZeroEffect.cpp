@@ -27,11 +27,12 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        if (player->m_pVehicle)
+        CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
+        if (playerVehicle)
         {
             Command<eScriptCommands::
                         COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-                player, player->m_pVehicle);
+                player, playerVehicle);
         }
 
         Teleportation::Teleport (CVector (-2245.66f, 128.89f, 35.0f));
