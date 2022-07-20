@@ -6,15 +6,15 @@
 class MathHelper
 {
 public:
-    static float
-    ToRadians (float degrees)
+    static double
+    ToRadians (double degrees)
     {
-        return (degrees * (float) M_PI) / 180.0f;
+        return (degrees * M_PI) / 180.0;
     }
 
-    static float
-    ToDegrees (float radians)
+    static double
+    ToDegrees (double radians)
     {
-        return (radians * 180.0f) / (float) M_PI;
+        return (radians * 180.0) / M_PI;
     }
 };
