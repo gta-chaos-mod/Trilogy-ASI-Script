@@ -51,6 +51,9 @@ public:
         HOOK_ARGS (inst, Hooked_DrawWanted, void (float, float, char *),
                    0x58DFD3);
 
+        HOOK_ARGS (inst, Hooked_DrawTripSkip, void (float, float, char *),
+                   0x58A324);
+
         HOOK_ARGS (inst, Hooked_RenderHealthBar,
                    void (int, signed int, signed int), 0x58EE9A);
 
@@ -260,6 +263,22 @@ public:
     }
 
     static void
+    Hooked_DrawTripSkip (auto &&cb, float &x, float &y, char *text)
+    {
+        if (!positions.contains ("tripSkip"))
+        {
+            QueueHUDElement ("tripSkip");
+            cb ();
+            return;
+        }
+
+        x = positions["tripSkip"].pos.x;
+        y = positions["tripSkip"].pos.y;
+
+        cb ();
+    }
+
+    static void
     Hooked_RenderHealthBar (auto &&cb, int playerId, signed int &x,
                             signed int &y)
     {
@@ -375,6 +394,4 @@ public:
     }
 };
 
-// TODO: Crashes when in fade after loading a save and enabling it.
-// Got addresses, but no debug symbols, since release build
 DEFINE_EFFECT (ScreensaverHUDEffect, "effect_screensaver_hud", GROUP_HUD);
