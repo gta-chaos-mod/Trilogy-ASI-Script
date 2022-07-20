@@ -7,6 +7,7 @@
 
 #ifdef GTASA
 #include <CAudioEngine.h>
+#include <eAudioEvents.h>
 #endif
 
 #include <CMenuManager.h>
@@ -130,7 +131,8 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         if (Config::GetOrDefault ("Chaos.PlayEffectSound", true))
         {
 #ifdef GTASA
-            AudioEngine.ReportFrontendAudioEvent (0x20, 0.0f, 1.0f);
+            AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_DISPLAY_INFO,
+                                                  0.0f, 1.0f);
 #endif
         }
 
