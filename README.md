@@ -69,6 +69,12 @@ Simple:
 	1. If you want to have the timer start automatically when you **start a new game**, make sure to tick the `Auto-Start` checkbox in the top right.
 4. Suffer
 
+# I'm getting an "Error: 126" when I try to start the game!
+You are most likely missing the DirectX 9 runtime.  
+Please download it from here and then try starting the game again:
+
+https://www.microsoft.com/en-us/download/details.aspx?id=8109
+
 # Is there a list of all effects?
 Of course! Here's a [spreadsheet](http://bit.ly/gta-sa-chaos-mod) that has all of them!
 
@@ -118,10 +124,10 @@ who has been helping me with a **LOT** of things in both the original mod and th
 - [Joshimuz](https://twitch.tv/Joshimuz)
 
 ## Everyone in the v3.0 release race that was held on the 9th of July, 2022
-Riekelt, Kato0909, TonyKaatib, DoubleDubbel, WaterArko, Kuba4ful, 2D_SVD, Saymite, NotCreativeBush, Floh284, SimonDiamond, Tepiloxtl, Jugachi, Kristof, LuckyLucketts, DennisOnTheInternet,
-KinzyKenzie, Simbe, Mytherious, Kamikaza404, MoRTaL, Scemmer_Joke, BladeXRG, Husker, GamingMaster, Fearful_was_taken, Nardiko, Abbygail, gian_97, Stickheadz32, Crucial,
-NateHotshot, Gukol, zoton2, glomerius, mossfis, Jersukai, English\_Ben, LotsOfS, Rose, prosto_big, YPOC, 
-
+2D_SVD, Abbygail, BladeXRG, Crucial, DennisOnTheInternet, DoubleDubbel, English\_Ben, Fearful_was_taken, Floh284, GamingMaster,
+gian_97, glomerius, Gukol, Husker, Jersukai, Jugachi, Kamikaza404, Kato0909, KinzyKenzie, Kristof, Kuba4ful, LotsOfS,
+LuckyLucketts, MoRTaL, mossfis, Mytherious, Nardiko, NateHotshot, NotCreativeBush, prosto_big, Riekelt, Rose, Saymite,
+Scemmer_Joke, Simbe, SimonDiamond, Stickheadz32, Tepiloxtl, TonyKaatib, WaterArko, YPOC, zoton2
 ___
 
 <details>
