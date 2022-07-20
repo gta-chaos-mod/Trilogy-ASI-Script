@@ -6,8 +6,8 @@
 std::string
 GenericUtil::GetModVersion ()
 {
-    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
-        return "Shoutouts to SimpleFlips.";
+    if (Globals::isReplaceAllTextEffectEnabled)
+        return Globals::replaceAllTextString;
 
     std::string version = "Chaos Mod v3.0";
 

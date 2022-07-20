@@ -38,8 +38,8 @@ EffectDrawHandler::CalculateDrawPosition ()
 
     std::string_view name = effect->GetName ();
 
-    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
-        name = "Shoutouts to SimpleFlips.";
+    if (Globals::isReplaceAllTextEffectEnabled)
+        name = Globals::replaceAllTextString;
 
 #ifdef GTASA
     CFont::SetScaleForCurrentlanguage (TEXT_SCALE_X, TEXT_SCALE_Y);
@@ -73,8 +73,8 @@ EffectDrawHandler::PrintEffectName ()
 {
     std::string_view name = effect->GetName ();
 
-    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
-        name = "Shoutouts to SimpleFlips.";
+    if (Globals::isReplaceAllTextEffectEnabled)
+        name = Globals::replaceAllTextString;
 
     gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
                      std::string (name), x, y, FONT_DEFAULT, 1.0f, 1.2f,
@@ -88,8 +88,8 @@ EffectDrawHandler::PrintSubtext ()
     {
         std::string_view subtext = effect->GetSubtext ();
 
-        if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
-            subtext = "Shoutouts to SimpleFlips.";
+        if (Globals::isReplaceAllTextEffectEnabled)
+            subtext = Globals::replaceAllTextString;
 
         gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
                          std::string (subtext), x, y - 30.0f, FONT_DEFAULT,
@@ -208,8 +208,8 @@ EffectDrawHandler::DrawAndXMore ()
 
     std::string text = "And " + std::to_string (more) + " more...";
 
-    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
-        text = "Shoutouts to SimpleFlips.";
+    if (Globals::isReplaceAllTextEffectEnabled)
+        text = Globals::replaceAllTextString;
 
     y = ((NUM_RECENT_EFFECTS + 2) * 65.0f) + 100.0f - 20.0f;
 

@@ -85,8 +85,8 @@ DrawVoting::DrawVote (int choice)
 #endif
     std::string_view description = votes[choice].description;
 
-    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled && pickedVote != -1)
-        description = "Shoutouts to SimpleFlips.";
+    if (Globals::isReplaceAllTextEffectEnabled && pickedVote != -1)
+        description = Globals::replaceAllTextString;
 
     gamefont::PrintUnscaled (std::string (description), x, y, FONT_DEFAULT,
                              SCREEN_MULTIPLIER (0.8f), SCREEN_MULTIPLIER (1.0f),
@@ -152,8 +152,8 @@ DrawVoting::CalculateBarWidth (int choice, float maxWidth)
 std::string
 DrawVoting::GetPercentage (int choice)
 {
-    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
-        return "Shoutouts to SimpleFlips.";
+    if (Globals::isReplaceAllTextEffectEnabled)
+        return Globals::replaceAllTextString;
 
     std::string percentage;
 

@@ -34,6 +34,7 @@ enum eEffectGroups : unsigned long long
     GROUP_TIMER_SPEED        = (1ull << 23),
     GROUP_CUSTOM_TEXTURES    = (1ull << 24),
     GROUP_CUSTOM_FONT        = (1ull << 25),
+    GROUP_REPLACE_ALL_TEXT   = (1ull << 26),
 
     GROUP_MAX_GROUPS = 32
 };

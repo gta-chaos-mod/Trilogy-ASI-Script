@@ -5,15 +5,24 @@
 #include <CFont.h>
 #include <CText.h>
 
-class ShoutoutsToSimpleFlipsEffect : public EffectBase
+class ReplaceAllTextEffect : public EffectBase
 {
     static inline std::string replacementText = "Shoutouts to SimpleFlips.";
 
+    std::string text = "";
+
 public:
+    ReplaceAllTextEffect (std::string text)
+    {
+        this->text = text;
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
-        Globals::isShoutoutsToSimpleFlipsEffectEnabled = true;
+        replacementText                        = text;
+        Globals::replaceAllTextString          = text;
+        Globals::isReplaceAllTextEffectEnabled = true;
 
         HOOK_METHOD_ARGS (inst, Hooked_CText_Get, char *(CText *, char *),
                           0x6A0050);
@@ -28,7 +37,7 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        Globals::isShoutoutsToSimpleFlipsEffectEnabled = false;
+        Globals::isReplaceAllTextEffectEnabled = false;
     }
 
     static char *
@@ -65,5 +74,7 @@ public:
     }
 };
 
-DEFINE_EFFECT (ShoutoutsToSimpleFlipsEffect, "effect_shoutouts_to_simpleflips",
-               0);
+// clang-format off
+DEFINE_EFFECT (ReplaceAllTextEffect, "effect_replace_all_text_simpleflips",     GROUP_REPLACE_ALL_TEXT, "Shoutouts To SimpleFlips.");
+DEFINE_EFFECT (ReplaceAllTextEffect, "effect_replace_all_text_queer_rights",    GROUP_REPLACE_ALL_TEXT, "Queer Rights!");
+// clang-format on

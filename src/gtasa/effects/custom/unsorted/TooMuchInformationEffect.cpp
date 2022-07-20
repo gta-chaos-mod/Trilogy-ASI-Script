@@ -366,9 +366,10 @@ public:
     static std::string
     GetInfoString (Info info)
     {
-        if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
+        if (Globals::isReplaceAllTextEffectEnabled)
         {
-            return "Shoutouts To SimpleFlips: Shoutouts To SimpleFlips.";
+            return std::format ("{}: {}", Globals::replaceAllTextString,
+                                Globals::replaceAllTextString);
         }
 
         return std::string (info.name).append (": ").append (info.function ());

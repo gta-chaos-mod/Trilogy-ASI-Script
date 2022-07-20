@@ -17,8 +17,8 @@
 std::string
 DrawHelper::GetCooldownString ()
 {
-    if (Globals::isShoutoutsToSimpleFlipsEffectEnabled)
-        return "Shoutouts to SimpleFlips.";
+    if (Globals::isReplaceAllTextEffectEnabled)
+        return Globals::replaceAllTextString;
 
     std::string cooldown;
     if (mode != "")
