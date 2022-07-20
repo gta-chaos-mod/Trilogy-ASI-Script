@@ -12,6 +12,8 @@ class ArcadeRacerCameraEffect : public EffectBase
     bool wasInVehicle = false;
 
     static inline float rotation = 0.0f;
+    static inline float oX       = 0.0f;
+    static inline float oZ       = 0.0f;
 
 public:
     bool
@@ -29,9 +31,19 @@ public:
         // Events::drawAfterFadeEvent += []
         // {
         //     gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
-        //                      std::to_string (rotation).c_str
-        //                      (), 20.0f, 60.0f, FONT_DEFAULT, 1.0f, 1.4f,
-        //                      color::White, 2, color::Black, true);
+        //                      std::to_string (oZ).c_str (), 20.0f, 60.0f,
+        //                      FONT_DEFAULT, 1.0f, 1.4f, color::White, 2,
+        //                      color::Black, true);
+
+        //     gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
+        //                      std::to_string (rotation).c_str (), 20.0f,
+        //                      120.0f, FONT_DEFAULT, 1.0f, 1.4f, color::White,
+        //                      2, color::Black, true);
+
+        //     gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
+        //                      std::to_string (oX).c_str (), 20.0f, 180.0f,
+        //                      FONT_DEFAULT, 1.0f, 1.4f, color::White, 2,
+        //                      color::Black, true);
         // };
     }
 
@@ -61,9 +73,12 @@ public:
             if (false)
             {
                 CMatrix *matrix = vehicle->GetMatrix ();
-                rotation        = MathHelper::ToDegrees (
-                                      atan2 (matrix->up.y - (M_PI / 2), matrix->up.z))
-                           + 90.0f;
+
+                oX = atan2 (matrix->at.y, matrix->at.z);
+                rotation
+                    = atan2 (-matrix->at.x, sqrt (pow (matrix->at.y, 2)
+                                                  + pow (matrix->at.z, 2)));
+                oZ = atan2 (matrix->up.x, matrix->right.x);
             }
             else
             {
