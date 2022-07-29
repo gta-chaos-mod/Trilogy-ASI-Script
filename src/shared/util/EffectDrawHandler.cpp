@@ -233,7 +233,7 @@ EffectDrawHandler::DrawRecentEffects (int num)
             effect.Draw (i, inset);
     }
 
-    DrawAndXMore ();
+    if (!Globals::isHideChaosUIEffectEnabled) DrawAndXMore ();
 }
 
 EffectDrawHandler::ScreensaverHUDElement
