@@ -45,12 +45,6 @@ public:
     static void
     RenderPed (CPed *ped)
     {
-        float speed = ped->m_vecMoveSpeed.Magnitude ();
-
-        RwV3d rotationOffset = {instance->Random (0.0f, 45.0f) * speed,
-                                instance->Random (0.0f, 45.0f) * speed,
-                                instance->Random (0.0f, 45.0f) * speed};
-
         if (!storedRotations.contains (ped))
         {
             storedRotations[ped]
@@ -59,9 +53,9 @@ public:
 
         RwV3d &rotation = storedRotations[ped];
 
-        rotation.x += rotationOffset.x;
-        rotation.y += rotationOffset.y;
-        rotation.z += rotationOffset.z;
+        rotation.x += instance->Random (0.0f, 20.0f);
+        rotation.y += instance->Random (0.0f, 20.0f);
+        rotation.z += instance->Random (0.0f, 20.0f);
 
         BoneHelper::SetBoneRotation (ped, BONE_PELVIS1, rotation);
     }
