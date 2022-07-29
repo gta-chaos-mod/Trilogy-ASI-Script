@@ -53,6 +53,6 @@ DEFINE_EFFECT (ObjectSizeLongEffect, "effect_object_size_long", 0);
 using ObjectSizePaperThinEffect = ObjectSizeEffect<RwV3d {0.01f, 1.0f, 1.0f}>;
 DEFINE_EFFECT (ObjectSizePaperThinEffect, "effect_object_size_paper_thin", 0);
 
-using ObjectSizeFlatEffect = ObjectSizeEffect<RwV3d {1.00f, 1.0f, 0.01f}>;
+using ObjectSizeFlatEffect = ObjectSizeEffect<RwV3d {1.0f, 1.0f, 0.01f}>;
 DEFINE_EFFECT (ObjectSizeFlatEffect, "effect_object_size_flat", 0);
 // clang-format on
