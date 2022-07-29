@@ -1,7 +1,9 @@
 #pragma once
 
+#include "util/Config.h"
 #include "util/EffectDatabase.h"
 #include "util/EffectInstance.h"
+#include "util/GameUtil.h"
 
 #include <string>
 #include <type_traits>
@@ -74,6 +76,17 @@ public:
     virtual void OnEnd (EffectInstance *instance){};
     virtual void OnTick (EffectInstance *instance){};
     virtual void OnProcessScripts (EffectInstance *instance){};
+
+    virtual bool
+    CanTickDown (EffectInstance *instance)
+    {
+        if (!Config::GetOrDefault ("Chaos.AlwaysCountDownEffects", true))
+        {
+            if (GameUtil::IsCutsceneProcessing ()) return false;
+        }
+
+        return true;
+    }
 
     // Only used for Crowd Control. Return false if the effect cannot be
     // triggered at the moment and Crowd Control needs to send effect later.

@@ -55,6 +55,7 @@ public:
 
     static void ClearWeapons (CPed *ped, bool keepParachute = false);
 
+    static bool IsCutsceneProcessing ();
     static bool IsPlayerSafe ();
 
     template <typename T>

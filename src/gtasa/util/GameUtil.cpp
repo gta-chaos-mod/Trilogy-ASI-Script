@@ -295,6 +295,12 @@ GameUtil::ClearWeapons (CPed *ped, bool keepParachute)
 }
 
 bool
+GameUtil::IsCutsceneProcessing ()
+{
+    return CCutsceneMgr::ms_cutsceneProcessing || CCutsceneMgr::ms_running;
+}
+
+bool
 GameUtil::IsPlayerSafe ()
 {
     CPlayerPed *player = FindPlayerPed ();
@@ -336,7 +342,7 @@ GameUtil::IsPlayerSafe ()
         return false;
     }
 
-    if (CCutsceneMgr::ms_cutsceneProcessing || CCutsceneMgr::ms_running)
+    if (GameUtil::IsCutsceneProcessing ())
     {
         return false;
     }

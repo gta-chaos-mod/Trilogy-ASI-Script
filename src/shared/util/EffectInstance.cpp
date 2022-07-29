@@ -25,8 +25,7 @@ EffectInstance::End ()
 void
 EffectInstance::Tick ()
 {
-    if (Config::GetOrDefault ("Chaos.AlwaysCountDownEffects", true)
-        || GameUtil::IsPlayerSafe ())
+    if (effect->CanTickDown (this))
     {
         int tick = (int) round (
             GenericUtil::CalculateTick (Globals::effectTimerSpeed));
