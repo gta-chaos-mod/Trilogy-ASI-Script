@@ -120,6 +120,7 @@ That way you are helping with making the mod even better (or worse, depending on
 who has been helping me with a **LOT** of things in both the original mod and this rewrite 💖
 
 ## Early v3.0 beta testers
+- [English\_Ben](https://twitch.tv/english_ben)
 - [hugo_one](https://twitch.tv/hugo_one)
 - [Joshimuz](https://twitch.tv/Joshimuz)
 
@@ -127,7 +128,7 @@ who has been helping me with a **LOT** of things in both the original mod and th
 2D_SVD, Abbygail, BladeXRG, Crucial, DennisOnTheInternet, DoubleDubbel, English\_Ben, Fearful_was_taken, Floh284, GamingMaster,
 gian_97, glomerius, Gukol, Husker, Jersukai, Jugachi, Kamikaza404, Kato0909, KinzyKenzie, Kristof, Kuba4ful, LotsOfS,
 LuckyLucketts, MoRTaL, mossfis, Mytherious, Nardiko, NateHotshot, NotCreativeBush, prosto_big, Riekelt, Rose, Saymite,
-Scemmer_Joke, Simbe, SimonDiamond, Stickheadz32, Tepiloxtl, TonyKaatib, WaterArko, YPOC, zoton2
+Scemmer_Joke, Simbe, SimonDiamond, Stickheadz32, Tepiloxtl, TonyKaatib, Voskos, WaterArko, YPOC, zoton2
 ___
 
 <details>
