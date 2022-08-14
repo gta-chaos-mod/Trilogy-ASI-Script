@@ -14,7 +14,7 @@ It will also be easier for interested developers to contribute to the project be
 Check out the [CONTRIBUTING](CONTRIBUTING.md) file for more information.
 
 # What does this mod do?
-Similar to the old [Vice City Chaos% mod](https://github.com/Lighnat0r-pers/gta-vc-chaos) by [Lightnat0r](https://github.com/Lighnat0r), it activates effects in the corresponding game every X seconds / minutes (cooldown can be defined in the GUI tool).
+Similar to the old [Vice City Chaos% mod](https://github.com/Lighnat0r-pers/gta-vc-chaos) by [Lightnat0r](https://github.com/Lighnat0r), it activates effects in the corresponding game every X seconds / minutes (cooldown can be defined in the GUI).
 
 # Which GTA games does it support?
 It started off as a mod for **San Andreas**, which is the one that is mainly supported right now.  
@@ -26,7 +26,7 @@ However, there is already basic support for **Vice City** and **III** implemente
 ~~**GTA III**: v1.0 US~~
 
 So far only San Andreas is officially supported.  
-Vice City and III have some sort of basic support in already, but the GUI Tool doesn't support them yet.
+Vice City and III have some sort of basic support in already, but the GUI doesn't support them yet.
 
 # How do I downgrade my game to the required version?
 There's a handy thread over on the GTA Forums that has downgraders for GTA III, Vice City and even San Andreas.  
@@ -55,7 +55,7 @@ If you don't need any of that, Silent's ASI Loader will be all you need.
 # How do I download the mod then?
 Head on over to the the `Releases` tab or [click here](https://github.com/gta-chaos-mod/asi-script/releases/latest).
 
-Installation is as simple as installing an ASI Loader (see previous section) and copying all the files into your game directory. (So the `chaos_mod` folder, the `scripts` folder and the `.exe`)
+Installation is as simple as installing an ASI Loader (see previous section) and copying all the files into your game directory. (So the `ChaosMod` folder, the `scripts` folder and the `.exe`)
 
 The `.exe` can be anywhere you want, as long as it has write permissions since it automatically saves the settings in a file called `config.cfg` in the same directory.
 
