@@ -69,6 +69,18 @@ public:
     {
         if (teleported)
         {
+            CPlayerPed *player = FindPlayerPed ();
+            if (player)
+            {
+                CWeapon weapon
+                    = player->m_aWeapons[player->GetWeaponSlot (WEAPON_PISTOL)];
+
+                if (weapon.m_nTotalAmmo == 0
+                    && player->m_nActiveWeaponSlot != 0)
+                    player->SetCurrentWeapon (WEAPON_UNARMED);
+            }
+
+           
             if (rydersCar && IsVehiclePointerValid (rydersCar)
                 && rydersCar->m_nStatus == STATUS_WRECKED)
             {
