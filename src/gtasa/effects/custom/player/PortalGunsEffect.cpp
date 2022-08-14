@@ -30,6 +30,34 @@ public:
         HOOK_STD_ARGS (inst, Hooked_Fx_c_AddBulletImpact,
                        void (RwV3d *, RwV3d *, int, signed int, float),
                        0x736545);
+
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        CStreaming::RequestModel (MODEL_TEC9, 2); // Tec-9
+        CStreaming::LoadAllRequestedModels (false);
+
+        player->ClearWeapon (WEAPON_TEC9);
+        player->ClearWeapon (WEAPON_MICRO_UZI);
+        player->ClearWeapon (WEAPON_MP5);
+
+        player->GiveWeapon (WEAPON_TEC9, 99999, 1);
+        player->SetCurrentWeapon (player->GetWeaponSlot (WEAPON_TEC9));
+
+        CStreaming::SetModelIsDeletable (MODEL_TEC9);
+    }
+
+    void
+    OnEnd (EffectInstance *inst) override
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        if (!player->DoWeHaveWeaponAvailable (WEAPON_TEC9)) return;
+
+        CWeapon weapon
+            = player->m_aWeapons[player->GetWeaponSlot (WEAPON_TEC9)];
+        if (weapon.m_nTotalAmmo > 500) player->SetAmmo (WEAPON_TEC9, 500);
     }
 
     static void
@@ -40,8 +68,9 @@ public:
         owner->PositionAnyPedOutOfCollision ();
     }
 
+    // Can still sometimes teleport to the 0,0,0 point
     static bool
-    IsPointValid (CVector v, CVector playerPosition)
+    IsPointValid (CVector v)
     {
         // Extra checks thanks to Zolika
         if (abs (v.x) > 1000000) return false;
@@ -57,8 +86,8 @@ public:
         if (v.y == 0) return false;
         if (v.z == 0) return false;
 
-        // Maybe increase to 50.0f since we are checking distance instead of
-        // individual x,y,z?
+        CVector playerPosition = FindPlayerPed ()->GetPosition ();
+
         float distance = DistanceBetweenPoints (v, playerPosition);
         return distance < 100.0f && distance > 0.01f;
     }
@@ -71,12 +100,10 @@ public:
     {
         cb ();
 
-        // Can still sometimes teleport to the 0,0,0 point
         CVector point = colPoint->m_vecPoint;
         point.z += 1.0f;
 
-        if (owner == FindPlayerPed ()
-            && IsPointValid (point, owner->GetPosition ()))
+        if (owner == FindPlayerPed () && IsPointValid (point))
         {
             TeleportToPosition ((CPed *) owner, point);
         }
@@ -88,7 +115,8 @@ public:
                                         int damageFactor, int pedPiece,
                                         char direction)
     {
-        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE)
+        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE
+            && IsPointValid (victim->GetPosition ()))
             TeleportToPosition ((CPed *) creator, victim->GetPosition ());
 
         cb ();
@@ -99,7 +127,8 @@ public:
                                    CPed *creator, eWeaponType weaponType,
                                    float damage, CVector coords)
     {
-        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE)
+        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE
+            && IsPointValid (thisVehicle->GetPosition ()))
             TeleportToPosition ((CPed *) creator, thisVehicle->GetPosition ());
 
         cb ();
@@ -110,7 +139,8 @@ public:
                                  RwV3d *fxOrigin, RwV3d *fxDirection,
                                  CEntity *creator, eWeaponType weaponType)
     {
-        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE)
+        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE
+            && IsPointValid (thisObject->GetPosition ()))
             TeleportToPosition ((CPed *) creator, thisObject->GetPosition ());
 
         cb ();
@@ -120,8 +150,9 @@ public:
     Hooked_Fx_c_AddBulletImpact (auto &&cb, RwV3d *position, RwV3d *direction,
                                  int surfnum, signed int count, float scale)
     {
-        TeleportToPosition (FindPlayerPed (),
-                            CVector (position->x, position->y, position->z));
+        CVector point = CVector (position->x, position->y, position->z);
+
+        if (IsPointValid (point)) TeleportToPosition (FindPlayerPed (), point);
 
         cb ();
     }
