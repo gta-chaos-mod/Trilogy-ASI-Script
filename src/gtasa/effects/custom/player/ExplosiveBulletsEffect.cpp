@@ -5,7 +5,6 @@
 
 using namespace plugin;
 
-// TODO: Snipers don't explode when not hitting a ped, car or object
 class ExplosiveBulletsEffect : public EffectBase
 {
 public:
@@ -31,6 +30,10 @@ public:
                           void (CObject *, float, RwV3d *, RwV3d *, CEntity *,
                                 eWeaponType),
                           0x736692, 0x7365E3);
+
+        HOOK_STD_ARGS (inst, Hooked_Fx_c_AddBulletImpact,
+                       void (RwV3d *, RwV3d *, int, signed int, float),
+                       0x736545);
     }
 
     static void
@@ -92,6 +95,15 @@ public:
         {
             ExplodeAt (thisObject->GetPosition ());
         }
+
+        cb ();
+    }
+
+    static void
+    Hooked_Fx_c_AddBulletImpact (auto &&cb, RwV3d *position, RwV3d *direction,
+                                 int surfnum, signed int count, float scale)
+    {
+        ExplodeAt (CVector (position->x, position->y, position->z));
 
         cb ();
     }

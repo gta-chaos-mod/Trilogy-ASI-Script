@@ -3,7 +3,6 @@
 
 #include <CFireManager.h>
 
-// TODO: Snipers don't create fire when not hitting a ped, car or object
 class FireBulletsEffect : public EffectBase
 {
 public:
@@ -29,6 +28,10 @@ public:
                           void (CObject *, float, RwV3d *, RwV3d *, CEntity *,
                                 eWeaponType),
                           0x736692, 0x7365E3);
+
+        HOOK_STD_ARGS (inst, Hooked_Fx_c_AddBulletImpact,
+                       void (RwV3d *, RwV3d *, int, signed int, float),
+                       0x736545);
     }
 
     static void
@@ -102,6 +105,16 @@ public:
         {
             StartFireAt (creator, thisObject->GetPosition ());
         }
+
+        cb ();
+    }
+
+    static void
+    Hooked_Fx_c_AddBulletImpact (auto &&cb, RwV3d *position, RwV3d *direction,
+                                 int surfnum, signed int count, float scale)
+    {
+        StartFireAt (FindPlayerPed (),
+                     CVector (position->x, position->y, position->z));
 
         cb ();
     }

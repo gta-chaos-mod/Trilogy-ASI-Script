@@ -1,7 +1,6 @@
 #include "util/EffectBase.h"
 #include "util/hooks/HookMacros.h"
 
-// TODO: Snipers don't teleport when not hitting a ped, car or object
 class PortalGunsEffect : public EffectBase
 {
 public:
@@ -27,6 +26,10 @@ public:
                           void (CObject *, float, RwV3d *, RwV3d *, CEntity *,
                                 eWeaponType),
                           0x736692, 0x7365E3);
+
+        HOOK_STD_ARGS (inst, Hooked_Fx_c_AddBulletImpact,
+                       void (RwV3d *, RwV3d *, int, signed int, float),
+                       0x736545);
     }
 
     static void
@@ -109,6 +112,16 @@ public:
     {
         if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE)
             TeleportToPosition ((CPed *) creator, thisObject->GetPosition ());
+
+        cb ();
+    }
+
+    static void
+    Hooked_Fx_c_AddBulletImpact (auto &&cb, RwV3d *position, RwV3d *direction,
+                                 int surfnum, signed int count, float scale)
+    {
+        TeleportToPosition (FindPlayerPed (),
+                            CVector (position->x, position->y, position->z));
 
         cb ();
     }
