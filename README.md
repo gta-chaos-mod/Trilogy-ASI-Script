@@ -113,6 +113,8 @@ Or better yet: **Create the effect yourself and do a pull request!**
 
 That way you are helping with making the mod even better (or worse, depending on how you look at it).
 
+Check out the [CONTRIBUTING](CONTRIBUTING.md) file for more information.
+
 # Credits
 ## [DK22Pac](https://github.com/DK22Pac) and everyone involved in the [plugin-sdk](https://github.com/DK22Pac/plugin-sdk)
 
