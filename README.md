@@ -87,11 +87,11 @@ Inside a sub-directory called `chaos_mod` in your corresponding GTA User Files f
 # How do I setup the Twitch voting?
 In the Twitch tab you have to fill out the `Access Token` and `Client ID` fields.
 
-To generate an Access Token and get a Client ID, please head to [this website](https://chaos.lord.moe/) and follow the instructions.
+To get a ClientID and generate an Access Token, please head to [this website](https://chaos.lord.moe/) and follow the instructions.
 
 For Twitch you now have the option to have voting happen through chat messages (1, 2, 3) or their integrated Polls system.
 
-![https://i.imgur.com/6Ebrgfy.png](https://i.imgur.com/6Ebrgfy.png)
+![https://i.imgur.com/UDmUKet.png](https://i.imgur.com/UDmUKet.png)
 
 # How do I setup the YouTube voting? (Experimental)
 Enable the `Experimental` tab by pressing `File` and then `Experimental`.
