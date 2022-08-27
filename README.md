@@ -78,6 +78,10 @@ https://www.microsoft.com/en-us/download/details.aspx?id=8109
 # Is there a list of all effects?
 Of course! Here's a [spreadsheet](http://bit.ly/gta-sa-chaos-mod) that has all of them!
 
+# The effect `SUPER. HOT.` isn't working correctly!
+It seems that mouse fixes such as `dinput8.dll` can cause issues with this (and maybe other) effects.
+If you're playing modded already I **highly** recommend using SilentPatch instead seeing as it also includes a mouse fix.
+
 # How do I load the last autosave when ingame?
 Hold down `Left CTRL` when hovering over the `Load Game` option in the menu.
 
@@ -125,6 +129,7 @@ who has been helping me with a **LOT** of things in both the original mod and th
 - [English\_Ben](https://twitch.tv/english_ben)
 - [hugo_one](https://twitch.tv/hugo_one)
 - [Joshimuz](https://twitch.tv/Joshimuz)
+- [Riekelt](https://twitch.tv/Riekelt)
 
 ## Everyone in the v3.0 release race that was held on the 9th of July, 2022
 2D_SVD, Abbygail, BladeXRG, Crucial, DennisOnTheInternet, DoubleDubbel, English\_Ben, Fearful_was_taken, Floh284, GamingMaster,

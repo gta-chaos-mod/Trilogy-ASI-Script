@@ -9,6 +9,8 @@
 
 using namespace plugin;
 
+// TODO: Teleport player back.
+// Probably not in their car but to the location at least
 class BlowUpRydersCarEffect : public EffectBase
 {
     bool      teleported = false;
@@ -80,7 +82,6 @@ public:
                     player->SetCurrentWeapon (WEAPON_UNARMED);
             }
 
-           
             if (rydersCar && IsVehiclePointerValid (rydersCar)
                 && rydersCar->m_nStatus == STATUS_WRECKED)
             {
