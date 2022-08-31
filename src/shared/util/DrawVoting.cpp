@@ -170,10 +170,11 @@ DrawVoting::GetPercentage (int choice)
         percentage.append (std::to_string (votes[choice].votes));
         percentage.append ("/");
         percentage.append (std::to_string (totalVotes));
-        ;
     }
     else
+    {
         percentage.append ("?%");
+    }
 
     return percentage;
 }
