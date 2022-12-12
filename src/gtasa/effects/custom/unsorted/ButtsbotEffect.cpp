@@ -43,8 +43,9 @@ public:
     {
         buttMap = {};
 
-        HOOK_METHOD_ARGS (inst, Hooked_CText_Get, char *(CText *, char *),
-                          0x6A0050);
+        HOOK_METHOD_ARGS (inst, Hooked_CKeyArray_Search,
+                          char *(CText *, unsigned __int8 *, int), 0x6A0070,
+                          0x6A00A4);
     }
 
     void
@@ -153,11 +154,17 @@ public:
     }
 
     static char *
-    Hooked_CText_Get (auto &&cb, CText *text, char *key)
+    Hooked_CKeyArray_Search (auto &&cb, CText *text, unsigned __int8 *key,
+                             int pFound)
     {
         char *textToRender = cb ();
 
-        return Buttify (textToRender);
+        if (textToRender != nullptr && pFound)
+        {
+            textToRender = Buttify (textToRender);
+        }
+
+        return textToRender;
     }
 };
 
