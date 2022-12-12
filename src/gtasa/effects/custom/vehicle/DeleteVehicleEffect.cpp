@@ -21,6 +21,7 @@ public:
 
         RemovePassengers (vehicle);
 
+        vehicle->m_fHealth = 0.0f;
         Command<eScriptCommands::COMMAND_DELETE_CAR> (vehicle);
     }
 
