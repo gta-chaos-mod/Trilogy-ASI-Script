@@ -1,6 +1,6 @@
 #pragma once
 
-// #define HOOK_MANAGER_DISABLE_ON_EMPTY_CALL_TREE true
+#define HOOK_MANAGER_DISABLE_ON_EMPTY_CALL_TREE true
 
 #include "util/hooks/FunctionCb.h"
 #include "util/hooks/HookTypes.h"
