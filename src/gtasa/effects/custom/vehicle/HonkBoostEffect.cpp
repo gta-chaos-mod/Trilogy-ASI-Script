@@ -24,32 +24,33 @@ public:
             {
                 wasHornOn[vehicle] = true;
 
-                CMatrix *matrix   = vehicle->GetMatrix ();
-                float    velocity = 1.5f;
-
-                vehicle->m_vecMoveSpeed.x = velocity * matrix->up.x;
-                vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
-                vehicle->m_vecMoveSpeed.z = velocity * matrix->up.z;
-
-                if (vehicle->m_pDriver)
-                    vehicle->m_pDriver->m_nPedFlags.CantBeKnockedOffBike = true;
+                ApplyVehicleSpeed (vehicle, 1.5f);
             }
             else if (wasHornOn[vehicle])
             {
                 wasHornOn[vehicle] = false;
 
-                CMatrixLink *matrix   = vehicle->GetMatrix ();
-                float        velocity = 0.75f;
-
-                vehicle->m_vecMoveSpeed.x = velocity * matrix->up.x;
-                vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
-                vehicle->m_vecMoveSpeed.z = velocity * matrix->up.z;
-
-                if (vehicle->m_pDriver)
-                    vehicle->m_pDriver->m_nPedFlags.CantBeKnockedOffBike
-                        = false;
+                ApplyVehicleSpeed (vehicle, 0.75f);
             }
         }
+    }
+
+    void
+    ApplyVehicleSpeed (CVehicle *vehicle, float velocity)
+    {
+        // Don't apply for empty vehicles or mission ped drivers
+        CPed *driver = vehicle->m_pDriver;
+
+        if (!driver) return;
+        if (driver->m_nCreatedBy == 2 && driver != FindPlayerPed ()) return;
+
+        CMatrixLink *matrix = vehicle->GetMatrix ();
+
+        vehicle->m_vecMoveSpeed.x = velocity * matrix->up.x;
+        vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
+        vehicle->m_vecMoveSpeed.z = velocity * matrix->up.z;
+
+        vehicle->m_pDriver->m_nPedFlags.CantBeKnockedOffBike = false;
     }
 };
 
