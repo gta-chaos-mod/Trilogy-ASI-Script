@@ -1,37 +1,104 @@
 #include "Websocket.h"
 
+#include "util/Config.h"
 #include "util/EffectHandler.h"
 
+#ifdef _WIN32
+#pragma comment(lib, "ws2_32")
+#include <WinSock2.h>
+#endif
+
 void
-Websocket::SetupWebsocketThread ()
+Websocket::Cleanup ()
 {
-    auto app = uWS::App ();
-
-    auto socketConfig = uWS::App::WebSocketBehavior<EmptySocketData> ();
-    socketConfig.open = [] (auto *ws)
+    if (wsClient.get () != nullptr)
     {
-        ws->subscribe ("broadcast");
-        globalApp->publish ("broadcast", "Hello!", uWS::OpCode::TEXT, true);
-    };
-    socketConfig.message
-        = [] (auto *ws, std::string_view message, uWS::OpCode opCode)
-    { CallFunction (std::string (message)); };
+        wsClient->close ();
+    }
 
-    app.ws<EmptySocketData> ("/*", std::move (socketConfig));
+    wsClient.reset ();
 
-    app.listen (9001, [] (auto *listenSocket) {});
+#ifdef _WIN32
+    WSACleanup ();
+#endif
+}
 
-    globalApp = &app;
-    loop      = uWS::Loop::get ();
+std::string
+Websocket::GetWebsocketURL ()
+{
+    return Config::GetOrDefault ("CrowdControl.Enabled", false)
+               ? CC_WEBSOCKET_URL
+               : GUI_WEBSOCKET_URL;
+}
 
-    app.run ();
+void
+Websocket::SetupClientThread ()
+{
+    try
+    {
+        using easywsclient::WebSocket;
+
+#ifdef _WIN32
+        INT     rc;
+        WSADATA wsaData;
+
+        rc = WSAStartup (MAKEWORD (2, 2), &wsaData);
+        if (rc)
+        {
+            printf ("WSAStartup Failed.\n");
+            return;
+        }
+#endif
+
+        std::unique_ptr<WebSocket> newClient (
+            WebSocket::from_url (GetWebsocketURL ()));
+        wsClient = std::move (newClient);
+
+        if (wsClient.get () == nullptr
+            || wsClient->getReadyState () == WebSocket::CLOSED)
+        {
+            return;
+        }
+
+        while (wsClient.get () != nullptr
+               && wsClient->getReadyState () != WebSocket::CLOSED)
+        {
+            if (!wsClient.get ()) break;
+            wsClient->poll ();
+
+            if (!wsClient.get ()) break;
+            wsClient->dispatch ([] (const std::string &message)
+                                { CallFunction (message); });
+        }
+    }
+    catch (...)
+    {
+        // Error connecting to socket
+    }
 }
 
 void
 Websocket::Setup ()
 {
-    std::thread setupThread ([] () { SetupWebsocketThread (); });
+    Cleanup ();
+
+    std::thread setupThread ([] () { SetupClientThread (); });
     setupThread.detach ();
+}
+
+bool
+Websocket::IsClientConnected ()
+{
+    using easywsclient::WebSocket;
+
+    return wsClient.get () != nullptr
+           && wsClient->getReadyState () == WebSocket::OPEN;
+}
+
+void
+Websocket::ReconnectClient ()
+{
+    Setup ();
 }
 
 void
@@ -43,33 +110,59 @@ Websocket::CallFunction (std::string text)
     {
         auto json = nlohmann::json::parse (text);
 
-        std::string type = json.at ("type");
-
-        if (type == "time")
+        if (json.value ("IsCrowdControl", false)
+            && Config::GetOrDefault ("CrowdControl.Enabled", false))
         {
-            auto data = json.at ("data");
+            int type = json.at ("type");
+            int id   = json.at ("id");
 
-            int         remaining = data.at ("remaining");
-            int         cooldown  = data.at ("cooldown");
-            std::string mode      = data.at ("mode");
+            // Request Type 1 == Start
+            if (type != 1) return;
 
-            DrawHelper::UpdateCooldown (remaining, cooldown, mode);
+            std::string effectID = json.at ("effectID");
+            std::string name     = json.value ("name", effectID);
+
+            int         duration = json.value ("realDuration", 1000 * 30);
+            std::string viewer   = json.value ("viewer", "The Crowd");
+
+            // Mods
+            json["crowdControlID"] = id;
+            json["displayName"]    = name;
+            json["subtext"]        = viewer;
+            json["duration"]       = duration;
+
+            EffectHandler::HandleFunction (json);
         }
-        else if (type == "votes")
+        else
         {
-            auto data = json.at ("data");
+            std::string type = json.at ("type");
 
-            std::vector<std::string> effects      = data.at ("effects");
-            std::vector<int>         votes        = data.at ("votes");
-            int                      pickedChoice = data.at ("pickedChoice");
+            if (type == "time")
+            {
+                auto data = json.at ("data");
 
-            DrawVoting::UpdateVotes (effects, votes, pickedChoice);
-        }
-        else if (type == "effect")
-        {
-            auto data = json.at ("data");
+                int         remaining = data.at ("remaining");
+                int         cooldown  = data.at ("cooldown");
+                std::string mode      = data.at ("mode");
 
-            EffectHandler::HandleFunction (data);
+                DrawHelper::UpdateCooldown (remaining, cooldown, mode);
+            }
+            else if (type == "votes")
+            {
+                auto data = json.at ("data");
+
+                std::vector<std::string> effects = data.at ("effects");
+                std::vector<int>         votes   = data.at ("votes");
+                int pickedChoice                 = data.at ("pickedChoice");
+
+                DrawVoting::UpdateVotes (effects, votes, pickedChoice);
+            }
+            else if (type == "effect")
+            {
+                auto data = json.at ("data");
+
+                EffectHandler::HandleFunction (data);
+            }
         }
     }
     catch (...)
@@ -81,21 +174,18 @@ Websocket::CallFunction (std::string text)
 void
 Websocket::SendWebsocketMessage (nlohmann::json json)
 {
-    loop->defer (
-        [json] () {
-            globalApp->publish ("broadcast", json.dump (), uWS::OpCode::TEXT,
-                                true);
-        });
+    if (wsClient.get () == nullptr) return;
+
+    wsClient->send (json.dump ());
 }
 
 void
-Websocket::SendCrowdControlResponse (int effectID, int response)
+Websocket::SendCrowdControlResponse (int effectID, int status)
 {
     nlohmann::json json;
 
-    json["type"]             = "CrowdControl";
-    json["data"]["id"]       = effectID;
-    json["data"]["response"] = response;
+    json["id"]     = effectID;
+    json["status"] = status;
 
     SendWebsocketMessage (json);
 }

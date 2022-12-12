@@ -22,6 +22,9 @@ class GameHandler
 
     static inline bool didTryLoadAutoSave = false;
 
+    static inline int lastConfigReload       = 0;
+    static inline int lastWebsocketReconnect = 0;
+
     static inline int lastMissionsPassed = -1;
     static inline int lastSaved          = 0;
     static inline int lastQuickSave      = 0;
@@ -47,7 +50,6 @@ public:
         // installed
         injector::WriteMemory<bool> (0xBED000, true, true);
 
-        Config::Init ();
         BoneHelper::Initialise ();
         GlobalRenderer::Initialise ();
         GameFixes::Initialise ();
@@ -96,6 +98,9 @@ public:
     static void
     ProcessGame ()
     {
+        HandleConfigReload ();
+        HandleWebsocketReconnect ();
+
         HandleAutoSave ();
         HandleQuickSave ();
 
@@ -105,13 +110,55 @@ public:
 
 private:
     static void
+    HandleConfigReload ()
+    {
+        // F7 + C
+        if (KeyPressed (VK_F7) && KeyPressed (67))
+        {
+            int currentTime
+                = std::max (CTimer::m_snTimeInMillisecondsNonClipped,
+                            (unsigned int) lastConfigReload);
+
+            if (FrontEndMenuManager.m_bMenuActive
+                && lastConfigReload <= currentTime)
+            {
+                lastConfigReload = currentTime + 3000;
+
+                Config::Init ();
+                Websocket::Setup ();
+            }
+        }
+    }
+
+    static void
+    HandleWebsocketReconnect ()
+    {
+        // F7 + R
+        if (KeyPressed (VK_F7) && KeyPressed (82))
+        {
+            int currentTime
+                = std::max (CTimer::m_snTimeInMillisecondsNonClipped,
+                            (unsigned int) lastWebsocketReconnect);
+
+            if (FrontEndMenuManager.m_bMenuActive
+                && lastWebsocketReconnect <= currentTime)
+            {
+                lastWebsocketReconnect = currentTime + 3000;
+
+                Websocket::Setup ();
+            }
+        }
+    }
+
+    static void
     HandleAutoSave ()
     {
         if (!Config::GetOrDefault ("Chaos.AutosaveAfterMissionPassed", true))
             return;
 
         int missionsPassed = GameUtil::GetRealMissionsPassed ();
-        int currentTime    = CTimer::m_snTimeInMilliseconds;
+        int currentTime    = std::max (CTimer::m_snTimeInMillisecondsNonClipped,
+                                       (unsigned int) lastMissionsPassed);
 
         if (lastMissionsPassed == -1)
         {
@@ -144,8 +191,11 @@ private:
     {
         if (!Config::GetOrDefault ("Chaos.QuickSave", false)) return;
 
-        int currentTime = CTimer::m_snTimeInMilliseconds;
-        if (KeyPressed (VK_F7) && lastQuickSave < currentTime)
+        int currentTime = std::max (CTimer::m_snTimeInMillisecondsNonClipped,
+                                    (unsigned int) lastQuickSave);
+
+        if (!FrontEndMenuManager.m_bMenuActive && KeyPressed (VK_F7)
+            && lastQuickSave < currentTime)
         {
             lastQuickSave = currentTime + 10000;
 

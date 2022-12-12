@@ -1,7 +1,9 @@
 #include "GenericUtil.h"
 
+#include "util/Config.h"
 #include "util/Globals.h"
 #include "util/Version.h"
+#include "util/Websocket.h"
 
 std::string
 GenericUtil::GetModVersion ()
@@ -18,6 +20,14 @@ GenericUtil::GetModVersion ()
 #ifdef VERSION_SUFFIX
     version.append ("-git.").append (VERSION_SUFFIX);
 #endif
+
+    if (Config::GetOrDefault ("CrowdControl.Enabled", false))
+        version.append ("~n~CC Connected: ");
+    else
+        version.append ("~n~GUI Connected: ");
+
+    bool connected = Websocket::IsClientConnected ();
+    version.append (connected ? "~g~true" : "~r~false");
 
     return version;
 }

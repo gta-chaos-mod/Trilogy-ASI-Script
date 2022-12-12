@@ -4,25 +4,31 @@
 #include "util/DrawHelper.h"
 #include "util/DrawVoting.h"
 #include "util/RandomHelper.h"
+#include "util/easywsclient/easywsclient.hpp"
 
 #include <thread>
 
 class Websocket
 {
-    static inline uWS::App  *globalApp;
-    static inline uWS::Loop *loop;
+    static inline std::string GUI_WEBSOCKET_URL = "ws://localhost:9001";
+    static inline std::string CC_WEBSOCKET_URL  = "ws://localhost:9002";
 
-    struct EmptySocketData
-    {
-    };
+    // Websocket Client
+    static inline std::atomic_bool                         stopClient = false;
+    static inline std::unique_ptr<easywsclient::WebSocket> wsClient   = NULL;
 
-    static void SetupWebsocketThread ();
+    static void        Cleanup ();
+    static std::string GetWebsocketURL ();
+    static void        SetupClientThread ();
 
 public:
     static void Setup ();
 
+    static bool IsClientConnected ();
+    static void ReconnectClient ();
+
     static void CallFunction (std::string text);
 
     static void SendWebsocketMessage (nlohmann::json data);
-    static void SendCrowdControlResponse (int effectID, int response);
+    static void SendCrowdControlResponse (int effectID, int status);
 };

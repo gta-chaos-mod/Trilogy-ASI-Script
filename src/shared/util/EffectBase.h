@@ -5,6 +5,8 @@
 #include "util/EffectInstance.h"
 #include "util/GameUtil.h"
 
+#include <bitset>
+#include <set>
 #include <string>
 #include <type_traits>
 

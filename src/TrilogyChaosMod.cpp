@@ -1,3 +1,4 @@
+#include "util/Config.h"
 #include "util/DrawHelper.h"
 #include "util/EffectHandler.h"
 #include "util/GameHandler.h"
@@ -23,6 +24,7 @@ class TrilogyChaosMod
 public:
     TrilogyChaosMod ()
     {
+        Config::Init ();
         Websocket::Setup ();
 
         Events::initRwEvent += GameHandler::Initialise;

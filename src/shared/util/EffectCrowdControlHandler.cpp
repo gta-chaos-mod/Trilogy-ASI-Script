@@ -15,8 +15,7 @@ EffectCrowdControlHandler::IsCrowdControlEnabled ()
 void
 EffectCrowdControlHandler::Initialise (const nlohmann::json &data)
 {
-    if (data.contains ("crowdControlData"))
-        crowdControlId = data["crowdControlData"].value ("id", -1);
+    crowdControlId = data.value ("crowdControlID", -1);
 }
 
 bool
@@ -68,11 +67,11 @@ EffectCrowdControlHandler::HandleOnEffectActivated () const
 void
 EffectCrowdControlHandler::SendRetry () const
 {
-    Websocket::SendCrowdControlResponse (crowdControlId, 2);
+    Websocket::SendCrowdControlResponse (crowdControlId, 3);
 }
 
 void
 EffectCrowdControlHandler::SendSucceeded () const
 {
-    Websocket::SendCrowdControlResponse (crowdControlId, 1);
+    Websocket::SendCrowdControlResponse (crowdControlId, 0);
 }

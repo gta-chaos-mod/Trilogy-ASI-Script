@@ -106,6 +106,8 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         /* Check for incompatibilities before effect activation */
         for (auto &i : effects)
         {
+            if (!i.IsRunning ()) continue;
+
             if (inst.IsOtherEffectIncompatible (i))
             {
                 if (!handlers.HandleOnEffectIncompatibility ()) return;

@@ -91,8 +91,11 @@ DrawHelper::DrawVersion ()
 {
     if (GenericUtil::IsMenuActive () && KeyPressed (VK_F7))
     {
+        int lines = CFont::GetNumberLines (
+            0.0f, 0.0f, (char *) GenericUtil::GetModVersion ().c_str ());
+
         gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
-                         GenericUtil::GetModVersion (), 20.0f, 60.0f,
+                         GenericUtil::GetModVersion (), 20.0f, lines * 50.0f,
                          FONT_DEFAULT, 1.0f, 1.4f, color::White, 2,
                          color::Black, true);
     }
