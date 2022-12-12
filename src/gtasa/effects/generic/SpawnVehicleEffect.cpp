@@ -11,6 +11,14 @@ using namespace plugin;
 class SpawnVehicleEffect : public OneTimeEffect
 {
 public:
+    bool
+    CanActivate () override
+    {
+        CPlayerPed *player = FindPlayerPed ();
+
+        return player && !player->m_nAreaCode;
+    }
+
     void
     OnStart (EffectInstance *instance)
     {
