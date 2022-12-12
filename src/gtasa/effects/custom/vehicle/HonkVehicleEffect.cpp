@@ -27,8 +27,14 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        CPlayerPed *player = FindPlayerPed ();
+
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        {
+            if (vehicle->m_pDriver && vehicle->m_pDriver == player) continue;
+
             vehicle->m_nHornCounter = 1;
+        }
     }
 
     static char
