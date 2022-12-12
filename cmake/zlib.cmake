@@ -1,6 +1,6 @@
 include(FetchContent)
 FetchContent_Declare(LIB_ZLIB
-  URL https://zlib.net/zlib1212.zip)
+  URL https://zlib.net/zlib1213.zip)
 
 message("Fetching zlib from zlib.net...")
 FetchContent_MakeAvailable (LIB_ZLIB)
