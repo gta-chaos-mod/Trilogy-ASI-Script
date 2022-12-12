@@ -25,8 +25,11 @@ GenericUtil::GetModVersion ()
 double
 GenericUtil::CalculateTick (double multiplier)
 {
-    unsigned diff = CTimer::m_snTimeInMilliseconds
-                    - CTimer::m_snPreviousTimeInMilliseconds;
+    unsigned diff = CTimer::m_snTimeInMillisecondsNonClipped
+                    - CTimer::m_snPreviousTimeInMillisecondsNonClipped;
+
+    // If the jump is too big, e.g. replays or loading saves
+    if (diff <= 0 || diff >= 1000) return 0;
 
     float timeScale = std::max (0.000001f, CTimer::ms_fTimeScale);
 
