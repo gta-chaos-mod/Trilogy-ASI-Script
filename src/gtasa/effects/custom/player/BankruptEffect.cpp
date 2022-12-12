@@ -14,6 +14,10 @@ public:
         CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
         if (!playerInfo) return;
 
+        // Cap the money at $10m so it doesn't run down endlessly
+        playerInfo->m_nDisplayMoney
+            = std::min (10000000, playerInfo->m_nDisplayMoney);
+
         playerInfo->m_nMoney = 0;
         inst->Disable ();
     }
