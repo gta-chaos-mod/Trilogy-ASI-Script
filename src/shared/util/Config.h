@@ -106,11 +106,10 @@ RainbowColors = true
 # Crowd Control Settings
 [CrowdControl]
 
-# Whether or not to enable the Crowd Control mode
-# WARNING: THIS IS MANDATORY TO BE ENABLED WHEN PLAYING WITH CROWD CONTROL!
+# Whether Crowd Control is enabled
+# WARNING: THIS HAS TO BE ENABLED WHEN PLAYING WITH CROWD CONTROL!
 # Default: false
 Enabled = false
-
 #######################################################)";
 #else
     static inline std::string configContent = "";
