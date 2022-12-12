@@ -14,17 +14,19 @@
 
 using namespace plugin;
 
-template <int vehicleID> class CustomVehicleSpawnsEffect : public EffectBase
+template <signed int vehicleID>
+class CustomVehicleSpawnsEffect : public EffectBase
 {
 public:
     void
     OnStart (EffectInstance *inst) override
     {
         // Traffic
-        HOOK_ARGS (inst, Hooked_RandomizeTrafficCars, int (int *), 0x43022A);
+        HOOK_ARGS (inst, Hooked_RandomizeTrafficCars, signed int (int *),
+                   0x43022A);
 
-        HOOK (inst, Hooked_RandomizeCarToLoad, int (int *), 0x40B4CB, 0x40B596,
-              0x40B62F, 0x40ED07);
+        HOOK (inst, Hooked_RandomizeCarToLoad, signed int (int *), 0x40B4CB,
+              0x40B596, 0x40B62F, 0x40ED07);
 
         // Disable police car spawns for the time being
         // HOOK (inst, Hooked_ChoosePoliceCarModel, int (int), 0x424E20,
@@ -43,7 +45,7 @@ public:
                           void (CCarGenerator *), 0x6F3EC1);
 
         HOOK_METHOD (inst, Hooked_RandomizeRandomSpawn,
-                     int (CLoadedCarGroup *, char, char), 0x6F3583);
+                     signed int (CLoadedCarGroup *, char, char), 0x6F3583);
 
         // Roadblocks
         // HOOK_METHOD_ARGS (inst, Hooked_RandomizeRoadblocks,
@@ -86,7 +88,7 @@ public:
         }
     }
 
-    static int
+    static signed int
     Hooked_RandomizeTrafficCars (auto &&cb, int *type)
     {
         LoadCarModel ();
@@ -100,7 +102,7 @@ public:
         return vehicleID;
     }
 
-    static int
+    static signed int
     Hooked_RandomizeCarToLoad (auto &&cb)
     {
         LoadCarModel ();
@@ -186,7 +188,7 @@ public:
         carGen->m_nModelId = oldModel;
     }
 
-    static int
+    static signed int
     Hooked_RandomizeRandomSpawn (auto &&cb)
     {
         return vehicleID;
