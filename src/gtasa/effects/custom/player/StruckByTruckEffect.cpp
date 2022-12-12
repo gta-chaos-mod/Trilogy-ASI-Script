@@ -8,6 +8,14 @@ class StruckByTruckEffect : public EffectBase
     int wait = 700;
 
 public:
+    bool
+    CanActivate () override
+    {
+        CPlayerPed *player = FindPlayerPed ();
+
+        return player && !player->m_nAreaCode && GameUtil::IsPlayerSafe ();
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
@@ -19,6 +27,8 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        if (!CanActivate ()) return;
+
         wait -= (int) GenericUtil::CalculateTick ();
         if (wait > 0) return;
 
