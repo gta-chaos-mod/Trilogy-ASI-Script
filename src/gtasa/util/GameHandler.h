@@ -13,6 +13,7 @@
 #include <CReferences.h>
 #include <CTheScripts.h>
 #include <CTimer.h>
+#include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
@@ -91,6 +92,17 @@ public:
         // Fix map crash when trying to load the legend
         HOOK_ARGS (GlobalHooksInstance::Get (), Hooked_FixMapLegendCrash,
                    void (float, float, char *), 0x582DEE);
+
+        // Hook CPhysical::CanPhysicalBeDamaged to allow cutting down of spawned
+        // trees with the chainsaw
+        HOOK_METHOD_ARGS (GlobalHooksInstance::Get (),
+                          Hooked_CanPhysicalBeDamaged,
+                          char (CPhysical *, int, char *), 0x5A0DEA);
+
+        HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_ObjectDamage,
+                          void (CObject *, float, RwV3d *, RwV3d *, CEntity *,
+                                eWeaponType),
+                          0x61D578);
 
         initialised = true;
     }
@@ -400,5 +412,30 @@ private:
         if (int (text) < 0x2000) text = (char *) "Absolute Legend.";
 
         cb ();
+    }
+
+    static char
+    Hooked_CanPhysicalBeDamaged (auto &&cb, CPhysical *physical, int weaponType,
+                                 char *unknown)
+    {
+        if (physical->m_nModelIndex == 708
+            && weaponType != eWeaponType::WEAPON_CHAINSAW)
+            return false;
+
+        return cb ();
+    }
+
+    static void
+    Hooked_ObjectDamage (auto &&cb, CObject *object, float damage,
+                         RwV3d *fxOrigin, RwV3d *fxDirection, CEntity *entity,
+                         eWeaponType weaponType)
+    {
+        cb ();
+
+        if (object->m_fHealth <= 0.0f && object->m_nModelIndex == 708
+            && weaponType == eWeaponType::WEAPON_CHAINSAW)
+        {
+            Command<eScriptCommands::COMMAND_DELETE_OBJECT> (object);
+        }
     }
 };
