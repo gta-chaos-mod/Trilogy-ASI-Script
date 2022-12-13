@@ -36,12 +36,11 @@ public:
                 }
                 case BOOST:
                 {
-                    vehicle->m_vecMoveSpeed.x
-                        = vehicle->m_vecMoveSpeed.x * 5.0f;
-                    vehicle->m_vecMoveSpeed.y
-                        = vehicle->m_vecMoveSpeed.y * 5.0f;
-                    vehicle->m_vecMoveSpeed.z
-                        = vehicle->m_vecMoveSpeed.z * 5.0f;
+                    float velocity = 1.0f;
+
+                    vehicle->m_vecMoveSpeed.x += velocity * matrix->up.x;
+                    vehicle->m_vecMoveSpeed.y += velocity * matrix->up.y;
+                    vehicle->m_vecMoveSpeed.z += velocity * matrix->up.z;
                     continue;
                 }
                 case INVERT_MOMENTUM:
