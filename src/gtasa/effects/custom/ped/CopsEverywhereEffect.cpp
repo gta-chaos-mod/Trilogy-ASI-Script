@@ -48,4 +48,5 @@ public:
     }
 };
 
-DEFINE_EFFECT (CopsEverywhereEffect, "effect_cops_everywhere", 0);
+DEFINE_EFFECT (CopsEverywhereEffect, "effect_cops_everywhere",
+               GROUP_NPC_SPAWNS);
