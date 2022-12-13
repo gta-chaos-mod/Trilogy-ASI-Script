@@ -35,8 +35,8 @@ GenericUtil::GetModVersion ()
 double
 GenericUtil::CalculateTick (double multiplier)
 {
-    unsigned diff = CTimer::m_snTimeInMillisecondsNonClipped
-                    - CTimer::m_snPreviousTimeInMillisecondsNonClipped;
+    unsigned diff = CTimer::m_snTimeInMilliseconds
+                    - CTimer::m_snPreviousTimeInMilliseconds;
 
     // If the jump is too big, e.g. replays or loading saves
     if (diff <= 0 || diff >= 1000) return 0;
