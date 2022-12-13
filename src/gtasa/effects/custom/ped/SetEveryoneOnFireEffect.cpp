@@ -5,6 +5,12 @@
 class SetEveryoneOnFireEffect : public OneTimeEffect
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return GameUtil::IsPlayerSafe ();
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
@@ -17,4 +23,5 @@ public:
     }
 };
 
-DEFINE_EFFECT (SetEveryoneOnFireEffect, "effect_set_everyone_on_fire", GROUP_HEALTH);
+DEFINE_EFFECT (SetEveryoneOnFireEffect, "effect_set_everyone_on_fire",
+               GROUP_HEALTH);
