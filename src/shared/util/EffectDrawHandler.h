@@ -1,5 +1,13 @@
 #pragma once
 
+#include "util/Config.h"
+
+#define DRAW_LEFT Config::GetOrDefault ("Drawing.DrawOnLeftSide", true)
+#define RECENT_EFFECTS                                                         \
+    std::max (3,                                                               \
+              std::min (8,                                                     \
+                        Config::GetOrDefault ("Drawing.NumRecentEffects", 6)))
+
 class EffectInstance;
 
 class EffectDrawHandler
@@ -48,9 +56,9 @@ public:
 
     void Draw (EffectInstance *instance, int idx, bool inset);
 
-    static bool AreEffectsInset (int num);
+    static bool AreEffectsInset ();
     static void DrawAndXMore ();
-    static void DrawRecentEffects (int num);
+    static void DrawRecentEffects ();
 
     static ScreensaverHUDElement CreateHUDElement (EffectInstance *effect);
     static void                  Tick ();

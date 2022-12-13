@@ -1,7 +1,6 @@
 #include "EffectDrawHandler.h"
 
 #include "util/ColorHelper.h"
-#include "util/Config.h"
 #include "util/DrawHelper.h"
 #include "util/EffectHandler.h"
 #include "util/EffectInstance.h"
@@ -14,13 +13,15 @@
 #include <CFont.h>
 #include <extensions/FontPrint.h>
 
+// TODO: Add config option to show effects on the left side of the screen
+
 bool
-EffectDrawHandler::AreEffectsInset (int num)
+EffectDrawHandler::AreEffectsInset ()
 {
     int i = 0;
     for (const auto &effect : EffectHandler::GetActiveEffects ())
     {
-        if (++i > num) return false;
+        if (++i > RECENT_EFFECTS) return false;
 
         if (effect.DoesEffectDrawTimer ()) return true;
     }
@@ -56,7 +57,7 @@ EffectDrawHandler::CalculateDrawPosition ()
 #endif
 
     x = GenericUtil::EaseOutBack (transitionTimer, -renderWidth, position);
-    y = ((idx + 1) * 65.0f) + 100.0f;
+    y = ((idx + 1) * 65.0f) + 200.0f;
 
     if (Globals::isScreensaverHUDEffectEnabled)
     {
@@ -76,9 +77,18 @@ EffectDrawHandler::PrintEffectName ()
     if (Globals::isReplaceAllTextEffectEnabled)
         name = Globals::replaceAllTextString;
 
-    gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                     std::string (name), x, y, FONT_DEFAULT, 1.0f, 1.2f,
-                     GetTextColor (), 1, color::Black, true);
+    if (DRAW_LEFT)
+    {
+        gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
+                         std::string (name), x, y, FONT_DEFAULT, 1.0f, 1.2f,
+                         GetTextColor (), 1, color::Black, true);
+    }
+    else
+    {
+        gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
+                         std::string (name), x, y, FONT_DEFAULT, 1.0f, 1.2f,
+                         GetTextColor (), 1, color::Black, true);
+    }
 }
 
 void
@@ -91,9 +101,20 @@ EffectDrawHandler::PrintSubtext ()
         if (Globals::isReplaceAllTextEffectEnabled)
             subtext = Globals::replaceAllTextString;
 
-        gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                         std::string (subtext), x, y - 30.0f, FONT_DEFAULT,
-                         0.8f, 1.0f, GetTextColor (), 1, color::Black, true);
+        if (DRAW_LEFT)
+        {
+            gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
+                             std::string (subtext), x, y - 30.0f, FONT_DEFAULT,
+                             0.8f, 1.0f, GetTextColor (), 1, color::Black,
+                             true);
+        }
+        else
+        {
+            gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
+                             std::string (subtext), x, y - 30.0f, FONT_DEFAULT,
+                             0.8f, 1.0f, GetTextColor (), 1, color::Black,
+                             true);
+        }
     }
 }
 
@@ -108,8 +129,14 @@ EffectDrawHandler::PrintEffectTimer ()
         if (effect->HasSubtext ()) y -= 10.0f;
 
         CVector2D center
-            = CVector2D (SCREEN_COORD_RIGHT (x) + SCREEN_COORD (50.0f),
+            = CVector2D (SCREEN_COORD_LEFT (x) + SCREEN_COORD (50.0f),
                          SCREEN_COORD_BOTTOM (y) + SCREEN_COORD (20.0f));
+
+        if (!DRAW_LEFT)
+        {
+            center = CVector2D (SCREEN_COORD_RIGHT (x) + SCREEN_COORD (50.0f),
+                                SCREEN_COORD_BOTTOM (y) + SCREEN_COORD (20.0f));
+        }
 
         RwTextureFilterMode filter        = rwFILTERLINEAR;
         int                 alphaBlending = true;
@@ -132,19 +159,32 @@ EffectDrawHandler::PrintEffectTimer ()
 
         if (actualRemaining < 60000)
         {
-            gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
+            gamefont::Print (gamefont::RightBottom, gamefont::AlignCenter,
                              GenericUtil::FormatTime (actualRemaining, true),
-                             x - 57.0f, y - 2.0f, FONT_DEFAULT, 0.6f, 1.0f,
+                             //  x - 57.0f, y - 2.0f, FONT_DEFAULT, 0.6f, 1.0f,
+                             center.x, center.y, FONT_DEFAULT, 0.6f, 1.0f,
                              color::White, 1, color::Black, true, 9999.0f,
                              false);
         }
     }
     else
     {
-        gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                         GenericUtil::FormatTime (actualRemaining), x - 60.0f,
-                         y - 8.0f, FONT_DEFAULT, 0.6f, 0.8f, GetTextColor (), 1,
-                         color::Black, true, 9999.0f, true);
+        if (DRAW_LEFT)
+        {
+            gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
+                             GenericUtil::FormatTime (actualRemaining),
+                             x - 60.0f, y - 8.0f, FONT_DEFAULT, 0.6f, 0.8f,
+                             GetTextColor (), 1, color::Black, true, 9999.0f,
+                             true);
+        }
+        else
+        {
+            gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
+                             GenericUtil::FormatTime (actualRemaining),
+                             x - 60.0f, y - 8.0f, FONT_DEFAULT, 0.6f, 0.8f,
+                             GetTextColor (), 1, color::Black, true, 9999.0f,
+                             true);
+        }
     }
 }
 void
@@ -195,10 +235,10 @@ EffectDrawHandler::DrawAndXMore ()
     auto &effects = EffectHandler::GetActiveEffects ();
 
     int size = effects.size ();
-    if (size <= NUM_RECENT_EFFECTS) return;
+    if (size <= RECENT_EFFECTS) return;
 
     int more = 0;
-    for (int i = NUM_RECENT_EFFECTS; i < size; i++)
+    for (int i = RECENT_EFFECTS; i < size; i++)
     {
         auto &effect = effects[i];
         if (effect.IsRunning ()) more++;
@@ -211,22 +251,31 @@ EffectDrawHandler::DrawAndXMore ()
     if (Globals::isReplaceAllTextEffectEnabled)
         text = Globals::replaceAllTextString;
 
-    y = ((NUM_RECENT_EFFECTS + 2) * 65.0f) + 100.0f - 20.0f;
+    y = ((RECENT_EFFECTS + 2) * 65.0f) + 200.0f - 20.0f;
 
-    gamefont::Print (gamefont::RightBottom, gamefont::AlignRight, text, x, y,
-                     FONT_DEFAULT, 0.8f, 1.0f, color::DarkGray, 1, color::Black,
-                     true);
+    if (DRAW_LEFT)
+    {
+        gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft, text, x, y,
+                         FONT_DEFAULT, 0.8f, 1.0f, color::DarkGray, 1,
+                         color::Black, true);
+    }
+    else
+    {
+        gamefont::Print (gamefont::RightBottom, gamefont::AlignRight, text, x,
+                         y, FONT_DEFAULT, 0.8f, 1.0f, color::DarkGray, 1,
+                         color::Black, true);
+    }
 }
 
 void
-EffectDrawHandler::DrawRecentEffects (int num)
+EffectDrawHandler::DrawRecentEffects ()
 {
-    bool inset = AreEffectsInset (num);
+    bool inset = AreEffectsInset ();
 
     int i = 0;
     for (auto &effect : EffectHandler::GetActiveEffects ())
     {
-        if (++i > num) break;
+        if (++i > RECENT_EFFECTS) break;
 
         if (!Globals::isHideChaosUIEffectEnabled
             || effect.GetEffect ()->GetID () == "effect_hide_chaos_ui")

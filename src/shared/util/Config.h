@@ -79,6 +79,16 @@ VehicleOneHitKO_ExplodeVehicles = false
 # Default: true
 Enabled = true
 
+# Max. number of recent effects
+# Min: 3
+# Max: 8
+# Default: 6
+NumRecentEffects = 6
+
+# Whether to draw the effects on the left or right side of the screen
+# Default: true
+DrawOnLeftSide = true
+
 # Draw the top bar showing the remaining time until the next effect happens
 # Default: true
 DrawRemainingTimeBar = true

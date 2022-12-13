@@ -146,7 +146,7 @@ DrawHelper::DrawRecentEffects ()
 {
     if (GenericUtil::IsMenuActive ()) return;
 
-    EffectDrawHandler::DrawRecentEffects (NUM_RECENT_EFFECTS);
+    EffectDrawHandler::DrawRecentEffects ();
 }
 
 // ######################################################

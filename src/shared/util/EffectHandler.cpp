@@ -42,7 +42,7 @@ EffectHandler::EmptyQueue ()
 void
 EffectHandler::RemoveStaleEffect (EffectInstance *instance)
 {
-    if (effects.size () <= NUM_RECENT_EFFECTS) return;
+    if (effects.size () <= RECENT_EFFECTS) return;
 
     if (&effects[0] == instance)
     {
@@ -56,9 +56,9 @@ EffectHandler::RemoveStaleEffect (EffectInstance *instance)
 void
 EffectHandler::RemoveStaleEffects (EffectInstance *except)
 {
-    if (effects.size () <= NUM_RECENT_EFFECTS) return;
+    if (effects.size () <= RECENT_EFFECTS) return;
 
-    int amountToRemove = effects.size () - NUM_RECENT_EFFECTS;
+    int amountToRemove = effects.size () - RECENT_EFFECTS;
 
     std::set<EffectInstance *> effectsToRemove = {};
 
