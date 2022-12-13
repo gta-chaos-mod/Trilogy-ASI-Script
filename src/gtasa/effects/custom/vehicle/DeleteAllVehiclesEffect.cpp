@@ -1,10 +1,10 @@
-#include "effects/OneTimeEffect.h"
+#include "util/EffectBase.h"
 
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
-class DeleteAllVehiclesEffect : public OneTimeEffect
+class DeleteAllVehiclesEffect : public EffectBase
 {
 public:
     void
@@ -14,9 +14,19 @@ public:
         {
             RemovePassengers (vehicle);
 
-            vehicle->m_fHealth = 0.0f;
+            vehicle->m_nStatus = eEntityStatus::STATUS_WRECKED;
+        }
+    }
+
+    void
+    OnProcessScripts (EffectInstance *inst) override
+    {
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        {
             Command<eScriptCommands::COMMAND_DELETE_CAR> (vehicle);
         }
+
+        inst->Disable ();
     }
 
     void

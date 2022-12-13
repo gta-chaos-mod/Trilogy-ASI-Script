@@ -1,11 +1,13 @@
-#include "effects/OneTimeEffect.h"
+#include "util/EffectBase.h"
 
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
 
-class DeleteVehicleEffect : public OneTimeEffect
+class DeleteVehicleEffect : public EffectBase
 {
+    CVehicle *vehicle = nullptr;
+
 public:
     bool
     CanActivate () override
@@ -16,13 +18,24 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (!vehicle) return;
+        vehicle = FindPlayerVehicle (-1, false);
+        if (!vehicle)
+        {
+            inst->Disable ();
+            return;
+        }
 
         RemovePassengers (vehicle);
 
-        vehicle->m_fHealth = 0.0f;
+        vehicle->m_nStatus = eEntityStatus::STATUS_WRECKED;
+    }
+
+    void
+    OnProcessScripts (EffectInstance *inst) override
+    {
         Command<eScriptCommands::COMMAND_DELETE_CAR> (vehicle);
+
+        inst->Disable ();
     }
 
     void
