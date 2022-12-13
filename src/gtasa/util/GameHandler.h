@@ -124,8 +124,14 @@ private:
             {
                 lastConfigReload = currentTime + 3000;
 
+                bool previousCCMode
+                    = Config::GetOrDefault ("CrowdControl.Enabled", false);
+
                 Config::Init ();
-                Websocket::Setup ();
+
+                if (previousCCMode
+                    != Config::GetOrDefault ("CrowdControl.Enabled", false))
+                    Websocket::Setup ();
             }
         }
     }
