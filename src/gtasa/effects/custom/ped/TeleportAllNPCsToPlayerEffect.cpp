@@ -6,7 +6,9 @@ public:
     bool
     CanActivate () override
     {
-        return FindPlayerPed ();
+        CPlayerPed *player = FindPlayerPed ();
+
+        return player && !player->m_nAreaCode;
     }
 
     void
