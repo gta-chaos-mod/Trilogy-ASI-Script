@@ -13,8 +13,6 @@
 #include <CFont.h>
 #include <extensions/FontPrint.h>
 
-// TODO: Add config option to show effects on the left side of the screen
-
 bool
 EffectDrawHandler::AreEffectsInset ()
 {
