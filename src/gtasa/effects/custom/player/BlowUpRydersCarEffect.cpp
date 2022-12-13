@@ -9,10 +9,9 @@
 
 using namespace plugin;
 
-// TODO: Teleport player back.
-// Probably not in their car but to the location at least
 class BlowUpRydersCarEffect : public EffectBase
 {
+    CVector   oldPosition;
     bool      teleported = false;
     CVehicle *rydersCar  = nullptr;
     int       pistolAmmo = 0;
@@ -21,7 +20,9 @@ public:
     bool
     CanActivate () override
     {
-        return GameUtil::IsPlayerSafe () && Teleportation::CanTeleport ();
+        CPlayerPed *player = FindPlayerPed ();
+        return player && !player->m_nAreaCode && GameUtil::IsPlayerSafe ()
+               && Teleportation::CanTeleport ();
     }
 
     void
@@ -33,6 +34,8 @@ public:
         rydersCar  = nullptr;
         teleported = false;
         pistolAmmo = 0;
+
+        oldPosition = FindPlayerPed ()->GetPosition ();
 
         inst->SetDuration (1000 * 15);
     }
@@ -52,6 +55,9 @@ public:
             CCheat::SuicideCheat ();
             return;
         }
+
+        Teleportation::Teleport (oldPosition);
+        Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
 
         if (pistolAmmo > 0)
         {
