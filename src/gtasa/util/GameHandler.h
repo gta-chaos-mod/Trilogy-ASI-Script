@@ -384,10 +384,12 @@ private:
     static bool
     Hooked_CanPedJumpOutCar (auto &&cb, CVehicle *vehicle, CPed *ped)
     {
+        if (!ped->IsPedInControl ()) return cb ();
+
         // Get vehicle speed in km/h
         float speed = vehicle->m_vecMoveSpeed.Magnitude () * 175.0f;
 
-        return speed > 30.0f;
+        return speed > 25.0f || cb ();
     }
 
     // Thanks to Parik's Rainbomizer code for this
