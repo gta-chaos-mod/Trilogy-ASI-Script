@@ -25,6 +25,10 @@ public:
         HOOK_METHOD (inst, Hooked_Empty,
                      void (CVehicle *, CPed *, eWeaponType, float, CVector),
                      0x73647F, 0x73B0BF, 0x73BEDD);
+
+        // CWeapon::GenerateDamageEvent (Police helicopter shots)
+        HOOK (inst, Hooked_Empty,
+              void (CPed *, CPed *, eWeaponType, int, int, char), 0x73B074);
     }
 
     static void
