@@ -47,6 +47,8 @@ public:
     CRGBA
     GetEffectColor () const;
 
+    static CRGBA GetDropShadowColor ();
+
     void UpdateTimers ();
 
     void CalculateDrawPosition ();
