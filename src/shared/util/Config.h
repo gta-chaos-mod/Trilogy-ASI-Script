@@ -2,6 +2,9 @@
 
 #include <filesystem>
 
+#define CONFIG(_setting, _default) Config::GetOrDefault (_setting, _default)
+#define CONFIG_CC_ENABLED CONFIG ("CrowdControl.Enabled", false)
+
 class Config
 {
     static inline std::shared_ptr<cpptoml::table> config;
