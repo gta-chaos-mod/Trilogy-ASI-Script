@@ -9,7 +9,7 @@
 bool
 EffectCrowdControlHandler::IsCrowdControlEnabled ()
 {
-    return Config::GetOrDefault ("CrowdControl.Enabled", false);
+    return CONFIG_CC_ENABLED;
 }
 
 void

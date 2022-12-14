@@ -123,7 +123,7 @@ EffectDrawHandler::PrintEffectTimer ()
     int actualRemaining
         = effect->GetEffectRemaining () / Globals::effectTimerSpeed;
 
-    if (Config::GetOrDefault ("Drawing.DrawCircles", true))
+    if (CONFIG ("Drawing.DrawCircles", true))
     {
         if (effect->HasSubtext ()) y -= 10.0f;
 

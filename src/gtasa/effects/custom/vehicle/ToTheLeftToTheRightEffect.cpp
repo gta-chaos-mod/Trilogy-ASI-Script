@@ -17,7 +17,7 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        if (!Config::GetOrDefault ("CrowdControl.Enabled", false))
+        if (!CONFIG_CC_ENABLED)
         {
             for (CVehicle *vehicle : CPools::ms_pVehiclePool)
             {

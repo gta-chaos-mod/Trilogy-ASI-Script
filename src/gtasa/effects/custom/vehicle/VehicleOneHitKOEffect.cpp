@@ -12,9 +12,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        shouldExplode
-            = Config::GetOrDefault ("Effects.VehicleOneHitKO_ExplodeVehicles",
-                                    false);
+        shouldExplode = CONFIG ("Effects.VehicleOneHitKO_ExplodeVehicles", false);
 
         vehicleHealthMap.clear ();
     }

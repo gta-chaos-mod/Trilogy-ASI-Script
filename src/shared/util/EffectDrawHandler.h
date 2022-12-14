@@ -2,11 +2,9 @@
 
 #include "util/Config.h"
 
-#define DRAW_LEFT Config::GetOrDefault ("Drawing.DrawOnLeftSide", true)
+#define DRAW_LEFT CONFIG ("Drawing.DrawOnLeftSide", true)
 #define RECENT_EFFECTS                                                         \
-    std::max (3,                                                               \
-              std::min (8,                                                     \
-                        Config::GetOrDefault ("Drawing.NumRecentEffects", 6)))
+    std::max (3, std::min (8, CONFIG ("Drawing.NumRecentEffects", 6)))
 
 class EffectInstance;
 

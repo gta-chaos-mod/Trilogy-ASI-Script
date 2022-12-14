@@ -57,14 +57,13 @@ DrawHelper::Draw ()
 
     DrawVersion ();
 
-    if (Config::GetOrDefault ("Drawing.Enabled", true))
+    if (CONFIG ("Drawing.Enabled", true))
     {
-        bool drawActiveEffects
-            = Config::GetOrDefault ("Drawing.DrawActiveEffects", true);
+        bool drawActiveEffects = CONFIG ("Drawing.DrawActiveEffects", true);
 
         if (!Globals::isHideChaosUIEffectEnabled)
         {
-            if (Config::GetOrDefault ("Drawing.DrawRemainingTimeBar", true))
+            if (CONFIG ("Drawing.DrawRemainingTimeBar", true))
             {
                 DrawTopBar ();
             }
@@ -74,7 +73,7 @@ DrawHelper::Draw ()
                 DrawRecentEffects ();
             }
 
-            if (Config::GetOrDefault ("Drawing.DrawVoting", true))
+            if (CONFIG ("Drawing.DrawVoting", true))
             {
                 DrawVoting::DrawVotes ();
             }
@@ -91,8 +90,19 @@ DrawHelper::DrawVersion ()
 {
     if (GenericUtil::IsMenuActive () && KeyPressed (VK_F7))
     {
-        int lines = CFont::GetNumberLines (
-            0.0f, 0.0f, (char *) GenericUtil::GetModVersion ().c_str ());
+        std::string version = GenericUtil::GetModVersion ();
+
+        // TODO: Doesn't build on GH Actions because
+        // CFont.cpp is missing a `#include <string>`
+
+#ifdef GTAVC
+        std::wstring wVersion (version.begin (), version.end ());
+
+        int lines = CFont::GetNumberLines (0.0f, 0.0f, wVersion.c_str ());
+#else
+        int lines
+            = CFont::GetNumberLines (0.0f, 0.0f, (char *) version.c_str ());
+#endif
 
         gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
                          GenericUtil::GetModVersion (), 20.0f, lines * 50.0f,

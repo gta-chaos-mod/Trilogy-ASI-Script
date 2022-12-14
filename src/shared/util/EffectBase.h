@@ -82,7 +82,7 @@ public:
     virtual bool
     CanTickDown (EffectInstance *instance)
     {
-        if (!Config::GetOrDefault ("Chaos.AlwaysCountDownEffects", true))
+        if (!CONFIG ("Chaos.AlwaysCountDownEffects", true))
         {
             if (GameUtil::IsCutsceneProcessing ()) return false;
         }

@@ -130,7 +130,7 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
 
         if (data.contains ("subtext")) inst.SetSubtext (data["subtext"]);
 
-        if (Config::GetOrDefault ("Chaos.PlayEffectSound", true))
+        if (CONFIG ("Chaos.PlayEffectSound", true))
         {
 #ifdef GTASA
             AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_DISPLAY_INFO,

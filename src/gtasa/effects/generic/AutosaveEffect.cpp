@@ -44,7 +44,7 @@ public:
             bool wasInVehicle              = player->m_nPedFlags.bInVehicle;
             player->m_nPedFlags.bInVehicle = false;
 
-            if (Config::GetOrDefault ("Chaos.SaveToSlot8", false))
+            if (CONFIG ("Chaos.SaveToSlot8", false))
             {
                 GameUtil::SaveToFile ("GTASAsf8.b");
             }

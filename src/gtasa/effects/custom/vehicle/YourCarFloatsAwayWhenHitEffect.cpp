@@ -46,7 +46,7 @@ public:
             applyCollisionEvent -= ApplyCollision;
             collisionHappened = false;
 
-            if (!Config::GetOrDefault ("CrowdControl.Enabled", false))
+            if (!CONFIG_CC_ENABLED)
             {
                 inst->SetDuration (
                     std::min (inst->GetEffectRemaining (), 1000 * 30));

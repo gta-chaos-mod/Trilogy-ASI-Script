@@ -21,7 +21,7 @@ GenericUtil::GetModVersion ()
     version.append ("-git.").append (VERSION_SUFFIX);
 #endif
 
-    if (Config::GetOrDefault ("CrowdControl.Enabled", false))
+    if (CONFIG_CC_ENABLED)
         version.append ("~n~CC Connected: ");
     else
         version.append ("~n~GUI Connected: ");

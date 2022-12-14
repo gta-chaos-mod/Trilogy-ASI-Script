@@ -26,9 +26,7 @@ Websocket::Cleanup ()
 std::string
 Websocket::GetWebsocketURL ()
 {
-    return Config::GetOrDefault ("CrowdControl.Enabled", false)
-               ? CC_WEBSOCKET_URL
-               : GUI_WEBSOCKET_URL;
+    return CONFIG_CC_ENABLED ? CC_WEBSOCKET_URL : GUI_WEBSOCKET_URL;
 }
 
 void
@@ -110,8 +108,7 @@ Websocket::CallFunction (std::string text)
     {
         auto json = nlohmann::json::parse (text);
 
-        if (json.value ("IsCrowdControl", false)
-            && Config::GetOrDefault ("CrowdControl.Enabled", false))
+        if (json.value ("IsCrowdControl", false) && CONFIG_CC_ENABLED)
         {
             int type = json.at ("type");
             int id   = json.at ("id");

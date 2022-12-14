@@ -9,6 +9,7 @@ public:
     {
         return GameUtil::IsPlayerSafe ();
     }
+
     void
     OnStart (EffectInstance *inst) override
     {

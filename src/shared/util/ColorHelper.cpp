@@ -13,7 +13,7 @@ ColorHelper::UpdateRainbowColor ()
 CRGBA
 ColorHelper::GetAdjustedColor (CRGBA color, float value)
 {
-    if (!Config::GetOrDefault ("Drawing.RainbowColors", true)) return color;
+    if (!CONFIG ("Drawing.RainbowColors", true)) return color;
 
     CRGBA tempColor = CRGBA (color);
 

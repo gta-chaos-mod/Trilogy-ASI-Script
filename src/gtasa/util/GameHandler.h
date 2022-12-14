@@ -136,14 +136,11 @@ private:
             {
                 lastConfigReload = currentTime + 3000;
 
-                bool previousCCMode
-                    = Config::GetOrDefault ("CrowdControl.Enabled", false);
+                bool previousCCMode = CONFIG_CC_ENABLED;
 
                 Config::Init ();
 
-                if (previousCCMode
-                    != Config::GetOrDefault ("CrowdControl.Enabled", false))
-                    Websocket::Setup ();
+                if (previousCCMode != CONFIG_CC_ENABLED) Websocket::Setup ();
             }
         }
     }
@@ -171,8 +168,7 @@ private:
     static void
     HandleAutoSave ()
     {
-        if (!Config::GetOrDefault ("Chaos.AutosaveAfterMissionPassed", true))
-            return;
+        if (!CONFIG ("Chaos.AutosaveAfterMissionPassed", true)) return;
 
         int missionsPassed = GameUtil::GetRealMissionsPassed ();
         int currentTime    = std::max (CTimer::m_snTimeInMillisecondsNonClipped,
@@ -207,7 +203,7 @@ private:
     static void
     HandleQuickSave ()
     {
-        if (!Config::GetOrDefault ("Chaos.QuickSave", false)) return;
+        if (!CONFIG ("Chaos.QuickSave", false)) return;
 
         int currentTime = std::max (CTimer::m_snTimeInMillisecondsNonClipped,
                                     (unsigned int) lastQuickSave);
@@ -229,7 +225,7 @@ private:
     static void
     HandleVehicleToRealPhysics ()
     {
-        if (Config::GetOrDefault ("Chaos.SwitchAllVehiclesToRealPhysics", true))
+        if (CONFIG ("Chaos.SwitchAllVehiclesToRealPhysics", true))
         {
             GameUtil::SetVehiclesToRealPhysics ();
         }
@@ -310,7 +306,7 @@ private:
         }
         else if (page == eMenuPage::MENUPAGE_NEW_GAME_ASK)
         {
-            if (Config::GetOrDefault ("Chaos.DeleteAutosaveOnNewGame", true)
+            if (CONFIG ("Chaos.DeleteAutosaveOnNewGame", true)
                 || KeyPressed (VK_CONTROL))
             {
                 GameUtil::DeleteAutoSave ();
@@ -326,7 +322,7 @@ private:
         std::string key_str (key);
         if (key_str == "FES_NGA")
         {
-            if (Config::GetOrDefault ("Chaos.DeleteAutosaveOnNewGame", true)
+            if (CONFIG ("Chaos.DeleteAutosaveOnNewGame", true)
                 || KeyPressed (VK_CONTROL))
                 return (char *) "New Game (Delete Autosave)";
         }
@@ -340,7 +336,7 @@ private:
             {
                 didTryLoadAutoSave = true;
 
-                if (Config::GetOrDefault ("Chaos.LoadAutosaveOnGameLoad", true))
+                if (CONFIG ("Chaos.LoadAutosaveOnGameLoad", true))
                 {
                     if (!KeyPressed (VK_CONTROL)) TryLoadAutoSave ();
                 }
@@ -363,14 +359,13 @@ private:
             Websocket::SendWebsocketMessage (json);
         }
 
-        if (Config::GetOrDefault ("Chaos.DeleteAutosaveOnNewGame", true)
+        if (CONFIG ("Chaos.DeleteAutosaveOnNewGame", true)
             || KeyPressed (VK_CONTROL))
         {
             GameUtil::DeleteAutoSave ();
         }
 
-        if (Config::GetOrDefault ("Chaos.ClearEffectsOnNewGame", true)
-            && !Config::GetOrDefault ("CrowdControl.Enabled", false))
+        if (CONFIG ("Chaos.ClearEffectsOnNewGame", true) && !CONFIG_CC_ENABLED)
         {
             for (auto &effect : EffectHandler::GetActiveEffects ())
                 effect.Disable ();
