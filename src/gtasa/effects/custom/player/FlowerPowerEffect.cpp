@@ -1,7 +1,12 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
+#include "util/hooks/HookMacros.h"
 
+#include <CProjectileInfo.h>
 #include <CStreaming.h>
+
+// TODO: Will probably disable the crosshair for Catalyst. Haven't checked other
+// missions yet.
 
 class FlowerPowerEffect : public EffectBase
 {
@@ -17,6 +22,9 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        HOOK_METHOD_ARGS (inst, Hooked_CTaskSimpleFight__FightStrike,
+                          void (void *, CPed *, CVector *), 0x629EED);
+
         storedWeapons.clear ();
 
         CPlayerPed *player = FindPlayerPed ();
@@ -37,6 +45,10 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
+        CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
+        info->m_nFlags.b1stPerson = true;
+        info->m_nNumCombos        = 14;
+
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
@@ -57,8 +69,18 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
+        CTheScripts::bDrawCrossHair = false;
+
+        CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
+        info->m_nFlags.b1stPerson = true;
+        info->m_nNumCombos        = 0;
+
         CPlayerPed *player = FindPlayerPed ();
-        if (!player) return;
+        if (!player)
+        {
+            CTheScripts::bDrawCrossHair = false;
+            return;
+        }
 
         for (int i = WEAPON_BRASSKNUCKLE; i < WEAPON_FLARE; i++)
         {
@@ -69,6 +91,15 @@ public:
         }
 
         GivePlayerFlowers (player);
+
+        CWeaponInfo *flowerWeaponInfo
+            = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
+
+        if (player->m_nActiveWeaponSlot == flowerWeaponInfo->m_nSlot
+            && TheCamera.Using1stPersonWeaponMode ())
+        {
+            CTheScripts::bDrawCrossHair = true;
+        }
     }
 
     void
@@ -84,6 +115,37 @@ public:
         CStreaming::SetModelIsDeletable (MODEL_FLOWERA);
 
         ped->SetCurrentWeapon (WEAPON_FLOWERS);
+    }
+
+    static void
+    SpawnRocket (CVector position)
+    {
+        CMatrix *matrix = TheCamera.m_matrix;
+        CVector  direction (matrix->up.x, matrix->up.y, matrix->up.z);
+
+        CProjectileInfo::AddProjectile (FindPlayerPed (), WEAPON_ROCKET,
+                                        position, 1.0f, &direction, nullptr);
+    }
+
+    static void
+    Hooked_CTaskSimpleFight__FightStrike (auto &&cb, void *task, CPed *ped,
+                                          CVector *outPoint)
+    {
+        cb ();
+
+        if (!ped->IsPlayer ()) return;
+
+        if (!TheCamera.Using1stPersonWeaponMode ()) return;
+
+        CWeaponInfo *flowerWeaponInfo
+            = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
+
+        if (ped->m_nActiveWeaponSlot != flowerWeaponInfo->m_nSlot) return;
+
+        CVector position
+            = ped->TransformFromObjectSpace (CVector (0.0f, 5.0f, 0.5f));
+
+        SpawnRocket (position);
     }
 };
 
