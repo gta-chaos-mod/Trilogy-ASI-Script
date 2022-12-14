@@ -5,6 +5,7 @@
 #define DRAW_LEFT CONFIG ("Drawing.DrawOnLeftSide", true)
 #define RECENT_EFFECTS                                                         \
     std::max (3, std::min (8, CONFIG ("Drawing.NumRecentEffects", 6)))
+#define LOWER_OPACITY CONFIG ("Drawing.LowerOpacityWhenMenuOpen", true)
 
 class EffectInstance;
 

@@ -92,6 +92,11 @@ NumRecentEffects = 6
 # Default: true
 DrawOnLeftSide = true
 
+# Whether to lower the opacity of effect texts when a menu (e.g. tuner or food) is open
+# (Only works when DrawOnLeftSide is true)
+# Default: true
+LowerOpacityWhenMenuOpen = true
+
 # Draw the top bar showing the remaining time until the next effect happens
 # Default: true
 DrawRemainingTimeBar = true

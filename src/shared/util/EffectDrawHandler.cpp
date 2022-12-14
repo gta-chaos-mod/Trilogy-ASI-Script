@@ -268,7 +268,8 @@ EffectDrawHandler::DrawAndXMore ()
 
     CRGBA darkGray (color::DarkGray);
 
-    if (CMenuSystem::num_menus_in_use && DRAW_LEFT) darkGray.a = 20;
+    if (CMenuSystem::num_menus_in_use && DRAW_LEFT && LOWER_OPACITY)
+        darkGray.a = 20;
 
     if (DRAW_LEFT)
     {
@@ -376,7 +377,8 @@ EffectDrawHandler::GetTextColor () const
     if (!effect->IsRunning () || !effect->DoesEffectDrawTimer ())
         color = disabledColor;
 
-    if (CMenuSystem::num_menus_in_use && DRAW_LEFT) color.a = 20;
+    if (CMenuSystem::num_menus_in_use && DRAW_LEFT && LOWER_OPACITY)
+        color.a = 20;
 
     return color;
 };
@@ -386,7 +388,8 @@ EffectDrawHandler::GetDropShadowColor ()
 {
     CRGBA color (color::Black);
 
-    if (CMenuSystem::num_menus_in_use && DRAW_LEFT) color.a = 20;
+    if (CMenuSystem::num_menus_in_use && DRAW_LEFT && LOWER_OPACITY)
+        color.a = 20;
 
     return color;
 };
