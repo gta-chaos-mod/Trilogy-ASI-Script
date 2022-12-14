@@ -10,11 +10,11 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        for (int i = 0; i < inst->Random (5, 15); i++)
+        for (int i = 0; i < inst->Random (5, 10); i++)
         {
             float x      = inst->Random (-3000.0f, 3000.0f);
             float y      = inst->Random (-3000.0f, 3000.0f);
-            int   sprite = inst->Random (0, 63);
+            int   sprite = inst->Random (2, 63);
 
             Command<eScriptCommands::COMMAND_ADD_SPRITE_BLIP_FOR_COORD> (
                 x, y, 0.0f, sprite);
