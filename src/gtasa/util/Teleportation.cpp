@@ -53,13 +53,16 @@ Teleportation::Teleport (CVector destination, int interior)
         CGame::currArea     = interior;
         entity->m_nAreaCode = interior;
 
-        CPopulation::bInPoliceStation = false;
+        CEntryExitManager::ms_entryExitStackPosn = interior;
+        CPopulation::bInPoliceStation            = false;
         CStreaming::RemoveBuildingsNotInArea (interior);
 
         if (player)
         {
             player->GetPadFromPlayer ()->bDisablePlayerEnterCar = false;
             player->m_nAreaCode                                 = interior;
+
+            if (interior == 0) player->m_pEnex = 0;
         }
 
         entity->m_vecMoveSpeed = moveSpeed;
