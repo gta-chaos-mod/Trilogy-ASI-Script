@@ -28,6 +28,11 @@ public:
         {
             ToggleTree (building, true);
         }
+
+        for (CObject *object : CPools::ms_pObjectPool)
+        {
+            ToggleTree (object, true);
+        }
     }
 
     void
@@ -36,6 +41,11 @@ public:
         for (CBuilding *building : CPools::ms_pBuildingPool)
         {
             ToggleTree (building, false);
+        }
+
+        for (CObject *object : CPools::ms_pObjectPool)
+        {
+            ToggleTree (object, false);
         }
     }
 
@@ -46,6 +56,15 @@ public:
 
         building->m_bUsesCollision = visible;
         building->m_bIsVisible     = visible;
+    }
+
+    void
+    ToggleTree (CObject *object, bool visible)
+    {
+        if (!treeModels.contains (object->m_nModelIndex)) return;
+
+        object->m_bUsesCollision = visible;
+        object->m_bIsVisible     = visible;
     }
 };
 
