@@ -27,7 +27,7 @@ public:
             if (weapon.m_nTotalAmmo > 0)
             {
                 storedWeapons.push_back (
-                    std::make_pair (weapon.m_nType, weapon.m_nTotalAmmo));
+                    std::make_pair (weapon.m_eWeaponType, weapon.m_nTotalAmmo));
             }
         }
 

@@ -87,7 +87,7 @@ public:
                 pad->NewState.LeftStickX *= -1;
                 pad->NewState.RightStickX *= -1;
 
-                pad->NewMouseControllerState.X *= -1;
+                pad->NewMouseControllerState.x *= -1;
 
                 if (FindPlayerVehicle (-1, false))
                 {

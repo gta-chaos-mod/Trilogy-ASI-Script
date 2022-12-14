@@ -23,7 +23,7 @@ public:
 
         int random = inst->Random (0, (int) possibleWeapons.size () - 1);
 
-        player->ClearWeapon (possibleWeapons[random].m_nType);
+        player->ClearWeapon (possibleWeapons[random].m_eWeaponType);
     }
 };
 

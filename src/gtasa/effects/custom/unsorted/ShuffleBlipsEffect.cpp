@@ -13,7 +13,7 @@ public:
         {
             tRadarTrace trace = CRadar::ms_RadarTrace[i];
             if (trace.m_nBlipType != eBlipType::BLIP_NONE)
-                validTraces.push_back (trace.m_nBlipSprite);
+                validTraces.push_back (trace.m_nRadarSprite);
         }
 
         std::shuffle (std::begin (validTraces), std::end (validTraces),
@@ -21,7 +21,7 @@ public:
 
         for (int i = 0; i < validTraces.size (); i++)
         {
-            CRadar::ms_RadarTrace[i].m_nBlipSprite = validTraces[i];
+            CRadar::ms_RadarTrace[i].m_nRadarSprite = validTraces[i];
         }
     }
 };

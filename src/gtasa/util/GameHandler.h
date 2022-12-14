@@ -238,7 +238,7 @@ private:
         if (!player) return;
 
         bool hasParachute
-            = player->m_aWeapons[player->m_nActiveWeaponSlot].m_nType
+            = player->m_aWeapons[player->m_nActiveWeaponSlot].m_eWeaponType
               == WEAPON_PARACHUTE;
 
         if (hasParachute) return;

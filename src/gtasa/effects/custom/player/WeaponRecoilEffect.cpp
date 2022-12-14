@@ -33,7 +33,7 @@ public:
             if (player)
             {
                 CPad *pad = player->GetPadFromPlayer ();
-                if (pad) pad->NewMouseControllerState.Y += recoilValue;
+                if (pad) pad->NewMouseControllerState.y += recoilValue;
             }
 
             recoilValue -= GenericUtil::CalculateTick (0.5f);
@@ -50,7 +50,7 @@ public:
         {
             recoilValue = 16.0f;
 
-            if (thisWeapon->m_nType == WEAPON_SNIPERRIFLE)
+            if (thisWeapon->m_eWeaponType == WEAPON_SNIPERRIFLE)
             {
                 recoilValue *= 4.0f;
             }

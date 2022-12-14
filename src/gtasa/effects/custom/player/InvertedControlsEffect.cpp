@@ -17,8 +17,8 @@ public:
                 pad->NewState.RightStickX *= -1;
                 pad->NewState.RightStickY *= -1;
 
-                pad->NewMouseControllerState.X *= -1;
-                pad->NewMouseControllerState.Y *= -1;
+                pad->NewMouseControllerState.x *= -1;
+                pad->NewMouseControllerState.y *= -1;
 
                 std::swap (pad->NewState.ButtonCross,
                            pad->NewState.ButtonSquare);

@@ -89,7 +89,7 @@ public:
         {
             return CRadar::ms_RadarTrace[LOWORD (FrontEndMenuManager
                                                      .m_nTargetBlipIndex)]
-                .m_vPosition;
+                .m_vecPos;
         }
 
         return {0.0f, 0.0f, 0.0f};

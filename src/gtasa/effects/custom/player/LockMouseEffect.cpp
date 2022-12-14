@@ -16,8 +16,8 @@ public:
             CPad *pad = player->GetPadFromPlayer ();
             if (pad)
             {
-                pad->NewMouseControllerState.X = 0.0f;
-                pad->NewMouseControllerState.Y = 0.0f;
+                pad->NewMouseControllerState.x = 0.0f;
+                pad->NewMouseControllerState.y = 0.0f;
             }
         }
     }

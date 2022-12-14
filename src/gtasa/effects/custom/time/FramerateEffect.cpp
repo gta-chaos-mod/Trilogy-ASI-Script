@@ -20,21 +20,21 @@ public:
     {
         inst->WriteMemory<byte> (0x53E94C, 0);
 
-        this->oldFramerate    = RsGlobal.frameLimit;
+        this->oldFramerate    = RsGlobal.maxFPS;
         this->oldFrameLimiter = FrontEndMenuManager.m_bFrameLimiterOn;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        RsGlobal.frameLimit                   = this->oldFramerate;
+        RsGlobal.maxFPS                       = this->oldFramerate;
         FrontEndMenuManager.m_bFrameLimiterOn = this->oldFrameLimiter;
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        RsGlobal.frameLimit                   = this->framerate;
+        RsGlobal.maxFPS                       = this->framerate;
         FrontEndMenuManager.m_bFrameLimiterOn = true;
     }
 };

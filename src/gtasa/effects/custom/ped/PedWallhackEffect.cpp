@@ -95,7 +95,7 @@ public:
         if (slot == 0) return "None";
 
         CWeapon weapon = ped->m_aWeapons[slot];
-        return weaponNames[weapon.m_nType];
+        return weaponNames[weapon.m_eWeaponType];
     }
 
     static std::string

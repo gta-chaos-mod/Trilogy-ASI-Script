@@ -34,7 +34,7 @@ public:
             vehicle->m_nPhysicalFlags.bCollisionProof = true;
             vehicle->m_nPhysicalFlags.bExplosionProof = true;
             vehicle->m_nPhysicalFlags.bFireProof      = true;
-            vehicle->m_nPhysicalFlags.bMeeleProof     = true;
+            vehicle->m_nPhysicalFlags.bMeleeProof     = true;
         }
     }
 

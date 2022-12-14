@@ -15,7 +15,7 @@ public:
         if (player->m_nActiveWeaponSlot == 0) return;
 
         CWeapon weapon = player->m_aWeapons[player->m_nActiveWeaponSlot];
-        player->ClearWeapon (weapon.m_nType);
+        player->ClearWeapon (weapon.m_eWeaponType);
     }
 };
 
