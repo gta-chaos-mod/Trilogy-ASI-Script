@@ -19,6 +19,8 @@ public:
                           char (CWeapon *, CVehicle *, char, char), 0x742280);
 
         // TODO: Doesn't work for Just Business
+        // Maybe because of using CCheat::SuicideCheat instead of actually
+        // killing the ped or setting their health to 0?
         HOOK_METHOD_ARGS (inst, Hooked_CTaskSimpleGangDriveBy_FireGun,
                           char (CTaskSimpleGangDriveBy *, CPed * ped), 0x51A3FD,
                           0x62D60D);
