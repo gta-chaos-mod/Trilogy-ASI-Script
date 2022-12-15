@@ -398,7 +398,9 @@ private:
     static bool
     Hooked_CanPedJumpOutCar (auto &&cb, CVehicle *vehicle, CPed *ped)
     {
-        if (!ped->IsPedInControl ()) return cb ();
+        if (!GameUtil::IsPlayerSafe ()) return cb ();
+
+        if (vehicle->IsDriver (ped)) return cb ();
 
         // Get vehicle speed in km/h
         float speed = vehicle->m_vecMoveSpeed.Magnitude () * 175.0f;
