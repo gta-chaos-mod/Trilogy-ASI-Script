@@ -5,9 +5,6 @@
 #include <CProjectileInfo.h>
 #include <CStreaming.h>
 
-// TODO: Will probably disable the crosshair for Catalyst. Haven't checked other
-// missions yet.
-
 class FlowerPowerEffect : public EffectBase
 {
     std::vector<std::pair<eWeaponType, int>> storedWeapons = {};
@@ -69,18 +66,12 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        CTheScripts::bDrawCrossHair = false;
-
         CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
         info->m_nFlags.b1stPerson = true;
         info->m_nNumCombos        = 0;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (!player)
-        {
-            CTheScripts::bDrawCrossHair = false;
-            return;
-        }
+        if (!player) return;
 
         for (int i = WEAPON_BRASSKNUCKLE; i < WEAPON_FLARE; i++)
         {
@@ -92,14 +83,11 @@ public:
 
         GivePlayerFlowers (player);
 
-        CWeaponInfo *flowerWeaponInfo
-            = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
+        if (!TheCamera.Using1stPersonWeaponMode ()) return;
 
-        if (player->m_nActiveWeaponSlot == flowerWeaponInfo->m_nSlot
-            && TheCamera.Using1stPersonWeaponMode ())
-        {
-            CTheScripts::bDrawCrossHair = true;
-        }
+        if (player->m_nActiveWeaponSlot != info->m_nSlot) return;
+
+        CTheScripts::bDrawCrossHair = true;
     }
 
     void
