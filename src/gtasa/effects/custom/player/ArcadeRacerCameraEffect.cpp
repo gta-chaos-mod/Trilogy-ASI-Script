@@ -11,10 +11,6 @@ class ArcadeRacerCameraEffect : public EffectBase
 {
     bool wasInVehicle = false;
 
-    static inline float rotation = 0.0f;
-    static inline float oX       = 0.0f;
-    static inline float oZ       = 0.0f;
-
 public:
     bool
     CanActivate () override
@@ -26,25 +22,6 @@ public:
     OnStart (EffectInstance *inst) override
     {
         wasInVehicle = false;
-
-        // Debug print
-        // Events::drawAfterFadeEvent += []
-        // {
-        //     gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
-        //                      std::to_string (oZ).c_str (), 20.0f, 60.0f,
-        //                      FONT_DEFAULT, 1.0f, 1.4f, color::White, 2,
-        //                      color::Black, true);
-
-        //     gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
-        //                      std::to_string (rotation).c_str (), 20.0f,
-        //                      120.0f, FONT_DEFAULT, 1.0f, 1.4f, color::White,
-        //                      2, color::Black, true);
-
-        //     gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
-        //                      std::to_string (oX).c_str (), 20.0f, 180.0f,
-        //                      FONT_DEFAULT, 1.0f, 1.4f, color::White, 2,
-        //                      color::Black, true);
-        // };
     }
 
     void
@@ -63,31 +40,39 @@ public:
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle)
         {
+            CMatrix *cam = &TheCamera.m_mCameraMatrix;
+
             CColModel *colModel = vehicle->GetColModel ();
             float      diffBack = colModel->m_boundBox.m_vecMax.x
                              - colModel->m_boundBox.m_vecMin.x;
             float diffUp = colModel->m_boundBox.m_vecMax.z
                            - colModel->m_boundBox.m_vecMin.z;
 
-            // TODO: Fix experimental "rotate with car" code
-            if (false)
-            {
-                CMatrix *matrix = vehicle->GetMatrix ();
-
-                oX = atan2 (matrix->at.y, matrix->at.z);
-                rotation
-                    = atan2 (-matrix->at.x, sqrt (pow (matrix->at.y, 2)
-                                                  + pow (matrix->at.z, 2)));
-                oZ = atan2 (matrix->up.x, matrix->right.x);
-            }
-            else
-            {
-                rotation = 0.0f;
-            }
-
             Command<eScriptCommands::COMMAND_ATTACH_CAMERA_TO_VEHICLE> (
-                vehicle, 0.0f, -diffBack - 4.0f, diffUp, 0.0f, 0.0f, 1.0f,
-                rotation, 2);
+                vehicle, 0.0f, -diffBack - 4.0f, diffUp * 1.25f, 0.0f, 0.0f,
+                1.0f, 0.0f, 2);
+
+            // Thanks to zolika for the rotation code <3
+            CMatrix *matrix = vehicle->GetMatrix ();
+            cam->right      = matrix->right;
+            cam->up         = matrix->up;
+            cam->at         = matrix->at;
+
+            cam->right.x *= -1;
+            cam->right.y *= -1;
+            cam->right.z *= -1;
+
+            CMatrix shakeMatrix;
+            shakeMatrix.pos = {0, 0, 0};
+            shakeMatrix.SetRotate (MathHelper::ToRadians (-15), 0, 0);
+
+            auto tmpMat = *cam;
+            auto mat    = tmpMat * shakeMatrix;
+            cam->right  = mat.right;
+            cam->up     = mat.up;
+            cam->at     = mat.at;
+
+            TheCamera.CopyCameraMatrixToRWCam (0);
 
             wasInVehicle = true;
         }
