@@ -7,25 +7,21 @@
 
 class ReplaceAllTextEffect : public EffectBase
 {
-    static inline std::string replacementText = "Shoutouts to SimpleFlips.";
-
-    std::string text = "";
+    static inline std::string replacementText = "Your Text Could Be Here";
 
 public:
-    ReplaceAllTextEffect (std::string text)
-    {
-        this->text = text;
-    }
-
     void
     OnStart (EffectInstance *inst) override
     {
-        replacementText                        = text;
-        Globals::replaceAllTextString          = text;
+        replacementText = CONFIG ("Effects.ReplaceAllText.Text",
+                                  (std::string) "Your Text Could Be Here");
+
+        Globals::replaceAllTextString          = replacementText;
         Globals::isReplaceAllTextEffectEnabled = true;
 
-        HOOK_METHOD_ARGS (inst, Hooked_CText_Get, char *(CText *, char *),
-                          0x6A0050);
+        HOOK_METHOD_ARGS (inst, Hooked_CKeyArray_Search,
+                          char *(CText *, unsigned __int8 *, int), 0x6A0070,
+                          0x6A00A4);
 
         HOOK_ARGS (inst, Hooked_PrintMoney, char (float, float, char *),
                    0x58F607);
@@ -41,9 +37,17 @@ public:
     }
 
     static char *
-    Hooked_CText_Get (auto &&cb, CText *text, char *key)
+    Hooked_CKeyArray_Search (auto &&cb, CText *text, unsigned __int8 *key,
+                             int pFound)
     {
-        return (char *) replacementText.c_str ();
+        char *textToRender = cb ();
+
+        if (textToRender != nullptr && pFound)
+        {
+            return (char *) replacementText.c_str ();
+        }
+
+        return textToRender;
     }
 
     static char
@@ -74,7 +78,4 @@ public:
     }
 };
 
-// clang-format off
-DEFINE_EFFECT (ReplaceAllTextEffect, "effect_replace_all_text_simpleflips",     GROUP_REPLACE_ALL_TEXT, "Shoutouts To SimpleFlips.");
-DEFINE_EFFECT (ReplaceAllTextEffect, "effect_replace_all_text_queer_rights",    GROUP_REPLACE_ALL_TEXT, "Queer Rights!");
-// clang-format on
+DEFINE_EFFECT (ReplaceAllTextEffect, "effect_replace_all_text", 0);

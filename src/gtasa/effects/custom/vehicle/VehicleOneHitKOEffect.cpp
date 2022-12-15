@@ -12,7 +12,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        shouldExplode = CONFIG ("Effects.VehicleOneHitKO_ExplodeVehicles", false);
+        shouldExplode
+            = CONFIG ("Effects.VehicleOneHitKO.ExplodeVehicles", false);
 
         vehicleHealthMap.clear ();
     }

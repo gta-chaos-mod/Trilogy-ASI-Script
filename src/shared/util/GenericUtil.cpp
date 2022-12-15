@@ -8,9 +8,6 @@
 std::string
 GenericUtil::GetModVersion ()
 {
-    if (Globals::isReplaceAllTextEffectEnabled)
-        return Globals::replaceAllTextString;
-
     std::string version = "Chaos Mod v3.0.1";
 
 #ifndef NDEBUG

@@ -7,12 +7,6 @@
 
 class ButtsbotEffect : public EffectBase
 {
-    static const inline double BUTT_FREQUENCY = 8;
-
-    static inline std::string lowerReplacement    = "butt";
-    static inline std::string upperReplacement    = "Butt";
-    static inline std::string allUpperReplacement = "BUTT";
-
     static inline std::map<char *, std::string> buttMap = {};
 
     static inline EffectInstance *instance = nullptr;
@@ -35,6 +29,30 @@ class ButtsbotEffect : public EffectBase
         std::vector<std::string> elems;
         split (s, delim, std::back_inserter (elems));
         return elems;
+    }
+
+    static double
+    GetButtFrequency ()
+    {
+        return CONFIG ("Effects.Buttsbot.Frequency", 8);
+    }
+
+    static std::string
+    GetLowerCase ()
+    {
+        return CONFIG ("Effects.Buttsbot.LowerCase", (std::string) "butt");
+    }
+
+    static std::string
+    GetUpperCase ()
+    {
+        return CONFIG ("Effects.Buttsbot.UpperCase", (std::string) "Butt");
+    }
+
+    static std::string
+    GetAllCaps ()
+    {
+        return CONFIG ("Effects.Buttsbot.AllCaps", (std::string) "BUTT");
     }
 
 public:
@@ -69,28 +87,28 @@ public:
             if (match.size () > 1 && match[1].matched)
             {
                 return std::regex_replace (word, std::regex (match[1].str ()),
-                                           lowerReplacement);
+                                           GetLowerCase ());
             }
 
             // Single word uppercase
             if (match.size () > 2 && match[2].matched)
             {
                 return std::regex_replace (word, std::regex (match[2].str ()),
-                                           upperReplacement);
+                                           GetUpperCase ());
             }
 
             // Starting with uppercase, rest lowercase
             if (match.size () > 3 && match[3].matched)
             {
                 return std::regex_replace (word, std::regex (match[3].str ()),
-                                           upperReplacement);
+                                           GetUpperCase ());
             }
 
             // All uppercase
             if (match.size () > 4 && match[4].matched)
             {
                 return std::regex_replace (word, std::regex (match[4].str ()),
-                                           allUpperReplacement);
+                                           GetAllCaps ());
             }
         }
 
@@ -126,7 +144,7 @@ public:
         if (splitText.size () > 1)
         {
             int buttFrequency
-                = (int) std::ceil (splitText.size () / BUTT_FREQUENCY);
+                = (int) std::ceil (splitText.size () / GetButtFrequency ());
 
             std::set<int> exclude = {};
             for (int i = 0; i < buttFrequency; i++)

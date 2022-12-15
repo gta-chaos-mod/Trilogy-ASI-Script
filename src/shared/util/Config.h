@@ -64,13 +64,23 @@ SwitchAllVehiclesToRealPhysics = true
 
 #######################################################
 # Effect-Specific Settings
-[Effects]
 
-# Vehicle One Hit K.O. - Explode Vehicles
+# Vehicle One Hit K.O.
+[Effects.VehicleOneHitKO]
+
 # When set to true vehicles will explode the moment they take damage.
 # When set to false they will just start burning.
 # Default: false
-VehicleOneHitKO_ExplodeVehicles = false
+ExplodeVehicles = false
+
+[Effects.Buttsbot]
+Frequency = 8
+LowerCase = "butt"
+UpperCase = "Butt"
+AllCaps = "BUTT"
+
+[Effects.ReplaceAllText]
+Text = "Your Text Could Be Here"
 
 #######################################################
 
