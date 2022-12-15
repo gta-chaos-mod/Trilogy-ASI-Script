@@ -9,6 +9,7 @@
 #include "util/Websocket.h"
 
 #include <CAnimManager.h>
+#include <CAudioEngine.h>
 #include <CFileMgr.h>
 #include <CReferences.h>
 #include <CTheScripts.h>
@@ -141,6 +142,9 @@ private:
                 Config::Init ();
 
                 if (previousCCMode != CONFIG_CC_ENABLED) Websocket::Setup ();
+
+                AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_DISPLAY_INFO,
+                                                      0.0f, 1.0f);
             }
         }
     }
@@ -161,6 +165,9 @@ private:
                 lastWebsocketReconnect = currentTime + 3000;
 
                 Websocket::Setup ();
+
+                AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_DISPLAY_INFO,
+                                                      0.0f, 1.0f);
             }
         }
     }
