@@ -92,9 +92,6 @@ DrawHelper::DrawVersion ()
     {
         std::string version = GenericUtil::GetModVersion ();
 
-        // TODO: Doesn't build on GH Actions because
-        // CFont.cpp is missing a `#include <string>`
-
 #ifdef GTAVC
         std::wstring wVersion (version.begin (), version.end ());
 
