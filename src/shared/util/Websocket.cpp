@@ -76,8 +76,30 @@ Websocket::SetupClientThread ()
 }
 
 void
+Websocket::SetupReconnectionHandler ()
+{
+    if (reconnectionHandlerInitialized) return;
+
+    std::thread reconnectionThread (
+        [] ()
+        {
+            while (true)
+            {
+                std::this_thread::sleep_for (std::chrono::seconds (3));
+
+                if (!IsClientConnectingOrConnected ()) Setup ();
+            }
+        });
+    reconnectionThread.detach ();
+
+    reconnectionHandlerInitialized = true;
+}
+
+void
 Websocket::Setup ()
 {
+    SetupReconnectionHandler ();
+
     Cleanup ();
 
     std::thread setupThread ([] () { SetupClientThread (); });
@@ -91,6 +113,17 @@ Websocket::IsClientConnected ()
 
     return wsClient.get () != nullptr
            && wsClient->getReadyState () == WebSocket::OPEN;
+}
+
+bool
+Websocket::IsClientConnectingOrConnected ()
+{
+    if (IsClientConnected ()) return true;
+
+    using easywsclient::WebSocket;
+
+    return wsClient.get () != nullptr
+           && wsClient->getReadyState () == WebSocket::CONNECTING;
 }
 
 void
