@@ -1,7 +1,9 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 
-#include <CCheat.h>
+#include <extensions/ScriptCommands.h>
+
+using namespace plugin;
 
 class OnePercentDeathEffect : public EffectBase
 {
@@ -19,12 +21,6 @@ public:
     }
 
     void
-    OnEnd (EffectInstance *inst) override
-    {
-        if (inst->Random (1, 100) == 50) CCheat::SuicideCheat ();
-    }
-
-    void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
@@ -33,6 +29,9 @@ public:
             inst->ResetTimer ();
             return;
         }
+
+        if (inst->Random (1, 100) == 50)
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
     }
 };
 

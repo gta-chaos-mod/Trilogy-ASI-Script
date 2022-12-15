@@ -1,8 +1,11 @@
 #include "util/EffectBase.h"
 #include "util/hooks/HookMacros.h"
 
-#include <CCheat.h>
 #include <CTaskSimpleGangDriveBy.h>
+#include <CTheScripts.h>
+#include <extensions/ScriptCommands.h>
+
+using namespace plugin;
 
 class NoShootingAllowedEffect : public EffectBase
 {
@@ -18,9 +21,6 @@ public:
         HOOK_METHOD_ARGS (inst, Hooked_CWeapon_FireFromCar,
                           char (CWeapon *, CVehicle *, char, char), 0x742280);
 
-        // TODO: Doesn't work for Just Business
-        // Maybe because of using CCheat::SuicideCheat instead of actually
-        // killing the ped or setting their health to 0?
         HOOK_METHOD_ARGS (inst, Hooked_CTaskSimpleGangDriveBy_FireGun,
                           char (CTaskSimpleGangDriveBy *, CPed * ped), 0x51A3FD,
                           0x62D60D);
@@ -33,7 +33,8 @@ public:
                          CVector *arg_14)
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (owner == player) CCheat::SuicideCheat ();
+        if (owner == player)
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (owner, 0);
 
         return cb ();
     }
@@ -46,7 +47,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (player && vehicle == FindPlayerVehicle (-1, false))
         {
-            CCheat::SuicideCheat ();
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
         }
 
         return cb ();
@@ -58,7 +59,8 @@ public:
                                            CPed                   *owner)
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (owner == player) CCheat::SuicideCheat ();
+        if (owner == player)
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (owner, 0);
 
         return cb ();
     }

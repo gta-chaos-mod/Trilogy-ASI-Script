@@ -2,7 +2,9 @@
 #include "util/EffectBase.h"
 #include "util/hooks/HookMacros.h"
 
-#include <CCheat.h>
+#include <extensions/ScriptCommands.h>
+
+using namespace plugin;
 
 class PacifistEffect : public EffectBase
 {
@@ -32,7 +34,7 @@ public:
             && (thisCalc->m_pDamager == player
                 || thisCalc->m_pDamager == FindPlayerVehicle (-1, false)))
         {
-            CCheat::SuicideCheat ();
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
         }
     }
 };

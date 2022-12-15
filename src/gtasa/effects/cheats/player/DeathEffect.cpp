@@ -1,7 +1,9 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 
-#include <CCheat.h>
+#include <extensions/ScriptCommands.h>
+
+using namespace plugin;
 
 class DeathEffect : public EffectBase
 {
@@ -22,7 +24,7 @@ public:
             return;
         }
 
-        CCheat::SuicideCheat ();
+        Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
         inst->Disable ();
     }
 };
