@@ -19,10 +19,6 @@ DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_ak47"         , GR
 DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_rockets"      , GROUP_NPC_SPAWNS | GROUP_NPCS_RECRUIT      , 0x96917E);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_riot_mode"                   , GROUP_NPC_SPAWNS                          , CCheat::RiotCheat                , 0x969175);
 
-// Player
-DEFINE_EFFECT (OneTimeFunctionEffect , "effect_get_jetpack"                 , 0                                         , CCheat::JetpackCheat);
-DEFINE_EFFECT (OneTimeFunctionEffect , "effect_get_parachute"               , 0                                         , CCheat::ParachuteCheat);
-
 // Stats
 DEFINE_EFFECT (TimedAddressEffect    , "effect_huge_bunny_hop"              , 0                                         , 0x969161);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_infinite_oxygen"             , 0                                         , 0x96916E);
