@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/EffectHandler.h"
 #include "util/GenericUtil.h"
 
 #include <CCheckpoints.h>
@@ -8,18 +9,11 @@
 
 using namespace plugin;
 
-// TODO: If you don't get to marker you get a penalty.
-// - 5 Mins. of One Hit KO only for CJ?
-
-// DEFINITELY Test for CC
-// Add effect queue for this specific case:
-// About to fail this effect (to get 5 mins of ohko) AND someone just buys
-// Infinite Health. Infinite Health would get disabled, so they would have their
-// money wasted.
+// TODO: Think about more penalties / penalty effects?
 
 // TODO: Increase effect duration based on distance
 
-class GetToMarkerOrDieEffect : public EffectBase
+class GetToMarkerEffect : public EffectBase
 {
     int     checkpoint        = 0;
     int     coordBlip         = 0;
@@ -61,7 +55,13 @@ public:
 
         if (!reachedMarker)
         {
-            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
+            nlohmann::json json;
+
+            json["effectID"]    = "effect_one_hit_ko";
+            json["displayName"] = "One Hit K.O. (Player)";
+            json["duration"]    = 1000 * 60 * 5;
+
+            EffectHandler::HandleFunction (json);
         }
     }
 
@@ -135,5 +135,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (GetToMarkerOrDieEffect, "effect_get_to_marker_or_die",
-               GROUP_HEALTH);
+DEFINE_EFFECT (GetToMarkerEffect, "effect_get_to_marker", GROUP_HEALTH);
