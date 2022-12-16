@@ -24,8 +24,7 @@ class GameHandler
 
     static inline bool didTryLoadAutoSave = false;
 
-    static inline int lastConfigReload       = 0;
-    static inline int lastWebsocketReconnect = 0;
+    static inline unsigned int lastConfigReload = 0;
 
     static inline int lastMissionsPassed = -1;
     static inline int lastSaved          = 0;
@@ -112,7 +111,6 @@ public:
     ProcessGame ()
     {
         HandleConfigReload ();
-        HandleWebsocketReconnect ();
 
         HandleAutoSave ();
         HandleQuickSave ();
@@ -128,15 +126,13 @@ private:
         // F7 + C
         if (KeyPressed (VK_F7) && KeyPressed (67))
         {
-            int currentTime
-                = std::max (CTimer::m_snTimeInMillisecondsNonClipped,
-                            (unsigned int) lastConfigReload);
+            unsigned int currentTime
+                = std::max (CTimer::m_snTimeInMillisecondsPauseMode,
+                            lastConfigReload);
 
             if (FrontEndMenuManager.m_bMenuActive
-                && lastConfigReload <= currentTime)
+                && lastConfigReload < currentTime)
             {
-                lastConfigReload = currentTime + 3000;
-
                 bool previousCCMode = CONFIG_CC_ENABLED;
 
                 Config::Init ();
@@ -145,29 +141,8 @@ private:
 
                 AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_DISPLAY_INFO,
                                                       0.0f, 1.0f);
-            }
-        }
-    }
 
-    static void
-    HandleWebsocketReconnect ()
-    {
-        // F7 + R
-        if (KeyPressed (VK_F7) && KeyPressed (82))
-        {
-            int currentTime
-                = std::max (CTimer::m_snTimeInMillisecondsNonClipped,
-                            (unsigned int) lastWebsocketReconnect);
-
-            if (FrontEndMenuManager.m_bMenuActive
-                && lastWebsocketReconnect <= currentTime)
-            {
-                lastWebsocketReconnect = currentTime + 3000;
-
-                Websocket::Setup ();
-
-                AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_DISPLAY_INFO,
-                                                      0.0f, 1.0f);
+                lastConfigReload = currentTime + 1000;
             }
         }
     }
