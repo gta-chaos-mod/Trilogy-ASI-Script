@@ -165,7 +165,7 @@ EffectDrawHandler::PrintEffectTimer ()
                 gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
                                  GenericUtil::FormatTime (actualRemaining,
                                                           true),
-                                 x - 59.0f, y - 2.0f, FONT_DEFAULT, 0.6f, 1.0f,
+                                 x - 60.0f, y - 3.0f, FONT_DEFAULT, 0.6f, 1.0f,
                                  GetTextColor (), 1, GetDropShadowColor (),
                                  true, 9999.0f, false);
             }
@@ -174,7 +174,7 @@ EffectDrawHandler::PrintEffectTimer ()
                 gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
                                  GenericUtil::FormatTime (actualRemaining,
                                                           true),
-                                 x - 59.0f, y - 2.0f, FONT_DEFAULT, 0.6f, 1.0f,
+                                 x - 60.0f, y - 3.0f, FONT_DEFAULT, 0.6f, 1.0f,
                                  GetTextColor (), 1, GetDropShadowColor (),
                                  true, 9999.0f, false);
             }
