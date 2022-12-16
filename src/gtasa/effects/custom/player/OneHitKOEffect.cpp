@@ -26,11 +26,11 @@ public:
 
         *neverHungryCheat = true;
 
-        for (CPed *ped : CPools::ms_pPedPool)
-        {
-            ped->m_fHealth = std::max (0.0f, std::min (ped->m_fHealth, 1.0f));
-            ped->m_fArmour = 0.0f;
-        }
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        player->m_fHealth = std::max (0.0f, std::min (player->m_fHealth, 1.0f));
+        player->m_fArmour = 0.0f;
     }
 
     static void
