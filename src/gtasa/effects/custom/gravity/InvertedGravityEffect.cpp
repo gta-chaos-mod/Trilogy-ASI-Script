@@ -23,12 +23,6 @@ public:
             vehicle->GetPosition ().z += 0.2f;
             vehicle->m_vecMoveSpeed.z = 0;
         }
-
-        for (CObject *object : CPools::ms_pObjectPool)
-        {
-            object->GetPosition ().z += 0.2f;
-            object->m_vecMoveSpeed.z = 0;
-        }
     }
 
     void
@@ -46,12 +40,6 @@ public:
         {
             NegateGravity (vehicle);
             ApplyGravity (vehicle, -0.002f);
-        }
-
-        for (CObject *object : CPools::ms_pObjectPool)
-        {
-            NegateGravity (object);
-            ApplyGravity (object, -0.002f);
         }
     }
 
