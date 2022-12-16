@@ -10,7 +10,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        for (int i = 0; i < inst->Random (5, 10); i++)
+        for (int i = 0; i < inst->Random (1, 3); i++)
         {
             float x      = inst->Random (-3000.0f, 3000.0f);
             float y      = inst->Random (-3000.0f, 3000.0f);
