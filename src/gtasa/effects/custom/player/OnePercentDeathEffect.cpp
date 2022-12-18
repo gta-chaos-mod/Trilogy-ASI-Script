@@ -21,6 +21,16 @@ public:
     }
 
     void
+    OnEnd (EffectInstance *inst) override
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        if (inst->Random (1, 100) == 50)
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
+    }
+
+    void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
@@ -29,9 +39,6 @@ public:
             inst->ResetTimer ();
             return;
         }
-
-        if (inst->Random (1, 100) == 50)
-            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
     }
 };
 
