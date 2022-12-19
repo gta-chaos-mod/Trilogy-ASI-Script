@@ -1,8 +1,27 @@
 #include "util/EffectBase.h"
+#include "util/Globals.h"
 
 class OneBulletMagazinesEffect : public EffectBase
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return !Globals::isInfiniteAmmoEffectEnabled;
+    }
+
+    void
+    OnStart (EffectInstance *inst) override
+    {
+        Globals::isOneBulletMagazinesEffectEnabled = true;
+    }
+
+    void
+    OnEnd (EffectInstance *inst) override
+    {
+        Globals::isOneBulletMagazinesEffectEnabled = false;
+    }
+
     void
     OnTick (EffectInstance *inst) override
     {
