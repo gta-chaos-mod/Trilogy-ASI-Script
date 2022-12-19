@@ -25,7 +25,7 @@ EffectInstance::End ()
 void
 EffectInstance::Tick ()
 {
-    if (effect->CanTickDown (this))
+    if (effect->CanTickDown_Internal (this))
     {
         int tick = (int) round (
             GenericUtil::CalculateTick (Globals::effectTimerSpeed));

@@ -39,6 +39,7 @@ enum eEffectGroups : unsigned long long
     GROUP_CUSTOM_TEXTURES    = (1ull << 24),
     GROUP_CUSTOM_FONT        = (1ull << 25),
     GROUP_REPLACE_ALL_TEXT   = (1ull << 26),
+    GROUP_TELEPORT           = (1ull << 27),
 
     GROUP_MAX_GROUPS = 32
 };
@@ -78,16 +79,21 @@ public:
     virtual void OnEnd (EffectInstance *instance){};
     virtual void OnTick (EffectInstance *instance){};
     virtual void OnProcessScripts (EffectInstance *instance){};
-
     virtual bool
     CanTickDown (EffectInstance *instance)
+    {
+        return true;
+    }
+
+    virtual bool
+    CanTickDown_Internal (EffectInstance *instance)
     {
         if (!CONFIG ("Chaos.AlwaysCountDownEffects", true))
         {
             if (GameUtil::IsCutsceneProcessing ()) return false;
         }
 
-        return true;
+        return CanTickDown (instance);
     }
 
     // Only used for Crowd Control. Return false if the effect cannot be
