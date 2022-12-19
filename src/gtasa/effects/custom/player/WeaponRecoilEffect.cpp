@@ -3,6 +3,7 @@
 #include "util/hooks/HookMacros.h"
 
 #include <CMenuSystem.h>
+#include <CTaskSimpleGangDriveBy.h>
 
 using namespace plugin;
 
@@ -20,6 +21,10 @@ public:
                           char (CWeapon *, CPed *, CVector *, CVector *,
                                 CEntity *, CVector *, CVector *),
                           0x61ECCD, 0x686787);
+
+        HOOK_METHOD_ARGS (inst, Hooked_CTaskSimpleGangDriveBy_FireGun,
+                          char (CTaskSimpleGangDriveBy *, CPed * ped), 0x51A3FD,
+                          0x62D60D);
     }
 
     void
@@ -54,6 +59,19 @@ public:
             {
                 recoilValue *= 4.0f;
             }
+        }
+
+        return cb ();
+    }
+
+    static char
+    Hooked_CTaskSimpleGangDriveBy_FireGun (auto                  &&cb,
+                                           CTaskSimpleGangDriveBy *thisTask,
+                                           CPed                   *owner)
+    {
+        if (owner == FindPlayerPed ())
+        {
+            recoilValue = 16.0f;
         }
 
         return cb ();
