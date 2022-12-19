@@ -1,6 +1,10 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
 
+// TODO: Trailers can't be attached properly to tankers when they are backwards,
+// upside down, different size, etc.
+// Where is the game handling that? Is it using the actual render matrix?
+
 using namespace plugin;
 
 class VehicleRotationBasedOnSpeedEffect : public EffectBase

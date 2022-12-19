@@ -1,6 +1,10 @@
 #include "util/EffectBase.h"
 #include "util/GlobalRenderer.h"
 
+// TODO: Trailers can't be attached properly to tankers when they are backwards,
+// upside down, different size, etc.
+// Where is the game handling that? Is it using the actual render matrix?
+
 template <RwV3d scale, float zAdjustment = 0.0f>
 class VehicleSizeEffect : public EffectBase
 {
