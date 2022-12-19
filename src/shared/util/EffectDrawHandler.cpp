@@ -1,6 +1,7 @@
 #include "EffectDrawHandler.h"
 
 #include "util/ColorHelper.h"
+#include "util/Config.h"
 #include "util/DrawHelper.h"
 #include "util/EffectHandler.h"
 #include "util/EffectInstance.h"
@@ -58,7 +59,7 @@ EffectDrawHandler::CalculateDrawPosition ()
     x = GenericUtil::EaseOutBack (transitionTimer, -renderWidth, position);
     y = ((idx + 1) * 65.0f) + 200.0f;
 
-    if (Globals::isScreensaverHUDEffectEnabled)
+    if (Globals::isScreensaverHUDEffectEnabled && !CONFIG_CC_ENABLED)
     {
         std::string effectName (effect->GetName ());
         auto        element = positions[effectName];
@@ -319,7 +320,7 @@ EffectDrawHandler::CreateHUDElement (EffectInstance *effect)
 void
 EffectDrawHandler::Tick ()
 {
-    if (!Globals::isScreensaverHUDEffectEnabled) return;
+    if (!Globals::isScreensaverHUDEffectEnabled || CONFIG_CC_ENABLED) return;
 
     for (auto &effect : EffectHandler::GetActiveEffects ())
     {
