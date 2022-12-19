@@ -34,4 +34,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (TeleportEffect, "effect_teleport", 0);
+DEFINE_EFFECT (TeleportEffect, "effect_teleport", GROUP_TELEPORT);

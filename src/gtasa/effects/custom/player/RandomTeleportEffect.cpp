@@ -61,4 +61,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (RandomTeleportEffect, "effect_random_teleport", 0);
+DEFINE_EFFECT (RandomTeleportEffect, "effect_random_teleport", GROUP_TELEPORT);

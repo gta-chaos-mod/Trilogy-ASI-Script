@@ -91,4 +91,4 @@ public:
 };
 
 DEFINE_EFFECT (TeleportToLibertyCityEffect, "effect_teleport_to_liberty_city",
-               0);
+               GROUP_TELEPORT);

@@ -43,4 +43,4 @@ public:
     }
 };
 
-DEFINE_EFFECT (TeleportToZeroEffect, "effect_teleport_to_zero", 0);
+DEFINE_EFFECT (TeleportToZeroEffect, "effect_teleport_to_zero", GROUP_TELEPORT);

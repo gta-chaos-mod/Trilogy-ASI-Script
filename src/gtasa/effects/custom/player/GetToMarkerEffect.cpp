@@ -135,4 +135,5 @@ public:
     }
 };
 
-DEFINE_EFFECT (GetToMarkerEffect, "effect_get_to_marker", GROUP_HEALTH);
+DEFINE_EFFECT (GetToMarkerEffect, "effect_get_to_marker",
+               GROUP_HEALTH | GROUP_TELEPORT);

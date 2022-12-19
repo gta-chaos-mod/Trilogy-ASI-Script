@@ -120,4 +120,5 @@ public:
     }
 };
 
-DEFINE_EFFECT (TeleportToMarkerEffect, "effect_teleport_to_marker", 0);
+DEFINE_EFFECT (TeleportToMarkerEffect, "effect_teleport_to_marker",
+               GROUP_TELEPORT);
