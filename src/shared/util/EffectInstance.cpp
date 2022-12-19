@@ -12,14 +12,22 @@ EffectInstance::EffectInstance (EffectBase *effect) : effect (effect) {}
 void
 EffectInstance::Start ()
 {
-    if (this->effect) this->effect->OnStart (this);
+    if (this->effect)
+    {
+        this->effect->OnStart (this);
+        Globals::enabledEffects[effect->GetID ().substr (7)] = true;
+    }
 }
 
 void
 EffectInstance::End ()
 {
     cleanupHandler.DoCleanup ();
-    if (this->effect) this->effect->OnEnd (this);
+    if (this->effect)
+    {
+        this->effect->OnEnd (this);
+        Globals::enabledEffects[effect->GetID ().substr (7)] = false;
+    }
 }
 
 void

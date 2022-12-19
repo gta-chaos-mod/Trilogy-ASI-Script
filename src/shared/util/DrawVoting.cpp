@@ -85,7 +85,7 @@ DrawVoting::DrawVote (int choice)
 #endif
     std::string_view description = votes[choice].description;
 
-    if (Globals::isReplaceAllTextEffectEnabled && pickedVote != -1)
+    if (Globals::enabledEffects["replace_all_text"] && pickedVote != -1)
         description = Globals::replaceAllTextString;
 
     gamefont::PrintUnscaled (std::string (description), x, y, FONT_DEFAULT,
@@ -152,7 +152,7 @@ DrawVoting::CalculateBarWidth (int choice, float maxWidth)
 std::string
 DrawVoting::GetPercentage (int choice)
 {
-    if (Globals::isReplaceAllTextEffectEnabled)
+    if (Globals::enabledEffects["replace_all_text"])
         return Globals::replaceAllTextString;
 
     std::string percentage;

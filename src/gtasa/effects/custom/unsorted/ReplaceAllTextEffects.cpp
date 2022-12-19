@@ -16,8 +16,7 @@ public:
         replacementText = CONFIG ("Effects.ReplaceAllText.Text",
                                   (std::string) "Your Text Could Be Here");
 
-        Globals::replaceAllTextString          = replacementText;
-        Globals::isReplaceAllTextEffectEnabled = true;
+        Globals::replaceAllTextString = replacementText;
 
         HOOK_METHOD_ARGS (inst, Hooked_CKeyArray_Search,
                           char *(CText *, unsigned __int8 *, int), 0x6A0070,
@@ -28,12 +27,6 @@ public:
 
         HOOK_ARGS (inst, Hooked_PrintClockAndAmmo, char (float, float, char *),
                    0x58EC21, 0x58962A);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        Globals::isReplaceAllTextEffectEnabled = false;
     }
 
     static char *

@@ -70,15 +70,11 @@ public:
                    void (CPed *, signed int, signed int, float), 0x58FA25);
 
         HOOK (inst, Hooked_DrawRadar, void (), 0x58FC53);
-
-        Globals::isScreensaverHUDEffectEnabled = true;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Globals::isScreensaverHUDEffectEnabled = false;
-
         EffectDrawHandler::ClearScreensaverHUDMap ();
     }
 

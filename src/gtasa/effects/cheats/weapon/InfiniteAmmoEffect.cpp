@@ -9,20 +9,12 @@ public:
     bool
     CanActivate () override
     {
-        return !Globals::isOneBulletMagazinesEffectEnabled;
-    }
-
-    void
-    OnStart (EffectInstance *inst) override
-    {
-        Globals::isInfiniteAmmoEffectEnabled = true;
+        return !Globals::enabledEffects["one_bullet_magazines"];
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Globals::isInfiniteAmmoEffectEnabled = false;
-
         *this->infiniteAmmoCheat = false;
     }
 

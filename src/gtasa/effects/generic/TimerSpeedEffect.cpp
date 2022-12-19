@@ -18,10 +18,13 @@ public:
 };
 
 using HalfTimerSpeedEffect = TimerSpeedEffect<0.5f>;
-DEFINE_EFFECT (HalfTimerSpeedEffect, "effect_half_timer_speed", GROUP_TIMER_SPEED);
+DEFINE_EFFECT (HalfTimerSpeedEffect, "effect_half_timer_speed",
+               GROUP_TIMER_SPEED);
 
 using DoubleTimerSpeedEffect = TimerSpeedEffect<2.0f>;
-DEFINE_EFFECT (DoubleTimerSpeedEffect, "effect_double_timer_speed", GROUP_TIMER_SPEED);
+DEFINE_EFFECT (DoubleTimerSpeedEffect, "effect_double_timer_speed",
+               GROUP_TIMER_SPEED);
 
 using QuintupleTimerSpeedEffect = TimerSpeedEffect<5.0f>;
-DEFINE_EFFECT (QuintupleTimerSpeedEffect, "effect_quintuple_timer_speed", GROUP_TIMER_SPEED);
+DEFINE_EFFECT (QuintupleTimerSpeedEffect, "effect_quintuple_timer_speed",
+               GROUP_TIMER_SPEED);

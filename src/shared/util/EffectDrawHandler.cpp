@@ -39,7 +39,7 @@ EffectDrawHandler::CalculateDrawPosition ()
 
     std::string_view name = effect->GetName ();
 
-    if (Globals::isReplaceAllTextEffectEnabled)
+    if (Globals::enabledEffects["replace_all_text"])
         name = Globals::replaceAllTextString;
 
 #ifdef GTASA
@@ -59,7 +59,7 @@ EffectDrawHandler::CalculateDrawPosition ()
     x = GenericUtil::EaseOutBack (transitionTimer, -renderWidth, position);
     y = ((idx + 1) * 65.0f) + 200.0f;
 
-    if (Globals::isScreensaverHUDEffectEnabled && !CONFIG_CC_ENABLED)
+    if (Globals::enabledEffects["screensaver_hud"] && !CONFIG_CC_ENABLED)
     {
         std::string effectName (effect->GetName ());
         auto        element = positions[effectName];
@@ -74,7 +74,7 @@ EffectDrawHandler::PrintEffectName ()
 {
     std::string_view name = effect->GetName ();
 
-    if (Globals::isReplaceAllTextEffectEnabled)
+    if (Globals::enabledEffects["replace_all_text"])
         name = Globals::replaceAllTextString;
 
     if (DRAW_LEFT)
@@ -98,7 +98,7 @@ EffectDrawHandler::PrintSubtext ()
     {
         std::string_view subtext = effect->GetSubtext ();
 
-        if (Globals::isReplaceAllTextEffectEnabled)
+        if (Globals::enabledEffects["replace_all_text"])
             subtext = Globals::replaceAllTextString;
 
         if (DRAW_LEFT)
@@ -262,7 +262,7 @@ EffectDrawHandler::DrawAndXMore ()
 
     std::string text = "And " + std::to_string (more) + " more...";
 
-    if (Globals::isReplaceAllTextEffectEnabled)
+    if (Globals::enabledEffects["replace_all_text"])
         text = Globals::replaceAllTextString;
 
     y = ((RECENT_EFFECTS + 2) * 65.0f) + 200.0f - 20.0f;
@@ -296,12 +296,12 @@ EffectDrawHandler::DrawRecentEffects ()
     {
         if (++i > RECENT_EFFECTS) break;
 
-        if (!Globals::isHideChaosUIEffectEnabled
+        if (!Globals::enabledEffects["hide_chaos_ui"]
             || effect.GetEffect ()->GetID () == "effect_hide_chaos_ui")
             effect.Draw (i, inset);
     }
 
-    if (!Globals::isHideChaosUIEffectEnabled) DrawAndXMore ();
+    if (!Globals::enabledEffects["hide_chaos_ui"]) DrawAndXMore ();
 }
 
 EffectDrawHandler::ScreensaverHUDElement
@@ -320,7 +320,8 @@ EffectDrawHandler::CreateHUDElement (EffectInstance *effect)
 void
 EffectDrawHandler::Tick ()
 {
-    if (!Globals::isScreensaverHUDEffectEnabled || CONFIG_CC_ENABLED) return;
+    if (!Globals::enabledEffects["screensaver_hud"] || CONFIG_CC_ENABLED)
+        return;
 
     for (auto &effect : EffectHandler::GetActiveEffects ())
     {

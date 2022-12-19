@@ -66,7 +66,7 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        if (!Globals::isScreensaverHUDEffectEnabled) return;
+        if (!Globals::enabledEffects["screensaver_hud"]) return;
 
         float tick = GenericUtil::CalculateTick (0.2f);
 
@@ -366,7 +366,7 @@ public:
     static std::string
     GetInfoString (Info info)
     {
-        if (Globals::isReplaceAllTextEffectEnabled)
+        if (Globals::enabledEffects["replace_all_text"])
         {
             return std::format ("{}: {}", Globals::replaceAllTextString,
                                 Globals::replaceAllTextString);

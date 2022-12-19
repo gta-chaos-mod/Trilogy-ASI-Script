@@ -17,7 +17,7 @@
 std::string
 DrawHelper::GetCooldownString ()
 {
-    if (Globals::isReplaceAllTextEffectEnabled)
+    if (Globals::enabledEffects["replace_all_text"])
         return Globals::replaceAllTextString;
 
     std::string cooldown;
@@ -61,7 +61,7 @@ DrawHelper::Draw ()
     {
         bool drawActiveEffects = CONFIG ("Drawing.DrawActiveEffects", true);
 
-        if (!Globals::isHideChaosUIEffectEnabled)
+        if (!Globals::enabledEffects["hide_chaos_ui"])
         {
             if (CONFIG ("Drawing.DrawRemainingTimeBar", true))
             {
