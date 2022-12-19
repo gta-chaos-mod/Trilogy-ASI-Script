@@ -5,6 +5,15 @@
 class RemoveCurrentWeaponEffect : public OneTimeEffect
 {
 public:
+    bool
+    CanActivate () override
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return false;
+
+        return player->m_nActiveWeaponSlot != 0;
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
