@@ -5,6 +5,8 @@
 #include <CMenuManager.h>
 #include <CTimer.h>
 
+// TODO: Somehow make this more reliable depending on the FPS.
+
 class DelayedControls : public EffectBase
 {
     struct InputData

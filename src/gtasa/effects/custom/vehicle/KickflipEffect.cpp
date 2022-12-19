@@ -2,6 +2,9 @@
 
 #include <CTimer.h>
 
+// TODO: Doesn't work on bikes, doesn't work well on Savanna, doesn't work on
+// helicopters and planes. Pretty much only works in cars...
+
 class KickflipEffect : public OneTimeEffect
 {
 public:
