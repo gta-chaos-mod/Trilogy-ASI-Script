@@ -127,7 +127,7 @@ public:
 
         float waterLevel = 0.0f;
         Command<eScriptCommands::COMMAND_GET_WATER_HEIGHT_AT_COORDS> (
-            randomPosition.x, randomPosition.y, true, &waterLevel);
+            randomPosition.x, randomPosition.y, false, &waterLevel);
 
         randomPosition.z = std::max (randomPosition.z, waterLevel);
 
