@@ -110,6 +110,12 @@ public:
             = CWorld::FindGroundZForCoord (markerPosition.x, markerPosition.y)
               + 3.0f;
 
+        float waterLevel = 0.0f;
+        Command<eScriptCommands::COMMAND_GET_WATER_HEIGHT_AT_COORDS> (
+            markerPosition.x, markerPosition.y, false, &waterLevel);
+
+        markerPosition.z = std::max (markerPosition.z, waterLevel);
+
         return markerPosition;
     }
 };
