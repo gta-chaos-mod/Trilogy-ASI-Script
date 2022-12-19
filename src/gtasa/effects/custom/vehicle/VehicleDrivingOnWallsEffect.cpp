@@ -9,7 +9,6 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        // TODO: Despite these hooks, cars still catch on fire when upside-down
         HOOK_METHOD (inst, Hooked_IsCarUpsideDown, char (int, int), 0x4655C9,
                      0x4655D6, 0x46564D, 0x46577C, 0x64450F, 0x6451F8, 0x647348,
                      0x651127);
@@ -46,6 +45,11 @@ public:
         if (!player) return;
 
         player->m_nPedFlags.CantBeKnockedOffBike = true;
+
+        CPlayerInfo *info = player->GetPlayerInfoForThisPlayerPed ();
+        if (!info) return;
+
+        info->m_nTimesUpsideDownInARow = 0;
     }
 
     void
