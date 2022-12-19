@@ -14,7 +14,7 @@ public:
     }
 
     void
-    OnTick (EffectInstance *inst) override
+    OnProcessScripts (EffectInstance *inst) override
     {
         GameUtil::SetVehiclesToRealPhysics ();
 
@@ -24,19 +24,20 @@ public:
             {
                 wasHornOn[vehicle] = true;
 
-                ApplyVehicleSpeed (vehicle, 1.5f);
+                ApplyVehicleSpeed (vehicle, 1.5f, true);
             }
             else if (wasHornOn[vehicle])
             {
                 wasHornOn[vehicle] = false;
 
-                ApplyVehicleSpeed (vehicle, 0.75f);
+                ApplyVehicleSpeed (vehicle, 0.75f, false);
             }
         }
     }
 
     void
-    ApplyVehicleSpeed (CVehicle *vehicle, float velocity)
+    ApplyVehicleSpeed (CVehicle *vehicle, float velocity,
+                       bool cantBeKnockedOffBike)
     {
         // Don't apply for empty vehicles or mission ped drivers
         CPed *driver = vehicle->m_pDriver;
@@ -50,7 +51,8 @@ public:
         vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
         vehicle->m_vecMoveSpeed.z = velocity * matrix->up.z;
 
-        vehicle->m_pDriver->m_nPedFlags.CantBeKnockedOffBike = false;
+        vehicle->m_pDriver->m_nPedFlags.CantBeKnockedOffBike
+            = cantBeKnockedOffBike;
     }
 };
 
