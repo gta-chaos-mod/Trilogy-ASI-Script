@@ -6,6 +6,15 @@
 class SkinnyPlayerEffect : public OneTimeEffect
 {
 public:
+    // Will not activate for CC if the player has less than 250/1000 muscle or
+    // fat.
+    bool
+    CanActivate () override
+    {
+        return CStats::GetStatValue (STAT_FAT) > 250.0f
+               || CStats::GetStatValue (STAT_MUSCLE) > 250.0f;
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
