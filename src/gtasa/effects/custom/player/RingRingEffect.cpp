@@ -7,9 +7,6 @@
 
 using namespace plugin;
 
-// TODO: Prevent phone call in cutscenes or when player isn't safe?
-// https://clips.twitch.tv/PlumpMoldyOilUnSane-hL7HE0ZU-D1R9XZR
-
 // TODO: Can still softlock missions such as Just Business when it happens right
 // before the player hops on the bike and the cutscene starts. Once the cutscene
 // is over and the player regains control, the camera will be stuck.
