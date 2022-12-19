@@ -83,59 +83,17 @@ public:
         CPed *thisDriver  = thisVehicle->m_pDriver;
         CPed *otherDriver = otherVehicle->m_pDriver;
 
-        CTask *this_m_aPrimaryTasks[5];
-        CTask *this_m_aSecondaryTasks[6];
-
-        CTask *other_m_aPrimaryTasks[5];
-        CTask *other_m_aSecondaryTasks[6];
-
         CPlayerPed *player = FindPlayerPed ();
 
         // Get peds out of their vehicles
         if (thisDriver)
         {
             if (thisDriver->m_nCreatedBy == 2 && thisDriver != player) return;
-
-            // for (int i = 0; i < 5; i++)
-            // {
-            //     this_m_aPrimaryTasks[i] = (CTask *) malloc (sizeof (CTask));
-            //     memcpy (
-            //         this_m_aPrimaryTasks[i],
-            //         thisDriver->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i],
-            //         sizeof (CTask));
-            // }
-
-            // for (int i = 0; i < 6; i++)
-            // {
-            //     this_m_aSecondaryTasks[i] = (CTask *) malloc (sizeof
-            //     (CTask)); memcpy (
-            //         this_m_aSecondaryTasks[i],
-            //         thisDriver->m_pIntelligence->m_TaskMgr.m_aSecondaryTasks[i],
-            //         sizeof (CTask));
-            // }
         }
 
         if (otherDriver)
         {
             if (otherDriver->m_nCreatedBy == 2 && thisDriver != player) return;
-
-            // for (int i = 0; i < 5; i++)
-            // {
-            //     other_m_aPrimaryTasks[i] = (CTask *) malloc (sizeof (CTask));
-            //     memcpy (
-            //         other_m_aPrimaryTasks[i],
-            //         otherDriver->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i],
-            //         sizeof (CTask));
-            // }
-
-            // for (int i = 0; i < 6; i++)
-            // {
-            //     other_m_aSecondaryTasks[i] = (CTask *) malloc (sizeof
-            //     (CTask)); memcpy (other_m_aSecondaryTasks[i],
-            //             otherDriver->m_pIntelligence->m_TaskMgr
-            //                 .m_aSecondaryTasks[i],
-            //             sizeof (CTask));
-            // }
         }
 
         bool wasPlayerADriver
@@ -152,8 +110,7 @@ public:
                         COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
                 thisDriver, thisVehicle);
 
-            WarpPedIntoCar (thisDriver, otherVehicle, drivingStyle,
-                            this_m_aPrimaryTasks, this_m_aSecondaryTasks);
+            WarpPedIntoCar (thisDriver, otherVehicle, drivingStyle);
         }
         if (otherDriver)
         {
@@ -166,8 +123,7 @@ public:
                         COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
                 otherDriver, otherVehicle);
 
-            WarpPedIntoCar (otherDriver, thisVehicle, drivingStyle,
-                            other_m_aPrimaryTasks, other_m_aSecondaryTasks);
+            WarpPedIntoCar (otherDriver, thisVehicle, drivingStyle);
         }
 
         if (wasPlayerADriver)
@@ -181,26 +137,16 @@ public:
     }
 
     static void
-    WarpPedIntoCar (CPed *ped, CVehicle *vehicle, eCarDrivingStyle drivingStyle,
-                    CTask *primaryTasks[5], CTask *secondaryTasks[6])
+    WarpPedIntoCar (CPed *ped, CVehicle *vehicle, eCarDrivingStyle drivingStyle)
     {
         vehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
 
-        // TODO: Set ped tasks again after teleportation
         Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (ped, vehicle);
 
         if (ped != FindPlayerPed ())
         {
-            // Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
-            //     ped, vehicle, 20.0f, drivingStyle);
-
-            // for (int i = 0; i < 5; i++)
-            //     memcpy (ped->m_pIntelligence->m_TaskMgr.m_aPrimaryTasks[i],
-            //             primaryTasks[i], sizeof (CTask));
-
-            // for (int i = 0; i < 6; i++)
-            //     memcpy (ped->m_pIntelligence->m_TaskMgr.m_aSecondaryTasks[i],
-            //             secondaryTasks[i], sizeof (CTask));
+            Command<eScriptCommands::COMMAND_TASK_CAR_DRIVE_WANDER> (
+                ped, vehicle, 20.0f, drivingStyle);
         }
     }
 };
