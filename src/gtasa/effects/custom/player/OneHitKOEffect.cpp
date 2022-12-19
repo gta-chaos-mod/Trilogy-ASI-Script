@@ -3,12 +3,20 @@
 
 class OneHitKOEffect : public EffectBase
 {
+    float previousHealth   = 100.0f;
+    float previousArmor    = 0.0f;
     bool *neverHungryCheat = reinterpret_cast<bool *> (0x969174);
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        previousHealth = player->m_fHealth;
+        previousArmor  = player->m_fArmour;
+
         // CHud::RenderHealthBar
         HOOK (inst, Hooked_Empty, void (int, signed int, signed int), 0x58EE9A);
     }
@@ -17,6 +25,12 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         *this->neverHungryCheat = false;
+
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        player->m_fHealth = previousHealth;
+        player->m_fArmour = previousArmor;
     }
 
     void
