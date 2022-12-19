@@ -1,4 +1,3 @@
-#include "effects/OneTimeEffect.h"
 #include "util/EffectBase.h"
 #include "util/EffectInstance.h"
 #include "util/GameUtil.h"
@@ -8,8 +7,12 @@
 
 using namespace plugin;
 
-class SpawnVehicleEffect : public OneTimeEffect
+class SpawnVehicleEffect : public EffectBase
 {
+    CVehicle           *oldVehicle = nullptr;
+    CVehicle           *newVehicle = nullptr;
+    std::vector<CPed *> passengers = {};
+
 public:
     bool
     CanActivate () override
@@ -22,43 +25,79 @@ public:
     void
     OnStart (EffectInstance *instance)
     {
-        if (!CanActivate ()) return;
-
-        SpawnForPlayer (instance->GetCustomData ().value ("vehicleID", 400),
-                        false);
+        oldVehicle = nullptr;
+        newVehicle = nullptr;
+        passengers.clear ();
     }
 
     void
-    SpawnForPlayer (int vehicleID, bool setPlayerAsDriver)
+    OnTick (EffectInstance *inst)
+    {
+        if (!CanActivate ()) return;
+
+        if (!newVehicle)
+        {
+            SpawnForPlayer (inst->GetCustomData ().value ("vehicleID", 400));
+
+            return;
+        }
+
+        if (newVehicle)
+        {
+            Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (
+                FindPlayerPed (), newVehicle);
+            if (passengers.size () > 0)
+            {
+                for (unsigned int i = 0;
+                     i < newVehicle->m_nMaxPassengers && i < passengers.size ();
+                     i++)
+                {
+                    Command<eScriptCommands::
+                                COMMAND_WARP_CHAR_INTO_CAR_AS_PASSENGER> (
+                        passengers[i], newVehicle, i);
+                }
+            }
+        }
+
+        if (oldVehicle)
+        {
+            Command<eScriptCommands::COMMAND_DELETE_CAR> (oldVehicle);
+        }
+
+        inst->Disable ();
+    }
+
+    void
+    SpawnForPlayer (int vehicleID, bool setPlayerAsDriver = false)
     {
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
         // Experimental code to swap vehicle pointers and their data.
-        // Doesn't work as intended and is not of high priority.
+        // Not fully functional, deleting the old car crashes the game because
+        // the pool is borked. Also immediately loading a game afterwards
+        // crashes, too
         if (setPlayerAsDriver)
         {
-            std::vector<CPed *> passengers = {};
-
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
+            oldVehicle = FindPlayerVehicle (-1, false);
+            if (oldVehicle)
             {
                 CStreaming::RequestModel (vehicleID, 1);
                 CStreaming::LoadAllRequestedModels (false);
                 CStreaming::SetModelIsDeletable (vehicleID);
 
-                auto     oldPosition = vehicle->GetPosition ();
-                auto     moveSpeed   = vehicle->m_vecMoveSpeed;
-                auto     turnSpeed   = vehicle->m_vecTurnSpeed;
+                auto     oldPosition = oldVehicle->GetPosition ();
+                auto     moveSpeed   = oldVehicle->m_vecMoveSpeed;
+                auto     turnSpeed   = oldVehicle->m_vecTurnSpeed;
                 RwMatrix oldMatrix;
-                vehicle->GetMatrix ()->CopyToRwMatrix (&oldMatrix);
-                auto createdBy = vehicle->m_nCreatedBy;
+                oldVehicle->GetMatrix ()->CopyToRwMatrix (&oldMatrix);
+                auto createdBy = oldVehicle->m_nCreatedBy;
 
                 Command<eScriptCommands::
                             COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-                    FindPlayerPed (), vehicle);
+                    FindPlayerPed (), oldVehicle);
 
-                for (CPed *ped : vehicle->m_apPassengers)
+                for (CPed *ped : oldVehicle->m_apPassengers)
                 {
                     if (ped)
                     {
@@ -66,67 +105,60 @@ public:
                         Command<
                             eScriptCommands::
                                 COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-                            ped, vehicle);
+                            ped, oldVehicle);
                     }
                 }
 
-                CVehicle *temporaryVehicle
-                    = GameUtil::CreateVehicle (vehicleID, oldPosition, 0.0f,
-                                               false);
+                oldPosition.z += 3.0f;
 
-                int oldRef = CPools::ms_pVehiclePool->GetRef (vehicle);
-                int newRef = CPools::ms_pVehiclePool->GetRef (temporaryVehicle);
+                newVehicle = GameUtil::CreateVehicle (vehicleID, oldPosition,
+                                                      0.0f, false);
 
-                // Allocate space
-                CHeli *heli = (CHeli *) malloc (sizeof (CHeli));
-                // Move the current vehicle into empty space
-                memcpy (heli, vehicle, sizeof (CHeli));
-                // Move the new vehicle into the current vehicle memory
-                memcpy (vehicle, temporaryVehicle, sizeof (CHeli));
-                // Move the current vehicle from the empty space to the new
-                // vehicle memory
-                memcpy (temporaryVehicle, heli, sizeof (CHeli));
-                // Free space
-                free (heli);
+                uint8_t veh1Bak[sizeof (CHeli)];
+                uint8_t veh2Bak[sizeof (CHeli)];
 
-                // std::swap (CPools::ms_pVehiclePool[oldRef],
-                //            CPools::ms_pVehiclePool[newRef]);
-                // std::swap (CPools::ms_pVehiclePool->m_byteMap[oldIndex],
-                //            CPools::ms_pVehiclePool->m_byteMap[newIndex]);
+                CReference *veh1Refs = oldVehicle->m_pReferences;
+                CReference *veh2Refs = newVehicle->m_pReferences;
 
-                // std::swap (temporaryVehicle, vehicle);
-                // CWorld::Remove (temporaryVehicle);
-                // Command<eScriptCommands::COMMAND_DELETE_CAR> (
-                //     temporaryVehicle);
+                memcpy (veh1Bak, oldVehicle, sizeof (CHeli));
+                memcpy (veh2Bak, newVehicle, sizeof (CHeli));
+
+                memcpy (newVehicle, veh1Bak, sizeof (CHeli));
+                memcpy (oldVehicle, veh2Bak, sizeof (CHeli));
+
+                // Audio
+                CAEAudioEntity tempEntity;
+                memcpy (&tempEntity, &oldVehicle->m_vehicleAudio,
+                        sizeof (CAEAudioEntity));
+                memcpy (&oldVehicle->m_vehicleAudio,
+                        &newVehicle->m_vehicleAudio, sizeof (CAEAudioEntity));
+                memcpy (&newVehicle->m_vehicleAudio, &tempEntity,
+                        sizeof (CAEAudioEntity));
+
+                auto ref1 = veh1Refs;
+                while (ref1)
+                {
+                    newVehicle->RegisterReference (ref1->m_ppEntity);
+                    oldVehicle->CleanUpOldReference (ref1->m_ppEntity);
+
+                    ref1 = ref1->m_pNext;
+                }
+
+                auto ref2 = veh2Refs;
+                while (ref2)
+                {
+                    oldVehicle->RegisterReference (ref2->m_ppEntity);
+                    newVehicle->CleanUpOldReference (ref2->m_ppEntity);
+
+                    ref2 = ref2->m_pNext;
+                }
 
                 CallMethod<0x59AD20, CMatrix *, RwMatrix *> (
-                    vehicle->GetMatrix (), &oldMatrix);
-                vehicle->m_vecMoveSpeed = moveSpeed;
-                vehicle->m_vecTurnSpeed = turnSpeed;
-                vehicle->m_nCreatedBy   = createdBy;
-
-                Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (player,
-                                                                      vehicle);
-                if (passengers.size () > 0)
-                {
-                    for (unsigned int i = 0; i < vehicle->m_nMaxPassengers
-                                             && i < passengers.size ();
-                         i++)
-                    {
-                        Command<eScriptCommands::
-                                    COMMAND_WARP_CHAR_INTO_CAR_AS_PASSENGER> (
-                            passengers[i], vehicle, i);
-                    }
-                }
+                    newVehicle->GetMatrix (), &oldMatrix);
+                newVehicle->m_vecMoveSpeed = moveSpeed;
+                newVehicle->m_vecTurnSpeed = turnSpeed;
+                newVehicle->m_nCreatedBy   = createdBy;
             }
-
-            /*CVehicle* vehicle = GameUtil::CreateVehicle(this->vehicleID,
-            position, player->m_fCurrentRotation, true); if
-            (playerWasInVehicle) { vehicle->m_vecMoveSpeed = moveSpeed;
-            vehicle->m_vecTurnSpeed = turnSpeed; vehicle->SetMatrix(matrix);
-            vehicle->m_nCreatedBy = createdBy; vehicle->m_pDriver =
-            playerVehicle->m_pDriver;
-            }*/
 
             Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
         }
@@ -139,6 +171,8 @@ public:
                                            player->m_fCurrentRotation
                                                + 1.5707964f,
                                            true);
+
+            vehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
         }
     }
 };
