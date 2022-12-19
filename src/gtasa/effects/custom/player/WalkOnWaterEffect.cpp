@@ -43,11 +43,8 @@ public:
         if (vehicle) heading = vehicle->GetHeading ();
 
         float waterLevel = 0.0f;
-
-        // TODO: This sometimes returns wrong values
-        if (!CallAndReturn<bool, 0x6E8580> (position.x, position.y, position.z,
-                                            &waterLevel, 0))
-            waterLevel = 0.0f;
+        Command<eScriptCommands::COMMAND_GET_WATER_HEIGHT_AT_COORDS> (
+            position.x, position.y, false, &waterLevel);
 
         waterLevel += 0.5f;
 
