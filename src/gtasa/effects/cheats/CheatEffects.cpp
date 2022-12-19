@@ -47,7 +47,6 @@ DEFINE_EFFECT (TimedAddressEffect    , "effect_insane_handling"             , 0 
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_never_wanted"                , GROUP_WANTED                              , CCheat::NotWantedCheat           , 0x969171);
 
 // Weapon
-DEFINE_EFFECT (TimedAddressEffect    , "effect_infinite_ammo"               , 0                                         , 0x969178);
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_weapon_set_1"                , GROUP_WEAPONS                             , CCheat::WeaponCheat1);
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_weapon_set_2"                , GROUP_WEAPONS                             , CCheat::WeaponCheat2);
 DEFINE_EFFECT (OneTimeFunctionEffect , "effect_weapon_set_3"                , GROUP_WEAPONS                             , CCheat::WeaponCheat3);
