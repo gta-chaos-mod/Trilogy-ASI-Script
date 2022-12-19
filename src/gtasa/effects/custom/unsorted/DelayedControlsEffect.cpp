@@ -5,26 +5,27 @@
 #include <CMenuManager.h>
 #include <CTimer.h>
 
-// TODO: Somehow make this more reliable depending on the FPS.
-
 class DelayedControls : public EffectBase
 {
     struct InputData
     {
+        unsigned int          timeInMs;
         CControllerState      state;
         CMouseControllerState mouseState;
         CKeyboardState        keyboardState;
     };
 
-    bool                  wasFrameLimiterOn = false;
     std::deque<InputData> bufferedInputData = {};
+
+    // For whatever reason we need to divide the time we want to delay by 2. Is
+    // "ProcessScripts" being run twice somewhere?
+    int bufferInMs = 500 / 2;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
         bufferedInputData.clear ();
-        wasFrameLimiterOn = FrontEndMenuManager.m_bFrameLimiterOn;
     }
 
     void
@@ -36,17 +37,15 @@ public:
         CPad *pad = player->GetPadFromPlayer ();
         if (!pad) return;
 
-        if (wasFrameLimiterOn != FrontEndMenuManager.m_bFrameLimiterOn)
-            bufferedInputData.clear ();
+        unsigned int timeInMs = CTimer::m_snTimeInMilliseconds;
 
-        wasFrameLimiterOn = FrontEndMenuManager.m_bFrameLimiterOn;
-
-        InputData frameData = {.state         = pad->NewState,
+        InputData frameData = {.timeInMs      = timeInMs + bufferInMs,
+                               .state         = pad->NewState,
                                .mouseState    = pad->NewMouseControllerState,
                                .keyboardState = pad->NewKeyState};
 
         bufferedInputData.push_back (frameData);
-        if (bufferedInputData.size () > GetFrameDelay ())
+        if (timeInMs > bufferedInputData[0].timeInMs)
         {
             InputData data               = bufferedInputData.front ();
             pad->NewState                = data.state;
@@ -61,12 +60,6 @@ public:
             pad->NewMouseControllerState = CMouseControllerState ();
             pad->NewKeyState             = CKeyboardState ();
         }
-    }
-
-    static int
-    GetFrameDelay ()
-    {
-        return (int) std::floor (CTimer::game_FPS / 5.0f);
     }
 };
 
