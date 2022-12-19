@@ -1,5 +1,7 @@
 #include "util/EffectBase.h"
 
+// TODO: Hydraulics aren't inverted for the minigame?
+
 class InvertedControlsEffect : public EffectBase
 {
 public:
@@ -7,33 +9,28 @@ public:
     OnProcessScripts (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                pad->NewState.LeftStickX *= -1;
-                pad->NewState.LeftStickY *= -1;
-                pad->NewState.RightStickX *= -1;
-                pad->NewState.RightStickY *= -1;
+        if (!player) return;
 
-                pad->NewMouseControllerState.x *= -1;
-                pad->NewMouseControllerState.y *= -1;
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
 
-                std::swap (pad->NewState.ButtonCross,
-                           pad->NewState.ButtonSquare);
-                std::swap (pad->NewState.ButtonCircle,
-                           pad->NewState.RightShoulder1);
+        pad->NewState.LeftStickX *= -1;
+        pad->NewState.LeftStickY *= -1;
+        pad->NewState.RightStickX *= -1;
+        pad->NewState.RightStickY *= -1;
 
-                std::swap (pad->NewState.DPadUp, pad->NewState.DPadDown);
-                std::swap (pad->NewState.DPadLeft, pad->NewState.DPadRight);
+        pad->NewMouseControllerState.x *= -1;
+        pad->NewMouseControllerState.y *= -1;
 
-                std::swap (pad->NewState.Start, pad->NewState.Select);
+        std::swap (pad->NewState.ButtonCross, pad->NewState.ButtonSquare);
+        std::swap (pad->NewState.ButtonCircle, pad->NewState.RightShoulder1);
 
-                std::swap (pad->NewState.ShockButtonL,
-                           pad->NewState.ShockButtonR);
-            }
-        }
+        std::swap (pad->NewState.DPadUp, pad->NewState.DPadDown);
+        std::swap (pad->NewState.DPadLeft, pad->NewState.DPadRight);
+
+        std::swap (pad->NewState.Start, pad->NewState.Select);
+
+        std::swap (pad->NewState.ShockButtonL, pad->NewState.ShockButtonR);
     }
 };
 
