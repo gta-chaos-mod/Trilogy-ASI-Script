@@ -7,6 +7,12 @@ using namespace plugin;
 class CinematicVehicleCameraEffect : public EffectBase
 {
 public:
+    bool
+    CanTickDown (EffectInstance *instance) override
+    {
+        return !CONFIG_CC_ENABLED || FindPlayerVehicle (-1, false);
+    }
+
     void
     OnEnd (EffectInstance *inst) override
     {
