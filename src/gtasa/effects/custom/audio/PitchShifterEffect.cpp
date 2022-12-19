@@ -5,6 +5,8 @@
 
 using namespace plugin;
 
+// TODO: Option to disable for dancing minigames?
+
 class PitchShifterEffect : public EffectBase
 {
     bool                countUp    = false;
