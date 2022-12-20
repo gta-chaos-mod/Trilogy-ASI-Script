@@ -4,6 +4,19 @@
 class SendVehiclesToSpaceEffect : public OneTimeEffect
 {
 public:
+    bool
+    CanActivate () override
+    {
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        {
+            if (vehicle && vehicle->m_nStatus != STATUS_WRECKED
+                && vehicle->m_fHealth > 0.0f)
+                return true;
+        }
+
+        return true;
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {

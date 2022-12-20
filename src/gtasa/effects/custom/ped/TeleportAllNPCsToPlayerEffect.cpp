@@ -7,8 +7,16 @@ public:
     CanActivate () override
     {
         CPlayerPed *player = FindPlayerPed ();
+        if (!player || player->m_nAreaCode) return false;
 
-        return player && !player->m_nAreaCode;
+        for (CPed *ped : CPools::ms_pPedPool)
+        {
+            if (ped->IsPlayer ()) continue;
+
+            if (ped && ped->m_fHealth > 0.0f) return true;
+        }
+
+        return true;
     }
 
     void
