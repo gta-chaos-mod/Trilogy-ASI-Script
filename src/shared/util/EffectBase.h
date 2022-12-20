@@ -88,7 +88,8 @@ public:
     virtual bool
     CanTickDown_Internal (EffectInstance *instance)
     {
-        if (!CONFIG ("Chaos.AlwaysCountDownEffects", true))
+        if (!CONFIG ("Chaos.AlwaysCountDownEffects", false)
+            || CONFIG_CC_ENABLED)
         {
             if (GameUtil::IsCutsceneProcessing ()) return false;
         }
@@ -98,6 +99,8 @@ public:
 
     // Only used for Crowd Control. Return false if the effect cannot be
     // triggered at the moment and Crowd Control needs to send effect later.
+    // NOTE: Effects can piggyback off of this as well if they need to wait
+    // before they can get activated, too
     virtual bool
     CanActivate ()
     {
