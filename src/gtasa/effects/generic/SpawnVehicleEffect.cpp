@@ -9,9 +9,10 @@ using namespace plugin;
 
 class SpawnVehicleEffect : public EffectBase
 {
-    CVehicle           *oldVehicle = nullptr;
-    CVehicle           *newVehicle = nullptr;
-    std::vector<CPed *> passengers = {};
+    bool                warpIntoCar = false;
+    CVehicle           *oldVehicle  = nullptr;
+    CVehicle           *newVehicle  = nullptr;
+    std::vector<CPed *> passengers  = {};
 
 public:
     bool
@@ -42,7 +43,7 @@ public:
             return;
         }
 
-        if (newVehicle)
+        if (newVehicle && warpIntoCar)
         {
             Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (
                 FindPlayerPed (), newVehicle);
@@ -72,6 +73,8 @@ public:
     {
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
+
+        warpIntoCar = setPlayerAsDriver;
 
         // Experimental code to swap vehicle pointers and their data.
         // Not fully functional, deleting the old car crashes the game because
@@ -166,13 +169,12 @@ public:
         {
             CVector position
                 = player->TransformFromObjectSpace (CVector (0.0f, 5.0f, 0.0f));
-            CVehicle *vehicle
-                = GameUtil::CreateVehicle (vehicleID, position,
-                                           player->m_fCurrentRotation
-                                               + 1.5707964f,
-                                           true);
+            newVehicle = GameUtil::CreateVehicle (vehicleID, position,
+                                                  player->m_fCurrentRotation
+                                                      + 1.5707964f,
+                                                  true);
 
-            vehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
+            newVehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
         }
     }
 };
