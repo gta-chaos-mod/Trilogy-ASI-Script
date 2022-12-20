@@ -1,17 +1,24 @@
 #include "effects/OneTimeEffect.h"
 
-#include <CTimer.h>
-
-// TODO: Doesn't work on bikes, doesn't work well on Savanna, doesn't work on
-// helicopters and planes. Pretty much only works in cars...
-
 class KickflipEffect : public OneTimeEffect
 {
 public:
     bool
     CanActivate () override
     {
-        return FindPlayerPed () && FindPlayerVehicle (-1, false) != nullptr;
+        if (!FindPlayerPed ()) return false;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (!vehicle) return false;
+
+        switch (vehicle->m_nVehicleClass)
+        {
+            case VEHICLE_AUTOMOBILE:
+            case VEHICLE_MTRUCK:
+            case VEHICLE_QUAD: return true;
+
+            default: return false;
+        }
     }
 
     void
