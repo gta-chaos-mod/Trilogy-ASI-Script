@@ -2,20 +2,18 @@
 #include "util/GenericUtil.h"
 #include "util/GlobalRenderer.h"
 
-// TODO: Trailers can't be attached properly to tankers when they are backwards,
-// upside down, different size, etc.
-// Where is the game handling that? Is it using the actual render matrix?
-
 template <RwV3d rotation, float angle, float perTick = 0.0f>
 class VehicleRotationEffect : public EffectBase
 {
-    static inline float rotationAngle = 0.0f;
+    static inline bool  isOnTankingMission = false;
+    static inline float rotationAngle      = 0.0f;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        rotationAngle = angle;
+        isOnTankingMission = false;
+        rotationAngle      = angle;
 
         GlobalRenderer::RenderVehicleEvent += RenderVehicle;
     }
@@ -33,11 +31,44 @@ public:
 
         rotationAngle += tick * perTick;
         rotationAngle = fmod (rotationAngle, 360.0f);
+
+        isOnTankingMission = IsTankingMissionActive ();
+    }
+
+    bool
+    IsTankingMissionActive ()
+    {
+        for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
+        {
+            if (i->m_bIsMission && i->m_bIsActive)
+            {
+                std::string missionName
+                    = GenericUtil::ToUpper (std::string (i->m_szName));
+
+                if (missionName == "CAT3" || missionName == "TRUCK")
+                    return true;
+            }
+        }
+
+        return false;
     }
 
     static void
     RenderVehicle (CVehicle *vehicle, RwFrame *frame)
     {
+        if (isOnTankingMission)
+        {
+            switch (vehicle->m_nModelIndex)
+            {
+                case 403: // Linerunner
+                case 514: // Tanker
+                case 515: // Roadtrain
+                    return;
+
+                default: break;
+            }
+        }
+
         int offset = perTick != 0.0f ? (int) vehicle % 360 : 0;
 
         RwFrameRotate (frame, &rotation, rotationAngle + offset,

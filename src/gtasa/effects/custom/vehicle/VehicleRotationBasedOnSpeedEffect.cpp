@@ -1,29 +1,28 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
-
-// TODO: Trailers can't be attached properly to tankers when they are backwards,
-// upside down, different size, etc.
-// Where is the game handling that? Is it using the actual render matrix?
+#include "util/GlobalRenderer.h"
 
 using namespace plugin;
 
 class VehicleRotationBasedOnSpeedEffect : public EffectBase
 {
+    static inline bool                        isOnTankingMission = false;
     static inline std::map<CVehicle *, RwV3d> rotationAngleMap;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        isOnTankingMission = false;
         rotationAngleMap.clear ();
 
-        Events::vehicleRenderEvent += RenderVehicleEvent;
+        GlobalRenderer::RenderVehicleEvent += RenderVehicle;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        Events::vehicleRenderEvent -= RenderVehicleEvent;
+        GlobalRenderer::RenderVehicleEvent -= RenderVehicle;
     }
 
     void
@@ -46,12 +45,43 @@ public:
             rotationAngleMap[vehicle].z
                 = fmod (rotationAngleMap[vehicle].z, 360.0f);
         }
+
+        isOnTankingMission = IsTankingMissionActive ();
+    }
+
+    bool
+    IsTankingMissionActive ()
+    {
+        for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
+        {
+            if (i->m_bIsMission && i->m_bIsActive)
+            {
+                std::string missionName
+                    = GenericUtil::ToUpper (std::string (i->m_szName));
+
+                if (missionName == "CAT3" || missionName == "TRUCK")
+                    return true;
+            }
+        }
+
+        return false;
     }
 
     static void
-    RenderVehicleEvent (CVehicle *vehicle)
+    RenderVehicle (CVehicle *vehicle, RwFrame *frame)
     {
-        auto frame = GetObjectParent (vehicle->m_pRwObject);
+        if (isOnTankingMission)
+        {
+            switch (vehicle->m_nModelIndex)
+            {
+                case 403: // Linerunner
+                case 514: // Tanker
+                case 515: // Roadtrain
+                    return;
+
+                default: break;
+            }
+        }
 
         RwV3d vec = rotationAngleMap[vehicle];
 

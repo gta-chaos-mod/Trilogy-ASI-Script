@@ -1,17 +1,17 @@
 #include "util/EffectBase.h"
+#include "util/GenericUtil.h"
 #include "util/GlobalRenderer.h"
-
-// TODO: Trailers can't be attached properly to tankers when they are backwards,
-// upside down, different size, etc.
-// Where is the game handling that? Is it using the actual render matrix?
 
 template <RwV3d scale, float zAdjustment = 0.0f>
 class VehicleSizeEffect : public EffectBase
 {
+    static inline bool isOnTankingMission = false;
+
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        isOnTankingMission = false;
         GlobalRenderer::RenderVehicleEvent += RenderVehicle;
     }
 
@@ -21,9 +21,46 @@ public:
         GlobalRenderer::RenderVehicleEvent -= RenderVehicle;
     }
 
+    void
+    OnTick (EffectInstance *inst) override
+    {
+        isOnTankingMission = IsTankingMissionActive ();
+    }
+
+    bool
+    IsTankingMissionActive ()
+    {
+        for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
+        {
+            if (i->m_bIsMission && i->m_bIsActive)
+            {
+                std::string missionName
+                    = GenericUtil::ToUpper (std::string (i->m_szName));
+
+                if (missionName == "CAT3" || missionName == "TRUCK")
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     static void
     RenderVehicle (CVehicle *vehicle, RwFrame *frame)
     {
+        if (isOnTankingMission)
+        {
+            switch (vehicle->m_nModelIndex)
+            {
+                case 403: // Linerunner
+                case 514: // Tanker
+                case 515: // Roadtrain
+                    return;
+
+                default: break;
+            }
+        }
+
         RwV3d translation = {0.0f, 0.0f, zAdjustment};
         RwFrameTranslate (frame, &translation, rwCOMBINEPRECONCAT);
 
