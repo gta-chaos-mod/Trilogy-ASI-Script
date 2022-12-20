@@ -14,8 +14,8 @@ public:
             vehicle->m_nPhysicalFlags.bBulletProof   = false;
             vehicle->m_nVehicleFlags.bTyresDontBurst = false;
 
-            if (vehicle->m_nVehicleClass == VEHICLE_AUTOMOBILE
-                || vehicle->m_nVehicleClass == VEHICLE_QUAD)
+            if (vehicle->m_nVehicleSubClass == VEHICLE_AUTOMOBILE
+                || vehicle->m_nVehicleSubClass == VEHICLE_QUAD)
             {
                 CAutomobile *car = (CAutomobile *) vehicle;
 
@@ -42,7 +42,7 @@ public:
                     vehicle->BurstTyre (eWheels::WHEEL_REAR_RIGHT, false);
                 }
             }
-            else if (vehicle->m_nVehicleClass == VEHICLE_BIKE)
+            else if (vehicle->m_nVehicleSubClass == VEHICLE_BIKE)
             {
                 CBike *bike = (CBike *) vehicle;
 

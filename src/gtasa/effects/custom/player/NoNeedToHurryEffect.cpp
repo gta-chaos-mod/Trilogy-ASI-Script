@@ -27,8 +27,8 @@ public:
     {
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            if (vehicle->m_nVehicleClass == VEHICLE_PLANE
-                || vehicle->m_nVehicleClass == VEHICLE_FPLANE)
+            if (vehicle->m_nVehicleSubClass == VEHICLE_PLANE
+                || vehicle->m_nVehicleSubClass == VEHICLE_FPLANE)
                 continue;
 
             Command<eScriptCommands::

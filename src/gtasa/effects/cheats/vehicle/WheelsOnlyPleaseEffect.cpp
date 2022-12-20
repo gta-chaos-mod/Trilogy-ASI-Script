@@ -223,7 +223,7 @@ public:
         }
         else
         {
-            switch (((CVehicle *) thisEntity)->m_nVehicleClass)
+            switch (((CVehicle *) thisEntity)->m_nVehicleSubClass)
             {
                 case VEHICLE_AUTOMOBILE:
                 case VEHICLE_BIKE:

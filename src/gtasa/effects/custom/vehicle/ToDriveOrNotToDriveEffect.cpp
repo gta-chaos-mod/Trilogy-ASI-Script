@@ -61,13 +61,13 @@ public:
     {
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            if (vehicle->m_nVehicleClass == VEHICLE_BIKE)
+            if (vehicle->m_nVehicleSubClass == VEHICLE_BIKE)
             {
                 CBike *bike = reinterpret_cast<CBike *> (vehicle);
                 bike->m_anWheelDamageState[0] = 0;
                 bike->m_anWheelDamageState[1] = 0;
             }
-            else if (vehicle->m_nVehicleClass == VEHICLE_AUTOMOBILE)
+            else if (vehicle->m_nVehicleSubClass == VEHICLE_AUTOMOBILE)
             {
                 CAutomobile *car = reinterpret_cast<CAutomobile *> (vehicle);
                 car->FixTyre (eWheels::WHEEL_FRONT_LEFT);

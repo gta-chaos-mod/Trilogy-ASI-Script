@@ -265,9 +265,9 @@ GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
                 CTheScripts::ClearSpaceForMissionEntity (position, vehicle);
             }
             CWorld::Add (vehicle);
-            if (vehicle->m_nVehicleClass == VEHICLE_BIKE)
+            if (vehicle->m_nVehicleSubClass == VEHICLE_BIKE)
                 reinterpret_cast<CBike *> (vehicle)->PlaceOnRoadProperly ();
-            else if (vehicle->m_nVehicleClass != VEHICLE_BOAT)
+            else if (vehicle->m_nVehicleSubClass != VEHICLE_BOAT)
                 reinterpret_cast<CAutomobile *> (vehicle)
                     ->PlaceOnRoadProperly ();
 

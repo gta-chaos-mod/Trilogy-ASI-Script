@@ -47,13 +47,13 @@ public:
             vehicle->m_vecMoveSpeed = CVector (0.0f, 0.0f, 0.0f);
             vehicle->m_vecTurnSpeed = CVector (0.0f, 0.0f, 0.0f);
 
-            int vehicleClass = vehicle->m_nVehicleClass;
-            if (vehicleClass == 9)
+            int vehicleSubClass = vehicle->m_nVehicleSubClass;
+            if (vehicleSubClass == 9)
             {
                 CBike *bike = (CBike *) vehicle;
                 bike->PlaceOnRoadProperly ();
             }
-            else if (vehicleClass != 5)
+            else if (vehicleSubClass != 5)
             {
                 CAutomobile *automobile = (CAutomobile *) vehicle;
                 automobile->PlaceOnRoadProperly ();

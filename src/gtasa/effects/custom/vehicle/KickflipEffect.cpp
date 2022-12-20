@@ -11,7 +11,7 @@ public:
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (!vehicle) return false;
 
-        switch (vehicle->m_nVehicleClass)
+        switch (vehicle->m_nVehicleSubClass)
         {
             case VEHICLE_AUTOMOBILE:
             case VEHICLE_MTRUCK:
