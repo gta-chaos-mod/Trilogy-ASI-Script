@@ -5,7 +5,7 @@
 
 using namespace plugin;
 
-// TODO: Option to disable for dancing minigames?
+// TODO: (Low Priority) Option to disable for dancing minigames?
 
 class PitchShifterEffect : public EffectBase
 {

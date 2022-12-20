@@ -217,7 +217,7 @@ public:
         cb ();
     }
 
-    // TODO: Calculate width for string properly
+    // TODO: (Low Priority) Calculate width for string properly
     static void
     Hooked_DrawHelpMessage (auto &&cb, float &x, float &y, char *text)
     {
@@ -359,7 +359,7 @@ public:
         cb ();
     }
 
-    // TODO: Fix squished radar when it goes to the top
+    // TODO: (Low Priority) Fix squished radar when it goes to the top
     static void
     Hooked_DrawRadar (auto &&cb)
     {

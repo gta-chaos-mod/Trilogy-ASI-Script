@@ -1,6 +1,8 @@
 #include "util/EffectBase.h"
 
-// TODO: Hydraulics aren't inverted for the minigame?
+// TODO: (Low Priority) Hydraulics aren't inverted for the minigame?
+// Script checks with opcode 0494.
+// Tried with processScripts.before already, same result.
 
 class InvertedControlsEffect : public EffectBase
 {

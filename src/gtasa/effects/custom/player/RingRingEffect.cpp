@@ -7,9 +7,10 @@
 
 using namespace plugin;
 
-// TODO: Can still softlock missions such as Just Business when it happens right
-// before the player hops on the bike and the cutscene starts. Once the cutscene
-// is over and the player regains control, the camera will be stuck.
+// TODO: (Low Priority) Can still softlock missions such as Just Business when
+// it happens right before the player hops on the bike and the cutscene starts.
+// Once the cutscene is over and the player regains control, the camera will be
+// stuck.
 
 class RingRingEffect : public EffectBase
 {
