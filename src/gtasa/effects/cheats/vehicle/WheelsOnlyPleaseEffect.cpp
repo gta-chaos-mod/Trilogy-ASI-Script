@@ -61,6 +61,13 @@ public:
         // Vehicle Damage Particles (Car, Bike)
         // CVehicle::AddDamagedVehicleParticles
         HOOK_METHOD (inst, Hooked_Empty, void (CVehicle *), 0x6AB34B, 0x6BD40A);
+
+        // CShadows::RenderExtraPlayerShadows
+        HOOK (inst, Hooked_Empty, void (), 0x553A04);
+
+        // CShadows::StoreShadowForVehicle
+        HOOK (inst, Hooked_Empty, void (CEntity *, int), 0x6ABCF5, 0x6BD667,
+              0x6C0B21, 0x6C58A0, 0x6CA73A);
     }
 
     void
