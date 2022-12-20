@@ -297,7 +297,26 @@ GameUtil::ClearWeapons (CPed *ped, bool keepParachute)
 bool
 GameUtil::IsCutsceneProcessing ()
 {
-    return CCutsceneMgr::ms_cutsceneProcessing || CCutsceneMgr::ms_running;
+    CPlayerPed *player = FindPlayerPed ();
+    if (!player) return true;
+
+    CPad *pad = player->GetPadFromPlayer ();
+    if (!pad) return true;
+
+    if (pad->bPlayerOnInteriorTransition || pad->bPlayerSafe
+        || pad->bPlayerSafeForCutscene)
+    {
+        return true;
+    }
+
+    if (CCutsceneMgr::ms_cutsceneProcessing || CCutsceneMgr::ms_running)
+    {
+        return true;
+    }
+
+    if (CEntryExitManager::WeAreInInteriorTransition ()) return true;
+
+    return false;
 }
 
 bool

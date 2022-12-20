@@ -51,7 +51,7 @@ public:
     {
         if (!EnsureVehicle ()) return;
 
-        if (IsCutsceneHappening ()) return;
+        if (GameUtil::IsCutsceneProcessing ()) return;
 
         currentSpeed = GetVehicleSpeed ();
 
@@ -74,31 +74,6 @@ public:
             timeLeft     = 1000 * 10;
             beepCooldown = 1000;
         }
-    }
-
-    bool
-    IsCutsceneHappening ()
-    {
-        CPlayerPed *player = FindPlayerPed ();
-        if (!player) return true;
-
-        CPad *pad = player->GetPadFromPlayer ();
-        if (!pad) return true;
-
-        if (pad->bPlayerOnInteriorTransition || pad->bPlayerSafe
-            || pad->bPlayerSafeForCutscene)
-        {
-            return true;
-        }
-
-        if (GameUtil::IsCutsceneProcessing ())
-        {
-            return true;
-        }
-
-        if (CEntryExitManager::WeAreInInteriorTransition ()) return true;
-
-        return false;
     }
 
     float
