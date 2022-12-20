@@ -5,10 +5,18 @@
 #include <CBoat.h>
 #include <CModelInfo.h>
 #include <CPlane.h>
+#include <CRealTimeShadow.h>
 #include <CShadows.h>
 #include <CTrain.h>
 
 using namespace plugin;
+
+// TODO: Shadows are still present for vehicles that have them visible before
+// this effect enables.
+// This is only an issue on FX Quality High or Very High, which most are
+// probably running on.
+// They are real time shadows, not quite sure where exactly those can be
+// cleared...
 
 class InvisibleVehiclesEffect : public EffectBase
 {
@@ -80,6 +88,11 @@ public:
         // CShadows::StoreShadowForVehicle
         HOOK (inst, Hooked_Empty, void (CEntity *, int), 0x6ABCF5, 0x6BD667,
               0x6C0B21, 0x6C58A0, 0x6CA73A);
+
+        // CShadows::StoreRealTimeShadow
+        HOOK_ARGS (inst, Hooked_StoreRealTimeShadow,
+                   void (CPhysical *, float, float, float, float, float, float),
+                   0x706B68);
     }
 
     void
@@ -142,6 +155,16 @@ public:
         RwV3d scale = {0.0f, 0.0f, 0.0f};
         RwMatrixScale (matrix, &scale, combineOp);
         return cb ();
+    }
+
+    static void
+    Hooked_StoreRealTimeShadow (auto &&cb, CPhysical *physical, float pposx,
+                                float pposy, float px1, float py1, float px2,
+                                float py2)
+    {
+        if (physical->m_nType == ENTITY_TYPE_VEHICLE) return;
+
+        cb ();
     }
 };
 

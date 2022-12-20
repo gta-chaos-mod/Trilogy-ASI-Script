@@ -10,6 +10,13 @@
 
 using namespace plugin;
 
+// TODO: Shadows are still present for vehicles that have them visible before
+// this effect enables.
+// This is only an issue on FX Quality High or Very High, which most are
+// probably running on.
+// They are real time shadows, not quite sure where exactly those can be
+// cleared...
+
 class WheelsOnlyPleaseEffect : public EffectBase
 {
     static inline bool overrideForceVehicleLightsOff = true;
