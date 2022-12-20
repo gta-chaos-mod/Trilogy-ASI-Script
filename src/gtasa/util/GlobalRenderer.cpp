@@ -3,6 +3,8 @@
 #include "util/GlobalHooksInstance.h"
 #include "util/hooks/HookMacros.h"
 
+#include <CModelInfo.h>
+
 using namespace plugin;
 
 void
@@ -11,7 +13,7 @@ GlobalRenderer::Initialise ()
     HOOK (GlobalHooksInstance::Get (), Hooked_FrameSyncDirty, void (),
           0x7EF37C);
 
-    HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_RenderEntity,
+    HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_RenderBuilding,
                       void (CEntity *), 0x534310);
 
     HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_RenderObject,
@@ -30,7 +32,7 @@ GlobalRenderer::Hooked_FrameSyncDirty (auto &&cb)
 }
 
 void
-GlobalRenderer::Hooked_RenderEntity (auto &&cb, CEntity *entity)
+GlobalRenderer::Hooked_RenderBuilding (auto &&cb, CEntity *entity)
 {
     bool isBuilding = entity && entity->m_nType == ENTITY_TYPE_BUILDING
                       && renderBuildingHooks.size () > 0;
@@ -129,6 +131,8 @@ GlobalRenderer::RenderVehicle (CVehicle *vehicle, bool reset)
     if (!IsVehiclePointerValid (vehicle) || !vehicle->m_matrix
         || !vehicle->m_pRwObject)
         return;
+
+    if (CModelInfo::IsTrailerModel (vehicle->m_nModelIndex)) return;
 
     auto frame = GetObjectParent (vehicle->m_pRwObject);
     if (!frame) return;

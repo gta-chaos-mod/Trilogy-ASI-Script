@@ -14,7 +14,7 @@ class GlobalRenderer
         = {};
 
     static void Hooked_FrameSyncDirty (auto &&cb);
-    static void Hooked_RenderEntity (auto &&cb, CEntity *entity);
+    static void Hooked_RenderBuilding (auto &&cb, CEntity *entity);
     static void Hooked_RenderObject (auto &&cb, CObject *object);
 
     static void RenderBuilding (CBuilding *building, bool reset = false);
