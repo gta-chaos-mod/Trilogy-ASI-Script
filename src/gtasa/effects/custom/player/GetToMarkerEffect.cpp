@@ -11,8 +11,6 @@ using namespace plugin;
 
 // TODO: Think about more penalties / penalty effects?
 
-// TODO: Increase effect duration based on distance
-
 class GetToMarkerEffect : public EffectBase
 {
     int     checkpoint        = 0;
