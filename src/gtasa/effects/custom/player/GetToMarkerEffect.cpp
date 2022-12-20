@@ -9,7 +9,7 @@
 
 using namespace plugin;
 
-// TODO: Think about more penalties / penalty effects?
+// TODO: (Low Priority) Think about more penalties / penalty effects?
 
 class GetToMarkerEffect : public EffectBase
 {
@@ -47,6 +47,8 @@ public:
         {
             Command<eScriptCommands::COMMAND_DELETE_CHECKPOINT> (checkpoint);
         }
+
+        SetPlanesLocked (false);
 
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
@@ -94,12 +96,35 @@ public:
                                        ? eBlipDisplay::BLIP_DISPLAY_NEITHER
                                        : eBlipDisplay::BLIP_DISPLAY_BOTH);
 
+        SetPlanesLocked (true);
+
         if (!Command<eScriptCommands::COMMAND_LOCATE_CHAR_ANY_MEANS_2D> (
                 player, position.x, position.y, 4.0f, 4.0f, true))
             return;
 
         reachedMarker = true;
         inst->Disable ();
+    }
+
+    void
+    SetPlanesLocked (bool locked)
+    {
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        {
+            switch (vehicle->m_nVehicleSubClass)
+            {
+                case VEHICLE_HELI:
+                case VEHICLE_PLANE:
+                case VEHICLE_FHELI:
+                case VEHICLE_FPLANE:
+                {
+                    vehicle->m_nVehicleFlags.bConsideredByPlayer = !locked;
+                    continue;
+                }
+
+                default: continue;
+            }
+        }
     }
 
     CVector
