@@ -11,15 +11,15 @@ public:
         if (CMenuSystem::num_menus_in_use) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                pad->NewMouseControllerState.x = 0.0f;
-                pad->NewMouseControllerState.y = 0.0f;
-            }
-        }
+        if (!player) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        pad->NewMouseControllerState.x = 0.0f;
+        pad->NewMouseControllerState.y = 0.0f;
+        pad->NewState.RightStickX      = 0;
+        pad->NewState.RightStickY      = 0;
     }
 };
 
