@@ -1,12 +1,16 @@
 #include "util/EffectBase.h"
-
-// TODO: (Low Priority) Hydraulics aren't inverted for the minigame?
-// Script checks with opcode 0494.
-// Tried with processScripts.before already, same result.
+#include "util/hooks/HookMacros.h"
 
 class InvertedControlsEffect : public EffectBase
 {
 public:
+    void
+    OnStart (EffectInstance *inst) override
+    {
+        HOOK_METHOD_ARGS (inst, Hooked_GetPositionOfAnalogueSticks,
+                          void (CRunningScript *, __int16), 0x48AF1F);
+    }
+
     void
     OnProcessScripts (EffectInstance *inst) override
     {
@@ -33,6 +37,25 @@ public:
         std::swap (pad->NewState.Start, pad->NewState.Select);
 
         std::swap (pad->NewState.ShockButtonL, pad->NewState.ShockButtonR);
+    }
+
+    static void
+    Hooked_GetPositionOfAnalogueSticks (auto &&cb, CRunningScript *script,
+                                        __int16 count)
+    {
+        if (CTheScripts::ScriptParams[0].iParam != 0)
+            CTheScripts::ScriptParams[0].iParam *= -1;
+
+        if (CTheScripts::ScriptParams[1].iParam != 0)
+            CTheScripts::ScriptParams[1].iParam *= -1;
+
+        if (CTheScripts::ScriptParams[2].iParam != 0)
+            CTheScripts::ScriptParams[2].iParam *= -1;
+
+        if (CTheScripts::ScriptParams[3].iParam != 0)
+            CTheScripts::ScriptParams[3].iParam *= -1;
+
+        cb ();
     }
 };
 
