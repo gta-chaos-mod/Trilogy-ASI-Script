@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CMenuSystem.h>
 
@@ -19,6 +20,9 @@ public:
     OnStart (EffectInstance *inst) override
     {
         mode = (eMovementKeyType) inst->Random (0, 3);
+
+        HOOK_METHOD_ARGS (inst, Hooked_GetPositionOfAnalogueSticks,
+                          void (CRunningScript *, __int16), 0x48AF1F);
     }
 
     void
@@ -71,6 +75,42 @@ public:
                 }
             }
         }
+    }
+
+    static void
+    Hooked_GetPositionOfAnalogueSticks (auto &&cb, CRunningScript *script,
+                                        __int16 count)
+    {
+        switch (mode)
+        {
+            case UP:
+            {
+                CTheScripts::ScriptParams[1].iParam
+                    = std::max (0, CTheScripts::ScriptParams[1].iParam);
+                break;
+            }
+            case DOWN:
+            {
+                CTheScripts::ScriptParams[1].iParam
+                    = std::min (0, CTheScripts::ScriptParams[1].iParam);
+                break;
+            }
+            case LEFT:
+            {
+                CTheScripts::ScriptParams[0].iParam
+                    = std::max (0, CTheScripts::ScriptParams[0].iParam);
+                break;
+            }
+            case RIGHT:
+            {
+                CTheScripts::ScriptParams[0].iParam
+                    = std::min (0, CTheScripts::ScriptParams[0].iParam);
+                break;
+            }
+            default: break;
+        }
+
+        cb ();
     }
 };
 
