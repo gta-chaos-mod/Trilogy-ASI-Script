@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/hooks/HookMacros.h"
 
 #include <deque>
 
@@ -15,17 +16,18 @@ class DelayedControls : public EffectBase
         CKeyboardState        keyboardState;
     };
 
-    std::deque<InputData> bufferedInputData = {};
+    static inline std::deque<InputData> bufferedInputData = {};
 
-    // For whatever reason we need to divide the time we want to delay by 2. Is
-    // "ProcessScripts" being run twice somewhere?
-    int bufferInMs = 500 / 2;
+    int bufferInMs = 1000;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
         bufferedInputData.clear ();
+
+        HOOK_METHOD_ARGS (inst, Hooked_GetPositionOfAnalogueSticks,
+                          void (CRunningScript *, __int16), 0x48AF1F);
     }
 
     void
@@ -60,6 +62,33 @@ public:
             pad->NewMouseControllerState = CMouseControllerState ();
             pad->NewKeyState             = CKeyboardState ();
         }
+    }
+
+    static void
+    Hooked_GetPositionOfAnalogueSticks (auto &&cb, CRunningScript *script,
+                                        __int16 count)
+    {
+        CTheScripts::ScriptParams[0].iParam = 0;
+        CTheScripts::ScriptParams[1].iParam = 0;
+        CTheScripts::ScriptParams[2].iParam = 0;
+        CTheScripts::ScriptParams[3].iParam = 0;
+
+        if (bufferedInputData.size () > 0)
+        {
+            InputData data = bufferedInputData[0];
+
+            unsigned int timeInMs = CTimer::m_snTimeInMilliseconds;
+
+            if (timeInMs > data.timeInMs)
+            {
+                CTheScripts::ScriptParams[0].iParam = data.state.LeftStickX;
+                CTheScripts::ScriptParams[1].iParam = data.state.LeftStickY;
+                CTheScripts::ScriptParams[2].iParam = data.state.RightStickX;
+                CTheScripts::ScriptParams[3].iParam = data.state.RightStickY;
+            }
+        }
+
+        cb ();
     }
 };
 
