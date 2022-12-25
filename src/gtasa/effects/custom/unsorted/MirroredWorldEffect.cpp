@@ -46,6 +46,9 @@ public:
 
         // CHud::DrawRadar
         HOOK (inst, Hooked_Empty, void (), 0x58FC53);
+
+        HOOK_METHOD_ARGS (inst, Hooked_GetPositionOfAnalogueSticks,
+                          void (CRunningScript *, __int16), 0x48AF1F);
     }
 
     void
@@ -191,6 +194,31 @@ public:
     static void
     Hooked_Empty (auto &&cb)
     {
+    }
+
+    static void
+    Hooked_GetPositionOfAnalogueSticks (auto &&cb, CRunningScript *script,
+                                        __int16 count)
+    {
+        if (CTheScripts::ScriptParams[2].iParam != 0)
+            CTheScripts::ScriptParams[2].iParam *= -1;
+
+        std::string missionName (script->m_szName);
+
+        if (missionName == "plchute" || missionName == "parach")
+        {
+            if (CTheScripts::ScriptParams[0].iParam != 0)
+                CTheScripts::ScriptParams[0].iParam *= -1;
+        }
+
+        if (missionName == "lowgame")
+        {
+            // Revert the on-screen controls for the minigame again
+            if (CTheScripts::ScriptParams[2].iParam != 0)
+                CTheScripts::ScriptParams[2].iParam *= -1;
+        }
+
+        cb ();
     }
 };
 
