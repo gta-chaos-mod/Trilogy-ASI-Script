@@ -10,7 +10,7 @@
 
 class Websocket
 {
-    static inline bool reconnectionHandlerInitialized = false;
+    static inline std::atomic_bool reconnectionHandlerInitialized = false;
 
     static inline std::string GUI_WEBSOCKET_URL = "ws://localhost:9001";
     static inline std::string CC_WEBSOCKET_URL  = "ws://localhost:9002";

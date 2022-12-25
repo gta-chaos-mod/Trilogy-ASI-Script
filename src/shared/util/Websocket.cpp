@@ -87,7 +87,8 @@ Websocket::SetupReconnectionHandler ()
             {
                 std::this_thread::sleep_for (std::chrono::seconds (3));
 
-                if (!IsClientConnectingOrConnected ()) Setup ();
+                if (!Websocket::IsClientConnectingOrConnected ())
+                    Websocket::Setup ();
             }
         });
     reconnectionThread.detach ();
