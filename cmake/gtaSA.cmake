@@ -11,7 +11,7 @@ set_target_properties(${CHAOS_SA} PROPERTIES SUFFIX ".asi")
 target_include_directories(${CHAOS_SA} PUBLIC "src/shared/" "src/gtasa" "${dxsdk_SOURCE_DIR}/Include")
 
 target_link_directories(${CHAOS_SA} PUBLIC "${dxsdk_SOURCE_DIR}/Lib/x86")
-target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa nlohmann_json uWebSockets minhook)
+target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa nlohmann_json uWebSockets minhook efsw)
 
 target_compile_definitions(${CHAOS_SA} PUBLIC NOMINMAX)
 

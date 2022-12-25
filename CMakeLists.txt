@@ -23,6 +23,7 @@ include(cmake/gtaSA.cmake)
 include(cmake/nlohmannJSON.cmake)
 include(cmake/uWebSockets.cmake)
 include(cmake/minhook.cmake)
+include(cmake/efsw.cmake)
 
 if(DEFINED ENV{GITHUB_SHA})
   string(SUBSTRING "$ENV{GITHUB_SHA}" 0 7 VERSION_SUFFIX)

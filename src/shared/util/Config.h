@@ -144,32 +144,32 @@ Enabled = false
 #endif
 
 public:
-    static void
-    Init ()
+    static std::string
+    GetConfigFilename ()
     {
         const std::string pluginFilename = std::string (PLUGIN_FILENAME);
         const std::string configFilename
             = pluginFilename.substr (0, pluginFilename.size () - 4) + ".toml";
+
+        return configFilename;
+    }
+
+    static std::filesystem::path
+    GetConfigPath ()
+    {
+        const std::string configFilename = GetConfigFilename ();
+
         const std::filesystem::path configPath
             = PLUGIN_PATH ((char *) configFilename.c_str ());
 
         std::filesystem::create_directories (configPath.parent_path ());
 
-        if (!std::filesystem::exists (configPath))
-        {
-            // Write default configuration file
-            std::ofstream ConfigFile (configPath);
-
-            ConfigFile << configContent;
-
-            ConfigFile.close ();
-        }
-
-        if (std::filesystem::exists (configPath))
-        {
-            config = cpptoml::parse_file (configPath.string ());
-        }
+        return configPath;
     }
+
+    static void Init ();
+
+    static void ReloadConfig ();
 
     template <class T>
     static T

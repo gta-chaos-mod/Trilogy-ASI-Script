@@ -24,8 +24,6 @@ class GameHandler
 
     static inline bool didTryLoadAutoSave = false;
 
-    static inline unsigned int lastConfigReload = 0;
-
     static inline int lastMissionsPassed = -1;
     static inline int lastSaved          = 0;
     static inline int lastQuickSave      = 0;
@@ -110,8 +108,6 @@ public:
     static void
     ProcessGame ()
     {
-        HandleConfigReload ();
-
         HandleAutoSave ();
         HandleQuickSave ();
 
@@ -120,33 +116,6 @@ public:
     }
 
 private:
-    static void
-    HandleConfigReload ()
-    {
-        // F7 + C
-        if (KeyPressed (VK_F7) && KeyPressed (67))
-        {
-            unsigned int currentTime
-                = std::max (CTimer::m_snTimeInMillisecondsPauseMode,
-                            lastConfigReload);
-
-            if (FrontEndMenuManager.m_bMenuActive
-                && lastConfigReload < currentTime)
-            {
-                bool previousCCMode = CONFIG_CC_ENABLED;
-
-                Config::Init ();
-
-                if (previousCCMode != CONFIG_CC_ENABLED) Websocket::Setup ();
-
-                AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_DISPLAY_INFO,
-                                                      0.0f, 1.0f);
-
-                lastConfigReload = currentTime + 1000;
-            }
-        }
-    }
-
     static void
     HandleAutoSave ()
     {
