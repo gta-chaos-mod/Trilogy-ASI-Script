@@ -1,6 +1,6 @@
 #include "Config.h"
 
-#include "util/FileUpdateListener.cpp"
+#include "util/FileUpdateListener.h"
 
 #include <efsw/efsw.hpp>
 

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "util/Config.h"
 #include "util/Websocket.h"
 
