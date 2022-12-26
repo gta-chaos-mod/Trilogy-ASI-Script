@@ -449,6 +449,8 @@ class _RealWebSocket : public easywsclient::WebSocket
         uint8_t closeFrame[6] = {0x88, 0x80, 0x00, 0x00, 0x00, 0x00}; // last 4 bytes are a masking key
         std::vector<uint8_t> header(closeFrame, closeFrame+6);
         txbuf.insert(txbuf.end(), header.begin(), header.end());
+
+        closesocket(sockfd);
     }
 
 };

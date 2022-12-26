@@ -48,25 +48,23 @@ Websocket::SetupClientThread ()
         }
 #endif
 
-        std::unique_ptr<WebSocket> newClient (
+        std::shared_ptr<WebSocket> newClient (
             WebSocket::from_url (GetWebsocketURL ()));
-        wsClient = std::move (newClient);
+        wsClient = newClient;
 
-        if (wsClient.get () == nullptr
-            || wsClient->getReadyState () == WebSocket::CLOSED)
+        if (newClient == nullptr
+            || newClient->getReadyState () == WebSocket::CLOSED)
         {
             return;
         }
 
-        while (wsClient.get () != nullptr
-               && wsClient->getReadyState () != WebSocket::CLOSED)
+        while (newClient != nullptr
+               && newClient->getReadyState () != WebSocket::CLOSED)
         {
-            if (!wsClient.get ()) break;
-            wsClient->poll ();
+            newClient->poll ();
 
-            if (!wsClient.get ()) break;
-            wsClient->dispatch ([] (const std::string &message)
-                                { CallFunction (message); });
+            newClient->dispatch ([] (const std::string &message)
+                                 { CallFunction (message); });
         }
     }
     catch (...)

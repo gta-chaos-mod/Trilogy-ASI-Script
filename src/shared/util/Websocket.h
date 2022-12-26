@@ -17,7 +17,7 @@ class Websocket
 
     // Websocket Client
     static inline std::atomic_bool                         stopClient = false;
-    static inline std::unique_ptr<easywsclient::WebSocket> wsClient   = NULL;
+    static inline std::shared_ptr<easywsclient::WebSocket> wsClient   = NULL;
 
     static void SetupReconnectionHandler ();
 
