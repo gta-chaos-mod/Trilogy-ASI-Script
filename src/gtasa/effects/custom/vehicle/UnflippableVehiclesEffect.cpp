@@ -13,8 +13,9 @@ public:
     {
         for (int i = 0; i < 210; i++)
         {
-            this->origVehicleHandling[i]
-                = gHandlingDataMgr.m_aVehicleHandling[i];
+            origVehicleHandling[i] = gHandlingDataMgr.m_aVehicleHandling[i];
+
+            if (origVehicleHandling[i].m_bIsBike) continue;
 
             gHandlingDataMgr.m_aVehicleHandling[i].m_vecCentreOfMass.z = -2.0f;
         }
@@ -25,8 +26,7 @@ public:
     {
         for (int i = 0; i < 210; i++)
         {
-            gHandlingDataMgr.m_aVehicleHandling[i]
-                = this->origVehicleHandling[i];
+            gHandlingDataMgr.m_aVehicleHandling[i] = origVehicleHandling[i];
         }
     }
 
