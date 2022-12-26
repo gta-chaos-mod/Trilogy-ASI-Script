@@ -1,5 +1,4 @@
 #include "util/EffectBase.h"
-#include "util/Variables.h"
 #include "util/hooks/HookMacros.h"
 
 #include <CMenuSystem.h>
@@ -13,8 +12,6 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        Variables::isDisableHUDEffectEnabled = true;
-
         HOOK (inst, Hooked_CHud_Draw, void (), 0x53E4FF);
 
         HOOK (inst, Hooked_CMenuSystem_DisplayGridMenu,
@@ -30,12 +27,6 @@ public:
 
         // CHud::DrawAreaName
         HOOK (inst, Hooked_Empty, void (), 0x58D542);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        Variables::isDisableHUDEffectEnabled = false;
     }
 
     static void

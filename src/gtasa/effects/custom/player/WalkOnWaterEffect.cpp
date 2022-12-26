@@ -1,5 +1,4 @@
 #include "util/EffectBase.h"
-#include "util/Variables.h"
 
 #include <CStreaming.h>
 #include <CTimer.h>
@@ -14,18 +13,10 @@ class WalkOnWaterEffect : public EffectBase
 
 public:
     void
-    OnStart (EffectInstance *inst) override
-    {
-        Variables::isWalkOnWaterEffectEnabled = true;
-    }
-
-    void
     OnEnd (EffectInstance *inst) override
     {
         if (roadObject && IsObjectPointerValid (roadObject))
             roadObject->m_dwRemovalTime = CTimer::m_snTimeInMilliseconds;
-
-        Variables::isWalkOnWaterEffectEnabled = false;
     }
 
     void
