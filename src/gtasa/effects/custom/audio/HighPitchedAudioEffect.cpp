@@ -15,7 +15,10 @@ public:
     {
         HOOK_METHOD_ARGS (inst, Hooked_SetFrequencyScalingFactor,
                           int (CAEAudioHardware *, int, int, float), 0x4D6E34,
-                          0x4D6E48, 0x4DBF9B, 0x4EA62D, 0x4F0871, 0x4F0A58);
+                          0x4D6E48, 0x4EA62D, 0x4F0871, 0x4F0A58);
+
+        HOOK_METHOD_ARGS (inst, Hooked_SetFrequencyScalingFactor_Cutscene,
+                          int (CAEAudioHardware *, int, int, float), 0x4DBF9B);
     }
 
     void
@@ -37,6 +40,17 @@ public:
     {
         if (factor > 0.0f) factor = audioPitch;
 
+        return cb ();
+    }
+
+    static int
+    Hooked_SetFrequencyScalingFactor_Cutscene (
+        auto &&cb, CAEAudioHardware *thisAudioHardware, int slot, int offset,
+        float &factor)
+    {
+        // TODO: This is used for cutscene audio, but also for e.g. the Lowrider
+        // and Dancing minigame misions. For now we just leave it be since the
+        // arrows jump around otherwise and it's making it impossible to play.
         return cb ();
     }
 };
