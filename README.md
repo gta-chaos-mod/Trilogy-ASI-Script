@@ -29,8 +29,8 @@ So far only San Andreas is officially supported.
 Vice City and III have some sort of basic support in already, but the GUI doesn't support them yet.
 
 # How do I downgrade my game to the required version?
-There's a handy thread over on the GTA Forums that has downgraders for GTA III, Vice City and even San Andreas.  
-https://gtaforums.com/topic/936600-iii-iv-various-gta-downgraders/
+There's a San Andreas downgrader by gamerzworld in the GTAForums here:  
+https://gtaforums.com/topic/927016-san-andreas-downgrader/
 
 # What ASI Loader is recommended to play the mod with?
 I **highly** recommend using the [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader) by [ThirteenAG](https://github.com/ThirteenAG) purely due to the fact that it supports saving CrashDumps.
