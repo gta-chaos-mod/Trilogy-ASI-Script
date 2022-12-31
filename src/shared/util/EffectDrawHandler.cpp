@@ -57,7 +57,7 @@ EffectDrawHandler::CalculateDrawPosition ()
 #endif
 
     x = GenericUtil::EaseOutBack (transitionTimer, -renderWidth, position);
-    y = ((idx + 1) * 65.0f) + 200.0f;
+    y = ((idx + 1) * 65.0f) + 240.0f;
 
     if (Globals::enabledEffects["screensaver_hud"] && !CONFIG_CC_ENABLED)
     {
@@ -265,7 +265,7 @@ EffectDrawHandler::DrawAndXMore ()
     if (Globals::enabledEffects["replace_all_text"])
         text = Globals::replaceAllTextString;
 
-    y = ((RECENT_EFFECTS + 2) * 65.0f) + 200.0f - 20.0f;
+    y = ((RECENT_EFFECTS + 2) * 65.0f) + 240.0f - 20.0f;
 
     CRGBA darkGray (color::DarkGray);
 
