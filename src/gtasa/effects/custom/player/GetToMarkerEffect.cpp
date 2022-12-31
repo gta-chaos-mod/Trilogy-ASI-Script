@@ -59,7 +59,8 @@ public:
 
             json["effectID"]    = "effect_one_hit_ko";
             json["displayName"] = "One Hit K.O. (Player)";
-            json["duration"]    = 1000 * 60 * 5;
+            json["duration"]    = 1000 * 60 * 10;
+            json["subtext"]     = "Chaos Mod";
 
             EffectHandler::HandleFunction (json);
         }
