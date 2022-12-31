@@ -39,6 +39,19 @@ EffectHandler::EmptyQueue ()
     }
 }
 
+int
+EffectHandler::GetActiveEffectCount ()
+{
+    int count = 0;
+
+    for (auto &effect : effects)
+    {
+        if (effect.IsRunning ()) count++;
+    }
+
+    return count;
+}
+
 void
 EffectHandler::RemoveStaleEffect (EffectInstance *instance)
 {

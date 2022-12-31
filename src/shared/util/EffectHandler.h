@@ -18,6 +18,8 @@ public:
 
     static void EmptyQueue ();
 
+    static int GetActiveEffectCount ();
+
     static void RemoveStaleEffect (EffectInstance *instance);
     static void RemoveStaleEffects (EffectInstance *except = nullptr);
 
