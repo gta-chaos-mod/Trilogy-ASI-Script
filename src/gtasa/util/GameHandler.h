@@ -380,10 +380,13 @@ private:
     {
         cb ();
 
-        if (object->m_fHealth <= 0.0f && object->m_nModelIndex == 708
+        if (object->m_nModelIndex == 708
             && weaponType == eWeaponType::WEAPON_CHAINSAW)
         {
-            Command<eScriptCommands::COMMAND_DELETE_OBJECT> (object);
+            object->m_pObjectInfo->m_fColDamageMultiplier = 0.5f;
+
+            if (object->m_fHealth <= 0.0f)
+                Command<eScriptCommands::COMMAND_DELETE_OBJECT> (object);
         }
     }
 };
