@@ -18,7 +18,7 @@ class DelayedControls : public EffectBase
 
     static inline std::deque<InputData> bufferedInputData = {};
 
-    int bufferInMs = 1000;
+    int bufferInMs = 500;
 
 public:
     void
