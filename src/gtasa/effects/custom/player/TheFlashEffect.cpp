@@ -47,11 +47,9 @@ public:
             = pad->GetSprint ()
               && !CMenuSystem::MenuInUse[CMenuSystem::CurrentMenuInUse];
 
-        injector::WriteMemory (0x8D2458, canFastSprint ? 0.25f : 5.0f);
+        injector::WriteMemory (0x8D2458, canFastSprint ? 0.5f : 5.0f);
 
-        if (!canFastSprint) return;
-
-        pad->NewState.ButtonCross = 0;
+        if (canFastSprint) pad->NewState.ButtonCross = 0;
 
         if (player->m_pIntelligence->GetTaskJetPack ()) return;
 
