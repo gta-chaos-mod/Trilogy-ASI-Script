@@ -32,77 +32,81 @@ Websocket::GetWebsocketURL ()
 void
 Websocket::SetupClientThread ()
 {
-    try
+    while (true)
     {
-        using easywsclient::WebSocket;
+        if (!wsClient.get ())
+        {
+            if (Websocket::IsClientConnectingOrConnected ()) continue;
+
+            try
+            {
+                using easywsclient::WebSocket;
 
 #ifdef _WIN32
-        INT     rc;
-        WSADATA wsaData;
+                INT     rc;
+                WSADATA wsaData;
 
-        rc = WSAStartup (MAKEWORD (2, 2), &wsaData);
-        if (rc)
-        {
-            printf ("WSAStartup Failed.\n");
-            return;
-        }
+                rc = WSAStartup (MAKEWORD (2, 2), &wsaData);
+                if (rc)
+                {
+                    printf ("WSAStartup Failed.\n");
+                    continue;
+                }
 #endif
 
-        std::shared_ptr<WebSocket> newClient (
-            WebSocket::from_url (GetWebsocketURL ()));
-        wsClient = newClient;
+                std::shared_ptr<WebSocket> newClient (
+                    WebSocket::from_url (GetWebsocketURL ()));
+                wsClient = newClient;
 
-        if (newClient == nullptr
-            || newClient->getReadyState () == WebSocket::CLOSED)
-        {
-            return;
+                if (newClient == nullptr
+                    || newClient->getReadyState () == WebSocket::CLOSED)
+                {
+                    continue;
+                }
+
+                while (newClient != nullptr
+                       && newClient->getReadyState () == WebSocket::OPEN)
+                {
+                    newClient->poll ();
+
+                    newClient->dispatch ([] (const std::string &message)
+                                         { CallFunction (message); });
+                }
+            }
+            catch (...)
+            {
+                // Error connecting to socket
+            }
         }
-
-        while (newClient != nullptr
-               && newClient->getReadyState () != WebSocket::CLOSED)
+        else
         {
-            newClient->poll ();
+            std::this_thread::sleep_for (std::chrono::seconds (3));
 
-            newClient->dispatch ([] (const std::string &message)
-                                 { CallFunction (message); });
+            if (!Websocket::IsClientConnectingOrConnected ())
+            {
+                Websocket::Cleanup ();
+            }
         }
-    }
-    catch (...)
-    {
-        // Error connecting to socket
     }
 }
 
 void
-Websocket::SetupReconnectionHandler ()
+Websocket::SetupConnectionHandler ()
 {
-    if (reconnectionHandlerInitialized) return;
+    if (connectionHandlerInitialized) return;
 
-    std::thread reconnectionThread (
-        [] ()
-        {
-            while (true)
-            {
-                std::this_thread::sleep_for (std::chrono::seconds (3));
+    std::thread setupThread ([] () { SetupClientThread (); });
+    setupThread.detach ();
 
-                if (!Websocket::IsClientConnectingOrConnected ())
-                    Websocket::Setup ();
-            }
-        });
-    reconnectionThread.detach ();
-
-    reconnectionHandlerInitialized = true;
+    connectionHandlerInitialized = true;
 }
 
 void
 Websocket::Setup ()
 {
-    SetupReconnectionHandler ();
-
     Cleanup ();
 
-    std::thread setupThread ([] () { SetupClientThread (); });
-    setupThread.detach ();
+    SetupConnectionHandler ();
 }
 
 bool

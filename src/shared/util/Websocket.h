@@ -10,7 +10,7 @@
 
 class Websocket
 {
-    static inline std::atomic_bool reconnectionHandlerInitialized = false;
+    static inline bool connectionHandlerInitialized = false;
 
     static inline std::string GUI_WEBSOCKET_URL = "ws://localhost:9001";
     static inline std::string CC_WEBSOCKET_URL  = "ws://localhost:9002";
@@ -19,7 +19,7 @@ class Websocket
     static inline std::atomic_bool                         stopClient = false;
     static inline std::shared_ptr<easywsclient::WebSocket> wsClient   = NULL;
 
-    static void SetupReconnectionHandler ();
+    static void SetupConnectionHandler ();
 
     static void        Cleanup ();
     static std::string GetWebsocketURL ();

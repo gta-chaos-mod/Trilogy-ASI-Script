@@ -451,6 +451,7 @@ class _RealWebSocket : public easywsclient::WebSocket
         txbuf.insert(txbuf.end(), header.begin(), header.end());
 
         closesocket(sockfd);
+        readyState = CLOSED;
     }
 
 };
