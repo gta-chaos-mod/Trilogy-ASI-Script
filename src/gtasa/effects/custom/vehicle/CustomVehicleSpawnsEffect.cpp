@@ -92,7 +92,8 @@ public:
     {
         LoadCarModel ();
 
-        CCarCtrl::ChooseModel (type);
+        cb ();
+
         if (IsPoliceModel ()) *type = 13; // TYPE_POLICECAR
 
         return vehicleID;
