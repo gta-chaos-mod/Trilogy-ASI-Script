@@ -29,16 +29,15 @@ public:
               0x40B596, 0x40B62F, 0x40ED07);
 
         // Disable police car spawns for the time being
-        // HOOK (inst, Hooked_ChoosePoliceCarModel, int (int), 0x424E20,
-        // 0x42C320,
-        //       0x43020E, 0x430283);
+        HOOK (inst, Hooked_ChoosePoliceCarModel, int (int), 0x424E20, 0x42C320,
+              0x43020E, 0x430283);
 
-        // HOOK_ARGS (inst, Hooked_FixEmptyPoliceCars, void (uint8_t *, char),
-        //            0x42BC26, 0x42C620, 0x431EE5, 0x499CBB, 0x499D6A,
-        //            0x49A5EB, 0x49A85E, 0x49A9AF);
+        HOOK_ARGS (inst, Hooked_FixEmptyPoliceCars, void (uint8_t *, char),
+                   0x42BC26, 0x42C620, 0x431EE5, 0x499CBB, 0x499D6A, 0x49A5EB,
+                   0x49A85E, 0x49A9AF);
 
-        // HOOK_METHOD_ARGS (inst, Hooked_FixCopCrash,
-        //                   CCopPed * (CCopPed *, eCopType), 0x61282F);
+        HOOK_METHOD_ARGS (inst, Hooked_FixCopCrash,
+                          CCopPed * (CCopPed *, eCopType), 0x61282F);
 
         // Parked Cars
         HOOK_METHOD_ARGS (inst, Hooked_RandomizeFixedSpawn,
@@ -48,9 +47,9 @@ public:
                      signed int (CLoadedCarGroup *, char, char), 0x6F3583);
 
         // Roadblocks
-        // HOOK_METHOD_ARGS (inst, Hooked_RandomizeRoadblocks,
-        //                   CVehicle * (CVehicle *, int, char, char), 0x462217,
-        //                   0x4998F0, 0x42B909);
+        HOOK_METHOD_ARGS (inst, Hooked_RandomizeRoadblocks,
+                          CVehicle * (CVehicle *, int, char, char), 0x462217,
+                          0x4998F0, 0x42B909);
     }
 
     static bool
@@ -93,11 +92,8 @@ public:
     {
         LoadCarModel ();
 
-        if (type)
-        {
-            CCarCtrl::ChooseModel (type);
-            if (IsPoliceModel ()) *type = 13; // TYPE_POLICECAR
-        }
+        CCarCtrl::ChooseModel (type);
+        if (IsPoliceModel ()) *type = 13; // TYPE_POLICECAR
 
         return vehicleID;
     }
