@@ -167,6 +167,12 @@ class PassCurrentMissionEffect : public EffectBase
     int  missionPassWait     = 100;
 
 public:
+    bool
+    CanActivate () override
+    {
+        return CTheScripts::IsPlayerOnAMission ();
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
