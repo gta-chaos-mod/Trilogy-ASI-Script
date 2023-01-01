@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/Globals.h"
 
 #include <CMenuSystem.h>
 #include <extensions/ScriptCommands.h>
@@ -8,6 +9,12 @@ using namespace plugin;
 class NoNeedToHurryEffect : public EffectBase
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return !Globals::enabledEffects["the_flash"];
+    }
+
     void
     OnEnd (EffectInstance *inst) override
     {

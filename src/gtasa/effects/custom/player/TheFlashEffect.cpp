@@ -8,6 +8,12 @@
 class TheFlashEffect : public EffectBase
 {
 public:
+    bool
+    CanActivate () override
+    {
+        return !Globals::enabledEffects["no_need_to_hurry"];
+    }
+
     void
     OnStart (EffectInstance *inst) override
     {
