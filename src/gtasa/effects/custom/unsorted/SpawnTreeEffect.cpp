@@ -1,10 +1,13 @@
 #include "effects/OneTimeEffect.h"
 
 #include <CStreaming.h>
+#include <CTimer.h>
 #include <CWorld.h>
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;
+
+// TODO: Randomize trees?
 
 class SpawnTreeEffect : public OneTimeEffect
 {
@@ -44,7 +47,9 @@ public:
 
         treeObject->SetMatrix (*matrix);
         treeObject->SetPosn (position);
-        treeObject->m_nObjectType                         = OBJECT_MISSION;
+        treeObject->m_nObjectType = OBJECT_TEMPORARY;
+        treeObject->m_dwRemovalTime
+            = CTimer::m_snTimeInMilliseconds + (1000 * 60 * 30);
         treeObject->m_nColDamageEffect                    = 0x14;
         treeObject->m_pObjectInfo->m_fColDamageMultiplier = 0.5f;
     }
