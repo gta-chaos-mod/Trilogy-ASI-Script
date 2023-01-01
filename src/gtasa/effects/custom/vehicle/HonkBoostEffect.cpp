@@ -1,6 +1,7 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 #include "util/MathHelper.h"
+#include "util/hooks/HookMacros.h"
 
 class HonkBoostEffect : public EffectBase
 {
@@ -11,6 +12,23 @@ public:
     OnStart (EffectInstance *inst) override
     {
         wasHornOn.clear ();
+
+        HOOK_METHOD_ARGS (inst, Hooked_ProcessSirensAndHorn,
+                          void (CVehicle *, char), 0x6B2B64);
+    }
+
+    static void
+    Hooked_ProcessSirensAndHorn (auto &&cb, CVehicle *thisVehicle, char horn)
+    {
+        if (!thisVehicle->m_pDriver || !thisVehicle->m_pDriver->IsPlayer ())
+            return;
+
+        CPlayerPed *ped = (CPlayerPed *) thisVehicle->m_pDriver;
+        CPad       *pad = ped->GetPadFromPlayer ();
+        if (!pad) return;
+
+        if (pad->bHornHistory[pad->iCurrHornHistory])
+            thisVehicle->m_nHornCounter = 1;
     }
 
     void
@@ -20,6 +38,15 @@ public:
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
+            if (vehicle->m_pDriver && vehicle->m_pDriver->IsPlayer ())
+            {
+                CPlayerPed *ped = (CPlayerPed *) vehicle->m_pDriver;
+                CPad       *pad = ped->GetPadFromPlayer ();
+                if (!pad) continue;
+
+                vehicle->m_nHornCounter = pad->GetHorn () ? 1 : 0;
+            }
+
             if (vehicle->m_nHornCounter > 0)
             {
                 wasHornOn[vehicle] = true;
