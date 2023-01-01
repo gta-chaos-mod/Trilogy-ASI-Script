@@ -93,10 +93,10 @@ Text = "Your Text Could Be Here"
 Enabled = true
 
 # Max. number of recent effects
-# Min: 3
-# Max: 8
-# Default: 6
-NumRecentEffects = 6
+# Min: 6
+# Max: 12
+# Default: 8
+NumRecentEffects = 12
 
 # Whether to draw the effects on the left or right side of the screen
 # Default: true

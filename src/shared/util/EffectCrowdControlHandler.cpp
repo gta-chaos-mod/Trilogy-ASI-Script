@@ -2,6 +2,7 @@
 
 #include "util/Config.h"
 #include "util/EffectBase.h"
+#include "util/EffectHandler.h"
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 #include "util/Websocket.h"
@@ -23,7 +24,9 @@ EffectCrowdControlHandler::HandleOnQueue () const
 {
     if (!*this) return true;
 
-    if (GenericUtil::IsMenuActive () || !GameUtil::IsPlayerSafe ())
+    // TODO: Setting for GetActiveEffectCount and Crowd Control
+    if (GenericUtil::IsMenuActive () || !GameUtil::IsPlayerSafe ()
+        || EffectHandler::GetActiveEffectCount () >= RECENT_EFFECTS)
     {
         SendRetry ();
         return false;
@@ -63,6 +66,8 @@ EffectCrowdControlHandler::HandleOnEffectActivated () const
 
     return true;
 }
+
+// 0 Success - 1 Failed - 2 Not Available - 3 Temp. Fail / Retry
 
 void
 EffectCrowdControlHandler::SendRetry () const

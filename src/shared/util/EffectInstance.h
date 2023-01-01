@@ -203,9 +203,9 @@ public:
     };
 
     void
-    Draw (int idx, bool inset)
+    Draw (int idx, bool inset, bool drawLeft)
     {
-        this->drawHandler.Draw (this, idx, inset);
+        this->drawHandler.Draw (this, idx, inset, drawLeft);
     }
 
     template <typename T>
