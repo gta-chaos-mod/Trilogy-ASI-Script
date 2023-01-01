@@ -138,6 +138,12 @@ RainbowColors = true
 # WARNING: THIS HAS TO BE ENABLED WHEN PLAYING WITH CROWD CONTROL!
 # Default: false
 Enabled = false
+
+# Prevents new effects from happening when the recent effect list is full.
+# Check Drawing.NumRecentEffects for the amount of effects drawn on screen.
+# Default: true
+PreventNewEffectsWhenFull = true
+
 #######################################################)";
 #else
     static inline std::string configContent = "";

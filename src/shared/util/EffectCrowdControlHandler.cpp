@@ -24,9 +24,14 @@ EffectCrowdControlHandler::HandleOnQueue () const
 {
     if (!*this) return true;
 
-    // TODO: Setting for GetActiveEffectCount and Crowd Control
-    if (GenericUtil::IsMenuActive () || !GameUtil::IsPlayerSafe ()
-        || EffectHandler::GetActiveEffectCount () >= RECENT_EFFECTS)
+    if (CONFIG ("CrowdControl.PreventNewEffectsWhenFull", true)
+        && EffectHandler::GetActiveEffectCount () >= RECENT_EFFECTS)
+    {
+        SendRetry ();
+        return false;
+    }
+
+    if (GenericUtil::IsMenuActive () || !GameUtil::IsPlayerSafe ())
     {
         SendRetry ();
         return false;
