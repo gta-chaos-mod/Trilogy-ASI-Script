@@ -21,6 +21,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
         InitialiseClothes ();
     }
 

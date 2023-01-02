@@ -17,6 +17,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
         inst->SetDuration (1000 * 5);
     }
 

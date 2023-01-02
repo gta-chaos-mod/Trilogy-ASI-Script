@@ -10,5 +10,6 @@ public:
     {
         instance->Disable ();
         instance->SetDuration (0);
+        instance->SetIsOneTimeEffect ();
     }
 };

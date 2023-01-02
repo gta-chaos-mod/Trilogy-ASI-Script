@@ -15,6 +15,12 @@ public:
     }
 
     void
+    OnStart (EffectInstance *inst) override
+    {
+        inst->SetIsOneTimeEffect ();
+    }
+
+    void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();

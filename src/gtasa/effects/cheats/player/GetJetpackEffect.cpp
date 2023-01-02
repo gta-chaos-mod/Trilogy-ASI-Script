@@ -25,6 +25,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
         inst->SetTimerVisible (false);
     }
 

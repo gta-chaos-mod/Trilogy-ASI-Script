@@ -22,6 +22,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
+
         handledEverything = false;
         handledMission    = false;
         lastIsOnMission   = false;

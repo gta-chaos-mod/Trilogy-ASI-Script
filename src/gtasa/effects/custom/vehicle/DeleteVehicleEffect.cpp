@@ -18,6 +18,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
+
         vehicle = FindPlayerVehicle (-1, false);
         if (!vehicle)
         {

@@ -19,6 +19,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
+
         wait = 700;
 
         inst->SetTimerVisible (false);

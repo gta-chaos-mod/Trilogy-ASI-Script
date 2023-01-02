@@ -21,6 +21,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
+
         CPlayerPed *player = FindPlayerPed ();
         if (!player || !CanActivate ()) return;
 

@@ -176,6 +176,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
+
         HOOK_STD_ARGS (inst, Hooked_Debug_GetKeyDown, char (int, int, int),
                        0x46DDED, 0x46DE32);
 

@@ -10,6 +10,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetIsOneTimeEffect ();
+
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
             RemovePassengers (vehicle);

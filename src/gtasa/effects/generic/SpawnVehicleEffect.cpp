@@ -26,6 +26,8 @@ public:
     void
     OnStart (EffectInstance *instance)
     {
+        instance->SetIsOneTimeEffect ();
+
         oldVehicle = nullptr;
         newVehicle = nullptr;
         passengers.clear ();

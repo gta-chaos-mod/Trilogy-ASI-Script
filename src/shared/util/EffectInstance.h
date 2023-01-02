@@ -27,8 +27,9 @@ private:
     int remaining = 0;
     int duration  = 0;
 
-    bool timerVisible = true;
-    bool isRunning    = false;
+    bool timerVisible    = true;
+    bool isRunning       = false;
+    bool isOneTimeEffect = false;
 
     nlohmann::json customData = {{"seed", 0}};
 
@@ -59,6 +60,18 @@ public:
     SetDuration (int duration)
     {
         this->duration = remaining = duration;
+    }
+
+    void
+    SetIsOneTimeEffect ()
+    {
+        isOneTimeEffect = true;
+    }
+
+    bool
+    IsOneTimeEffect ()
+    {
+        return isOneTimeEffect;
     }
 
     void
