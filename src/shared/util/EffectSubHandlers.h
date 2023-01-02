@@ -3,6 +3,7 @@
 #include <tuple>
 
 class EffectBase;
+class EffectInstance;
 
 // Subhandler that always returns true
 class EffectSubHandler
@@ -27,7 +28,7 @@ public:
     }
 
     bool
-    HandleOnEffectActivated () const
+    HandleOnEffectActivated (bool isOneTimeEffect) const
     {
         return true;
     }
@@ -68,10 +69,11 @@ public:
     }
 
     bool
-    HandleOnEffectActivated () const
+    HandleOnEffectActivated (EffectInstance *inst) const
     {
-        return (...
-                & std::get<SubHandlers> (handlers).HandleOnEffectActivated ());
+        return (
+            ...
+            & std::get<SubHandlers> (handlers).HandleOnEffectActivated (inst));
     }
 
     template <typename T>

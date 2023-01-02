@@ -24,7 +24,7 @@ public:
     bool HandleOnQueue () const;
     bool HandleOnAddEffect (EffectBase *effect) const;
     bool HandleOnEffectIncompatibility () const;
-    bool HandleOnEffectActivated () const;
+    bool HandleOnEffectActivated (bool isOneTimeEffect) const;
 
     explicit operator bool () const
     {

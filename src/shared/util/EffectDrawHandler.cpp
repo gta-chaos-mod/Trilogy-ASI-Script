@@ -184,7 +184,7 @@ EffectDrawHandler::PrintEffectTimer ()
 
         if (actualRemaining < 60000)
         {
-            float timerPosX = drawLeft ? x - 40 : x + 40;
+            float timerPosX = x - 40;
             float timerPosY = drawLeft ? yLeft : yRight;
 
             if (drawLeft)

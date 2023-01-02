@@ -125,7 +125,7 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         }
 
         /* Actually activate the effect */
-        if (!handlers.HandleOnEffectActivated ()) return;
+        if (!handlers.HandleOnEffectActivated (&inst)) return;
 
         inst.SetSubHandlers (handlers);
         inst.SetDuration (data["duration"]);

@@ -24,13 +24,6 @@ EffectCrowdControlHandler::HandleOnQueue () const
 {
     if (!*this) return true;
 
-    if (CONFIG ("CrowdControl.PreventNewEffectsWhenFull", true)
-        && EffectHandler::GetActiveEffectCount () >= RECENT_EFFECTS)
-    {
-        SendRetry ();
-        return false;
-    }
-
     if (GenericUtil::IsMenuActive () || !GameUtil::IsPlayerSafe ())
     {
         SendRetry ();
@@ -65,8 +58,18 @@ EffectCrowdControlHandler::HandleOnEffectIncompatibility () const
 }
 
 bool
-EffectCrowdControlHandler::HandleOnEffectActivated () const
+EffectCrowdControlHandler::HandleOnEffectActivated (bool isOneTimeEffect) const
 {
+    if (CONFIG ("CrowdControl.PreventNewEffectsWhenFull", true))
+    {
+        if (isOneTimeEffect
+            && EffectHandler::GetActiveEffectCount () >= RECENT_EFFECTS)
+        {
+            SendRetry ();
+            return false;
+        }
+    }
+
     if (*this) SendSucceeded ();
 
     return true;
