@@ -89,12 +89,22 @@ public:
     {
         int result = cb ();
 
-        for (int i = 0; i < 20; i++)
-        {
-            beatInfo->BeatWindow[i].Time /= audioPitch;
-        }
+        // After some more testing it doesn't seem like this affects the
+        // distance properly. The notes do appear either closer together or
+        // further apart, making for some sort of "hyperspeed" effect (similar
+        // to Guitar Hero). However, the actual distance seems to be calculated
+        // within the actual GetBeatInfo method and that is unfortunately not
+        // reverse engineered yet. The notes jump around every 1-2s ingame when
+        // the scaling factor is different. Is there a way to make it update
+        // more frequently perhaps?
 
-        beatInfo->BeatNumber = 10;
+        // for (int i = 0; i < 20; i++)
+        // {
+        //     // beatInfo->BeatWindow[i].Time
+        //     //     -= CONFIG ("Testing.Offset", 2000); // /= audioPitch;
+        // }
+
+        // // beatInfo->BeatNumber = 10;
 
         return result;
     }
