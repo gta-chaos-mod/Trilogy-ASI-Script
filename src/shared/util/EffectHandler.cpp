@@ -18,14 +18,20 @@ EffectHandler::Tick ()
 {
     EmptyQueue ();
 
-    for (auto &effect : effects)
+    for (auto &effect : timedEffects)
+        effect.Tick ();
+
+    for (auto &effect : oneTimeEffects)
         effect.Tick ();
 }
 
 void
 EffectHandler::ProcessScripts ()
 {
-    for (auto &effect : effects)
+    for (auto &effect : timedEffects)
+        effect.ProcessScripts ();
+
+    for (auto &effect : oneTimeEffects)
         effect.ProcessScripts ();
 }
 
@@ -44,7 +50,7 @@ EffectHandler::GetActiveEffectCount ()
 {
     int count = 0;
 
-    for (auto &effect : effects)
+    for (auto &effect : timedEffects)
     {
         if (effect.IsRunning ()) count++;
     }
@@ -53,44 +59,33 @@ EffectHandler::GetActiveEffectCount ()
 }
 
 void
-EffectHandler::RemoveStaleEffect (EffectInstance *instance)
+EffectHandler::RemoveStaleEffects (bool checkOneTimeEffects)
 {
-    if (effects.size () <= RECENT_EFFECTS) return;
+    auto &effects = checkOneTimeEffects ? oneTimeEffects : timedEffects;
 
-    if (&effects[0] == instance)
+    if (effects.size () > RECENT_EFFECTS)
     {
-        RemoveStaleEffects (instance);
-        return;
+        int amountToRemove = effects.size () - RECENT_EFFECTS;
+
+        std::set<EffectInstance *> effectsToRemove = {};
+
+        for (int i = effects.size () - 1; i > 1; i--)
+        {
+            auto &effect = effects[i];
+
+            if (effect.IsRunning ()) continue;
+
+            effectsToRemove.insert (&effect);
+
+            if (effectsToRemove.size () >= amountToRemove) break;
+        }
+
+        std::erase_if (effects,
+                       [effectsToRemove] (EffectInstance &effect) {
+                           return !effect.IsRunning ()
+                                  && effectsToRemove.contains (&effect);
+                       });
     }
-
-    RemoveStaleEffects ();
-}
-
-void
-EffectHandler::RemoveStaleEffects (EffectInstance *except)
-{
-    if (effects.size () <= RECENT_EFFECTS) return;
-
-    int amountToRemove = effects.size () - RECENT_EFFECTS;
-
-    std::set<EffectInstance *> effectsToRemove = {};
-
-    for (int i = effects.size () - 1; i > 1; i--)
-    {
-        auto &effect = effects[i];
-
-        if (effect.IsRunning () || &effect == except) continue;
-
-        effectsToRemove.insert (&effect);
-
-        if (effectsToRemove.size () >= amountToRemove) break;
-    }
-
-    std::erase_if (effects,
-                   [effectsToRemove] (EffectInstance &effect) {
-                       return !effect.IsRunning ()
-                              && effectsToRemove.contains (&effect);
-                   });
 }
 
 template <typename _Callable, typename... _Args>
@@ -117,7 +112,7 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         auto inst = effect->CreateInstance ();
 
         /* Check for incompatibilities before effect activation */
-        for (auto &i : effects)
+        for (auto &i : timedEffects)
         {
             if (!i.IsRunning ()) continue;
 
@@ -154,9 +149,16 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         inst.Enable ();
         inst.Tick ();
 
-        effects.push_front (std::move (inst));
-
-        RemoveStaleEffects (&effects[0]);
+        if (inst.IsOneTimeEffect ())
+        {
+            oneTimeEffects.push_front (std::move (inst));
+            RemoveStaleEffects (true);
+        }
+        else
+        {
+            timedEffects.push_front (std::move (inst));
+            RemoveStaleEffects (false);
+        }
     };
 
     QueueFunction (effectFunction);

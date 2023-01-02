@@ -24,10 +24,13 @@ static const float SUBTEXT_SCALE_Y = 0.6f;
 static const float Y_SPACING = 45.0f;
 
 bool
-EffectDrawHandler::AreEffectsInset ()
+EffectDrawHandler::AreEffectsInset (bool checkOneTimeEffects)
 {
+    auto &effects = checkOneTimeEffects ? EffectHandler::GetOneTimeEffects ()
+                                        : EffectHandler::GetActiveEffects ();
+
     int i = 0;
-    for (const auto &effect : EffectHandler::GetActiveEffects ())
+    for (const auto &effect : effects)
     {
         if (++i > RECENT_EFFECTS) return false;
 
@@ -62,7 +65,11 @@ EffectDrawHandler::CalculateDrawPosition ()
 #endif
 
     x = GenericUtil::EaseOutBack (transitionTimer, -renderWidth, position);
-    y = ((idx + 1) * Y_SPACING) + 260.0f;
+
+    if (drawLeft)
+        yLeft = ((idx + 1) * Y_SPACING) + 260.0f;
+    else
+        yRight = ((idx + 1) * Y_SPACING) + 260.0f;
 
     if (Globals::enabledEffects["screensaver_hud"] && !CONFIG_CC_ENABLED)
     {
@@ -70,7 +77,11 @@ EffectDrawHandler::CalculateDrawPosition ()
         auto        element = positions[effectName];
 
         x = element.pos.x;
-        y = element.pos.y;
+
+        if (drawLeft)
+            yLeft = element.pos.y;
+        else
+            yRight = element.pos.y;
     }
 }
 
@@ -85,15 +96,15 @@ EffectDrawHandler::PrintEffectName ()
     if (drawLeft)
     {
         gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
-                         std::string (name), x, y, FONT_DEFAULT, TEXT_SCALE_X,
-                         TEXT_SCALE_Y, GetTextColor (), 1,
+                         std::string (name), x, yLeft, FONT_DEFAULT,
+                         TEXT_SCALE_X, TEXT_SCALE_Y, GetTextColor (), 1,
                          GetDropShadowColor (), false);
     }
     else
     {
         gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                         std::string (name), x, y, FONT_DEFAULT, TEXT_SCALE_X,
-                         TEXT_SCALE_Y, GetTextColor (), 1,
+                         std::string (name), x, yRight, FONT_DEFAULT,
+                         TEXT_SCALE_X, TEXT_SCALE_Y, GetTextColor (), 1,
                          GetDropShadowColor (), false);
     }
 }
@@ -111,16 +122,16 @@ EffectDrawHandler::PrintSubtext ()
         if (drawLeft)
         {
             gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
-                             std::string (subtext), x, y - 20.0f, FONT_DEFAULT,
-                             SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y, GetTextColor (),
-                             1, GetDropShadowColor (), true);
+                             std::string (subtext), x, yLeft - 20.0f,
+                             FONT_DEFAULT, SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y,
+                             GetTextColor (), 1, GetDropShadowColor (), true);
         }
         else
         {
             gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
-                             std::string (subtext), x, y - 20.0f, FONT_DEFAULT,
-                             SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y, GetTextColor (),
-                             1, GetDropShadowColor (), true);
+                             std::string (subtext), x, yRight - 20.0f,
+                             FONT_DEFAULT, SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y,
+                             GetTextColor (), 1, GetDropShadowColor (), true);
         }
     }
 }
@@ -133,16 +144,23 @@ EffectDrawHandler::PrintEffectTimer ()
 
     if (CONFIG ("Drawing.DrawCircles", true))
     {
-        if (effect->HasSubtext ()) y -= 10.0f;
+        if (effect->HasSubtext ())
+        {
+            if (drawLeft)
+                yLeft -= 10.0f;
+            else
+                yRight -= 10.0f;
+        }
 
         CVector2D center
             = CVector2D (SCREEN_COORD_LEFT (x) - SCREEN_COORD (33.0f),
-                         SCREEN_COORD_BOTTOM (y) + SCREEN_COORD (10.0f));
+                         SCREEN_COORD_BOTTOM (yLeft) + SCREEN_COORD (10.0f));
 
         if (!drawLeft)
         {
             center = CVector2D (SCREEN_COORD_RIGHT (x) + SCREEN_COORD (33.0f),
-                                SCREEN_COORD_BOTTOM (y) + SCREEN_COORD (10.0f));
+                                SCREEN_COORD_BOTTOM (yRight)
+                                    + SCREEN_COORD (10.0f));
         }
 
         RwTextureFilterMode filter        = rwFILTERLINEAR;
@@ -167,7 +185,7 @@ EffectDrawHandler::PrintEffectTimer ()
         if (actualRemaining < 60000)
         {
             float timerPosX = drawLeft ? x - 40 : x + 40;
-            float timerPosY = y;
+            float timerPosY = drawLeft ? yLeft : yRight;
 
             if (drawLeft)
             {
@@ -197,17 +215,17 @@ EffectDrawHandler::PrintEffectTimer ()
         {
             gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
                              GenericUtil::FormatTime (actualRemaining),
-                             x - 60.0f, y - 8.0f, FONT_DEFAULT, SUBTEXT_SCALE_X,
-                             SUBTEXT_SCALE_Y, GetTextColor (), 1,
-                             GetDropShadowColor (), true, 9999.0f, true);
+                             x - 60.0f, yLeft - 8.0f, FONT_DEFAULT,
+                             SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y, GetTextColor (),
+                             1, GetDropShadowColor (), true, 9999.0f, true);
         }
         else
         {
             gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
                              GenericUtil::FormatTime (actualRemaining),
-                             x - 60.0f, y - 8.0f, FONT_DEFAULT, SUBTEXT_SCALE_X,
-                             SUBTEXT_SCALE_Y, GetTextColor (), 1,
-                             GetDropShadowColor (), true, 9999.0f, true);
+                             x - 60.0f, yRight - 8.0f, FONT_DEFAULT,
+                             SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y, GetTextColor (),
+                             1, GetDropShadowColor (), true, 9999.0f, true);
         }
     }
 }
@@ -215,15 +233,10 @@ void
 EffectDrawHandler::Draw (EffectInstance *effect, int idx, bool inset,
                          bool drawLeft)
 {
-    this->effect  = effect;
-    this->idx     = idx;
-    this->isInset = inset;
-
-    // TODO: Timed effects left, one-time effects right. Need to revamp `y`
-    // value. Also need to revamp clearing recent effects code so it's 2x the
-    // number recent effects.
-    this->drawLeft = true;
-    // this->drawLeft = drawLeft;
+    this->effect   = effect;
+    this->idx      = idx;
+    this->isInset  = inset;
+    this->drawLeft = drawLeft;
 
     UpdateTimers ();
 
@@ -282,7 +295,10 @@ EffectDrawHandler::DrawAndXMore ()
     if (Globals::enabledEffects["replace_all_text"])
         text = Globals::replaceAllTextString;
 
-    y = ((RECENT_EFFECTS + 2) * Y_SPACING) + 260.0f - 20.0f;
+    if (drawLeft)
+        yLeft = ((RECENT_EFFECTS + 2) * Y_SPACING) + 260.0f - 20.0f;
+    else
+        yRight = ((RECENT_EFFECTS + 2) * Y_SPACING) + 260.0f - 20.0f;
 
     CRGBA darkGray (color::DarkGray);
 
@@ -291,14 +307,14 @@ EffectDrawHandler::DrawAndXMore ()
 
     if (drawLeft)
     {
-        gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft, text, x, y,
-                         FONT_DEFAULT, SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y,
+        gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft, text, x,
+                         yLeft, FONT_DEFAULT, SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y,
                          darkGray, 1, GetDropShadowColor (), true);
     }
     else
     {
         gamefont::Print (gamefont::RightBottom, gamefont::AlignRight, text, x,
-                         y, FONT_DEFAULT, SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y,
+                         yRight, FONT_DEFAULT, SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y,
                          darkGray, 1, GetDropShadowColor (), true);
     }
 }
@@ -306,8 +322,9 @@ EffectDrawHandler::DrawAndXMore ()
 void
 EffectDrawHandler::DrawRecentEffects ()
 {
-    bool inset = AreEffectsInset ();
+    bool inset = AreEffectsInset (false);
 
+    /* Timed Effects */
     int i = 0;
     for (auto &effect : EffectHandler::GetActiveEffects ())
     {
@@ -315,10 +332,20 @@ EffectDrawHandler::DrawRecentEffects ()
 
         if (!Globals::enabledEffects["hide_chaos_ui"]
             || effect.GetEffect ()->GetID () == "effect_hide_chaos_ui")
-            effect.Draw (i, inset, effect.GetEffectDuration () > 0);
+            effect.Draw (i, inset, true);
     }
 
     if (!Globals::enabledEffects["hide_chaos_ui"]) DrawAndXMore ();
+
+    i     = 0;
+    inset = AreEffectsInset (true);
+    for (auto &effect : EffectHandler::GetOneTimeEffects ())
+    {
+        if (++i > RECENT_EFFECTS) break;
+
+        if (!Globals::enabledEffects["hide_chaos_ui"])
+            effect.Draw (i, inset, false);
+    }
 }
 
 EffectDrawHandler::ScreensaverHUDElement

@@ -94,16 +94,11 @@ Enabled = true
 
 # Max. number of recent effects
 # Min: 6
-# Max: 12
+# Max: 10
 # Default: 8
-NumRecentEffects = 12
-
-# Whether to draw the effects on the left or right side of the screen
-# Default: true
-DrawOnLeftSide = true
+NumRecentEffects = 8
 
 # Whether to lower the opacity of effect texts when a menu (e.g. tuner or food) is open
-# (Only works when DrawOnLeftSide is true)
 # Default: true
 LowerOpacityWhenMenuOpen = true
 
