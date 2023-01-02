@@ -72,6 +72,8 @@ Websocket::SetupClientThread ()
                     newClient->dispatch ([] (const std::string &message)
                                          { CallFunction (message); });
                 }
+
+                Websocket::Cleanup ();
             }
             catch (...)
             {
