@@ -60,17 +60,18 @@ EffectCrowdControlHandler::HandleOnEffectIncompatibility () const
 bool
 EffectCrowdControlHandler::HandleOnEffectActivated (bool isOneTimeEffect) const
 {
-    if (CONFIG ("CrowdControl.PreventNewEffectsWhenFull", true))
+    if (*this)
     {
-        if (isOneTimeEffect
+        if (CONFIG ("CrowdControl.PreventNewEffectsWhenFull", true)
+            && !isOneTimeEffect
             && EffectHandler::GetActiveEffectCount () >= RECENT_EFFECTS)
         {
             SendRetry ();
             return false;
         }
-    }
 
-    if (*this) SendSucceeded ();
+        SendSucceeded ();
+    }
 
     return true;
 }
