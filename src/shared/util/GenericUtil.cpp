@@ -76,13 +76,7 @@ GenericUtil::FormatTime (int duration, bool onlySeconds)
 bool
 GenericUtil::IsMenuActive ()
 {
-#ifdef GTASA
     return FrontEndMenuManager.m_bMenuActive;
-#elif GTAVC
-    return FrontendMenuManager.m_bMenuVisible;
-#elif GTA3
-    return FrontEndMenuManager.m_bMenuActive;
-#endif
 }
 
 float

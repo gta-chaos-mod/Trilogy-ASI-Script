@@ -12,7 +12,6 @@
 #include <algorithm>
 
 #include <CFont.h>
-#include <CMenuSystem.h>
 #include <extensions/FontPrint.h>
 
 static const float TEXT_SCALE_X = 0.6f;
