@@ -278,7 +278,7 @@ GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
 }
 
 void
-GameUtil::ClearWeapons (CPed *ped, bool keepParachute)
+GameUtil::ClearWeapons (CPed *ped)
 {
     if (!ped) return;
 
@@ -290,7 +290,7 @@ GameUtil::ClearWeapons (CPed *ped, bool keepParachute)
     for (int i = WEAPON_BRASSKNUCKLE; i < WEAPON_FLARE; i++)
     {
         eWeaponType type = static_cast<eWeaponType> (i);
-        if (type != WEAPON_PARACHUTE || !keepParachute) ped->ClearWeapon (type);
+        ped->ClearWeapon (type);
     }
 }
 
