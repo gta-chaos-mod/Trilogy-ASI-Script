@@ -17,11 +17,14 @@ public:
         if (action != efsw::Actions::Modified) return;
         if (filename != Config::GetConfigFilename ()) return;
 
-        bool previousCCMode = CONFIG_CC_ENABLED;
+        bool        previousCCMode          = CONFIG_CC_ENABLED;
+        std::string previousGUIWebsocketURL = Websocket::GetGUIWebsocketURL ();
 
         Config::ReloadConfig ();
 
-        if (previousCCMode != CONFIG_CC_ENABLED) Websocket::Setup ();
+        if (previousCCMode != CONFIG_CC_ENABLED
+            || previousGUIWebsocketURL != Websocket::GetGUIWebsocketURL ())
+            Websocket::Setup ();
 
 #ifdef GTASA
         AudioEngine.ReportFrontendAudioEvent (AE_FRONTEND_DISPLAY_INFO, 0.0f,

@@ -26,7 +26,16 @@ Websocket::Cleanup ()
 std::string
 Websocket::GetWebsocketURL ()
 {
-    return CONFIG_CC_ENABLED ? CC_WEBSOCKET_URL : GUI_WEBSOCKET_URL;
+    return CONFIG_CC_ENABLED ? CC_WEBSOCKET_URL : GetGUIWebsocketURL ();
+}
+
+std::string
+Websocket::GetGUIWebsocketURL ()
+{
+    std::string url ("ws://localhost:");
+    url.append (std::to_string (GUI_WEBSOCKET_PORT));
+
+    return url;
 }
 
 void

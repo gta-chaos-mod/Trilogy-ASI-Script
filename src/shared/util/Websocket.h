@@ -8,6 +8,9 @@
 
 #include <thread>
 
+#define GUI_WEBSOCKET_PORT                                                     \
+    std::max (1025, std::min (65535, CONFIG ("Chaos.GUIWebsocketPort", 9001)))
+
 class Websocket
 {
     static inline bool connectionHandlerInitialized = false;
@@ -27,6 +30,8 @@ class Websocket
 
 public:
     static void Setup ();
+
+    static std::string GetGUIWebsocketURL ();
 
     static bool IsClientConnected ();
     static bool IsClientConnectingOrConnected ();
