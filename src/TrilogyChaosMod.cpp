@@ -33,6 +33,7 @@ public:
         Events::processScriptsEvent += EffectHandler::ProcessScripts;
         Events::gameProcessEvent += GameHandler::ProcessGame;
 
+        Events::drawHudEvent.before += DrawHelper::DrawEffects;
         drawAfterFadeEvent += DrawHelper::Draw;
         Events::gameProcessEvent += DrawHelper::Tick;
     }

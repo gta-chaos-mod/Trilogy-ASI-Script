@@ -19,6 +19,7 @@ public:
 
     static void Draw ();
 
+    static void DrawEffects ();
     static void DrawVersion ();
     static void DrawTopBar ();
     static void DrawRecentEffects ();

@@ -57,32 +57,31 @@ DrawHelper::Draw ()
 
     DrawVersion ();
 
-    if (CONFIG ("Drawing.Enabled", true))
+    if (!CONFIG ("Drawing.Enabled", true)) return;
+    if (Globals::enabledEffects["hide_chaos_ui"]) return;
+
+    if (CONFIG ("Drawing.DrawRemainingTimeBar", true))
     {
-        bool drawActiveEffects = CONFIG ("Drawing.DrawActiveEffects", true);
-
-        if (!Globals::enabledEffects["hide_chaos_ui"])
-        {
-            if (CONFIG ("Drawing.DrawRemainingTimeBar", true))
-            {
-                DrawTopBar ();
-            }
-
-            if (drawActiveEffects)
-            {
-                DrawRecentEffects ();
-            }
-
-            if (CONFIG ("Drawing.DrawVoting", true))
-            {
-                DrawVoting::DrawVotes ();
-            }
-        }
-        else if (drawActiveEffects)
-        {
-            DrawRecentEffects ();
-        }
+        DrawTopBar ();
     }
+
+    if (CONFIG ("Drawing.DrawVoting", true))
+    {
+        DrawVoting::DrawVotes ();
+    }
+}
+
+void
+DrawHelper::DrawEffects ()
+{
+    if (!CONFIG ("Drawing.Enabled", true)) return;
+
+    bool drawActiveEffects = CONFIG ("Drawing.DrawActiveEffects", true);
+
+    if (!drawActiveEffects) return;
+    if (Globals::enabledEffects["hide_chaos_ui"]) return;
+
+    DrawRecentEffects ();
 }
 
 void
