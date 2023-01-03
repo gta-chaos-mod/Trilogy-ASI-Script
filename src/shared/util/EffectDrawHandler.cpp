@@ -300,22 +300,17 @@ EffectDrawHandler::DrawAndXMore ()
     else
         yRight = ((RECENT_EFFECTS + 2) * Y_SPACING) + 260.0f - 20.0f;
 
-    CRGBA darkGray (color::DarkGray);
-
-    if (CMenuSystem::num_menus_in_use && drawLeft && LOWER_OPACITY)
-        darkGray.a = 20;
-
     if (drawLeft)
     {
         gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft, text, x,
                          yLeft, FONT_DEFAULT, SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y,
-                         darkGray, 1, GetDropShadowColor (), true);
+                         color::DarkGray, 1, GetDropShadowColor (), true);
     }
     else
     {
         gamefont::Print (gamefont::RightBottom, gamefont::AlignRight, text, x,
                          yRight, FONT_DEFAULT, SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y,
-                         darkGray, 1, GetDropShadowColor (), true);
+                         color::DarkGray, 1, GetDropShadowColor (), true);
     }
 }
 
@@ -423,21 +418,13 @@ EffectDrawHandler::GetTextColor () const
     if (!effect->IsRunning () || !effect->DoesEffectDrawTimer ())
         color = disabledColor;
 
-    if (CMenuSystem::num_menus_in_use && drawLeft && LOWER_OPACITY)
-        color.a = 20;
-
     return color;
 };
 
 CRGBA
 EffectDrawHandler::GetDropShadowColor ()
 {
-    CRGBA color (color::Black);
-
-    if (CMenuSystem::num_menus_in_use && drawLeft && LOWER_OPACITY)
-        color.a = 20;
-
-    return color;
+    return color::Black;
 };
 
 CRGBA

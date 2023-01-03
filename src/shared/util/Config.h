@@ -98,11 +98,6 @@ Enabled = true
 # Default: 8
 NumRecentEffects = 8
 
-# Whether to lower the opacity of effect texts when a menu (e.g. tuner or food) is open
-# Note: This only affects timed effects on the left side of the screen as that's where the menus usually open.
-# Default: true
-LowerOpacityWhenMenuOpen = true
-
 # Draw the top bar showing the remaining time until the next effect happens
 # Default: true
 DrawRemainingTimeBar = true

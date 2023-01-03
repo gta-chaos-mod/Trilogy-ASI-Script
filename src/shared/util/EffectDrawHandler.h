@@ -4,7 +4,6 @@
 
 #define RECENT_EFFECTS                                                         \
     std::max (6, std::min (10, CONFIG ("Drawing.NumRecentEffects", 8)))
-#define LOWER_OPACITY CONFIG ("Drawing.LowerOpacityWhenMenuOpen", true)
 
 class EffectInstance;
 
