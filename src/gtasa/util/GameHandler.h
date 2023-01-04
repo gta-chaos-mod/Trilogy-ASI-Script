@@ -1,6 +1,7 @@
 #pragma once
 
 #include "util/BoneHelper.h"
+#include "util/CStuntJump.h"
 #include "util/Config.h"
 #include "util/GameFixes.h"
 #include "util/GameUtil.h"
@@ -27,6 +28,8 @@ class GameHandler
     static inline int lastMissionsPassed = -1;
     static inline int lastSaved          = 0;
     static inline int lastQuickSave      = 0;
+
+    static inline CStuntJump *&currentStuntJump = *(CStuntJump **) 0xA9A88C;
 
 public:
     static void
@@ -97,10 +100,15 @@ public:
                           Hooked_CanPhysicalBeDamaged,
                           char (CPhysical *, int, char *), 0x5A0DEA);
 
+        // Damaging tree objects with the chainsaw
         HOOK_METHOD_ARGS (GlobalHooksInstance::Get (), Hooked_ObjectDamage,
                           void (CObject *, float, RwV3d *, RwV3d *, CEntity *,
                                 eWeaponType),
                           0x61D578);
+
+        // Fix stunt jump crash when player vehicle doesn't exist anymore
+        HOOK (GlobalHooksInstance::Get (), Hooked_FixStuntJumpCrash, void (),
+              0x53C0C1);
 
         initialised = true;
     }
@@ -388,5 +396,18 @@ private:
             if (object->m_fHealth <= 0.0f)
                 Command<eScriptCommands::COMMAND_DELETE_OBJECT> (object);
         }
+    }
+
+    static void
+    Hooked_FixStuntJumpCrash (auto &&cb)
+    {
+        if (currentStuntJump && !FindPlayerVehicle (-1, false))
+        {
+            currentStuntJump      = nullptr;
+            CTimer::ms_fTimeScale = 1.0f;
+            TheCamera.RestoreWithJumpCut ();
+        }
+
+        cb ();
     }
 };
