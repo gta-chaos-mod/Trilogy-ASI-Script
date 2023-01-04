@@ -26,13 +26,18 @@ VALIDATE_SIZE (tBeatInfo, 0xAC);
 
 using namespace plugin;
 
-template <float timeScale, float audioPitch>
+template <float timeScale, float _audioPitch>
 class GameSpeedEffect : public EffectBase
 {
+    static inline float audioPitch = 1.0f;
+
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        audioPitch = _audioPitch;
+        inst->WriteMemory (0x8CBA6C, &audioPitch);
+
         HOOK_METHOD_ARGS (inst, Hooked_SetFrequencyScalingFactor,
                           int (CAEAudioHardware *, int, int, float), 0x4D6E34,
                           0x4D6E48, 0x4EA62D, 0x4F0871, 0x4F0A58);
@@ -48,15 +53,12 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CTimer::ms_fTimeScale = 1.0f;
-        injector::WriteMemory (0x8CBA6C, 1.0f, true);
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
         CTimer::ms_fTimeScale = timeScale;
-
-        injector::WriteMemory (0x8CBA6C, audioPitch, true);
 
         GameUtil::SetVehiclesToRealPhysics ();
     }

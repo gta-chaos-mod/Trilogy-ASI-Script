@@ -223,12 +223,23 @@ public:
 
     template <typename T>
     void
-    WriteMemory (uintptr_t addr, const T &value)
+    WriteMemory (uintptr_t addr, const T &value, bool addToCleanup = true,
+                 bool vp = true)
     {
-        T original = injector::ReadMemory<T> (addr);
-        injector::WriteMemory (addr, value);
+        T original = injector::ReadMemory<T> (addr, vp);
+        injector::WriteMemory (addr, value, vp);
+
+        if (!addToCleanup) return;
 
         cleanupHandler.AddFunction (
-            [addr, original] { injector::WriteMemory (addr, original); });
+            [addr, original, vp]
+            { injector::WriteMemory (addr, original, vp); });
+    }
+
+    template <typename T>
+    T
+    ReadMemory (uintptr_t addr, bool vp = true)
+    {
+        return injector::ReadMemory<T> (addr, vp);
     }
 };

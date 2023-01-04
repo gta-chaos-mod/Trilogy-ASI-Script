@@ -18,7 +18,7 @@ public:
             playerInfo->m_nNumHoursDidntEat = 60;
             CallMethod<0x56E610, CPlayerInfo *> (playerInfo);
 
-            injector::WriteMemory (0xB9B8F0, true); // bHungryMessageShown
+            inst->WriteMemory (0xB9B8F0, true, false); // bHungryMessageShown
         }
     }
 };

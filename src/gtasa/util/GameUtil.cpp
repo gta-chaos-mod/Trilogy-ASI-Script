@@ -89,7 +89,8 @@ GameUtil::LoadFromFile (std::string fileName)
         FrontEndMenuManager.m_bLoadingData = true;
         FrontEndMenuManager.m_bMenuActive  = false;
 
-        byte gameState = injector::ReadMemory<byte> (0xC8D4C0); // GameState
+        byte gameState
+            = injector::ReadMemory<byte> (0xC8D4C0, true); // GameState
 
         if (gameState == 9)
         {
@@ -130,50 +131,51 @@ GameUtil::GetRealMissionsPassed ()
     int passed = 0;
 
     // Los Santos
-    passed += injector::ReadMemory<byte> (0xA4A060); // Intro
-    passed += injector::ReadMemory<byte> (0xA4A070); // Sweet
-    passed += injector::ReadMemory<byte> (0xA4A07C); // OG Loc
-    passed += injector::ReadMemory<byte> (0xA4A080); // Crash
-    passed += injector::ReadMemory<byte> (0xA4A074); // Ryder
-    passed += injector::ReadMemory<byte> (0xA4A078); // Smoke
-    passed += injector::ReadMemory<byte> (0xA4A084); // Lowrider
-    passed += injector::ReadMemory<byte> (0xA4A088); // LS Final
+    passed += injector::ReadMemory<byte> (0xA4A060, true); // Intro
+    passed += injector::ReadMemory<byte> (0xA4A070, true); // Sweet
+    passed += injector::ReadMemory<byte> (0xA4A07C, true); // OG Loc
+    passed += injector::ReadMemory<byte> (0xA4A080, true); // Crash
+    passed += injector::ReadMemory<byte> (0xA4A074, true); // Ryder
+    passed += injector::ReadMemory<byte> (0xA4A078, true); // Smoke
+    passed += injector::ReadMemory<byte> (0xA4A084, true); // Lowrider
+    passed += injector::ReadMemory<byte> (0xA4A088, true); // LS Final
 
     // Badlands
-    passed += injector::ReadMemory<byte> (0xA4A114); // Badlands
-    passed += injector::ReadMemory<byte> (0xA4A10C); // The Truth
-    passed += injector::ReadMemory<byte> (0xA4A110)
+    passed += injector::ReadMemory<byte> (0xA4A114, true); // Badlands
+    passed += injector::ReadMemory<byte> (0xA4A10C, true); // The Truth
+    passed += injector::ReadMemory<byte> (0xA4A110, true)
               / 5; // Cesar (both races increase throughout the race - we are
                    // interested in 5 and 10)
-    passed += injector::ReadMemory<byte> (
-        0xA4A488); // Catalina (Local Liquor Store)
     passed
-        += injector::ReadMemory<byte> (0xA4A48C); // Catalina (Small Town Bank)
-    passed
-        += injector::ReadMemory<byte> (0xA4A490); // Catalina (Tanker Commander)
-    passed
-        += injector::ReadMemory<byte> (0xA4A494); // Catalina (Against All Odds)
-    passed += injector::ReadMemory<byte> (0xA4BB2C); // King in Exile
+        += injector::ReadMemory<byte> (0xA4A488,
+                                       true); // Catalina (Local Liquor Store)
+    passed += injector::ReadMemory<byte> (0xA4A48C,
+                                          true); // Catalina (Small Town Bank)
+    passed += injector::ReadMemory<byte> (0xA4A490,
+                                          true); // Catalina (Tanker Commander)
+    passed += injector::ReadMemory<byte> (0xA4A494,
+                                          true); // Catalina (Against All Odds)
+    passed += injector::ReadMemory<byte> (0xA4BB2C, true); // King in Exile
 
     // San Fierro
-    passed += injector::ReadMemory<byte> (0xA4A1D4); // Garage
-    passed += injector::ReadMemory<byte> (0xA4A1DC); // Wuzimu
-    passed += injector::ReadMemory<byte> (0xA4A1E4); // Syndicate
-    passed += injector::ReadMemory<byte> (0xA4A1E8); // Crash
-    passed += injector::ReadMemory<byte> (0xA4A1D8); // Zero
-    passed += injector::ReadMemory<byte> (0xA4A1E0); // Steal
+    passed += injector::ReadMemory<byte> (0xA4A1D4, true); // Garage
+    passed += injector::ReadMemory<byte> (0xA4A1DC, true); // Wuzimu
+    passed += injector::ReadMemory<byte> (0xA4A1E4, true); // Syndicate
+    passed += injector::ReadMemory<byte> (0xA4A1E8, true); // Crash
+    passed += injector::ReadMemory<byte> (0xA4A1D8, true); // Zero
+    passed += injector::ReadMemory<byte> (0xA4A1E0, true); // Steal
 
     // Las Venturas
-    passed += injector::ReadMemory<byte> (0xA4A2A4); // Toreno
-    passed += injector::ReadMemory<byte> (0xA4A2B4); // Casino
-    passed += injector::ReadMemory<byte> (0xA4A2B8); // Crash
-    passed += injector::ReadMemory<byte> (0xA4A2BC); // Madd Dogg
-    passed += injector::ReadMemory<byte> (0xA4A2C0); // Heist
+    passed += injector::ReadMemory<byte> (0xA4A2A4, true); // Toreno
+    passed += injector::ReadMemory<byte> (0xA4A2B4, true); // Casino
+    passed += injector::ReadMemory<byte> (0xA4A2B8, true); // Crash
+    passed += injector::ReadMemory<byte> (0xA4A2BC, true); // Madd Dogg
+    passed += injector::ReadMemory<byte> (0xA4A2C0, true); // Heist
 
     // Return to Los Santos
-    passed += injector::ReadMemory<byte> (0xA4A328); // Mansion
-    passed += injector::ReadMemory<byte> (0xA4A32C); // Grove
-    passed += injector::ReadMemory<byte> (0xA4A334); // Riot
+    passed += injector::ReadMemory<byte> (0xA4A328, true); // Mansion
+    passed += injector::ReadMemory<byte> (0xA4A32C, true); // Grove
+    passed += injector::ReadMemory<byte> (0xA4A334, true); // Riot
 
     return passed;
 }

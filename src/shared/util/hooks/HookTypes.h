@@ -81,7 +81,7 @@ template <auto Address> struct AutomaticHook
     static void
     InitialiseType (uintptr_t src)
     {
-        uint8_t opcode = injector::ReadMemory<uint8_t> (src);
+        uint8_t opcode = injector::ReadMemory<uint8_t> (src, true);
 
         switch (opcode)
         {

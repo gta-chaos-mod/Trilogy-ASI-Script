@@ -363,7 +363,7 @@ public:
     static void
     Hooked_DrawRadar (auto &&cb)
     {
-        float   oldX      = injector::ReadMemory<float> (0x858A10);
+        float   oldX      = injector::ReadMemory<float> (0x858A10, true);
         RwInt32 oldHeight = RsGlobal.maximumHeight;
 
         float x = oldX;
@@ -379,14 +379,14 @@ public:
         x = positions["radar"].pos.x / 2.9f;
         y = positions["radar"].pos.y / 0.9f;
 
-        injector::WriteMemory<float> (0x858A10, x);
+        injector::WriteMemory<float> (0x858A10, x, true);
         RsGlobal.maximumHeight = y;
 
         cb ();
 
         RsGlobal.maximumHeight = oldHeight;
 
-        injector::WriteMemory<float> (0x858A10, oldX);
+        injector::WriteMemory<float> (0x858A10, oldX, true);
     }
 };
 

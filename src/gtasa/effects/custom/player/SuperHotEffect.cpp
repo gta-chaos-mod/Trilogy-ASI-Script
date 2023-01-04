@@ -16,6 +16,8 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->WriteMemory (0x8CBA6C, &gameSpeed);
+
         HOOK_METHOD_ARGS (inst, Hooked_SetFrequencyScalingFactor,
                           int (CAEAudioHardware *, int, int, float), 0x4D6E34,
                           0x4D6E48, 0x4DBF9B, 0x4EA62D, 0x4F0871, 0x4F0A58);
@@ -25,7 +27,6 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CTimer::ms_fTimeScale = 1.0f;
-        injector::WriteMemory (0x8CBA6C, 1.0f, true);
     }
 
     void
@@ -96,7 +97,6 @@ public:
         gameSpeed = GenericUtil::EaseOutBack (gameSpeedProgress, 0.01f, 1.0f);
 
         CTimer::ms_fTimeScale = gameSpeed;
-        injector::WriteMemory (0x8CBA6C, gameSpeed, true);
     }
 
     static int

@@ -13,24 +13,14 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->WriteMemory (0x8CBA6C, &audioPitch);
+
         HOOK_METHOD_ARGS (inst, Hooked_SetFrequencyScalingFactor,
                           int (CAEAudioHardware *, int, int, float), 0x4D6E34,
                           0x4D6E48, 0x4EA62D, 0x4F0871, 0x4F0A58);
 
         HOOK_METHOD_ARGS (inst, Hooked_SetFrequencyScalingFactor_Cutscene,
                           int (CAEAudioHardware *, int, int, float), 0x4DBF9B);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        injector::WriteMemory (0x8CBA6C, 1.0f, true);
-    }
-
-    void
-    OnTick (EffectInstance *inst) override
-    {
-        injector::WriteMemory (0x8CBA6C, audioPitch, true);
     }
 
     static int

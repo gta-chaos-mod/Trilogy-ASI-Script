@@ -31,7 +31,7 @@ public:
     OnStart (EffectInstance *inst) override
     {
         isWidescreenFixInstalled
-            = injector::ReadMemory<uint32_t> (0x5834BA + 2) != 0x859520;
+            = inst->ReadMemory<uint32_t> (0x5834BA + 2) != 0x859520;
 
         ResetRaster ();
 
@@ -148,8 +148,9 @@ public:
                     || FindPlayerVehicle (-1, false))
                 {
                     // Calculate radar offset
-                    float radarWidth = injector::ReadMemory<float> (0x866B78);
-                    float oldX       = injector::ReadMemory<float> (0x858A10);
+                    float radarWidth
+                        = injector::ReadMemory<float> (0x866B78, true);
+                    float oldX = injector::ReadMemory<float> (0x858A10, true);
 
                     float calculation = isWidescreenFixInstalled
                                             ? (546.0f * CDraw::ms_fAspectRatio)
@@ -157,9 +158,9 @@ public:
 
                     float offset = calculation - radarWidth - 40;
 
-                    injector::WriteMemory<float> (0x858A10, offset);
+                    injector::WriteMemory<float> (0x858A10, offset, true);
                     CHud::DrawRadar ();
-                    injector::WriteMemory<float> (0x858A10, oldX);
+                    injector::WriteMemory<float> (0x858A10, oldX, true);
                 }
             }
         }

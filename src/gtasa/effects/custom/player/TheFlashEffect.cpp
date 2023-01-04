@@ -7,6 +7,8 @@
 
 class TheFlashEffect : public EffectBase
 {
+    static inline float playerSprintThreshold = 5.0f;
+
 public:
     bool
     CanActivate () override
@@ -17,14 +19,10 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->WriteMemory (0x8D2458, &playerSprintThreshold);
+
         HOOK_METHOD_ARGS (inst, Hooked_CEventDamage_AffectsPed,
                           bool (CEventDamage *, CPed *), 0x5E2F57, 0x5E3020);
-    }
-
-    void
-    OnEnd (EffectInstance *inst) override
-    {
-        injector::WriteMemory (0x8D2458, 5.0f);
     }
 
     void
@@ -47,7 +45,7 @@ public:
             = pad->GetSprint ()
               && !CMenuSystem::MenuInUse[CMenuSystem::CurrentMenuInUse];
 
-        injector::WriteMemory (0x8D2458, canFastSprint ? 0.5f : 5.0f);
+        playerSprintThreshold = canFastSprint ? 0.5f : 5.0f;
 
         if (canFastSprint) pad->NewState.ButtonCross = 0;
 
