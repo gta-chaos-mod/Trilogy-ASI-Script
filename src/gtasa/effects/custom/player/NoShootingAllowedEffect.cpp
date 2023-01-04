@@ -24,6 +24,19 @@ public:
         HOOK_METHOD_ARGS (inst, Hooked_CTaskSimpleGangDriveBy_FireGun,
                           char (CTaskSimpleGangDriveBy *, CPed * ped), 0x51A3FD,
                           0x62D60D);
+
+        HOOK_METHOD_ARGS (inst, Hooked_CVehicle_FirePlaneGuns,
+                          void (CVehicle *), 0x6E3A17);
+
+        HOOK_METHOD_ARGS (inst,
+                          Hooked_CVehicle_PossiblyDropFreeFallBombForPlayer,
+                          char (CVehicle *, int, bool), 0x6E3A27);
+
+        HOOK_METHOD_ARGS (inst, Hooked_CVehicle_FireHeatSeakingMissile,
+                          char (CVehicle *, CEntity *, bool), 0x6E3A72);
+
+        HOOK_METHOD_ARGS (inst, Hooked_CVehicle_FireUnguidedMissile,
+                          char (CVehicle *, int, bool), 0x6E3A82);
     }
 
     static char
@@ -61,6 +74,56 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (owner == player)
             Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (owner, 0);
+
+        return cb ();
+    }
+
+    static void
+    Hooked_CVehicle_FirePlaneGuns (auto &&cb, CVehicle *vehicle)
+    {
+        CPed *driver = vehicle->m_pDriver;
+
+        if (driver && driver->IsPlayer ())
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (driver, 0);
+
+        cb ();
+    }
+
+    static char
+    Hooked_CVehicle_PossiblyDropFreeFallBombForPlayer (auto    &&cb,
+                                                       CVehicle *vehicle,
+                                                       int       positionType,
+                                                       bool      checkTime)
+    {
+        CPed *driver = vehicle->m_pDriver;
+
+        if (driver && driver->IsPlayer ())
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (driver, 0);
+
+        return cb ();
+    }
+
+    static char
+    Hooked_CVehicle_FireHeatSeakingMissile (auto &&cb, CVehicle *vehicle,
+                                            CEntity *targetEntity,
+                                            bool     checkTime)
+    {
+        CPed *driver = vehicle->m_pDriver;
+
+        if (driver && driver->IsPlayer ())
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (driver, 0);
+
+        return cb ();
+    }
+
+    static char
+    Hooked_CVehicle_FireUnguidedMissile (auto &&cb, CVehicle *vehicle,
+                                         int positionType, bool checkTime)
+    {
+        CPed *driver = vehicle->m_pDriver;
+
+        if (driver && driver->IsPlayer ())
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (driver, 0);
 
         return cb ();
     }
