@@ -21,8 +21,8 @@ class Config
 # Websocket port for the connection to the GUI
 # Min: 1025
 # Max: 65535
-# Default: 9001
-GUIWebsocketPort = 9001
+# Default: 42069
+GUIWebsocketPort = 42069
 
 # Always count down effects, no matter if it's in a cutscene or the player is currently
 # in a specific state (e.g. getting arrested, getting wasted, etc.)

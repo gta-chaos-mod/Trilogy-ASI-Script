@@ -9,14 +9,14 @@
 #include <thread>
 
 #define GUI_WEBSOCKET_PORT                                                     \
-    std::max (1025, std::min (65535, CONFIG ("Chaos.GUIWebsocketPort", 9001)))
+    std::max (1025, std::min (65535, CONFIG ("Chaos.GUIWebsocketPort", 42069)))
 
 class Websocket
 {
     static inline bool connectionHandlerInitialized = false;
 
-    static inline std::string GUI_WEBSOCKET_URL = "ws://localhost:9001";
-    static inline std::string CC_WEBSOCKET_URL  = "ws://localhost:9002";
+    static inline std::string GUI_WEBSOCKET_URL = "ws://localhost:42069";
+    static inline std::string CC_WEBSOCKET_URL  = "ws://localhost:42070";
 
     // Websocket Client
     static inline std::atomic_bool                         stopClient = false;
