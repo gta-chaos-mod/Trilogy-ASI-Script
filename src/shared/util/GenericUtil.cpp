@@ -82,7 +82,7 @@ GenericUtil::IsMenuActive ()
 #ifdef GTASA
     return FrontEndMenuManager.m_bMenuActive;
 #elif GTAVC
-    return FrontendMenuManager.m_bMenuVisible;
+    return FrontEndMenuManager.m_bMenuActive;
 #elif GTA3
     return FrontEndMenuManager.m_bMenuActive;
 #endif

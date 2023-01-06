@@ -90,7 +90,8 @@ public:
                 if (weapon.m_nTotalAmmo > 0)
                 {
                     storedWeapons.push_back (
-                        std::make_pair (weapon.m_nType, weapon.m_nTotalAmmo));
+                        std::make_pair (weapon.m_eWeaponType,
+                                        weapon.m_nTotalAmmo));
                 }
             }
 
@@ -114,7 +115,7 @@ public:
 
         CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (activeWeapon, 1);
         if (player->m_nActiveWeaponSlot != info->m_nSlot
-            || player->m_aWeapons[player->m_nActiveWeaponSlot].m_nType
+            || player->m_aWeapons[player->m_nActiveWeaponSlot].m_eWeaponType
                    != activeWeapon)
         {
             int model = info->m_nModelId1;

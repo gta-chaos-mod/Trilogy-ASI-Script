@@ -16,7 +16,7 @@ public:
         if (player) player->m_nPedFlags.CantBeKnockedOffBike = 0;
 
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (vehicle) vehicle->m_nDoorLock = eCarLock::CARLOCK_UNLOCKED;
+        if (vehicle) vehicle->m_eDoorLock = eDoorLock::DOORLOCK_UNLOCKED;
     }
 
     void
@@ -27,7 +27,7 @@ public:
         if (vehicle && vehicle->CanBeDriven ()
             && vehicle->m_nStatus != STATUS_WRECKED)
         {
-            vehicle->m_nDoorLock = eCarLock::CARLOCK_LOCKED_PLAYER_INSIDE;
+            vehicle->m_eDoorLock = eDoorLock::DOORLOCK_LOCKED_PLAYER_INSIDE;
 
             CPlayerPed *player = FindPlayerPed ();
             if (player) player->m_nPedFlags.CantBeKnockedOffBike = 1;

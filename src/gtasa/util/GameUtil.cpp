@@ -259,7 +259,7 @@ GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
             vehicle->SetPosn (position);
             vehicle->SetOrientation (0.0f, 0.0f, orientation);
             vehicle->m_nStatus   = STATUS_ABANDONED;
-            vehicle->m_nDoorLock = CARLOCK_UNLOCKED;
+            vehicle->m_eDoorLock = eDoorLock::DOORLOCK_UNLOCKED;
             if (clearSpace)
             {
                 CTheScripts::ClearSpaceForMissionEntity (position, vehicle);

@@ -91,11 +91,16 @@ DrawHelper::DrawVersion ()
 {
     if (GenericUtil::IsMenuActive () && KeyPressed (VK_F7))
     {
+        std::string version{GenericUtil::GetModVersion ()};
+#ifdef GTASA
+        int lines = CFont::GetNumberLines (0.0f, 0.0f, version.data ());
+#else
         int lines = CFont::GetNumberLines (
-            0.0f, 0.0f, (char *) GenericUtil::GetModVersion ().c_str ());
-
-        gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
-                         GenericUtil::GetModVersion (), 20.0f, lines * 50.0f,
+            0.0f, 0.0f,
+            std::wstring (version.begin (), version.end ()).c_str ());
+#endif
+        gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft, version,
+                         20.0f, lines * 50.0f,
                          FONT_DEFAULT, 1.0f, 1.4f, color::White, 2,
                          color::Black, true);
     }
