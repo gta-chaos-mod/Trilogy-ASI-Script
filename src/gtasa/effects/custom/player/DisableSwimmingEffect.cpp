@@ -1,3 +1,5 @@
+// Effect created by gromcheck
+
 #include "util/EffectBase.h"
 
 class DisableSwimmingEffect : public EffectBase
@@ -7,26 +9,15 @@ public:
     OnProcessScripts (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player && !FindPlayerVehicle (-1, false))
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (!pad)
-            {
-                return;
-            }
+        if (!player || !FindPlayerVehicle (-1, false)) return;
 
-            bool cond = player->m_pIntelligence->GetTaskSwim ();
-            cond |= player->m_nPhysicalFlags.bSubmergedInWater;
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
 
-            if (cond)
-            {
-                pad->DisablePlayerControls = true;
-            }
-            else
-            {
-                pad->DisablePlayerControls = false;
-            }
-        }
+        bool cond = player->m_pIntelligence->GetTaskSwim ();
+        cond |= player->m_nPhysicalFlags.bSubmergedInWater;
+
+        pad->DisablePlayerControls = cond;
     }
 };
 
