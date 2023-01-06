@@ -7,6 +7,8 @@
 
 class Config
 {
+    static inline bool fileWatcherInitialized = false;
+
     static inline std::shared_ptr<cpptoml::table> config;
 #ifdef GTASA
     static inline std::string configContent

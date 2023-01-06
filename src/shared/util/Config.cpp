@@ -7,16 +7,23 @@
 void
 Config::Init ()
 {
-    efsw::FileWatcher  *fileWatcher = new efsw::FileWatcher ();
-    FileUpdateListener *listener    = new FileUpdateListener ();
-
-    efsw::WatchID watchID
-        = fileWatcher->addWatch (GetConfigPath ().parent_path ().string (),
-                                 listener, false);
-
-    fileWatcher->watch ();
-
     ReloadConfig ();
+
+    if (!fileWatcherInitialized)
+    {
+        const std::filesystem::path configPath = GetConfigPath ();
+
+        efsw::FileWatcher  *fileWatcher = new efsw::FileWatcher ();
+        FileUpdateListener *listener    = new FileUpdateListener ();
+
+        efsw::WatchID watchID
+            = fileWatcher->addWatch (GetConfigPath ().parent_path ().string (),
+                                     listener, false);
+
+        fileWatcher->watch ();
+
+        fileWatcherInitialized = true;
+    }
 }
 
 void
