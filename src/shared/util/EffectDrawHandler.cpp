@@ -146,20 +146,20 @@ EffectDrawHandler::PrintEffectTimer ()
         if (effect->HasSubtext ())
         {
             if (drawLeft)
-                yLeft -= 10.0f;
+                yLeft -= 8.0f;
             else
-                yRight -= 10.0f;
+                yRight -= 8.0f;
         }
 
         CVector2D center
             = CVector2D (SCREEN_COORD_LEFT (x) - SCREEN_COORD (33.0f),
-                         SCREEN_COORD_BOTTOM (yLeft) + SCREEN_COORD (10.0f));
+                         SCREEN_COORD_BOTTOM (yLeft) + SCREEN_COORD (12.0f));
 
         if (!drawLeft)
         {
             center = CVector2D (SCREEN_COORD_RIGHT (x) + SCREEN_COORD (33.0f),
                                 SCREEN_COORD_BOTTOM (yRight)
-                                    + SCREEN_COORD (10.0f));
+                                    + SCREEN_COORD (12.0f));
         }
 
         RwTextureFilterMode filter        = rwFILTERLINEAR;
@@ -184,7 +184,7 @@ EffectDrawHandler::PrintEffectTimer ()
         if (actualRemaining < 60000)
         {
             float timerPosX = x - 40;
-            float timerPosY = drawLeft ? yLeft : yRight;
+            float timerPosY = drawLeft ? yLeft - 2.0f : yRight - 2.0f;
 
             if (drawLeft)
             {
@@ -210,21 +210,25 @@ EffectDrawHandler::PrintEffectTimer ()
     }
     else
     {
+        float textPosX = x - 50.0f;
+        float textPosY = drawLeft ? yLeft - 4.0f : yRight - 4.0f;
+        if (effect->HasSubtext ()) textPosY -= 6.0f;
+
         if (drawLeft)
         {
             gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
                              GenericUtil::FormatTime (actualRemaining),
-                             x - 60.0f, yLeft - 8.0f, FONT_DEFAULT,
-                             SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y, GetTextColor (),
-                             1, GetDropShadowColor (), true, 9999.0f, true);
+                             textPosX, textPosY, FONT_DEFAULT, SUBTEXT_SCALE_X,
+                             SUBTEXT_SCALE_Y, GetTextColor (), 1,
+                             GetDropShadowColor (), true, 9999.0f, true);
         }
         else
         {
             gamefont::Print (gamefont::RightBottom, gamefont::AlignRight,
                              GenericUtil::FormatTime (actualRemaining),
-                             x - 60.0f, yRight - 8.0f, FONT_DEFAULT,
-                             SUBTEXT_SCALE_X, SUBTEXT_SCALE_Y, GetTextColor (),
-                             1, GetDropShadowColor (), true, 9999.0f, true);
+                             textPosX, textPosY, FONT_DEFAULT, SUBTEXT_SCALE_X,
+                             SUBTEXT_SCALE_Y, GetTextColor (), 1,
+                             GetDropShadowColor (), true, 9999.0f, true);
         }
     }
 }
