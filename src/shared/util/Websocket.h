@@ -15,8 +15,7 @@ class Websocket
 {
     static inline bool connectionHandlerInitialized = false;
 
-    static inline std::string GUI_WEBSOCKET_URL = "ws://localhost:42069";
-    static inline std::string CC_WEBSOCKET_URL  = "ws://localhost:42070";
+    static inline std::string CC_WEBSOCKET_URL = "ws://localhost:42070";
 
     // Websocket Client
     static inline std::atomic_bool                         stopClient = false;
