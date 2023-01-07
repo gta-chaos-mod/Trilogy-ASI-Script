@@ -403,7 +403,8 @@ private:
     {
         if (currentStuntJump && !FindPlayerVehicle (-1, false))
         {
-            currentStuntJump      = nullptr;
+            currentStuntJump = nullptr;
+            injector::WriteMemory<int> (0xA9A898, 0, true);
             CTimer::ms_fTimeScale = 1.0f;
             TheCamera.RestoreWithJumpCut ();
         }

@@ -1,5 +1,7 @@
+#include "util/CStuntJump.h"
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
+#include "util/GenericUtil.h"
 #include "util/Teleportation.h"
 
 #include <CStreaming.h>
@@ -12,6 +14,8 @@ class RandomStuntJumpEffect : public EffectBase
         CVector orientation = {0.0f, 0.0f, 0.0f};
         float   velocity    = 1.0f;
     };
+
+    static inline CStuntJump *&currentStuntJump = *(CStuntJump **) 0xA9A88C;
 
     // clang-format off
     std::vector<StuntJump> stuntJumps = {
@@ -30,6 +34,7 @@ class RandomStuntJumpEffect : public EffectBase
     // clang-format on
 
     bool teleported = false;
+    int  wait       = 3000;
 
 public:
     bool
@@ -41,6 +46,9 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetDuration (1000 * 120);
+        inst->SetTimerVisible (false);
+        wait       = 3000;
         teleported = false;
     }
 
@@ -71,9 +79,20 @@ public:
             Teleport (randomJump);
 
             teleported = true;
-
-            inst->SetDuration (1000 * 10);
+            return;
         }
+
+        wait -= (int) GenericUtil::CalculateTick ();
+        if (wait > 0)
+        {
+            inst->ResetTimer ();
+            return;
+        }
+
+        if (currentStuntJump)
+            inst->ResetTimer ();
+        else
+            inst->Disable ();
     }
 
     void
