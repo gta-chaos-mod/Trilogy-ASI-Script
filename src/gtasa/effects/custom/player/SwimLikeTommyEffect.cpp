@@ -9,36 +9,29 @@ class SwimLikeTommyEffect : public EffectBase
 
 public:
     void
-    OnProcessScripts (EffectInstance *inst) override
+    OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (!player || !FindPlayerVehicle (-1, false)) return;
+        if (!player || FindPlayerVehicle (-1, false)) return;
 
         CPad *pad = player->GetPadFromPlayer ();
         if (!pad) return;
 
         bool cond = player->m_pIntelligence->GetTaskSwim ();
-        cond |= player->m_nPhysicalFlags.bSubmergedInWater;
 
         pad->DisablePlayerControls = cond;
+
+        if (cond) DrainPlayerHealth (player);
     }
 
     void
-    OnTick (EffectInstance *inst) override
+    DrainPlayerHealth (CPlayerPed *player)
     {
         wait -= (int) GenericUtil::CalculateTick ();
         if (wait > 0) return;
 
-        CPlayerPed *player = FindPlayerPed ();
-        if (!player) return;
-
-        bool cond = player->m_pIntelligence->GetTaskSwim ();
-        cond |= player->m_nPhysicalFlags.bSubmergedInWater;
-
-        if (cond)
-        {
-            player->m_fHealth -= player->m_fMaxHealth * 0.01f;
-        }
+        player->m_fHealth -= player->m_fMaxHealth * 0.01f;
+        player->m_fHealth = std::max (0.0f, player->m_fHealth);
 
         wait = 50;
     }
