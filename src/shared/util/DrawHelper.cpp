@@ -76,10 +76,7 @@ DrawHelper::DrawEffects ()
 {
     if (!CONFIG ("Drawing.Enabled", true)) return;
 
-    bool drawActiveEffects = CONFIG ("Drawing.DrawActiveEffects", true);
-
-    if (!drawActiveEffects) return;
-    if (Globals::enabledEffects["hide_chaos_ui"]) return;
+    if (!CONFIG ("Drawing.DrawActiveEffects", true)) return;
 
     DrawRecentEffects ();
 }

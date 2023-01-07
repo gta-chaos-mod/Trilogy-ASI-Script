@@ -11,6 +11,10 @@
 
 #include <algorithm>
 
+#ifdef GTASA
+#include <CMenuSystem.h>
+#endif
+
 #include <CFont.h>
 #include <extensions/FontPrint.h>
 
@@ -421,13 +425,25 @@ EffectDrawHandler::GetTextColor () const
     if (!effect->IsRunning () || !effect->DoesEffectDrawTimer ())
         color = disabledColor;
 
+#ifdef GTASA
+    if (CMenuSystem::num_menus_in_use && !effect->IsOneTimeEffect ())
+        color.a = 10;
+#endif
+
     return color;
 };
 
 CRGBA
 EffectDrawHandler::GetDropShadowColor ()
 {
-    return color::Black;
+    CRGBA color (color::Black);
+
+#ifdef GTASA
+    if (CMenuSystem::num_menus_in_use && !effect->IsOneTimeEffect ())
+        color.a = 10;
+#endif
+
+    return color;
 };
 
 CRGBA
