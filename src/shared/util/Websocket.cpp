@@ -17,10 +17,6 @@ Websocket::Cleanup ()
     }
 
     wsClient.reset ();
-
-#ifdef _WIN32
-    WSACleanup ();
-#endif
 }
 
 std::string
@@ -45,23 +41,11 @@ Websocket::SetupClientThread ()
     {
         if (!wsClient.get ())
         {
-            if (Websocket::IsClientConnectingOrConnected ()) continue;
+            if (IsClientConnectingOrConnected ()) continue;
 
             try
             {
                 using easywsclient::WebSocket;
-
-#ifdef _WIN32
-                INT     rc;
-                WSADATA wsaData;
-
-                rc = WSAStartup (MAKEWORD (2, 2), &wsaData);
-                if (rc)
-                {
-                    printf ("WSAStartup Failed.\n");
-                    continue;
-                }
-#endif
 
                 std::shared_ptr<WebSocket> newClient (
                     WebSocket::from_url (GetWebsocketURL ()));
@@ -82,7 +66,7 @@ Websocket::SetupClientThread ()
                                          { CallFunction (message); });
                 }
 
-                Websocket::Cleanup ();
+                Cleanup ();
             }
             catch (...)
             {
@@ -93,9 +77,9 @@ Websocket::SetupClientThread ()
         {
             std::this_thread::sleep_for (std::chrono::seconds (3));
 
-            if (!Websocket::IsClientConnectingOrConnected ())
+            if (!IsClientConnectingOrConnected ())
             {
-                Websocket::Cleanup ();
+                Cleanup ();
             }
         }
     }
@@ -106,7 +90,19 @@ Websocket::SetupConnectionHandler ()
 {
     if (connectionHandlerInitialized) return;
 
-    std::thread setupThread ([] () { SetupClientThread (); });
+#ifdef _WIN32
+    INT     rc;
+    WSADATA wsaData;
+
+    rc = WSAStartup (MAKEWORD (2, 2), &wsaData);
+    if (rc)
+    {
+        fprintf (stderr, "[GTA Chaos] WSAStartup Failed. Error: %d\n", rc);
+        return;
+    }
+#endif
+
+    std::thread setupThread (SetupClientThread);
     setupThread.detach ();
 
     connectionHandlerInitialized = true;
