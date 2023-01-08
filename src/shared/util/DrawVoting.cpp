@@ -1,7 +1,14 @@
 #include "DrawVoting.h"
 
 #include "util/ColorHelper.h"
+#include "util/Config.h"
 #include "util/Globals.h"
+
+static const float TEXT_SCALE_X = 0.6f;
+static const float TEXT_SCALE_Y = 0.8f;
+
+static const float SUBTEXT_SCALE_X = 0.4f;
+static const float SUBTEXT_SCALE_Y = 0.6f;
 
 void
 DrawVoting::DrawVotes ()
@@ -27,7 +34,8 @@ DrawVoting::DrawVotes ()
             }
         }
 
-        drawRemaining -= (int) GenericUtil::CalculateTick ();
+        drawRemaining
+            = std::max (0, drawRemaining - (int) GenericUtil::CalculateTick ());
         return;
     }
 
@@ -61,13 +69,14 @@ DrawVoting::UpdateVotes (std::vector<std::string> effects,
 void
 DrawVoting::DrawVote (int choice)
 {
+    if (!drawRemaining && votes[choice].offset == 0.0f) return;
     if (votes[choice].description == "") return;
 
     float barX = 0.0f;
     float x    = 0.0f;
     if (choice == 0)
     { // Left Align
-        x = SCREEN_COORD_LEFT (100.0f) + SCREEN_COORD (150.0f);
+        x = SCREEN_COORD_CENTER_X - SCREEN_COORD (400.0f);
     }
     else if (choice == 1)
     { // Center Align
@@ -75,30 +84,40 @@ DrawVoting::DrawVote (int choice)
     }
     else if (choice == 2)
     { // Right Align
-        x = SCREEN_COORD_RIGHT (100.0f) - SCREEN_COORD (150.0f);
+        x = SCREEN_COORD_CENTER_X + SCREEN_COORD (400.0f);
     }
 
+    bool drawVotesOnTop = CONFIG ("Drawing.DrawVotesOnTop", false);
+
 #ifdef GTASA
-    float y = SCREEN_COORD_BOTTOM (CalculateYOffset (choice, 65.0f));
-#else
     float y = SCREEN_COORD_BOTTOM (CalculateYOffset (choice, 75.0f));
+
+    if (drawVotesOnTop)
+        y = SCREEN_COORD_TOP (CalculateYOffset (choice, 75.0f))
+            - SCREEN_MULTIPLIER (TEXT_SCALE_Y);
+#else
+    float y = SCREEN_COORD_BOTTOM (CalculateYOffset (choice, 85.0f));
+
+    if (drawVotesOnTop)
+        y = SCREEN_COORD_TOP (CalculateYOffset (choice, 85.0f))
+            - SCREEN_MULTIPLIER (TEXT_SCALE_Y);
 #endif
     std::string_view description = votes[choice].description;
 
     if (Globals::enabledEffects["replace_all_text"] && pickedVote != -1)
         description = Globals::replaceAllTextString;
 
+    CRGBA color = (pickedVote == -1 || pickedVote == choice) ? color::White
+                                                             : color::DarkGray;
     gamefont::PrintUnscaled (std::string (description), x, y, FONT_DEFAULT,
-                             SCREEN_MULTIPLIER (0.8f), SCREEN_MULTIPLIER (1.0f),
-                             (pickedVote == -1 || pickedVote == choice)
-                                 ? color::White
-                                 : color::DarkGray,
+                             SCREEN_MULTIPLIER (TEXT_SCALE_X),
+                             SCREEN_MULTIPLIER (TEXT_SCALE_Y), color,
                              gamefont::AlignCenter, 1, color::Black, true);
 
     // Vote Bars
-    float barWidth = 300.0f;
+    float barWidth = 200.0f;
     float barStart = x - SCREEN_COORD (barWidth / 2);
-    y += SCREEN_COORD (40.0f);
+    y += drawVotesOnTop ? -SCREEN_COORD (20.0f) : SCREEN_COORD (30.0f);
 
     // Outline Bar
     CRect rect
@@ -123,11 +142,8 @@ DrawVoting::DrawVote (int choice)
     float percentage_x = barStart + 150.0f;
 
     gamefont::PrintUnscaled (GetPercentage (choice), x, y - SCREEN_COORD (3.0f),
-                             FONT_DEFAULT, SCREEN_MULTIPLIER (0.4f),
-                             SCREEN_MULTIPLIER (0.6f),
-                             (pickedVote == -1 || pickedVote == choice)
-                                 ? color::White
-                                 : color::DarkGray,
+                             FONT_DEFAULT, SCREEN_MULTIPLIER (SUBTEXT_SCALE_X),
+                             SCREEN_MULTIPLIER (SUBTEXT_SCALE_Y), color,
                              gamefont::AlignCenter, 1, color::Black, true);
 }
 

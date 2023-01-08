@@ -334,7 +334,7 @@ EffectDrawHandler::DrawRecentEffects ()
 
         if (!Globals::enabledEffects["hide_chaos_ui"]
             || effect.GetEffect ()->GetID () == "effect_hide_chaos_ui")
-            effect.Draw (CONFIG ("Drawing.TopToBottom", true)
+            effect.Draw (CONFIG ("Drawing.EffectsTopToBottom", true)
                              ? RECENT_EFFECTS - i + 1
                              : i,
                          inset, true);
@@ -349,7 +349,7 @@ EffectDrawHandler::DrawRecentEffects ()
         if (++i > RECENT_EFFECTS) break;
 
         if (!Globals::enabledEffects["hide_chaos_ui"])
-            effect.Draw (CONFIG ("Drawing.TopToBottom", true)
+            effect.Draw (CONFIG ("Drawing.EffectsTopToBottom", true)
                              ? RECENT_EFFECTS - i + 1
                              : i,
                          inset, false);

@@ -60,14 +60,14 @@ DrawHelper::Draw ()
     if (!CONFIG ("Drawing.Enabled", true)) return;
     if (Globals::enabledEffects["hide_chaos_ui"]) return;
 
-    if (CONFIG ("Drawing.DrawRemainingTimeBar", true))
-    {
-        DrawTopBar ();
-    }
-
     if (CONFIG ("Drawing.DrawVoting", true))
     {
         DrawVoting::DrawVotes ();
+    }
+
+    if (CONFIG ("Drawing.DrawRemainingTimeBar", true))
+    {
+        DrawTopBar ();
     }
 }
 

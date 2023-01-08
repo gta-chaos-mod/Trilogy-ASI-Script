@@ -130,7 +130,11 @@ RainbowColors = true
 # Will draw effects from the top instead of from the bottom
 # The newest effect will be added at the top
 # Default: true
-TopToBottom = true
+EffectsTopToBottom = true
+
+# Will draw votes on the top of the screen instead of the bottom
+# Default: false
+DrawVotesOnTop = true
 
 #######################################################
 
