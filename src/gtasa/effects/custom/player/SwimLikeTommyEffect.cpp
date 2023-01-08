@@ -3,6 +3,9 @@
 #include "util/EffectBase.h"
 #include "util/GenericUtil.h"
 
+// TODO: Maybe disable in Amphibious Assault and
+// The Da Nang Thang missions?
+
 class SwimLikeTommyEffect : public EffectBase
 {
     int wait = 0;
