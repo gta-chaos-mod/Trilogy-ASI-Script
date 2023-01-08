@@ -55,7 +55,7 @@ public:
         Command<eScriptCommands::COMMAND_ADD_EXPLOSION> (position.x, position.y,
                                                          position.z, 0);
 
-        CCheat::SuicideCheat ();
+        Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
 
         inst->Disable ();
     }
