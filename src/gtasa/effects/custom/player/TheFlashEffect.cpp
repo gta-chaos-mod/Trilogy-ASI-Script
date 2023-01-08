@@ -25,9 +25,6 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         inst->WriteMemory (0x8D2458, 5.0f, false);
-
-        HOOK_METHOD_ARGS (inst, Hooked_CEventDamage_AffectsPed,
-                          bool (CEventDamage *, CPed *), 0x5E2F57, 0x5E3020);
     }
 
     void
