@@ -4,7 +4,7 @@ include(FetchContent)
 
 FetchContent_Declare(LIB_uWebSockets
   GIT_REPOSITORY https://github.com/uNetworking/uWebSockets/
-  GIT_TAG v20.31.0)
+  GIT_TAG v20.35.0)
 
 message("Fetching uWebSockets from GitHub...")
 FetchContent_MakeAvailable (LIB_uWebSockets)
