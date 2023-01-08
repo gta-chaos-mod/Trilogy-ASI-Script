@@ -52,7 +52,7 @@ public:
         if (!rydersCar || !IsVehiclePointerValid (rydersCar)
             || rydersCar->m_nStatus != STATUS_WRECKED)
         {
-            CCheat::SuicideCheat ();
+            Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
             return;
         }
 
