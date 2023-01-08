@@ -334,7 +334,10 @@ EffectDrawHandler::DrawRecentEffects ()
 
         if (!Globals::enabledEffects["hide_chaos_ui"]
             || effect.GetEffect ()->GetID () == "effect_hide_chaos_ui")
-            effect.Draw (i, inset, true);
+            effect.Draw (CONFIG ("Drawing.TopToBottom", true)
+                             ? RECENT_EFFECTS - i + 1
+                             : i,
+                         inset, true);
     }
 
     if (!Globals::enabledEffects["hide_chaos_ui"]) DrawAndXMore ();
@@ -346,7 +349,10 @@ EffectDrawHandler::DrawRecentEffects ()
         if (++i > RECENT_EFFECTS) break;
 
         if (!Globals::enabledEffects["hide_chaos_ui"])
-            effect.Draw (i, inset, false);
+            effect.Draw (CONFIG ("Drawing.TopToBottom", true)
+                             ? RECENT_EFFECTS - i + 1
+                             : i,
+                         inset, false);
     }
 }
 
