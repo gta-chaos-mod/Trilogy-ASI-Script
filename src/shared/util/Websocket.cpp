@@ -60,7 +60,7 @@ Websocket::SetupClientThread ()
                 while (newClient != nullptr
                        && newClient->getReadyState () == WebSocket::OPEN)
                 {
-                    newClient->poll (10);
+                    newClient->poll (50);
 
                     newClient->dispatch ([] (const std::string &message)
                                          { CallFunction (message); });
