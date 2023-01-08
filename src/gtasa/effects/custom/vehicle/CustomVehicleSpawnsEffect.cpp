@@ -14,13 +14,17 @@
 
 using namespace plugin;
 
-template <signed int vehicleID>
 class CustomVehicleSpawnsEffect : public EffectBase
 {
+    static inline int vehicleID = 411; // Default: Infernus
+
 public:
     void
     OnStart (EffectInstance *inst) override
     {
+        vehicleID = inst->GetCustomData ().value ("vehicleID", 411);
+        vehicleID = std::clamp (vehicleID, 400, 611);
+
         // Traffic
         HOOK_ARGS (inst, Hooked_RandomizeTrafficCars, signed int (int *),
                    0x43022A);
@@ -233,52 +237,5 @@ public:
     }
 };
 
-// Infernus
-using InfernusVehicleSpawnsEffect = CustomVehicleSpawnsEffect<411>;
-DEFINE_EFFECT (InfernusVehicleSpawnsEffect, "effect_vehicle_spawns_infernus",
-               GROUP_VEHICLE_RARITY);
-
-// Bobcat
-using BobcatVehicleSpawnsEffect = CustomVehicleSpawnsEffect<422>;
-DEFINE_EFFECT (BobcatVehicleSpawnsEffect, "effect_vehicle_spawns_bobcat",
-               GROUP_VEHICLE_RARITY);
-
-// Rhino / Tank
-using RhinoVehicleSpawnsEffect = CustomVehicleSpawnsEffect<432>;
-DEFINE_EFFECT (RhinoVehicleSpawnsEffect, "effect_vehicle_spawns_rhino",
-               GROUP_VEHICLE_RARITY);
-
-// Caddy
-using CaddyVehicleSpawnsEffect = CustomVehicleSpawnsEffect<457>;
-DEFINE_EFFECT (CaddyVehicleSpawnsEffect, "effect_vehicle_spawns_caddy",
-               GROUP_VEHICLE_RARITY);
-
-// Kart
-using KartVehicleSpawnsEffect = CustomVehicleSpawnsEffect<571>;
-DEFINE_EFFECT (KartVehicleSpawnsEffect, "effect_vehicle_spawns_kart",
-               GROUP_VEHICLE_RARITY);
-
-// Monster
-using MonsterVehicleSpawnsEffect = CustomVehicleSpawnsEffect<444>;
-DEFINE_EFFECT (MonsterVehicleSpawnsEffect, "effect_vehicle_spawns_monster",
-               GROUP_VEHICLE_RARITY);
-
-// Mower
-using MowerVehicleSpawnsEffect = CustomVehicleSpawnsEffect<572>;
-DEFINE_EFFECT (MowerVehicleSpawnsEffect, "effect_vehicle_spawns_mower",
-               GROUP_VEHICLE_RARITY);
-
-// Vortex
-using VortexVehicleSpawnsEffect = CustomVehicleSpawnsEffect<539>;
-DEFINE_EFFECT (VortexVehicleSpawnsEffect, "effect_vehicle_spawns_vortex",
-               GROUP_VEHICLE_RARITY);
-
-// Combine
-using CombineVehicleSpawnsEffect = CustomVehicleSpawnsEffect<532>;
-DEFINE_EFFECT (CombineVehicleSpawnsEffect, "effect_vehicle_spawns_combine",
-               GROUP_VEHICLE_RARITY);
-
-// Mr. Whoopee
-using WhoopeeVehicleSpawnsEffect = CustomVehicleSpawnsEffect<423>;
-DEFINE_EFFECT (WhoopeeVehicleSpawnsEffect, "effect_vehicle_spawns_whoopee",
+DEFINE_EFFECT (CustomVehicleSpawnsEffect, "effect_custom_vehicle_spawns",
                GROUP_VEHICLE_RARITY);
