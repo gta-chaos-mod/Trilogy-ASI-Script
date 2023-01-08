@@ -17,7 +17,7 @@ public:
 
             if (origVehicleHandling[i].m_bIsBike) continue;
 
-            gHandlingDataMgr.m_aVehicleHandling[i].m_vecCentreOfMass.z = 2.0f;
+            gHandlingDataMgr.m_aVehicleHandling[i].m_vecCentreOfMass.z = 1.5f;
         }
     }
 
