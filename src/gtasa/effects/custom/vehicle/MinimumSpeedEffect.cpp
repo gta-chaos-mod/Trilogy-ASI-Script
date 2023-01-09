@@ -6,9 +6,12 @@
 
 using namespace plugin;
 
+// TODO: Explode BMX separately
+
 class MinimumSpeedEffect : public EffectBase
 {
-    static inline const float SPEED_THRESHOLD = 80.0f;
+    static inline const float VELOCITY_CONST           = 0.277778f / 50.f;
+    static inline const float FALLBACK_SPEED_THRESHOLD = 80.0f;
 
     static inline CVehicle *lastVehicle;
     static inline int       timeLeft     = 1000 * 10;
@@ -57,7 +60,7 @@ public:
 
         int tick = (int) GenericUtil::CalculateTick ();
 
-        if (currentSpeed >= SPEED_THRESHOLD)
+        if (currentSpeed >= GetVehicleMaxSpeed () / 2)
             timeLeft += tick;
         else
         {
@@ -77,13 +80,26 @@ public:
     }
 
     float
-    GetVehicleSpeed (float inKMH = true)
+    GetVehicleSpeed ()
     {
         if (!IsVehiclePointerValid (lastVehicle)) return 0.0f;
 
-        float speed = lastVehicle->m_vecMoveSpeed.Magnitude ();
+        float currentSpeed
+            = lastVehicle->m_pHandlingData->m_transmissionData.m_fCurrentSpeed
+              / VELOCITY_CONST;
 
-        return inKMH ? speed * 175.0f : speed;
+        return std::abs (currentSpeed);
+    }
+
+    static float
+    GetVehicleMaxSpeed ()
+    {
+        if (!IsVehiclePointerValid (lastVehicle))
+            return FALLBACK_SPEED_THRESHOLD;
+
+        return lastVehicle->m_pHandlingData->m_transmissionData
+                   .m_fMaxGearVelocity
+               / VELOCITY_CONST;
     }
 
     bool
@@ -184,8 +200,9 @@ public:
         char speedBuffer[64];
         sprintf_s (speedBuffer, "%.0f", currentSpeed);
 
-        CRGBA speedColor
-            = currentSpeed > SPEED_THRESHOLD ? color::White : color::Orange;
+        CRGBA speedColor = currentSpeed > (GetVehicleMaxSpeed () / 2)
+                               ? color::White
+                               : color::Orange;
 
         gamefont::PrintUnscaled (speedBuffer,
                                  left + (SCREEN_MULTIPLIER (width) / 2),
