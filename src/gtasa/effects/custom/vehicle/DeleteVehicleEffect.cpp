@@ -52,12 +52,11 @@ public:
 
         for (CPed *ped : vehicle->m_apPassengers)
         {
-            if (ped)
-            {
-                Command<eScriptCommands::
-                            COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
-                    ped, vehicle);
-            }
+            if (!ped) continue;
+
+            Command<eScriptCommands::
+                        COMMAND_REMOVE_CHAR_FROM_CAR_MAINTAIN_POSITION> (
+                ped, vehicle);
         }
     }
 };

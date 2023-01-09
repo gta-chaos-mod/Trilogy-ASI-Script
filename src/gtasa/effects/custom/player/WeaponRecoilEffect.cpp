@@ -32,17 +32,17 @@ public:
     {
         if (CMenuSystem::num_menus_in_use) return;
 
-        if (recoilValue > 0.0f)
-        {
-            CPlayerPed *player = FindPlayerPed ();
-            if (player)
-            {
-                CPad *pad = player->GetPadFromPlayer ();
-                if (pad) pad->NewMouseControllerState.y += recoilValue;
-            }
+        if (recoilValue <= 0.0f) return;
 
-            recoilValue -= GenericUtil::CalculateTick (0.5f);
-        }
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (pad) pad->NewMouseControllerState.y += recoilValue;
+
+        recoilValue
+            = std::max (0.0f, recoilValue
+                                  - (float) GenericUtil::CalculateTick (0.5f));
     }
 
     static char
@@ -51,15 +51,14 @@ public:
                          CEntity *targetEntity, CVector *vecTarget,
                          CVector *arg_14)
     {
-        if (owner == FindPlayerPed () && !FindPlayerVehicle (-1, false))
-        {
-            recoilValue = 16.0f;
+        if (!owner->IsPlayer ()) return cb ();
 
-            if (thisWeapon->m_eWeaponType == WEAPON_SNIPERRIFLE)
-            {
-                recoilValue *= 4.0f;
-            }
-        }
+        if (FindPlayerVehicle (-1, false)) return cb ();
+
+        recoilValue = 16.0f;
+
+        if (thisWeapon->m_eWeaponType == WEAPON_SNIPERRIFLE)
+            recoilValue *= 4.0f;
 
         return cb ();
     }

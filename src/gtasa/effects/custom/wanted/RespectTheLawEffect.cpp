@@ -1,4 +1,4 @@
-//Effect created by gromchek
+// Effect created by gromchek
 
 #include "util/EffectBase.h"
 
@@ -14,17 +14,12 @@ public:
         CWanted *wanted = FindPlayerWanted (-1);
         if (!wanted) return;
 
-        if (!player->CanSetPedState () || !player->IsAlive ())
-        {
-            return;
-        }
+        if (!player->CanSetPedState () || !player->IsAlive ()) return;
 
-        if (wanted->m_nWantedLevel > 0)
-        {
-            player->SetPedState (PEDSTATE_ARRESTED);
-        }
+        if (!wanted->m_nWantedLevel) return;
+
+        player->SetPedState (PEDSTATE_ARRESTED);
     }
 };
 
-DEFINE_EFFECT (RespectTheLawEffect, "effect_respect_the_law",
-               GROUP_WANTED);
+DEFINE_EFFECT (RespectTheLawEffect, "effect_respect_the_law", GROUP_WANTED);

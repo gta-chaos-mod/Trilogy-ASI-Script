@@ -23,7 +23,9 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        if (!didSave) inst->OverrideName ("Autosave Failed");
+        if (didSave) return;
+
+        inst->OverrideName ("Autosave Failed");
     }
 
     void

@@ -25,10 +25,9 @@ public:
 
         Command<eScriptCommands::COMMAND_TASK_LEAVE_CAR_IMMEDIATELY> (player,
                                                                       vehicle);
-        if (!CTheScripts::IsPlayerOnAMission ())
-        {
-            vehicle->m_nVehicleFlags.bConsideredByPlayer = false;
-        }
+        if (CTheScripts::IsPlayerOnAMission ()) return;
+
+        vehicle->m_nVehicleFlags.bConsideredByPlayer = false;
     }
 };
 

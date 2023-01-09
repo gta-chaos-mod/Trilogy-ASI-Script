@@ -7,7 +7,9 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player) player->CheatWantedLevel (4);
+        if (!player) return;
+
+        player->CheatWantedLevel (4);
     }
 };
 

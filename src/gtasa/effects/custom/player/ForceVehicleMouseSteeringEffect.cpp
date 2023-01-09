@@ -26,18 +26,17 @@ public:
     {
         if (CMenuSystem::num_menus_in_use) return;
 
-        if (!FindPlayerVehicle (-1, false)) return;
-
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                pad->NewState.LeftStickX = 0;
-                pad->NewState.LeftStickY = 0;
-            }
-        }
+        if (!player) return;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (!vehicle || vehicle->m_pDriver != player) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        pad->NewState.LeftStickX = 0;
+        pad->NewState.LeftStickY = 0;
     }
 };
 

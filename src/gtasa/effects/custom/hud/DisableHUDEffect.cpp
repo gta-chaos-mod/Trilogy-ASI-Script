@@ -34,7 +34,9 @@ public:
     {
         CRadar::Draw3dMarkers ();
 
-        if (CMenuSystem::num_menus_in_use) CMenuSystem::Process (-99);
+        if (!CMenuSystem::num_menus_in_use) return;
+
+        CMenuSystem::Process (-99);
     }
 
     static tMenuPanel *

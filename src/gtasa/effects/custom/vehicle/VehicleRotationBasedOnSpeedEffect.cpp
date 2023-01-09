@@ -54,14 +54,12 @@ public:
     {
         for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
         {
-            if (i->m_bIsMission && i->m_bIsActive)
-            {
-                std::string missionName
-                    = GenericUtil::ToUpper (std::string (i->m_szName));
+            if (!i->m_bIsMission || !i->m_bIsActive) continue;
 
-                if (missionName == "CAT3" || missionName == "TRUCK")
-                    return true;
-            }
+            std::string missionName
+                = GenericUtil::ToUpper (std::string (i->m_szName));
+
+            if (missionName == "CAT3" || missionName == "TRUCK") return true;
         }
 
         return false;

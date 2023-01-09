@@ -32,26 +32,22 @@ public:
         applyCollisionEvent -= ApplyCollision;
 
         CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
-        if (playerVehicle)
-        {
-            playerVehicle->m_nPhysicalFlags.bApplyGravity = true;
-        }
+        if (!playerVehicle) return;
+
+        playerVehicle->m_nPhysicalFlags.bApplyGravity = true;
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        if (collisionHappened)
-        {
-            applyCollisionEvent -= ApplyCollision;
-            collisionHappened = false;
+        if (!collisionHappened) return;
 
-            if (!CONFIG_CC_ENABLED)
-            {
-                inst->SetDuration (
-                    std::min (inst->GetEffectRemaining (), 1000 * 30));
-            }
-        }
+        applyCollisionEvent -= ApplyCollision;
+        collisionHappened = false;
+
+        if (CONFIG_CC_ENABLED) return;
+
+        inst->SetDuration (std::min (inst->GetEffectRemaining (), 1000 * 30));
     }
 
     static void

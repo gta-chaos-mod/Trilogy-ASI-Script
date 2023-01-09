@@ -6,21 +6,19 @@ class VehicleOneHitKOEffect : public EffectBase
 {
     static inline std::map<CVehicle *, float> vehicleHealthMap = {};
 
-    bool shouldExplode = true;
-
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        shouldExplode
-            = CONFIG ("Effects.VehicleOneHitKO.ExplodeVehicles", false);
-
         vehicleHealthMap.clear ();
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
+        bool shouldExplode
+            = CONFIG ("Effects.VehicleOneHitKO.ExplodeVehicles", false);
+
         for (auto vehicle : CPools::ms_pVehiclePool)
         {
             if (!vehicleHealthMap.contains (vehicle)

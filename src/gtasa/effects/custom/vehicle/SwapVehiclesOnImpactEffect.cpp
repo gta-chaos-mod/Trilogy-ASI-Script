@@ -85,7 +85,7 @@ public:
 
         CPlayerPed *player = FindPlayerPed ();
 
-        // Get peds out of their vehicles
+        // Check for mission peds
         if (thisDriver)
         {
             if (thisDriver->m_nCreatedBy == 2 && thisDriver != player) return;
@@ -112,6 +112,7 @@ public:
 
             WarpPedIntoCar (thisDriver, otherVehicle, drivingStyle);
         }
+
         if (otherDriver)
         {
             eCarDrivingStyle drivingStyle

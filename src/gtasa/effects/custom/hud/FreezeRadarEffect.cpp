@@ -28,16 +28,15 @@ public:
         if (positionSet) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            position    = player->GetPosition ();
-            orientation = player->GetHeading ();
+        if (!player) return;
 
-            CRadar::CalculateCachedSinCos ();
-            cachedSinCos = {CRadar::cachedSin, CRadar::cachedCos};
+        position    = player->GetPosition ();
+        orientation = player->GetHeading ();
 
-            positionSet = true;
-        }
+        CRadar::CalculateCachedSinCos ();
+        cachedSinCos = {CRadar::cachedSin, CRadar::cachedCos};
+
+        positionSet = true;
     }
 
     static void

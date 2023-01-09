@@ -27,29 +27,25 @@ public:
     void
     TeleportLag (EffectInstance *inst)
     {
-        if (Teleportation::CanTeleport ())
-        {
-            CEntity *entity = FindPlayerEntity (-1);
-            if (entity)
-            {
-                float range = 2.0f;
-                if (inst->Random (0, 4) == 0) range = 7.5f;
+        if (!Teleportation::CanTeleport ()) return;
 
-                CVector position
-                    = entity->GetPosition ()
-                      + CVector (inst->Random (-range, range),
-                                 inst->Random (-range, range), 0.0f);
+        CEntity *entity = FindPlayerEntity (-1);
+        if (!entity) return;
 
-                bool  worked = false;
-                float newZ
-                    = CWorld::FindGroundZFor3DCoord (position.x, position.y,
-                                                     position.z + 10.0f,
-                                                     &worked, nullptr);
-                if (worked && newZ > position.z) position.z = newZ + 2.0f;
+        float range = 2.0f;
+        if (inst->Random (0, 4) == 0) range = 7.5f;
 
-                entity->SetPosn (position);
-            }
-        }
+        CVector position = entity->GetPosition ()
+                           + CVector (inst->Random (-range, range),
+                                      inst->Random (-range, range), 0.0f);
+
+        bool  worked = false;
+        float newZ   = CWorld::FindGroundZFor3DCoord (position.x, position.y,
+                                                      position.z + 10.0f, &worked,
+                                                      nullptr);
+        if (worked && newZ > position.z) position.z = newZ + 2.0f;
+
+        entity->SetPosn (position);
     }
 };
 

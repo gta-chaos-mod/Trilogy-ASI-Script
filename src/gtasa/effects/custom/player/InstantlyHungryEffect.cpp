@@ -11,15 +11,15 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+        if (!player) return;
 
-            playerInfo->m_nNumHoursDidntEat = 60;
-            CallMethod<0x56E610, CPlayerInfo *> (playerInfo);
+        CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+        if (!playerInfo) return;
 
-            inst->WriteMemory (0xB9B8F0, true, false); // bHungryMessageShown
-        }
+        playerInfo->m_nNumHoursDidntEat = 60;
+        CallMethod<0x56E610, CPlayerInfo *> (playerInfo);
+
+        inst->WriteMemory (0xB9B8F0, true, false); // bHungryMessageShown
     }
 };
 

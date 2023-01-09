@@ -39,15 +39,14 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        if (vehicleList.size () > 0)
+        if (!vehicleList.size ()) return;
+
+        for (auto &info : vehicleList)
         {
-            for (auto &info : vehicleList)
+            if (IsVehiclePointerValid (info.vehicle))
             {
-                if (IsVehiclePointerValid (info.vehicle))
-                {
-                    info.vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                    info.vehicle->BlowUpCar (nullptr, false);
-                }
+                info.vehicle->m_nPhysicalFlags.bExplosionProof = false;
+                info.vehicle->BlowUpCar (nullptr, false);
             }
         }
     }
@@ -97,31 +96,27 @@ public:
     {
         int step = (int) GenericUtil::CalculateTick ();
 
-        if (vehicleList.size () > 0)
-        {
-            for (auto &info : vehicleList)
-            {
-                CVehicle *vehicle = info.vehicle;
-                if (vehicle)
-                {
-                    info.time -= step;
-                    if (info.time < 0)
-                    {
-                        if (IsVehiclePointerValid (vehicle))
-                        {
-                            vehicle->m_nPhysicalFlags.bExplosionProof = false;
-                            vehicle->BlowUpCar (nullptr, false);
-                        }
-                    }
-                }
-            }
+        if (!vehicleList.size ()) return;
 
-            std::erase_if (vehicleList,
-                           [] (VehicleInfo &info) {
-                               return !IsVehiclePointerValid (info.vehicle)
-                                      || info.time < 0;
-                           });
+        for (auto &info : vehicleList)
+        {
+            CVehicle *vehicle = info.vehicle;
+            if (!vehicle) continue;
+
+            info.time -= step;
+            if (info.time > 0) continue;
+
+            if (!IsVehiclePointerValid (vehicle)) continue;
+
+            vehicle->m_nPhysicalFlags.bExplosionProof = false;
+            vehicle->BlowUpCar (nullptr, false);
         }
+
+        std::erase_if (vehicleList,
+                       [] (VehicleInfo &info) {
+                           return !IsVehiclePointerValid (info.vehicle)
+                                  || info.time < 0;
+                       });
     }
 
     void

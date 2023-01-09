@@ -26,7 +26,9 @@ public:
         }
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player) player->m_pPlayerData->m_bPlayerSprintDisabled = false;
+        if (!player) return;
+
+        player->m_pPlayerData->m_bPlayerSprintDisabled = false;
     }
 
     void
@@ -50,16 +52,15 @@ public:
         if (CMenuSystem::num_menus_in_use) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player && !FindPlayerVehicle (-1, false))
-        {
-            player->m_pPlayerData->m_bPlayerSprintDisabled = true;
+        if (!player || FindPlayerVehicle (-1, false)) return;
 
-            CPad *pad = player->GetPadFromPlayer ();
-            if (!pad) return;
+        player->m_pPlayerData->m_bPlayerSprintDisabled = true;
 
-            pad->NewState.m_bPedWalk   = UCHAR_MAX;
-            pad->NewState.ShockButtonL = 0;
-        }
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        pad->NewState.m_bPedWalk   = UCHAR_MAX;
+        pad->NewState.ShockButtonL = 0;
     }
 };
 

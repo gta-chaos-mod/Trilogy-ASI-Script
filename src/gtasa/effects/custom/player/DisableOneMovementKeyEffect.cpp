@@ -31,48 +31,46 @@ public:
         if (CMenuSystem::num_menus_in_use) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        switch (mode)
         {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
+            case eMovementKeyType::UP:
             {
-                switch (mode)
+                pad->NewState.LeftStickY
+                    = std::max ((short) 0u, pad->NewState.LeftStickY);
+
+                if (FindPlayerVehicle (-1, false))
                 {
-                    case eMovementKeyType::UP:
-                    {
-                        pad->NewState.LeftStickY
-                            = std::max ((short) 0u, pad->NewState.LeftStickY);
-
-                        if (FindPlayerVehicle (-1, false))
-                        {
-                            pad->NewState.ButtonCross = 0;
-                        }
-                        break;
-                    }
-                    case eMovementKeyType::DOWN:
-                    {
-                        pad->NewState.LeftStickY
-                            = std::min (pad->NewState.LeftStickY, (short) 0u);
-
-                        if (FindPlayerVehicle (-1, false))
-                        {
-                            pad->NewState.ButtonSquare = 0;
-                        }
-                        break;
-                    }
-                    case eMovementKeyType::LEFT:
-                    {
-                        pad->NewState.LeftStickX
-                            = std::max ((short) 0u, pad->NewState.LeftStickX);
-                        break;
-                    }
-                    case eMovementKeyType::RIGHT:
-                    {
-                        pad->NewState.LeftStickX
-                            = std::min (pad->NewState.LeftStickX, (short) 0u);
-                        break;
-                    }
+                    pad->NewState.ButtonCross = 0;
                 }
+                break;
+            }
+            case eMovementKeyType::DOWN:
+            {
+                pad->NewState.LeftStickY
+                    = std::min (pad->NewState.LeftStickY, (short) 0u);
+
+                if (FindPlayerVehicle (-1, false))
+                {
+                    pad->NewState.ButtonSquare = 0;
+                }
+                break;
+            }
+            case eMovementKeyType::LEFT:
+            {
+                pad->NewState.LeftStickX
+                    = std::max ((short) 0u, pad->NewState.LeftStickX);
+                break;
+            }
+            case eMovementKeyType::RIGHT:
+            {
+                pad->NewState.LeftStickX
+                    = std::min (pad->NewState.LeftStickX, (short) 0u);
+                break;
             }
         }
     }

@@ -100,6 +100,7 @@ public:
             RpGeometryForAllMaterials (atomic->geometry, MaterialCallback,
                                        data);
         }
+
         return atomic;
     }
 };

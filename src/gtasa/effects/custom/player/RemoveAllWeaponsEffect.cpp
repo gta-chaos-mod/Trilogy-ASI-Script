@@ -14,7 +14,9 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player) GameUtil::ClearWeapons (player);
+        if (!player) return;
+
+        GameUtil::ClearWeapons (player);
     }
 
     bool

@@ -22,18 +22,19 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player) player->m_fHealth = player->m_fMaxHealth;
+        if (!player) return;
+
+        player->m_fHealth = player->m_fMaxHealth;
 
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (vehicle)
-        {
-            vehicle->m_nPhysicalFlags.bInvulnerable   = true;
-            vehicle->m_nPhysicalFlags.bBulletProof    = true;
-            vehicle->m_nPhysicalFlags.bCollisionProof = true;
-            vehicle->m_nPhysicalFlags.bExplosionProof = true;
-            vehicle->m_nPhysicalFlags.bFireProof      = true;
-            vehicle->m_nPhysicalFlags.bMeleeProof     = true;
-        }
+        if (!vehicle) return;
+
+        vehicle->m_nPhysicalFlags.bInvulnerable   = true;
+        vehicle->m_nPhysicalFlags.bBulletProof    = true;
+        vehicle->m_nPhysicalFlags.bCollisionProof = true;
+        vehicle->m_nPhysicalFlags.bExplosionProof = true;
+        vehicle->m_nPhysicalFlags.bFireProof      = true;
+        vehicle->m_nPhysicalFlags.bMeleeProof     = true;
     }
 
     static void

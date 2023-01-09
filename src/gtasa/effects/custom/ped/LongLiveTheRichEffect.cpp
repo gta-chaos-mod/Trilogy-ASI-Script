@@ -54,16 +54,15 @@ public:
         *neverHungryCheat = false;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            player->m_fHealth = std::min (gainedMoney, player->m_fMaxHealth);
+        if (!player) return;
 
-            CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+        player->m_fHealth = std::min (gainedMoney, player->m_fMaxHealth);
 
-            playerInfo->m_nMoney = std::min ((int) gainedMoney * 100, 100000);
-            playerInfo->m_nMoney += storedMoney;
-            playerInfo->m_nDisplayMoney = playerInfo->m_nMoney;
-        }
+        CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+
+        playerInfo->m_nMoney = std::min ((int) gainedMoney * 100, 100000);
+        playerInfo->m_nMoney += storedMoney;
+        playerInfo->m_nDisplayMoney = playerInfo->m_nMoney;
     }
 
     void
@@ -72,13 +71,12 @@ public:
         *neverHungryCheat = true;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+        if (!player) return;
 
-            playerInfo->m_nMoney        = (int) gainedMoney;
-            playerInfo->m_nDisplayMoney = (int) gainedMoney;
-        }
+        CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+
+        playerInfo->m_nMoney        = (int) gainedMoney;
+        playerInfo->m_nDisplayMoney = (int) gainedMoney;
     }
 
     static void

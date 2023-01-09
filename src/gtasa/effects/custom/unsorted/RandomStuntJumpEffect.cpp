@@ -56,7 +56,9 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player) player->m_nPedFlags.CantBeKnockedOffBike = 0;
+        if (!player) return;
+
+        player->m_nPedFlags.CantBeKnockedOffBike = 0;
     }
 
     void

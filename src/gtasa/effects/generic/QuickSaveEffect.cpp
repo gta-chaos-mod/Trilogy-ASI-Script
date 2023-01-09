@@ -21,7 +21,9 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        if (!didSave) inst->OverrideName ("Quicksave Failed");
+        if (didSave) return;
+
+        inst->OverrideName ("Quicksave Failed");
     }
 
     void

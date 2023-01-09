@@ -11,11 +11,12 @@ public:
         if (CMenuSystem::num_menus_in_use) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player && !FindPlayerVehicle (-1, false))
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->NewState.ButtonSquare = 0;
-        }
+        if (!player || FindPlayerVehicle (-1, false)) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        pad->NewState.ButtonSquare = 0;
     }
 };
 

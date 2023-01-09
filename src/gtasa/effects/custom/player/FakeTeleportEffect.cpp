@@ -76,26 +76,25 @@ public:
         }
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        previousLocation = player->GetPosition ();
+        previousInterior = player->m_nAreaCode;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (vehicle)
         {
-            previousLocation = player->GetPosition ();
-            previousInterior = player->m_nAreaCode;
-
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
-            {
-                wasInVehicle      = true;
-                previousLocation  = vehicle->GetPosition ();
-                previousMoveSpeed = vehicle->m_vecMoveSpeed;
-                previousTurnSpeed = vehicle->m_vecTurnSpeed;
-                vehicle->GetMatrix ()->CopyToRwMatrix (&previousMatrix);
-            }
-
-            Teleportation::Teleport (fakeLocation);
-
-            hasTeleported = true;
-            inst->SetTimerVisible (false);
+            wasInVehicle      = true;
+            previousLocation  = vehicle->GetPosition ();
+            previousMoveSpeed = vehicle->m_vecMoveSpeed;
+            previousTurnSpeed = vehicle->m_vecTurnSpeed;
+            vehicle->GetMatrix ()->CopyToRwMatrix (&previousMatrix);
         }
+
+        Teleportation::Teleport (fakeLocation);
+
+        hasTeleported = true;
+        inst->SetTimerVisible (false);
     }
 };
 

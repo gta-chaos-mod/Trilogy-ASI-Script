@@ -14,7 +14,9 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CWanted *wanted = FindPlayerWanted (-1);
-        if (wanted) wanted->CheatWantedLevel (6);
+        if (!wanted) return;
+
+        wanted->CheatWantedLevel (6);
     }
 };
 

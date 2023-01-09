@@ -64,22 +64,20 @@ public:
         if (CMenuSystem::num_menus_in_use) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        pad->NewState.LeftStickX *= -1;
+        pad->NewState.RightStickX *= -1;
+
+        pad->NewMouseControllerState.x *= -1;
+
+        if (FindPlayerVehicle (-1, false))
         {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                pad->NewState.LeftStickX *= -1;
-                pad->NewState.RightStickX *= -1;
-
-                pad->NewMouseControllerState.x *= -1;
-
-                if (FindPlayerVehicle (-1, false))
-                {
-                    std::swap (pad->NewState.LeftShoulder2,
-                               pad->NewState.RightShoulder2);
-                }
-            }
+            std::swap (pad->NewState.LeftShoulder2,
+                       pad->NewState.RightShoulder2);
         }
     }
 

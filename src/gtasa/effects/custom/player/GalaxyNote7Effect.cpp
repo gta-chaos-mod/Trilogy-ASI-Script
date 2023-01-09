@@ -23,8 +23,6 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        inst->SetIsOneTimeEffect ();
-
         wait         = 1000;
         pickedUpCall = false;
     }

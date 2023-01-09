@@ -9,23 +9,20 @@ public:
     OnStart (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+        if (!player) return;
 
-            player->m_fHealth = player->m_fMaxHealth;
-            player->m_fArmour = playerInfo->m_nMaxArmour;
-            playerInfo->m_nMoney += 250000;
+        CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
 
-            CVehicle *vehicle = FindPlayerVehicle (-1, false);
-            if (vehicle)
-            {
-                float setHealth
-                    = vehicle->m_fHealth > 1000.0f ? 100000.0f : 1000.0f;
-                vehicle->Fix ();
-                vehicle->m_fHealth = setHealth;
-            }
-        }
+        player->m_fHealth = player->m_fMaxHealth;
+        player->m_fArmour = playerInfo->m_nMaxArmour;
+        playerInfo->m_nMoney += 250000;
+
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (!vehicle) return;
+
+        float setHealth = vehicle->m_fHealth > 1000.0f ? 100000.0f : 1000.0f;
+        vehicle->Fix ();
+        vehicle->m_fHealth = setHealth;
     }
 };
 

@@ -17,19 +17,15 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        if (!CONFIG_CC_ENABLED)
-        {
-            for (CVehicle *vehicle : CPools::ms_pVehiclePool)
-            {
-                float amplify = 10.0f;
+        if (CONFIG_CC_ENABLED) return;
 
-                vehicle->m_vecMoveSpeed.x
-                    += inst->Random (-0.25f, 0.25f, amplify);
-                vehicle->m_vecMoveSpeed.y
-                    += inst->Random (-0.25f, 0.25f, amplify);
-                vehicle->m_vecMoveSpeed.z
-                    += inst->Random (-0.05f, 0.05f, amplify);
-            }
+        for (CVehicle *vehicle : CPools::ms_pVehiclePool)
+        {
+            float amplify = 10.0f;
+
+            vehicle->m_vecMoveSpeed.x += inst->Random (-0.25f, 0.25f, amplify);
+            vehicle->m_vecMoveSpeed.y += inst->Random (-0.25f, 0.25f, amplify);
+            vehicle->m_vecMoveSpeed.z += inst->Random (-0.05f, 0.05f, amplify);
         }
     }
 

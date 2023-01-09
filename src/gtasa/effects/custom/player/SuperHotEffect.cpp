@@ -32,27 +32,29 @@ public:
     void
     OnProcessScripts (EffectInstance *inst) override
     {
-        bool isSuperHotMode = true;
-
-        CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                if (IsAnyKeyDown (pad, true))
-                    pressCooldown = std::max (250, pressCooldown);
-
-                if (WasAimJustPressed (pad)) pressCooldown = 600;
-
-                pressCooldown -= (int) GenericUtil::CalculateTick ();
-                pressCooldown = std::clamp (pressCooldown, 0, 600);
-
-                if (pressCooldown > 0) isSuperHotMode = false;
-            }
-        }
+        bool isSuperHotMode = IsSuperHotMode ();
 
         ModifyGameSpeed (isSuperHotMode);
+    }
+
+    bool
+    IsSuperHotMode ()
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return false;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return false;
+
+        if (IsAnyKeyDown (pad, true))
+            pressCooldown = std::max (250, pressCooldown);
+
+        if (WasAimJustPressed (pad)) pressCooldown = 600;
+
+        pressCooldown -= (int) GenericUtil::CalculateTick ();
+        pressCooldown = std::clamp (pressCooldown, 0, 600);
+
+        return pressCooldown > 0;
     }
 
     bool

@@ -46,10 +46,10 @@ public:
 
         player->m_nPedFlags.CantBeKnockedOffBike = true;
 
-        CPlayerInfo *info = player->GetPlayerInfoForThisPlayerPed ();
-        if (!info) return;
+        CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+        if (!playerInfo) return;
 
-        info->m_nTimesUpsideDownInARow = 0;
+        playerInfo->m_nTimesUpsideDownInARow = 0;
     }
 
     void

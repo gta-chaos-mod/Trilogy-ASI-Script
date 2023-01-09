@@ -11,11 +11,12 @@ public:
         if (CMenuSystem::num_menus_in_use) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->NewState.ButtonCircle = UCHAR_MAX;
-        }
+        if (!player) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        pad->NewState.ButtonCircle = UCHAR_MAX;
     }
 };
 

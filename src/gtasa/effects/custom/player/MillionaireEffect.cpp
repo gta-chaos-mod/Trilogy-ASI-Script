@@ -15,15 +15,13 @@ public:
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
-            if (playerInfo)
-            {
-                playerInfo->m_nMoney += 1000000;
-                inst->Disable ();
-            }
-        }
+        if (!player) return;
+
+        CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+        if (!playerInfo) return;
+
+        playerInfo->m_nMoney += 1000000;
+        inst->Disable ();
     }
 };
 

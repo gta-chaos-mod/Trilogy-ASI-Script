@@ -27,7 +27,9 @@ public:
         applyCollisionEvent -= ApplyCollision;
 
         CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
-        if (playerVehicle) playerVehicle->m_nPhysicalFlags.bApplyGravity = true;
+        if (!playerVehicle) return;
+
+        playerVehicle->m_nPhysicalFlags.bApplyGravity = true;
     }
 
     static void

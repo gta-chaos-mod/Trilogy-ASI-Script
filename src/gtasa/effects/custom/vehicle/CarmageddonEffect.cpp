@@ -46,62 +46,58 @@ public:
         if (wait > 0) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        // Spawn a vehicle at a specified distance and a random angle from
+        // the player
+        float   spawnDistance = GetSpawnDistance ();
+        CVector spawnPosition = player->TransformFromObjectSpace (
+            CVector (0.0f, spawnDistance, 50.0f));
+
+        float thats_rad = MathHelper::ToRadians (inst->Random (0.0f, 360.0f));
+
+        spawnPosition
+            += CVector (30.0f * sin (thats_rad), 30.0f * cos (thats_rad), 0.0f);
+
+        for (int i = 0; i < inst->Random (1, 3); i++)
         {
-            // Spawn a vehicle at a specified distance and a random angle from
-            // the player
-            float   spawnDistance = GetSpawnDistance ();
-            CVector spawnPosition = player->TransformFromObjectSpace (
-                CVector (0.0f, spawnDistance, 50.0f));
+            int carToSpawn = possibleVehicles[inst->Random (
+                0, (int) possibleVehicles.size () - 1)];
 
-            float thats_rad
-                = MathHelper::ToRadians (inst->Random (0.0f, 360.0f));
+            // If too many vehicles are loaded, choose an already loaded
+            // vehicle. Game limit is 22.
+            int loadedVehicles = CStreaming::ms_vehiclesLoaded.CountMembers ();
+            if (loadedVehicles > 20)
+                carToSpawn = CStreaming::ms_vehiclesLoaded.GetMember (
+                    inst->Random (0, loadedVehicles - 1));
 
-            spawnPosition += CVector (30.0f * sin (thats_rad),
-                                      30.0f * cos (thats_rad), 0.0f);
-
-            for (int i = 0; i < inst->Random (1, 3); i++)
+            // Non valid vehicle
+            if (std::find (possibleVehicles.begin (), possibleVehicles.end (),
+                           carToSpawn)
+                == possibleVehicles.end ())
             {
-                int carToSpawn = possibleVehicles[inst->Random (
-                    0, (int) possibleVehicles.size () - 1)];
+                i--;
+                return;
+            }
 
-                // If too many vehicles are loaded, choose an already loaded
-                // vehicle. Game limit is 22.
-                int loadedVehicles
-                    = CStreaming::ms_vehiclesLoaded.CountMembers ();
-                if (loadedVehicles > 20)
-                    carToSpawn = CStreaming::ms_vehiclesLoaded.GetMember (
-                        inst->Random (0, loadedVehicles - 1));
+            // If too many vehicles are in the pool, don't spawn any more
+            // vehicles until there's room.
+            if (CPools::ms_pVehiclePool->GetNoOfFreeSpaces () < 5
+                || carToSpawn == -1)
+            {
+                return;
+            }
 
-                // Non valid vehicle
-                if (std::find (possibleVehicles.begin (),
-                               possibleVehicles.end (), carToSpawn)
-                    == possibleVehicles.end ())
-                {
-                    i--;
-                    return;
-                }
+            CVehicle *vehicle
+                = GameUtil::CreateVehicle (carToSpawn, spawnPosition,
+                                           inst->Random (0.0f, 360.0f), false);
 
-                // If too many vehicles are in the pool, don't spawn any more
-                // vehicles until there's room.
-                if (CPools::ms_pVehiclePool->GetNoOfFreeSpaces () < 5
-                    || carToSpawn == -1)
-                {
-                    return;
-                }
+            if (vehicle)
+            {
+                vehicle->m_vecMoveSpeed.z -= 5.0f;
+                vehicle->m_fHealth = 249.0f;
 
-                CVehicle *vehicle
-                    = GameUtil::CreateVehicle (carToSpawn, spawnPosition,
-                                               inst->Random (0.0f, 360.0f),
-                                               false);
-
-                if (vehicle)
-                {
-                    vehicle->m_vecMoveSpeed.z -= 5.0f;
-                    vehicle->m_fHealth = 249.0f;
-
-                    vehicleList.push_back (VehicleInfo{.vehicle = vehicle});
-                }
+                vehicleList.push_back (VehicleInfo{.vehicle = vehicle});
             }
         }
 

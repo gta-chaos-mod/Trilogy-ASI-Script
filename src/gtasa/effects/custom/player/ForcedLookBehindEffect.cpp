@@ -11,22 +11,20 @@ public:
         if (CMenuSystem::num_menus_in_use) return;
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
+        if (!player) return;
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        // If player is in vehicle
+        if (FindPlayerVehicle (-1, false))
         {
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad)
-            {
-                // If player is in vehicle
-                if (FindPlayerVehicle (-1, false))
-                {
-                    pad->NewState.LeftShoulder2  = UCHAR_MAX;
-                    pad->NewState.RightShoulder2 = UCHAR_MAX;
-                }
-                else
-                {
-                    pad->NewState.ShockButtonR = UCHAR_MAX;
-                }
-            }
+            pad->NewState.LeftShoulder2  = UCHAR_MAX;
+            pad->NewState.RightShoulder2 = UCHAR_MAX;
+        }
+        else
+        {
+            pad->NewState.ShockButtonR = UCHAR_MAX;
         }
     }
 };

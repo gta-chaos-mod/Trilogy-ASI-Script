@@ -11,26 +11,26 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            Command<eScriptCommands::COMMAND_SET_PLAYER_DRUNKENNESS> (0, 0);
+        if (!player) return;
 
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->SetDrunkInputDelay (0);
-        }
+        Command<eScriptCommands::COMMAND_SET_PLAYER_DRUNKENNESS> (0, 0);
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (pad) pad->SetDrunkInputDelay (0);
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player)
-        {
-            Command<eScriptCommands::COMMAND_SET_PLAYER_DRUNKENNESS> (0, 100);
+        if (!player) return;
 
-            CPad *pad = player->GetPadFromPlayer ();
-            if (pad) pad->SetDrunkInputDelay (5);
-        }
+        Command<eScriptCommands::COMMAND_SET_PLAYER_DRUNKENNESS> (0, 100);
+
+        CPad *pad = player->GetPadFromPlayer ();
+        if (!pad) return;
+
+        pad->SetDrunkInputDelay (5);
     }
 };
 
