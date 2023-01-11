@@ -54,7 +54,7 @@ public:
         pressCooldown -= (int) GenericUtil::CalculateTick ();
         pressCooldown = std::clamp (pressCooldown, 0, 600);
 
-        return pressCooldown > 0;
+        return !pressCooldown;
     }
 
     bool
