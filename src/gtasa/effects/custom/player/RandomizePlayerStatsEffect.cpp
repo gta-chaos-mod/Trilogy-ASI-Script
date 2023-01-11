@@ -3,8 +3,8 @@
 
 #include <CStats.h>
 
-constexpr float DEFAULT_STAT_MAX_HEALTH = 569.0f;
-using stat_list                         = std::initializer_list<eStats>;
+constexpr float MIN_STAT_HEALTH = 200.0f;
+using stat_list                 = std::initializer_list<eStats>;
 
 template <const float min, const float max, typename Base>
 class RandomizePlayerStatsEffect : public Base
@@ -28,9 +28,13 @@ public:
         {
             if (stat == STAT_MAX_HEALTH)
             {
-                float mmin = std::clamp (min, DEFAULT_STAT_MAX_HEALTH, 1000.0f);
-                float mmax = std::clamp (max, DEFAULT_STAT_MAX_HEALTH, 1000.0f);
-                CStats::SetStatValue (stat, inst->Random (mmin, mmax));
+                float mmin = std::clamp (min, MIN_STAT_HEALTH, 1000.0f);
+                float mmax = std::clamp (max, MIN_STAT_HEALTH, 1000.0f);
+
+                float randomStatHealth = inst->Random (mmin, mmax);
+                CStats::SetStatValue (stat, randomStatHealth);
+
+                AdjustPlayerHealth (randomStatHealth);
 
                 continue;
             }
@@ -53,6 +57,22 @@ public:
 
             GameUtil::RebuildPlayer ();
         }
+    }
+
+    void
+    AdjustPlayerHealth (float randomStatHealth)
+    {
+        float actualHealth = randomStatHealth * 0.001f * 176.0f;
+
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        player->m_fHealth = std::min (player->m_fHealth, actualHealth);
+
+        CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
+        if (!playerInfo) return;
+
+        playerInfo->m_nMaxHealth = actualHealth;
     }
 };
 
