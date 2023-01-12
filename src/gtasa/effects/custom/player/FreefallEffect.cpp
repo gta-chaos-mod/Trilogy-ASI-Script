@@ -2,6 +2,9 @@
 #include "util/Teleportation.h"
 
 #include <CTaskSimpleCarSetPedOut.h>
+#include <extensions/ScriptCommands.h>
+
+using namespace plugin;
 
 class FreefallEffect : public EffectBase
 {
@@ -40,6 +43,8 @@ public:
         position.z       = 1250.0f;
 
         Teleportation::Teleport (position);
+
+        Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
 
         inst->Disable ();
     }
