@@ -1,6 +1,7 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 #include "util/MathHelper.h"
+#include "util/hooks/HookMacros.h"
 
 #include <CModelInfo.h>
 #include <extensions/ScriptCommands.h>
@@ -22,6 +23,17 @@ public:
     OnStart (EffectInstance *inst) override
     {
         wasInVehicle = false;
+
+        HOOK_METHOD (inst, Hooked_CCam__Process_AttachedCam, int (CCam *),
+                     0x527BE5);
+    }
+
+    static int
+    Hooked_CCam__Process_AttachedCam (auto &&cb)
+    {
+        if (!IsEntityPointerValid (TheCamera.m_pAttachedEntity)) return 0;
+
+        return cb ();
     }
 
     void
