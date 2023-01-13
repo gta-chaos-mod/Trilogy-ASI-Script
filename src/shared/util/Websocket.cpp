@@ -193,7 +193,7 @@ Websocket::CallFunction (std::string text)
 
                 std::vector<std::string> effects = data.at ("effects");
                 std::vector<int>         votes   = data.at ("votes");
-                int pickedChoice                 = data.at ("pickedChoice");
+                eVoteChoice pickedChoice         = data.at ("pickedChoice");
 
                 DrawVoting::UpdateVotes (effects, votes, pickedChoice);
             }

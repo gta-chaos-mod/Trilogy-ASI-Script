@@ -24,7 +24,7 @@ DrawVoting::DrawVotes ()
         // Make sure to bring back the picked one
         for (int i = 0; i < 3; i++)
         {
-            if (pickedVote == -1)
+            if (pickedVote == UNDETERMINED)
             {
                 votes[i].offset
                     = std::min (votes[i].offset
@@ -51,7 +51,7 @@ DrawVoting::DrawVotes ()
 
 void
 DrawVoting::UpdateVotes (std::vector<std::string> effects,
-                         std::vector<int> _votes, int _pickedVote)
+                         std::vector<int> _votes, eVoteChoice _pickedVote)
 {
     totalVotes = 0;
     for (int i = 0; i < 3; i++)
@@ -104,11 +104,14 @@ DrawVoting::DrawVote (int choice)
 #endif
     std::string_view description = votes[choice].description;
 
-    if (Globals::enabledEffects["replace_all_text"] && pickedVote != -1)
+    if (Globals::enabledEffects["replace_all_text"]
+        && pickedVote != UNDETERMINED)
         description = Globals::replaceAllTextString;
 
-    CRGBA color = (pickedVote == -1 || pickedVote == choice) ? color::White
-                                                             : color::DarkGray;
+    CRGBA color = pickedVote == UNDETERMINED ? color::White : color::DarkGray;
+
+    if (pickedVote & GetVoteChoice (choice)) color = color::White;
+
     gamefont::PrintUnscaled (std::string (description), x, y, FONT_DEFAULT,
                              SCREEN_MULTIPLIER (TEXT_SCALE_X),
                              SCREEN_MULTIPLIER (TEXT_SCALE_Y), color,

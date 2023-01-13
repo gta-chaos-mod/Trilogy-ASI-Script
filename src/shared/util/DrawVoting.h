@@ -7,6 +7,22 @@
 
 using namespace plugin;
 
+enum eVoteChoice
+{
+    UNDETERMINED = -1,
+    NONE         = 0,
+
+    FIRST  = 1 << 0,
+    SECOND = 1 << 1,
+    THIRD  = 1 << 2,
+
+    FIRST_SECOND = FIRST | SECOND,
+    FIRST_THIRD  = FIRST | THIRD,
+    SECOND_THIRD = SECOND | THIRD,
+
+    ALL = FIRST | SECOND | THIRD,
+};
+
 class DrawVoting
 {
     struct VotingElement
@@ -26,14 +42,27 @@ class DrawVoting
 
     static inline VotingElement votes[3];
     static inline int           totalVotes = 0;
-    static inline int           pickedVote = 0;
+    static inline eVoteChoice   pickedVote = eVoteChoice::NONE;
 
     static inline int drawRemaining = 0;
+
+    static eVoteChoice
+    GetVoteChoice (int choice)
+    {
+        switch (choice)
+        {
+            case 0: return FIRST;
+            case 1: return SECOND;
+            case 2: return THIRD;
+
+            default: return NONE;
+        }
+    };
 
 public:
     static void DrawVotes ();
     static void UpdateVotes (std::vector<std::string> effects,
-                             std::vector<int> _votes, int _pickedVote);
+                             std::vector<int> _votes, eVoteChoice _pickedVote);
 
     static void        DrawVote (int choice);
     static float       CalculateYOffset (int choice, float adjustment);
