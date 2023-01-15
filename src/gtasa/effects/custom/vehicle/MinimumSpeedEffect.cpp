@@ -7,6 +7,7 @@
 using namespace plugin;
 
 // TODO: Explode BMX separately
+// TODO: Planes aren't affected anymore, calculate differently
 
 class MinimumSpeedEffect : public EffectBase
 {
