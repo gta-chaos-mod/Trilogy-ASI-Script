@@ -1,5 +1,6 @@
 #include "EffectInstance.h"
 
+#include "util/AudioWrapper.h"
 #include "util/Config.h"
 #include "util/EffectBase.h"
 #include "util/EffectHandler.h"
@@ -14,6 +15,14 @@ EffectInstance::Start ()
 {
     if (this->effect)
     {
+        std::string file = "ChaosMod/audio/";
+        file.append (this->effect->GetID ());
+        file.append (".ogg");
+
+        const char *path = GAME_PATH ((char *) file.c_str ());
+
+        PlayAudioStream (path);
+
         this->effect->OnStart (this);
         Globals::enabledEffects[effect->GetID ().substr (7)] = true;
     }

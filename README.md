@@ -75,6 +75,9 @@ Please download it from here and then try starting the game again:
 
 https://www.microsoft.com/en-us/download/details.aspx?id=8109
 
+If that doesn't fix it then make sure you have the `bass.dll` in your game directory.  
+It comes bundled with the Chaos Mod archive you downloaded.
+
 # Is there a list of all effects?
 Of course! Here's a [spreadsheet](http://bit.ly/gta-sa-chaos-mod) that has all of them!
 

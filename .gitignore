@@ -74,3 +74,6 @@ build
 
 # Exclude the compiled Version.h file
 src/shared/util/Version.h
+
+# Include bass.lib
+!lib/bass.lib

@@ -20,14 +20,14 @@ endif()
 include(cmake/DirectXSDK.cmake)
 include(cmake/pluginSDK.cmake)
 
-include(cmake/gta3.cmake)
-include(cmake/gtaVC.cmake)
-include(cmake/gtaSA.cmake)
-
 include(cmake/nlohmannJSON.cmake)
 include(cmake/uWebSockets.cmake)
 include(cmake/minhook.cmake)
 include(cmake/efsw.cmake)
+
+include(cmake/gta3.cmake)
+include(cmake/gtaVC.cmake)
+include(cmake/gtaSA.cmake)
 
 if(DEFINED ENV{GITHUB_SHA})
   string(SUBSTRING "$ENV{GITHUB_SHA}" 0 7 VERSION_SUFFIX)

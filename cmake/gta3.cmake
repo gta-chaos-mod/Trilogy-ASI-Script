@@ -10,8 +10,11 @@ set_target_properties(${CHAOS_3} PROPERTIES SUFFIX ".asi")
 
 target_include_directories(${CHAOS_3} PUBLIC "src/shared/" "src/gta3" "${dxsdk_SOURCE_DIR}/Include")
 
-target_link_directories(${CHAOS_3} PUBLIC "${dxsdk_SOURCE_DIR}/Lib/x86")
-target_link_libraries(${CHAOS_3} PUBLIC plugin_III nlohmann_json uWebSockets minhook efsw)
+target_link_directories(${CHAOS_3} PUBLIC
+    lib/
+    "${dxsdk_SOURCE_DIR}/Lib/x86"
+)
+target_link_libraries(${CHAOS_3} PUBLIC plugin_III nlohmann_json uWebSockets minhook efsw bass)
 
 target_compile_definitions(${CHAOS_3} PUBLIC NOMINMAX)
 
@@ -21,6 +24,7 @@ target_precompile_headers(
     PUBLIC
     src/shared/_include/Definitions.h
     src/shared/_include/cpptoml.h
+    lib/bass.h
 )
 
 # Include specific libraries for easier use
