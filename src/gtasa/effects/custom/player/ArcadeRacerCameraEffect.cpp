@@ -64,7 +64,7 @@ public:
                 vehicle, 0.0f, -diffBack - 4.0f, diffUp * 1.25f, 0.0f, 0.0f,
                 1.0f, 0.0f, 2);
 
-            // Thanks to zolika for the rotation code <3
+            // Thanks to Zolika for the rotation code <3
             CMatrix *matrix = vehicle->GetMatrix ();
             cam->right      = matrix->right;
             cam->up         = matrix->up;
