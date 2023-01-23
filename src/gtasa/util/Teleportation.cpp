@@ -53,7 +53,7 @@ Teleportation::Teleport (CVector destination, int interior)
         CGame::currArea     = interior;
         entity->m_nAreaCode = interior;
 
-        CEntryExitManager::ms_entryExitStackPosn = interior;
+        CEntryExitManager::ms_entryExitStackPosn = 0;
         CPopulation::bInPoliceStation            = false;
         CStreaming::RemoveBuildingsNotInArea (interior);
 
