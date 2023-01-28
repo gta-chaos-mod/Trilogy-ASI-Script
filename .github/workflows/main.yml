@@ -23,16 +23,18 @@ jobs:
 
     - name: Create bin folder
       if: steps.cache-bin.outputs.cache-hit != 'true'
-      run: mkdir bin
+      run: |
+        mkdir bin
+        cd bin
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
+        mkdir output_III
+        mkdir output_VC
+        mkdir output_SA
     
     - name: Compile
       run: |
         cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
         ninja
-        mkdir output_III
-        mkdir output_VC
-        mkdir output_SA
         cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
         cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
