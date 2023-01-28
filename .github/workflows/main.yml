@@ -14,9 +14,19 @@ jobs:
       with:
         arch: x86
 
+    - name: Cache bin
+      id: cache-bin
+      uses: actions/cache@v3
+      with:
+        path: bin
+        key: ${{ runner.os }}-bin
+
+    - name: Create bin folder
+      if: steps.cache-bin.outputs.cache-hit != 'true'
+      run: mkdir bin
+    
     - name: Compile
       run: |
-        mkdir bin
         cd bin
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
         ninja
