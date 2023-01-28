@@ -35,6 +35,15 @@ public:
 
         bool phoneRinging = GameUtil::GetGlobalVariable<bool> (15);
 
+        for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
+        {
+            if (i->m_bIsActive && !std::strcmp("BCESAR2", i->m_szName))
+            {
+                phoneRinging = true;
+                break;
+            }
+        }
+
         if (phoneRinging
             || player->m_pIntelligence->m_TaskMgr.FindTaskByType (
                 3, TASK_COMPLEX_USE_MOBILE_PHONE))
