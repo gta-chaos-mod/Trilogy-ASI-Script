@@ -7,6 +7,7 @@
 #include "util/GlobalHooksInstance.h"
 
 #include <CText.h>
+#include <CTheScripts.h>
 
 using namespace plugin;
 
@@ -66,18 +67,16 @@ public:
                                              CRunningScript  *thisScript,
                                              unsigned __int16 num)
     {
+        int offset = thisScript->m_pCurrentIP - thisScript->m_pBaseIP - 2;
+
         __int16 result = cb ();
 
         std::string missionName
             = GenericUtil::ToUpper (std::string (thisScript->m_szName));
         if (missionName == "CESAR1")
         {
-            int currentOffset = thisScript->m_pCurrentIP
-                                - (unsigned char *) CTheScripts::ScriptSpace;
-
             if (CTheScripts::ScriptParams[0].iParam == 0
-                && CTheScripts::ScriptParams[1].iParam == 0
-                && currentOffset == 205104)
+                && CTheScripts::ScriptParams[1].iParam == 0 && offset == 5098)
             {
                 CTheScripts::ScriptParams[1].iParam = 1;
             }
