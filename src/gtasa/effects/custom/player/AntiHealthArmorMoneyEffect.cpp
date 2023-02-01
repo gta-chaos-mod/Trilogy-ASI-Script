@@ -19,7 +19,10 @@ public:
         playerInfo->m_nMoney = std::max (0, playerInfo->m_nMoney - 250000);
 
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
-        if (vehicle) vehicle->m_fHealth = 250.0f;
+        if (!vehicle) return;
+
+        float setHealth    = vehicle->m_fHealth > 1000.0f ? 1250.0f : 250.0f;
+        vehicle->m_fHealth = std::min (vehicle->m_fHealth, setHealth);
     }
 };
 
