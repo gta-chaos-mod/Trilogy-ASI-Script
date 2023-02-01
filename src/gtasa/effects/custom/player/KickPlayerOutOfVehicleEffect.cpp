@@ -1,4 +1,5 @@
 #include "effects/OneTimeEffect.h"
+#include "util/Globals.h"
 
 #include <CTheScripts.h>
 #include <extensions/ScriptCommands.h>
@@ -11,7 +12,8 @@ public:
     bool
     CanActivate () override
     {
-        return FindPlayerVehicle (-1, false);
+        return FindPlayerVehicle (-1, false)
+               && !Globals::enabledEffects["lock_player_inside_vehicle"];
     }
 
     void
