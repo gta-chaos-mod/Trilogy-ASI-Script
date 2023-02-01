@@ -7,6 +7,8 @@ using namespace plugin;
 
 class OnePercentDeathEffect : public EffectBase
 {
+    static inline int timesAttempted = 0;
+
 public:
     bool
     CanActivate () override
@@ -27,8 +29,20 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        if (inst->Random (1, 100) == 50)
+        int chance = ++timesAttempted >= 5 ? 10 : 100;
+
+        int random = inst->Random (1, chance);
+
+        if (random == 1)
+        {
+            timesAttempted = 0;
+
             Command<eScriptCommands::COMMAND_SET_CHAR_HEALTH> (player, 0);
+        }
+        else if (timesAttempted >= 5)
+        {
+            timesAttempted = 0;
+        }
     }
 
     void
