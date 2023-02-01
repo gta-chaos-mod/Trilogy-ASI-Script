@@ -316,8 +316,6 @@ GameUtil::IsCutsceneProcessing ()
         return true;
     }
 
-    if (CEntryExitManager::WeAreInInteriorTransition ()) return true;
-
     return false;
 }
 
@@ -342,14 +340,19 @@ GameUtil::IsPlayerSafe ()
         }
     }
 
-    switch (TheCamera.m_PlayerWeaponMode.m_nMode)
-    {
-        case MODE_HELICANNON_1STPERSON:
-        case MODE_CAMERA: return false;
-        default:
-        {
-        }
-    }
+    // TODO: See if we can safely remove this now that we're checking for
+    // attachedTo
+
+    // switch (TheCamera.m_PlayerWeaponMode.m_nMode)
+    // {
+    //     case MODE_HELICANNON_1STPERSON:
+    //     case MODE_CAMERA: return false;
+    //     default:
+    //     {
+    //     }
+    // }
+
+    if (player->m_pAttachedTo) return false;
 
     CPlayerData *data = player->m_pPlayerData;
     if (!data || !data->m_bCanBeDamaged) return false;
