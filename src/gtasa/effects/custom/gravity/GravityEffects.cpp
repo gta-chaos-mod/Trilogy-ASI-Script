@@ -29,12 +29,6 @@ public:
             NegateGravity (vehicle);
             ApplyGravity (vehicle);
         }
-
-        for (CObject *object : CPools::ms_pObjectPool)
-        {
-            NegateGravity (object);
-            ApplyGravity (object);
-        }
     }
 
     void
