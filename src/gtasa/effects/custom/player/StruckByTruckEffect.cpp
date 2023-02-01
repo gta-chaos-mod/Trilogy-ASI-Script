@@ -5,7 +5,8 @@
 
 class StruckByTruckEffect : public EffectBase
 {
-    int wait = 700;
+    CAutomobile *linerunner = nullptr;
+    int          wait       = 700;
 
 public:
     bool
@@ -21,7 +22,8 @@ public:
     {
         inst->SetIsOneTimeEffect ();
 
-        wait = 700;
+        linerunner = nullptr;
+        wait       = 700;
 
         inst->SetTimerVisible (false);
     }
@@ -31,29 +33,47 @@ public:
     {
         if (!CanActivate ()) return;
 
+        SpawnOrUpdateTruck ();
+
         wait -= (int) GenericUtil::CalculateTick ();
         if (wait > 0) return;
 
+        linerunner->PlaceOnRoadProperly ();
+
+        CMatrix *matrix   = linerunner->GetMatrix ();
+        float    velocity = 1.0f;
+
+        linerunner->m_vecMoveSpeed.x = velocity * matrix->up.x;
+        linerunner->m_vecMoveSpeed.y = velocity * matrix->up.y;
+        linerunner->m_vecMoveSpeed.z = velocity * matrix->up.z;
+
+        inst->Disable ();
+    }
+
+    void
+    SpawnOrUpdateTruck ()
+    {
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
         CVector position
             = player->TransformFromObjectSpace (CVector (0.0f, 25.0f, 0.0f));
 
+        float playerFacing = player->m_fCurrentRotation - M_PI;
+
+        if (linerunner)
+        {
+            linerunner->SetPosn (position);
+            linerunner->SetOrientation (0.0f, 0.0f, playerFacing);
+            return;
+        }
+
         // Linerunner
-        CAutomobile *vehicle = (CAutomobile *) GameUtil::CreateVehicle (
-            403, position, player->m_fCurrentRotation - M_PI, true);
+        linerunner
+            = (CAutomobile *) GameUtil::CreateVehicle (403, position,
+                                                       playerFacing, true);
 
-        vehicle->PlaceOnRoadProperly ();
-
-        CMatrix *matrix   = vehicle->GetMatrix ();
-        float    velocity = 1.0f;
-
-        vehicle->m_vecMoveSpeed.x = velocity * matrix->up.x;
-        vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
-        vehicle->m_vecMoveSpeed.z = velocity * matrix->up.z;
-
-        inst->Disable ();
+        linerunner->PlaceOnRoadProperly ();
     }
 };
 
