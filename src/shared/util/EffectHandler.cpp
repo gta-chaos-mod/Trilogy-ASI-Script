@@ -111,8 +111,23 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
 
         auto inst = effect->CreateInstance ();
 
-        /* Check for incompatibilities before effect activation */
+        /* Check for incompatibilities with timed effects before effect
+         * activation */
         for (auto &i : timedEffects)
+        {
+            if (!i.IsRunning ()) continue;
+
+            if (inst.IsOtherEffectIncompatible (i))
+            {
+                if (!handlers.HandleOnEffectIncompatibility ()) return;
+
+                i.Disable ();
+            }
+        }
+
+        /* Check for incompatibilities with fake one-time effects before effect
+         * activation */
+        for (auto &i : oneTimeEffects)
         {
             if (!i.IsRunning ()) continue;
 
