@@ -5,15 +5,17 @@
 template <RwV3d rotation, float angle, float perTick = 0.0f>
 class VehicleRotationEffect : public EffectBase
 {
-    static inline bool  isOnTankingMission = false;
-    static inline float rotationAngle      = 0.0f;
+    static inline bool  isOnTankingMission  = false;
+    static inline bool  isOnForkliftMission = false;
+    static inline float rotationAngle       = 0.0f;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
-        isOnTankingMission = false;
-        rotationAngle      = angle;
+        isOnTankingMission  = false;
+        isOnForkliftMission = false;
+        rotationAngle       = angle;
 
         GlobalRenderer::RenderVehicleEvent += RenderVehicle;
     }
@@ -32,12 +34,15 @@ public:
         rotationAngle += tick * perTick;
         rotationAngle = fmod (rotationAngle, 360.0f);
 
-        isOnTankingMission = IsTankingMissionActive ();
+        UpdateMissionChecks ();
     }
 
-    bool
-    IsTankingMissionActive ()
+    void
+    UpdateMissionChecks ()
     {
+        isOnTankingMission  = false;
+        isOnForkliftMission = false;
+
         for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
         {
             if (!i->m_bIsMission || !i->m_bIsActive) continue;
@@ -45,27 +50,52 @@ public:
             std::string missionName
                 = GenericUtil::ToUpper (std::string (i->m_szName));
 
-            if (missionName == "CAT3" || missionName == "TRUCK") return true;
+            if (missionName == "CAT3" || missionName == "TRUCK")
+            {
+                isOnTankingMission = true;
+            }
+
+            if (missionName == "RYDER2")
+            {
+                isOnForkliftMission = true;
+            }
+        }
+    }
+
+    static bool
+    IsVehicleModelValid (int modelId)
+    {
+        if (isOnTankingMission)
+        {
+            switch (modelId)
+            {
+                case 403: // Linerunner
+                case 514: // Tanker
+                case 515: // Roadtrain
+                    return false;
+
+                default: break;
+            }
         }
 
-        return false;
+        if (isOnForkliftMission)
+        {
+            switch (modelId)
+            {
+                case 530: // Forklift
+                    return false;
+
+                default: break;
+            }
+        }
+
+        return true;
     }
 
     static void
     RenderVehicle (CVehicle *vehicle, RwFrame *frame)
     {
-        if (isOnTankingMission)
-        {
-            switch (vehicle->m_nModelIndex)
-            {
-                case 403: // Linerunner
-                case 514: // Tanker
-                case 515: // Roadtrain
-                    return;
-
-                default: break;
-            }
-        }
+        if (!IsVehicleModelValid (vehicle->m_nModelIndex)) return;
 
         int offset = perTick != 0.0f ? (int) vehicle % 360 : 0;
 
