@@ -4,7 +4,7 @@
 
 #include "util/Config.h"
 
-#define CONFIG_VOLUME CONFIG ("Chaos.Volume", 50.0)
+#define CONFIG_VOLUME CONFIG ("Chaos.Volume", 100.0)
 
 float
 GetAudioVolume ()

@@ -29,8 +29,8 @@ GUIWebsocketPort = 42069
 # Effect sound volume between 0 and 100
 # Min: 0
 # Max: 100
-# Default: 50
-Volume = 50
+# Default: 100
+Volume = 100
 
 # Always count down effects, no matter if it's in a cutscene or the player is currently
 # in a specific state (e.g. getting arrested, getting wasted, etc.)
