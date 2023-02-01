@@ -9,14 +9,15 @@ Teleportation::CanTeleport ()
     if (!player) return false;
 
     CVehicle *vehicle = FindPlayerVehicle (-1, false);
-    if (vehicle)
-    {
-        if (!vehicle->IsDriver (player)) return false;
+    if (!vehicle) return true;
 
-        if (Command<eScriptCommands::COMMAND_IS_RECORDING_GOING_ON_FOR_CAR> (
-                vehicle))
-            return false;
-    }
+    if (vehicle->m_nPhysicalFlags.bDisableMoveForce) return false;
+
+    if (!vehicle->IsDriver (player)) return false;
+
+    if (Command<eScriptCommands::COMMAND_IS_RECORDING_GOING_ON_FOR_CAR> (
+            vehicle))
+        return false;
 
     return true;
 }
