@@ -1,6 +1,10 @@
 #include "util/EffectBase.h"
 #include "util/GameUtil.h"
 
+#include <extensions/ScriptCommands.h>
+
+using namespace plugin;
+
 class FreezeVehicleEffect : public EffectBase
 {
     CVehicle *vehicle;
@@ -12,7 +16,14 @@ public:
     bool
     CanActivate () override
     {
-        return FindPlayerVehicle (-1, false);
+        CVehicle *vehicle = FindPlayerVehicle (-1, false);
+        if (!vehicle) return false;
+
+        if (Command<eScriptCommands::COMMAND_IS_RECORDING_GOING_ON_FOR_CAR> (
+                vehicle))
+            return false;
+
+        return true;
     }
 
     void
@@ -35,6 +46,8 @@ public:
     {
         if (!vehicle) return;
 
+        vehicle->m_nPhysicalFlags.bDisableMoveForce = false;
+
         vehicle->m_vecMoveSpeed = moveSpeed;
         vehicle->m_vecTurnSpeed = turnSpeed;
     }
@@ -43,6 +56,8 @@ public:
     OnTick (EffectInstance *inst) override
     {
         if (!vehicle) return;
+
+        vehicle->m_nPhysicalFlags.bDisableMoveForce = true;
 
         vehicle->SetPosn (position);
         vehicle->m_vecMoveSpeed = {0, 0, 0};
