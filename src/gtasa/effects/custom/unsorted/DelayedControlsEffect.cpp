@@ -18,7 +18,8 @@ class DelayedControls : public EffectBase
 
     static inline std::deque<InputData> bufferedInputData = {};
 
-    int bufferInMs = 500;
+    // For whatever reason we need to do half of the buffer we want in code
+    int bufferInMs = 500 / 2;
 
 public:
     void
@@ -39,9 +40,10 @@ public:
         CPad *pad = player->GetPadFromPlayer ();
         if (!pad) return;
 
-        unsigned int timeInMs = CTimer::m_snTimeInMilliseconds;
+        unsigned int timeInMs       = CTimer::m_snTimeInMilliseconds;
+        unsigned int adjustedBuffer = bufferInMs * CTimer::ms_fTimeScale;
 
-        InputData frameData = {.timeInMs      = timeInMs + bufferInMs,
+        InputData frameData = {.timeInMs      = timeInMs + adjustedBuffer,
                                .state         = pad->NewState,
                                .mouseState    = pad->NewMouseControllerState,
                                .keyboardState = pad->NewKeyState};
@@ -75,7 +77,7 @@ public:
 
         if (bufferedInputData.size () > 0)
         {
-            InputData data = bufferedInputData[0];
+            InputData data = bufferedInputData.front ();
 
             unsigned int timeInMs = CTimer::m_snTimeInMilliseconds;
 
