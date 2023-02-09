@@ -101,10 +101,13 @@ For Twitch you now have the option to have voting happen through chat messages (
 ![https://i.imgur.com/UDmUKet.png](https://i.imgur.com/UDmUKet.png)
 
 # How do I setup the YouTube voting? (Experimental)
-Enable the `Experimental` tab by pressing `File` and then `Experimental`.
-Tick the checkbox that says `YouTube Connection`.
+Head into the `Settings` tab and switch the Stream Mode to `YouTube`.
 
-Put your livestream ID into the `Access Token` field in the `Stream` tab and put something random into `Client ID` (this field doesn't matter in this mode as it's not read).
+After that, switch back to the `Stream` tab (or enter it with the button in the top right)
+put in your YouTube live / watch ID for the livestream into the field.
+
+For example, if your livestream URL is `https://www.youtube.com/watch?v=19iuE4jIN5k`
+you'd put in `19iuE4jIN5k` as the Livestream ID.
 
 Do note that in YouTube mode there will be no chat messages posted about voting happening.
 
