@@ -59,7 +59,7 @@ public:
 
             json["effectID"]    = "effect_one_hit_ko";
             json["displayName"] = "One Hit K.O. (Player)";
-            json["duration"]    = 1000 * 60 * 10;
+            json["duration"]    = 1000 * 60 * 5;
             json["subtext"]     = "Chaos Mod";
 
             EffectHandler::HandleFunction (json);
@@ -92,10 +92,15 @@ public:
             return;
         }
 
-        CRadar::ChangeBlipDisplay (coordBlip,
-                                   GenericUtil::IsMenuActive ()
+        eBlipDisplay displayMode = GenericUtil::IsMenuActive ()
                                        ? eBlipDisplay::BLIP_DISPLAY_NEITHER
-                                       : eBlipDisplay::BLIP_DISPLAY_BOTH);
+                                       : eBlipDisplay::BLIP_DISPLAY_BOTH;
+
+        if (CONFIG_CC_ENABLED
+            && CONFIG ("CrowdControl.Effects.GetToTheMarker.ShowOnMap", false))
+            displayMode = eBlipDisplay::BLIP_DISPLAY_BOTH;
+
+        CRadar::ChangeBlipDisplay (coordBlip, displayMode);
 
         SetPlanesLocked (true);
 

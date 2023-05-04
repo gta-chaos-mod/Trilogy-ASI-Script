@@ -158,6 +158,12 @@ Enabled = false
 # Default: true
 PreventNewEffectsWhenFull = true
 
+[CrowdControl.Effects.GetToTheMarker]
+
+# Whether to show the marker on the big map in the pause menu
+# Default: true
+ShowOnMap = true
+
 #######################################################)";
 #else
     static inline std::string configContent = "";
