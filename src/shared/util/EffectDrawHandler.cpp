@@ -322,27 +322,64 @@ EffectDrawHandler::DrawAndXMore ()
 }
 
 void
+EffectDrawHandler::ResetOffsetCooldown (bool removeStaleEffects)
+{
+    int seconds = CONFIG ("Drawing.RotationSeconds", 10);
+    seconds     = std::clamp (seconds, 3, 15);
+
+    offsetCooldown = 1000 * seconds;
+
+    if (removeStaleEffects)
+    {
+        EffectHandler::RemoveStaleEffects (false);
+    }
+}
+
+void
 EffectDrawHandler::DrawRecentEffects ()
 {
     bool inset = AreEffectsInset (false);
 
     /* Timed Effects */
-    int i = 0;
-    for (auto &effect : EffectHandler::GetActiveEffects ())
+    auto &effects     = EffectHandler::GetActiveEffects ();
+    int   effectsSize = effects.size ();
+
+    if (effectsSize > RECENT_EFFECTS)
     {
-        if (++i > RECENT_EFFECTS) break;
+        offsetCooldown -= GenericUtil::CalculateTick ();
+        if (offsetCooldown <= 0)
+        {
+            ResetOffsetCooldown (true);
+
+            offset = (offset + RECENT_EFFECTS) % effectsSize;
+        }
+    }
+    else
+    {
+        ResetOffsetCooldown ();
+    }
+
+    int drawn = 0;
+    for (int i = 0; i < effectsSize; i++)
+    {
+        int   index  = (i + offset) % effectsSize;
+        auto &effect = effects[index];
 
         if (!Globals::enabledEffects["hide_chaos_ui"]
             || effect.GetEffect ()->GetID () == "effect_hide_chaos_ui")
+        {
+            if (++drawn > RECENT_EFFECTS) break;
+
             effect.Draw (CONFIG ("Drawing.EffectsTopToBottom", true)
-                             ? RECENT_EFFECTS - i + 1
-                             : i,
+                             ? RECENT_EFFECTS - drawn + 1
+                             : drawn,
                          inset, true);
+        }
     }
 
     if (!Globals::enabledEffects["hide_chaos_ui"]) DrawAndXMore ();
 
-    i     = 0;
+    int i = 0;
     inset = AreEffectsInset (true);
     for (auto &effect : EffectHandler::GetOneTimeEffects ())
     {

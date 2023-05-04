@@ -16,6 +16,9 @@ class EffectDrawHandler
     static inline bool isInset;
     static inline bool drawLeft = true;
 
+    static inline int offset         = 0;
+    static inline int offsetCooldown = 1000 * 10;
+
     static inline float x      = 0;
     static inline float yLeft  = 0;
     static inline float yRight = 0;
@@ -60,6 +63,7 @@ public:
     static bool AreEffectsInset (bool checkOneTimeEffects = false);
     static void DrawAndXMore ();
     static void DrawRecentEffects ();
+    static void ResetOffsetCooldown (bool removeStaleEffects = false);
 
     static ScreensaverHUDElement CreateHUDElement (EffectInstance *effect);
     static void                  Tick ();

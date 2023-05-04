@@ -112,6 +112,13 @@ Enabled = true
 # Default: 8
 NumRecentEffects = 8
 
+# Amount of seconds to wait to shift timed effects down by one.
+# This will only happen when it shows "And X more..." (as in, NumRecentEffects was hit)
+# Min: 3
+# Max: 15
+# Default: 5
+RotationSeconds = 5
+
 # Draw the top bar showing the remaining time until the next effect happens
 # Default: true
 DrawRemainingTimeBar = true
