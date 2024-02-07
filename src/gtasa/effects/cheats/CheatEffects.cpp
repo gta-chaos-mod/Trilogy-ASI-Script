@@ -14,7 +14,6 @@ DEFINE_EFFECT (TimedAddressEffect    , "effect_everyone_armed"              , GR
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_gang_members_everywhere"     , GROUP_NPC_SPAWNS                          , CCheat::GangsCheat               , 0x96915A);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_gangs_control_the_streets"   , GROUP_NPC_SPAWNS                          , CCheat::GangLandCheat            , 0x96915B);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_ghost_town"                  , GROUP_NPC_SPAWNS | GROUP_VEHICLE_RARITY   , 0x96917A);
-DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_9mm"          , GROUP_NPC_SPAWNS | GROUP_NPCS_RECRUIT      , 0x96917C);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_ak47"         , GROUP_NPC_SPAWNS | GROUP_NPCS_RECRUIT      , 0x96917D);
 DEFINE_EFFECT (TimedAddressEffect    , "effect_recruit_anyone_rockets"      , GROUP_NPC_SPAWNS | GROUP_NPCS_RECRUIT      , 0x96917E);
 DEFINE_EFFECT (TimedFunctionEffect   , "effect_riot_mode"                   , GROUP_NPC_SPAWNS                          , CCheat::RiotCheat                , 0x969175);
