@@ -351,7 +351,11 @@ EffectDrawHandler::DrawRecentEffects ()
         {
             ResetOffsetCooldown (true);
 
-            offset = (offset + RECENT_EFFECTS) % effectsSize;
+            // Get the active effects again after resetting the cooldown and
+            // removing stale effects
+            effects     = EffectHandler::GetActiveEffects ();
+            effectsSize = effects.size ();
+            offset      = (offset + RECENT_EFFECTS) % effectsSize;
         }
     }
     else
