@@ -19,7 +19,7 @@ public:
 
     static void EmptyQueue ();
 
-    static int GetActiveEffectCount ();
+    static int GetActiveEffectCount (bool onlyRunning = true);
 
     static void RemoveStaleEffects (bool checkOneTimeEffects);
 

@@ -341,21 +341,15 @@ EffectDrawHandler::DrawRecentEffects ()
     bool inset = AreEffectsInset (false);
 
     /* Timed Effects */
-    auto &effects     = EffectHandler::GetActiveEffects ();
-    int   effectsSize = effects.size ();
-
-    if (effectsSize > RECENT_EFFECTS)
+    if (EffectHandler::GetActiveEffectCount (false) > RECENT_EFFECTS)
     {
         offsetCooldown -= GenericUtil::CalculateTick ();
         if (offsetCooldown <= 0)
         {
             ResetOffsetCooldown (true);
 
-            // Get the active effects again after resetting the cooldown and
-            // removing stale effects
-            effects     = EffectHandler::GetActiveEffects ();
-            effectsSize = effects.size ();
-            offset      = (offset + RECENT_EFFECTS) % effectsSize;
+            offset = (offset + RECENT_EFFECTS)
+                     % EffectHandler::GetActiveEffectCount ();
         }
     }
     else
@@ -364,6 +358,9 @@ EffectDrawHandler::DrawRecentEffects ()
 
         ResetOffsetCooldown ();
     }
+
+    auto &effects     = EffectHandler::GetActiveEffects ();
+    auto  effectsSize = effects.size ();
 
     int drawn = 0;
     for (int i = 0; i < effectsSize; i++)

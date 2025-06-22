@@ -46,13 +46,13 @@ EffectHandler::EmptyQueue ()
 }
 
 int
-EffectHandler::GetActiveEffectCount ()
+EffectHandler::GetActiveEffectCount (bool onlyRunning)
 {
     int count = 0;
 
     for (auto &effect : timedEffects)
     {
-        if (effect.IsRunning ()) count++;
+        if (!onlyRunning || effect.IsRunning ()) count++;
     }
 
     return count;
@@ -81,7 +81,8 @@ EffectHandler::RemoveStaleEffects (bool checkOneTimeEffects)
         }
 
         std::erase_if (effects,
-                       [effectsToRemove] (EffectInstance &effect) {
+                       [effectsToRemove] (EffectInstance &effect)
+                       {
                            return !effect.IsRunning ()
                                   && effectsToRemove.contains (&effect);
                        });
