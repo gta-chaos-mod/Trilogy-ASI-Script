@@ -122,9 +122,9 @@ public:
     {
         int random = instance->Random (0, (int) strings.size () - 1);
 
-        // ~k~ strings are used for input replacements (e.g. ~k~~GO_BACK~ which
-        // would be replaced into "RETURN" or similar)
-        if (strings[random].find_first_of ("~k~") != std::string::npos)
+        // ~ strings are used for input replacements and other stuff (e.g.
+        // ~k~~GO_BACK~ which would be replaced into "RETURN" or similar)
+        if (strings[random].find_first_of ("~") != std::string::npos)
         {
             exclude.insert (random);
 
