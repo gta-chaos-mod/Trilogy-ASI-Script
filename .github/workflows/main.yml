@@ -16,7 +16,7 @@ jobs:
 
     # Install CMake and Ninja
     - name: Get CMake and Ninja
-      uses: lukka/get-cmake@v3.20.1
+      uses: lukka/get-cmake@v3.19.2
 
     # Setup sccache directly
     - name: Setup sccache
