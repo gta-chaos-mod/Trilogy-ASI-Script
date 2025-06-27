@@ -2,8 +2,6 @@
 #include "util/GenericUtil.h"
 #include "util/GlobalRenderer.h"
 
-// TODO: Blacklist "Highjack" vehicles as well
-
 template <RwV3d scale, float zAdjustment = 0.0f>
 class VehicleSizeEffect : public EffectBase
 {
@@ -67,6 +65,10 @@ public:
                 case 403: // Linerunner
                 case 514: // Tanker
                 case 515: // Roadtrain
+                case 584: // Trailer (Tanker Commander)
+                case 435: // Trailer 1
+                case 450: // Trailer 2
+                case 591: // Trailer 3
                     return false;
 
                 default: break;
