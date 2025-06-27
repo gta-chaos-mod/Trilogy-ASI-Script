@@ -63,16 +63,19 @@ public:
 
         GameUtil::ClearWeapons (player);
 
+        // Give the player a complementary firearm for their troubles
+        if (storedWeapons.size () == 0)
+        {
+            GivePlayerWeapon (WEAPON_PISTOL, 50, true);
+            return;
+        }
+
         for (auto const &[type, ammo] : storedWeapons)
         {
-            int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
-            CStreaming::RequestModel (model, 2);
-            CStreaming::LoadAllRequestedModels (false);
-
-            player->GiveWeapon (type, ammo, true);
-
-            CStreaming::SetModelIsDeletable (model);
+            GivePlayerWeapon (type, ammo);
         }
+
+        player->SetCurrentWeapon (activeWeapon);
     }
 
     void
@@ -85,6 +88,9 @@ public:
 
         if (!weaponsStored)
         {
+            activeWeapon
+                = player->m_aWeapons[player->m_nActiveWeaponSlot].m_eWeaponType;
+
             for (CWeapon weapon : player->m_aWeapons)
             {
                 if (weapon.m_nTotalAmmo > 0)
@@ -108,6 +114,27 @@ public:
     }
 
     static void
+    GivePlayerWeapon (eWeaponType type, int ammo,
+                      bool setAsCurrentWeapon = false)
+    {
+        CPlayerPed *player = FindPlayerPed ();
+        if (!player) return;
+
+        int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
+        CStreaming::RequestModel (model, 2);
+        CStreaming::LoadAllRequestedModels (false);
+
+        player->GiveWeapon (type, ammo, true);
+
+        if (setAsCurrentWeapon)
+        {
+            player->SetCurrentWeapon (type);
+        }
+
+        CStreaming::SetModelIsDeletable (model);
+    }
+
+    static void
     GivePlayerActiveWeapon ()
     {
         CPlayerPed *player = FindPlayerPed ();
@@ -118,15 +145,7 @@ public:
             || player->m_aWeapons[player->m_nActiveWeaponSlot].m_eWeaponType
                    != activeWeapon)
         {
-            int model = info->m_nModelId1;
-
-            CStreaming::RequestModel (model, 2);
-            CStreaming::LoadAllRequestedModels (false);
-
-            player->GiveWeapon (activeWeapon, 9999, 1);
-            player->SetCurrentWeapon (activeWeapon);
-
-            CStreaming::SetModelIsDeletable (model);
+            GivePlayerWeapon (activeWeapon, 99999, true);
         }
     }
 
