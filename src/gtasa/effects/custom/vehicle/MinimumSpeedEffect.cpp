@@ -3,10 +3,10 @@
 
 #include <CAudioEngine.h>
 #include <eAudioEvents.h>
+#include <extensions/ScriptCommands.h>
+
 
 using namespace plugin;
-
-// TODO: Explode BMX separately
 
 class MinimumSpeedEffect : public EffectBase
 {
@@ -151,8 +151,24 @@ public:
         if (IsVehiclePointerValid (vehicle) && vehicle->CanBeDriven ()
             && vehicle->m_nStatus != STATUS_WRECKED)
         {
-            vehicle->m_nPhysicalFlags.bExplosionProof = false;
-            vehicle->BlowUpCar (nullptr, false);
+            const int vehicleId   = vehicle->m_nModelIndex;
+            auto      vehicleType = CModelInfo::IsVehicleModelType (vehicleId);
+            switch (vehicleType)
+            {
+                case VEHICLE_BMX:
+                {
+                    auto p = vehicle->GetPosition ();
+                    Command<eScriptCommands::COMMAND_ADD_EXPLOSION> (p.x, p.y,
+                                                                     p.z, 11);
+                    break;
+                }
+                default:
+                {
+                    vehicle->m_nPhysicalFlags.bExplosionProof = false;
+                    vehicle->BlowUpCar (nullptr, false);
+                    break;
+                }
+            }
         }
     }
 
