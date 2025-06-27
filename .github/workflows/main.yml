@@ -19,15 +19,24 @@ jobs:
       with:
         arch: x86
 
-    - name: Compile
+    - name: Compile with CMake
+      uses: lukka/run-cmake@v1
+      with:
+        args: |
+          -DCMAKE_BUILD_TYPE=Release
+          -D CMAKE_C_COMPILER_LAUNCHER=sccache
+          -D CMAKE_CXX_COMPILER_LAUNCHER=sccache
+          -G "Ninja"
+          ../
+
+    - name: Build with Ninja
+      run: ninja
+
+    - name: Create output directories
       run: |
-        mkdir bin
-        cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=sccache -D CMAKE_CXX_COMPILER_LAUNCHER=sccache ../
-        ninja
-        mkdir output_III
-        mkdir output_VC
-        mkdir output_SA
+        mkdir -p bin/output_III
+        mkdir -p bin/output_VC
+        mkdir -p bin/output_SA
 
     - name: Copy built files
       run: |
