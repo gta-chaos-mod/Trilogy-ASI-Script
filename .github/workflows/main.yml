@@ -18,6 +18,17 @@ jobs:
     - name: Get CMake and Ninja
       uses: lukka/get-cmake@latest
 
+    # Create dummy vcpkg.json
+    - name: Dummy vcpkg.json
+      run: |
+        @'
+        {
+          "name": "main",
+          "version-string": "latest"
+        }
+        '@ | Out-File -FilePath vcpkg.json -Encoding utf8
+
+    # Setup vcpkg
     - name: Setup anew (or from cache) vcpkg (and does not build any package)
       uses: lukka/run-vcpkg@v11 
 
