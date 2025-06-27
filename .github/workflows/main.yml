@@ -13,28 +13,16 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: x86
-
-    - name: Cache bin
-      id: cache-bin
-      uses: actions/cache@v4
-      with:
-        path: bin
-        key: ${{ runner.os }}-bin
-
-    - name: Create bin folder
-      if: steps.cache-bin.outputs.cache-hit != 'true'
-      run: |
-        mkdir bin
-        cd bin
-        mkdir output_III
-        mkdir output_VC
-        mkdir output_SA
     
     - name: Compile
       run: |
+        mkdir bin
         cd bin
         cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ../
         nmake
+        mkdir output_III
+        mkdir output_VC
+        mkdir output_SA
 
     - name: Copy built files
       run: |
