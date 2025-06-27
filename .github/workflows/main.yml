@@ -26,11 +26,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           -D CMAKE_C_COMPILER_LAUNCHER=sccache
           -D CMAKE_CXX_COMPILER_LAUNCHER=sccache
-          -G "Ninja"
           ../
-
-    - name: Build with Ninja
-      run: ninja
 
     - name: Create output directories
       run: |
