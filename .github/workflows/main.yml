@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Setup
-      uses: ilammy/msvc-dev-cmd@v1.5.0
+      uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: x86
 
@@ -26,7 +26,7 @@ jobs:
       run: |
         mkdir bin
         cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
+        cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ../
         mkdir output_III
         mkdir output_VC
         mkdir output_SA
@@ -34,7 +34,7 @@ jobs:
     - name: Compile
       run: |
         cd bin
-        ninja
+        nmake
         cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
         cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
