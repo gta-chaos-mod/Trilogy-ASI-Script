@@ -13,6 +13,7 @@ jobs:
       uses: hendrikmuhs/ccache-action@v1.2.18
       with:
         variant: "sccache"
+        create-symlink: true
 
     - name: Setup
       uses: ilammy/msvc-dev-cmd@v1.13.0
