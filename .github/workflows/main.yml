@@ -12,7 +12,6 @@ jobs:
     - name: Ccache
       uses: hendrikmuhs/ccache-action@v1.2.18
       with:
-        variant: "sccache"
         create-symlink: true
 
     - name: Setup
