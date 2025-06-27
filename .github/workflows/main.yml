@@ -9,16 +9,21 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Ccache
+      uses: hendrikmuhs/ccache-action@v1.2.18
+      with:
+        variant: "sccache"
+
     - name: Setup
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: x86
-    
+
     - name: Compile
       run: |
         mkdir bin
         cd bin
-        cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ../
+        cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache ../
         nmake
         mkdir output_III
         mkdir output_VC
@@ -42,10 +47,9 @@ jobs:
       with:
         name: "TrilogyChaosMod.VC"
         path: bin/output_VC
-        
+
     - name: Upload SA
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.SA"
         path: bin/output_SA
-  
