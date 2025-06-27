@@ -134,8 +134,13 @@ DrawHelper::DrawTopBar ()
     gamefont::PrintUnscaled (GetCooldownString (), x, SCREEN_MULTIPLIER (2.0f),
                              FONT_DEFAULT, SCREEN_MULTIPLIER (0.8f),
                              SCREEN_MULTIPLIER (0.8f), color::White,
-                             gamefont::AlignCenter, 1, color::Black, true,
+                             gamefont::AlignCenter, 1, color::Black, false,
                              9999.0F, true);
+
+    // Dummy render because the last rendered text will have broken colors
+    gamefont::PrintUnscaled ("dummy", 0, 0, FONT_DEFAULT, 0, 0,
+                             CRGBA (0, 0, 0, 0), gamefont::AlignCenter, 1,
+                             CRGBA (0, 0, 0, 0));
 
 #ifdef GTASA
     CFont::SetProportional (true);

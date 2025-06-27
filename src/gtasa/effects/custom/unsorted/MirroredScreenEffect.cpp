@@ -76,6 +76,9 @@ public:
         SetRenderState (rwRENDERSTATETEXTURERASTER, (int) raster);
 
         RwIm2DRenderPrimitive (rwPRIMTYPETRISTRIP, vertices, 4);
+
+        DrawHelper::DrawEffects ();
+        DrawHelper::Draw ();
     }
 };
 
