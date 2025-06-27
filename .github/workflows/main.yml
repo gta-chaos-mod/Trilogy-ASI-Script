@@ -18,6 +18,9 @@ jobs:
     - name: Get CMake and Ninja
       uses: lukka/get-cmake@latest
 
+    - name: Setup anew (or from cache) vcpkg (and does not build any package)
+      uses: lukka/run-vcpkg@v11 
+
     # Setup ccache
     - name: Setup ccache
       uses: hendrikmuhs/ccache-action@v1.2.18
@@ -39,8 +42,8 @@ jobs:
               "binaryDir": "${sourceDir}/bin",
               "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_C_COMPILER_LAUNCHER": "ccache",
-                "CMAKE_CXX_COMPILER_LAUNCHER": "ccache"
+                "CMAKE_C_COMPILER_LAUNCHER": "sccache",
+                "CMAKE_CXX_COMPILER_LAUNCHER": "sccache"
               }
             }
           ],
