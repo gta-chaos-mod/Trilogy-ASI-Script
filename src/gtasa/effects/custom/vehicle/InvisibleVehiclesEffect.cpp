@@ -11,12 +11,10 @@
 
 using namespace plugin;
 
-// TODO: Shadows are still present for vehicles that have them visible before
-// this effect enables.
-// This is only an issue on FX Quality High or Very High, which most are
-// probably running on.
-// They are real time shadows, not quite sure where exactly those can be
-// cleared...
+// TODO (Low Priority): Shadows are still present for vehicles that have them
+// visible before this effect enables. This is only an issue on FX Quality High
+// or Very High, which most are probably running on. They are real time shadows,
+// not quite sure where exactly those can be cleared...
 
 class InvisibleVehiclesEffect : public EffectBase
 {
@@ -29,7 +27,7 @@ public:
         inst->WriteMemory<bool *> (0xC1CC18, &overrideForceVehicleLightsOff);
 
         HOOK (inst, Hooked_RwIm3DTransform,
-              uint8_t * (uint8_t *, signed int, RwMatrix *, unsigned int),
+              uint8_t *(uint8_t *, signed int, RwMatrix *, unsigned int),
               0x6F07C7, 0x6F08E1);
 
         HOOK_METHOD_ARGS (inst, Hooked_RenderEffects, void (CEntity *),
