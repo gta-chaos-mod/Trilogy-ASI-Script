@@ -9,34 +9,63 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Ccache
-      uses: hendrikmuhs/ccache-action@v1.2.18
-      with:
-        variant: "sccache"
-
-    - name: Setup
+    - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: x86
 
-    - name: Compile with CMake
-      uses: lukka/run-cmake@v1
+    # Install CMake and Ninja
+    - name: Get CMake and Ninja
+      uses: lukka/get-cmake@latest
+
+    # Setup ccache
+    - name: Setup ccache
+      uses: hendrikmuhs/ccache-action@v1.2.18
       with:
-        args: |
-          -DCMAKE_BUILD_TYPE=Release
-          -D CMAKE_C_COMPILER_LAUNCHER=sccache
-          -D CMAKE_CXX_COMPILER_LAUNCHER=sccache
-          ../
+        variant: "sccache"
 
-    - name: Create output directories
+    # Create CMakePresets.json for run-cmake
+    - name: Create CMake preset
       run: |
-        mkdir -p bin/output_III
-        mkdir -p bin/output_VC
-        mkdir -p bin/output_SA
+        @'
+        {
+          "version": 3,
+          "configurePresets": [
+            {
+              "name": "default",
+              "displayName": "Default",
+              "description": "Default build with sccache",
+              "generator": "Ninja",
+              "binaryDir": "${sourceDir}/bin",
+              "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER_LAUNCHER": "ccache",
+                "CMAKE_CXX_COMPILER_LAUNCHER": "ccache"
+              }
+            }
+          ],
+          "buildPresets": [
+            {
+              "name": "default",
+              "configurePreset": "default"
+            }
+          ]
+        }
+        '@ | Out-File -FilePath CMakePresets.json -Encoding utf8
 
-    - name: Copy built files
+    # Run CMake with caching
+    - name: Configure and Build
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: 'windows-x86-release'
+        buildPreset: 'windows-x86-release'
+
+    - name: Prepare artifacts
       run: |
         cd bin
+        if (!(Test-Path "output_III")) { mkdir output_III }
+        if (!(Test-Path "output_VC")) { mkdir output_VC }
+        if (!(Test-Path "output_SA")) { mkdir output_SA }
         cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
         cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
