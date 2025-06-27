@@ -11,6 +11,8 @@ jobs:
 
     - name: Ccache
       uses: hendrikmuhs/ccache-action@v1.2.18
+      with:
+        variant: "sccache"
 
     - name: Setup
       uses: ilammy/msvc-dev-cmd@v1.13.0
@@ -21,7 +23,7 @@ jobs:
       run: |
         mkdir bin
         cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache ../
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=sccache -D CMAKE_CXX_COMPILER_LAUNCHER=sccache ../
         ninja
         mkdir output_III
         mkdir output_VC
