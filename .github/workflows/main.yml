@@ -26,7 +26,6 @@ jobs:
       run: |
         mkdir bin
         cd bin
-        cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ../
         mkdir output_III
         mkdir output_VC
         mkdir output_SA
@@ -34,7 +33,12 @@ jobs:
     - name: Compile
       run: |
         cd bin
+        cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ../
         nmake
+
+    - name: Copy built files
+      run: |
+        cd bin
         cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
         cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
