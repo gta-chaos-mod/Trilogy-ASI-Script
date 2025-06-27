@@ -23,8 +23,8 @@ jobs:
       run: |
         mkdir bin
         cd bin
-        cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache ../
-        nmake
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache ../
+        ninja
         mkdir output_III
         mkdir output_VC
         mkdir output_SA
