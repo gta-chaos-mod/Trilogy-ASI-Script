@@ -27,7 +27,7 @@ jobs:
         if (!(Test-Path "bin")) { mkdir bin }
         cd bin
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
-        ninja
+        ninja -d explain
 
     - name: Prepare artifacts
       run: |
