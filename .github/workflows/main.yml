@@ -17,39 +17,22 @@ jobs:
     - name: Get CMake
       uses: lukka/get-cmake@v3.31.6
 
-    # - name: Run sccache-cache
-    #   uses: mozilla-actions/sccache-action@v0.0.9
-    #   env:
-    #     SCCACHE_GHA_ENABLED: "true"
-
-    - name: ccache
-      uses: hendrikmuhs/ccache-action@v1.2
-
-    # - name: Cache CMake
-    #   uses: actions/cache@v4
-    #   with:
-    #     path: bin
-    #     key: build-${{ github.run_id }}
-    #     restore-keys: |
-    #       build-
+    - name: Cache CMake
+      uses: actions/cache@v4
+      with:
+        path: bin
+        key: build-${{ github.run_id }}
+        restore-keys: |
+          build-
 
     - name: Configure and build
-      uses: lukka/run-cmake@v3
-      with:
-        cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
-        cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-        cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache'
-        buildDirectory: '${{ github.workspace }}/bin' 
-    # - name: Configure and build
-    #   run: |
-    #     if (!(Test-Path "bin")) {
-    #       mkdir bin
-    #       cmake -Bbin -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache .
-    #     }
-    #     cd bin
-    #     cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
-    #   env:
-    #     SCCACHE_GHA_ENABLED: "true"
+      run: |
+        if (!(Test-Path "bin")) {
+          mkdir bin
+          cmake -Bbin -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache .
+        }
+        cd bin
+        ninja
 
     - name: Prepare artifacts
       run: |
