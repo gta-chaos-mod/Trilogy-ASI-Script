@@ -7,6 +7,9 @@
 			"description": "Default build with sccache",
 			"generator": "Ninja",
 			"binaryDir": "${sourceDir}/bin",
+			"architecture": {
+				"value": "x86"
+			},
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release",
 				"CMAKE_C_COMPILER_LAUNCHER": "sccache",
@@ -17,7 +20,8 @@
 	"buildPresets": [
 		{
 			"name": "default",
-			"configurePreset": "default"
+			"configurePreset": "default",
+			"verbose": true
 		}
 	]
 }
