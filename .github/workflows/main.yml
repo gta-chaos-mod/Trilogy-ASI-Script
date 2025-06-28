@@ -38,8 +38,8 @@ jobs:
       run: |
         if (!(Test-Path "bin")) { mkdir bin }
         cd bin
-        cmake -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
-        cmake --build . --config Release -j
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
+        ninja
       env:
         SCCACHE_GHA_ENABLED: "true"
 
