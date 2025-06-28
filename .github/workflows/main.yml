@@ -34,34 +34,32 @@ jobs:
       run: |
         if (!(Test-Path "bin")) { mkdir bin }
         cd bin
-        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
         cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
-      #cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
-      #ninja
       env:
         SCCACHE_GHA_ENABLED: "true"
 
     - name: Prepare artifacts
       run: |
         cd bin
-        if (!(Test-Path "output_III")) { mkdir output_III }
-        if (!(Test-Path "output_VC")) { mkdir output_VC }
         if (!(Test-Path "output_SA")) { mkdir output_SA }
-        cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
-        cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
+      #  if (!(Test-Path "output_III")) { mkdir output_III }
+      #  cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
+      #  if (!(Test-Path "output_VC")) { mkdir output_VC }
+      #  cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
 
-    - name: Upload III
-      uses: actions/upload-artifact@v4
-      with:
-        name: "TrilogyChaosMod.III"
-        path: bin/output_III
+    # - name: Upload III
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: "TrilogyChaosMod.III"
+    #     path: bin/output_III
 
-    - name: Upload VC
-      uses: actions/upload-artifact@v4
-      with:
-        name: "TrilogyChaosMod.VC"
-        path: bin/output_VC
+    # - name: Upload VC
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: "TrilogyChaosMod.VC"
+    #     path: bin/output_VC
 
     - name: Upload SA
       uses: actions/upload-artifact@v4
