@@ -26,15 +26,15 @@ jobs:
     - name: Cache CMake dependency source code
       uses: actions/cache@v4
       with:
-        path: build
+        path: bin
         key: build-${{ steps.date.outputs.NOW }}
         restore-keys: |
           build-
 
     - name: Configure and build
       run: |
-        if (!(Test-Path "build")) { mkdir build }
-        cd build
+        if (!(Test-Path "build")) { mkdir bin }
+        cd bin
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
         ninja -d explain
       env:
@@ -42,7 +42,7 @@ jobs:
 
     - name: Prepare artifacts
       run: |
-        cd build
+        cd bin
         if (!(Test-Path "output_III")) { mkdir output_III }
         if (!(Test-Path "output_VC")) { mkdir output_VC }
         if (!(Test-Path "output_SA")) { mkdir output_SA }
@@ -54,16 +54,16 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.III"
-        path: build/output_III
+        path: bin/output_III
 
     - name: Upload VC
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.VC"
-        path: build/output_VC
+        path: bin/output_VC
 
     - name: Upload SA
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.SA"
-        path: build/output_SA
+        path: bin/output_SA
