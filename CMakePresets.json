@@ -18,7 +18,10 @@
 		{
 			"name": "default",
 			"configurePreset": "default",
-			"verbose": true
+			"nativeToolOptions": [
+				"-d",
+				"explain"
+			]
 		}
 	]
 }
