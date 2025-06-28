@@ -17,8 +17,16 @@ jobs:
     # Setup sccache
     - name: Setup sccache
       uses: mozilla-actions/sccache-action@v0.0.9
+      with:
+        version: "latest"
       env:
         SCCACHE_GHA_ENABLED: "true"
+
+    # Verify sccache is working
+    - name: Verify sccache
+      run: |
+        sccache --version
+        sccache --show-stats
 
     # Run CMake with caching, disable vcpkg
     - name: Configure and Build
@@ -30,6 +38,12 @@ jobs:
         mkdir output_III
         mkdir output_VC
         mkdir output_SA
+      env:
+        SCCACHE_GHA_ENABLED: "true"
+
+    # Show sccache stats after build
+    - name: Show sccache stats
+      run: sccache --show-stats
 
     - name: Prepare artifacts
       run: |
