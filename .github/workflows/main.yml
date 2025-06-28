@@ -26,7 +26,7 @@ jobs:
             mkdir bin
         }
         cd bin
-        cmake --build . --config Debug --target TrilogyChaosMod.SA ../
+        cmake --build . --config Release --target all ../
         #cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
         #ninja -d explain
       env:
