@@ -32,7 +32,7 @@ jobs:
           cmake -Bbin -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE .
         }
         cd bin
-        ninja
+        cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
 
     - name: Prepare artifacts
       run: |
