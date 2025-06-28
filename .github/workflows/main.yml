@@ -29,7 +29,6 @@ jobs:
         buildPreset: 'default'
       env:
         VCPKG_ROOT: ''
-        SCCACHE_GHA_ENABLED: "true"
 
     - name: Prepare artifacts
       run: |
