@@ -14,60 +14,26 @@ jobs:
       with:
         arch: x86
 
-    # Install CMake and Ninja
-    - name: Get CMake and Ninja
-      uses: lukka/get-cmake@v3.31.6
-
-    # Setup sccache directly
+    # Setup sccache
     - name: Setup sccache
       uses: mozilla-actions/sccache-action@v0.0.9
       env:
         SCCACHE_GHA_ENABLED: "true"
 
-    # Create CMakePresets.json for run-cmake
-    - name: Create CMake preset
-      run: |
-        @'
-        {
-          "version": 3,
-          "configurePresets": [
-            {
-              "name": "default",
-              "displayName": "Default",
-              "description": "Default build with sccache",
-              "generator": "Ninja",
-              "binaryDir": "${sourceDir}/bin",
-              "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_C_COMPILER_LAUNCHER": "sccache",
-                "CMAKE_CXX_COMPILER_LAUNCHER": "sccache"
-              }
-            }
-          ],
-          "buildPresets": [
-            {
-              "name": "default",
-              "configurePreset": "default"
-            }
-          ]
-        }
-        '@ | Out-File -FilePath CMakePresets.json -Encoding utf8
-
     # Run CMake with caching, disable vcpkg
     - name: Configure and Build
-      uses: lukka/run-cmake@v10
-      with:
-        configurePreset: 'default'
-        buildPreset: 'default'
-      env:
-        VCPKG_ROOT: ''
+      run: |
+        mkdir -p bin
+        cd bin
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
+        ninja
+        mkdir output_III
+        mkdir output_VC
+        mkdir output_SA
 
     - name: Prepare artifacts
       run: |
         cd bin
-        if (!(Test-Path "output_III")) { mkdir output_III }
-        if (!(Test-Path "output_VC")) { mkdir output_VC }
-        if (!(Test-Path "output_SA")) { mkdir output_SA }
         cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
         cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
