@@ -31,6 +31,7 @@ jobs:
 
     - name: Prepare artifacts
       run: |
+        cd bin
         mkdir -p output_III
         mkdir -p output_VC
         mkdir -p output_SA
@@ -42,16 +43,16 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.III"
-        path: output_III
+        path: bin/output_III
 
     - name: Upload VC
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.VC"
-        path: output_VC
+        path: bin/output_VC
 
     - name: Upload SA
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.SA"
-        path: output_SA
+        path: bin/output_SA
