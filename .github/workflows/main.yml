@@ -17,8 +17,6 @@ jobs:
     # Setup sccache
     - name: Setup sccache
       uses: mozilla-actions/sccache-action@v0.0.9
-      with:
-        version: "latest"
       env:
         SCCACHE_GHA_ENABLED: "true"
 
