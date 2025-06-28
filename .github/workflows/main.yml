@@ -18,15 +18,13 @@ jobs:
 
     - name: Run sccache-cache
       uses: mozilla-actions/sccache-action@v0.0.9
-
-    - name: Configure sccache environment
-      run: |
-        echo "SCCACHE_GHA_ENABLED=true" >> $env:GITHUB_ENV
-        echo "CMAKE_C_COMPILER_LAUNCHER=sccache" >> $env:GITHUB_ENV
-        echo "CMAKE_CXX_COMPILER_LAUNCHER=sccache" >> $env:GITHUB_ENV
+      env:
+        SCCACHE_GHA_ENABLED: "true"
 
     - name: Show sccache stats (before)
-      run: sccache --show-stats
+      run: |
+        sccache --show-stats
+        sccache --show-config
 
     - name: Configure and Build
       uses: lukka/run-cmake@v10
@@ -35,6 +33,7 @@ jobs:
         buildPreset: 'default'
       env:
         VCPKG_ROOT: ''
+        SCCACHE_GHA_ENABLED: "true"
 
     - name: Show sccache stats (after)
       run: sccache --show-stats
