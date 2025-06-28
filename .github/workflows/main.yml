@@ -24,8 +24,6 @@ jobs:
 
     - name: ccache
       uses: hendrikmuhs/ccache-action@v1.2
-      with:
-        key: ccache-${{ github.run_id }}
 
     # - name: Cache CMake
     #   uses: actions/cache@v4
