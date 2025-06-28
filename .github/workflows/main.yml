@@ -21,6 +21,8 @@ jobs:
     # Setup sccache directly
     - name: Setup sccache
       uses: mozilla-actions/sccache-action@v0.0.9
+      env:
+        SCCACHE_GHA_ENABLED: "true"
 
     # Create CMakePresets.json for run-cmake
     - name: Create CMake preset
