@@ -26,7 +26,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: bin
-        key: build-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
+        key: build-${{ github.run_id }}
         restore-keys: |
           build-
 
