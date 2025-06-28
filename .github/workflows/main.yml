@@ -24,7 +24,6 @@ jobs:
     - name: Show sccache stats (before)
       run: |
         sccache --show-stats
-        sccache --show-config
 
     - name: Configure and Build
       uses: lukka/run-cmake@v10
