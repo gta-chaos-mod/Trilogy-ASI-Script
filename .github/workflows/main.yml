@@ -14,10 +14,11 @@ jobs:
       with:
         arch: x86
 
-    - name: Setup ccache
-      uses: hendrikmuhs/ccache-action@v1.2
-      with:
-        key: ${{ runner.os }}-ccache
+    - name: Run sccache-cache
+      uses: mozilla-actions/sccache-action@v0.0.9
+
+    - name: Tell sccache to use Actions cache
+      run: Add-Content -Path $env:GITHUB_ENV -Value "SCCACHE_GHA_ENABLED=true"
 
     - name: Configure and Build
       run: |
@@ -25,10 +26,11 @@ jobs:
             mkdir bin
         }
         cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
-        ninja -d explain
+        cmake --build . --config Debug --target TrilogyChaosMod.SA ../
+        #cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
+        #ninja -d explain
       env:
-        CCACHE_DIR: ${{ github.workspace }}/.ccache
+        SCCACHE_GHA_ENABLED: "true"
 
     - name: Prepare artifacts
       run: |
