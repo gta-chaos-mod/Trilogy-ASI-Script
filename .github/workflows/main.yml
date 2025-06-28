@@ -29,7 +29,7 @@ jobs:
     # Run CMake with caching, disable vcpkg
     - name: Configure and Build
       run: |
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache .
         ninja
         mkdir output_III
         mkdir output_VC
