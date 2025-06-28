@@ -70,7 +70,7 @@ public:
         if (Globals::enabledEffects["walk_on_water"])
             newZ = std::max (0.0f, newZ);
 
-        player->GetMatrix ()->pos.z = newZ + 0.8f;
+        player->GetMatrix ()->pos.z = newZ + 0.7f;
     }
 
     static bool
