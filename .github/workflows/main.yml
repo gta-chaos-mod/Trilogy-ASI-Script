@@ -14,25 +14,21 @@ jobs:
       with:
         arch: x86
 
-    - name: Cache bin
-      id: cache-bin
-      uses: actions/cache@v4
+    - name: Setup ccache
+      uses: hendrikmuhs/ccache-action@v1.2
       with:
-        path: bin
-        key: ${{ runner.os }}-bin
+        key: ${{ runner.os }}-ccache
 
-    # Run CMake with caching, disable vcpkg
     - name: Configure and Build
       run: |
         if (!(Test-Path "bin")) {
             mkdir bin
-            cd bin
-            cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
         }
-        else {
-            make
-        }
+        cd bin
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
         ninja -d explain
+      env:
+        CCACHE_DIR: ${{ github.workspace }}/.ccache
 
     - name: Prepare artifacts
       run: |
