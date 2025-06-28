@@ -13,7 +13,6 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: x86
-        toolset: "14.44.35207"
 
     - name: Get CMake
       uses: lukka/get-cmake@v3.31.6
@@ -33,9 +32,11 @@ jobs:
 
     - name: Configure and build
       run: |
-        if (!(Test-Path "bin")) { mkdir bin }
+        if (!(Test-Path "bin")) {
+          mkdir bin
+          cmake -Bbin -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE .
+        }
         cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE ../
         cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
     #   env:
     #     SCCACHE_GHA_ENABLED: "true"
