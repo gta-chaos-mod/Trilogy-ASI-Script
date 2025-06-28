@@ -14,8 +14,6 @@ jobs:
       with:
         arch: x86
 
-    - uses: lukka/get-cmake@v3.31.6
-
     - name: Cache CMake dependency source code
       uses: actions/cache@v4
       env:
@@ -46,13 +44,13 @@ jobs:
         restore-keys: |
           ${{ env.cache-name }}-${{ runner.os }}-
 
-    - name: Configure and Build
-      uses: lukka/run-cmake@v10
-      with:
-        configurePreset: 'default'
-        buildPreset: 'default'
-      env:
-        VCPKG_ROOT: ''
+    - name: Configure and build
+      run: |
+        if (!(Test-Path "build")) { mkdir build }
+        mkdir build
+        cd build
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
+        ninja
 
     - name: Prepare artifacts
       run: |
