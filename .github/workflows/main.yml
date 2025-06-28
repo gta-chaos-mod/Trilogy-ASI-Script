@@ -24,9 +24,14 @@ jobs:
     # Run CMake with caching, disable vcpkg
     - name: Configure and Build
       run: |
-        if (!(Test-Path "bin")) { mkdir bin }
-        cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
+        if (!(Test-Path "bin")) {
+            mkdir bin
+            cd bin
+            cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
+        }
+        else {
+            make
+        }
         ninja -d explain
 
     - name: Prepare artifacts
