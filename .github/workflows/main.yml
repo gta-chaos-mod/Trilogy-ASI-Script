@@ -34,13 +34,20 @@ jobs:
     #       build-
 
     - name: Configure and build
-      run: |
-        if (!(Test-Path "bin")) {
-          mkdir bin
-          cmake -Bbin -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache .
-        }
-        cd bin
-        cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
+      uses: lukka/run-cmake@v3
+      with:
+        cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
+        cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+        cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache'
+        buildDirectory: '${{ github.workspace }}/bin' 
+    # - name: Configure and build
+    #   run: |
+    #     if (!(Test-Path "bin")) {
+    #       mkdir bin
+    #       cmake -Bbin -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache .
+    #     }
+    #     cd bin
+    #     cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
     #   env:
     #     SCCACHE_GHA_ENABLED: "true"
 
