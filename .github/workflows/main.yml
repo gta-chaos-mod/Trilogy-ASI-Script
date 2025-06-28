@@ -14,6 +14,8 @@ jobs:
       with:
         arch: x86
 
+    - uses: lukka/get-cmake@v3.31.6
+
     - name: Run sccache-cache
       uses: mozilla-actions/sccache-action@v0.0.9
 
@@ -21,15 +23,12 @@ jobs:
       run: Add-Content -Path $env:GITHUB_ENV -Value "SCCACHE_GHA_ENABLED=true"
 
     - name: Configure and Build
-      run: |
-        if (!(Test-Path "bin")) {
-            mkdir bin
-        }
-        cd bin
-        cmake --build . --config Release --target all ../
-        #cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
-        #ninja -d explain
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: 'default'
+        buildPreset: 'default'
       env:
+        VCPKG_ROOT: ''
         SCCACHE_GHA_ENABLED: "true"
 
     - name: Prepare artifacts

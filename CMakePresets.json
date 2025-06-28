@@ -1,0 +1,23 @@
+{
+	"version": 3,
+	"configurePresets": [
+		{
+			"name": "default",
+			"displayName": "Default",
+			"description": "Default build with sccache",
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/bin",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release",
+				"CMAKE_C_COMPILER_LAUNCHER": "sccache",
+				"CMAKE_CXX_COMPILER_LAUNCHER": "sccache"
+			}
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "default",
+			"configurePreset": "default"
+		}
+	]
+}
