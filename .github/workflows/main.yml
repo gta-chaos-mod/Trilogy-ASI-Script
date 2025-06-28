@@ -24,7 +24,7 @@ jobs:
     # Run CMake with caching, disable vcpkg
     - name: Configure and Build
       run: |
-        mkdir -p bin
+        if (!(Test-Path "bin")) { mkdir bin }
         cd bin
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
         ninja
@@ -32,9 +32,9 @@ jobs:
     - name: Prepare artifacts
       run: |
         cd bin
-        mkdir -p output_III
-        mkdir -p output_VC
-        mkdir -p output_SA
+        if (!(Test-Path "output_III")) { mkdir output_III }
+        if (!(Test-Path "output_VC")) { mkdir output_VC }
+        if (!(Test-Path "output_SA")) { mkdir output_SA }
         cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
         cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
