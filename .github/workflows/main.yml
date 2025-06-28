@@ -21,7 +21,7 @@ jobs:
 
     - name: Set current date as env variable
       id: date
-      run: echo "::set-output name=date::$(date +'%Y_%m_%d-%H_%M_%S')"
+      run: echo "date=$(date +'%Y_%m_%d-%H_%M_%S')" >> $GITHUB_OUTPUT
 
     - name: Cache CMake dependency source code
       uses: actions/cache@v4
