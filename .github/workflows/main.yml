@@ -9,10 +9,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup MSVC
-      uses: ilammy/msvc-dev-cmd@v1.13.0
-      with:
-        arch: x86
+    # - name: Setup MSVC
+    #   uses: ilammy/msvc-dev-cmd@v1.13.0
+    #   with:
+    #     arch: x86
 
     - uses: lukka/get-cmake@v3.31.6
 
