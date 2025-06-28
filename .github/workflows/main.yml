@@ -22,15 +22,11 @@ jobs:
       env:
         SCCACHE_GHA_ENABLED: "true"
 
-    - name: Set current date as env variable
-      id: date
-      run: echo "timestamp=$(date +'%Y-%m-%d-%H-%M-%S')" >> $GITHUB_OUTPUT
-
     - name: Cache CMake dependency source code
       uses: actions/cache@v4
       with:
         path: bin
-        key: build-${{ steps.date.outputs.timestamp }}
+        key: build-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
         restore-keys: |
           build-
 
