@@ -29,9 +29,7 @@ jobs:
     # Run CMake with caching, disable vcpkg
     - name: Configure and Build
       run: |
-        mkdir -p bin
-        cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
         ninja
         mkdir output_III
         mkdir output_VC
@@ -45,7 +43,6 @@ jobs:
 
     - name: Prepare artifacts
       run: |
-        cd bin
         cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
         cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
@@ -54,16 +51,16 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.III"
-        path: bin/output_III
+        path: output_III
 
     - name: Upload VC
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.VC"
-        path: bin/output_VC
+        path: output_VC
 
     - name: Upload SA
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.SA"
-        path: bin/output_SA
+        path: output_SA
