@@ -56,7 +56,7 @@ jobs:
 
     - name: Prepare artifacts
       run: |
-        cd bin
+        cd build
         if (!(Test-Path "output_III")) { mkdir output_III }
         if (!(Test-Path "output_VC")) { mkdir output_VC }
         if (!(Test-Path "output_SA")) { mkdir output_SA }
@@ -68,16 +68,16 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.III"
-        path: bin/output_III
+        path: build/output_III
 
     - name: Upload VC
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.VC"
-        path: bin/output_VC
+        path: build/output_VC
 
     - name: Upload SA
       uses: actions/upload-artifact@v4
       with:
         name: "TrilogyChaosMod.SA"
-        path: bin/output_SA
+        path: build/output_SA
