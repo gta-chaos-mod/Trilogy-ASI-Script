@@ -21,7 +21,7 @@ jobs:
 
     - name: Set current date as env variable
       id: date
-      run: echo "NOW=$(date +'%Y_%m_%d-%H_%M_%S')" >> $GITHUB_OUTPUT
+      run: echo "NOW=$(date +'%Y_%m_%d-%H_%M_%S')" >> $env:$GITHUB_OUTPUT
 
     - name: Cache CMake dependency source code
       uses: actions/cache@v4
@@ -33,7 +33,7 @@ jobs:
 
     - name: Configure and build
       run: |
-        if (!(Test-Path "build")) { mkdir bin }
+        if (!(Test-Path "bin")) { mkdir bin }
         cd bin
         cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
         ninja -d explain
