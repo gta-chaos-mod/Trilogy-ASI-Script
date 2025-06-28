@@ -19,35 +19,17 @@ jobs:
       env:
         SCCACHE_GHA_ENABLED: "true"
 
+    - name: Set current date as env variable
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y_%m_%d-%H_%M_%S')"
+
     - name: Cache CMake dependency source code
       uses: actions/cache@v4
-      env:
-        cache-name: cache-cmake-dependency-sources
       with:
-        # CMake cache is at ${{github.workspace}}/build/_deps but we only will cache folders ending in '-src' to cache source code
-        path: ${{github.workspace}}/build/_deps/*-src
-        # Cache hash is dependent on CMakeLists files anywhere as these can change what's in the cache, as well as cmake modules files
-        key: ${{ env.cache-name }}-${{ hashFiles('**/CMakeLists.txt', 'cmake/**') }}
-        # it's acceptable to reuse caches for different CMakeLists content if exact match is not available and unlike build caches, we
-        # don't need to restrict these by OS or compiler as it's only source code that's being cached
+        path: build
+        key: build-${{ steps.date.outputs.date }}
         restore-keys: |
-          ${{ env.cache-name }}
-
-    - name: Cache CMake dependency build objects
-      uses: actions/cache@v4
-      env:
-        cache-name: cache-cmake-dependency-builds
-      with:
-        # CMake cache is at ${{github.workspace}}/build/_deps but we only care about the folders ending in -build or -subbuild
-        path: |
-          ${{github.workspace}}/build/_deps/*-build
-          ${{github.workspace}}/build/_deps/*-subbuild
-        # Cache hash is dependent on CMakeLists files anywhere as these can change what's in the cache, as well as cmake modules files
-        key: ${{ env.cache-name }}-${{ runner.os }}-${{ hashFiles('**/CMakeLists.txt', 'cmake/**') }}
-        # it's acceptable to reuse caches for different CMakeLists content if exact match is not available
-        # as long as the OS and Compiler match exactly
-        restore-keys: |
-          ${{ env.cache-name }}-${{ runner.os }}-
+          build-
 
     - name: Configure and build
       run: |
