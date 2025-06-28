@@ -21,13 +21,13 @@ jobs:
 
     - name: Set current date as env variable
       id: date
-      run: echo "NOW=$(date +'%Y_%m_%d-%H_%M_%S')" >> $env:$GITHUB_OUTPUT
+      run: echo "timestamp=$(date +'%Y-%m-%d-%H-%M-%S')" >> $GITHUB_OUTPUT
 
     - name: Cache CMake dependency source code
       uses: actions/cache@v4
       with:
         path: bin
-        key: build-${{ steps.date.outputs.NOW }}
+        key: build-${{ steps.date.outputs.timestamp }}
         restore-keys: |
           build-
 
