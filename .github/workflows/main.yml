@@ -14,38 +14,29 @@ jobs:
       with:
         arch: x86
 
-    # Setup sccache
-    - name: Setup sccache
-      uses: mozilla-actions/sccache-action@v0.0.9
-      env:
-        SCCACHE_GHA_ENABLED: "true"
-
-    # Verify sccache is working
-    - name: Verify sccache
-      run: |
-        sccache --version
-        sccache --show-stats
+    - name: Cache bin
+      id: cache-bin
+      uses: actions/cache@v4
+      with:
+        path: bin
+        key: ${{ runner.os }}-bin
 
     # Run CMake with caching, disable vcpkg
     - name: Configure and Build
       run: |
-        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache .
-        cmake --build . --config Release
-        mkdir output_III
-        mkdir output_VC
-        mkdir output_SA
-      env:
-        SCCACHE_GHA_ENABLED: "true"
-
-    # Show sccache stats after build
-    - name: Show sccache stats
-      run: sccache --show-stats
+        mkdir -p bin
+        cd bin
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ../
+        ninja
 
     - name: Prepare artifacts
       run: |
-        cp Release/TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
-        cp Release/TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
-        cp Release/TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
+        mkdir -p output_III
+        mkdir -p output_VC
+        mkdir -p output_SA
+        cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
+        cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
+        cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
 
     - name: Upload III
       uses: actions/upload-artifact@v4
