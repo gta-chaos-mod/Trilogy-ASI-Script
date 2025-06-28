@@ -19,8 +19,14 @@ jobs:
     - name: Run sccache-cache
       uses: mozilla-actions/sccache-action@v0.0.9
 
-    - name: Tell sccache to use Actions cache
-      run: Add-Content -Path $env:GITHUB_ENV -Value "SCCACHE_GHA_ENABLED=true"
+    - name: Configure sccache environment
+      run: |
+        echo "SCCACHE_GHA_ENABLED=true" >> $env:GITHUB_ENV
+        echo "CMAKE_C_COMPILER_LAUNCHER=sccache" >> $env:GITHUB_ENV
+        echo "CMAKE_CXX_COMPILER_LAUNCHER=sccache" >> $env:GITHUB_ENV
+
+    - name: Show sccache stats (before)
+      run: sccache --show-stats
 
     - name: Configure and Build
       uses: lukka/run-cmake@v10
@@ -29,6 +35,9 @@ jobs:
         buildPreset: 'default'
       env:
         VCPKG_ROOT: ''
+
+    - name: Show sccache stats (after)
+      run: sccache --show-stats
 
     - name: Prepare artifacts
       run: |
