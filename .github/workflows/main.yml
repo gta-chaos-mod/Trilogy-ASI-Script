@@ -34,7 +34,7 @@ jobs:
       run: |
         if (!(Test-Path "bin")) { mkdir bin }
         cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ../
+        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE ../
         cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
     #   env:
     #     SCCACHE_GHA_ENABLED: "true"
