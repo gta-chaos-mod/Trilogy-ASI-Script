@@ -29,9 +29,9 @@ include(cmake/gta3.cmake)
 include(cmake/gtaVC.cmake)
 include(cmake/gtaSA.cmake)
 
-if(DEFINED ENV{VERSION_SUFFIX}})
+if(DEFINED ENV{VERSION_SUFFIX})
 	string(SUBSTRING "$ENV{VERSION_SUFFIX}" 0 7 VERSION_SUFFIX)
-	message(STATUS "Short SHA: ${VERSION_SUFFIX}")
+	message(STATUS "Version Suffix: ${VERSION_SUFFIX}")
 endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/shared/util/Version.h.in"
