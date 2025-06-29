@@ -9,6 +9,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Check for release commit
+      run: |
+        if (${{ github.event.head_commit.message }} -match '^v[0-9]+\.[0-9]+\.[0-9]+$') {
+          echo "__IS_RELEASE_COMMIT=true" >> $GITHUB_ENV
+        }
+        echo "Is Release Commit: $__IS_RELEASE_COMMIT"
+
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
