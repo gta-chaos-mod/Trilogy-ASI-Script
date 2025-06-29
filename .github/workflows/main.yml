@@ -39,6 +39,8 @@ jobs:
         }
         cd bin
         cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
+      env:
+        VERSION_SUFFIX: ${{ env.VERSION_SUFFIX }}
 
     - name: Prepare artifacts
       run: |
