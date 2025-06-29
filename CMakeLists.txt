@@ -29,8 +29,8 @@ include(cmake/gta3.cmake)
 include(cmake/gtaVC.cmake)
 include(cmake/gtaSA.cmake)
 
-if(DEFINED ENV{GITHUB_SHA} AND NOT DEFINED ENV{__IS_RELEASE_COMMIT})
-	string(SUBSTRING "$ENV{GITHUB_SHA}" 0 7 VERSION_SUFFIX)
+if(DEFINED ENV{VERSION_SUFFIX}})
+	string(SUBSTRING "$ENV{VERSION_SUFFIX}" 0 7 VERSION_SUFFIX)
 	message(STATUS "Short SHA: ${VERSION_SUFFIX}")
 endif()
 
