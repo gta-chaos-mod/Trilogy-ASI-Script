@@ -27,9 +27,9 @@ jobs:
       uses: actions/cache@v4
       with:
         path: bin
-        key: build-${{ github.run_id }}
+        key: build-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.run_id }}
         restore-keys: |
-          build-
+          build-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
     - name: Configure and build
       run: |
@@ -39,8 +39,6 @@ jobs:
         }
         cd bin
         cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
-      env:
-        VERSION_SUFFIX: ${{ env.VERSION_SUFFIX }}
 
     - name: Prepare artifacts
       run: |
