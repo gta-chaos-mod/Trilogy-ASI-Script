@@ -9,44 +9,58 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Ccache
-      uses: hendrikmuhs/ccache-action@v1.2.18
-      with:
-        variant: "sccache"
+    - name: Check for release commit
+      run: |
+        if ("${{ github.event.head_commit.message }}" -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+$') {
+            echo "VERSION_SUFFIX=${{ github.sha }}" >> $env:GITHUB_ENV
+        }
 
-    - name: Setup
+    - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: x86
 
-    - name: Compile
-      run: |
-        mkdir bin
-        cd bin
-        cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -D CMAKE_C_COMPILER_LAUNCHER=sccache -D CMAKE_CXX_COMPILER_LAUNCHER=sccache ../
-        ninja
-        mkdir output_III
-        mkdir output_VC
-        mkdir output_SA
+    - name: Get CMake
+      uses: lukka/get-cmake@v3.31.6
 
-    - name: Copy built files
+    - name: Cache CMake
+      uses: actions/cache@v4
+      with:
+        path: bin
+        key: build-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.run_id }}
+        restore-keys: |
+          build-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
+
+    - name: Configure and build
+      run: |
+        if (!(Test-Path "bin")) {
+          mkdir bin
+          cmake -Bbin -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE .
+        }
+        cd bin
+        cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
+
+    - name: Prepare artifacts
       run: |
         cd bin
-        cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
-        cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
+        if (!(Test-Path "output_SA")) { mkdir output_SA }
         cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
+      #  if (!(Test-Path "output_III")) { mkdir output_III }
+      #  cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
+      #  if (!(Test-Path "output_VC")) { mkdir output_VC }
+      #  cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
 
-    - name: Upload III
-      uses: actions/upload-artifact@v4
-      with:
-        name: "TrilogyChaosMod.III"
-        path: bin/output_III
+    # - name: Upload III
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: "TrilogyChaosMod.III"
+    #     path: bin/output_III
 
-    - name: Upload VC
-      uses: actions/upload-artifact@v4
-      with:
-        name: "TrilogyChaosMod.VC"
-        path: bin/output_VC
+    # - name: Upload VC
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: "TrilogyChaosMod.VC"
+    #     path: bin/output_VC
 
     - name: Upload SA
       uses: actions/upload-artifact@v4
