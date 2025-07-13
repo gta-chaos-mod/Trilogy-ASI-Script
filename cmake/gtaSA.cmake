@@ -11,29 +11,28 @@ set_target_properties(${CHAOS_SA} PROPERTIES SUFFIX ".asi")
 target_include_directories(${CHAOS_SA} PUBLIC "src/shared/" "src/gtasa" "${dxsdk_SOURCE_DIR}/Include")
 
 target_link_directories(${CHAOS_SA} PUBLIC
-    lib/
-    "${dxsdk_SOURCE_DIR}/Lib/x86"
+	lib/
+	"${dxsdk_SOURCE_DIR}/Lib/x86"
 )
-target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa nlohmann_json uWebSockets minhook efsw bass)
+target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa nlohmann_json ixwebsocket minhook efsw bass)
 
 target_compile_definitions(${CHAOS_SA} PUBLIC NOMINMAX)
 
 # Include global definitions like colors
 target_precompile_headers(
-    ${CHAOS_SA}
-    PUBLIC
-    src/shared/_include/Definitions.h
-    src/shared/_include/cpptoml.h
-    lib/bass.h
+	${CHAOS_SA}
+	PUBLIC
+	src/shared/_include/Definitions.h
+	src/shared/_include/cpptoml.h
+	lib/bass.h
 )
 
 # Include specific libraries for easier use
 target_precompile_headers(
-    ${CHAOS_SA}
-    PRIVATE
-    <plugin.h>
-    <nlohmann/json.hpp>
-    <App.h>
+	${CHAOS_SA}
+	PRIVATE
+	<plugin.h>
+	<nlohmann/json.hpp>
 )
 
 # #####################################################################

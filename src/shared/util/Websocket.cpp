@@ -3,22 +3,6 @@
 #include "util/Config.h"
 #include "util/EffectHandler.h"
 
-#ifdef _WIN32
-#pragma comment(lib, "ws2_32")
-#include <WinSock2.h>
-#endif
-
-void
-Websocket::Cleanup ()
-{
-    if (wsClient.get () != nullptr)
-    {
-        wsClient->close ();
-    }
-
-    wsClient.reset ();
-}
-
 std::string
 Websocket::GetWebsocketURL ()
 {
@@ -35,94 +19,40 @@ Websocket::GetGUIWebsocketURL ()
 }
 
 void
-Websocket::SetupClientThread ()
-{
-    while (true)
-    {
-        if (!wsClient.get ())
-        {
-            if (IsClientConnectingOrConnected ()) continue;
-
-            try
-            {
-                using easywsclient::WebSocket;
-
-                std::shared_ptr<WebSocket> newClient (
-                    WebSocket::from_url (GetWebsocketURL ()));
-                wsClient = newClient;
-
-                if (newClient == nullptr
-                    || newClient->getReadyState () == WebSocket::CLOSED)
-                {
-                    continue;
-                }
-
-                while (newClient != nullptr
-                       && newClient->getReadyState () == WebSocket::OPEN)
-                {
-                    newClient->poll (50);
-
-                    newClient->dispatch ([] (const std::string &message)
-                                         { CallFunction (message); });
-                }
-
-                Cleanup ();
-            }
-            catch (...)
-            {
-                // Error connecting to socket
-            }
-        }
-        else
-        {
-            std::this_thread::sleep_for (std::chrono::seconds (3));
-
-            if (!IsClientConnectingOrConnected ())
-            {
-                Cleanup ();
-            }
-        }
-    }
-}
-
-void
-Websocket::SetupConnectionHandler ()
-{
-    if (connectionHandlerInitialized) return;
-
-#ifdef _WIN32
-    INT     rc;
-    WSADATA wsaData;
-
-    rc = WSAStartup (MAKEWORD (2, 2), &wsaData);
-    if (rc)
-    {
-        fprintf (stderr, "[GTA Chaos] WSAStartup Failed. Error: %d\n", rc);
-        return;
-    }
-#endif
-
-    std::thread setupThread (SetupClientThread);
-    setupThread.detach ();
-
-    connectionHandlerInitialized = true;
-}
-
-void
 Websocket::Setup ()
 {
-    Cleanup ();
+    ix::initNetSystem ();
 
-    SetupConnectionHandler ();
+    wsClient.setUrl (GetWebsocketURL ());
+
+    wsClient.setOnMessageCallback (
+        [] (const ix::WebSocketMessagePtr &msg)
+        {
+            if (msg->type == ix::WebSocketMessageType::Message)
+            {
+                CallFunction (msg->str);
+                // std::cout << "received message: " << msg->str << std::endl;
+                // std::cout << "> " << std::flush;
+            }
+            else if (msg->type == ix::WebSocketMessageType::Open)
+            {
+                // std::cout << "Connection established" << std::endl;
+                // std::cout << "> " << std::flush;
+            }
+            else if (msg->type == ix::WebSocketMessageType::Error)
+            {
+                // std::cout << "Connection error: " << msg->errorInfo.reason <<
+                // std::endl; std::cout << "> " << std::flush;
+            }
+        });
+
+    wsClient.start ();
 }
 
 bool
 Websocket::IsClientConnected ()
 {
-    using easywsclient::WebSocket;
-
-    return wsClient.get () != nullptr
-           && wsClient->getReadyState () == WebSocket::OPEN;
+    return wsClient.getReadyState () == ix::ReadyState::Open;
 }
 
 bool
@@ -130,10 +60,7 @@ Websocket::IsClientConnectingOrConnected ()
 {
     if (IsClientConnected ()) return true;
 
-    using easywsclient::WebSocket;
-
-    return wsClient.get () != nullptr
-           && wsClient->getReadyState () == WebSocket::CONNECTING;
+    return wsClient.getReadyState () == ix::ReadyState::Connecting;
 }
 
 void
@@ -214,9 +141,7 @@ Websocket::CallFunction (std::string text)
 void
 Websocket::SendWebsocketMessage (nlohmann::json json)
 {
-    if (wsClient.get () == nullptr) return;
-
-    wsClient->send (json.dump ());
+    wsClient.send (json.dump ());
 }
 
 void

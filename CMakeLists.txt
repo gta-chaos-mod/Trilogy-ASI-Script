@@ -21,7 +21,7 @@ include(cmake/DirectXSDK.cmake)
 include(cmake/pluginSDK.cmake)
 
 include(cmake/nlohmannJSON.cmake)
-include(cmake/uWebSockets.cmake)
+include(cmake/IXWebSocket.cmake)
 include(cmake/minhook.cmake)
 include(cmake/efsw.cmake)
 
