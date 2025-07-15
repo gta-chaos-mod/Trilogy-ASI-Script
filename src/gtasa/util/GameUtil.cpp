@@ -363,3 +363,10 @@ GameUtil::IsPlayerSafe ()
 
     return true;
 }
+
+bool
+GameUtil::IsTreeModel (int model_id)
+{
+    return std::find (treeModels.begin (), treeModels.end (), model_id)
+           != treeModels.end ();
+}

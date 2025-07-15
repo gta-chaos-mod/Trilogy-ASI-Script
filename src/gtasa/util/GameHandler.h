@@ -373,7 +373,7 @@ private:
     Hooked_CanPhysicalBeDamaged (auto &&cb, CPhysical *physical, int weaponType,
                                  char *unknown)
     {
-        if (physical->m_nModelIndex == 708
+        if (GameUtil::IsTreeModel (physical->m_nModelIndex)
             && weaponType != eWeaponType::WEAPON_CHAINSAW)
             return false;
 
@@ -387,7 +387,7 @@ private:
     {
         cb ();
 
-        if (object->m_nModelIndex == 708
+        if (GameUtil::IsTreeModel (object->m_nModelIndex)
             && weaponType == eWeaponType::WEAPON_CHAINSAW)
         {
             object->m_pObjectInfo->m_fColDamageMultiplier = 0.5f;
