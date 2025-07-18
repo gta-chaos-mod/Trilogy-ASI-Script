@@ -388,10 +388,9 @@ private:
         cb ();
 
         if (GameUtil::IsTreeModel (object->m_nModelIndex)
+            && object->m_nObjectType == OBJECT_MISSION2
             && weaponType == eWeaponType::WEAPON_CHAINSAW)
         {
-            object->m_pObjectInfo->m_fColDamageMultiplier = 0.5f;
-
             if (object->m_fHealth <= 0.0f)
                 Command<eScriptCommands::COMMAND_DELETE_OBJECT> (object);
         }
