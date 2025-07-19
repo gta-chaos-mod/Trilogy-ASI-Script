@@ -86,9 +86,7 @@ public:
 
         CObject *treeObject;
 
-        // int model = treeModels[inst->Random (0, (int) treeModels.size () -
-        // 1)];
-        int model = 655;
+        int model = treeModels[inst->Random (0, (int) treeModels.size () - 1)];
         CStreaming::RequestModel (model, 2);
         CStreaming::LoadAllRequestedModels (false);
         Command<eScriptCommands::COMMAND_CREATE_OBJECT> (model, position.x,
