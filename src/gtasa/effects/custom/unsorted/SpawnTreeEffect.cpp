@@ -29,7 +29,7 @@ private:
             case 780:
             case 792:
             case 892:
-                return 0.25f;
+                return 0.5f;
 
                 // Medium trees
             case 615:
@@ -50,7 +50,7 @@ private:
             case 763:
             case 771:
             case 775:
-                return 0.15f;
+                return 0.25f;
 
                 // Large trees
             case 621:
@@ -67,10 +67,10 @@ private:
             case 720:
             case 739:
             case 740:
-                return 0.1f;
+                return 0.16f;
 
                 // Fallback
-            default: return 0.25f;
+            default: return 0.5f;
         }
     }
 
@@ -86,7 +86,9 @@ public:
 
         CObject *treeObject;
 
-        int model = treeModels[inst->Random (0, (int) treeModels.size () - 1)];
+        // int model = treeModels[inst->Random (0, (int) treeModels.size () -
+        // 1)];
+        int model = 655;
         CStreaming::RequestModel (model, 2);
         CStreaming::LoadAllRequestedModels (false);
         Command<eScriptCommands::COMMAND_CREATE_OBJECT> (model, position.x,
