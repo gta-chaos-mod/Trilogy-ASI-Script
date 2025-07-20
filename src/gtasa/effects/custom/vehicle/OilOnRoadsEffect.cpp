@@ -140,7 +140,7 @@ struct OilSpot
 };
 
 bool
-operator<(const CompressedVector &lhs, const CompressedVector &rhs)
+operator< (const CompressedVector &lhs, const CompressedVector &rhs)
 {
     if (lhs.x != rhs.x)
     {
