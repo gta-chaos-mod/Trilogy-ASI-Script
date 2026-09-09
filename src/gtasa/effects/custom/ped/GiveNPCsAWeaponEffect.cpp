@@ -46,8 +46,8 @@ public:
 };
 
 DEFINE_EFFECT (GiveNPCsAWeaponEffect, "effect_give_npcs_an_rpg", GROUP_WEAPONS,
-               weapon_list{WEAPONTYPE_RLAUNCHER});
+               weapon_list{ WEAPONTYPE_RLAUNCHER });
 
 DEFINE_EFFECT (GiveNPCsAWeaponEffect, "effect_give_npcs_a_sprcan_fire_ex",
                GROUP_WEAPONS,
-               weapon_list{WEAPONTYPE_SPRAYCAN, WEAPONTYPE_EXTINGUISHER});
+               weapon_list{ WEAPONTYPE_SPRAYCAN, WEAPONTYPE_EXTINGUISHER });

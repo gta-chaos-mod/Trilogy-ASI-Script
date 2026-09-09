@@ -82,8 +82,8 @@ public:
     IsPoliceModel (int model = -1)
     {
         const int ids[]
-            = {280, 281, 282, 283, 284, 285, 286, 287, 288, 427, 430,
-               432, 433, 490, 497, 523, 528, 596, 597, 598, 599, 601};
+            = { 280, 281, 282, 283, 284, 285, 286, 287, 288, 427, 430,
+                432, 433, 490, 497, 523, 528, 596, 597, 598, 599, 601 };
         for (auto id : ids)
         {
             if (id == model) return true;
@@ -201,7 +201,7 @@ public:
     Hooked_RhinoFix (auto &&cb, RwMatrix *matrix, RwV3d *translation,
                      RwOpCombineType combineOp)
     {
-        RwV3d scale = {0.0f, 0.0f, 0.0f};
+        RwV3d scale = { 0.0f, 0.0f, 0.0f };
         RwMatrixScale (matrix, &scale, combineOp);
         return cb ();
     }

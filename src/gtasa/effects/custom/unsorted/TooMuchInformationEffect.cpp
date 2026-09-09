@@ -50,17 +50,16 @@ public:
     AddInformation (EffectInstance *inst, const char *name,
                     std::function<std::string ()> function)
     {
-        information.push_back (
-            Info{.name = name,
-                 .position
-                 = CVector2D (inst->Random (SCREEN_COORD_LEFT (20.0f),
-                                            SCREEN_COORD_RIGHT (20.0f)),
-                              inst->Random (SCREEN_COORD_TOP (20.0f),
-                                            SCREEN_COORD_BOTTOM (20.0f))),
-                 .speedModifier = inst->Random (0.5f, 2.0f),
-                 .goingRight    = inst->Random (0, 1) == 0,
-                 .goingDown     = inst->Random (0, 1) == 0,
-                 .function      = function});
+        information.push_back (Info{
+            .name     = name,
+            .position = CVector2D (inst->Random (SCREEN_COORD_LEFT (20.0f),
+                                                 SCREEN_COORD_RIGHT (20.0f)),
+                                   inst->Random (SCREEN_COORD_TOP (20.0f),
+                                                 SCREEN_COORD_BOTTOM (20.0f))),
+            .speedModifier = inst->Random (0.5f, 2.0f),
+            .goingRight    = inst->Random (0, 1) == 0,
+            .goingDown     = inst->Random (0, 1) == 0,
+            .function      = function });
     }
 
     void

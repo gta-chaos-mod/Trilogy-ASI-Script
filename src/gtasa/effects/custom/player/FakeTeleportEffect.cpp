@@ -31,9 +31,9 @@ public:
         hasTeleported = false;
         wasInVehicle  = false;
 
-        fakeLocation = {inst->GetCustomData ().value ("posX", 1544.0f),
-                        inst->GetCustomData ().value ("posY", -1353.0f),
-                        inst->GetCustomData ().value ("posZ", 332.0f)};
+        fakeLocation = { inst->GetCustomData ().value ("posX", 1544.0f),
+                         inst->GetCustomData ().value ("posY", -1353.0f),
+                         inst->GetCustomData ().value ("posZ", 332.0f) };
     }
 
     void

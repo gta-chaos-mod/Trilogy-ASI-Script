@@ -132,4 +132,5 @@ public:
 #define DEFINE_EFFECT(className, effectId, effectTypes, ...)                   \
     auto &CONCAT (className##_inst_, __LINE__)                                 \
         = className::Register<className, __LINE__> (                           \
-            {effectId, effectId, 1, effectTypes} __VA_OPT__ (, ) __VA_ARGS__);\
+            { effectId, effectId, 1, effectTypes } __VA_OPT__ (, )             \
+                __VA_ARGS__);\

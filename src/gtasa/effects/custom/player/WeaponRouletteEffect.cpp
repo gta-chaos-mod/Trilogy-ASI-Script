@@ -8,38 +8,38 @@ class WeaponRouletteEffect : public EffectBase
 {
     int                                      wait          = 0;
     std::vector<std::pair<eWeaponType, int>> storedWeapons = {};
-    std::vector<eWeaponType>                 weapons
-        = {// Melee
-           WEAPONTYPE_GOLFCLUB, WEAPONTYPE_NIGHTSTICK, WEAPONTYPE_KNIFE,
-           WEAPONTYPE_BASEBALLBAT, WEAPONTYPE_SHOVEL, WEAPONTYPE_POOLCUE,
-           WEAPONTYPE_KATANA, WEAPONTYPE_CHAINSAW,
+    std::vector<eWeaponType>                 weapons       = {
+        // Melee
+        WEAPONTYPE_GOLFCLUB, WEAPONTYPE_NIGHTSTICK, WEAPONTYPE_KNIFE,
+        WEAPONTYPE_BASEBALLBAT, WEAPONTYPE_SHOVEL, WEAPONTYPE_POOLCUE,
+        WEAPONTYPE_KATANA, WEAPONTYPE_CHAINSAW,
 
-           // Handguns
-           WEAPONTYPE_PISTOL, WEAPONTYPE_PISTOL_SILENCED,
-           WEAPONTYPE_DESERT_EAGLE,
+        // Handguns
+        WEAPONTYPE_PISTOL, WEAPONTYPE_PISTOL_SILENCED, WEAPONTYPE_DESERT_EAGLE,
 
-           // Shotguns
-           WEAPONTYPE_SHOTGUN, WEAPONTYPE_SAWNOFF, WEAPONTYPE_SPAS12,
+        // Shotguns
+        WEAPONTYPE_SHOTGUN, WEAPONTYPE_SAWNOFF, WEAPONTYPE_SPAS12,
 
-           // Sub-Machine Guns
-           WEAPONTYPE_MICRO_UZI, WEAPONTYPE_MP5, WEAPONTYPE_TEC9,
+        // Sub-Machine Guns
+        WEAPONTYPE_MICRO_UZI, WEAPONTYPE_MP5, WEAPONTYPE_TEC9,
 
-           // Assault Rifles
-           WEAPONTYPE_AK47, WEAPONTYPE_M4,
+        // Assault Rifles
+        WEAPONTYPE_AK47, WEAPONTYPE_M4,
 
-           // Rifles
-           WEAPONTYPE_COUNTRYRIFLE, WEAPONTYPE_SNIPERRIFLE,
+        // Rifles
+        WEAPONTYPE_COUNTRYRIFLE, WEAPONTYPE_SNIPERRIFLE,
 
-           // Heavy Weapons
-           WEAPONTYPE_RLAUNCHER, WEAPONTYPE_RLAUNCHER_HS, WEAPONTYPE_FTHROWER,
-           WEAPONTYPE_MINIGUN,
+        // Heavy Weapons
+        WEAPONTYPE_RLAUNCHER, WEAPONTYPE_RLAUNCHER_HS, WEAPONTYPE_FTHROWER,
+        WEAPONTYPE_MINIGUN,
 
-           // Projectiles
-           WEAPONTYPE_GRENADE, WEAPONTYPE_TEARGAS, WEAPONTYPE_MOLOTOV,
-           WEAPONTYPE_SATCHEL_CHARGE,
+        // Projectiles
+        WEAPONTYPE_GRENADE, WEAPONTYPE_TEARGAS, WEAPONTYPE_MOLOTOV,
+        WEAPONTYPE_SATCHEL_CHARGE,
 
-           // Special
-           WEAPONTYPE_SPRAYCAN, WEAPONTYPE_EXTINGUISHER};
+        // Special
+        WEAPONTYPE_SPRAYCAN, WEAPONTYPE_EXTINGUISHER
+    };
 
 public:
     bool

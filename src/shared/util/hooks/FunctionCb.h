@@ -34,7 +34,8 @@ struct FunctionCbTrampoline<TYPE_METHOD, Ret, Arg1, Args...>
     std::tuple<Args...> params;
 
     template <auto &info>
-    static Ret __fastcall Trampoline (Arg1 arg1, void *edx, Args... args)
+    static Ret __fastcall
+    Trampoline (Arg1 arg1, void *edx, Args... args)
     {
         return info.WalkTree (arg1, args...);
     }
@@ -50,7 +51,9 @@ struct FunctionCbTrampoline<TYPE_METHOD, Ret, Arg1, Args...>
 template <typename Ret, typename... Args>
 struct FunctionCbTrampoline<TYPE_STD, Ret, Args...>
 {
-    template <auto &info> static Ret __stdcall Trampoline (Args... args)
+    template <auto &info>
+    static Ret __stdcall
+    Trampoline (Args... args)
     {
         return info.WalkTree (args...);
     }
@@ -106,9 +109,9 @@ struct FunctionCb<HookType, Ret (Args...)>
         Ret
         WalkTree (Args... args)
         {
-            FunctionCb cb{std::forward_as_tuple (args...),
-                          std::begin (s_CallTree), std::end (s_CallTree),
-                          s_OriginalFunction};
+            FunctionCb cb{ std::forward_as_tuple (args...),
+                           std::begin (s_CallTree), std::end (s_CallTree),
+                           s_OriginalFunction };
             return cb ();
         }
     };
@@ -116,7 +119,10 @@ struct FunctionCb<HookType, Ret (Args...)>
     Ret
     operator() ()
     {
-        if (it == end) { return this->Call (origFunction, params); }
+        if (it == end)
+        {
+            return this->Call (origFunction, params);
+        }
 
         return (*(it++)) (*this);
     }

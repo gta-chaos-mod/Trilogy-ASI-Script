@@ -8,56 +8,57 @@ using namespace plugin;
 
 class PedWallhackEffect : public EffectBase
 {
-    static inline std::vector<std::string> weaponNames = {"None",
-                                                          "Brassknuckle",
-                                                          "Golfclub",
-                                                          "Nightstick",
-                                                          "Knife",
-                                                          "Bat",
-                                                          "Shovel",
-                                                          "Poolstick",
-                                                          "Katana",
-                                                          "Chainsaw",
-                                                          "Fun Toy", // DILDO1
-                                                          "Fun Toy", // DILDO2
-                                                          "Fun Toy", // VIBE1
-                                                          "Fun Toy", // VIBE2
-                                                          "Flowers",
-                                                          "Cane",
-                                                          "Grenade",
-                                                          "Teargas",
-                                                          "Molotov",
-                                                          "Rocket Launcher",
-                                                          "HS Rocket Launcher",
-                                                          "Unused",
-                                                          "Pistol",
-                                                          "Silenced Pistol",
-                                                          "Desert Eagle",
-                                                          "Shotgun",
-                                                          "Sawn-off Shotgun",
-                                                          "Combat Shotgun",
-                                                          "Micro Uzi",
-                                                          "MP5",
-                                                          "AK-47",
-                                                          "M4",
-                                                          "Tec-9",
-                                                          "Country Rifle",
-                                                          "Sniper",
-                                                          "Rocket Launcher",
-                                                          "HS Rocket Launcher",
-                                                          "Flamethrower",
-                                                          "Minigun",
-                                                          "Satchel",
-                                                          "Satchel Detonator",
-                                                          "Spraycan",
-                                                          "Fire Extinguisher",
-                                                          "Camera",
-                                                          "Nightvision Goggles",
-                                                          "Infrared Goggles",
-                                                          "Parachute",
-                                                          "Unused",
-                                                          "Armor",
-                                                          "Flare"};
+    static inline std::vector<std::string> weaponNames
+        = { "None",
+            "Brassknuckle",
+            "Golfclub",
+            "Nightstick",
+            "Knife",
+            "Bat",
+            "Shovel",
+            "Poolstick",
+            "Katana",
+            "Chainsaw",
+            "Fun Toy", // DILDO1
+            "Fun Toy", // DILDO2
+            "Fun Toy", // VIBE1
+            "Fun Toy", // VIBE2
+            "Flowers",
+            "Cane",
+            "Grenade",
+            "Teargas",
+            "Molotov",
+            "Rocket Launcher",
+            "HS Rocket Launcher",
+            "Unused",
+            "Pistol",
+            "Silenced Pistol",
+            "Desert Eagle",
+            "Shotgun",
+            "Sawn-off Shotgun",
+            "Combat Shotgun",
+            "Micro Uzi",
+            "MP5",
+            "AK-47",
+            "M4",
+            "Tec-9",
+            "Country Rifle",
+            "Sniper",
+            "Rocket Launcher",
+            "HS Rocket Launcher",
+            "Flamethrower",
+            "Minigun",
+            "Satchel",
+            "Satchel Detonator",
+            "Spraycan",
+            "Fire Extinguisher",
+            "Camera",
+            "Nightvision Goggles",
+            "Infrared Goggles",
+            "Parachute",
+            "Unused",
+            "Armor",
+            "Flare" };
 
 public:
     void
@@ -112,7 +113,7 @@ public:
     Wallhack (CPed *ped)
     {
         CVector position = ped->GetPosition ();
-        RwV3d   pos      = {position.x, position.y, position.z};
+        RwV3d   pos      = { position.x, position.y, position.z };
 
         RwV3d coords;
         float w, h;

@@ -118,13 +118,13 @@ public:
 
         RwV3d vec = rotationAngleMap[vehicle];
 
-        RwV3d rotationX = {1.0f, 0.0f, 0.0f};
+        RwV3d rotationX = { 1.0f, 0.0f, 0.0f };
         RwFrameRotate (frame, &rotationX, vec.x, rwCOMBINEPRECONCAT);
 
-        RwV3d rotationY = {0.0f, 1.0f, 0.0f};
+        RwV3d rotationY = { 0.0f, 1.0f, 0.0f };
         RwFrameRotate (frame, &rotationY, vec.y, rwCOMBINEPRECONCAT);
 
-        RwV3d rotationZ = {0.0f, 0.0f, 1.0f};
+        RwV3d rotationZ = { 0.0f, 0.0f, 1.0f };
         RwFrameRotate (frame, &rotationZ, vec.z, rwCOMBINEPRECONCAT);
     }
 };

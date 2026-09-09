@@ -67,7 +67,7 @@ public:
         else if (!currentVehicle && lastVehicle
                  && !ContainsVehicle (lastVehicle))
         {
-            vehicleList.push_back (VehicleInfo{.vehicle = lastVehicle});
+            vehicleList.push_back (VehicleInfo{ .vehicle = lastVehicle });
 
             lastVehicle->m_fHealth = 1000.0f;
         }

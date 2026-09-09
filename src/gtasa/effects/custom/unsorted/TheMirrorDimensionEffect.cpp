@@ -51,15 +51,15 @@ public:
         float offsetZ = fmod (playerPosition.z - position.z, 360.0f);
 
         // X Axis
-        RwV3d rotation = {1.0f, 0.0f, 0.0f};
+        RwV3d rotation = { 1.0f, 0.0f, 0.0f };
         RwFrameRotate (frame, &rotation, offsetX, rwCOMBINEPRECONCAT);
 
         // Y Axis
-        rotation = {0.0f, 1.0f, 0.0f};
+        rotation = { 0.0f, 1.0f, 0.0f };
         RwFrameRotate (frame, &rotation, offsetY, rwCOMBINEPRECONCAT);
 
         // Z Axis
-        rotation = {0.0f, 0.0f, 1.0f};
+        rotation = { 0.0f, 0.0f, 1.0f };
         RwFrameRotate (frame, &rotation, offsetZ, rwCOMBINEPRECONCAT);
     }
 };

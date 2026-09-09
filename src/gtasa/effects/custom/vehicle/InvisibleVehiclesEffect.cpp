@@ -150,7 +150,7 @@ public:
     Hooked_RhinoFix (auto &&cb, RwMatrix *matrix, RwV3d *translation,
                      RwOpCombineType combineOp)
     {
-        RwV3d scale = {0.0f, 0.0f, 0.0f};
+        RwV3d scale = { 0.0f, 0.0f, 0.0f };
         RwMatrixScale (matrix, &scale, combineOp);
         return cb ();
     }

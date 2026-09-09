@@ -33,7 +33,7 @@ public:
     static void
     RenderPed (CPed *ped)
     {
-        RwV3d rwScale = {scale, scale, scale};
+        RwV3d rwScale = { scale, scale, scale };
         for (int i = BONE_NECK; i <= BONE_HEAD; i++)
             BoneHelper::ScaleBone (ped, i, rwScale);
 

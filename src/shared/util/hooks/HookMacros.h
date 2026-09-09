@@ -77,7 +77,7 @@
 #define HOOK_METHOD(inst, func, prototype, ...)                                \
     HOOK_ (inst, func, TYPE_METHOD, prototype, __VA_ARGS__)
 
-#define HOOK_STD(inst, func, prototype, ...)                                \
+#define HOOK_STD(inst, func, prototype, ...)                                   \
     HOOK_ (inst, func, TYPE_STD, prototype, __VA_ARGS__)
 
 // Hook with arguments support
@@ -88,8 +88,7 @@
             [] (auto &&cb)                                                     \
             {                                                                  \
                 return std::apply ([&] (auto &...args)                         \
-                                   { return func (cb, args...); },             \
-                                   cb.params);                                 \
+                                   { return func (cb, args...); }, cb.params); \
             },                                                                 \
             inst, hook);                                                       \
     }

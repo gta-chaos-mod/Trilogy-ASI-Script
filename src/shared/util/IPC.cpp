@@ -5,10 +5,10 @@
 #include <libsharedmemory/libsharedmemory.hpp>
 
 void
-IPC::Setup()
+IPC::Setup ()
 {
-    std::thread ipc_thread(
-        []()
+    std::thread ipc_thread (
+        [] ()
         {
             std::unique_ptr<lsm::SharedMemoryQueue> reader;
 
@@ -17,12 +17,13 @@ IPC::Setup()
             {
                 try
                 {
-                    reader = std::make_unique<lsm::SharedMemoryQueue>(
+                    reader = std::make_unique<lsm::SharedMemoryQueue> (
                         "ChaosModEffect", 10, 1024, false, false);
                 }
                 catch (...)
                 {
-                    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                    std::this_thread::sleep_for (
+                        std::chrono::milliseconds (500));
                 }
             }
 
@@ -30,19 +31,20 @@ IPC::Setup()
             while (true)
             {
                 std::string msg;
-                if (reader->dequeue(msg))
+                if (reader->dequeue (msg))
                 {
-                    MessageBoxA(NULL, msg.c_str(), "IPC Message",
-                                MB_OK | MB_ICONINFORMATION);
+                    MessageBoxA (NULL, msg.c_str (), "IPC Message",
+                                 MB_OK | MB_ICONINFORMATION);
 
-                    Websocket::CallFunction(msg);
+                    Websocket::CallFunction (msg);
                 }
                 else
                 {
-                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                    std::this_thread::sleep_for (
+                        std::chrono::milliseconds (10));
                 }
             }
         });
 
-    ipc_thread.detach();
+    ipc_thread.detach ();
 }

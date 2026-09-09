@@ -20,7 +20,7 @@ class DelayedControls : public EffectBase
     static inline std::deque<InputData> bufferedInputData = {};
 
     // 150ms is the minimum for delay
-    std::chrono::milliseconds chronoBuffer = std::chrono::milliseconds{100};
+    std::chrono::milliseconds chronoBuffer = std::chrono::milliseconds{ 100 };
 
 public:
     void
@@ -47,13 +47,13 @@ public:
         // Add extra random delay between 0 and 100ms, resulting in a random
         // input delay between 150 and 250ms
         auto addedRandomDelay
-            = std::chrono::milliseconds{inst->Random (0, 100)};
+            = std::chrono::milliseconds{ inst->Random (0, 100) };
 
         InputData frameData
-            = {.chronoTime    = chronoTime + chronoBuffer + addedRandomDelay,
-               .state         = pad->NewState,
-               .mouseState    = pad->NewMouseControllerState,
-               .keyboardState = pad->NewKeyState};
+            = { .chronoTime    = chronoTime + chronoBuffer + addedRandomDelay,
+                .state         = pad->NewState,
+                .mouseState    = pad->NewMouseControllerState,
+                .keyboardState = pad->NewKeyState };
 
         bufferedInputData.push_back (frameData);
         if (chronoTime > bufferedInputData[0].chronoTime)

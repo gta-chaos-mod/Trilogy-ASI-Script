@@ -37,7 +37,7 @@ public:
 
         for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
         {
-            if (i->m_bIsActive && !std::strcmp("BCESAR2", i->m_szName))
+            if (i->m_bIsActive && !std::strcmp ("BCESAR2", i->m_szName))
             {
                 phoneRinging = true;
                 break;

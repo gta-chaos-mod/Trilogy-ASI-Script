@@ -5,27 +5,29 @@
 
 namespace
 {
-const float MAX_RADIUS = 15.0f;
+    const float MAX_RADIUS = 15.0f;
 
-bool
-pointInRadius (const CVector &p1, const CVector &p2, const float R = MAX_RADIUS)
-{
-    auto dx = std::abs (p1.x - p2.x);
-    auto dy = std::abs (p1.y - p2.y);
-    auto dz = std::abs (p1.z - p2.z);
-    if ((dx + dy + dz) <= R) return true;
+    bool
+    pointInRadius (const CVector &p1, const CVector &p2,
+                   const float R = MAX_RADIUS)
+    {
+        auto dx = std::abs (p1.x - p2.x);
+        auto dy = std::abs (p1.y - p2.y);
+        auto dz = std::abs (p1.z - p2.z);
+        if ((dx + dy + dz) <= R) return true;
 
-    return (dx * dx + dy * dy + dz * dz <= R * R);
-}
+        return (dx * dx + dy * dy + dz * dz <= R * R);
+    }
 } // namespace
 
 class AutoCollectPickupsEffect : public EffectBase
 {
 private:
     static constexpr int weaponsIds[]
-        = {342, 343, 344, 346, 347, 348, 349, 350, 351, 352, 353, 355, 356, 357,
-           358, 359, 360, 361, 362, 363, 365, 366, 367, 372, 321, 322, 323, 324,
-           325, 326, 331, 333, 334, 335, 336, 337, 338, 339, 341, 371};
+        = { 342, 343, 344, 346, 347, 348, 349, 350, 351, 352,
+            353, 355, 356, 357, 358, 359, 360, 361, 362, 363,
+            365, 366, 367, 372, 321, 322, 323, 324, 325, 326,
+            331, 333, 334, 335, 336, 337, 338, 339, 341, 371 };
 
 public:
     void

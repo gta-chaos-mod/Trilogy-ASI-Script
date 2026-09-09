@@ -27,8 +27,8 @@ public:
     static void
     OnPedCreated (CPed *ped)
     {
-        pedInfoMap[ped] = {.previousHealth = ped->m_fHealth,
-                           .previousArmor  = ped->m_fArmour};
+        pedInfoMap[ped] = { .previousHealth = ped->m_fHealth,
+                            .previousArmor  = ped->m_fArmour };
     }
 
     void
@@ -54,8 +54,8 @@ public:
         {
             if (!pedInfoMap.contains (ped))
             {
-                pedInfoMap[ped] = {.previousHealth = ped->m_fHealth,
-                                   .previousArmor  = ped->m_fArmour};
+                pedInfoMap[ped] = { .previousHealth = ped->m_fHealth,
+                                    .previousArmor  = ped->m_fArmour };
             }
 
             ped->m_fHealth = std::max (0.0f, std::min (ped->m_fHealth, 1.0f));

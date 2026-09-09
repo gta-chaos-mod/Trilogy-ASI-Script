@@ -6,7 +6,7 @@ class TeleportToLibertyCityEffect : public EffectBase
 {
     int     wait          = 5000;
     bool    hasTeleported = false;
-    CVector fakeLocation  = {-738.0f, 500.0f, 1373.0f};
+    CVector fakeLocation  = { -738.0f, 500.0f, 1373.0f };
     CVector previousLocation;
     int     previousInterior = 0;
 

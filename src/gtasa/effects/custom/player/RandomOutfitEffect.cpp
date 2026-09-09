@@ -52,8 +52,8 @@ public:
         mClothes.clear ();
 
         std::vector<std::string> shops
-            = {"CSchp", "CSsprt",  "LACS1",   "clothgp", "Csdesgn",
-               "Csexl", "barbers", "barber2", "barber3"};
+            = { "CSchp", "CSsprt",  "LACS1",   "clothgp", "Csdesgn",
+                "Csexl", "barbers", "barber2", "barber3" };
 
         for (auto i : shops)
         {
@@ -75,7 +75,7 @@ public:
     GetRandomCRCForComponent (EffectInstance *inst, int componentId)
     {
         int size = mClothes[componentId].size () - 1;
-        if (size < 0) return {0, 0};
+        if (size < 0) return { 0, 0 };
 
         int randomId = inst->Random (0, size);
         return mClothes[componentId][randomId];

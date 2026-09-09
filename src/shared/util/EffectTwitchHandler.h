@@ -20,7 +20,8 @@ public:
             voter = data["twitchData"].value ("voter", "");
     }
 
-    explicit operator bool ()
+    explicit
+    operator bool ()
     {
         return voter != "";
     }

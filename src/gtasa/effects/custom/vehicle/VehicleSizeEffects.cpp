@@ -94,7 +94,7 @@ public:
     {
         if (!IsVehicleModelValid (vehicle->m_nModelIndex)) return;
 
-        RwV3d translation = {0.0f, 0.0f, zAdjustment};
+        RwV3d translation = { 0.0f, 0.0f, zAdjustment };
         RwFrameTranslate (frame, &translation, rwCOMBINEPRECONCAT);
 
         RwFrameScale (frame, &scale, rwCOMBINEPRECONCAT);

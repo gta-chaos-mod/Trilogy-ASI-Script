@@ -4,13 +4,13 @@
 
 class ShakyHandsEffect : public EffectBase
 {
-    static inline RwV2d offset = {0, 0};
+    static inline RwV2d offset = { 0, 0 };
 
 public:
     void
     OnTick (EffectInstance *inst) override
     {
-        offset = {inst->Random (-2.5f, 2.5f), inst->Random (-2.5f, 2.5f)};
+        offset = { inst->Random (-2.5f, 2.5f), inst->Random (-2.5f, 2.5f) };
     }
 
     void

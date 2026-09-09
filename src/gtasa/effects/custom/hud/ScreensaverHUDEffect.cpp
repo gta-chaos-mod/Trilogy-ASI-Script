@@ -14,7 +14,7 @@ class ScreensaverHUDEffect : public EffectBase
 {
     struct HUDElement
     {
-        CVector2D pos           = {0.0f, 0.0f};
+        CVector2D pos           = { 0.0f, 0.0f };
         float     speedModifier = 1.0f;
         bool      goingRight    = false;
         bool      goingDown     = false;
@@ -126,7 +126,8 @@ public:
                                                 SCREEN_COORD_BOTTOM (20.0f))),
             .speedModifier = instance->Random (0.5f, 2.0f),
             .goingRight    = instance->Random (0, 1) == 0,
-            .goingDown     = instance->Random (0, 1) == 0};
+            .goingDown     = instance->Random (0, 1) == 0
+        };
     }
 
     static void

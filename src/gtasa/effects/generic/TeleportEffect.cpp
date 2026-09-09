@@ -17,9 +17,9 @@ public:
     {
         inst->SetIsOneTimeEffect ();
 
-        this->destination = {inst->GetCustomData ().value ("posX", 0.0f),
-                             inst->GetCustomData ().value ("posY", 0.0f),
-                             inst->GetCustomData ().value ("posZ", 0.0f)};
+        this->destination = { inst->GetCustomData ().value ("posX", 0.0f),
+                              inst->GetCustomData ().value ("posY", 0.0f),
+                              inst->GetCustomData ().value ("posZ", 0.0f) };
     }
 
     void

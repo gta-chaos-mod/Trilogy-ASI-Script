@@ -15,7 +15,7 @@ class GetToMarkerEffect : public EffectBase
 {
     int     checkpoint        = 0;
     int     coordBlip         = 0;
-    CVector position          = {0.0, 0.0f, 0.0f};
+    CVector position          = { 0.0, 0.0f, 0.0f };
     bool    positionGenerated = false;
     bool    reachedMarker     = false;
 

@@ -60,8 +60,8 @@ public:
         vehicle->bDisableMoveForce = true;
 
         vehicle->SetPosn (position);
-        vehicle->m_vecMoveSpeed = {0, 0, 0};
-        vehicle->m_vecTurnSpeed = {0, 0, 0};
+        vehicle->m_vecMoveSpeed = { 0, 0, 0 };
+        vehicle->m_vecTurnSpeed = { 0, 0, 0 };
     }
 };
 

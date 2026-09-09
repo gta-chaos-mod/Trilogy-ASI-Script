@@ -8,11 +8,11 @@ using namespace plugin;
 class CJ101Effect : public EffectBase
 {
 private:
-    const int MIN_SPAWN_SEC    = 8;
-    const int MAX_SPAWN_SEC    = 13;
-    const int planesId[5]      = {511, 512, 476, 593, 513};
-    int       timer            = 0;
-    int       planeSpawnTimer  = 0;
+    const int MIN_SPAWN_SEC   = 8;
+    const int MAX_SPAWN_SEC   = 13;
+    const int planesId[5]     = { 511, 512, 476, 593, 513 };
+    int       timer           = 0;
+    int       planeSpawnTimer = 0;
 
 public:
     bool
@@ -61,7 +61,8 @@ public:
             plane->m_fHealth = 249.0f;
 
             timer = 0;
-            planeSpawnTimer = inst->Random (MIN_SPAWN_SEC, MAX_SPAWN_SEC) * 1000;
+            planeSpawnTimer
+                = inst->Random (MIN_SPAWN_SEC, MAX_SPAWN_SEC) * 1000;
         }
     }
 
@@ -77,7 +78,7 @@ public:
             float posX = playerPos.x - dirX;
             float posY = playerPos.y - dirY;
             float posZ = CWorld::FindGroundZForCoord (posX, posY);
-            return {{posX, posY, posZ}, playerAngle};
+            return { { posX, posY, posZ }, playerAngle };
         }
         else
         {
@@ -85,7 +86,7 @@ public:
             float posY = playerPos.y + dirY;
             float posZ = CWorld::FindGroundZForCoord (posX, posY);
             playerAngle -= M_PI;
-            return {{posX, posY, posZ}, playerAngle};
+            return { { posX, posY, posZ }, playerAngle };
         }
     }
 };

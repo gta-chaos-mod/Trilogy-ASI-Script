@@ -12,9 +12,10 @@ class SpawnTreeEffect : public OneTimeEffect
 private:
     // Separate list of trees for spawning since not all are a good fit
     static inline std::vector<int> treeModels
-        = {615, 616, 617, 618, 619, 620, 621, 622, 623, 645, 648, 652, 654, 655,
-           656, 657, 658, 664, 670, 672, 673, 685, 687, 693, 696, 697, 700, 704,
-           713, 719, 720, 739, 740, 763, 770, 771, 775, 780, 792, 892};
+        = { 615, 616, 617, 618, 619, 620, 621, 622, 623, 645,
+            648, 652, 654, 655, 656, 657, 658, 664, 670, 672,
+            673, 685, 687, 693, 696, 697, 700, 704, 713, 719,
+            720, 739, 740, 763, 770, 771, 775, 780, 792, 892 };
 
     float
     getTreeHealthMultiplier (int modelID)

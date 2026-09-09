@@ -32,7 +32,7 @@ private:
     bool isRunning       = false;
     bool isOneTimeEffect = false;
 
-    nlohmann::json customData = {{"seed", 0}};
+    nlohmann::json customData = { { "seed", 0 } };
 
     EffectDrawHandler drawHandler;
     SubHandlers_t     subHandlers;

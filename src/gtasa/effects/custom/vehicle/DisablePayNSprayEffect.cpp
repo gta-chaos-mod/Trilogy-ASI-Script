@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+
 #include <extensions/ScriptCommands.h>
 
 using namespace plugin;

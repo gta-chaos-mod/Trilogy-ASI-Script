@@ -133,8 +133,8 @@ public:
         }
 
         // Set vehicle cooldowns
-        vehicleCooldowns.push_back (CooldownInfo{.vehicle = thisVehicle});
-        vehicleCooldowns.push_back (CooldownInfo{.vehicle = otherVehicle});
+        vehicleCooldowns.push_back (CooldownInfo{ .vehicle = thisVehicle });
+        vehicleCooldowns.push_back (CooldownInfo{ .vehicle = otherVehicle });
     }
 
     static void

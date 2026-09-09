@@ -14,8 +14,8 @@ public:
     OnStart (EffectInstance *inst) override
     {
         constexpr int weathers[]
-            = {WEATHER_RAINY_SF, WEATHER_FOGGY_SF, WEATHER_RAINY_COUNTRYSIDE,
-               WEATHER_SANDSTORM_DESERT};
+            = { WEATHER_RAINY_SF, WEATHER_FOGGY_SF, WEATHER_RAINY_COUNTRYSIDE,
+                WEATHER_SANDSTORM_DESERT };
 
         auto idx     = inst->Random (0, 10000) % std::size (weathers);
         forceWeather = weathers[idx];

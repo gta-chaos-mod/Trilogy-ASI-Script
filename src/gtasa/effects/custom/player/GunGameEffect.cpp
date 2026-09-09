@@ -12,22 +12,22 @@ class GunGameEffect : public EffectBase
     bool                                     weaponsStored = false;
     std::vector<std::pair<eWeaponType, int>> storedWeapons = {};
 
-    static inline std::vector<eWeaponType> weapons
-        = {// Handguns
-           WEAPONTYPE_PISTOL, WEAPONTYPE_PISTOL_SILENCED,
-           WEAPONTYPE_DESERT_EAGLE,
+    static inline std::vector<eWeaponType> weapons = {
+        // Handguns
+        WEAPONTYPE_PISTOL, WEAPONTYPE_PISTOL_SILENCED, WEAPONTYPE_DESERT_EAGLE,
 
-           // Shotguns
-           WEAPONTYPE_SHOTGUN, WEAPONTYPE_SAWNOFF, WEAPONTYPE_SPAS12,
+        // Shotguns
+        WEAPONTYPE_SHOTGUN, WEAPONTYPE_SAWNOFF, WEAPONTYPE_SPAS12,
 
-           // Sub-Machine Guns
-           WEAPONTYPE_MICRO_UZI, WEAPONTYPE_MP5, WEAPONTYPE_TEC9,
+        // Sub-Machine Guns
+        WEAPONTYPE_MICRO_UZI, WEAPONTYPE_MP5, WEAPONTYPE_TEC9,
 
-           // Assault Rifles
-           WEAPONTYPE_AK47, WEAPONTYPE_M4,
+        // Assault Rifles
+        WEAPONTYPE_AK47, WEAPONTYPE_M4,
 
-           // Rifles
-           WEAPONTYPE_COUNTRYRIFLE, WEAPONTYPE_SNIPERRIFLE};
+        // Rifles
+        WEAPONTYPE_COUNTRYRIFLE, WEAPONTYPE_SNIPERRIFLE
+    };
 
     static inline eWeaponType activeWeapon = WEAPONTYPE_UNARMED;
 

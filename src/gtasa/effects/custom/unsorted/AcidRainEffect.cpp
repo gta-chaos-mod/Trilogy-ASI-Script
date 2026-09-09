@@ -10,9 +10,9 @@ const int RAIN_TICK_TIME = 750;
 typedef unsigned int (*GetIsCullzoneDarkAtPoint_f) (float x, float y, float z);
 namespace
 {
-GetIsCullzoneDarkAtPoint_f    isCullZone = nullptr;
-constexpr std::array<int, 12> openTopCars
-    = {424, 429, 480, 485, 486, 531, 533, 539, 568, 571, 572, 575};
+    GetIsCullzoneDarkAtPoint_f    isCullZone = nullptr;
+    constexpr std::array<int, 12> openTopCars
+        = { 424, 429, 480, 485, 486, 531, 533, 539, 568, 571, 572, 575 };
 } // namespace
 
 class AcidRainEffect : public EffectBase

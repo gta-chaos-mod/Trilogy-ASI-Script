@@ -4,22 +4,22 @@
 #include <cstdio>
 namespace
 {
-enum eWeaponSlot
-{
-    UNARMED,
-    MELEE,
-    HANDGUN,
-    SHOTGUN,
-    SMG,
-    RIFLE,
-    SNIPER,
-    HEAVY,
-    THROWN,
-    SPECIAL,
-    GIFT,
-    PARACHUTE,
-    DETONATOR,
-};
+    enum eWeaponSlot
+    {
+        UNARMED,
+        MELEE,
+        HANDGUN,
+        SHOTGUN,
+        SMG,
+        RIFLE,
+        SNIPER,
+        HEAVY,
+        THROWN,
+        SPECIAL,
+        GIFT,
+        PARACHUTE,
+        DETONATOR,
+    };
 } // namespace
 
 using namespace plugin;

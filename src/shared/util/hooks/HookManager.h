@@ -63,7 +63,7 @@ public:
     static void
     Enable ()
     {
-        static typename Callback::HookInfo hookInfo{sm_CallTree};
+        static typename Callback::HookInfo hookInfo{ sm_CallTree };
 
         Hook<Address>::template Enable (GetAddress (),
                                         Callback::template Trampoline<hookInfo>,

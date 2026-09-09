@@ -54,7 +54,8 @@ public:
         }
         else
         {
-            roadObject->Teleport ({position.x, position.y, waterLevel}, false);
+            roadObject->Teleport ({ position.x, position.y, waterLevel },
+                                  false);
             roadObject->SetOrientation (0.0f, 0.0f, heading);
         }
 

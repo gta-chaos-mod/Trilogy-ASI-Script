@@ -58,14 +58,14 @@ public:
     {
         float negativeGravity
             = CTimer::ms_fTimeStep * physical->m_fMass * -0.008f;
-        physical->ApplyMoveForce ({0, 0, -negativeGravity});
+        physical->ApplyMoveForce ({ 0, 0, -negativeGravity });
     }
 
     void
     ApplyGravity (CPhysical *physical, float gravity)
     {
         float newGravity = CTimer::ms_fTimeStep * physical->m_fMass * -gravity;
-        physical->ApplyMoveForce ({0, 0, newGravity});
+        physical->ApplyMoveForce ({ 0, 0, newGravity });
     }
 };
 

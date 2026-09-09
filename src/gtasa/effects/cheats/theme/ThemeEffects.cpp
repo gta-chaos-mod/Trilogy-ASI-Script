@@ -6,12 +6,12 @@ class PlayerClothesCheat : public TimedFunctionEffect
 public:
     PlayerClothesCheat (std::function<void ()> function, int addr)
         : TimedFunctionEffect (
-            [function]
-            {
-                function ();
-                GameUtil::RebuildPlayer ();
-            },
-            addr)
+              [function]
+              {
+                  function ();
+                  GameUtil::RebuildPlayer ();
+              },
+              addr)
     {
     }
 };

@@ -26,10 +26,9 @@ public:
             return;
         }
 
-        lastHealthValue = std::min (lastHealthValue, player->m_fHealth);
+        lastHealthValue   = std::min (lastHealthValue, player->m_fHealth);
         player->m_fHealth = lastHealthValue;
     }
 };
 
-DEFINE_EFFECT (DisableHealingEffect, "effect_disable_healing",
-               GROUP_HEALTH);
+DEFINE_EFFECT (DisableHealingEffect, "effect_disable_healing", GROUP_HEALTH);

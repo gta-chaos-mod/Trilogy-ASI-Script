@@ -17,106 +17,106 @@ class PassCurrentMissionEffect : public EffectBase
 
     std::map<std::string, int> offsetMap = {
         /* Los Santos */
-        {"INTRO1", 18131}, // Big Smoke
-        {"INTRO2", 13692}, // Ryder
-        {"SWEET1", 14682}, // Tagging Up Turf
-        {"SWEET1B", 8674}, // Cleaning The Hood
-        {"SWEET3", 12908}, // Drive-Thru
-        {"SWEET2", 20304}, // Nines And AK's
-        {"SWEET4", 23785}, // Drive-By
-        {"HOODS5", 15274}, // Sweet's Girl
-        {"SWEET6", 147},   // Cesar Vialpando
-        {"SWEET7", 32422}, // Los Sepulcros
-        {"CRASH1", 1199},  // Burning Desire
-        {"CRASH4", 6337},  // Doberman
-        {"DRUGS3", 19361}, // Gray Imports
-        {"GUNS1", 40660},  // Home Invasion
-        {"RYDER2", 238},   // Robbing Uncle Sam
-        {"RYDER3", 2254},  // Catalyst
-        {"TWAR7", 23183},  // OG Loc
-        {"SMOKE2", 11352}, // Running Dog
-        {"SMOKE3", 20115}, // Wrong Side Of The Tracks
-        {"DRUGS1", 52043}, // Just Business
-        {"MUSIC1", 15574}, // Life's a Beach
-        {"MUSIC2", 10527}, // Madd Dogg's Rhymes
-        {"MUSIC3", 15510}, // Management Issues
-        {"MUSIC5", 15889}, // House Party
-        {"DRUGS4", 67765}, // Reuniting The Families
-        {"LA1FIN2", 390},  // The Green Sabre
+        { "INTRO1", 18131 }, // Big Smoke
+        { "INTRO2", 13692 }, // Ryder
+        { "SWEET1", 14682 }, // Tagging Up Turf
+        { "SWEET1B", 8674 }, // Cleaning The Hood
+        { "SWEET3", 12908 }, // Drive-Thru
+        { "SWEET2", 20304 }, // Nines And AK's
+        { "SWEET4", 23785 }, // Drive-By
+        { "HOODS5", 15274 }, // Sweet's Girl
+        { "SWEET6", 147 },   // Cesar Vialpando
+        { "SWEET7", 32422 }, // Los Sepulcros
+        { "CRASH1", 1199 },  // Burning Desire
+        { "CRASH4", 6337 },  // Doberman
+        { "DRUGS3", 19361 }, // Gray Imports
+        { "GUNS1", 40660 },  // Home Invasion
+        { "RYDER2", 238 },   // Robbing Uncle Sam
+        { "RYDER3", 2254 },  // Catalyst
+        { "TWAR7", 23183 },  // OG Loc
+        { "SMOKE2", 11352 }, // Running Dog
+        { "SMOKE3", 20115 }, // Wrong Side Of The Tracks
+        { "DRUGS1", 52043 }, // Just Business
+        { "MUSIC1", 15574 }, // Life's a Beach
+        { "MUSIC2", 10527 }, // Madd Dogg's Rhymes
+        { "MUSIC3", 15510 }, // Management Issues
+        { "MUSIC5", 15889 }, // House Party
+        { "DRUGS4", 67765 }, // Reuniting The Families
+        { "LA1FIN2", 390 },  // The Green Sabre
         /* ######################### */
         /* Badlands */
-        {"BCRASH1", 13609}, // Badlands
-        {"CAT1", 292},      // Local Liquor Store
-        {"CAT2", 30025},    // Small Town Bank
-        {"CAT3", 4141},     // Tanker Commander
-        {"CAT4", 6648},     // Against All Odds
-        {"TRUTH1", 16397},  // Body Harvest
-        {"TRUTH2", 11942},  // Are You Going To San Fierro?
+        { "BCRASH1", 13609 }, // Badlands
+        { "CAT1", 292 },      // Local Liquor Store
+        { "CAT2", 30025 },    // Small Town Bank
+        { "CAT3", 4141 },     // Tanker Commander
+        { "CAT4", 6648 },     // Against All Odds
+        { "TRUTH1", 16397 },  // Body Harvest
+        { "TRUTH2", 11942 },  // Are You Going To San Fierro?
         /* ######################### */
         /* San Fierro */
-        {"GARAG1", 4928},  // Wear Flowers In Your Hair
-        {"DECON", 133},    // Deconstruction
-        {"SCRASH3", 679},  // 555 WE TIP
-        {"SCRASH2", 661},  // Snail Trail
-        {"WUZI1", 27975},  // Mountain Cloud Boys
-        {"FARLIE4", 608},  // Ran Fa Li
-        {"DRIV6", 12781},  // Lure
-        {"WUZI2", 26588},  // Amphibious Assault
-        {"WUZI5", 20684},  // The Da Nang Thang
-        {"SYN1", 14568},   // Photo Opportunity
-        {"SYN2", 84},      // Jizzy
-        {"SYN3", 19158},   // Outrider
-        {"SYND4", 12241},  // Ice Cold Killa
-        {"SYN6", 9169},    // Toreno's Last Flight
-        {"SYN7", 14730},   // Yay Ka-Boom Boom
-        {"SYN5", 23169},   // Pier 69
-        {"DRIV2", 12885},  // T-Bone Mendez
-        {"DRIV3", 2674},   // Mike Toreno
-        {"STEAL1", 7659},  // Zeroing In
-        {"STEAL2", 26031}, // Test Drive
-        {"STEAL5", 5117},  // Puncture Wounds
-        {"ZERO1", 5321},   // Air Raid
-        {"ZERO2", 3285},   // Supply Lines...
-        {"ZERO4", 2105},   // New Model Army
+        { "GARAG1", 4928 },  // Wear Flowers In Your Hair
+        { "DECON", 133 },    // Deconstruction
+        { "SCRASH3", 679 },  // 555 WE TIP
+        { "SCRASH2", 661 },  // Snail Trail
+        { "WUZI1", 27975 },  // Mountain Cloud Boys
+        { "FARLIE4", 608 },  // Ran Fa Li
+        { "DRIV6", 12781 },  // Lure
+        { "WUZI2", 26588 },  // Amphibious Assault
+        { "WUZI5", 20684 },  // The Da Nang Thang
+        { "SYN1", 14568 },   // Photo Opportunity
+        { "SYN2", 84 },      // Jizzy
+        { "SYN3", 19158 },   // Outrider
+        { "SYND4", 12241 },  // Ice Cold Killa
+        { "SYN6", 9169 },    // Toreno's Last Flight
+        { "SYN7", 14730 },   // Yay Ka-Boom Boom
+        { "SYN5", 23169 },   // Pier 69
+        { "DRIV2", 12885 },  // T-Bone Mendez
+        { "DRIV3", 2674 },   // Mike Toreno
+        { "STEAL1", 7659 },  // Zeroing In
+        { "STEAL2", 26031 }, // Test Drive
+        { "STEAL5", 5117 },  // Puncture Wounds
+        { "ZERO1", 5321 },   // Air Raid
+        { "ZERO2", 3285 },   // Supply Lines...
+        { "ZERO4", 2105 },   // New Model Army
         /* ######################### */
         /* Las Venturas */
-        {"TORENO1", 14457}, // Monster
-        {"TORENO2", 10715}, // Highjack
-        {"DES3", 147},      // Interdiction
-        {"DESERT6", 726},   // N.O.E.
-        {"DESERT9", 21869}, // Stowaway
-        {"MAF4", 29924},    // Black Project
-        {"DES10", 4130},    // Green Goo
-        {"CASINO1", 19542}, // Fender Ketchup
-        {"CASINO2", 16387}, // Explosive Situation
-        {"CASINO3", 14129}, // You've Had Your Chips
-        {"CASINO4", 45880}, // Don Peyote
-        {"CASINO5", 12838}, // Intensive Care
-        {"CASINO6", 1290},  // The Meat Business
-        {"CASINO9", 12440}, // Freefall
-        {"CASIN10", 15339}, // Saint Mark's Bistro
-        {"VCRASH1", 7980},  // Misappropriation
-        {"VCR2", 5058},     // High Noon
-        {"DOC2", 13233},    // Madd Dogg
-        {"HEIST1", 23694},  // Architectural Espionage
-        {"HEIST3", 2606},   // Key To Her Heart
-        {"HEIST2", 18813},  // Dam And Blast
-        {"HEIST4", 13180},  // Cop Wheels
-        {"HEIST5", 13735},  // Up, Up and Away!
-        {"HEIST9", 44516},  // Breaking the Bank at Caligula's
+        { "TORENO1", 14457 }, // Monster
+        { "TORENO2", 10715 }, // Highjack
+        { "DES3", 147 },      // Interdiction
+        { "DESERT6", 726 },   // N.O.E.
+        { "DESERT9", 21869 }, // Stowaway
+        { "MAF4", 29924 },    // Black Project
+        { "DES10", 4130 },    // Green Goo
+        { "CASINO1", 19542 }, // Fender Ketchup
+        { "CASINO2", 16387 }, // Explosive Situation
+        { "CASINO3", 14129 }, // You've Had Your Chips
+        { "CASINO4", 45880 }, // Don Peyote
+        { "CASINO5", 12838 }, // Intensive Care
+        { "CASINO6", 1290 },  // The Meat Business
+        { "CASINO9", 12440 }, // Freefall
+        { "CASIN10", 15339 }, // Saint Mark's Bistro
+        { "VCRASH1", 7980 },  // Misappropriation
+        { "VCR2", 5058 },     // High Noon
+        { "DOC2", 13233 },    // Madd Dogg
+        { "HEIST1", 23694 },  // Architectural Espionage
+        { "HEIST3", 2606 },   // Key To Her Heart
+        { "HEIST2", 18813 },  // Dam And Blast
+        { "HEIST4", 13180 },  // Cop Wheels
+        { "HEIST5", 13735 },  // Up, Up and Away!
+        { "HEIST9", 44516 },  // Breaking the Bank at Caligula's
         /* ######################### */
         /* Return To Los Santos */
-        {"MANSIO1", 6889}, // A Home In The Hills
-        {"MANSIO2", 1456}, // Vertical Bird
-        {"MANSIO3", 6740}, // Home Coming
-        {"MANSON5", 1350}, // Cut Throat Business
-        {"GROVE1", 18881}, // Beat Down on B Dup
-        {"GROVE2", 3159},  // Grove 4 Life
-        {"RIOT1", 2997},   // Riot
-        {"RIOT2", 30259},  // Los Desperados
-        {"FINALEA", 1473}, // End Of The Line (Part 1)
-        {"FINALEB", -1},   // End Of The Line (Part 2)
-        {"FINALEC", 1817}, // End Of The Line (Part 3)
+        { "MANSIO1", 6889 }, // A Home In The Hills
+        { "MANSIO2", 1456 }, // Vertical Bird
+        { "MANSIO3", 6740 }, // Home Coming
+        { "MANSON5", 1350 }, // Cut Throat Business
+        { "GROVE1", 18881 }, // Beat Down on B Dup
+        { "GROVE2", 3159 },  // Grove 4 Life
+        { "RIOT1", 2997 },   // Riot
+        { "RIOT2", 30259 },  // Los Desperados
+        { "FINALEA", 1473 }, // End Of The Line (Part 1)
+        { "FINALEB", -1 },   // End Of The Line (Part 2)
+        { "FINALEC", 1817 }, // End Of The Line (Part 3)
         /* ######################### */
     };
     std::vector<std::string> debugCodeMap = {

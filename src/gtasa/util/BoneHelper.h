@@ -98,8 +98,8 @@ public:
     static void ShoulderBoneRotation (CPed *ped);
 
 private:
-    static CMatrix *__fastcall Hooked_CPed_ShoulderBoneRotation (
-        RpClump *clump);
+    static CMatrix *__fastcall
+    Hooked_CPed_ShoulderBoneRotation (RpClump *clump);
 
     static bool _hasAnyModifications (CPed *ped);
     static void _setBonePositions (CPed *ped);

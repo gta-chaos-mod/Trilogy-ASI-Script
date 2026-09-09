@@ -56,7 +56,7 @@ public:
     NegateGravity (CPhysical *physical)
     {
         float gravity = CTimer::ms_fTimeStep * physical->m_fMass * -0.008f;
-        physical->ApplyMoveForce ({0, 0, -gravity});
+        physical->ApplyMoveForce ({ 0, 0, -gravity });
     }
 
     void
@@ -65,9 +65,9 @@ public:
         float gravity = CTimer::ms_fTimeStep * physical->m_fMass * -0.008f;
 
         CMatrix *matrix = &physical->GetMatrix ();
-        physical->ApplyMoveForce ({matrix->at.x * gravity,
-                                   matrix->at.y * gravity,
-                                   matrix->at.z * gravity});
+        physical->ApplyMoveForce ({ matrix->at.x * gravity,
+                                    matrix->at.y * gravity,
+                                    matrix->at.z * gravity });
     }
 
     static char

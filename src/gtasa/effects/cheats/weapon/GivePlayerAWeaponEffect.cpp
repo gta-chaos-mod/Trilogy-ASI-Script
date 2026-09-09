@@ -9,22 +9,22 @@
 using namespace plugin;
 namespace
 {
-enum eWeaponSlot : unsigned int
-{
-    UNARMED,
-    MELEE,
-    HANDGUN,
-    SHOTGUN,
-    SMG,
-    RIFLE,
-    SNIPER,
-    HEAVY,
-    THROWN,
-    SPECIAL,
-    GIFT,
-    PARACHUTE,
-    DETONATOR,
-};
+    enum eWeaponSlot : unsigned int
+    {
+        UNARMED,
+        MELEE,
+        HANDGUN,
+        SHOTGUN,
+        SMG,
+        RIFLE,
+        SNIPER,
+        HEAVY,
+        THROWN,
+        SPECIAL,
+        GIFT,
+        PARACHUTE,
+        DETONATOR,
+    };
 } // namespace
 
 class GivePlayerAWeapon : public OneTimeEffect

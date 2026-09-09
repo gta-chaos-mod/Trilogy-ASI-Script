@@ -22,7 +22,7 @@ public:
     RenderPed (CPed *ped)
     {
         // Big Butts
-        RwV3d scale = {1.25f, 2.0f, 1.0f};
+        RwV3d scale = { 1.25f, 2.0f, 1.0f };
 
         BoneHelper::ScaleBone (ped, BONE_PELVIS1, scale, BONE_PELVIS1);
 
@@ -31,8 +31,8 @@ public:
 
         auto  pos = BoneHelper::GetBonePosition (ped, BONE_PELVIS1);
         RwV3d newPos
-            = {pos.x - matrix->up.x * 0.15f, pos.y - matrix->up.y * 0.15f,
-               pos.z - matrix->up.z * 0.15f};
+            = { pos.x - matrix->up.x * 0.15f, pos.y - matrix->up.y * 0.15f,
+                pos.z - matrix->up.z * 0.15f };
         BoneHelper::SetBonePosition (ped, BONE_PELVIS1, newPos);
     }
 };

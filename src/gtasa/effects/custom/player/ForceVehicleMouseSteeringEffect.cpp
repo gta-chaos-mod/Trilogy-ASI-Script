@@ -11,11 +11,11 @@ public:
     OnStart (EffectInstance *inst) override
     {
         for (int address :
-             {0x52565D + 2, // Mouse Steering
-              0x6AD7AC + 1, 0x6BE39C + 1, 0x6CE03D + 1, 0x6F0AFA + 1,
+             { 0x52565D + 2, // Mouse Steering
+               0x6AD7AC + 1, 0x6BE39C + 1, 0x6CE03D + 1, 0x6F0AFA + 1,
 
-              0x525665 + 2, // Mouse Flying
-              0x6C4880 + 1, 0x6CAE07 + 1})
+               0x525665 + 2, // Mouse Flying
+               0x6C4880 + 1, 0x6CAE07 + 1 })
         {
             inst->WriteMemory<bool *> (address, &overrideMouseSteering);
         }

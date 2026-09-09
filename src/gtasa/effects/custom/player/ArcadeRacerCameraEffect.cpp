@@ -75,7 +75,7 @@ public:
             cam->right.z *= -1;
 
             CMatrix shakeMatrix;
-            shakeMatrix.pos = {0, 0, 0};
+            shakeMatrix.pos = { 0, 0, 0 };
             shakeMatrix.SetRotate (MathHelper::ToRadians (-15), 0, 0);
 
             auto tmpMat = *cam;

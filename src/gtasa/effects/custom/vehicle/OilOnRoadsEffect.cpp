@@ -12,16 +12,16 @@
 using namespace plugin;
 namespace
 {
-bool
-pointInRadius (const CVector &p1, const CVector &center, const float R)
-{
-    auto dx = std::abs (p1.x - center.x);
-    auto dy = std::abs (p1.y - center.y);
-    auto dz = std::abs (p1.z - center.z);
-    if ((dx + dy + dz) <= R) return true;
+    bool
+    pointInRadius (const CVector &p1, const CVector &center, const float R)
+    {
+        auto dx = std::abs (p1.x - center.x);
+        auto dy = std::abs (p1.y - center.y);
+        auto dz = std::abs (p1.z - center.z);
+        if ((dx + dy + dz) <= R) return true;
 
-    return ((dx * dx + dy * dy + dz * dz) <= R * R);
-}
+        return ((dx * dx + dy * dy + dz * dz) <= R * R);
+    }
 } // namespace
 
 enum class OilSpotState
@@ -241,19 +241,20 @@ OilOnRoadsEffect::pathSearch ()
     float   playerPosOffset = 8.0f;
     float   nextPosOffset   = 256.0f;
     auto    pos             = player->GetPosition ();
-    CVector nextPos[] = {{pos.x, pos.y + nextPosOffset, pos.z},
-                         {pos.x, pos.y - nextPosOffset, pos.z},
-                         {pos.x + nextPosOffset, pos.y, pos.z},
-                         {pos.x - nextPosOffset, pos.y, pos.z},
-                         {pos.x + nextPosOffset, pos.y + nextPosOffset, pos.z},
-                         {pos.x - nextPosOffset, pos.y + nextPosOffset, pos.z},
-                         {pos.x + nextPosOffset, pos.y - nextPosOffset, pos.z},
-                         {pos.x - nextPosOffset, pos.y - nextPosOffset, pos.z}};
+    CVector nextPos[]
+        = { { pos.x, pos.y + nextPosOffset, pos.z },
+            { pos.x, pos.y - nextPosOffset, pos.z },
+            { pos.x + nextPosOffset, pos.y, pos.z },
+            { pos.x - nextPosOffset, pos.y, pos.z },
+            { pos.x + nextPosOffset, pos.y + nextPosOffset, pos.z },
+            { pos.x - nextPosOffset, pos.y + nextPosOffset, pos.z },
+            { pos.x + nextPosOffset, pos.y - nextPosOffset, pos.z },
+            { pos.x - nextPosOffset, pos.y - nextPosOffset, pos.z } };
 
-    CVector playerPos[] = {{pos.x, pos.y + playerPosOffset, pos.z},
-                           {pos.x, pos.y - playerPosOffset, pos.z},
-                           {pos.x + playerPosOffset, pos.y, pos.z},
-                           {pos.x - playerPosOffset, pos.y, pos.z}};
+    CVector playerPos[] = { { pos.x, pos.y + playerPosOffset, pos.z },
+                            { pos.x, pos.y - playerPosOffset, pos.z },
+                            { pos.x + playerPosOffset, pos.y, pos.z },
+                            { pos.x - playerPosOffset, pos.y, pos.z } };
 
     for (const auto &p : playerPos)
     {

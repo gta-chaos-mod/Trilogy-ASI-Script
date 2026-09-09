@@ -103,7 +103,7 @@ RwV3d
 BoneHelper::GetBonePosition (CPed *ped, unsigned int boneId)
 {
     // Default position
-    RwV3d position = {0, 0, 0};
+    RwV3d position = { 0, 0, 0 };
     if (!IsValidBone (ped, boneId)) return position;
 
     if (bonePositions.contains (ped))
@@ -116,7 +116,7 @@ BoneHelper::GetBonePosition (CPed *ped, unsigned int boneId)
     if (rwBoneMatrix)
     {
         const RwV3d &pos = rwBoneMatrix->pos;
-        position         = {pos.x, pos.y, pos.z};
+        position         = { pos.x, pos.y, pos.z };
     }
 
     return position;
@@ -134,7 +134,7 @@ RwV3d
 BoneHelper::GetBoneScale (CPed *ped, unsigned int boneId)
 {
     // Default scale
-    RwV3d scale = {1, 1, 1};
+    RwV3d scale = { 1, 1, 1 };
     if (!IsValidBone (ped, boneId)) return scale;
 
     if (boneScales.contains (ped))
@@ -161,10 +161,10 @@ BoneHelper::SetBoneScale (CPed *ped, unsigned int boneId, RwV3d scale,
     if (!IsValidBone (ped, boneId)) return;
 
     boneScales[ped].clear ();
-    boneScales[ped].push_back (BoneScaleInfo{.boneId        = boneId,
-                                             .scale         = scale,
-                                             .rootBone      = rootBone,
-                                             .scaleWithRoot = scaleWithRoot});
+    boneScales[ped].push_back (BoneScaleInfo{ .boneId        = boneId,
+                                              .scale         = scale,
+                                              .rootBone      = rootBone,
+                                              .scaleWithRoot = scaleWithRoot });
 }
 
 void
@@ -173,16 +173,16 @@ BoneHelper::ScaleBone (CPed *ped, unsigned int boneId, RwV3d scale,
 {
     if (!IsValidBone (ped, boneId)) return;
 
-    boneScales[ped].push_back (BoneScaleInfo{.boneId        = boneId,
-                                             .scale         = scale,
-                                             .rootBone      = rootBone,
-                                             .scaleWithRoot = scaleWithRoot});
+    boneScales[ped].push_back (BoneScaleInfo{ .boneId        = boneId,
+                                              .scale         = scale,
+                                              .rootBone      = rootBone,
+                                              .scaleWithRoot = scaleWithRoot });
 }
 
 RwV3d
 BoneHelper::GetBoneRotation (CPed *ped, unsigned int boneId)
 {
-    RwV3d angles = {0, 0, 0};
+    RwV3d angles = { 0, 0, 0 };
     if (!IsValidBone (ped, boneId)) return angles;
 
     if (boneRotations.contains (ped))
@@ -350,9 +350,9 @@ BoneHelper::_setBoneScales (CPed *ped)
                     RwV3d rootPos = GetBonePosition (ped, scaleInfo.rootBone);
 
                     RwV3d newPos
-                        = {(rootPos.x + ((bonePos.x - rootPos.x) * scale.x)),
-                           (rootPos.y + ((bonePos.y - rootPos.y) * scale.y)),
-                           (rootPos.z + ((bonePos.z - rootPos.z) * scale.z))};
+                        = { (rootPos.x + ((bonePos.x - rootPos.x) * scale.x)),
+                            (rootPos.y + ((bonePos.y - rootPos.y) * scale.y)),
+                            (rootPos.z + ((bonePos.z - rootPos.z) * scale.z)) };
 
                     SetBonePosition (ped, scaleInfo.boneId, newPos);
                 }

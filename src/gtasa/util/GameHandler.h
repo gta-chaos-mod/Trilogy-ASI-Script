@@ -159,7 +159,7 @@ private:
 
             EffectHandler::HandleFunction (json);
 
-            lastSaved = currentTime + std::chrono::milliseconds{10000};
+            lastSaved = currentTime + std::chrono::milliseconds{ 10000 };
         }
     }
 
@@ -173,7 +173,7 @@ private:
         if (!FrontEndMenuManager.m_bMenuActive && KeyPressed (VK_F7)
             && lastQuickSave < currentTime)
         {
-            lastQuickSave = currentTime + std::chrono::milliseconds{10000};
+            lastQuickSave = currentTime + std::chrono::milliseconds{ 10000 };
 
             nlohmann::json json;
 

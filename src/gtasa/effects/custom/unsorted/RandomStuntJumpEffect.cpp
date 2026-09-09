@@ -10,8 +10,8 @@ class RandomStuntJumpEffect : public EffectBase
 {
     struct StuntJump
     {
-        CVector position    = {0.0f, 0.0f, 0.0f};
-        CVector orientation = {0.0f, 0.0f, 0.0f};
+        CVector position    = { 0.0f, 0.0f, 0.0f };
+        CVector orientation = { 0.0f, 0.0f, 0.0f };
         float   velocity    = 1.0f;
     };
 

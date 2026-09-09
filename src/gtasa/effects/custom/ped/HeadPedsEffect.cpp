@@ -22,14 +22,14 @@ public:
     static void
     RenderPed (CPed *ped)
     {
-        RwV3d scale = {0.1f, 0.1f, 0.1f};
+        RwV3d scale = { 0.1f, 0.1f, 0.1f };
         for (int i = 0; i < 500; i++)
             BoneHelper::ScaleBone (ped, i, scale);
 
         for (int i = 5000; i < 5026; i++)
             BoneHelper::ScaleBone (ped, i, scale);
 
-        scale = {50.0f, 50.0f, 50.0f};
+        scale = { 50.0f, 50.0f, 50.0f };
         for (int i = BONE_NECK; i <= BONE_RIGHTUPPERTORSO - 1; i++)
             BoneHelper::ScaleBone (ped, i, scale, BONE_NECK);
 
@@ -39,7 +39,7 @@ public:
         // Cutscene related?
         BoneHelper::ScaleBone (ped, 30, scale, BONE_NECK);
 
-        scale = {0.1f, 0.1f, 0.1f};
+        scale = { 0.1f, 0.1f, 0.1f };
         for (int i = BONE_RIGHTUPPERTORSO; i < BONE_RIGHTFOOT; i++)
             BoneHelper::ScaleBone (ped, i, scale, 0, false);
 

@@ -400,13 +400,14 @@ EffectDrawHandler::ScreensaverHUDElement
 EffectDrawHandler::CreateHUDElement (EffectInstance *effect)
 {
     return ScreensaverHUDElement{
-        .pos           = CVector2D (effect->Random (SCREEN_COORD_LEFT (10.0f),
-                                                    SCREEN_COORD_RIGHT (10.0f)),
-                                    effect->Random (SCREEN_COORD_TOP (10.0f),
-                                                    SCREEN_COORD_BOTTOM (10.0f))),
+        .pos = CVector2D (effect->Random (SCREEN_COORD_LEFT (10.0f),
+                                          SCREEN_COORD_RIGHT (10.0f)),
+                          effect->Random (SCREEN_COORD_TOP (10.0f),
+                                          SCREEN_COORD_BOTTOM (10.0f))),
         .speedModifier = effect->Random (0.5f, 2.0f),
         .goingRight    = effect->Random (0, 1) == 0,
-        .goingDown     = effect->Random (0, 1) == 0};
+        .goingDown     = effect->Random (0, 1) == 0
+    };
 }
 
 void
