@@ -16,9 +16,11 @@ jobs:
     steps:
     # 1. Version Suffix Check for non-release commits
     - name: Check for release commit
+      env:
+        COMMIT_MSG: ${{ github.event.head_commit.message }}
       shell: powershell
       run: |
-        if ("${{ github.event.head_commit.message }}" -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+$') {
+        if ($env:COMMIT_MSG -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+$') {
             echo "VERSION_SUFFIX=${{ github.sha }}" >> $env:GITHUB_ENV
         }
 
