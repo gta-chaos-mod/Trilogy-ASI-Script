@@ -42,7 +42,7 @@ public:
     {
         signed int ret = cb ();
 
-        IDirect3DDevice9 *device = GetD3DDevice ();
+        IDirect3DDevice9 *device = (IDirect3DDevice9 *) GetD3DDevice ();
         if (!device) return ret;
 
         if (!image && loadAttempts++ <= 5)
@@ -65,7 +65,8 @@ public:
     {
         PDIRECT3DTEXTURE9 texture;
         HRESULT           hr
-            = D3DXCreateTextureFromFileA (GetD3DDevice (), filename, &texture);
+            = D3DXCreateTextureFromFileA ((IDirect3DDevice9 *) GetD3DDevice (),
+                                          filename, &texture);
         if (hr != S_OK) return false;
 
         D3DSURFACE_DESC my_image_desc;

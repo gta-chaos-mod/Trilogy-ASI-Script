@@ -99,8 +99,8 @@ public:
         {
             if (ped->m_nPedType == PED_TYPE_COP)
             {
-                ped->m_nPedFlags.bDontRender     = false;
-                ped->m_nPedFlags.bRenderPedInCar = true;
+                ped->bDontRender     = false;
+                ped->bRenderPedInCar = true;
             }
         }
     }
@@ -112,8 +112,8 @@ public:
         {
             if (ped->m_nPedType == PED_TYPE_COP)
             {
-                ped->m_nPedFlags.bDontRender     = true;
-                ped->m_nPedFlags.bRenderPedInCar = false;
+                ped->bDontRender     = true;
+                ped->bRenderPedInCar = false;
             }
         }
 
@@ -121,9 +121,9 @@ public:
         {
             if (IsPoliceModel (vehicle->m_nModelIndex))
             {
-                vehicle->m_nVehicleFlags.bLightsOn = 0;
-                vehicle->m_nRenderLightsFlags      = 0;
-                vehicle->m_nOverrideLights         = 1;
+                vehicle->bLightsOn            = 0;
+                vehicle->m_nRenderLightsFlags = 0;
+                vehicle->m_nOverrideLights    = 1;
             }
         }
     }

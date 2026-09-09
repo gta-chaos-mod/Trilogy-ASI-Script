@@ -91,7 +91,7 @@ public:
     static std::string
     GetActivePedWeapon (CPed *ped)
     {
-        int slot = ped->m_nActiveWeaponSlot;
+        int slot = ped->m_nSelectedWepSlot;
         if (slot == 0) return "None";
 
         CWeapon weapon = ped->m_aWeapons[slot];

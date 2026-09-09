@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/ScriptParams.h"
 #include "util/hooks/HookMacros.h"
 
 class LetsTakeABreakEffect : public EffectBase
@@ -39,10 +40,10 @@ public:
     Hooked_GetPositionOfAnalogueSticks (auto &&cb, CRunningScript *script,
                                         __int16 count)
     {
-        CTheScripts::ScriptParams[0].iParam = 0;
-        CTheScripts::ScriptParams[1].iParam = 0;
-        CTheScripts::ScriptParams[2].iParam = 0;
-        CTheScripts::ScriptParams[3].iParam = 0;
+        ScriptParams[0].iParam = 0;
+        ScriptParams[1].iParam = 0;
+        ScriptParams[2].iParam = 0;
+        ScriptParams[3].iParam = 0;
 
         cb ();
     }

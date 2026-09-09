@@ -15,7 +15,7 @@ public:
         if (vehicle && vehicle->m_pDriver == player)
         {
             const int vehicleId   = vehicle->m_nModelIndex;
-            auto      vehicleType = CModelInfo::IsVehicleModelType (vehicleId);
+            auto      vehicleType = CModelInfo::GetVehicleModelType (vehicleId);
             switch (vehicleType)
             {
                 case VEHICLE_AUTOMOBILE:

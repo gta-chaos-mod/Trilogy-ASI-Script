@@ -15,13 +15,13 @@ public:
     OnProcessScripts (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (!player->m_nPedFlags.bFiringWeapon) return;
+        if (!player->bFiringWeapon) return;
 
         CVector position
             = player->TransformFromObjectSpace (CVector (0.0f, 5.0f, 0.0f));
 
         SpawnVehicle (GetRandomVehicle (inst), position,
-                      player->m_fCurrentRotation + 1.5707964f);
+                      player->m_fHeadingCurrent + 1.5707964f);
     }
 
     int

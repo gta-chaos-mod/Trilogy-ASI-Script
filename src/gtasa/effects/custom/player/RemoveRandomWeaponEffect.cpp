@@ -36,7 +36,7 @@ public:
         for (int i = 1; i < 13; i++)
         {
             CWeapon weapon = player->m_aWeapons[i];
-            if (weapon.m_nTotalAmmo > 0) possibleWeapons.push_back (weapon);
+            if (weapon.m_nAmmoTotal > 0) possibleWeapons.push_back (weapon);
         }
 
         return possibleWeapons;

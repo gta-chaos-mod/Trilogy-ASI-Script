@@ -29,7 +29,7 @@ public:
         CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
         if (!playerVehicle) return;
 
-        playerVehicle->m_nPhysicalFlags.bApplyGravity = true;
+        playerVehicle->bApplyGravity = true;
     }
 
     static void
@@ -45,11 +45,9 @@ public:
         CVehicle *playerVehicle = FindPlayerVehicle (-1, false);
         if (!playerVehicle) return;
 
-        if (playerVehicle == thisEntity)
-            otherEntity->m_nPhysicalFlags.bApplyGravity = false;
+        if (playerVehicle == thisEntity) otherEntity->bApplyGravity = false;
 
-        if (playerVehicle == otherEntity)
-            thisEntity->m_nPhysicalFlags.bApplyGravity = false;
+        if (playerVehicle == otherEntity) thisEntity->bApplyGravity = false;
     }
 };
 

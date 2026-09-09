@@ -67,7 +67,7 @@ std::vector<std::function<void (EffectInstance *)>> customCheats = {
 
             if (cond && inst->Random (1, 100000) % 100 == 0)
             {
-                vehicle->m_nPhysicalFlags.bExplosionProof = false;
+                vehicle->bExplosionProof = false;
                 vehicle->BlowUpCar (nullptr, false);
                 continue;
             }
@@ -162,7 +162,8 @@ std::vector<std::function<void (EffectInstance *)>> customCheats = {
 
         auto *vehicle = FindPlayerVehicle (-1, false);
 
-        eWeaponType weapons[] = {WEAPON_CHAINSAW, WEAPON_KATANA, WEAPON_SPAS12};
+        eWeaponType weapons[]
+            = {WEAPONTYPE_CHAINSAW, WEAPONTYPE_KATANA, WEAPONTYPE_SPAS12};
         for (CPed *ped : CPools::ms_pPedPool)
         {
             if (!ped) continue;

@@ -28,10 +28,10 @@ public:
         if (car && (thisPed != FindPlayerPed ()))
         {
             auto diff = car->GetPosition () - thisPed->GetPosition ();
-            diff.Normalise ();
+            diff.Normalize ();
 
             float pushFactor = 0.25f;
-            if (CModelInfo::IsVehicleModelType (car->m_nModelIndex)
+            if (CModelInfo::GetVehicleModelType (car->m_nModelIndex)
                 != VEHICLE_AUTOMOBILE)
             {
                 pushFactor *= 0.5f;

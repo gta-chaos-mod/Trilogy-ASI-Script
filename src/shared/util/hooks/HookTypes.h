@@ -1,7 +1,6 @@
 #pragma once
 
 #include <MinHook.h>
-#include <injector/hooking.hpp>
 
 template <auto Address, typename T> struct InjectorHook
 {

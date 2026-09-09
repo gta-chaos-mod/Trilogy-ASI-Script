@@ -140,7 +140,7 @@ public:
     static void
     WarpPedIntoCar (CPed *ped, CVehicle *vehicle, eCarDrivingStyle drivingStyle)
     {
-        vehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
+        vehicle->bHasBeenOwnedByPlayer = true;
 
         Command<eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR> (ped, vehicle);
 

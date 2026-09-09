@@ -36,8 +36,8 @@ public:
                                CPedDamageResponseCalculator *thisCalc,
                                CPed *ped, uint8_t *cDamageReponseInfo, char a4)
     {
-        if (thisCalc->m_weaponType <= WEAPON_BRASSKNUCKLE
-            || thisCalc->m_weaponType == WEAPON_PARACHUTE)
+        if (thisCalc->m_weaponType <= WEAPONTYPE_BRASSKNUCKLE
+            || thisCalc->m_weaponType == WEAPONTYPE_PARACHUTE)
         {
             cb ();
             return;

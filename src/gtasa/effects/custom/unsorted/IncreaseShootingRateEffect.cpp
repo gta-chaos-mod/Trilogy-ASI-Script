@@ -27,7 +27,7 @@ public:
         for (int i = 0; i < MAX_WEAPON_INFOS; i++)
         {
             CWeaponInfo *p        = aWeaponInfo + i;
-            int          modelId1 = p->m_nModelId1;
+            int          modelId1 = p->m_nModelId;
             auto         it
                 = std::find (weaponsId.cbegin (), weaponsId.cend (), modelId1);
             if (it != weaponsId.cend ())
@@ -55,7 +55,7 @@ public:
         for (int i = 0; i < MAX_WEAPON_INFOS; i++)
         {
             CWeaponInfo *p        = aWeaponInfo + i;
-            int          modelId1 = p->m_nModelId1;
+            int          modelId1 = p->m_nModelId;
 
             auto it = animTime.find (modelId1);
             if (it != animTime.cend ())
@@ -73,7 +73,7 @@ public:
         for (int i = 0; i < MAX_WEAPON_INFOS; i++)
         {
             CWeaponInfo *p        = aWeaponInfo + i;
-            int          modelId1 = p->m_nModelId1;
+            int          modelId1 = p->m_nModelId;
 
             auto it = defaultAnimTime.find (modelId1);
             if (it != defaultAnimTime.cend ())

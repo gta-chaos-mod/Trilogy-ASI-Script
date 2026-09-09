@@ -74,7 +74,6 @@ class PassCurrentMissionEffect : public EffectBase
         {"DRIV3", 2674},   // Mike Toreno
         {"STEAL1", 7659},  // Zeroing In
         {"STEAL2", 26031}, // Test Drive
-        {"STEAL4", 89},    // Customs Fast Track
         {"STEAL5", 5117},  // Puncture Wounds
         {"ZERO1", 5321},   // Air Raid
         {"ZERO2", 3285},   // Supply Lines...
@@ -143,7 +142,6 @@ class PassCurrentMissionEffect : public EffectBase
         "FARLIE4", // Ran Fa Li
         "SYN2",    // Jizzy
         "DRIV3",   // Mike Toreno
-        "STEAL4",  // Customs Fast Track
         "ZERO1",   // Air Raid
         "ZERO2",   // Supply Lines...
         "ZERO4",   // New Model Army
@@ -168,8 +166,31 @@ class PassCurrentMissionEffect : public EffectBase
 
 public:
     bool
+    IsCatalinaMissionSelector ()
+    {
+        for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
+        {
+            if (i->m_bIsMission && i->m_bIsActive && !i->m_bIsExternal)
+            {
+                std::string missionName
+                    = GenericUtil::ToUpper (std::string (i->m_szName));
+
+                // Catalina "go to mission" missions
+                if (missionName == "CATALIN")
+                {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool
     CanActivate () override
     {
+        if (IsCatalinaMissionSelector ()) return false;
+
         return CTheScripts::IsPlayerOnAMission ();
     }
 
@@ -208,6 +229,12 @@ public:
             return;
         }
 
+        if (IsCatalinaMissionSelector ())
+        {
+            inst->ResetTimer ();
+            return;
+        }
+
         for (auto i = CTheScripts::pActiveScripts; i; i = i->m_pNext)
         {
             if (i->m_bIsMission && i->m_bIsActive && !i->m_bIsExternal)
@@ -238,6 +265,39 @@ public:
                     }
 
                     break;
+                }
+                else if (missionName == "STEAL4")
+                {
+                    i->m_pCurrentIP = i->m_pBaseIP + 25110;
+
+                    // Instead of jumping to that part of the script,
+                    // jump to a spot where mission passed is shown (or show it
+                    // ourselves) and just set the flag, start the script, and
+                    // set import_export_is_active
+
+                    /*
+                    :STEAL4_25110
+                    00A1: put_actor $PLAYER_ACTOR at -1569.625 122.3311 2.5469
+                    015F: set_camera_position -1571.141 131.4032 3.3235 rotation
+                    0.0 0.0 0.0 0160: set_camera_point_at -1571.685
+                    132.226 3.4872 switchstyle 2 0A0B:
+                    set_rendering_origin_at_3D_coord -1571.685 132.226 3.4872
+                    angle 0.0 0395: clear_area 1 at -1570.718 131.0493 3.3547
+                    radius 50.0 02A3: enable_widescreen 1 0004: $1185 = 1 004F:
+                    create_thread @IMPEXPM 0004: $1909 = 1
+
+                    // Decompiled
+                    SET_CHAR_COORDINATES scplayer -1569.6251 122.3311 2.5469
+                    SET_FIXED_CAMERA_POSITION -1571.1414 131.4032 3.3235 0.0 0.0
+                    0.0 POINT_CAMERA_AT_POINT 	  -1571.6854 132.2260 3.4872
+                    JUMP_CUT LOAD_SCENE_IN_DIRECTION -1571.6854 132.2260 3.4872
+                    0.0 CLEAR_AREA -1570.7183 131.0493 3.3547 50.0 TRUE
+                    SWITCH_WIDESCREEN ON
+
+                    steal4_flag = 1
+                    START_NEW_SCRIPT import_export_script
+                    import_export_is_active = 1 // unlocks the import / export
+                    */
                 }
                 else if (missionName == "CESAR1")
                 {

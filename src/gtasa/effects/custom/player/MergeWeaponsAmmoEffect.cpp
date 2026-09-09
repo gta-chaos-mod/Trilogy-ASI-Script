@@ -64,10 +64,10 @@ public:
             {
                 continue;
             }
-            totalAmmo += player->m_aWeapons[i].m_nTotalAmmo;
+            totalAmmo += player->m_aWeapons[i].m_nAmmoTotal;
         }
         isValidWeapon         = false;
-        auto activeWeaponSlot = player->m_nActiveWeaponSlot;
+        auto activeWeaponSlot = player->m_nSelectedWepSlot;
         if (activeWeaponSlot >= HANDGUN && activeWeaponSlot < SPECIAL)
         {
             isValidWeapon = true;
@@ -105,7 +105,7 @@ public:
 
         if (isValidWeapon)
         {
-            int activeSlot     = player->m_nActiveWeaponSlot;
+            int activeSlot     = player->m_nSelectedWepSlot;
             *infiniteAmmoCheat = true; // hack to decrease ammo manually
             auto hasFire       = cb ();
             *infiniteAmmoCheat = false;
@@ -138,7 +138,7 @@ public:
 
         if (isValidWeapon)
         {
-            int activeSlot     = player->m_nActiveWeaponSlot;
+            int activeSlot     = player->m_nSelectedWepSlot;
             *infiniteAmmoCheat = true; // hack to decrease ammo manually
             auto hasFire       = cb ();
             *infiniteAmmoCheat = false;
@@ -160,9 +160,9 @@ public:
         auto *player = FindPlayerPed ();
         auto &weapon = player->m_aWeapons[slot];
 
-        if (weapon.m_nTotalAmmo > 2)
+        if (weapon.m_nAmmoTotal > 2)
         {
-            weapon.m_nTotalAmmo--;
+            weapon.m_nAmmoTotal--;
         }
         else
         {
@@ -173,9 +173,9 @@ public:
                 {
                     continue;
                 }
-                if (player->m_aWeapons[i].m_nTotalAmmo > 0)
+                if (player->m_aWeapons[i].m_nAmmoTotal > 0)
                 {
-                    player->m_aWeapons[i].m_nTotalAmmo--;
+                    player->m_aWeapons[i].m_nAmmoTotal--;
                     forceDecreaseAmmo = false;
                     break;
                 }
@@ -183,7 +183,7 @@ public:
 
             if (forceDecreaseAmmo)
             {
-                weapon.m_nTotalAmmo--;
+                weapon.m_nAmmoTotal--;
             }
         }
     }

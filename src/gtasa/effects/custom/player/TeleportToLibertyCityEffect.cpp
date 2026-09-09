@@ -43,7 +43,7 @@ public:
         {
             vehicle->m_vecMoveSpeed = previousMoveSpeed;
             vehicle->m_vecTurnSpeed = previousTurnSpeed;
-            CallMethod<0x59AD20, CMatrix *, RwMatrix *> (vehicle->GetMatrix (),
+            CallMethod<0x59AD20, CMatrix *, RwMatrix *> (&vehicle->GetMatrix (),
                                                          &previousMatrix);
         }
 
@@ -81,7 +81,7 @@ public:
                 previousLocation  = vehicle->GetPosition ();
                 previousMoveSpeed = vehicle->m_vecMoveSpeed;
                 previousTurnSpeed = vehicle->m_vecTurnSpeed;
-                vehicle->GetMatrix ()->CopyToRwMatrix (&previousMatrix);
+                vehicle->GetMatrix ().CopyToRwMatrix (&previousMatrix);
             }
 
             Teleportation::Teleport (fakeLocation, 1);

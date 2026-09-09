@@ -32,7 +32,7 @@ public:
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            vehicle->m_nPhysicalFlags.bExplosionProof = false;
+            vehicle->bExplosionProof = false;
             vehicle->BlowUpCar (nullptr, false);
         }
 

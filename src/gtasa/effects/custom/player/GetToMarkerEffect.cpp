@@ -105,6 +105,9 @@ public:
             return;
 
         reachedMarker = true;
+
+        // TODO: positive effects - Invincible? Teleport To Marker? Maybe both?
+
         inst->Disable ();
     }
 
@@ -120,7 +123,7 @@ public:
                 case VEHICLE_FHELI:
                 case VEHICLE_FPLANE:
                 {
-                    vehicle->m_nVehicleFlags.bConsideredByPlayer = !locked;
+                    vehicle->bConsideredByPlayer = !locked;
                     continue;
                 }
 

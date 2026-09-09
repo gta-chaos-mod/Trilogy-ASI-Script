@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/ScriptParams.h"
 #include "util/hooks/HookMacros.h"
 
 #include <deque>
@@ -76,10 +77,10 @@ public:
     Hooked_GetPositionOfAnalogueSticks (auto &&cb, CRunningScript *script,
                                         __int16 count)
     {
-        CTheScripts::ScriptParams[0].iParam = 0;
-        CTheScripts::ScriptParams[1].iParam = 0;
-        CTheScripts::ScriptParams[2].iParam = 0;
-        CTheScripts::ScriptParams[3].iParam = 0;
+        ScriptParams[0].iParam = 0;
+        ScriptParams[1].iParam = 0;
+        ScriptParams[2].iParam = 0;
+        ScriptParams[3].iParam = 0;
 
         if (bufferedInputData.size () > 0)
         {
@@ -90,10 +91,10 @@ public:
 
             if (chronoTime > data.chronoTime)
             {
-                CTheScripts::ScriptParams[0].iParam = data.state.LeftStickX;
-                CTheScripts::ScriptParams[1].iParam = data.state.LeftStickY;
-                CTheScripts::ScriptParams[2].iParam = data.state.RightStickX;
-                CTheScripts::ScriptParams[3].iParam = data.state.RightStickY;
+                ScriptParams[0].iParam = data.state.LeftStickX;
+                ScriptParams[1].iParam = data.state.LeftStickY;
+                ScriptParams[2].iParam = data.state.RightStickX;
+                ScriptParams[3].iParam = data.state.RightStickY;
             }
         }
 

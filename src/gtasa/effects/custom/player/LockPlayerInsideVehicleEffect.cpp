@@ -13,7 +13,7 @@ public:
     OnEnd (EffectInstance *inst) override
     {
         CPlayerPed *player = FindPlayerPed ();
-        if (player) player->m_nPedFlags.CantBeKnockedOffBike = 0;
+        if (player) player->CantBeKnockedOffBike = 0;
 
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle) vehicle->m_eDoorLock = eDoorLock::DOORLOCK_UNLOCKED;
@@ -30,7 +30,7 @@ public:
             vehicle->m_eDoorLock = eDoorLock::DOORLOCK_LOCKED_PLAYER_INSIDE;
 
             CPlayerPed *player = FindPlayerPed ();
-            if (player) player->m_nPedFlags.CantBeKnockedOffBike = 1;
+            if (player) player->CantBeKnockedOffBike = 1;
         }
     }
 };

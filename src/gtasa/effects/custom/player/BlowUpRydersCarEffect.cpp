@@ -64,11 +64,12 @@ public:
             CStreaming::RequestModel (MODEL_COLT45, 2); // Colt 45
             CStreaming::LoadAllRequestedModels (false);
 
-            player->GiveWeapon (WEAPON_PISTOL, pistolAmmo, 1);
+            player->GiveWeapon (WEAPONTYPE_PISTOL, pistolAmmo, 1);
 
             CStreaming::SetModelIsDeletable (MODEL_COLT45);
 
-            player->SetCurrentWeapon (player->GetWeaponSlot (WEAPON_PISTOL));
+            player->SetCurrentWeapon (
+                player->GetWeaponSlot (WEAPONTYPE_PISTOL));
         }
     }
 
@@ -80,12 +81,11 @@ public:
             CPlayerPed *player = FindPlayerPed ();
             if (player)
             {
-                CWeapon weapon
-                    = player->m_aWeapons[player->GetWeaponSlot (WEAPON_PISTOL)];
+                CWeapon weapon = player->m_aWeapons[player->GetWeaponSlot (
+                    WEAPONTYPE_PISTOL)];
 
-                if (weapon.m_nTotalAmmo == 0
-                    && player->m_nActiveWeaponSlot != 0)
-                    player->SetCurrentWeapon (WEAPON_UNARMED);
+                if (weapon.m_nAmmoTotal == 0 && player->m_nSelectedWepSlot != 0)
+                    player->SetCurrentWeapon (WEAPONTYPE_UNARMED);
             }
 
             if (rydersCar && IsVehiclePointerValid (rydersCar)
@@ -127,22 +127,22 @@ public:
                                        0.0f, true);
 
         // Clear the weapon so the player only has 1 shot
-        if (player->DoWeHaveWeaponAvailable (WEAPON_PISTOL))
+        if (player->DoWeHaveWeaponAvailable (WEAPONTYPE_PISTOL))
         {
             pistolAmmo
-                = player->m_aWeapons[player->GetWeaponSlot (WEAPON_PISTOL)]
-                      .m_nTotalAmmo;
-            player->ClearWeapon (WEAPON_PISTOL);
+                = player->m_aWeapons[player->GetWeaponSlot (WEAPONTYPE_PISTOL)]
+                      .m_nAmmoTotal;
+            player->ClearWeapon (WEAPONTYPE_PISTOL);
         }
 
         CStreaming::RequestModel (MODEL_COLT45, 2); // Colt 45
         CStreaming::LoadAllRequestedModels (false);
 
-        player->GiveWeapon (WEAPON_PISTOL, 1, 1);
+        player->GiveWeapon (WEAPONTYPE_PISTOL, 1, 1);
 
         CStreaming::SetModelIsDeletable (MODEL_COLT45);
 
-        player->SetCurrentWeapon (player->GetWeaponSlot (WEAPON_PISTOL));
+        player->SetCurrentWeapon (player->GetWeaponSlot (WEAPONTYPE_PISTOL));
 
         teleported = true;
     }

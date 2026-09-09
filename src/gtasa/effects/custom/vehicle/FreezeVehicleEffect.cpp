@@ -46,7 +46,7 @@ public:
     {
         if (!vehicle) return;
 
-        vehicle->m_nPhysicalFlags.bDisableMoveForce = false;
+        vehicle->bDisableMoveForce = false;
 
         vehicle->m_vecMoveSpeed = moveSpeed;
         vehicle->m_vecTurnSpeed = turnSpeed;
@@ -57,7 +57,7 @@ public:
     {
         if (!vehicle) return;
 
-        vehicle->m_nPhysicalFlags.bDisableMoveForce = true;
+        vehicle->bDisableMoveForce = true;
 
         vehicle->SetPosn (position);
         vehicle->m_vecMoveSpeed = {0, 0, 0};

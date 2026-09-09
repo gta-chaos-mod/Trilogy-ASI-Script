@@ -116,7 +116,7 @@ public:
             if (info.time > DESPAWN_TIME)
             {
                 if (IsVehiclePointerValid (info.vehicle))
-                    info.vehicle->m_nVehicleFlags.bFadeOut = true;
+                    info.vehicle->bFadeOut = true;
             }
         }
 

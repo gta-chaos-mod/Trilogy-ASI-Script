@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 namespace Globals
 {
 inline float                            effectTimerSpeed     = 1.0f;

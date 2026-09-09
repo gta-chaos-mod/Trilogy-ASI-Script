@@ -39,7 +39,7 @@ public:
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            CMatrixLink *matrix = vehicle->GetMatrix ();
+            CMatrixLink *matrix = &vehicle->GetMatrix ();
             switch (this->type)
             {
                 case INVERT_MOMENTUM_AND_MATRIX:

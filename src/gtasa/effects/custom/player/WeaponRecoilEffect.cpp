@@ -57,7 +57,7 @@ public:
 
         recoilValue = 16.0f;
 
-        if (thisWeapon->m_eWeaponType == WEAPON_SNIPERRIFLE)
+        if (thisWeapon->m_eWeaponType == WEAPONTYPE_SNIPERRIFLE)
             recoilValue *= 4.0f;
 
         return cb ();

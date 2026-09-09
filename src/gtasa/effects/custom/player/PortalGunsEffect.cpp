@@ -7,13 +7,13 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        HOOK_METHOD_ARGS (inst, Hooked_CWeapon_DoBulletImpact,
+        HOOK_METHOD_ARGS (inst, Hooked_CWeaponTYPE_DoBulletImpact,
                           void (CWeapon *, CEntity *, CEntity *, CVector *,
                                 CVector *, CColPoint *, int),
                           0x741199, 0x7411DF, 0x7412DF, 0x741E30);
 
         // Sniper Section //
-        HOOK_ARGS (inst, Hooked_CWeapon_GenerateDamageEvent,
+        HOOK_ARGS (inst, Hooked_CWeaponTYPE_GenerateDamageEvent,
                    void (CPed *, CPed *, eWeaponType, int, int, char),
                    0x736306);
 
@@ -37,12 +37,12 @@ public:
         CStreaming::RequestModel (MODEL_TEC9, 2); // Tec-9
         CStreaming::LoadAllRequestedModels (false);
 
-        player->ClearWeapon (WEAPON_TEC9);
-        player->ClearWeapon (WEAPON_MICRO_UZI);
-        player->ClearWeapon (WEAPON_MP5);
+        player->ClearWeapon (WEAPONTYPE_TEC9);
+        player->ClearWeapon (WEAPONTYPE_MICRO_UZI);
+        player->ClearWeapon (WEAPONTYPE_MP5);
 
-        player->GiveWeapon (WEAPON_TEC9, 99999, 1);
-        player->SetCurrentWeapon (player->GetWeaponSlot (WEAPON_TEC9));
+        player->GiveWeapon (WEAPONTYPE_TEC9, 99999, 1);
+        player->SetCurrentWeapon (player->GetWeaponSlot (WEAPONTYPE_TEC9));
 
         CStreaming::SetModelIsDeletable (MODEL_TEC9);
     }
@@ -53,11 +53,11 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        if (!player->DoWeHaveWeaponAvailable (WEAPON_TEC9)) return;
+        if (!player->DoWeHaveWeaponAvailable (WEAPONTYPE_TEC9)) return;
 
         CWeapon weapon
-            = player->m_aWeapons[player->GetWeaponSlot (WEAPON_TEC9)];
-        if (weapon.m_nTotalAmmo > 500) player->SetAmmo (WEAPON_TEC9, 500);
+            = player->m_aWeapons[player->GetWeaponSlot (WEAPONTYPE_TEC9)];
+        if (weapon.m_nAmmoTotal > 500) player->SetAmmo (WEAPONTYPE_TEC9, 500);
     }
 
     static void
@@ -88,15 +88,15 @@ public:
 
         CVector playerPosition = FindPlayerPed ()->GetPosition ();
 
-        float distance = DistanceBetweenPoints (v, playerPosition);
+        float distance = v.Distance (playerPosition);
         return distance < 100.0f && distance > 0.01f;
     }
 
     static void
-    Hooked_CWeapon_DoBulletImpact (auto &&cb, CWeapon *weapon, CEntity *owner,
-                                   CEntity *victim, CVector *startPoint,
-                                   CVector *endPoint, CColPoint *colPoint,
-                                   int a7)
+    Hooked_CWeaponTYPE_DoBulletImpact (auto &&cb, CWeapon *weapon,
+                                       CEntity *owner, CEntity *victim,
+                                       CVector *startPoint, CVector *endPoint,
+                                       CColPoint *colPoint, int a7)
     {
         cb ();
 
@@ -110,12 +110,13 @@ public:
     }
 
     static void
-    Hooked_CWeapon_GenerateDamageEvent (auto &&cb, CPed *victim, CPed *creator,
-                                        eWeaponType weaponType,
-                                        int damageFactor, int pedPiece,
-                                        char direction)
+    Hooked_CWeaponTYPE_GenerateDamageEvent (auto &&cb, CPed *victim,
+                                            CPed       *creator,
+                                            eWeaponType weaponType,
+                                            int damageFactor, int pedPiece,
+                                            char direction)
     {
-        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE
+        if (creator == FindPlayerPed () && weaponType == WEAPONTYPE_SNIPERRIFLE
             && IsPointValid (victim->GetPosition ()))
             TeleportToPosition ((CPed *) creator, victim->GetPosition ());
 
@@ -127,7 +128,7 @@ public:
                                    CPed *creator, eWeaponType weaponType,
                                    float damage, CVector coords)
     {
-        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE
+        if (creator == FindPlayerPed () && weaponType == WEAPONTYPE_SNIPERRIFLE
             && IsPointValid (thisVehicle->GetPosition ()))
             TeleportToPosition ((CPed *) creator, thisVehicle->GetPosition ());
 
@@ -139,7 +140,7 @@ public:
                                  RwV3d *fxOrigin, RwV3d *fxDirection,
                                  CEntity *creator, eWeaponType weaponType)
     {
-        if (creator == FindPlayerPed () && weaponType == WEAPON_SNIPERRIFLE
+        if (creator == FindPlayerPed () && weaponType == WEAPONTYPE_SNIPERRIFLE
             && IsPointValid (thisObject->GetPosition ()))
             TeleportToPosition ((CPed *) creator, thisObject->GetPosition ());
 

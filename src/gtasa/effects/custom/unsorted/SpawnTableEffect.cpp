@@ -43,14 +43,14 @@ public:
 
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle)
-            matrix = vehicle->GetMatrix ();
+            matrix = &vehicle->GetMatrix ();
         else
-            matrix = player->GetMatrix ();
+            matrix = &player->GetMatrix ();
 
         tableObject->SetMatrix (*matrix);
         tableObject->SetPosn (position);
-        tableObject->m_nPhysicalFlags.bCollisionProof = true;
-        tableObject->m_nObjectType                    = OBJECT_TEMPORARY;
+        tableObject->bCollisionProof = true;
+        tableObject->m_nObjectType   = OBJECT_TEMPORARY;
         tableObject->m_dwRemovalTime
             = CTimer::m_snTimeInMilliseconds + 1000 * 5;
     }

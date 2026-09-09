@@ -46,7 +46,7 @@ public:
             if (Command<eScriptCommands::COMMAND_IS_CAR_PASSENGER_SEAT_FREE> (
                     vehicle, i))
             {
-                vehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
+                vehicle->bHasBeenOwnedByPlayer = true;
 
                 Command<
                     eScriptCommands::COMMAND_WARP_CHAR_INTO_CAR_AS_PASSENGER> (

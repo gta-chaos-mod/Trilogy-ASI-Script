@@ -236,7 +236,7 @@ BoneHelper::UpdatePed (CPed *ped, bool updateHierarchy)
 {
     if (ped && ped->m_pRwClump)
     {
-        ped->m_bDontUpdateHierarchy = updateHierarchy;
+        ped->bDontUpdateHierarchy;
 
         // This is the wrong address - PR a fix to plugin-sdk?
         // ped->UpdateRpHAnim ();
@@ -268,7 +268,7 @@ BoneHelper::ShoulderBoneRotation (CPed *ped)
         // CPed::ShoulderBoneRotation - PR a fix to plugin-sdk?
         Call<0x5DF560> (ped->m_pRwClump);
 
-        ped->m_bDontUpdateHierarchy = true;
+        ped->bDontUpdateHierarchy = true;
     }
 }
 

@@ -11,7 +11,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
-        FrontEndMenuManager.m_bActivateMenuNextFrame = true;
+        FrontEndMenuManager.m_bStartUpFrontEndRequested = true;
 
         wait = inst->Random (1000 * 10, 1000 * 30);
     }
@@ -22,7 +22,7 @@ public:
         wait -= (int) GenericUtil::CalculateTick ();
         if (wait > 0) return;
 
-        FrontEndMenuManager.m_bActivateMenuNextFrame = true;
+        FrontEndMenuManager.m_bStartUpFrontEndRequested = true;
 
         wait = inst->Random (1000 * 10, 1000 * 30);
     }

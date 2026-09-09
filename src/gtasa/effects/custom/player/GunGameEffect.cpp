@@ -14,21 +14,22 @@ class GunGameEffect : public EffectBase
 
     static inline std::vector<eWeaponType> weapons
         = {// Handguns
-           WEAPON_PISTOL, WEAPON_PISTOL_SILENCED, WEAPON_DESERT_EAGLE,
+           WEAPONTYPE_PISTOL, WEAPONTYPE_PISTOL_SILENCED,
+           WEAPONTYPE_DESERT_EAGLE,
 
            // Shotguns
-           WEAPON_SHOTGUN, WEAPON_SAWNOFF, WEAPON_SPAS12,
+           WEAPONTYPE_SHOTGUN, WEAPONTYPE_SAWNOFF, WEAPONTYPE_SPAS12,
 
            // Sub-Machine Guns
-           WEAPON_MICRO_UZI, WEAPON_MP5, WEAPON_TEC9,
+           WEAPONTYPE_MICRO_UZI, WEAPONTYPE_MP5, WEAPONTYPE_TEC9,
 
            // Assault Rifles
-           WEAPON_AK47, WEAPON_M4,
+           WEAPONTYPE_AK47, WEAPONTYPE_M4,
 
            // Rifles
-           WEAPON_COUNTRYRIFLE, WEAPON_SNIPERRIFLE};
+           WEAPONTYPE_COUNTRYRIFLE, WEAPONTYPE_SNIPERRIFLE};
 
-    static inline eWeaponType activeWeapon = WEAPON_UNARMED;
+    static inline eWeaponType activeWeapon = WEAPONTYPE_UNARMED;
 
     static inline EffectInstance *instance = nullptr;
 
@@ -45,7 +46,7 @@ public:
         wait          = 0;
         weaponsStored = false;
         storedWeapons.clear ();
-        activeWeapon = WEAPON_UNARMED;
+        activeWeapon = WEAPONTYPE_UNARMED;
 
         HOOK_METHOD_ARGS (inst, Hooked_CPedDamageResponseCalculator_WillKillPed,
                           void (CPedDamageResponseCalculator *, CPed *, void *,
@@ -66,7 +67,7 @@ public:
         // Give the player a complementary firearm for their troubles
         if (storedWeapons.size () == 0)
         {
-            GivePlayerWeapon (WEAPON_PISTOL, 50, true);
+            GivePlayerWeapon (WEAPONTYPE_PISTOL, 50, true);
             return;
         }
 
@@ -89,15 +90,15 @@ public:
         if (!weaponsStored)
         {
             activeWeapon
-                = player->m_aWeapons[player->m_nActiveWeaponSlot].m_eWeaponType;
+                = player->m_aWeapons[player->m_nSelectedWepSlot].m_eWeaponType;
 
             for (CWeapon weapon : player->m_aWeapons)
             {
-                if (weapon.m_nTotalAmmo > 0)
+                if (weapon.m_nAmmoTotal > 0)
                 {
                     storedWeapons.push_back (
                         std::make_pair (weapon.m_eWeaponType,
-                                        weapon.m_nTotalAmmo));
+                                        weapon.m_nAmmoTotal));
                 }
             }
 
@@ -120,7 +121,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
+        int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId;
         CStreaming::RequestModel (model, 2);
         CStreaming::LoadAllRequestedModels (false);
 
@@ -141,8 +142,8 @@ public:
         if (!player) return;
 
         CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (activeWeapon, 1);
-        if (player->m_nActiveWeaponSlot != info->m_nSlot
-            || player->m_aWeapons[player->m_nActiveWeaponSlot].m_eWeaponType
+        if (player->m_nSelectedWepSlot != info->m_nSlot
+            || player->m_aWeapons[player->m_nSelectedWepSlot].m_eWeaponType
                    != activeWeapon)
         {
             GivePlayerWeapon (activeWeapon, 99999, true);

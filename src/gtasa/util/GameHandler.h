@@ -7,6 +7,7 @@
 #include "util/GameUtil.h"
 #include "util/GlobalHooksInstance.h"
 #include "util/GlobalRenderer.h"
+#include "util/IPC.h"
 #include "util/Websocket.h"
 
 #include <CAnimManager.h>
@@ -38,6 +39,8 @@ public:
     Initialise ()
     {
         if (initialised) return;
+
+        IPC::Setup ();
 
         // Check if the mod is already loaded / installed once
         if (injector::ReadMemory<bool> (0xBED000, true))
@@ -197,8 +200,8 @@ private:
         if (!player) return;
 
         bool hasParachute
-            = player->m_aWeapons[player->m_nActiveWeaponSlot].m_eWeaponType
-              == WEAPON_PARACHUTE;
+            = player->m_aWeapons[player->m_nSelectedWepSlot].m_eWeaponType
+              == WEAPONTYPE_PARACHUTE;
 
         if (hasParachute) return;
 
@@ -254,7 +257,7 @@ private:
     Hooked_ProcessMenuOptions (auto &&cb, CMenuManager *thisManager,
                                eMenuPage page)
     {
-        if (page == eMenuPage::MENUPAGE_LOAD_GAME)
+        if (page == eMenuPage::MENUPAGE_CHOOSE_LOAD_SLOT)
         {
             if (KeyPressed (VK_CONTROL))
             {
@@ -374,7 +377,7 @@ private:
                                  char *unknown)
     {
         if (GameUtil::IsTreeModel (physical->m_nModelIndex)
-            && weaponType != eWeaponType::WEAPON_CHAINSAW)
+            && weaponType != eWeaponType::WEAPONTYPE_CHAINSAW)
             return false;
 
         return cb ();
@@ -389,7 +392,7 @@ private:
 
         if (GameUtil::IsTreeModel (object->m_nModelIndex)
             && object->m_nObjectType == OBJECT_MISSION2
-            && weaponType == eWeaponType::WEAPON_CHAINSAW)
+            && weaponType == eWeaponType::WEAPONTYPE_CHAINSAW)
         {
             if (object->m_fHealth <= 0.0f)
                 Command<eScriptCommands::COMMAND_DELETE_OBJECT> (object);

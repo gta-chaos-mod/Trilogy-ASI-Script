@@ -29,7 +29,7 @@ public:
         if (position.z < 1.0f && position.z > -5.0f)
             player->SetPosn (position.x, position.y, 1.0f);
 
-        float     heading = player->m_fCurrentRotation;
+        float     heading = player->m_fHeadingCurrent;
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle) heading = vehicle->GetHeading ();
 

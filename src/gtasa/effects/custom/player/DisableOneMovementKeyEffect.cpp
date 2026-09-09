@@ -1,4 +1,5 @@
 #include "util/EffectBase.h"
+#include "util/ScriptParams.h"
 #include "util/hooks/HookMacros.h"
 
 #include <CMenuSystem.h>
@@ -83,26 +84,22 @@ public:
         {
             case UP:
             {
-                CTheScripts::ScriptParams[1].iParam
-                    = std::max (0, CTheScripts::ScriptParams[1].iParam);
+                ScriptParams[1].iParam = std::max (0, ScriptParams[1].iParam);
                 break;
             }
             case DOWN:
             {
-                CTheScripts::ScriptParams[1].iParam
-                    = std::min (0, CTheScripts::ScriptParams[1].iParam);
+                ScriptParams[1].iParam = std::min (0, ScriptParams[1].iParam);
                 break;
             }
             case LEFT:
             {
-                CTheScripts::ScriptParams[0].iParam
-                    = std::max (0, CTheScripts::ScriptParams[0].iParam);
+                ScriptParams[0].iParam = std::max (0, ScriptParams[0].iParam);
                 break;
             }
             case RIGHT:
             {
-                CTheScripts::ScriptParams[0].iParam
-                    = std::min (0, CTheScripts::ScriptParams[0].iParam);
+                ScriptParams[0].iParam = std::min (0, ScriptParams[0].iParam);
                 break;
             }
             default: break;

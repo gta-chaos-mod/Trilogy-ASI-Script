@@ -10,34 +10,36 @@ class WeaponRouletteEffect : public EffectBase
     std::vector<std::pair<eWeaponType, int>> storedWeapons = {};
     std::vector<eWeaponType>                 weapons
         = {// Melee
-           WEAPON_GOLFCLUB, WEAPON_NIGHTSTICK, WEAPON_KNIFE, WEAPON_BASEBALLBAT,
-           WEAPON_SHOVEL, WEAPON_POOLCUE, WEAPON_KATANA, WEAPON_CHAINSAW,
+           WEAPONTYPE_GOLFCLUB, WEAPONTYPE_NIGHTSTICK, WEAPONTYPE_KNIFE,
+           WEAPONTYPE_BASEBALLBAT, WEAPONTYPE_SHOVEL, WEAPONTYPE_POOLCUE,
+           WEAPONTYPE_KATANA, WEAPONTYPE_CHAINSAW,
 
            // Handguns
-           WEAPON_PISTOL, WEAPON_PISTOL_SILENCED, WEAPON_DESERT_EAGLE,
+           WEAPONTYPE_PISTOL, WEAPONTYPE_PISTOL_SILENCED,
+           WEAPONTYPE_DESERT_EAGLE,
 
            // Shotguns
-           WEAPON_SHOTGUN, WEAPON_SAWNOFF, WEAPON_SPAS12,
+           WEAPONTYPE_SHOTGUN, WEAPONTYPE_SAWNOFF, WEAPONTYPE_SPAS12,
 
            // Sub-Machine Guns
-           WEAPON_MICRO_UZI, WEAPON_MP5, WEAPON_TEC9,
+           WEAPONTYPE_MICRO_UZI, WEAPONTYPE_MP5, WEAPONTYPE_TEC9,
 
            // Assault Rifles
-           WEAPON_AK47, WEAPON_M4,
+           WEAPONTYPE_AK47, WEAPONTYPE_M4,
 
            // Rifles
-           WEAPON_COUNTRYRIFLE, WEAPON_SNIPERRIFLE,
+           WEAPONTYPE_COUNTRYRIFLE, WEAPONTYPE_SNIPERRIFLE,
 
            // Heavy Weapons
-           WEAPON_RLAUNCHER, WEAPON_RLAUNCHER_HS, WEAPON_FTHROWER,
-           WEAPON_MINIGUN,
+           WEAPONTYPE_RLAUNCHER, WEAPONTYPE_RLAUNCHER_HS, WEAPONTYPE_FTHROWER,
+           WEAPONTYPE_MINIGUN,
 
            // Projectiles
-           WEAPON_GRENADE, WEAPON_TEARGAS, WEAPON_MOLOTOV,
-           WEAPON_SATCHEL_CHARGE,
+           WEAPONTYPE_GRENADE, WEAPONTYPE_TEARGAS, WEAPONTYPE_MOLOTOV,
+           WEAPONTYPE_SATCHEL_CHARGE,
 
            // Special
-           WEAPON_SPRAYCAN, WEAPON_EXTINGUISHER};
+           WEAPONTYPE_SPRAYCAN, WEAPONTYPE_EXTINGUISHER};
 
 public:
     bool
@@ -57,10 +59,10 @@ public:
 
         for (CWeapon weapon : player->m_aWeapons)
         {
-            if (weapon.m_nTotalAmmo > 0)
+            if (weapon.m_nAmmoTotal > 0)
             {
                 storedWeapons.push_back (
-                    std::make_pair (weapon.m_eWeaponType, weapon.m_nTotalAmmo));
+                    std::make_pair (weapon.m_eWeaponType, weapon.m_nAmmoTotal));
             }
         }
     }
@@ -77,7 +79,7 @@ public:
 
         for (auto const &[type, ammo] : storedWeapons)
         {
-            int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
+            int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId;
             CStreaming::RequestModel (model, 2);
             CStreaming::LoadAllRequestedModels (false);
 
@@ -103,7 +105,7 @@ public:
         eWeaponType randomWeapon
             = weapons[inst->Random (0, (int) weapons.size () - 1)];
 
-        int model = CWeaponInfo::GetWeaponInfo (randomWeapon, 1)->m_nModelId1;
+        int model = CWeaponInfo::GetWeaponInfo (randomWeapon, 1)->m_nModelId;
 
         CStreaming::RequestModel (model, 2);
         CStreaming::LoadAllRequestedModels (false);

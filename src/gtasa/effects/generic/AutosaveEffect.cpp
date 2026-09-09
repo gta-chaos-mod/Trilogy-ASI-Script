@@ -44,8 +44,8 @@ public:
                 script = script->m_pNext;
             }
 
-            bool wasInVehicle              = player->m_nPedFlags.bInVehicle;
-            player->m_nPedFlags.bInVehicle = false;
+            bool wasInVehicle  = player->bInVehicle;
+            player->bInVehicle = false;
 
             if (CONFIG ("Chaos.SaveToSlot8", false))
             {
@@ -60,7 +60,7 @@ public:
                 .append (".b");
             GameUtil::SaveToFile (missionSave);
 
-            player->m_nPedFlags.bInVehicle = wasInVehicle;
+            player->bInVehicle = wasInVehicle;
 
             inst->OverrideName ("Autosave Completed");
 

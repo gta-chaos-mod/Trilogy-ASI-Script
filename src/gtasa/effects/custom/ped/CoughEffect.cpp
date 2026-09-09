@@ -63,7 +63,7 @@ public:
         if (vehicle)
         {
             const int vehicleId   = vehicle->m_nModelIndex;
-            auto      vehicleType = CModelInfo::IsVehicleModelType (vehicleId);
+            auto      vehicleType = CModelInfo::GetVehicleModelType (vehicleId);
             bool      canSpin     = false;
             switch (vehicleType)
             {
@@ -83,7 +83,7 @@ public:
         }
 
         bool canPlayAnim = Command<Commands::IS_CHAR_ON_FOOT> (ped);
-        canPlayAnim &= !ped->m_nPedFlags.bInVehicle;
+        canPlayAnim &= !ped->bInVehicle;
         canPlayAnim &= !Command<Commands::IS_CHAR_IN_WATER> (ped);
         if (ped == FindPlayerPed ())
         {

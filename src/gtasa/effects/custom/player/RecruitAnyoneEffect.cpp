@@ -42,11 +42,11 @@ public:
     }
 };
 
-using RecruitAnyonePistol       = RecruitAnyoneEffect<WEAPON_PISTOL>;
-using RecruitAnyoneDeserEagle   = RecruitAnyoneEffect<WEAPON_DESERT_EAGLE>;
-using RecruitAnyoneSuperShotgun = RecruitAnyoneEffect<WEAPON_SPAS12>;
-using RecruitAnyoneMinigun      = RecruitAnyoneEffect<WEAPON_MINIGUN>;
-using RecruitAnyoneSpray        = RecruitAnyoneEffect<WEAPON_SPRAYCAN>;
+using RecruitAnyonePistol       = RecruitAnyoneEffect<WEAPONTYPE_PISTOL>;
+using RecruitAnyoneDeserEagle   = RecruitAnyoneEffect<WEAPONTYPE_DESERT_EAGLE>;
+using RecruitAnyoneSuperShotgun = RecruitAnyoneEffect<WEAPONTYPE_SPAS12>;
+using RecruitAnyoneMinigun      = RecruitAnyoneEffect<WEAPONTYPE_MINIGUN>;
+using RecruitAnyoneSpray        = RecruitAnyoneEffect<WEAPONTYPE_SPRAYCAN>;
 
 DEFINE_EFFECT (RecruitAnyonePistol, "effect_recruit_anyone_9mm",
                GROUP_NPC_SPAWNS | GROUP_NPCS_RECRUIT);

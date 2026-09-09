@@ -1,10 +1,16 @@
 include(FetchContent)
-FetchContent_Declare(dxsdk
+
+FetchContent_Declare(
+    dxsdk
     GIT_REPOSITORY https://github.com/hrydgard/minidx9.git
     GIT_TAG master
 )
 
-message("Fetching DirectX SDK from GitHub...")
-
 FetchContent_MakeAvailable(dxsdk)
-message("DirectX SDK path: ${dxsdk_SOURCE_DIR}")
+
+# Wrap in an INTERFACE target for modern CMake target-based linking
+if(NOT TARGET dxsdk)
+    add_library(dxsdk INTERFACE)
+    target_include_directories(dxsdk INTERFACE "${dxsdk_SOURCE_DIR}/Include")
+    target_link_directories(dxsdk INTERFACE "${dxsdk_SOURCE_DIR}/Lib/x86")
+endif()

@@ -11,7 +11,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return false;
 
-        return player->m_nActiveWeaponSlot != 0;
+        return player->m_nSelectedWepSlot != 0;
     }
 
     void
@@ -21,9 +21,9 @@ public:
         if (!player) return;
 
         // Don't remove fists
-        if (player->m_nActiveWeaponSlot == 0) return;
+        if (player->m_nSelectedWepSlot == 0) return;
 
-        CWeapon weapon = player->m_aWeapons[player->m_nActiveWeaponSlot];
+        CWeapon weapon = player->m_aWeapons[player->m_nSelectedWepSlot];
         player->ClearWeapon (weapon.m_eWeaponType);
     }
 };

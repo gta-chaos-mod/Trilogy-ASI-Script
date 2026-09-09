@@ -180,7 +180,7 @@ public:
                             ePedState state = PEDSTATE_NONE;
 
                             CPlayerPed *player = FindPlayerPed ();
-                            if (player) state = player->m_nPedState;
+                            if (player) state = player->m_ePedState;
 
                             return std::to_string (state);
                         });
@@ -198,19 +198,18 @@ public:
                         });
 
         // In Water
-        AddInformation (
-            inst, "In Water",
-            []
-            {
-                bool water = false;
+        AddInformation (inst, "In Water",
+                        []
+                        {
+                            bool water = false;
 
-                CPlayerPed *player = FindPlayerPed ();
-                if (player)
-                    water = player->m_nPhysicalFlags.bTouchingWater
-                            || player->m_nPhysicalFlags.bSubmergedInWater;
+                            CPlayerPed *player = FindPlayerPed ();
+                            if (player)
+                                water = player->bTouchingWater
+                                        || player->bSubmergedInWater;
 
-                return BoolToString (water);
-            });
+                            return BoolToString (water);
+                        });
 
         // Player Vehicle Exists
         AddInformation (inst, "Player Vehicle Exists",
@@ -281,34 +280,37 @@ public:
                         });
 
         // Weather
-        AddInformation (inst, "Weather",
-                        []
+        AddInformation (inst, "Weather", []
                         { return std::to_string (CWeather::NewWeatherType); });
 
         // Ped Count
         AddInformation (inst, "Ped Count",
-                        [] {
+                        []
+                        {
                             return std::to_string (
                                 CPools::ms_pPedPool->GetNoOfUsedSpaces ());
                         });
 
         // Vehicle Count
         AddInformation (inst, "Vehicle Count",
-                        [] {
+                        []
+                        {
                             return std::to_string (
                                 CPools::ms_pVehiclePool->GetNoOfUsedSpaces ());
                         });
 
         // Building Count
         AddInformation (inst, "Building Count",
-                        [] {
+                        []
+                        {
                             return std::to_string (
                                 CPools::ms_pBuildingPool->GetNoOfUsedSpaces ());
                         });
 
         // Object Count
         AddInformation (inst, "Object Count",
-                        [] {
+                        []
+                        {
                             return std::to_string (
                                 CPools::ms_pObjectPool->GetNoOfUsedSpaces ());
                         });
@@ -346,7 +348,8 @@ public:
 
         // Luck
         AddInformation (inst, "Luck",
-                        [] {
+                        []
+                        {
                             return std::format ("{:.0f}", CStats::GetStatValue (
                                                               STAT_LUCK));
                         });

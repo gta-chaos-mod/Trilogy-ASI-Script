@@ -22,7 +22,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player || !CanActivate ()) return;
 
-        player->SetCurrentWeapon (WEAPON_UNARMED);
+        player->SetCurrentWeapon (WEAPONTYPE_UNARMED);
         inst->Disable ();
     }
 };

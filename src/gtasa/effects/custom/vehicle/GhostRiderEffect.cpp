@@ -45,7 +45,7 @@ public:
         {
             if (IsVehiclePointerValid (info.vehicle))
             {
-                info.vehicle->m_nPhysicalFlags.bExplosionProof = false;
+                info.vehicle->bExplosionProof = false;
                 info.vehicle->BlowUpCar (nullptr, false);
             }
         }
@@ -108,15 +108,13 @@ public:
 
             if (!IsVehiclePointerValid (vehicle)) continue;
 
-            vehicle->m_nPhysicalFlags.bExplosionProof = false;
+            vehicle->bExplosionProof = false;
             vehicle->BlowUpCar (nullptr, false);
         }
 
-        std::erase_if (vehicleList,
-                       [] (VehicleInfo &info) {
-                           return !IsVehiclePointerValid (info.vehicle)
-                                  || info.time < 0;
-                       });
+        std::erase_if (
+            vehicleList, [] (VehicleInfo &info)
+            { return !IsVehiclePointerValid (info.vehicle) || info.time < 0; });
     }
 
     void

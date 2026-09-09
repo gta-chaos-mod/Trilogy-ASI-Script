@@ -95,9 +95,9 @@ public:
         CStreaming::SetModelIsDeletable (model);
 
         bool  worked = false;
-        float newZ   = CWorld::FindGroundZFor3DCoord (position.x, position.y,
-                                                      position.z + 2.0f, &worked,
-                                                      nullptr);
+        float newZ = CWorld::FindGroundZFor3DCoord (position.x, position.y,
+                                                    position.z + 2.0f, &worked,
+                                                    nullptr);
         if (worked && newZ > position.z) position.z = newZ;
 
         // Lower the tree into the ground a bit so it has a lower chance of
@@ -108,9 +108,9 @@ public:
 
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle)
-            matrix = vehicle->GetMatrix ();
+            matrix = &vehicle->GetMatrix ();
         else
-            matrix = player->GetMatrix ();
+            matrix = &player->GetMatrix ();
 
         treeObject->SetMatrix (*matrix);
         treeObject->SetPosn (position);

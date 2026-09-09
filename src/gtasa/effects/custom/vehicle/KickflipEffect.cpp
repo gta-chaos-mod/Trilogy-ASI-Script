@@ -32,7 +32,7 @@ public:
 
         vehicle->m_vecMoveSpeed.z = 0.5f;
 
-        CMatrix *matrix = vehicle->GetMatrix ();
+        CMatrix *matrix = &vehicle->GetMatrix ();
 
         vehicle->m_vecTurnSpeed.x = 0.076f * matrix->up.x;
         vehicle->m_vecTurnSpeed.y = 0.076f * matrix->up.y;

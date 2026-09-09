@@ -28,9 +28,8 @@ public:
         {
             for (CPed *ped : CPools::ms_pPedPool)
             {
-                if (!ped || ped->m_nPhysicalFlags.bFireProof
-                    || !ped->m_nPhysicalFlags.bTouchingWater
-                    || !ped->m_nPhysicalFlags.bSubmergedInWater)
+                if (!ped || ped->bFireProof || !ped->bTouchingWater
+                    || !ped->bSubmergedInWater)
                     continue;
 
                 ped->m_fHealth -= ped->m_fMaxHealth * HEALTH_PRECENT_DAMAGE;
@@ -43,9 +42,8 @@ public:
             }
             for (auto *vehicle : CPools::ms_pVehiclePool)
             {
-                if (!vehicle || vehicle->m_nPhysicalFlags.bFireProof
-                    || !(vehicle->m_nPhysicalFlags.bTouchingWater
-                         || vehicle->m_nPhysicalFlags.bSubmergedInWater))
+                if (!vehicle || vehicle->bFireProof
+                    || !(vehicle->bTouchingWater || vehicle->bSubmergedInWater))
                     continue;
 
                 vehicle->m_fHealth -= 1000.0 * HEALTH_PRECENT_DAMAGE;

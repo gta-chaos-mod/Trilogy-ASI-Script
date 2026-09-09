@@ -29,10 +29,10 @@ public:
 
         for (CWeapon weapon : player->m_aWeapons)
         {
-            if (weapon.m_nTotalAmmo > 0)
+            if (weapon.m_nAmmoTotal > 0)
             {
                 storedWeapons.push_back (
-                    std::make_pair (weapon.m_eWeaponType, weapon.m_nTotalAmmo));
+                    std::make_pair (weapon.m_eWeaponType, weapon.m_nAmmoTotal));
             }
         }
 
@@ -42,7 +42,7 @@ public:
     void
     OnEnd (EffectInstance *inst) override
     {
-        CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
+        CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (WEAPONTYPE_FLOWERS, 1);
         info->m_nFlags.b1stPerson = true;
         info->m_nNumCombos        = 14;
 
@@ -53,7 +53,7 @@ public:
 
         for (auto const &[type, ammo] : storedWeapons)
         {
-            int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId1;
+            int model = CWeaponInfo::GetWeaponInfo (type, 1)->m_nModelId;
             CStreaming::RequestModel (model, 2);
             CStreaming::LoadAllRequestedModels (false);
 
@@ -66,26 +66,26 @@ public:
     void
     OnTick (EffectInstance *inst) override
     {
-        CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
+        CWeaponInfo *info = CWeaponInfo::GetWeaponInfo (WEAPONTYPE_FLOWERS, 1);
         info->m_nFlags.b1stPerson = true;
         info->m_nNumCombos        = 0;
 
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        for (int i = WEAPON_BRASSKNUCKLE; i < WEAPON_FLARE; i++)
+        for (int i = WEAPONTYPE_BRASSKNUCKLE; i < WEAPONTYPE_FLARE; i++)
         {
             eWeaponType type = static_cast<eWeaponType> (i);
-            if (type == WEAPON_FLOWERS) continue;
+            if (type == WEAPONTYPE_FLOWERS) continue;
 
-            if (type != WEAPON_PARACHUTE) player->ClearWeapon (type);
+            if (type != WEAPONTYPE_PARACHUTE) player->ClearWeapon (type);
         }
 
         GivePlayerFlowers (player);
 
         if (!TheCamera.Using1stPersonWeaponMode ()) return;
 
-        if (player->m_nActiveWeaponSlot != info->m_nSlot) return;
+        if (player->m_nSelectedWepSlot != info->m_nSlot) return;
 
         CTheScripts::bDrawCrossHair = true;
     }
@@ -93,16 +93,16 @@ public:
     void
     GivePlayerFlowers (CPed *ped)
     {
-        if (ped->DoWeHaveWeaponAvailable (WEAPON_FLOWERS)) return;
+        if (ped->DoWeHaveWeaponAvailable (WEAPONTYPE_FLOWERS)) return;
 
         CStreaming::RequestModel (MODEL_FLOWERA, 2); // Flowers
         CStreaming::LoadAllRequestedModels (false);
 
-        ped->GiveWeapon (WEAPON_FLOWERS, 500, 1);
+        ped->GiveWeapon (WEAPONTYPE_FLOWERS, 500, 1);
 
         CStreaming::SetModelIsDeletable (MODEL_FLOWERA);
 
-        ped->SetCurrentWeapon (WEAPON_FLOWERS);
+        ped->SetCurrentWeapon (WEAPONTYPE_FLOWERS);
     }
 
     static void
@@ -111,7 +111,7 @@ public:
         CMatrix *matrix = TheCamera.m_matrix;
         CVector  direction (matrix->up.x, matrix->up.y, matrix->up.z);
 
-        CProjectileInfo::AddProjectile (FindPlayerPed (), WEAPON_ROCKET,
+        CProjectileInfo::AddProjectile (FindPlayerPed (), WEAPONTYPE_ROCKET,
                                         position, 1.0f, &direction, nullptr);
     }
 
@@ -126,9 +126,9 @@ public:
         if (!TheCamera.Using1stPersonWeaponMode ()) return;
 
         CWeaponInfo *flowerWeaponInfo
-            = CWeaponInfo::GetWeaponInfo (WEAPON_FLOWERS, 1);
+            = CWeaponInfo::GetWeaponInfo (WEAPONTYPE_FLOWERS, 1);
 
-        if (ped->m_nActiveWeaponSlot != flowerWeaponInfo->m_nSlot) return;
+        if (ped->m_nSelectedWepSlot != flowerWeaponInfo->m_nSlot) return;
 
         CVector position
             = ped->TransformFromObjectSpace (CVector (0.0f, 5.0f, 0.5f));

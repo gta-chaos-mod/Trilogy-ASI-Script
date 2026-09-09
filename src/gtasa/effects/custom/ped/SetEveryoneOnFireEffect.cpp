@@ -16,7 +16,7 @@ public:
     {
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPhysicalFlags.bFireProof = false;
+            ped->bFireProof = false;
 
             gFireManager.StartFire (ped, nullptr, 1.0f, 1, 7000, 100);
         }

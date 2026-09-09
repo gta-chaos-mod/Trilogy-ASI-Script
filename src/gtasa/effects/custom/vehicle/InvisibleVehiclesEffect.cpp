@@ -104,7 +104,7 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPedFlags.bRenderPedInCar = true;
+            ped->bRenderPedInCar = true;
         }
     }
 
@@ -119,7 +119,7 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            if (ped->m_pVehicle) ped->m_nPedFlags.bRenderPedInCar = false;
+            if (ped->m_pVehicle) ped->bRenderPedInCar = false;
         }
     }
 
@@ -135,7 +135,7 @@ public:
     {
         if (!thisEntity) return;
 
-        if (!CModelInfo::IsVehicleModelType (thisEntity->m_nModelIndex))
+        if (!CModelInfo::IsVehicleModel (thisEntity->m_nModelIndex))
         {
             cb ();
         }

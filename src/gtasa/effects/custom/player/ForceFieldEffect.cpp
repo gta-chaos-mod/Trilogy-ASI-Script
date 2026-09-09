@@ -36,13 +36,13 @@ public:
     MovePhysical (CPhysical *physical, CVector playerPos)
     {
         CVector physicalPos = physical->GetPosition ();
-        float   distance    = DistanceBetweenPoints (playerPos, physicalPos);
+        float   distance    = playerPos.Distance (physicalPos);
 
         if (distance > startDistance) return;
 
-        physical->m_nPhysicalFlags.bApplyGravity     = true;
-        physical->m_nPhysicalFlags.bDisableMoveForce = false;
-        physical->m_nPhysicalFlags.bDisableZ         = false;
+        physical->bApplyGravity     = true;
+        physical->bDisableMoveForce = false;
+        physical->bDisableZ         = false;
 
         float forceDistance
             = std::min (std::max (0.0f, (startDistance - distance)),

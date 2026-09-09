@@ -29,12 +29,12 @@ public:
         {
             if (!vehicle || !vehicle->m_pDriver) continue;
 
-            vehicle->m_nPhysicalFlags.bInvulnerable   = true;
-            vehicle->m_nPhysicalFlags.bBulletProof    = true;
-            vehicle->m_nPhysicalFlags.bCollisionProof = true;
-            vehicle->m_nPhysicalFlags.bExplosionProof = true;
-            vehicle->m_nPhysicalFlags.bFireProof      = true;
-            vehicle->m_nPhysicalFlags.bMeleeProof     = true;
+            vehicle->bInvulnerable   = true;
+            vehicle->bBulletProof    = true;
+            vehicle->bCollisionProof = true;
+            vehicle->bExplosionProof = true;
+            vehicle->bFireProof      = true;
+            vehicle->bMeleeProof     = true;
         }
     }
 

@@ -29,7 +29,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        player->m_nPedFlags.CantBeKnockedOffBike = false;
+        player->CantBeKnockedOffBike = false;
     }
 
     void
@@ -44,7 +44,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        player->m_nPedFlags.CantBeKnockedOffBike = true;
+        player->CantBeKnockedOffBike = true;
 
         CPlayerInfo *playerInfo = player->GetPlayerInfoForThisPlayerPed ();
         if (!playerInfo) return;
@@ -64,7 +64,7 @@ public:
     {
         float gravity = CTimer::ms_fTimeStep * physical->m_fMass * -0.008f;
 
-        CMatrixLink *matrix = physical->GetMatrix ();
+        CMatrix *matrix = &physical->GetMatrix ();
         physical->ApplyMoveForce ({matrix->at.x * gravity,
                                    matrix->at.y * gravity,
                                    matrix->at.z * gravity});

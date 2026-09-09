@@ -40,7 +40,7 @@ public:
             return;
         }
 
-        vehicle->m_nPhysicalFlags.bExplosionProof = false;
+        vehicle->bExplosionProof = false;
         vehicle->BlowUpCar (nullptr, false);
 
         inst->Disable ();

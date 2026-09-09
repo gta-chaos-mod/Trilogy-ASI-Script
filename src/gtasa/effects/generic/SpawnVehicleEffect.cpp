@@ -95,7 +95,7 @@ public:
                 auto     moveSpeed   = oldVehicle->m_vecMoveSpeed;
                 auto     turnSpeed   = oldVehicle->m_vecTurnSpeed;
                 RwMatrix oldMatrix;
-                oldVehicle->GetMatrix ()->CopyToRwMatrix (&oldMatrix);
+                oldVehicle->GetMatrix ().CopyToRwMatrix (&oldMatrix);
                 auto createdBy = oldVehicle->m_nCreatedBy;
 
                 Command<eScriptCommands::
@@ -159,7 +159,7 @@ public:
                 }
 
                 CallMethod<0x59AD20, CMatrix *, RwMatrix *> (
-                    newVehicle->GetMatrix (), &oldMatrix);
+                    &newVehicle->GetMatrix (), &oldMatrix);
                 newVehicle->m_vecMoveSpeed = moveSpeed;
                 newVehicle->m_vecTurnSpeed = turnSpeed;
                 newVehicle->m_nCreatedBy   = createdBy;
@@ -172,11 +172,11 @@ public:
             CVector position
                 = player->TransformFromObjectSpace (CVector (0.0f, 5.0f, 0.0f));
             newVehicle = GameUtil::CreateVehicle (vehicleID, position,
-                                                  player->m_fCurrentRotation
+                                                  player->m_fHeadingCurrent
                                                       + 1.5707964f,
                                                   true);
 
-            newVehicle->m_nVehicleFlags.bHasBeenOwnedByPlayer = true;
+            newVehicle->bHasBeenOwnedByPlayer = true;
         }
     }
 };

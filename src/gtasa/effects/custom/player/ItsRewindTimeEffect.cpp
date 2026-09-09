@@ -60,15 +60,15 @@ public:
             CPlayerPed *player = FindPlayerPed ();
             if (player)
             {
-                player->m_nPhysicalFlags.bCollidable        = true;
-                player->m_nPhysicalFlags.bCanBeCollidedWith = false;
+                player->bCollidable        = true;
+                player->bCanBeCollidedWith = false;
             }
 
             CVehicle *vehicle = FindPlayerVehicle (-1, false);
             if (vehicle)
             {
-                vehicle->m_nPhysicalFlags.bCollidable        = true;
-                vehicle->m_nPhysicalFlags.bCanBeCollidedWith = false;
+                vehicle->bCollidable        = true;
+                vehicle->bCanBeCollidedWith = false;
             }
         }
     }
@@ -91,11 +91,11 @@ public:
             vehicle->m_vecMoveSpeed = rewindData.moveSpeed;
             vehicle->m_vecTurnSpeed = rewindData.turnSpeed;
 
-            CallMethod<0x59AD20, CMatrix *, RwMatrix *> (vehicle->GetMatrix (),
+            CallMethod<0x59AD20, CMatrix *, RwMatrix *> (&vehicle->GetMatrix (),
                                                          &rewindData.matrix);
 
-            vehicle->m_nPhysicalFlags.bCollidable        = false;
-            vehicle->m_nPhysicalFlags.bCanBeCollidedWith = false;
+            vehicle->bCollidable        = false;
+            vehicle->bCanBeCollidedWith = false;
         }
 
         CPlayerPed *player = FindPlayerPed ();
@@ -111,8 +111,8 @@ public:
                 player->m_vecTurnSpeed = rewindData.turnSpeed;
             }
 
-            player->m_nPhysicalFlags.bCollidable        = false;
-            player->m_nPhysicalFlags.bCanBeCollidedWith = false;
+            player->bCollidable        = false;
+            player->bCanBeCollidedWith = false;
         }
 
         currentRewindID += 3;
@@ -139,7 +139,7 @@ public:
             rewindData.location      = vehicle->GetPosition ();
             rewindData.moveSpeed     = vehicle->m_vecMoveSpeed;
             rewindData.turnSpeed     = vehicle->m_vecTurnSpeed;
-            vehicle->GetMatrix ()->CopyToRwMatrix (&rewindData.matrix);
+            vehicle->GetMatrix ().CopyToRwMatrix (&rewindData.matrix);
         }
 
         CPlayerPed *player = FindPlayerPed ();

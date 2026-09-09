@@ -21,21 +21,21 @@ public:
         inst->WriteMemory<byte> (0x53E94C, 0);
 
         this->oldFramerate    = RsGlobal.maxFPS;
-        this->oldFrameLimiter = FrontEndMenuManager.m_bFrameLimiterOn;
+        this->oldFrameLimiter = FrontEndMenuManager.m_bPrefsVsync;
     }
 
     void
     OnEnd (EffectInstance *inst) override
     {
-        RsGlobal.maxFPS                       = this->oldFramerate;
-        FrontEndMenuManager.m_bFrameLimiterOn = this->oldFrameLimiter;
+        RsGlobal.maxFPS                   = this->oldFramerate;
+        FrontEndMenuManager.m_bPrefsVsync = this->oldFrameLimiter;
     }
 
     void
     OnTick (EffectInstance *inst) override
     {
-        RsGlobal.maxFPS                       = this->framerate;
-        FrontEndMenuManager.m_bFrameLimiterOn = true;
+        RsGlobal.maxFPS                   = this->framerate;
+        FrontEndMenuManager.m_bPrefsVsync = true;
     }
 };
 

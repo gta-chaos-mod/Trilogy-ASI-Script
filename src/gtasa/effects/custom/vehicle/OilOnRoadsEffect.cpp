@@ -197,7 +197,7 @@ public:
             }
             spot.Update (dt);
 
-            if (TheCamera.IsSphereVisible (&spot.pos,
+            if (TheCamera.IsSphereVisible (spot.pos,
                                            spot.SPOT_SIZE * spot.radius))
             {
                 spot.Render ();
@@ -241,14 +241,14 @@ OilOnRoadsEffect::pathSearch ()
     float   playerPosOffset = 8.0f;
     float   nextPosOffset   = 256.0f;
     auto    pos             = player->GetPosition ();
-    CVector nextPos[]       = {{pos.x, pos.y + nextPosOffset, pos.z},
-                               {pos.x, pos.y - nextPosOffset, pos.z},
-                               {pos.x + nextPosOffset, pos.y, pos.z},
-                               {pos.x - nextPosOffset, pos.y, pos.z},
-                               {pos.x + nextPosOffset, pos.y + nextPosOffset, pos.z},
-                               {pos.x - nextPosOffset, pos.y + nextPosOffset, pos.z},
-                               {pos.x + nextPosOffset, pos.y - nextPosOffset, pos.z},
-                               {pos.x - nextPosOffset, pos.y - nextPosOffset, pos.z}};
+    CVector nextPos[] = {{pos.x, pos.y + nextPosOffset, pos.z},
+                         {pos.x, pos.y - nextPosOffset, pos.z},
+                         {pos.x + nextPosOffset, pos.y, pos.z},
+                         {pos.x - nextPosOffset, pos.y, pos.z},
+                         {pos.x + nextPosOffset, pos.y + nextPosOffset, pos.z},
+                         {pos.x - nextPosOffset, pos.y + nextPosOffset, pos.z},
+                         {pos.x + nextPosOffset, pos.y - nextPosOffset, pos.z},
+                         {pos.x - nextPosOffset, pos.y - nextPosOffset, pos.z}};
 
     CVector playerPos[] = {{pos.x, pos.y + playerPosOffset, pos.z},
                            {pos.x, pos.y - playerPosOffset, pos.z},
@@ -265,8 +265,10 @@ OilOnRoadsEffect::pathSearch ()
                                    {}, false, false);
             for (auto j = 0; j < nodesCount; j++)
             {
-                auto p = ThePaths.GetPathNode (resultNodes[j])->m_vecPosn;
-                pathOrigin.emplace (p);
+                auto node = ThePaths.GetPathNode (resultNodes[j]);
+                pathOrigin.emplace (CompressedVector (node->CoorsX,
+                                                      node->CoorsY,
+                                                      node->CoorsZ));
             }
         }
     }

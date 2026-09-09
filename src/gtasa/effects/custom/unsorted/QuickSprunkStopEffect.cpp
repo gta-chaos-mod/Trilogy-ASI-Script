@@ -41,9 +41,9 @@ public:
 
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (vehicle)
-            matrix = vehicle->GetMatrix ();
+            matrix = &vehicle->GetMatrix ();
         else
-            matrix = player->GetMatrix ();
+            matrix = &player->GetMatrix ();
 
         sprunkObject->SetMatrix (*matrix);
         sprunkObject->SetPosn (position);

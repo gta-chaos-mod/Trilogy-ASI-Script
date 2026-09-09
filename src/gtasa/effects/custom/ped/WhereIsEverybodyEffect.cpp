@@ -26,7 +26,7 @@ public:
     {
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPedFlags.bDontRender = false;
+            ped->bDontRender = false;
         }
     }
 
@@ -35,7 +35,7 @@ public:
     {
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPedFlags.bDontRender = true;
+            ped->bDontRender = true;
         }
     }
 

@@ -16,8 +16,8 @@ public:
         CVehicle *vehicle = FindPlayerVehicle (-1, false);
         if (!vehicle) return;
 
-        vehicle->m_nPhysicalFlags.bFireProof = false;
-        vehicle->m_fHealth                   = 249.9f;
+        vehicle->bFireProof = false;
+        vehicle->m_fHealth  = 249.9f;
     }
 };
 

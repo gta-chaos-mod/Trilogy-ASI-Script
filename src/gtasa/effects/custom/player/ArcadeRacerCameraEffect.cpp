@@ -56,16 +56,16 @@ public:
 
             CColModel *colModel = vehicle->GetColModel ();
             float      diffBack = colModel->m_boundBox.m_vecMax.x
-                             - colModel->m_boundBox.m_vecMin.x;
-            float diffUp = colModel->m_boundBox.m_vecMax.z
-                           - colModel->m_boundBox.m_vecMin.z;
+                                  - colModel->m_boundBox.m_vecMin.x;
+            float      diffUp   = colModel->m_boundBox.m_vecMax.z
+                                  - colModel->m_boundBox.m_vecMin.z;
 
             Command<eScriptCommands::COMMAND_ATTACH_CAMERA_TO_VEHICLE> (
                 vehicle, 0.0f, -diffBack - 4.0f, diffUp * 1.25f, 0.0f, 0.0f,
                 1.0f, 0.0f, 2);
 
             // Thanks to Zolika for the rotation code <3
-            CMatrix *matrix = vehicle->GetMatrix ();
+            CMatrix *matrix = &vehicle->GetMatrix ();
             cam->right      = matrix->right;
             cam->up         = matrix->up;
             cam->at         = matrix->at;

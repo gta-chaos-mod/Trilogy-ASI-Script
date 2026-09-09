@@ -55,12 +55,11 @@ public:
 
         if (player->m_pIntelligence->GetTaskJetPack ()) return;
 
-        if (player->m_pIntelligence->GetTaskSwim ()
-            || player->m_nPhysicalFlags.bTouchingWater)
+        if (player->m_pIntelligence->GetTaskSwim () || player->bTouchingWater)
             return;
 
         // Update Z Pos To Ground Pos
-        CVector pos    = player->GetMatrix ()->pos;
+        CVector pos    = player->GetMatrix ().pos;
         bool    worked = false;
         float   newZ   = CWorld::FindGroundZFor3DCoord (pos.x, pos.y, pos.z,
                                                         &worked, nullptr);
@@ -70,7 +69,7 @@ public:
         if (Globals::enabledEffects["walk_on_water"])
             newZ = std::max (0.0f, newZ);
 
-        player->GetMatrix ()->pos.z = newZ + 0.7f;
+        player->GetMatrix ().pos.z = newZ + 0.7f;
     }
 
     static bool

@@ -29,7 +29,7 @@ public:
                                                                       vehicle);
         if (CTheScripts::IsPlayerOnAMission ()) return;
 
-        vehicle->m_nVehicleFlags.bConsideredByPlayer = false;
+        vehicle->bConsideredByPlayer = false;
     }
 };
 

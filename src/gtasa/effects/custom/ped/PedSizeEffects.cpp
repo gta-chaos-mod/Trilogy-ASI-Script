@@ -30,7 +30,7 @@ public:
         for (int i = 5000; i < 5026; i++)
             BoneHelper::ScaleBone (ped, i, scale);
 
-        if (!ped->m_nPedFlags.bInVehicle && !CCutsceneMgr::ms_running)
+        if (!ped->bInVehicle && !CCutsceneMgr::ms_running)
         {
             RwV3d pos = BoneHelper::GetBonePosition (ped, 0);
             pos.z -= zAdjustment;

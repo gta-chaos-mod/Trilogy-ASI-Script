@@ -2,37 +2,55 @@
 # ########################## GTA San Andreas ##########################
 set(CHAOS_SA ${PROJECT_NAME}.SA)
 
-file(GLOB_RECURSE SA_SOURCES CONFIGURE_DEPENDS src/TrilogyChaosMod.cpp src/shared/*.cpp src/gtasa/*.cpp)
+file(GLOB_RECURSE SA_SOURCES CONFIGURE_DEPENDS
+    src/TrilogyChaosMod.cpp
+    src/shared/*.cpp
+    src/shared/*.h
+    src/shared/*.hpp
+    src/gtasa/*.cpp
+    src/gtasa/*.h
+    src/gtasa/*.hpp
+)
 
 add_library(${CHAOS_SA} SHARED ${SA_SOURCES})
 
 set_target_properties(${CHAOS_SA} PROPERTIES SUFFIX ".asi")
 
-target_include_directories(${CHAOS_SA} PUBLIC "src/shared/" "src/gtasa" "${dxsdk_SOURCE_DIR}/Include")
+target_include_directories(${CHAOS_SA} PUBLIC
+    "src/"
+    "src/shared"
+    "src/gtasa"
+)
 
 target_link_directories(${CHAOS_SA} PUBLIC
-	lib/
-	"${dxsdk_SOURCE_DIR}/Lib/x86"
+    lib/
 )
-target_link_libraries(${CHAOS_SA} PUBLIC plugin_sa nlohmann_json ixwebsocket minhook efsw bass)
+
+target_link_libraries(${CHAOS_SA} PUBLIC 
+    PluginSDK::gtasa 
+    dxsdk 
+    nlohmann_json 
+    ixwebsocket 
+    minhook 
+    efsw 
+    bass
+)
 
 target_compile_definitions(${CHAOS_SA} PUBLIC NOMINMAX)
 
 # Include global definitions like colors
 target_precompile_headers(
-	${CHAOS_SA}
-	PUBLIC
-	src/shared/_include/Definitions.h
-	src/shared/_include/cpptoml.h
-	lib/bass.h
+    ${CHAOS_SA}
+    PUBLIC
+    src/shared/_include/Definitions.h
+    src/shared/_include/cpptoml.h
+    lib/bass.h
 )
 
 # Include specific libraries for easier use
 target_precompile_headers(
-	${CHAOS_SA}
-	PRIVATE
-	<plugin.h>
-	<nlohmann/json.hpp>
+    ${CHAOS_SA}
+    PRIVATE
+    <plugin.h>
+    <nlohmann/json.hpp>
 )
-
-# #####################################################################

@@ -72,14 +72,13 @@ public:
         if (!driver) return;
         if (driver->m_nCreatedBy == 2 && driver != FindPlayerPed ()) return;
 
-        CMatrixLink *matrix = vehicle->GetMatrix ();
+        CMatrix *matrix = &vehicle->GetMatrix ();
 
         vehicle->m_vecMoveSpeed.x = velocity * matrix->up.x;
         vehicle->m_vecMoveSpeed.y = velocity * matrix->up.y;
         vehicle->m_vecMoveSpeed.z = velocity * matrix->up.z;
 
-        vehicle->m_pDriver->m_nPedFlags.CantBeKnockedOffBike
-            = cantBeKnockedOffBike;
+        vehicle->m_pDriver->CantBeKnockedOffBike = cantBeKnockedOffBike;
     }
 };
 

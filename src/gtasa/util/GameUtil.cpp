@@ -86,8 +86,8 @@ GameUtil::LoadFromFile (std::string fileName)
 
     if (std::filesystem::exists (CGenericGameStorage::ms_LoadFileName))
     {
-        FrontEndMenuManager.m_bLoadingData = true;
-        FrontEndMenuManager.m_bMenuActive  = false;
+        FrontEndMenuManager.m_bWantToLoad = true;
+        FrontEndMenuManager.m_bMenuActive = false;
 
         byte gameState
             = injector::ReadMemory<byte> (0xC8D4C0, true); // GameState
@@ -186,10 +186,10 @@ GameUtil::RebuildPlayer ()
     CPlayerPed *player = FindPlayerPed ();
     if (player)
     {
-        ePedState oldState  = player->m_nPedState;
-        player->m_nPedState = PEDSTATE_IDLE;
+        ePedState oldState  = player->m_ePedState;
+        player->m_ePedState = PEDSTATE_IDLE;
         CClothes::RebuildPlayer (player, false);
-        player->m_nPedState = oldState;
+        player->m_ePedState = oldState;
     }
 }
 
@@ -243,11 +243,11 @@ GameUtil::CreateVehicle (int vehicleID, CVector position, float orientation,
             case VEHICLE_PLANE: vehicle = new CPlane (vehicleID, 1); break;
             case VEHICLE_BIKE:
                 vehicle = new CBike (vehicleID, 1);
-                reinterpret_cast<CBike *> (vehicle)->m_nDamageFlags |= 0x10;
+                reinterpret_cast<CBike *> (vehicle)->m_nBikeFlags |= 0x10;
                 break;
             case VEHICLE_BMX:
                 vehicle = new CBmx (vehicleID, 1);
-                reinterpret_cast<CBmx *> (vehicle)->m_nDamageFlags |= 0x10;
+                reinterpret_cast<CBmx *> (vehicle)->m_nBikeFlags |= 0x10;
                 break;
             case VEHICLE_TRAILER: vehicle = new CTrailer (vehicleID, 1); break;
             case VEHICLE_BOAT:
@@ -289,7 +289,7 @@ GameUtil::ClearWeapons (CPed *ped)
     if (ped->m_pIntelligence->GetUsingParachute ())
         ped->m_pIntelligence->ClearTasks (true, false);
 
-    for (int i = WEAPON_BRASSKNUCKLE; i < WEAPON_FLARE; i++)
+    for (int i = WEAPONTYPE_BRASSKNUCKLE; i < WEAPONTYPE_FLARE; i++)
     {
         eWeaponType type = static_cast<eWeaponType> (i);
         ped->ClearWeapon (type);
@@ -328,7 +328,7 @@ GameUtil::IsPlayerSafe ()
         return false;
     }
 
-    switch (player->m_nPedState)
+    switch (player->m_ePedState)
     {
         case PEDSTATE_ARRESTED:
         case PEDSTATE_ARREST_PLAYER:

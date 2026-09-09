@@ -78,7 +78,7 @@ public:
                     }
                 }
 
-                if (ped->m_nPhysicalFlags.bSubmergedInWater)
+                if (ped->bSubmergedInWater)
                 {
                     continue;
                 }
@@ -116,7 +116,7 @@ public:
         }
 
         auto *vehicle = ped->m_pVehicle;
-        if (ped->m_nPedFlags.bInVehicle && vehicle)
+        if (ped->bInVehicle && vehicle)
         {
             const int vehicleId = vehicle->m_nModelIndex;
             // boats with a cabin
@@ -152,7 +152,7 @@ public:
                 }
             }
 
-            auto vehicleType = CModelInfo::IsVehicleModelType (vehicleId);
+            auto vehicleType = CModelInfo::GetVehicleModelType (vehicleId);
             switch (vehicleType)
             {
                 case VEHICLE_QUAD:

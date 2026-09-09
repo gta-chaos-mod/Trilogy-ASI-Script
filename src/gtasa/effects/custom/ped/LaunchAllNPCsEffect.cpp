@@ -12,7 +12,7 @@ public:
         {
             if (ped == player) continue;
 
-            ped->m_nPhysicalFlags.bDisableMoveForce = false;
+            ped->bDisableMoveForce = false;
 
             ped->GetPosition ().z += 0.5f;
             ped->ApplyMoveForce ({0, 0, 200.0f});

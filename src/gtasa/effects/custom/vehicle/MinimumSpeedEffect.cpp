@@ -5,7 +5,6 @@
 #include <eAudioEvents.h>
 #include <extensions/ScriptCommands.h>
 
-
 using namespace plugin;
 
 class MinimumSpeedEffect : public EffectBase
@@ -152,7 +151,7 @@ public:
             && vehicle->m_nStatus != STATUS_WRECKED)
         {
             const int vehicleId   = vehicle->m_nModelIndex;
-            auto      vehicleType = CModelInfo::IsVehicleModelType (vehicleId);
+            auto      vehicleType = CModelInfo::GetVehicleModelType (vehicleId);
             switch (vehicleType)
             {
                 case VEHICLE_BMX:
@@ -164,7 +163,7 @@ public:
                 }
                 default:
                 {
-                    vehicle->m_nPhysicalFlags.bExplosionProof = false;
+                    vehicle->bExplosionProof = false;
                     vehicle->BlowUpCar (nullptr, false);
                     break;
                 }

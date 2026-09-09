@@ -14,8 +14,8 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPedFlags.bDoBloodyFootprints = false;
-            ped->m_nPedFlags.bPedIsBleeding      = false;
+            ped->bDoBloodyFootprints = false;
+            ped->bPedIsBleeding      = false;
         }
     }
 
@@ -35,8 +35,8 @@ public:
 
         for (CPed *ped : CPools::ms_pPedPool)
         {
-            ped->m_nPedFlags.bDoBloodyFootprints = true;
-            ped->m_nPedFlags.bPedIsBleeding      = true;
+            ped->bDoBloodyFootprints = true;
+            ped->bPedIsBleeding      = true;
 
             if (isLosingHealth) ped->m_fHealth -= inst->Random (0.0f, 3.0f);
         }

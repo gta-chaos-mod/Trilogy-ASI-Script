@@ -11,8 +11,8 @@ public:
 
         for (CVehicle *vehicle : CPools::ms_pVehiclePool)
         {
-            vehicle->m_nPhysicalFlags.bBulletProof   = false;
-            vehicle->m_nVehicleFlags.bTyresDontBurst = false;
+            vehicle->bBulletProof    = false;
+            vehicle->bTyresDontBurst = false;
 
             if (vehicle->m_nVehicleSubClass == VEHICLE_AUTOMOBILE
                 || vehicle->m_nVehicleSubClass == VEHICLE_QUAD)
@@ -41,12 +41,12 @@ public:
             {
                 CBike *bike = (CBike *) vehicle;
 
-                if (!bike->m_anWheelDamageState[0])
+                if (!bike->m_nWheelStatus[0])
                 {
                     vehicle->BurstTyre (eWheels::WHEEL_FRONT_LEFT, false);
                 }
 
-                if (!bike->m_anWheelDamageState[1])
+                if (!bike->m_nWheelStatus[1])
                 {
                     vehicle->BurstTyre (eWheels::WHEEL_REAR_LEFT, false);
                 }

@@ -40,7 +40,7 @@ public:
     {
         if (raster) RwRasterDestroy (raster);
 
-        auto cameraRaster = Scene.m_pRwCamera->frameBuffer;
+        auto cameraRaster = Scene.m_pCamera->frameBuffer;
         raster
             = RwRasterCreate (cameraRaster->width, cameraRaster->height,
                               cameraRaster->depth, rwRASTERTYPECAMERATEXTURE);

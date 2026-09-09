@@ -39,8 +39,8 @@ public:
     {
         if (!GameUtil::IsTreeModel (building->m_nModelIndex)) return;
 
-        building->m_bUsesCollision = visible;
-        building->m_bIsVisible     = visible;
+        building->bUsesCollision = visible;
+        building->bIsVisible     = visible;
     }
 
     void
@@ -48,8 +48,8 @@ public:
     {
         if (!GameUtil::IsTreeModel (object->m_nModelIndex)) return;
 
-        object->m_bUsesCollision = visible;
-        object->m_bIsVisible     = visible;
+        object->bUsesCollision = visible;
+        object->bIsVisible     = visible;
     }
 };
 

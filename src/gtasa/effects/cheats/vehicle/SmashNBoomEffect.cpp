@@ -30,10 +30,10 @@ public:
         {
             if (!vehicle) continue;
 
-            vehicle->m_nPhysicalFlags.bInvulnerable   = false;
-            vehicle->m_nPhysicalFlags.bExplosionProof = false;
-            vehicle->m_nPhysicalFlags.bFireProof      = false;
-            vehicle->m_nPhysicalFlags.bCollisionProof = false;
+            vehicle->bInvulnerable   = false;
+            vehicle->bExplosionProof = false;
+            vehicle->bFireProof      = false;
+            vehicle->bCollisionProof = false;
         }
     }
 
@@ -47,12 +47,12 @@ public:
         {
             if (!vehicle) continue;
 
-            bool proof = (player && playerVehicle == vehicle
-                          && playerVehicle->IsDriver (player));
-            vehicle->m_nPhysicalFlags.bInvulnerable   = proof;
-            vehicle->m_nPhysicalFlags.bExplosionProof = proof;
-            vehicle->m_nPhysicalFlags.bFireProof      = proof;
-            vehicle->m_nPhysicalFlags.bCollisionProof = proof;
+            bool proof               = (player && playerVehicle == vehicle
+                                        && playerVehicle->IsDriver (player));
+            vehicle->bInvulnerable   = proof;
+            vehicle->bExplosionProof = proof;
+            vehicle->bFireProof      = proof;
+            vehicle->bCollisionProof = proof;
         }
     }
 
@@ -71,13 +71,13 @@ public:
 
         if (playerVehicle == thisEntity)
         {
-            otherEntity->m_nPhysicalFlags.bExplosionProof = false;
+            otherEntity->bExplosionProof = false;
             ((CVehicle *) otherEntity)->BlowUpCar (nullptr, false);
         }
 
         if (playerVehicle == otherEntity)
         {
-            thisEntity->m_nPhysicalFlags.bExplosionProof = false;
+            thisEntity->bExplosionProof = false;
             ((CVehicle *) thisEntity)->BlowUpCar (nullptr, false);
         }
     }

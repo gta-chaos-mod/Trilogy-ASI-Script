@@ -1,69 +1,112 @@
-name: CMake
+name: Build And Create Artifacts
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "3.0" ]
 
 jobs:
   build:
     runs-on: windows-latest
 
-    steps:
-    - uses: actions/checkout@v4
+    env:
+      PLUGIN_SDK_DIR: ${{ github.workspace }}/plugin-sdk
 
+    steps:
+    # 1. Version Suffix Check for non-release commits
     - name: Check for release commit
+      shell: powershell
       run: |
         if ("${{ github.event.head_commit.message }}" -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+$') {
             echo "VERSION_SUFFIX=${{ github.sha }}" >> $env:GITHUB_ENV
         }
 
-    - name: Setup MSVC
-      uses: ilammy/msvc-dev-cmd@v1.13.0
+    # 2. Setup x86 MSVC environment for Ninja & CMake
+    - name: Setup x86 MSVC Command Prompt
+      uses: TheMrMilchmann/setup-msvc-dev@v4
       with:
         arch: x86
 
-    - name: Get CMake
-      uses: lukka/get-cmake@v3.31.6
+    # 3. Checkout project repository
+    - name: Checkout TrilogyChaosMod
+      uses: actions/checkout@v7
 
-    - name: Cache CMake
-      uses: actions/cache@v4
+    # 4. Clone PluginSDK into 'plugin-sdk'
+    - name: Clone PluginSDK
+      shell: cmd
+      run: |
+        if not exist plugin-sdk (
+            git clone https://github.com/DK22Pac/plugin-sdk.git plugin-sdk
+            cd plugin-sdk
+            git checkout 15f15b60bbf74c106e1b496ff92c98764abf4605
+        )
+
+    # 5. Cache compiled PluginSDK static libraries
+    - name: Cache PluginSDK Output
+      id: cache-pluginsdk
+      uses: actions/cache@v6
       with:
-        path: bin
-        key: build-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}-${{ github.run_id }}
-        restore-keys: |
-          build-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
+        path: plugin-sdk/output
+        key: pluginsdk-${{ runner.os }}-${{ hashFiles('plugin-sdk/**') }}
 
-    - name: Configure and build
+    - name: Setup MSBuild
+      if: steps.cache-pluginsdk.outputs.cache-hit != 'true'
+      uses: microsoft/setup-msbuild@v3
+
+    # 6. Generate and build PluginSDK ONLY if cache missed
+    - name: Generate PluginSDK Solution via Premake
+      if: steps.cache-pluginsdk.outputs.cache-hit != 'true'
+      shell: cmd
       run: |
-        if (!(Test-Path "bin")) {
-          mkdir bin
-          cmake -Bbin -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE .
-        }
-        cd bin
-        cmake --build . --config Release --target TrilogyChaosMod.SA -j 8 --
+        "%PLUGIN_SDK_DIR%\tools\premake\premake5.exe" vs2026 --file="%PLUGIN_SDK_DIR%\tools\premake\premake5.lua"
 
-    - name: Prepare artifacts
+    - name: Build PluginSDK Static Libraries
+      if: steps.cache-pluginsdk.outputs.cache-hit != 'true'
+      shell: cmd
       run: |
-        cd bin
-        if (!(Test-Path "output_SA")) { mkdir output_SA }
-        cp TrilogyChaosMod.SA.asi output_SA/TrilogyChaosMod.SA.asi
-      #  if (!(Test-Path "output_III")) { mkdir output_III }
-      #  cp TrilogyChaosMod.III.asi output_III/TrilogyChaosMod.III.asi
-      #  if (!(Test-Path "output_VC")) { mkdir output_VC }
-      #  cp TrilogyChaosMod.VC.asi output_VC/TrilogyChaosMod.VC.asi
+        msbuild "%PLUGIN_SDK_DIR%\plugin_III\Plugin_III.vcxproj" /p:Configuration=Release /p:Platform=Win32 /m
+        msbuild "%PLUGIN_SDK_DIR%\plugin_vc\Plugin_VC.vcxproj" /p:Configuration=Release /p:Platform=Win32 /m
+        msbuild "%PLUGIN_SDK_DIR%\plugin_sa\Plugin_SA.vcxproj" /p:Configuration=Release /p:Platform=Win32 /m
 
-    # - name: Upload III
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: "TrilogyChaosMod.III"
-    #     path: bin/output_III
+    # 7. Configure and Build CMake project
+    - name: Configure CMake
+      run: |
+        cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DVERSION_SUFFIX="${{ env.VERSION_SUFFIX }}"
 
-    # - name: Upload VC
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: "TrilogyChaosMod.VC"
-    #     path: bin/output_VC
+    - name: Compile Plugins
+      run: |
+        cmake --build build --config Release
 
-    - name: Upload SA
-      uses: actions/upload-artifact@v4
+    # 8. Organize outputs into designated directories
+    - name: Organize Output Folders
+      shell: cmd
+      run: |
+        if not exist build\output_III mkdir build\output_III
+        if not exist build\output_VC mkdir build\output_VC
+        if not exist build\output_SA mkdir build\output_SA
+        if exist build\TrilogyChaosMod.III.asi copy build\TrilogyChaosMod.III.asi build\output_III\
+        if exist build\TrilogyChaosMod.VC.asi copy build\TrilogyChaosMod.VC.asi build\output_VC\
+        if exist build\TrilogyChaosMod.SA.asi copy build\TrilogyChaosMod.SA.asi build\output_SA\
+
+    # 9. Upload individual ASI artifacts
+    - name: Upload III Artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: "TrilogyChaosMod.III"
+        path: build/output_III/
+        if-no-files-found: ignore
+
+    - name: Upload VC Artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: "TrilogyChaosMod.VC"
+        path: build/output_VC/
+        if-no-files-found: ignore
+
+    - name: Upload SA Artifact
+      uses: actions/upload-artifact@v7
       with:
         name: "TrilogyChaosMod.SA"
-        path: bin/output_SA
+        path: build/output_SA/
+        if-no-files-found: ignore

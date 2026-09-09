@@ -59,7 +59,7 @@ public:
         CPlayerPed *player = FindPlayerPed ();
         if (!player) return;
 
-        player->m_nPedFlags.CantBeKnockedOffBike = 0;
+        player->CantBeKnockedOffBike = 0;
     }
 
     void
@@ -72,7 +72,7 @@ public:
         }
 
         CPlayerPed *player = FindPlayerPed ();
-        if (player) player->m_nPedFlags.CantBeKnockedOffBike = 1;
+        if (player) player->CantBeKnockedOffBike = 1;
 
         if (!teleported)
         {
@@ -129,7 +129,7 @@ public:
                                                               stuntVehicle);
         Command<eScriptCommands::COMMAND_RESTORE_CAMERA_JUMPCUT> ();
 
-        CMatrix *matrix = stuntVehicle->GetMatrix ();
+        CMatrix *matrix = &stuntVehicle->GetMatrix ();
 
         stuntVehicle->m_vecMoveSpeed.x = jump.velocity * matrix->up.x;
         stuntVehicle->m_vecMoveSpeed.y = jump.velocity * matrix->up.y;

@@ -11,7 +11,7 @@ Teleportation::CanTeleport ()
     CVehicle *vehicle = FindPlayerVehicle (-1, false);
     if (!vehicle) return true;
 
-    if (vehicle->m_nPhysicalFlags.bDisableMoveForce) return false;
+    if (vehicle->bDisableMoveForce) return false;
 
     if (!vehicle->IsDriver (player)) return false;
 

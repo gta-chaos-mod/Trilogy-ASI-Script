@@ -30,7 +30,7 @@ enum eWeaponSlot : unsigned int
 class GivePlayerAWeapon : public OneTimeEffect
 {
 private:
-    eWeaponType weaponType = WEAPON_BRASSKNUCKLE;
+    eWeaponType weaponType = WEAPONTYPE_BRASSKNUCKLE;
 
 public:
     GivePlayerAWeapon (eWeaponType weapon) : weaponType (weapon) {}
@@ -42,7 +42,7 @@ public:
         if (!player) return false;
 
         if (player->m_aWeapons[player->GetWeaponSlot (weaponType)].m_eWeaponType
-            == WEAPON_PARACHUTE)
+            == WEAPONTYPE_PARACHUTE)
             return false;
 
         return GameUtil::IsPlayerSafe ();
@@ -77,7 +77,7 @@ public:
             default: break;
         }
 
-        if (weaponType == WEAPON_MINIGUN)
+        if (weaponType == WEAPONTYPE_MINIGUN)
         {
             ammo = 250;
         }
@@ -91,15 +91,15 @@ public:
 };
 
 // clang-format off
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_ak47", GROUP_WEAPONS, WEAPON_AK47);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_uzi", GROUP_WEAPONS, WEAPON_MICRO_UZI);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_sniper", GROUP_WEAPONS, WEAPON_SNIPERRIFLE);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_shotgun", GROUP_WEAPONS, WEAPON_SPAS12);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_rocket_launcher", GROUP_WEAPONS, WEAPON_RLAUNCHER_HS);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_pistol", GROUP_WEAPONS, WEAPON_PISTOL_SILENCED);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_minigun", GROUP_WEAPONS, WEAPON_MINIGUN);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_weapon_set_4", GROUP_WEAPONS, WEAPON_MINIGUN);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_grenades", GROUP_WEAPONS, WEAPON_GRENADE);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_chainsaw", GROUP_WEAPONS, WEAPON_CHAINSAW);
-DEFINE_EFFECT (GivePlayerAWeapon, "effect_get_parachute", GROUP_WEAPONS, WEAPON_PARACHUTE);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_ak47", GROUP_WEAPONS, WEAPONTYPE_AK47);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_uzi", GROUP_WEAPONS, WEAPONTYPE_MICRO_UZI);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_sniper", GROUP_WEAPONS, WEAPONTYPE_SNIPERRIFLE);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_shotgun", GROUP_WEAPONS, WEAPONTYPE_SPAS12);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_rocket_launcher", GROUP_WEAPONS, WEAPONTYPE_RLAUNCHER_HS);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_pistol", GROUP_WEAPONS, WEAPONTYPE_PISTOL_SILENCED);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_minigun", GROUP_WEAPONS, WEAPONTYPE_MINIGUN);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_weapon_set_4", GROUP_WEAPONS, WEAPONTYPE_MINIGUN);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_grenades", GROUP_WEAPONS, WEAPONTYPE_GRENADE);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_give_chainsaw", GROUP_WEAPONS, WEAPONTYPE_CHAINSAW);
+DEFINE_EFFECT (GivePlayerAWeapon, "effect_get_parachute", GROUP_WEAPONS, WEAPONTYPE_PARACHUTE);
 // clang-format on

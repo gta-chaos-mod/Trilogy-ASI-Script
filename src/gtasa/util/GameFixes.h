@@ -5,6 +5,7 @@
 #include "util/GameUtil.h"
 #include "util/GenericUtil.h"
 #include "util/GlobalHooksInstance.h"
+#include "util/ScriptParams.h"
 
 #include <CText.h>
 #include <CTheScripts.h>
@@ -75,10 +76,10 @@ public:
             = GenericUtil::ToUpper (std::string (thisScript->m_szName));
         if (missionName == "CESAR1")
         {
-            if (CTheScripts::ScriptParams[0].iParam == 0
-                && CTheScripts::ScriptParams[1].iParam == 0 && offset == 5098)
+            if (ScriptParams[0].iParam == 0 && ScriptParams[1].iParam == 0
+                && offset == 5098)
             {
-                CTheScripts::ScriptParams[1].iParam = 1;
+                ScriptParams[1].iParam = 1;
             }
         }
 
