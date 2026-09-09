@@ -32,7 +32,8 @@ target_link_libraries(${CHAOS_SA} PUBLIC
     nlohmann_json 
     ixwebsocket 
     minhook 
-    efsw 
+    efsw
+    lsm 
     bass
 )
 

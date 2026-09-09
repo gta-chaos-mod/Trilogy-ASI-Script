@@ -10,7 +10,7 @@ class GenericUtil
 public:
     static std::string GetModVersion ();
 
-    static double CalculateTick (double multiplier = 1.0);
+    static float CalculateTick (float multiplier = 1.0);
 
     static std::string FormatTime (int duration, bool onlySeconds = false);
 

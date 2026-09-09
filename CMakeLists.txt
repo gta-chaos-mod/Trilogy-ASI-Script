@@ -22,6 +22,15 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
 find_package(PluginSDK REQUIRED COMPONENTS gtasa OPTIONAL_COMPONENTS gta3 gtavc)
 
 # Include cmakes
+include(cmake/DirectXSDK.cmake)
+
+include(cmake/nlohmannJSON.cmake)
+include(cmake/IXWebSocket.cmake)
+include(cmake/minhook.cmake)
+include(cmake/efsw.cmake)
+include(cmake/libsharedmemory.cmake)
+
+# Include games if they're found
 if (PluginSDK_gta3_FOUND)
   include(cmake/gta3.cmake)
 endif()
@@ -33,13 +42,6 @@ endif()
 if (PluginSDK_gtasa_FOUND)
   include(cmake/gtaSA.cmake)
 endif()
-
-include(cmake/DirectXSDK.cmake)
-
-include(cmake/nlohmannJSON.cmake)
-include(cmake/IXWebSocket.cmake)
-include(cmake/minhook.cmake)
-include(cmake/efsw.cmake)
 
 if(DEFINED ENV{VERSION_SUFFIX})
 	string(SUBSTRING "$ENV{VERSION_SUFFIX}" 0 7 VERSION_SUFFIX)

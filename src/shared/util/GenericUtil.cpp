@@ -29,14 +29,14 @@ GenericUtil::GetModVersion ()
     return version;
 }
 
-double
-GenericUtil::CalculateTick (double multiplier)
+float
+GenericUtil::CalculateTick (float multiplier)
 {
     unsigned diff = CTimer::m_snTimeInMilliseconds
                     - CTimer::m_snPreviousTimeInMilliseconds;
 
     // If the jump is too big, e.g. replays or loading saves
-    if (diff <= 0 || diff >= 1000) return 0;
+    if (diff <= 0 || diff >= 1000) return 0.0f;
 
     float timeScale = std::max (0.000001f, CTimer::ms_fTimeScale);
 

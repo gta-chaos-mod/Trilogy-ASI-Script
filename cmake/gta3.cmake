@@ -33,6 +33,7 @@ target_link_libraries(${CHAOS_3} PUBLIC
 	ixwebsocket
 	minhook
 	efsw
+	lsm
 	bass
 )
 

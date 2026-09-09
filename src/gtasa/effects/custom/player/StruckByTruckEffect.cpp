@@ -59,7 +59,7 @@ public:
         CVector position
             = player->TransformFromObjectSpace (CVector (0.0f, 25.0f, 0.0f));
 
-        float playerFacing = player->m_fHeadingCurrent - M_PI;
+        float playerFacing = (float) (player->m_fHeadingCurrent - M_PI);
 
         if (linerunner)
         {
