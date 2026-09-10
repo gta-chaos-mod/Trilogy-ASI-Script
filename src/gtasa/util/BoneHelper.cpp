@@ -236,7 +236,7 @@ BoneHelper::UpdatePed (CPed *ped, bool updateHierarchy)
 {
     if (ped && ped->m_pRwClump)
     {
-        ped->bDontUpdateHierarchy;
+        ped->bDontUpdateHierarchy = false;
 
         // This is the wrong address - PR a fix to plugin-sdk?
         // ped->UpdateRpHAnim ();
