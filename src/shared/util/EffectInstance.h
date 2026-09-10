@@ -28,9 +28,10 @@ private:
     int remaining = 0;
     int duration  = 0;
 
-    bool timerVisible    = true;
-    bool isRunning       = false;
-    bool isOneTimeEffect = false;
+    bool timerVisible       = true;
+    bool isRunning          = false;
+    bool isOneTimeEffect    = false;
+    bool isDrawnTemporarily = false;
 
     nlohmann::json customData = { { "seed", 0 } };
 
@@ -73,6 +74,18 @@ public:
     IsOneTimeEffect ()
     {
         return isOneTimeEffect;
+    }
+
+    void
+    SetIsDrawnTemporarily ()
+    {
+        isDrawnTemporarily = true;
+    }
+
+    bool
+    IsDrawnTemporarily ()
+    {
+        return isDrawnTemporarily;
     }
 
     void

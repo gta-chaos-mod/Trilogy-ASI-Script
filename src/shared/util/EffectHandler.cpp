@@ -151,6 +151,8 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
         inst.SetDuration (data["duration"]);
         inst.SetSoundID (effect->GetID ());
 
+        if (data.contains ("drawnTemporarily")) inst.SetIsDrawnTemporarily ();
+
         if (data.contains ("effectData"))
             inst.SetCustomData (data["effectData"]);
 

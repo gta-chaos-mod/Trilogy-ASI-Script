@@ -33,9 +33,6 @@ IPC::Setup ()
                 std::string msg;
                 if (reader->dequeue (msg))
                 {
-                    MessageBoxA (NULL, msg.c_str (), "IPC Message",
-                                 MB_OK | MB_ICONINFORMATION);
-
                     Websocket::CallFunction (msg);
                 }
                 else
