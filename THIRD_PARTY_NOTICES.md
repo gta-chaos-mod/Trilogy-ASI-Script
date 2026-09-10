@@ -11,6 +11,7 @@ Below are the software components, repository links, license types, and full lic
 3. [IXWebSocket](#3-ixwebsocket)
 4. [libsharedmemory](#4-libsharedmemory)
 5. [nlohmann_json](#5-nlohmann_json)
+6. [BASS](#6-BASS)
 
 ---
 
@@ -241,4 +242,16 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
+
+---
+
+## 6. BASS
+
+* **Website:** [https://www.un4seen.com/](https://www.un4seen.com/)
+* **License:** [https://www.un4seen.com/bass.html#license](https://www.un4seen.com/bass.html#license)
+* **License Type:** Custom; Free for non-commercial use
+
+```text
+BASS is free for non-commercial use. If you are a non-commercial entity (eg. an individual) and you are not making any money from your product (through sales, advertising, etc) then you can use BASS in it for free. Otherwise, one of the following licences will be required. 
 ```
