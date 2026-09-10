@@ -66,10 +66,7 @@ jobs:
     - name: Build PluginSDK Static Libraries
       if: steps.cache-pluginsdk.outputs.cache-hit != 'true'
       shell: cmd
-      run: |
-        msbuild "%PLUGIN_SDK_DIR%\plugin_III\Plugin_III.vcxproj" /p:Configuration=Release /p:Platform=Win32 /m
-        msbuild "%PLUGIN_SDK_DIR%\plugin_vc\Plugin_VC.vcxproj" /p:Configuration=Release /p:Platform=Win32 /m
-        msbuild "%PLUGIN_SDK_DIR%\plugin_sa\Plugin_SA.vcxproj" /p:Configuration=Release /p:Platform=Win32 /m
+      run: msbuild "%PLUGIN_SDK_DIR%\plugin_sa\Plugin_SA.vcxproj" /p:Configuration=Release /p:Platform=Win32 /m
 
     # 7. Configure and Build CMake project
     - name: Configure CMake
@@ -80,35 +77,17 @@ jobs:
       run: |
         cmake --build build --config Release
 
-    # 8. Organize outputs into designated directories
-    - name: Organize Output Folders
+    # 8. Organize output into designated directory
+    - name: Organize Output Folder
       shell: cmd
       run: |
-        if not exist build\output_III mkdir build\output_III
-        if not exist build\output_VC mkdir build\output_VC
-        if not exist build\output_SA mkdir build\output_SA
-        if exist build\TrilogyChaosMod.III.asi copy build\TrilogyChaosMod.III.asi build\output_III\
-        if exist build\TrilogyChaosMod.VC.asi copy build\TrilogyChaosMod.VC.asi build\output_VC\
-        if exist build\TrilogyChaosMod.SA.asi copy build\TrilogyChaosMod.SA.asi build\output_SA\
+        if not exist build\output mkdir build\output
+        if exist build\TrilogyChaosMod.SA.asi copy build\TrilogyChaosMod.SA.asi build\output\
 
-    # 9. Upload individual ASI artifacts
-    - name: Upload III Artifact
-      uses: actions/upload-artifact@v7
-      with:
-        name: "TrilogyChaosMod.III"
-        path: build/output_III/
-        if-no-files-found: ignore
-
-    - name: Upload VC Artifact
-      uses: actions/upload-artifact@v7
-      with:
-        name: "TrilogyChaosMod.VC"
-        path: build/output_VC/
-        if-no-files-found: ignore
-
+    # 9. Upload ASI artifact
     - name: Upload SA Artifact
       uses: actions/upload-artifact@v7
       with:
         name: "TrilogyChaosMod.SA"
-        path: build/output_SA/
+        path: build/output/
         if-no-files-found: ignore
