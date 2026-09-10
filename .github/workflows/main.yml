@@ -83,6 +83,9 @@ jobs:
       run: |
         if not exist build\output mkdir build\output
         if exist build\TrilogyChaosMod.SA.asi copy build\TrilogyChaosMod.SA.asi build\output\
+        if exist TrilogyChaosMod.SA.toml copy TrilogyChaosMod.SA.toml build\output\
+        if exist lib\bass.dll copy lib\bass.dll build\output\
+        if exist resources\ChaosMod xcopy /E /I /Y resources\ChaosMod build\output\ChaosMod\
         if exist THIRD_PARTY_NOTICES.md copy THIRD_PARTY_NOTICES.md build\output\
 
     # 9. Upload ASI artifact

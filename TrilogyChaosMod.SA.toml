@@ -1,18 +1,4 @@
-#pragma once
-
-#include <filesystem>
-
-#define CONFIG(_setting, _default) Config::GetOrDefault (_setting, _default)
-#define CONFIG_CC_ENABLED CONFIG ("CrowdControl.Enabled", false)
-
-class Config
-{
-    static inline bool fileWatcherInitialized = false;
-
-    static inline std::shared_ptr<cpptoml::table> config;
-#ifdef GTASA
-    static inline std::string configContent
-        = R"(#######################################################
+#######################################################
 # Chaos Mod
 #######################################################
 
@@ -173,45 +159,4 @@ PreventNewEffectsWhenFull = false
 # Default: false
 CheckForIncompatibleEffects = false
 
-#######################################################)";
-#else
-    static inline std::string configContent = "";
-#endif
-
-public:
-    static std::string
-    GetConfigFilename ()
-    {
-        const std::string pluginFilename = std::string (PLUGIN_FILENAME);
-        const std::string configFilename
-            = pluginFilename.substr (0, pluginFilename.size () - 4) + ".toml";
-
-        return configFilename;
-    }
-
-    static std::filesystem::path
-    GetConfigPath ()
-    {
-        const std::string configFilename = GetConfigFilename ();
-
-        const std::filesystem::path configPath
-            = PLUGIN_PATH ((char *) configFilename.c_str ());
-
-        std::filesystem::create_directories (configPath.parent_path ());
-
-        return configPath;
-    }
-
-    static void Init ();
-
-    static void ReloadConfig ();
-
-    template <class T>
-    static T
-    GetOrDefault (std::string key, T defaultValue)
-    {
-        if (!config) return defaultValue;
-
-        return config->get_qualified_as<T> (key).value_or (defaultValue);
-    }
-};
+#######################################################
