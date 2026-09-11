@@ -23,6 +23,7 @@ public:
 
         CPad *pad = player->GetPadFromPlayer ();
         if (!pad) return;
+        if (!pad->NewState.RightShoulder1) return;
 
         pad->NewMouseControllerState.x += offset.x;
         pad->NewMouseControllerState.y += offset.y;
