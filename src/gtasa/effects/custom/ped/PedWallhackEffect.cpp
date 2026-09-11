@@ -139,6 +139,7 @@ public:
         text.append (std::format ("In Vehicle: {}~n~", IsPedInCar (ped)));
 
         CFont::PrintString (coords.x, coords.y, (char *) text.c_str ());
+        CFont::DrawFonts ();
     }
 };
 

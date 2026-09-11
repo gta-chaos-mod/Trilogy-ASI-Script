@@ -70,13 +70,6 @@ public:
                 return;
 
             DrawHelper::DrawEffects ();
-        };
-        drawAfterFadeEvent += [] ()
-        {
-            if (Globals::enabledEffects["mirrored_screen"]
-                || Globals::enabledEffects["upside_down_screen"])
-                return;
-
             DrawHelper::Draw ();
         };
     }

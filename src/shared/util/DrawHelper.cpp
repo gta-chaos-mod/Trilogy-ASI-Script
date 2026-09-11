@@ -69,6 +69,8 @@ DrawHelper::Draw ()
     {
         DrawTopBar ();
     }
+
+    CFont::DrawFonts ();
 }
 
 void
@@ -79,6 +81,8 @@ DrawHelper::DrawEffects ()
     if (!CONFIG ("Drawing.DrawActiveEffects", true)) return;
 
     DrawRecentEffects ();
+
+    CFont::DrawFonts ();
 }
 
 void
@@ -107,10 +111,6 @@ DrawHelper::DrawVersion ()
 void
 DrawHelper::DrawTopBar ()
 {
-#ifdef GTASA
-    bool wasFontPropOn = CFont::m_bFontPropOn;
-#endif
-
     // Calculate the width of the inner timer bar
     float maxWidth = SCREEN_WIDTH - SCREEN_COORD (8.0f);
     float barWidth = CalculateBarWidth () - SCREEN_COORD (8.0f);
@@ -140,12 +140,6 @@ DrawHelper::DrawTopBar ()
                              SCREEN_MULTIPLIER (0.8f), color::White,
                              gamefont::AlignCenter, 1, color::Black, false,
                              9999.0F, true);
-
-#ifdef GTASA
-    CFont::SetProportional (wasFontPropOn);
-#else
-    // CFont::SetPropOn ();
-#endif
 }
 
 void

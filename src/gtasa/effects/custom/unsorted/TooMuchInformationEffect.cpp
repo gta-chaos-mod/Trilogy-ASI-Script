@@ -406,6 +406,8 @@ public:
                                      gamefont::AlignLeft, 1, color::Black, true,
                                      9999.0F, true);
         }
+
+        CFont::DrawFonts ();
     }
 };
 

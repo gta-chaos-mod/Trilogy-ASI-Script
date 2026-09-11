@@ -228,6 +228,8 @@ public:
                                  SCREEN_MULTIPLIER (0.8f), speedColor,
                                  gamefont::AlignCenter, 1, color::Black, true,
                                  9999.0F, false);
+
+        CFont::DrawFonts ();
     }
 };
 
