@@ -268,7 +268,7 @@ EffectDrawHandler::UpdateTimers ()
     /* Fade-in of the effect text (and timer)  */
     float tick = GenericUtil::CalculateTick (0.0015f);
 
-    if (effect->IsDrawnTemporarily () && effect->GetEffectRemaining () < 1000)
+    if (effect->IsDrawnTemporarily () && effect->GetDrawRemaining () < 1000)
     {
         this->transitionTimer -= tick;
 
@@ -335,7 +335,7 @@ EffectDrawHandler::DrawAndXMore ()
 void
 EffectDrawHandler::ResetOffsetCooldown (bool removeStaleEffects)
 {
-    int seconds = CONFIG ("Drawing.RotationSeconds", 10);
+    int seconds = CONFIG ("Drawing.RotationSeconds", 5);
     seconds     = std::clamp (seconds, 3, 15);
 
     offsetCooldown = 1000 * seconds;
@@ -382,8 +382,7 @@ EffectDrawHandler::DrawRecentEffects ()
         if (!Globals::enabledEffects["hide_chaos_ui"]
             || effect.GetEffect ()->GetID () == "effect_hide_chaos_ui")
         {
-            if (effect.IsDrawnTemporarily ()
-                && effect.GetEffectRemaining () < 0)
+            if (effect.IsDrawnTemporarily () && effect.GetDrawRemaining () < 0)
                 continue;
             if (++drawn > RECENT_EFFECTS) break;
 
@@ -400,7 +399,7 @@ EffectDrawHandler::DrawRecentEffects ()
     inset = AreEffectsInset (true);
     for (auto &effect : EffectHandler::GetOneTimeEffects ())
     {
-        if (effect.IsDrawnTemporarily () && effect.GetEffectRemaining () < 0)
+        if (effect.IsDrawnTemporarily () && effect.GetDrawRemaining () < 0)
             continue;
         if (++i > RECENT_EFFECTS) break;
 

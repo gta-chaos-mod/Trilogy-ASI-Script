@@ -47,6 +47,9 @@ EffectInstance::Tick ()
         int tick = (int) round (
             GenericUtil::CalculateTick (Globals::effectTimerSpeed));
         this->remaining -= tick;
+
+        // Tick down drawRemaining on normal speed
+        this->drawRemaining -= (int) GenericUtil::CalculateTick ();
     }
 
     if (GetEffectRemaining () < 0) Disable ();

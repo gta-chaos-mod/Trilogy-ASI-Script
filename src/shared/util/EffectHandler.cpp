@@ -52,6 +52,9 @@ EffectHandler::GetActiveEffectCount (bool onlyRunning)
 
     for (auto &effect : timedEffects)
     {
+        if (effect.IsDrawnTemporarily () && !effect.IsShownOnScreen ())
+            continue;
+
         if (!onlyRunning || effect.IsRunning ()) count++;
     }
 
@@ -74,6 +77,8 @@ EffectHandler::RemoveStaleEffects (bool checkOneTimeEffects)
             auto &effect = effects[i];
 
             if (effect.IsRunning ()) continue;
+            if (effect.IsShownOnScreen () && !effect.IsDrawnTemporarily ())
+                continue;
 
             effectsToRemove.insert (&effect);
 
@@ -92,9 +97,8 @@ EffectHandler::RemoveStaleEffects (bool checkOneTimeEffects)
     std::erase_if (effects,
                    [] (EffectInstance &effect)
                    {
-                       return !effect.IsRunning ()
-                              && effect.IsDrawnTemporarily ()
-                              && effect.GetEffectRemaining () < 0;
+                       return !effect.IsRunning () && !effect.IsShownOnScreen ()
+                              && effect.IsDrawnTemporarily ();
                    });
 }
 
@@ -158,6 +162,7 @@ EffectHandler::QueueEffect (EffectBase *effect, const nlohmann::json &data)
 
         inst.SetSubHandlers (handlers);
         inst.SetDuration (data["duration"]);
+        inst.SetDrawDuration (data["duration"]);
         inst.SetSoundID (effect->GetID ());
 
         if (data.contains ("drawnTemporarily")) inst.SetIsDrawnTemporarily ();

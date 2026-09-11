@@ -28,6 +28,9 @@ private:
     int remaining = 0;
     int duration  = 0;
 
+    int drawRemaining = 0;
+    int drawDuration  = 0;
+
     bool timerVisible       = true;
     bool isRunning          = false;
     bool isOneTimeEffect    = false;
@@ -62,6 +65,15 @@ public:
     SetDuration (int duration)
     {
         this->duration = remaining = duration;
+    }
+
+    void
+    SetDrawDuration (int drawDuration)
+    {
+        // Minimum of 30 seconds so the player has a chance to see what happened
+        drawDuration = std::max (30 * 1000, drawDuration);
+
+        this->drawDuration = drawRemaining = drawDuration;
     }
 
     void
@@ -139,7 +151,7 @@ public:
     bool
     IsShownOnScreen () const
     {
-        return GetEffectRemaining () > 0;
+        return GetDrawRemaining () > 0;
     }
 
     bool
@@ -158,6 +170,12 @@ public:
     GetEffectRemaining () const
     {
         return remaining;
+    }
+
+    int
+    GetDrawRemaining () const
+    {
+        return drawRemaining;
     }
 
     nlohmann::json &
@@ -229,6 +247,9 @@ public:
         {
             End ();
             isRunning = false;
+
+            // Set remaining draw time to 30 seconds at max.
+            drawRemaining = std::min (drawRemaining, 1000 * 30);
         }
     };
 
