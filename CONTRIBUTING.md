@@ -166,6 +166,10 @@ OnStart (EffectInstance *inst) override
     // re-engage at a later point.
     inst->SetTimerVisible(false);
 
+    // Sets this effect to draw temporarily.
+    // Once it's finished it will bounce out of the screen.
+    inst->SetIsDrawnTemporarily();
+
     // Get's custom data that was sent from the Chaos Mod UI
     // or another provider.
     //
