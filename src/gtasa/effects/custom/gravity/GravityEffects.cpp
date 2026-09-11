@@ -63,5 +63,5 @@ DEFINE_EFFECT (SimpleGravityEffect, "effect_quarter_gravity",   GROUP_GRAVITY, 0
 DEFINE_EFFECT (SimpleGravityEffect, "effect_half_gravity",      GROUP_GRAVITY, 0.004f);
 DEFINE_EFFECT (SimpleGravityEffect, "effect_double_gravity",    GROUP_GRAVITY, 0.016f);
 DEFINE_EFFECT (SimpleGravityEffect, "effect_quadruple_gravity", GROUP_GRAVITY, 0.032f);
-DEFINE_EFFECT (SimpleGravityEffect, "effect_insane_gravity",    GROUP_GRAVITY, 0.2f);
+DEFINE_EFFECT (SimpleGravityEffect, "effect_insane_gravity",    GROUP_GRAVITY, 0.5f);
 // clang-format on
