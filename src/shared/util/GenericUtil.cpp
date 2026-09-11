@@ -8,7 +8,8 @@
 std::string
 GenericUtil::GetModVersion ()
 {
-    std::string version = "Chaos Mod v3.3.0";
+    std::string version = std::format ("Chaos Mod v{}.{}.{}", MOD_VERSION_MAJOR,
+                                       MOD_VERSION_MINOR, MOD_VERSION_PATCH);
 
 #ifndef NDEBUG
     version.append ("-debug");

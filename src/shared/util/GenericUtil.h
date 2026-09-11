@@ -5,6 +5,17 @@
 #include <CMenuManager.h>
 #include <CTimer.h>
 
+// Adapted from CLEO
+// Returns a hex version number in the following format:
+// 0x0v0v0v
+// 0x0v0v0v
+#define MOD_VERSION_MAJOR 3
+#define MOD_VERSION_MINOR 3
+#define MOD_VERSION_PATCH 0
+
+#define MOD_VERSION                                                            \
+    ((MOD_VERSION_MAJOR << 16) | (MOD_VERSION_MINOR << 8) | MOD_VERSION_PATCH)
+
 class GenericUtil
 {
 public:
