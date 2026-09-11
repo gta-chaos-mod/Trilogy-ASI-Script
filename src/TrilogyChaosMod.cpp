@@ -1,3 +1,4 @@
+#include "trilogychaosmod.sa_export.h"
 #include "util/Config.h"
 #include "util/DrawHelper.h"
 #include "util/EffectHandler.h"
@@ -18,6 +19,31 @@ UnProtectInstance ()
     DWORD  oldProtect;
     VirtualProtect ((VOID *) hExecutableInstance, size, PAGE_EXECUTE_READWRITE,
                     &oldProtect);
+}
+
+extern "C"
+{
+    TrilogyChaosMod_API int
+    GetModVersion ()
+    {
+        return MOD_VERSION;
+    }
+
+    TrilogyChaosMod_API void
+    QueueEffect (const char *jsonStr)
+    {
+        if (!jsonStr) return;
+
+        try
+        {
+            nlohmann::json data = nlohmann::json::parse (jsonStr);
+            EffectHandler::HandleFunction (data);
+        }
+        catch (...)
+        {
+            // Ignore un-parseable JSON data
+        }
+    }
 }
 
 class TrilogyChaosMod

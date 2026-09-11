@@ -16,10 +16,16 @@ add_library(${CHAOS_SA} SHARED ${SA_SOURCES})
 
 set_target_properties(${CHAOS_SA} PROPERTIES SUFFIX ".asi")
 
+include(GenerateExportHeader)
+generate_export_header(${CHAOS_SA}
+    EXPORT_MACRO_NAME ${PROJECT_NAME}_API
+)
+
 target_include_directories(${CHAOS_SA} PUBLIC
     "src/"
     "src/shared"
     "src/gtasa"
+    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 target_link_directories(${CHAOS_SA} PUBLIC
