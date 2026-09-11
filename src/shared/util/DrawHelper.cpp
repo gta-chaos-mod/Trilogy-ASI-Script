@@ -107,6 +107,10 @@ DrawHelper::DrawVersion ()
 void
 DrawHelper::DrawTopBar ()
 {
+#ifdef GTASA
+    bool wasFontPropOn = CFont::m_bFontPropOn;
+#endif
+
     // Calculate the width of the inner timer bar
     float maxWidth = SCREEN_WIDTH - SCREEN_COORD (8.0f);
     float barWidth = CalculateBarWidth () - SCREEN_COORD (8.0f);
@@ -137,15 +141,10 @@ DrawHelper::DrawTopBar ()
                              gamefont::AlignCenter, 1, color::Black, false,
                              9999.0F, true);
 
-    // Dummy render because the last rendered text will have broken colors
-    gamefont::PrintUnscaled ("dummy", 0, 0, FONT_DEFAULT, 0, 0,
-                             CRGBA (0, 0, 0, 0), gamefont::AlignCenter, 1,
-                             CRGBA (0, 0, 0, 0));
-
 #ifdef GTASA
-    CFont::SetProportional (true);
+    CFont::SetProportional (wasFontPropOn);
 #else
-    CFont::SetPropOn ();
+    // CFont::SetPropOn ();
 #endif
 }
 

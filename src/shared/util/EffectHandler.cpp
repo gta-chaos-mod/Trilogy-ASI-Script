@@ -87,6 +87,15 @@ EffectHandler::RemoveStaleEffects (bool checkOneTimeEffects)
                                   && effectsToRemove.contains (&effect);
                        });
     }
+
+    // Remove temporary effects regardless
+    std::erase_if (effects,
+                   [] (EffectInstance &effect)
+                   {
+                       return !effect.IsRunning ()
+                              && effect.IsDrawnTemporarily ()
+                              && effect.GetEffectRemaining () < 0;
+                   });
 }
 
 template <typename _Callable, typename... _Args>
