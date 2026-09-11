@@ -121,15 +121,6 @@ public:
         if (!CSprite::CalcScreenCoors (pos, &coords, &w, &h, true, true))
             return;
 
-        CFont::SetOrientation (ALIGN_LEFT);
-        CFont::SetColor (color::White);
-        CFont::SetDropShadowPosition (1);
-        CFont::SetBackground (false, false);
-        CFont::SetWrapx (SCREEN_WIDTH);
-        CFont::SetScale (0.5, 1.0);
-        CFont::SetFontStyle (FONT_SUBTITLES);
-        CFont::SetProportional (true);
-
         std::string text = std::format ("Skin ID: {0:}~n~", ped->m_nModelIndex);
         text.append (std::format ("Position: {:.2f}, {:.2f}, {:.2f}~n~", pos.x,
                                   pos.y, pos.z));
@@ -138,7 +129,8 @@ public:
         text.append (std::format ("Weapon: {}~n~", GetActivePedWeapon (ped)));
         text.append (std::format ("In Vehicle: {}~n~", IsPedInCar (ped)));
 
-        CFont::PrintString (coords.x, coords.y, (char *) text.c_str ());
+        gamefont::PrintUnscaled (text, coords.x, coords.y);
+
         CFont::DrawFonts ();
     }
 };
