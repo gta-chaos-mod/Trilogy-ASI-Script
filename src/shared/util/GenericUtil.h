@@ -8,7 +8,7 @@
 // Adapted from CLEO
 // Returns a hex version number in the following format:
 // 0x0v0v0v
-// 0x0v0v0v
+// Example: 0x030300
 #define MOD_VERSION_MAJOR 3
 #define MOD_VERSION_MINOR 3
 #define MOD_VERSION_PATCH 0
