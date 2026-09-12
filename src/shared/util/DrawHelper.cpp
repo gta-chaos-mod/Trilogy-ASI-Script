@@ -97,10 +97,19 @@ DrawHelper::DrawVersion ()
 
         int lines = CFont::GetNumberLines (0.0f, 0.0f, wVersion.c_str ());
 #else
+        CFont::SetFontStyle (FONT_DEFAULT);
+        CFont::SetScaleForCurrentlanguage (1.0f, 1.4f);
         int lines
             = CFont::GetNumberLines (0.0f, 0.0f, (char *) version.c_str ());
 #endif
 
+        float x = screen::GetCoord (15.0f, screen::SIDE_LEFT);
+        float y = screen::GetCoord (lines * 50.0f, screen::SIDE_BOTTOM);
+        CRect backgroundBox (
+            x, y, x + CFont::GetStringWidth ((char *) version.c_str (), true),
+            screen::GetCoord (0.0f, screen::SIDE_BOTTOM));
+
+        CSprite2d::DrawRect (backgroundBox, color::Black);
         gamefont::Print (gamefont::LeftBottom, gamefont::AlignLeft,
                          GenericUtil::GetModVersion (), 20.0f, lines * 50.0f,
                          FONT_DEFAULT, 1.0f, 1.4f, color::White, 2,
