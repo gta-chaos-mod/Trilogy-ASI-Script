@@ -361,6 +361,8 @@ GameUtil::IsPlayerSafe ()
 
     if (CEntryExitManager::WeAreInInteriorTransition ()) return false;
 
+    if (FrontEndMenuManager.m_bMenuActive) return false;
+
     return true;
 }
 
