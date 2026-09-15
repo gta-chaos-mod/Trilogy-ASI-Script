@@ -15,16 +15,13 @@ EffectInstance::Start ()
 {
     if (this->effect)
     {
-        std::string file = "ChaosMod/audio/";
-        file.append (this->GetSoundID ());
-        file.append (".ogg");
-
-        const char *path = GAME_PATH ((char *) file.c_str ());
-
-        PlayAudioStream (path);
-
         this->effect->OnStart (this);
         Globals::enabledEffects[effect->GetID ().substr (7)] = true;
+
+        if (this->playSoundAutomatically)
+        {
+            this->PlayEffectSound ();
+        }
     }
 }
 
@@ -90,4 +87,20 @@ EffectInstance::IsOtherEffectIncompatible (const EffectInstance &other)
     if (this->GetName () == other.GetName ()) return true;
 
     return false;
+}
+
+void
+EffectInstance::PlayEffectSound ()
+{
+    if (this->effectSoundPlayed) return;
+
+    std::string file = "ChaosMod/audio/";
+    file.append (this->GetSoundID ());
+    file.append (".ogg");
+
+    const char *path = GAME_PATH ((char *) file.c_str ());
+
+    PlayAudioStream (path);
+
+    this->effectSoundPlayed = true;
 }

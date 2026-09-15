@@ -36,6 +36,9 @@ private:
     bool isOneTimeEffect    = false;
     bool isDrawnTemporarily = false;
 
+    bool effectSoundPlayed      = false;
+    bool playSoundAutomatically = true;
+
     nlohmann::json customData = { { "seed", 0 } };
 
     EffectDrawHandler drawHandler;
@@ -53,6 +56,8 @@ public:
 
     /// Returns whether other effect can run together with this effect.
     bool IsOtherEffectIncompatible (const EffectInstance &other);
+
+    void PlayEffectSound ();
 
     EffectBase *
     GetEffect ()
@@ -98,6 +103,12 @@ public:
     IsDrawnTemporarily ()
     {
         return isDrawnTemporarily;
+    }
+
+    void
+    SetPlaySoundAutomatically (bool playSoundAutomatically)
+    {
+        this->playSoundAutomatically = playSoundAutomatically;
     }
 
     void

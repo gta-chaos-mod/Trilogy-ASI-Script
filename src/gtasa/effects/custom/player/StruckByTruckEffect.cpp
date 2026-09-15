@@ -20,6 +20,7 @@ public:
     void
     OnStart (EffectInstance *inst) override
     {
+        inst->SetPlaySoundAutomatically (false);
         inst->SetIsOneTimeEffect ();
 
         linerunner = nullptr;
@@ -33,6 +34,7 @@ public:
     {
         if (!CanActivate ()) return;
 
+        inst->PlayEffectSound ();
         SpawnOrUpdateTruck ();
 
         wait -= (int) GenericUtil::CalculateTick ();
