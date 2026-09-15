@@ -71,6 +71,8 @@ build
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,cmake,c++
 
+.artifacts
+
 # Exclude the compiled Version.h file
 src/shared/util/Version.h
 
