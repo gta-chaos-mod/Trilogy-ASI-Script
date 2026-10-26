@@ -60,6 +60,8 @@ public:
         // TODO: This is used for cutscene audio, but also for e.g. the Lowrider
         // and Dancing minigame misions. For now we just leave it be since the
         // arrows jump around otherwise and it's making it impossible to play.
+        if (factor > 0.0f) factor = audioPitch;
+
         return cb ();
     }
 };

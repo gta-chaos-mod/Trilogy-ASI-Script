@@ -57,6 +57,16 @@ public:
         // installed
         injector::WriteMemory<bool> (0xBED000, true, true);
 
+        // CAEStreamingChannel::GetPlayTime / UpdatePlayTime: resync the real
+        // playback position every call instead of every 1000 ms
+        injector::WriteMemory<uint32_t> (0x4F1A0E, 0, true);
+        injector::WriteMemory<uint32_t> (0x4F18DE, 0, true);
+
+        // CAEStreamingChannel::UpdatePlayTime: bytes -> ms with the original
+        // sample rate, not the one scaled by the frequency scaling factor
+        injector::WriteMemory<uint8_t> (0x4F1909, 0x40, true);
+        injector::WriteMemory<uint8_t> (0x4F190C, 0x40, true);
+
         BoneHelper::Initialise ();
         GlobalRenderer::Initialise ();
         GameFixes::Initialise ();
