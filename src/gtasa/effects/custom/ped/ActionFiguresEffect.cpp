@@ -6,19 +6,21 @@
 
 class ActionFiguresEffect : public EffectBase
 {
-    int                wait       = 0;
-    static inline bool storeBones = true;
+    int                        wait       = 0;
+    static inline unsigned int generation = 0;
 
     static inline std::map<CPed *, std::map<unsigned int, RwV3d>> boneRotations;
+    static inline std::map<CPed *, unsigned int> storedGeneration;
 
 public:
     void
     OnStart (EffectInstance *inst) override
     {
         wait       = 0;
-        storeBones = true;
+        generation = 0;
 
         boneRotations.clear ();
+        storedGeneration.clear ();
 
         BoneHelper::RenderEvent += RenderPed;
         Events::pedCtorEvent += PedConstructor;
@@ -35,27 +37,27 @@ public:
     OnTick (EffectInstance *inst) override
     {
         wait -= (int) GenericUtil::CalculateTick ();
-        if (wait > 0)
-        {
-            storeBones = false;
-            return;
-        }
+        if (wait > 0) return;
 
-        storeBones = true;
-        wait       = 200;
+        generation++;
+        wait = 200;
     }
 
     static void
     PedConstructor (CPed *ped)
     {
         boneRotations.erase (ped);
+        storedGeneration.erase (ped);
     }
 
     static void
     RenderPed (CPed *ped)
     {
-        if (storeBones)
+        auto it = storedGeneration.find (ped);
+        if (it == storedGeneration.end () || it->second != generation)
         {
+            storedGeneration[ped] = generation;
+
             // Store bones
             boneRotations[ped][0] = BoneHelper::GetBoneRotation (ped, 0);
 

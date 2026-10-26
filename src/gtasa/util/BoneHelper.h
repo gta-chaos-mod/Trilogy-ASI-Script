@@ -6,6 +6,8 @@ using namespace plugin;
 
 class BoneHelper
 {
+    static inline unsigned int renderFrame = 0;
+
     static inline ThiscallEvent<AddressList<0x5B1F31, H_CALL>, PRIORITY_AFTER,
                                 ArgPickN<CPed *, 0>, void (CPed *)>
         cutscenePedRenderEvent;

@@ -6,6 +6,8 @@
 void
 BoneHelper::Initialise ()
 {
+    Events::drawingEvent += [] { renderFrame++; };
+
     Events::pedRenderEvent += RenderPed;
     cutscenePedRenderEvent += RenderPed;
 
@@ -34,9 +36,9 @@ BoneHelper::PedConstructor (CPed *ped)
 void
 BoneHelper::RenderPed (CPed *ped)
 {
-    if (!ped || pedLastRendered[ped] >= CTimer::m_FrameCounter) return;
+    if (!ped || pedLastRendered[ped] == renderFrame) return;
 
-    pedLastRendered[ped] = CTimer::m_FrameCounter;
+    pedLastRendered[ped] = renderFrame;
 
     if (renderHooks.size () > 0)
     {
