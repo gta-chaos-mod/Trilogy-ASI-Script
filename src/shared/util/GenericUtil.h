@@ -11,7 +11,7 @@
 // Example: 0x030300
 #define MOD_VERSION_MAJOR 3
 #define MOD_VERSION_MINOR 3
-#define MOD_VERSION_PATCH 0
+#define MOD_VERSION_PATCH 1
 
 #define MOD_VERSION                                                            \
     ((MOD_VERSION_MAJOR << 16) | (MOD_VERSION_MINOR << 8) | MOD_VERSION_PATCH)
